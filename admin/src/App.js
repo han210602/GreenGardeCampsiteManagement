@@ -13,7 +13,7 @@ function App() {
         <main className="content">
           <Topbar/>
         </main>
-      </div>;
+      </div>
 
     </ThemeProvider>
   </ColorModeContext.Provider>
