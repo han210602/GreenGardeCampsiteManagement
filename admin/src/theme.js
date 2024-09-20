@@ -7,6 +7,8 @@ import {createTheme} from "@mui/material/styles";
 //import { Typography } from "@mui/material";
 
 // color design tokens
+
+/* ctrl k + ctrl g */
 export const tokens = (mode) => ({
     ...(mode === "dark"
     ? {
@@ -25,7 +27,7 @@ export const tokens = (mode) => ({
           100: "#d0d1d5",
           200: "#a1a4ab",
           300: "#727681",
-          400: "#1F2A40",
+          400: "#1F2A40", // changed
           500: "#141b2d",
           600: "#101624",
           700: "#0c101b",
