@@ -1,0 +1,112 @@
+.campingclass {
+    background-color: #002d21; /* Darker green background */
+    padding: 60px;
+    color: #f5f5f5; /* Light text for better contrast */
+    font-family: 'Georgia', serif; /* Serif font to match the aesthetic */
+    text-align: center;
+    position: relative;
+    min-height: 100vh;
+}
+  
+  
+    .campingclass h1{
+    
+    font-size: 2rem;
+    
+    }
+    .first-camping .text {
+        text-decoration: none;
+        color: #edf0f2;
+        font-style: normal;
+        font-weight: 400;
+      }
+      
+
+    .first-camping{
+    
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 4rem;
+    }
+    .second-camping{
+    
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 4rem;
+    }
+    .camp-text{
+    
+        width: 45%;
+        text-align: start;
+        font-size: 1.1rem;
+    
+    }
+    .camp-text p{
+
+        text-decoration: none;
+  color: #edf0f2;
+  font-style: normal;
+  font-weight: 400;
+    }
+    
+    .camp-text h2{
+        padding-bottom: 1rem;
+        color: #edf0f2;
+
+    }.imgcamping {
+        position: relative;
+        width: 50%;
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem; 
+    }
+    
+    .imgcamping img {
+        width: 49%;
+        height: 350px;
+        object-fit: cover;
+        border-radius: 6px;
+        box-shadow: -1px 1px 62px -18px rgba(0, 0, 0, 0.19);
+    }
+    
+    .imgcamping img:nth-child(2) {
+        position: absolute;
+        top: -5%; 
+        right: 0;
+    }
+    
+    @media screen and (max-width: 850px) {
+        .campingclass{
+             margin: 4rem 2rem;
+    
+        }
+        
+    .first-camping{
+    
+        display: flex;
+        flex-direction: column-reverse;
+     
+        margin-top: 2rem;
+    }
+    .camp-text{
+        width: 100%;
+    }
+    .imgcamping{
+        width: 100%;
+        margin: 1.8rem 0;
+    }
+    .imgcamping img{
+        height: 250px;
+    }
+    
+    .second-camping{
+    
+        display: flex;
+        flex-direction: column-reverse;
+    
+        margin-top: 4rem;
+    }
+    }
