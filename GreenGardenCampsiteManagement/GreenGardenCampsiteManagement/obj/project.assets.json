@@ -3337,9 +3337,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagement.csproj",
-      "projectName": "GreenGardenCampsiteManagement",
-      "projectPath": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagement.csproj",
+      "projectUniqueName": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI.csproj",
+      "projectName": "GreenGardenCampsiteManagementAPI",
+      "projectPath": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI.csproj",
       "packagesPath": "C:\\Users\\PCT\\.nuget\\packages\\",
       "outputPath": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagement\\obj\\",
       "projectStyle": "PackageReference",

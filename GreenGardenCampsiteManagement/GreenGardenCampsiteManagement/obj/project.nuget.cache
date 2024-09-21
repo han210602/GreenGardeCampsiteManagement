@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "6Ov30YoqB1ef/xP/D9b3ph3PDvFassyCm9ACuBGLwu6OdKhhL6wE6s+VfuURF401Z7UCI6CcNiKCxa4j73pbug==",
+  "dgSpecHash": "lLuBy7kwlKxPUfuWz0cgNB2i+9WqejCAWEtb2Y2TXbBzWSNXnypjbu18VX8Sb9lytIQBKwvnitiRkI0KTfF5rA==",
   "success": true,
-  "projectFilePath": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagement.csproj",
+  "projectFilePath": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\PCT\\.nuget\\packages\\csvhelper\\32.0.3\\csvhelper.32.0.3.nupkg.sha512",
     "C:\\Users\\PCT\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\6.0.29\\microsoft.aspnetcore.authentication.jwtbearer.6.0.29.nupkg.sha512",

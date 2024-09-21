@@ -1,8 +1,8 @@
 {
   "Version": 1,
-  "Hash": "nVLo2i+xaSbno5iVFfCjZm7PjVkVp0QwIkZHXuxTlMI=",
-  "Source": "GreenGardenCampsiteManagement",
-  "BasePath": "_content/GreenGardenCampsiteManagement",
+  "Hash": "sqBLYXTvwFKmJirev6QhEhY9H+uXL95fTjVJB97IZjs=",
+  "Source": "GreenGardenCampsiteManagementAPI",
+  "BasePath": "_content/GreenGardenCampsiteManagementAPI",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
