@@ -11,6 +11,6 @@ namespace Repositories.Accounts
     {
         void CreateAccount(Account a);
         List<Account> GetAllAccount();
-
+        string Login(AccountDTO a);
     }
 }
