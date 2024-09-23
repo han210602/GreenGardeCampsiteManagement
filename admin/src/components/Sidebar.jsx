@@ -25,8 +25,10 @@ const Sidebar = () => {
         <>
           <div className="flex justify-between items-center">
             <Link to="/" onClick={handleCloseSideBar} className="items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight dark:text-white text-slate-900">
+              {/* NAME OF WEBSITE */}
               <SiShopware /> <span>Green Garden</span>
             </Link>
+            {/* MENU BUTTON */}
             <TooltipComponent content="Menu" position="BottomCenter">
               <button
                 type="button"

@@ -352,6 +352,38 @@ export const LinePrimaryYAxis = {
   minorTickLines: { width: 0 },
 };
 
+export const inventoryGrid = [
+  { type: 'checkbox', width: '50' },
+  { field: 'ProductID',
+    headerText: 'Product ID',
+    width: '120',
+    textAlign: 'Center',
+    isPrimaryKey: true,
+  },
+  { field: 'ProductName',
+    headerText: 'Product Name',
+    width: '150',
+    template: customerGridImage,
+    textAlign: 'Center' },
+  { field: 'UnitsInStock',
+    headerText: 'Units In Stock',
+    width: '130',
+    format: 'yMd',
+    textAlign: 'Center' },
+  { field: 'Status',
+    headerText: 'Status',
+    width: '130',
+    format: 'yMd',
+    textAlign: 'Center',
+    template: customerGridStatus },
+  { field: 'CategoryName',
+    headerText: 'Category Name',
+    width: '130',
+    format: 'yMd',
+    textAlign: 'Center' },
+
+];
+
 export const customersGrid = [
   { type: 'checkbox', width: '50' },
   { headerText: 'Name',
@@ -743,6 +775,10 @@ export const ordersGrid = [
     width: '150',
     textAlign: 'Center',
   },
+];
+
+export const inventoryData = [
+
 ];
 
 export const customersData = [
