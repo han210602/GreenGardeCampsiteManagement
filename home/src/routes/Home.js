@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import HomeDetail from '../components/HomeDetail';
 import Camping from '../components/Camping';  // Importing Camping component
 import Event from '../components/Event';  // Importing Camping component
+import FeedBackCustomer from '../components/FeedBackCustomer';
 
 class Home extends React.Component {
     render() {
@@ -20,6 +21,7 @@ class Home extends React.Component {
                 /> 
                 <Camping /> 
                 <Event/>
+                <FeedBackCustomer/>
             </>
         );
     }

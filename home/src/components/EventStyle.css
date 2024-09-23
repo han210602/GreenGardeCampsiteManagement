@@ -13,7 +13,20 @@
     display: flex;
     justify-content: space-between; 
 }
-
+.e-card h4 {
+    font-size: 1.5rem;
+    color: #2c3e50; /* Dark blue */
+    margin-top: 10px;
+    font-weight: 700;
+  }
+  
+  .e-card p {
+    font-size: 1rem;
+    color: #7f8c8d; /* Light gray */
+    line-height: 1.6;
+    margin-top: 5px;
+    margin-bottom: 10px;
+  }
 .e-card {
     width: 32%; /* 32% to fit 3 cards per row */
     text-align: start;
