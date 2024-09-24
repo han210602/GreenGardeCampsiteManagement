@@ -1,4 +1,4 @@
-import React from 'react'; // Don't forget to import React
+import React from 'react'; 
 import "./EventStyle.css";
 import EventData from './EventData';
 class Event extends React.Component {

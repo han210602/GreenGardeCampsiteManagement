@@ -23,45 +23,51 @@
     height: 100%;
     object-fit: cover;
     }
-    .img-text{
-    
+    .img-text {
         position: absolute;
         top: 55%;
         left: 50%;
         transform: translate(-50%, -50%);
         width: 100%;
-    }.img-text h1 {
+        text-align: center;
+    }
+    
+    .img-text h1 {
         font-size: 3rem;
         font-weight: 800;
-        background-color: #fff;
+        background-color: #FFEB3B;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
     
     .img-text p {
         font-size: 1.3rem;
-        color: #fff;
-        padding: 0.5rem 0rem 2rem 0;
+        color: #FFEB3B;
+        padding: 0.5rem 0 2rem 0;
     }
-    .img-text p {
-        font-size: 1.3rem;
-        color: #fff;
-        padding: 0.5rem 0rem 2rem 0;
-    }
- 
+    
     .img-text a {
-        color:#ffffff;pointer-events:all;
+        color: #4CAF50;
+        pointer-events: all;
     }
+    
     .img-text .show {
         text-decoration: none;
-        background: #fff;
+        background: #4CAF50;
         padding: 1rem 2rem;
         border-radius: 6px;
         font-size: 1.1rem;
         font-weight: bold;
         letter-spacing: 2px;
         color: #222;
+        transition: background-color 0.3s ease, color 0.3s ease;
     }
+    
+    .img-text .show:hover {
+        background-color: #222;
+        color: #fff;
+    }
+    
     
     @media screen and (max-width: 555px) {
     .img-text h1{

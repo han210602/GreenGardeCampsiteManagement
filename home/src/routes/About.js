@@ -1,58 +1,50 @@
 import React from 'react';
 import Navbar from "../components/Navbar";
 import HomeDetail from '../components/HomeDetail';
-import Camping from '../components/Camping';
+import CardBlog from '../components/CardBlog';
 
 class About extends React.Component {
     render() {
         return (
             <>
                         <Navbar/>
-                        <HomeDetail
-                    cName="HomeDetailmid" 
-                    img="https://images.unsplash.com/photo-1520918998343-a33f59b7c079?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                    title="Welcome to "  
-                    text="Garden Camping!"  
-                    buttonText="Book now"
-                    url="/"
-                    btnClass="show"
-                />
-                <p>This is About</p>
-                <Camping/>
+                        <p style={{ fontSize: '2rem', marginTop:'10px' }}>
+  Tin tức mới
+</p>
+
+                        <CardBlog data={data} />
+
             </>
         );
     }
 }
-const blogPosts = [
-    {
-      image: 'image1-url',
-      title: 'Địa điểm vui chơi dã ngoại lý tưởng...',
-      description: 'Địa điểm vui chơi dã ngoại lý tưởng dành cho các gia đình...',
-    },
-    {
-      image: 'image2-url',
-      title: 'Chương trình VUI DÃ NGOẠI...',
-      description: 'Chương trình VUI DÃ NGOẠI - TRẢI NGHIỆM TẾT XƯA...',
-    },
-    {
-      image: 'image3-url',
-      title: 'Địa điểm vui chơi lý tưởng cho dịp...',
-      description: 'Địa điểm vui chơi lý tưởng cho dịp nghỉ lễ...',
-    },
-    // Add more blog posts here
-  ];
-const BlogPage = () => {
-    return (
-      <div style={styles.gridContainer}>
-        {blogPosts.map((post, index) => (
-          <BlogCard
-            key={index}
-            image={post.image}
-            title={post.title}
-            description={post.description}
-          />
-        ))}
-      </div>
-    );
-  };
+
+const data = [
+  {
+    image: 'https://scontent.fhan2-5.fna.fbcdn.net/v/t39.30808-6/457852705_990912556379775_4301449055103666944_n.jpg?stp=cp6_dst-jpg&_nc_cat=104&ccb=1-7&_nc_sid=833d8c&_nc_ohc=S09xGC7SWNwQ7kNvgHMwKmd&_nc_ht=scontent.fhan2-5.fna&_nc_gid=AYBYUeAYzTOXAf-NLrMWVle&oh=00_AYAh55PtwPB8bT6ATbmuH1veOla2weqsmUvwlroADk1utw&oe=66F81C9B',
+    title: 'Hướng dẫn về một số trường hợp...',
+    description: 'Khi bạn mua kìm đa năng...',
+    link: '#'
+  },
+  {
+    image: 'https://scontent.fhan2-5.fna.fbcdn.net/v/t39.30808-6/458185119_990912543046443_4708194444760094723_n.jpg?stp=cp6_dst-jpg&_nc_cat=107&ccb=1-7&_nc_sid=833d8c&_nc_ohc=yiCauITKjE4Q7kNvgE3PXm8&_nc_ht=scontent.fhan2-5.fna&_nc_gid=Af1BHxnhjUH_HhlGgKJUKdj&oh=00_AYCw3oPfyEzfmm99z13VQIS0eBBQP1_PGLqJicncoJEe3A&oe=66F83E59',
+    title: 'Cắm trại đi ngao du cùng...',
+    description: 'Cắm trại sẽ mang đến những trải nghiệm...',
+    link: '#'
+  },
+  {
+    image: 'https://scontent.fhan2-5.fna.fbcdn.net/v/t39.30808-6/453259359_965558882248476_6221705252383496036_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=833d8c&_nc_ohc=g0HSYzjIH60Q7kNvgF8lvmb&_nc_ht=scontent.fhan2-5.fna&_nc_gid=AD7ficw5QqdNdAQb9IQGxfY&oh=00_AYDwqgKJAiojyCDpm9UKdqQNWX4tgZgwTqw7AsVJUrpsqg&oe=66F82461',
+    title: 'Một chuyến phiêu lưu đáng nhớ...',
+    description: 'Khám phá vùng đất mới cùng bạn bè...',
+    link: '#'
+  },
+
+  {
+    image: 'https://scontent.fhan2-5.fna.fbcdn.net/v/t39.30808-6/453259359_965558882248476_6221705252383496036_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=833d8c&_nc_ohc=g0HSYzjIH60Q7kNvgF8lvmb&_nc_ht=scontent.fhan2-5.fna&_nc_gid=AD7ficw5QqdNdAQb9IQGxfY&oh=00_AYDwqgKJAiojyCDpm9UKdqQNWX4tgZgwTqw7AsVJUrpsqg&oe=66F82461',
+    title: 'Cắm trại đi ngao du cùng...',
+    description: 'Cắm trại sẽ mang đến những trải nghiệm...',
+    link: '#'
+  },
+  // Add more items as needed
+];
 export default About;

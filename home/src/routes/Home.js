@@ -4,6 +4,7 @@ import HomeDetail from '../components/HomeDetail';
 import Camping from '../components/Camping';  // Importing Camping component
 import Event from '../components/Event';  // Importing Camping component
 import FeedBackCustomer from '../components/FeedBackCustomer';
+import Footer from '../components/Footer';  // Importing Camping component
 
 class Home extends React.Component {
     render() {
@@ -12,16 +13,17 @@ class Home extends React.Component {
                 <Navbar />
                 <HomeDetail
                     cName="HomeDetail"
-                    img="https://scontent.fhan14-3.fna.fbcdn.net/v/t39.30808-6/278306774_497799305313682_6686106468907275869_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=cc71e4&_nc_ohc=RmiKJa1EEGMQ7kNvgFJcrpD&_nc_ht=scontent.fhan14-3.fna&_nc_gid=AYQwKaBLSFC9X6ngVXaTO-e&oh=00_AYAM7qCkW3M_MwDOU7rPJ6rlCBbo_hrm34p0oLYdfOCh5A&oe=66F4C085"
+                    img="https://scontent.fhan20-1.fna.fbcdn.net/v/t39.30808-6/427457417_852235940247438_5893304871313187228_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=833d8c&_nc_ohc=mJHimb69aRgQ7kNvgHLjLIQ&_nc_ht=scontent.fhan20-1.fna&_nc_gid=As5vM5m5AGSkR9oJcWmeIJG&oh=00_AYCcZTl1BNLhtNtnVirRJOrRULzHJtBuIGn7hKZf2ezBuw&oe=66F8A1D7"
                     title="Green Garden Camping"
-                    text="Hello!"
-                    buttonText="Book now"
+                    text="Xin chào!"
+                    buttonText="Đặt ngay"
                     url="/"
                     btnClass="show"
                 /> 
                 <Camping /> 
                 <Event/>
                 <FeedBackCustomer/>
+                <Footer/>
             </>
         );
     }

@@ -1,0 +1,72 @@
+/* Styling the card container for layout */
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    padding: 16px;
+    margin: 0 auto;
+    max-width: 1200px;
+    align-items: start;
+    justify-items: center;
+    text-align: center;
+}
+
+/* Styling each card */
+.cardblog {
+    background-color: #f9f9f9; /* Slightly off-white */
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column; /* Ensure the content stacks */
+    justify-content: center; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    text-align: center;
+    max-width: 100%;
+}
+
+/* Hover effect for each card */
+.card:hover {
+    transform: scale(1.02);
+}
+
+
+.cardblog img{
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+    margin-bottom: 15px; 
+    border-radius: 5px;
+
+}
+.card h3 {
+    padding-bottom: 1rem;
+    color: black;
+}
+
+.card a {
+    display: inline-block;
+    padding: 8px 16px;
+    color: white;
+    background-color: #007bff; 
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.card a:hover {
+    background-color: #0056b3; 
+}
+
+@media screen and (max-width: 1024px) {
+    .card-container {
+        grid-template-columns: repeat(2, 1fr); 
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .card-container {
+        grid-template-columns: 1fr;
+    }
+}
