@@ -3,7 +3,7 @@ import { AiOutlineMenu } from 'react-icons/ai';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
-import avatar from '../data/avatar.jpg';
+import avatar from '../data/PersonalAvatar.png';
 import { UserProfile } from './';
 import { useStateContext } from '../contexts/ContextProvider';
 
@@ -49,7 +49,6 @@ const Navbar = () => {
 
   return (
     <div className="flex justify-between p-2 md:ml-6 md:mr-6 relative">
-
       <NavButton title="Menu" customFunc={handleActiveMenu} color={currentColor} icon={<AiOutlineMenu />} />
       <div className="flex">
         <TooltipComponent content="Profile" position="BottomCenter">

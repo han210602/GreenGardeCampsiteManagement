@@ -5,8 +5,8 @@ import { employeesData, employeesGrid } from '../data/dummy';
 import { Header } from '../components';
 
 const Employees = () => {
-  const toolbarOptions = ['Search', 'Delete'];
-
+  const selectionsettings = { persistSelection: true };
+  const toolbarOptions = ['Delete', 'Search'];
   const editing = { allowDeleting: true, allowEditing: true };
 
   return (
@@ -14,10 +14,11 @@ const Employees = () => {
       <Header category="Page" title="Employees" />
       <GridComponent
         dataSource={employeesData}
-        width="auto"
+        enableHover={false}
         allowPaging
         allowSorting
         pageSettings={{ pageCount: 5 }}
+        selectionSettings={selectionsettings}
         editSettings={editing}
         toolbar={toolbarOptions}
       >
@@ -25,7 +26,7 @@ const Employees = () => {
           {/* eslint-disable-next-line react/jsx-props-no-spreading */}
           {employeesGrid.map((item, index) => <ColumnDirective key={index} {...item} />)}
         </ColumnsDirective>
-        <Inject services={[Search, Page]} />
+        <Inject services={[Page, Search]} />
 
       </GridComponent>
     </div>

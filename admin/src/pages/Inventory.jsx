@@ -1,5 +1,5 @@
 import React from 'react';
-import { GridComponent, ColumnsDirective, ColumnDirective, Page, Selection, Inject, Edit, Toolbar, Sort, Filter } from '@syncfusion/ej2-react-grids';
+import { GridComponent, ColumnsDirective, ColumnDirective, Page, Selection, Inject, Edit, Toolbar, Sort, Filter, Search } from '@syncfusion/ej2-react-grids';
 
 import { inventoryData, inventoryGrid } from '../data/dummy';
 import { Header } from '../components';
@@ -19,15 +19,16 @@ const Inventory = () => {
         toolbar={toolbarOptions}
         editSettings={editing}
         allowSorting
+        allowFiltering // Enabling filtering globally
+        filterSettings={{ type: 'Excel' }} // 'Menu', 'CheckBox', 'Excel'
       >
         <ColumnsDirective>
-          {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-          {inventoryGrid.map((item, index) => <ColumnDirective key={index} {...item} />)}
+          {/* Add column directives, ensuring the category field allows filtering */}
+          {inventoryGrid.map((item, index) => (<ColumnDirective key={index} {...item} allowFiltering={item.field === 'CategoryName'} />))}
         </ColumnsDirective>
-        <Inject services={[Page, Selection, Toolbar, Edit, Sort, Filter]} />
+        <Inject services={[Page, Selection, Toolbar, Edit, Sort, Filter, Search]} />
       </GridComponent>
     </div>
   );
 };
-
 export default Inventory;

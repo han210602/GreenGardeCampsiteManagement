@@ -1,8 +1,7 @@
 import React from 'react';
 import { AiOutlineCalendar, AiOutlineShoppingCart, AiOutlineBarChart, AiOutlineStock } from 'react-icons/ai';
-import { FiShoppingBag, FiEdit, FiPieChart, FiBarChart, FiCreditCard } from 'react-icons/fi';
+import { FiShoppingBag, FiPieChart, FiBarChart, FiCreditCard } from 'react-icons/fi';
 import { BsKanban, BsBoxSeam, BsCurrencyDollar } from 'react-icons/bs';
-import { BiColorFill } from 'react-icons/bi';
 import { IoMdContacts } from 'react-icons/io';
 import { RiContactsLine } from 'react-icons/ri';
 import { MdOutlineSupervisorAccount } from 'react-icons/md';
@@ -91,6 +90,18 @@ const customerGridImage = (props) => (
     <div>
       <p>{props.CustomerName}</p>
       <p>{props.CustomerEmail}</p>
+    </div>
+  </div>
+);
+const productGridImage = (props) => (
+  <div className="image flex gap-4">
+    <img
+      className="rounded-full w-10 h-10"
+      src={props.ProductImage}
+      alt="product"
+    />
+    <div>
+      <p>{props.ProductName}</p>
     </div>
   </div>
 );
@@ -357,25 +368,18 @@ export const inventoryGrid = [
   { field: 'ProductID',
     headerText: 'Product ID',
     width: '120',
-    textAlign: 'Center',
     isPrimaryKey: true,
   },
   { field: 'ProductName',
     headerText: 'Product Name',
     width: '150',
-    template: customerGridImage,
+    template: productGridImage,
     textAlign: 'Center' },
   { field: 'UnitsInStock',
     headerText: 'Units In Stock',
     width: '130',
     format: 'yMd',
     textAlign: 'Center' },
-  { field: 'Status',
-    headerText: 'Status',
-    width: '130',
-    format: 'yMd',
-    textAlign: 'Center',
-    template: customerGridStatus },
   { field: 'CategoryName',
     headerText: 'Category Name',
     width: '130',
@@ -427,6 +431,7 @@ export const customersGrid = [
 ];
 
 export const employeesGrid = [
+  { type: 'checkbox', width: '50' },
   { headerText: 'Employee',
     width: '150',
     template: gridEmployeeProfile,
@@ -504,14 +509,6 @@ export const links = [
       {
         name: 'kanban',
         icon: <BsKanban />,
-      },
-      {
-        name: 'editor',
-        icon: <FiEdit />,
-      },
-      {
-        name: 'color-picker',
-        icon: <BiColorFill />,
       },
     ],
   },
@@ -679,6 +676,14 @@ export const medicalproBranding = {
 
 export const themeColors = [
   {
+    name: 'green-theme',
+    color: '#013927',
+  },
+  {
+    name: 'green2-theme',
+    color: '#02704d',
+  },
+  {
     name: 'blue-theme',
     color: '#1A97F5',
   },
@@ -778,7 +783,55 @@ export const ordersGrid = [
 ];
 
 export const inventoryData = [
-
+  {
+    ProductID: 1110,
+    ProductName: 'Leu don',
+    ProductImage: product1,
+    UnitsInStock: '50',
+    CategoryName: 'Leu',
+  },
+  {
+    ProductID: 1111,
+    ProductName: 'Leu doi',
+    ProductImage: product1,
+    UnitsInStock: '50',
+    CategoryName: 'Leu',
+  },
+  {
+    ProductID: 1112,
+    ProductName: 'Leu gia dinh',
+    ProductImage: product1,
+    UnitsInStock: '50',
+    CategoryName: 'Leu',
+  },
+  {
+    ProductID: 1211,
+    ProductName: 'BBQ',
+    ProductImage: product1,
+    UnitsInStock: '50',
+    CategoryName: 'Food&Drink',
+  },
+  {
+    ProductID: 1212,
+    ProductName: 'Pepsi',
+    ProductImage: product1,
+    UnitsInStock: '50',
+    CategoryName: 'Food&Drink',
+  },
+  {
+    ProductID: 1213,
+    ProductName: 'Hotpot',
+    ProductImage: product1,
+    UnitsInStock: '50',
+    CategoryName: 'Food&Drink',
+  },
+  {
+    ProductID: 1214,
+    ProductName: 'Meat',
+    ProductImage: product1,
+    UnitsInStock: '50',
+    CategoryName: 'Food&Drink',
+  },
 ];
 
 export const customersData = [
