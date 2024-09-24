@@ -71,5 +71,23 @@ namespace DataAccess.DAO
         {
             return accounts;
         }
+        public static Account GetAccountById(int accountId)
+        {
+            return accounts.SingleOrDefault(acc => acc.AccountId == accountId);
+        }
+
+    
+        public static void UpdateAccount(Account updatedAccount)
+        {
+            accounts = accounts.Select(acc =>
+                acc.AccountId == updatedAccount.AccountId ? updatedAccount : acc
+            ).ToList();
+        }
+
+   
+        public static void DeleteAccount(int accountId)
+        {
+            accounts = accounts.Where(acc => acc.AccountId != accountId).ToList();
+        }
     }
 }

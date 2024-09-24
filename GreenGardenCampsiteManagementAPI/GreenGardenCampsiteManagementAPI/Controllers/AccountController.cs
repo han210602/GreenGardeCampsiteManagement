@@ -15,8 +15,7 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
         {
             _repo = repo;
         }
-        [Authorize]
-        [HttpGet]
+        [HttpGet("GetAllAccounts")]
         public async Task<ActionResult<IEnumerable<Account>>> GetAllAccounts()
         {
             return _repo.GetAllAccount();
@@ -54,6 +53,48 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 
             };
             _repo.CreateAccount(a);
+            return NoContent();
+        }
+        [HttpGet("{id}")]
+        public IActionResult GetAccountById(int id)
+        {
+            var account = _repo.GetAccountById(id);
+            if (account == null)
+            {
+                return NotFound("Account not found.");
+            }
+            return Ok(account);
+        }
+
+
+        [HttpPut("UpdateAccount")]
+        public IActionResult UpdateAccount(int id,[FromBody] Account updatedAccount)
+        {
+            var existingAccount = _repo.GetAccountById(id);
+            if (existingAccount == null)
+            {
+                return NotFound("Account not found.");
+            }
+
+            existingAccount.Email = updatedAccount.Email;
+            existingAccount.Password = updatedAccount.Password;
+            existingAccount.Fullname = updatedAccount.Fullname;
+
+            _repo.UpdateAccount(existingAccount);
+            return NoContent();
+        }
+
+   
+        [HttpDelete("{id}")]
+        public IActionResult DeleteAccount(int id)
+        {
+            var account = _repo.GetAccountById(id);
+            if (account == null)
+            {
+                return NotFound("Account not found.");
+            }
+
+            _repo.DeleteAccount(id);
             return NoContent();
         }
     }

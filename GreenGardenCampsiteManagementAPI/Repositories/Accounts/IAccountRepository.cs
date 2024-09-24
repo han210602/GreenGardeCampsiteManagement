@@ -12,5 +12,8 @@ namespace Repositories.Accounts
         void CreateAccount(Account a);
         List<Account> GetAllAccount();
         string Login(AccountDTO a);
+        Account GetAccountById(int accountId);  
+        void UpdateAccount(Account updatedAccount);  
+        void DeleteAccount(int accountId);
     }
 }

@@ -32,5 +32,18 @@ namespace Repositories.Accounts
             // Call the static Login method in AccountDAO and pass _configuration
             return AccountDAO.Login(a, _configuration);
         }
+        public Account GetAccountById(int accountId)
+        {
+            return AccountDAO.GetAccountById(accountId);
+        }
+
+        public void UpdateAccount(Account updatedAccount)
+        {
+            AccountDAO.UpdateAccount(updatedAccount);
+        }
+        public void DeleteAccount(int accountId)
+        {
+            AccountDAO.DeleteAccount(accountId);
+        }
     }
 }
