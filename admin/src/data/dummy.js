@@ -1,7 +1,7 @@
 import React from 'react';
-import { AiOutlineCalendar, AiOutlineShoppingCart, AiOutlineBarChart, AiOutlineStock } from 'react-icons/ai';
+import { AiOutlineShoppingCart, AiOutlineBarChart, AiOutlineStock } from 'react-icons/ai';
 import { FiShoppingBag, FiPieChart, FiBarChart, FiCreditCard } from 'react-icons/fi';
-import { BsKanban, BsBoxSeam, BsCurrencyDollar } from 'react-icons/bs';
+import { BsBoxSeam, BsCurrencyDollar } from 'react-icons/bs';
 import { IoMdContacts } from 'react-icons/io';
 import { RiContactsLine } from 'react-icons/ri';
 import { MdOutlineSupervisorAccount } from 'react-icons/md';
@@ -472,7 +472,7 @@ export const links = [
     title: 'Dashboard',
     links: [
       {
-        name: 'ecommerce',
+        name: 'ecommerces',
         icon: <FiShoppingBag />,
       },
     ],
@@ -494,21 +494,8 @@ export const links = [
         icon: <RiContactsLine />,
       },
       {
-        name: 'Inventory',
+        name: 'inventory',
         icon: <RiContactsLine />,
-      },
-    ],
-  },
-  {
-    title: 'Apps',
-    links: [
-      {
-        name: 'calendar',
-        icon: <AiOutlineCalendar />,
-      },
-      {
-        name: 'kanban',
-        icon: <BsKanban />,
       },
     ],
   },
