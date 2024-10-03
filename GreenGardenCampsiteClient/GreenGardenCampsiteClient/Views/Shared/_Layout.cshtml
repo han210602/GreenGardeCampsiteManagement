@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - GreenGardenCampsiteClient</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/GreenGardenCampsiteClient.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/HomeStyle.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Common/HomeStyle.css" asp-append-version="true" />
+
+
+
+</head>
+<body>
+    <header>
+        <nav class="site-nav">
+            <div class="container">
+                <div class="site-navigation">
+                    <a href="index.html" class="logo m-0" style="color: #ffff;">Green Garden<span class="text-primary">.</span></a>
+                    <ul class="js-clone-nav d-none d-lg-inline-block text-left site-menu float-right">
+                        <li class="active"><a href="index.html" style="color:#ffff">Home</a></li>
+                        <li class="has-children">
+                            <a href="#">Dịch vụ</a>
+                            <ul class="dropdown">
+                                <li><a href="elements.html">Đặt thuê dụng cụ</a></li>
+                                <li class="has-children">
+                                    <a href="#">Đặt vé</a>
+                                    <ul class="dropdown">
+                                        <li><a href="#">Đặt theo đơn</a></li>
+                                        <li><a href="#">Đặt theo combo</a></li>
+                                      
+                                    </ul>
+                                </li>
+                                <li class="has-children">
+                                    <a href="#">Đặt đồ ăn</a>
+                                    <ul class="dropdown">
+                                        <li><a href="#">Đặt theo đơn</a></li>
+                                        <li><a href="#">Đặt theo combo</a></li>
+                                     
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                    <a href="#" class="burger ml-auto float-right site-menu-toggle js-menu-toggle d-inline-block d-lg-none light" data-toggle="collapse" data-target="#main-navbar">
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div style="width:100%">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+    <footer class="container">
+        <div >
+            <div class="top">
+                <div>
+                    <h1>Thông Tin Liên Hệ</h1>
+                </div>
+
+                <div>
+                    <a href="/">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+
+                    <a href="/">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="/">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                </div>
+            </div>
+            <hr />
+            <div class="bottom">
+                <div>
+                    <p>
+                        <i class="fas fa-map-marker-alt"></i> Đường Đê vàng lối rẽ Đình
+                        chùa thái linh Quán tự phường Giang- Biên -Long -Biên -Hà -Nội đi
+                        thêm 50m rẽ phải là đến Sông Quê Green Garden, Hanoi, Vietnam
+                    </p>
+                    <p>
+                        <i class="fas fa-phone-alt"></i> 098 732 76 69
+                    </p>
+                    <p>
+                        <i class="fas fa-envelope"></i> hocausongque@gmail.com
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
