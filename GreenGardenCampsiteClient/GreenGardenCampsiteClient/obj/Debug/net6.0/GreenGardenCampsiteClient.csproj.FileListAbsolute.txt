@@ -29,3 +29,34 @@ D:\GreenGardenCampsiteClient\GreenGardenCampsiteClient\obj\Debug\net6.0\refint\G
 D:\GreenGardenCampsiteClient\GreenGardenCampsiteClient\obj\Debug\net6.0\GreenGardenCampsiteClient.pdb
 D:\GreenGardenCampsiteClient\GreenGardenCampsiteClient\obj\Debug\net6.0\GreenGardenCampsiteClient.genruntimeconfig.cache
 D:\GreenGardenCampsiteClient\GreenGardenCampsiteClient\obj\Debug\net6.0\ref\GreenGardenCampsiteClient.dll
+C:\Users\Nguyen Thanh Hau\Desktop\New folder\GreenGardenCampsiteManagement\GreenGardenCampsiteClient\GreenGardenCampsiteClient\bin\Debug\net6.0\appsettings.Development.json
+C:\Users\Nguyen Thanh Hau\Desktop\New folder\GreenGardenCampsiteManagement\GreenGardenCampsiteClient\GreenGardenCampsiteClient\bin\Debug\net6.0\appsettings.json
+C:\Users\Nguyen Thanh Hau\Desktop\New folder\GreenGardenCampsiteManagement\GreenGardenCampsiteClient\GreenGardenCampsiteClient\bin\Debug\net6.0\GreenGardenCampsiteClient.staticwebassets.runtime.json
+C:\Users\Nguyen Thanh Hau\Desktop\New folder\GreenGardenCampsiteManagement\GreenGardenCampsiteClient\GreenGardenCampsiteClient\bin\Debug\net6.0\GreenGardenCampsiteClient.exe
+C:\Users\Nguyen Thanh Hau\Desktop\New folder\GreenGardenCampsiteManagement\GreenGardenCampsiteClient\GreenGardenCampsiteClient\bin\Debug\net6.0\GreenGardenCampsiteClient.deps.json
+C:\Users\Nguyen Thanh Hau\Desktop\New folder\GreenGardenCampsiteManagement\GreenGardenCampsiteClient\GreenGardenCampsiteClient\bin\Debug\net6.0\GreenGardenCampsiteClient.runtimeconfig.json
+C:\Users\Nguyen Thanh Hau\Desktop\New folder\GreenGardenCampsiteManagement\GreenGardenCampsiteClient\GreenGardenCampsiteClient\bin\Debug\net6.0\GreenGardenCampsiteClient.dll
+C:\Users\Nguyen Thanh Hau\Desktop\New folder\GreenGardenCampsiteManagement\GreenGardenCampsiteClient\GreenGardenCampsiteClient\bin\Debug\net6.0\GreenGardenCampsiteClient.pdb
+C:\Users\Nguyen Thanh Hau\Desktop\New folder\GreenGardenCampsiteManagement\GreenGardenCampsiteClient\GreenGardenCampsiteClient\obj\Debug\net6.0\GreenGardenCampsiteClient.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Nguyen Thanh Hau\Desktop\New folder\GreenGardenCampsiteManagement\GreenGardenCampsiteClient\GreenGardenCampsiteClient\obj\Debug\net6.0\GreenGardenCampsiteClient.AssemblyInfoInputs.cache
+C:\Users\Nguyen Thanh Hau\Desktop\New folder\GreenGardenCampsiteManagement\GreenGardenCampsiteClient\GreenGardenCampsiteClient\obj\Debug\net6.0\GreenGardenCampsiteClient.AssemblyInfo.cs
+C:\Users\Nguyen Thanh Hau\Desktop\New folder\GreenGardenCampsiteManagement\GreenGardenCampsiteClient\GreenGardenCampsiteClient\obj\Debug\net6.0\GreenGardenCampsiteClient.csproj.CoreCompileInputs.cache
+C:\Users\Nguyen Thanh Hau\Desktop\New folder\GreenGardenCampsiteManagement\GreenGardenCampsiteClient\GreenGardenCampsiteClient\obj\Debug\net6.0\GreenGardenCampsiteClient.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Nguyen Thanh Hau\Desktop\New folder\GreenGardenCampsiteManagement\GreenGardenCampsiteClient\GreenGardenCampsiteClient\obj\Debug\net6.0\GreenGardenCampsiteClient.RazorAssemblyInfo.cache
+C:\Users\Nguyen Thanh Hau\Desktop\New folder\GreenGardenCampsiteManagement\GreenGardenCampsiteClient\GreenGardenCampsiteClient\obj\Debug\net6.0\GreenGardenCampsiteClient.RazorAssemblyInfo.cs
+C:\Users\Nguyen Thanh Hau\Desktop\New folder\GreenGardenCampsiteManagement\GreenGardenCampsiteClient\GreenGardenCampsiteClient\obj\Debug\net6.0\GreenGardenCampsiteClient.sourcelink.json
+C:\Users\Nguyen Thanh Hau\Desktop\New folder\GreenGardenCampsiteManagement\GreenGardenCampsiteClient\GreenGardenCampsiteClient\obj\Debug\net6.0\staticwebassets.build.json
+C:\Users\Nguyen Thanh Hau\Desktop\New folder\GreenGardenCampsiteManagement\GreenGardenCampsiteClient\GreenGardenCampsiteClient\obj\Debug\net6.0\staticwebassets.development.json
+C:\Users\Nguyen Thanh Hau\Desktop\New folder\GreenGardenCampsiteManagement\GreenGardenCampsiteClient\GreenGardenCampsiteClient\obj\Debug\net6.0\staticwebassets\msbuild.GreenGardenCampsiteClient.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\Nguyen Thanh Hau\Desktop\New folder\GreenGardenCampsiteManagement\GreenGardenCampsiteClient\GreenGardenCampsiteClient\obj\Debug\net6.0\staticwebassets\msbuild.build.GreenGardenCampsiteClient.props
+C:\Users\Nguyen Thanh Hau\Desktop\New folder\GreenGardenCampsiteManagement\GreenGardenCampsiteClient\GreenGardenCampsiteClient\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.GreenGardenCampsiteClient.props
+C:\Users\Nguyen Thanh Hau\Desktop\New folder\GreenGardenCampsiteManagement\GreenGardenCampsiteClient\GreenGardenCampsiteClient\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.GreenGardenCampsiteClient.props
+C:\Users\Nguyen Thanh Hau\Desktop\New folder\GreenGardenCampsiteManagement\GreenGardenCampsiteClient\GreenGardenCampsiteClient\obj\Debug\net6.0\staticwebassets.pack.json
+C:\Users\Nguyen Thanh Hau\Desktop\New folder\GreenGardenCampsiteManagement\GreenGardenCampsiteClient\GreenGardenCampsiteClient\obj\Debug\net6.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\Nguyen Thanh Hau\Desktop\New folder\GreenGardenCampsiteManagement\GreenGardenCampsiteClient\GreenGardenCampsiteClient\obj\Debug\net6.0\scopedcss\bundle\GreenGardenCampsiteClient.styles.css
+C:\Users\Nguyen Thanh Hau\Desktop\New folder\GreenGardenCampsiteManagement\GreenGardenCampsiteClient\GreenGardenCampsiteClient\obj\Debug\net6.0\scopedcss\projectbundle\GreenGardenCampsiteClient.bundle.scp.css
+C:\Users\Nguyen Thanh Hau\Desktop\New folder\GreenGardenCampsiteManagement\GreenGardenCampsiteClient\GreenGardenCampsiteClient\obj\Debug\net6.0\GreenGardenCampsiteClient.dll
+C:\Users\Nguyen Thanh Hau\Desktop\New folder\GreenGardenCampsiteManagement\GreenGardenCampsiteClient\GreenGardenCampsiteClient\obj\Debug\net6.0\refint\GreenGardenCampsiteClient.dll
+C:\Users\Nguyen Thanh Hau\Desktop\New folder\GreenGardenCampsiteManagement\GreenGardenCampsiteClient\GreenGardenCampsiteClient\obj\Debug\net6.0\GreenGardenCampsiteClient.pdb
+C:\Users\Nguyen Thanh Hau\Desktop\New folder\GreenGardenCampsiteManagement\GreenGardenCampsiteClient\GreenGardenCampsiteClient\obj\Debug\net6.0\GreenGardenCampsiteClient.genruntimeconfig.cache
+C:\Users\Nguyen Thanh Hau\Desktop\New folder\GreenGardenCampsiteManagement\GreenGardenCampsiteClient\GreenGardenCampsiteClient\obj\Debug\net6.0\ref\GreenGardenCampsiteClient.dll
