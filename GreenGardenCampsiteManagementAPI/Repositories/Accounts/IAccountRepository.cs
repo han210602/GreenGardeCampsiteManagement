@@ -9,11 +9,8 @@ namespace Repositories.Accounts
 {
     public interface IAccountRepository
     {
-        void CreateAccount(Account a);
-        List<Account> GetAllAccount();
-        string Login(AccountDTO a);
-        Account GetAccountById(int accountId);  
-        void UpdateAccount(Account updatedAccount);  
-        void DeleteAccount(int accountId);
+        //void CreateAccount(Account a);
+        //List<Account> GetAllAccount();
+        //string Login(AccountDTO a);
     }
 }

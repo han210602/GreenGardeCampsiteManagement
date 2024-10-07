@@ -11,39 +11,26 @@ namespace Repositories.Accounts
 {
     public class AccountRepository : IAccountRepository
     {
-        private readonly IConfiguration _configuration;
+        //private readonly IConfiguration _configuration;
 
-        // Inject IConfiguration to pass it to AccountDAO
-        public AccountRepository(IConfiguration configuration)
-        {
-            _configuration = configuration;
-        }
+        //// Inject IConfiguration to pass it to AccountDAO
+        //public AccountRepository(IConfiguration configuration)
+        //{
+        //    _configuration = configuration;
+        //}
 
-        public void CreateAccount(Account a)
-        {
-            AccountDAO.CreateAccount(a);
-        }
-        public List<Account> GetAllAccount()
-        {
-            return AccountDAO.GetAllAccount();
-        }
-        public string Login(AccountDTO a)
-        {
-            // Call the static Login method in AccountDAO and pass _configuration
-            return AccountDAO.Login(a, _configuration);
-        }
-        public Account GetAccountById(int accountId)
-        {
-            return AccountDAO.GetAccountById(accountId);
-        }
-
-        public void UpdateAccount(Account updatedAccount)
-        {
-            AccountDAO.UpdateAccount(updatedAccount);
-        }
-        public void DeleteAccount(int accountId)
-        {
-            AccountDAO.DeleteAccount(accountId);
-        }
+        //public void CreateAccount(Account a)
+        //{
+        //    AccountDAO.CreateAccount(a);
+        //}
+        //public List<Account> GetAllAccount()
+        //{
+        //    return AccountDAO.GetAllAccount();
+        //}
+        //public string Login(AccountDTO a)
+        //{
+        //    // Call the static Login method in AccountDAO and pass _configuration
+        //    return AccountDAO.Login(a, _configuration);
+        //}
     }
 }
