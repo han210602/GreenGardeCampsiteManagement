@@ -33,7 +33,7 @@
 }
 
 .nav-menu li a:hover {
-    background-color: #013927;
+    background-color: #024933;
     color: #fff;
     border-radius: 4px;
     transition: all 0.2s ease-in-out;
@@ -43,9 +43,36 @@
 .menu-icon {
     display: none;
 }
+.dropdown-container {
+    position: relative;
+    cursor: pointer;
+}
 
+.dropdown-menu {
+    position: absolute;
+    background-color: #013927;
+    padding: 10px;
+    border-radius: 5px;
+    list-style: none;
+    top: 100%;
+    left: 0;
+    min-width: 150px;
+    z-index: 1;
+}
+
+.dropdown-menu li {
+    padding: 8px 0;
+}
+
+.dropdown-menu li a {
+    text-decoration: none;
+    color: white;
+}
+
+.dropdown-menu li a:hover {
+    color: #ffcc00; /* Highlight color on hover */
+}
 @media screen and (max-width: 768px) {
-
     .navbaritems {
         display: flex;
         justify-content: space-between;
@@ -53,13 +80,6 @@
         padding: 0 15px;
         height: 80px;
         background-color: #013927;
-    }
-
-    /* Styling for the navbar logo on mobile */
-    .navbar-logo {
-        font-size: 1.5rem;
-        color: white;
-        font-weight: bold;
     }
 
     /* Hide the nav menu initially for mobile */
@@ -71,10 +91,10 @@
         background-color: #013927;
         width: 100%;
         position: absolute;
-        top: 80px;
+        top: 80px; /* Below the navbar */
         left: 0;
         opacity: 0;
-        padding: 20px 0; 
+        padding: 20px 0;
         margin: 0;
         z-index: -1;
         transition: opacity 0.3s ease-in-out, z-index 0.3s;
@@ -113,7 +133,7 @@
         color: white;
     }
 
-    /* Align the menu icon and logo on the same row */
+    /* Ensure the menu icon and logo are aligned properly */
     .navbar-logo,
     .menu-icon {
         z-index: 2; /* Ensure they are on top of the content */

@@ -2,6 +2,7 @@
     margin: 4rem 6rem;
     color: #2a2a2a;
 }
+
 .event h1 {
     font-size: 3rem;
 }
@@ -11,6 +12,7 @@
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap; 
+}
 
 .e-card h4 {
     font-size: 1.5rem;
@@ -28,7 +30,7 @@
 }
 
 .e-card {
-    width: 32%;
+    width: 100%;
     text-align: start;
     box-shadow: 0 5px 25px 2px rgba(0, 0, 0, 0.1);
     border-radius: 7px;
@@ -117,6 +119,5 @@
 
     .e-img {
         height: 200px; 
-}
-}
+    }
 }

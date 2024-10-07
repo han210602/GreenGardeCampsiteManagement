@@ -13,7 +13,7 @@ class Home extends React.Component {
                 <Navbar />
                 <HomeDetail
                     cName="HomeDetail"
-                    img="https://scontent.fhan20-1.fna.fbcdn.net/v/t39.30808-6/427457417_852235940247438_5893304871313187228_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=833d8c&_nc_ohc=mJHimb69aRgQ7kNvgHLjLIQ&_nc_ht=scontent.fhan20-1.fna&_nc_gid=As5vM5m5AGSkR9oJcWmeIJG&oh=00_AYCcZTl1BNLhtNtnVirRJOrRULzHJtBuIGn7hKZf2ezBuw&oe=66F8A1D7"
+                    img="https://scontent.fhan2-4.fna.fbcdn.net/v/t39.30808-6/410569930_706142101610927_2810974494115182308_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=833d8c&_nc_ohc=0TSgK6PinjcQ7kNvgFl3N8_&_nc_ht=scontent.fhan2-4.fna&_nc_gid=Ak5vNPHdEMXjqAabuabCphC&oh=00_AYA0ArrZHJX6NPHZ1CWtLi9uhmyWr36RF7_zbB49bIH5nQ&oe=66F94F41"
                     title="Green Garden Camping"
                     text="Xin chào!"
                     buttonText="Đặt ngay"
