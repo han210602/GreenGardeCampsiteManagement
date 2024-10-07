@@ -201,3 +201,4 @@ C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteMa
 C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenCampsiteManagementAPI\obj\Debug\net6.0\GreenGardenCampsiteManagementAPI.pdb
 C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenCampsiteManagementAPI\obj\Debug\net6.0\GreenGardenCampsiteManagementAPI.genruntimeconfig.cache
 C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenCampsiteManagementAPI\obj\Debug\net6.0\ref\GreenGardenCampsiteManagementAPI.dll
+D:\SEP490\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenCampsiteManagementAPI\bin\Debug\net6.0\AutoMapper.dll

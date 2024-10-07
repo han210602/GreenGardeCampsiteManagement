@@ -43,11 +43,8 @@ namespace BusinessObject.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var builder = new ConfigurationBuilder()
-                           .SetBasePath(Directory.GetCurrentDirectory())
-                           .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-            IConfigurationRoot configuration = builder.Build();
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("MyCnn"));
+            string connectionString = "server=MSI\\SQL2019;database=GreenGarden;uid=sa;pwd=123;TrustServerCertificate=True";
+            optionsBuilder.UseSqlServer(connectionString);
 
         }
 

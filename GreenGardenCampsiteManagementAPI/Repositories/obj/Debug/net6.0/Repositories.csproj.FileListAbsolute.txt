@@ -151,3 +151,4 @@ C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteMa
 C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\Repositories\obj\Debug\net6.0\Repositories.pdb
 C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\Repositories\obj\Debug\net6.0\Repositories.genruntimeconfig.cache
 C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\Repositories\obj\Debug\net6.0\ref\Repositories.dll
+D:\SEP490\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\Repositories\bin\Debug\net6.0\appsettings.json

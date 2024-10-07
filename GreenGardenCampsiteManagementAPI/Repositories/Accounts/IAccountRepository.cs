@@ -1,4 +1,5 @@
-﻿using BusinessObject.Models;
+﻿using BusinessObject.DTOs;
+using BusinessObject.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace Repositories.Accounts
     public interface IAccountRepository
     {
         //void CreateAccount(Account a);
-        //List<Account> GetAllAccount();
-        //string Login(AccountDTO a);
+        List<ViewUserDTO> GetAllAccount();
+        string Login(AccountDTO a);
     }
 }
