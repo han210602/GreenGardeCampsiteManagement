@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\GreenGardenCampsiteClient.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\wwwroot\\css\\Admin\\pagingstyle.css",
+      "PackagePath": "staticwebassets\\css\\Admin\\pagingstyle.css"
+    },
+    {
       "Id": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\wwwroot\\css\\Admin\\styles.css",
       "PackagePath": "staticwebassets\\css\\Admin\\styles.css"
     },
@@ -35,6 +39,10 @@
     {
       "Id": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\wwwroot\\js\\Admin\\inventorymanagement.js",
       "PackagePath": "staticwebassets\\js\\Admin\\inventorymanagement.js"
+    },
+    {
+      "Id": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\wwwroot\\js\\Admin\\ordermanagement.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\ordermanagement.js"
     },
     {
       "Id": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\wwwroot\\js\\site.js",

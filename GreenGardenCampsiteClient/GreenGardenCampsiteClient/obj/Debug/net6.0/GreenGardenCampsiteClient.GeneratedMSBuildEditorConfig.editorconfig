@@ -18,28 +18,36 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\Nguyen Thanh Hau\Desktop\New folder\GreenGardenCampsiteManagement\GreenGardenCampsiteClient\GreenGardenCampsiteClient
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/Nguyen Thanh Hau/Desktop/New folder/GreenGardenCampsiteManagement/GreenGardenCampsiteClient/GreenGardenCampsiteClient/Views/ad/CustomerManagement.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcYWRcQ3VzdG9tZXJNYW5hZ2VtZW50LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/Nguyen Thanh Hau/Desktop/New folder/GreenGardenCampsiteManagement/GreenGardenCampsiteClient/GreenGardenCampsiteClient/Views/ad/EmployeeManagement.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcYWRcRW1wbG95ZWVNYW5hZ2VtZW50LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/Nguyen Thanh Hau/Desktop/New folder/GreenGardenCampsiteManagement/GreenGardenCampsiteClient/GreenGardenCampsiteClient/Views/ad/InventoryManagement.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcYWRcSW52ZW50b3J5TWFuYWdlbWVudC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/Nguyen Thanh Hau/Desktop/New folder/GreenGardenCampsiteManagement/GreenGardenCampsiteClient/GreenGardenCampsiteClient/Views/ad/OrderManagement.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcYWRcT3JkZXJNYW5hZ2VtZW50LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/Nguyen Thanh Hau/Desktop/New folder/GreenGardenCampsiteManagement/GreenGardenCampsiteClient/GreenGardenCampsiteClient/Views/Common/Home.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tbW9uXEhvbWUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Nguyen Thanh Hau/Desktop/New folder/GreenGardenCampsiteManagement/GreenGardenCampsiteClient/GreenGardenCampsiteClient/Views/Common/Service.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tbW9uXFNlcnZpY2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Nguyen Thanh Hau/Desktop/New folder/GreenGardenCampsiteManagement/GreenGardenCampsiteClient/GreenGardenCampsiteClient/Views/CustomerManagement/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ3VzdG9tZXJNYW5hZ2VtZW50XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Nguyen Thanh Hau/Desktop/New folder/GreenGardenCampsiteManagement/GreenGardenCampsiteClient/GreenGardenCampsiteClient/Views/EmployeeManagement/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVNYW5hZ2VtZW50XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Nguyen Thanh Hau/Desktop/New folder/GreenGardenCampsiteManagement/GreenGardenCampsiteClient/GreenGardenCampsiteClient/Views/InventoryManagement/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW52ZW50b3J5TWFuYWdlbWVudFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Nguyen Thanh Hau/Desktop/New folder/GreenGardenCampsiteManagement/GreenGardenCampsiteClient/GreenGardenCampsiteClient/Views/OrderManagement/CreateOrder.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJNYW5hZ2VtZW50XENyZWF0ZU9yZGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Nguyen Thanh Hau/Desktop/New folder/GreenGardenCampsiteManagement/GreenGardenCampsiteClient/GreenGardenCampsiteClient/Views/OrderManagement/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJNYW5hZ2VtZW50XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Nguyen Thanh Hau/Desktop/New folder/GreenGardenCampsiteManagement/GreenGardenCampsiteClient/GreenGardenCampsiteClient/Views/OrderManagement/UpdateOrder.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJNYW5hZ2VtZW50XFVwZGF0ZU9yZGVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Nguyen Thanh Hau/Desktop/New folder/GreenGardenCampsiteManagement/GreenGardenCampsiteClient/GreenGardenCampsiteClient/Views/Shared/Error.cshtml]

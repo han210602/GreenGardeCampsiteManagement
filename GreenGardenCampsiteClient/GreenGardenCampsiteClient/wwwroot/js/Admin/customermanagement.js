@@ -1,52 +1,75 @@
-﻿const customerTableBody = document.getElementById('customerTableBody');
-const searchInput = document.getElementById('searchInput');
-const createButton = document.getElementById('createButton');
+﻿
 
-// **Optional function to generate unique IDs**
-function generateUniqueID() {
-    // Implement your logic to generate unique IDs (e.g., using a counter)
-}
-
-// Function to create a new customer row
-function createCustomerRow(id, name, account, phone, address) {
-    const newRow = document.createElement('tr');
-    newRow.innerHTML = `
-    <td><span class="math-inline">\{id\}</td\>
-<td\></span>{name}</td>
-    <td><span class="math-inline">\{account\}</td\>
-<td\></span>{phone}</td>
-    <td>${address}</td>
-    <td>
-      <button class="btn btn-primary">Edit</button>
-      <button class="btn btn-danger">Block</button>
-    </td>
-  `;
-    customerTableBody.appendChild(newRow);
-}
-
-// **Sample customer data (replace with your actual data source)**
+// Sample customer data
 const customerData = [
     { id: 1, name: 'John Doe', account: 'john.doe@company.com', phone: '1234567890', address: '123 Main St' },
     { id: 2, name: 'Jane Smith', account: 'jane.smith@company.com', phone: '9876543210', address: '456 Elm St' },
     { id: 3, name: 'Michael Brown', account: 'michael.brown@company.com', phone: '0987654321', address: '789 Oak Ave' },
+    { id: 4, name: 'Alice Johnson', account: 'alice.johnson@company.com', phone: '6543210987', address: '321 Pine Rd' },
+    { id: 5, name: 'Tom Hanks', account: 'tom.hanks@company.com', phone: '3216549870', address: '456 Cedar St' },
+    { id: 5, name: 'Tom Hanks', account: 'tom.hanks@company.com', phone: '3216549870', address: '456 Cedar St' },
+    { id: 5, name: 'Tom Hanks', account: 'tom.hanks@company.com', phone: '3216549870', address: '456 Cedar St' },
+    { id: 5, name: 'Tom Hanks', account: 'tom.hanks@company.com', phone: '3216549870', address: '456 Cedar St' },
+    { id: 5, name: 'Tom Hanks', account: 'tom.hanks@company.com', phone: '3216549870', address: '456 Cedar St' },
+    { id: 5, name: 'Tom Hanks', account: 'tom.hanks@company.com', phone: '3216549870', address: '456 Cedar St' },
 ];
 
-// Function to populate the table with initial data
-function populateTable(data) {
-    customerTableBody.innerHTML = ''; // Clear existing rows
-    for (const customer of data) {
-        createCustomerRow(customer.id, customer.name, customer.account, customer.phone, customer.address);
+
+const itemsPerPage = 6; // Change this value to display more/less items per page
+let currentPage = 1;
+const totalPages = Math.ceil(customerData.length / itemsPerPage);
+
+// Function to load and display paginated data
+function loadTableData(page) {
+    const start = (page - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    const paginatedData = customerData.slice(start, end);
+    const customerTableBody = document.getElementById('customerTableBody');
+   
+
+    // Clear previous data
+    customerTableBody.innerHTML = '';
+
+    // Render new data
+    paginatedData.forEach(item => {
+        const row = `<tr>
+                        <td>${item.id}</td>
+                        <td>${item.name}</td>
+                        <td>${item.account}</td>
+                        <td>${item.phone}</td>
+                        <td>${item.address}</td>
+                        <td>
+                            <button class="btn btn-primary">Edit</button>
+                            <button class="btn btn-danger">Block</button>
+                        </td>
+                    </tr>`;
+        customerTableBody.innerHTML += row;
+    });
+}
+
+// Function to update pagination controls
+function updatePaginationControls() {
+    const paginationControls = document.getElementById('paginationControls');
+    paginationControls.innerHTML = '';
+
+    for (let i = 1; i <= totalPages; i++) {
+        const activeClass = (i === currentPage) ? 'active' : '';
+        const pageButton = `<li class="page-item ${activeClass}">
+                                <a class="page-link" href="#">${i}</a>
+                            </li>`;
+        paginationControls.innerHTML += pageButton;
     }
 }
 
-// Function to filter customers based on search input
-function filterCustomers(searchTerm) {
-    const filteredData = customerData.filter(customer => {
-        const fullName = customer.name.toLowerCase();
-        return fullName.includes(searchTerm.toLowerCase());
-    });
-    populateTable(filteredData);
-}
+// Event listener for pagination controls
+document.getElementById('paginationControls').addEventListener('click', function (e) {
+    if (e.target.tagName === 'A') {
+        currentPage = Number(e.target.textContent);
+        loadTableData(currentPage);
+        updatePaginationControls();
+    }
+});
 
-// Event listener for search input changes
-search
+// Initial page load
+loadTableData(currentPage);
+updatePaginationControls();

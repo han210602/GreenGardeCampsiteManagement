@@ -10,3 +10,84 @@
     font-weight: bold;
     margin:auto;
 }
+
+/* Table styles */
+.table {
+    width: 100%;
+    margin: 20px 0;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden; /* Ensures rounded corners work */
+}
+
+    .table th, .table td {
+        padding: 15px;
+        text-align: left;
+        vertical-align: middle;
+    }
+
+    /* Header styles */
+    .table thead th {
+        background-color: #003c00; /* Màu xanh lá cây đậm */
+        color: white;
+        font-weight: bold;
+    }
+
+    /* Row styles */
+    .table tbody tr {
+        transition: background-color 0.3s;
+    }
+
+        .table tbody tr:nth-child(even) {
+            background-color: #e6f5e6; /* Màu xám nhạt cho các hàng chẵn */
+        }
+
+        .table tbody tr:hover {
+            background-color: #b3e0b3; /* Màu nền nhạt khi hover */
+        }
+
+/* Button styles */
+.btn {
+    border-radius: 5px;
+}
+
+
+/* Pagination styles */
+.pagination {
+    justify-content: center;
+    margin-top: 20px;
+}
+
+    /* Styles for page items */
+    .pagination .page-item {
+        margin: 0 5px; /* Khoảng cách giữa các nút */
+    }
+
+    /* Styles for page links */
+    .pagination .page-link {
+        border-radius: 5px; /* Bo góc cho nút */
+        background-color: #4CAF50; /* Màu nền xanh lá cây */
+        color: white; /* Màu chữ trắng */
+        padding: 10px 15px; /* Khoảng cách bên trong */
+        border: none; /* Xóa viền */
+        transition: background-color 0.3s; /* Hiệu ứng chuyển màu */
+    }
+
+        /* Hover effect for page links */
+        .pagination .page-link:hover {
+            background-color: #45a049; /* Màu nền khi hover */
+        }
+
+    /* Active page link */
+    .pagination .page-item.active .page-link {
+        background-color: #388e3c; /* Màu nền cho trang đang hoạt động */
+        color: white; /* Màu chữ trắng */
+        font-weight: bold; /* Đậm chữ */
+    }
+
+/* Disabled state for previous and next buttons */
+.btn[disabled] {
+    background-color: #ccc; /* Màu nền cho nút vô hiệu hóa */
+    color: #666; /* Màu chữ cho nút vô hiệu hóa */
+    cursor: not-allowed; /* Con trỏ cho nút vô hiệu hóa */
+}

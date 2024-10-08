@@ -8,5 +8,16 @@ namespace GreenGardenCampsiteClient.Controllers.AdminController
         {
             return View();
         }
+
+        public IActionResult CreateOrder()
+        {
+            return View("CreateOrder");
+        }
+
+        public IActionResult UpdateOrder()
+        {
+            return View("UpdateOrder");
+        }
+
     }
 }

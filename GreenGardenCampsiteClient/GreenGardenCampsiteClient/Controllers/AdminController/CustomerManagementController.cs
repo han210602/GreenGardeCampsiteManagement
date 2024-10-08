@@ -6,7 +6,7 @@ namespace GreenGardenCampsiteClient.Controllers.AdminController
     {
         public IActionResult Index()
         {
-            return View("Admin");
+            return View();
         }
     }
 }
