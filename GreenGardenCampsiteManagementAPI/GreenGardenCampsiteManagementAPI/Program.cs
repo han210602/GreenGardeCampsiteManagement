@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Repositories.Accounts;
+using Repositories.Activities;
 using Repositories.IReponsitory;
+using Repositories.Orders;
 using Repositories.Reponsitory;
 using System.Security.Claims;
 using System.Text;
@@ -44,27 +46,30 @@ builder.Services.AddAuthentication(options =>
 });
 
 // Đăng ký các repository vào DI container
-builder.Services.AddScoped<IActivityReponsitory, ActivityReponsitory>();
-builder.Services.AddScoped<ICampingCategoryReponsitory, CampingCategoryReponsitory>();
-builder.Services.AddScoped<ICampingGearReponsitory, CampingGearReponsitory>();
-builder.Services.AddScoped<IComboCampingGearDetaiReponsitory, ComboCampingGearDetaiReponsitory>();
-builder.Services.AddScoped<IComboFootDetailReponsitory, ComboFootDetailReponsitory>();
-builder.Services.AddScoped<IComboReponsitory, ComboReponsitory>();
-builder.Services.AddScoped<IComboTicketDetailReponsitory, ComboTicketDetailReponsitory>();
-builder.Services.AddScoped<IEventReponsitory, EventReponsitory>();
-builder.Services.AddScoped<IFoodAndDrinkCategoryReponsitory, FoodAndDrinkCategoryReponsitory>();
-builder.Services.AddScoped<IFoodAndDrinkReponsitory, FoodAndDrinkReponsitory>();
-builder.Services.AddScoped<IFoodComboItemReponsitory, FoodComboItemReponsitory>();
-builder.Services.AddScoped<IFoodComboReponsitory, FoodComboReponsitory>();
-builder.Services.AddScoped<IOrderCampingGearDetailReponsitory, OrderCampingGearDetailReponsitory>();
-builder.Services.AddScoped<IOrderComboDetailReponsitory, OrderComboDetailReponsitory>();
-builder.Services.AddScoped<IOrderFoodComboDetailReponsitory, OrderFoodComboDetailReponsitory>();
-builder.Services.AddScoped<IOrderFoodDetailReponsitory, OrderFoodDetailReponsitory>();
-builder.Services.AddScoped<IOrderReponsitory, OrderReponsitory>();
-builder.Services.AddScoped<IOrderTicketDetailReponsitory, OrderTicketDetailReponsitory>();
-builder.Services.AddScoped<ITicketCategoryReponsitory, TicketCategoryReponsitory>();
-builder.Services.AddScoped<ITicketReponsitory, TicketReponsitory>();
+//builder.Services.AddScoped<IActivityReponsitory, ActivityReponsitory>();
+//builder.Services.AddScoped<ICampingCategoryReponsitory, CampingCategoryReponsitory>();
+//builder.Services.AddScoped<ICampingGearReponsitory, CampingGearReponsitory>();
+//builder.Services.AddScoped<IComboCampingGearDetaiReponsitory, ComboCampingGearDetaiReponsitory>();
+//builder.Services.AddScoped<IComboFootDetailReponsitory, ComboFootDetailReponsitory>();
+//builder.Services.AddScoped<IComboReponsitory, ComboReponsitory>();
+//builder.Services.AddScoped<IComboTicketDetailReponsitory, ComboTicketDetailReponsitory>();
+//builder.Services.AddScoped<IEventReponsitory, EventReponsitory>();
+//builder.Services.AddScoped<IFoodAndDrinkCategoryReponsitory, FoodAndDrinkCategoryReponsitory>();
+//builder.Services.AddScoped<IFoodAndDrinkReponsitory, FoodAndDrinkReponsitory>();
+//builder.Services.AddScoped<IFoodComboItemReponsitory, FoodComboItemReponsitory>();
+//builder.Services.AddScoped<IFoodComboReponsitory, FoodComboReponsitory>();
+//builder.Services.AddScoped<IOrderCampingGearDetailReponsitory, OrderCampingGearDetailReponsitory>();
+//builder.Services.AddScoped<IOrderComboDetailReponsitory, OrderComboDetailReponsitory>();
+//builder.Services.AddScoped<IOrderFoodComboDetailReponsitory, OrderFoodComboDetailReponsitory>();
+//builder.Services.AddScoped<IOrderFoodDetailReponsitory, OrderFoodDetailReponsitory>();
+//builder.Services.AddScoped<IOrderReponsitory, OrderReponsitory>();
+//builder.Services.AddScoped<IOrderTicketDetailReponsitory, OrderTicketDetailReponsitory>();
+//builder.Services.AddScoped<ITicketCategoryReponsitory, TicketCategoryReponsitory>();
+//builder.Services.AddScoped<ITicketReponsitory, TicketReponsitory>();
 builder.Services.AddScoped<IUserReponsitory, UserReponsitory>();
+builder.Services.AddScoped<IOrderRepository,OrderRepository>();
+builder.Services.AddScoped<IActivityRepository, ActiviyRepository>();
+
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 
 // Đăng ký AutoMapper

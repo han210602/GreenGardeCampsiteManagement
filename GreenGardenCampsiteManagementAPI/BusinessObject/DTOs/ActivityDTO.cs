@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace BusinessObject.DTOs
 {
-    internal class ActivityDTO
+    public class ActivityDTO
     {
+        public int ActivityId { get; set; }
+        public string ActivityName { get; set; } = null!;
     }
 }
