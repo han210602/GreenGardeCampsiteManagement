@@ -46,6 +46,12 @@ namespace Repositories.Orders
             return OrderDAO.getAllOrder();
         }
 
+        public OrderDetailDTO GetOrderDetail(int id)
+        {
+            return OrderDAO.GetOrderDetail(id);
+
+        }
+
         public bool UpdateOrder(OrderDTO order, OrderTicketDetailDTO order_ticket, OrderCampingGearDetailDTO order_camping_gear, OrderFoodDetailDTO order_food, OrderFoodComboDetailDTO order_foot_combo, OrderComboDetailDTO order_combo)
         {
             throw new NotImplementedException();

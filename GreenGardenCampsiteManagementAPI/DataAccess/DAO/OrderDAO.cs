@@ -203,5 +203,81 @@ namespace DataAccess.DAO
 
             }
         }
+
+        public static OrderDetailDTO GetOrderDetail(int id)
+        {
+
+            OrderDetailDTO order = new OrderDetailDTO();
+            try
+            {
+                using (var context = new GreenGardenContext())
+                {
+                    order = context.Orders
+                        .Include(o => o.OrderTicketDetails).ThenInclude(t => t.Ticket)
+                        .Include(o => o.OrderFoodDetails).ThenInclude(t=>t.Item)
+                        .Include(o => o.OrderCampingGearDetails).ThenInclude(g=>g.Gear)
+                        .Include(o => o.OrderComboDetails).ThenInclude(c=>c.Combo)
+                        .Include(o => o.OrderFoodComboDetails).ThenInclude(f=>f.Combo)
+                        .Select(o => new OrderDetailDTO()
+                        {
+                            OrderId = o.OrderId,
+                            EmployeeName = o.Employee.FirstName + "" + o.Employee.LastName,
+                            CustomerName = o.CustomerId != null ? o.Customer.FirstName + "" + o.Customer.LastName : o.CustomerName,
+                            OrderDate = o.OrderDate,
+                            OrderUsageDate = o.OrderUsageDate,
+                            Deposit = o.Deposit,
+                            TotalAmount = o.TotalAmount,
+                            AmountPayable = o.AmountPayable,
+                            StatusOrder = o.StatusOrder,
+                            ActivityId = o.Activity.ActivityName,
+                            OrderTicketDetails=o.OrderTicketDetails.Select(o=>new OrderTicketDetailDTO
+                            {
+                                TicketId= o.TicketId,
+                                Name=o.Ticket.TicketName,
+                                Quantity=o.Quantity,
+                                Price=o.Quantity.Value*o.Ticket.Price,
+                                Description=o.Description,
+                            }).ToList(),
+                           OrderCampingGearDetails=o.OrderCampingGearDetails.Select(o=> new OrderCampingGearDetailDTO 
+                           { 
+                                GearId=o.GearId,
+                                Name=o.Gear.GearName,
+                                Quantity=o.Quantity,
+                                Price = o.Quantity.Value * o.Gear.RentalPrice,
+
+                           }).ToList(),
+                           OrderFoodDetails=o.OrderFoodDetails.Select(o=>new OrderFoodDetailDTO
+                           {
+                               ItemId=o.ItemId,
+                               Name=o.Item.ItemName,
+                               Quantity=o.Quantity,
+                               Price = o.Quantity.Value * o.Item.Price,
+                           }).ToList(),
+                           OrderFoodComboDetails = o.OrderFoodComboDetails.Select(o => new OrderFoodComboDetailDTO
+                           {
+                               ComboId=o.ComboId,
+                               Name = o.Combo.ComboName,
+                               Quantity = o.Quantity,
+                               Price = o.Quantity.Value * o.Combo.Price,
+                           }).ToList(),
+                            OrderComboDetails = o.OrderComboDetails.Select(o => new OrderComboDetailDTO
+                           {
+                               ComboId=o.ComboId,
+                               Name = o.Combo.ComboName,
+                               Quantity = o.Quantity,
+                               Price = o.Quantity.Value * o.Combo.Price,
+                           }).ToList()
+
+                        }).FirstOrDefault(o=>o.OrderId==id);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return order;
+
+        }
     }
 }

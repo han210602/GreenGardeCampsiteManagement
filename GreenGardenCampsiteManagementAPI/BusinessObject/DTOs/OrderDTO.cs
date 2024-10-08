@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessObject.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,5 +19,23 @@ namespace BusinessObject.DTOs
         public decimal AmountPayable { get; set; }
         public bool? StatusOrder { get; set; }
         public string? ActivityId { get; set; }
+    }
+    public class OrderDetailDTO
+    {
+        public int OrderId { get; set; }
+        public string? EmployeeName { get; set; }
+        public string? CustomerName { get; set; }
+        public DateTime? OrderDate { get; set; }
+        public DateTime? OrderUsageDate { get; set; }
+        public decimal Deposit { get; set; }
+        public decimal TotalAmount { get; set; }
+        public decimal AmountPayable { get; set; }
+        public bool? StatusOrder { get; set; }
+        public string? ActivityId { get; set; }
+        public virtual ICollection<OrderCampingGearDetailDTO> OrderCampingGearDetails { get; set; }
+        public virtual ICollection<OrderComboDetailDTO> OrderComboDetails { get; set; }
+        public virtual ICollection<OrderFoodComboDetailDTO> OrderFoodComboDetails { get; set; }
+        public virtual ICollection<OrderFoodDetailDTO> OrderFoodDetails { get; set; }
+        public virtual ICollection<OrderTicketDetailDTO> OrderTicketDetails { get; set; }
     }
 }

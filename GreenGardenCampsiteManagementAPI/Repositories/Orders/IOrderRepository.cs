@@ -10,6 +10,7 @@ namespace Repositories.Orders
      public interface IOrderRepository
      {
         List<OrderDTO> GetAllOrders();
+        OrderDetailDTO GetOrderDetail(int id);
         bool EnterDeposit(int id,decimal money);
         bool DeleteOrder(int id);
         bool CreateUniqueOrder(

@@ -15,12 +15,24 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
         {
             _repo = repo;
         }
-        [HttpGet]
+        [HttpGet("GetAllOrders")]
         public IActionResult GetAllOrders()
         {
             try
             {
                 return Ok(_repo.GetAllOrders().ToList());
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+        [HttpGet("GetOrderDetail/{id}")]
+        public IActionResult GetOrderDetail(int id)
+        {
+            try
+            {
+                return Ok(_repo.GetOrderDetail(id));
             }
             catch (Exception ex)
             {
