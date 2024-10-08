@@ -25,6 +25,8 @@ namespace DataAccess.DAO
                         .Select(o => new OrderDTO()
                         {
                             OrderId = o.OrderId,
+                            CustomerId = o.CustomerId,
+                            EmployeeId = o.EmployeeId,
                             EmployeeName = o.Employee.FirstName + "" + o.Employee.LastName,
                             CustomerName = o.CustomerId != null ? o.Customer.FirstName + "" + o.Customer.LastName : o.CustomerName,
                             OrderDate = o.OrderDate,
@@ -33,7 +35,7 @@ namespace DataAccess.DAO
                             TotalAmount = o.TotalAmount,
                             AmountPayable = o.AmountPayable,
                             StatusOrder = o.StatusOrder,
-                            ActivityId = o.Activity.ActivityName
+                            ActivityName = o.Activity.ActivityName
                         })
                         .ToList();
                 }
@@ -133,37 +135,6 @@ namespace DataAccess.DAO
         }
 
         public static bool CreateUniqueOrder(OrderDTO order
-            , OrderTicketDetailDTO order_ticket
-            , OrderCampingGearDetailDTO order_camping_gear
-            , OrderFoodDetailDTO order_food
-            , OrderFoodComboDetailDTO order_foot_combo)
-        {
-            try
-            {
-                using (var context = new GreenGardenContext())
-                {
-                    if (order_ticket == null)
-                    {
-                        return false;
-                    }
-                    else
-                    {
-                        
-
-
-                        return true;
-                    }
-                    
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-
-            }
-        }
-
-        public static bool CreateUniqueOrder(OrderDTO order
             , List<OrderTicketDetailDTO> order_ticket
             , List<OrderCampingGearDetailDTO> order_camping_gear
             , List<OrderFoodDetailDTO> order_food
@@ -173,23 +144,67 @@ namespace DataAccess.DAO
             {
                 using (var context = new GreenGardenContext())
                 {
+                    
                     if (order_ticket == null)
                     {
                         return false;
                     }
                     else
                     {
-                        decimal total_campinggear_money = 0;
-                        decimal total_ticket_money = 0;
-                        decimal total_foot_money = 0;
-                        decimal total_footcombo_money = 0;
-                        foreach (var ticket in order_ticket)
+                        context.Add(new Order() {
+                            CustomerId=order.CustomerId,
+                            EmployeeId=order.EmployeeId,
+                            CustomerName=order.CustomerName,
+                            OrderUsageDate=order.OrderUsageDate,
+                            TotalAmount=order.TotalAmount,
+                            AmountPayable=order.TotalAmount,
+                            StatusOrder=order.StatusOrder,
+                            ActivityId=order.ActivityId,
+                        });
+                      
+                        context.SaveChanges();
+                       
+                        int id_order=order.OrderId;
+                        Console.WriteLine("Add thanh cong"+id_order);
+                        foreach (var item in order_ticket)
                         {
-                        total_ticket_money += context.Tickets.FirstOrDefault(t => t.TicketId == ticket.TicketId).Price * ticket.Quantity.Value;
-                        
-                        
-                        }
+                            context.OrderTicketDetails.Add(new OrderTicketDetail { 
+                            OrderId=id_order,
+                            TicketId=item.TicketId,
+                            Quantity=item.Quantity,
+                            });
+                            context.SaveChanges();
 
+                        }
+                        if (order_food != null)
+                        {
+                            foreach (var item in order_food)
+                            {
+                                context.OrderFoodDetails.Add(new OrderFoodDetail
+                                {
+                                    OrderId = id_order,
+                                    ItemId=item.ItemId,
+                                    Quantity = item.Quantity,
+                                });
+                            }
+                            context.SaveChanges();
+                        }
+                       
+
+                        if (order_foot_combo != null)
+                        {
+                            foreach (var item in order_foot_combo)
+                            {
+                                context.OrderFoodComboDetails.Add(new OrderFoodComboDetail
+                                {
+                                    OrderId = id_order,
+                                    ComboId = item.ComboId,
+                                    Quantity = item.Quantity,
+                                });
+                            }
+                            context.SaveChanges();
+                        }
+                        
 
 
                         return true;

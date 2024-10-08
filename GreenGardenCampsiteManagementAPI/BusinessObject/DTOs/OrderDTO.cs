@@ -10,6 +10,8 @@ namespace BusinessObject.DTOs
     public class OrderDTO
     {
         public int OrderId { get; set; }
+        public int? CustomerId { get; set; }
+        public int? EmployeeId { get; set; }
         public string? EmployeeName { get; set; }
         public string? CustomerName { get; set; }
         public DateTime? OrderDate { get; set; }
@@ -18,7 +20,9 @@ namespace BusinessObject.DTOs
         public decimal TotalAmount { get; set; }
         public decimal AmountPayable { get; set; }
         public bool? StatusOrder { get; set; }
-        public string? ActivityId { get; set; }
+        public int? ActivityId { get; set; }
+        public string? ActivityName { get; set; }
+
     }
     public class OrderDetailDTO
     {

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BusinessObject.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Repositories.Accounts;
@@ -21,6 +22,18 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
             try
             {
                 return Ok(_repo.GetAllOrders().ToList());
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+        [HttpPost("CreateUniqueOrder")]
+        public IActionResult CreateUniqueOrder([FromBody] CreateUniqueOrderRequest order) 
+        {
+            try
+            {
+                return Ok(_repo.CreateUniqueOrder(order.Order,order.OrderTicket, order.OrderCampingGear, order.OrderFood, order.OrderFoodCombo));
             }
             catch (Exception ex)
             {
@@ -65,5 +78,13 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
         }
 
 
+    }
+    public class CreateUniqueOrderRequest
+    {
+        public OrderDTO Order { get; set; }
+        public List<OrderTicketDetailDTO> OrderTicket { get; set; }
+        public List<OrderCampingGearDetailDTO> OrderCampingGear { get; set; }
+        public List<OrderFoodDetailDTO> OrderFood { get; set; }
+        public List<OrderFoodComboDetailDTO> OrderFoodCombo { get; set; }
     }
 }
