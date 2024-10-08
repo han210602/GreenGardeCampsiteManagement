@@ -6,8 +6,10 @@ using DataAccess.DAO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Repositories.Accounts;
+using System.Text.Json;
 
 namespace GreenGardenCampsiteManagementAPI.Controllers
 {
@@ -36,7 +38,7 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
-  
+
         [HttpPost("Login")]
         public IActionResult Login([FromBody] AccountDTO loginRequest)
         {
@@ -65,7 +67,7 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
             {
                 var verificationCodeMessage = await _repo.SendVerificationCode(email);
 
-          
+
 
                 return Ok(verificationCodeMessage);
             }
@@ -80,16 +82,16 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
         {
             try
             {
-             
+
                 var registerResponse = await _repo.Register(registerRequest, enteredCode);
 
-     
+
                 if (registerResponse == null)
                 {
                     return BadRequest("Registration failed.");
                 }
 
-              
+
                 return Ok(registerResponse);
             }
             catch (Exception ex)
@@ -104,19 +106,78 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
         {
             try
             {
-                // Await the asynchronous method
+                
                 var response = await _repo.SendResetPassword(email);
 
                 return Content(response, "application/json");
             }
             catch (Exception ex)
             {
-                // Log the exception if needed (optional)
+                
                 Console.WriteLine($"Error: {ex.Message}");
 
                 return StatusCode(500, new { Message = ex.Message });
             }
         }
+        [HttpPut("UpdateProfile")]
+        public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfile updateProfile)
+        {
+            if (updateProfile == null)
+            {
+                return BadRequest("Dữ liệu không hợp lệ.");
+            }
+
+            if (updateProfile.UserId <= 0)
+            {
+                return BadRequest("ID người dùng không hợp lệ.");
+            }
+
+            try
+            {
+                var message = await _repo.UpdateProfile(updateProfile);
+
+               
+                if (message == "Cập nhật thông tin thành công.")
+                {
+                    return Ok(message); 
+                }
+                else
+                {
+                    return NotFound(message); 
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message); 
+            }
+        }
+        [HttpPut("ChangePassword")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePassword changePasswordDto)
+        {
+            if (changePasswordDto == null)
+            {
+                return BadRequest("Dữ liệu không hợp lệ.");
+            }
+
+            try
+            {
+                var message = await _repo.ChangePassword(changePasswordDto); 
+
+                if (message == "Cập nhật mật khẩu thành công.")
+                {
+                    return Ok(message); 
+                }
+                else
+                {
+                    return BadRequest(message); 
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message); 
+            }
+        }
+
 
 
     }

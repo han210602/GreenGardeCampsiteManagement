@@ -203,3 +203,10 @@ C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteMa
 C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenCampsiteManagementAPI\obj\Debug\net6.0\ref\GreenGardenCampsiteManagementAPI.dll
 D:\SEP490\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenCampsiteManagementAPI\bin\Debug\net6.0\AutoMapper.dll
 C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenCampsiteManagementAPI\bin\Debug\net6.0\AutoMapper.dll
+D:\SEP490\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenCampsiteManagementAPI\bin\Debug\net6.0\Google.Apis.dll
+D:\SEP490\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenCampsiteManagementAPI\bin\Debug\net6.0\Google.Apis.Auth.dll
+D:\SEP490\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenCampsiteManagementAPI\bin\Debug\net6.0\Google.Apis.Core.dll
+D:\SEP490\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenCampsiteManagementAPI\bin\Debug\net6.0\Newtonsoft.Json.dll
+D:\SEP490\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenCampsiteManagementAPI\bin\Debug\net6.0\System.CodeDom.dll
+D:\SEP490\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenCampsiteManagementAPI\bin\Debug\net6.0\System.Management.dll
+D:\SEP490\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenCampsiteManagementAPI\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Management.dll

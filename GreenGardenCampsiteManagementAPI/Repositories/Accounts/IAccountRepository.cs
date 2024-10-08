@@ -14,6 +14,8 @@ namespace Repositories.Accounts
         string Login(AccountDTO a);
         Task<string> SendResetPassword(string email);
         Task<string> Register(Register a, string enteredCode); 
-        Task<string> SendVerificationCode(string email); 
+        Task<string> SendVerificationCode(string email);
+        Task<string> UpdateProfile(UpdateProfile updateProfile);
+        Task<string> ChangePassword(ChangePassword changePasswordDto);
     }
 }

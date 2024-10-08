@@ -48,5 +48,13 @@ namespace Repositories.Accounts
             
             return await AccountDAO.SendVerificationCode(email, _configuration);
         }
+        public async Task<string> UpdateProfile(UpdateProfile updateProfileDto)
+        {
+            return await AccountDAO.UpdateProfile(updateProfileDto);
+        }
+        public async Task<string> ChangePassword(ChangePassword changePasswordDto)
+        {
+            return await AccountDAO.ChangePassword(changePasswordDto); 
+        }
     }
 }
