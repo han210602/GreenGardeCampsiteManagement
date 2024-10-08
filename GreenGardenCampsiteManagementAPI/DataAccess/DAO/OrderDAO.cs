@@ -118,7 +118,7 @@ namespace DataAccess.DAO
         {
             if(order_combo!=null)
             {
-
+                
             }
             else
             {
@@ -130,6 +130,78 @@ namespace DataAccess.DAO
 
 
             return false;
+        }
+
+        public static bool CreateUniqueOrder(OrderDTO order
+            , OrderTicketDetailDTO order_ticket
+            , OrderCampingGearDetailDTO order_camping_gear
+            , OrderFoodDetailDTO order_food
+            , OrderFoodComboDetailDTO order_foot_combo)
+        {
+            try
+            {
+                using (var context = new GreenGardenContext())
+                {
+                    if (order_ticket == null)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        
+
+
+                        return true;
+                    }
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+
+            }
+        }
+
+        public static bool CreateUniqueOrder(OrderDTO order
+            , List<OrderTicketDetailDTO> order_ticket
+            , List<OrderCampingGearDetailDTO> order_camping_gear
+            , List<OrderFoodDetailDTO> order_food
+            , List<OrderFoodComboDetailDTO> order_foot_combo)
+        {
+            try
+            {
+                using (var context = new GreenGardenContext())
+                {
+                    if (order_ticket == null)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        decimal total_campinggear_money = 0;
+                        decimal total_ticket_money = 0;
+                        decimal total_foot_money = 0;
+                        decimal total_footcombo_money = 0;
+                        foreach (var ticket in order_ticket)
+                        {
+                        total_ticket_money += context.Tickets.FirstOrDefault(t => t.TicketId == ticket.TicketId).Price * ticket.Quantity.Value;
+                        
+                        
+                        }
+
+
+
+                        return true;
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+
+            }
         }
     }
 }

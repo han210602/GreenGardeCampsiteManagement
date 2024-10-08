@@ -20,6 +20,16 @@ namespace Repositories.Orders
             return OrderDAO.CreateOrder(order, order_ticket, order_camping_gear, order_food, order_foot_combo, order_combo);
         }
 
+        public bool CreateComboOrder(OrderDTO order, OrderCampingGearDetailDTO order_camping_gear, OrderFoodDetailDTO order_food, OrderFoodComboDetailDTO order_foot_combo, OrderComboDetailDTO order_combo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool CreateUniqueOrder(OrderDTO order, List<OrderTicketDetailDTO> order_ticket, List<OrderCampingGearDetailDTO> order_camping_gear, List<OrderFoodDetailDTO> order_food, List<OrderFoodComboDetailDTO> order_foot_combo)
+        {
+            return OrderDAO.CreateUniqueOrder(order, order_ticket, order_camping_gear, order_food, order_foot_combo);
+        }
+
         public bool DeleteOrder(int id)
         {
             return OrderDAO.DeleteOrder(id);
@@ -34,6 +44,11 @@ namespace Repositories.Orders
         public List<OrderDTO> GetAllOrders()
         {
             return OrderDAO.getAllOrder();
+        }
+
+        public bool UpdateOrder(OrderDTO order, OrderTicketDetailDTO order_ticket, OrderCampingGearDetailDTO order_camping_gear, OrderFoodDetailDTO order_food, OrderFoodComboDetailDTO order_foot_combo, OrderComboDetailDTO order_combo)
+        {
+            throw new NotImplementedException();
         }
     }
 }
