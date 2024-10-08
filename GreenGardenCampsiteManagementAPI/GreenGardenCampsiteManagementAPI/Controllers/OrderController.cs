@@ -39,6 +39,18 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+        [HttpPut("DeleteOrder/{id}")]
+        public IActionResult DeleteOrder(int id)
+        {
+            try
+            {
+                return Ok(_repo.DeleteOrder(id));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
 
 
     }

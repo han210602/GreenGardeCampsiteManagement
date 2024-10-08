@@ -72,5 +72,64 @@ namespace DataAccess.DAO
 
             }
         }
+
+        public static bool DeleteOrder(int id)
+        {
+
+            try
+            {
+                using (var context = new GreenGardenContext())
+                {
+                    var order = context.Orders.FirstOrDefault(o => o.OrderId == id);
+                    if (order != null)
+                    { 
+                        var list_ticket=context.OrderTicketDetails.Where(o=>o.OrderId==id).ToList();
+                        var list_foot=context.OrderFoodDetails.Where(o=>o.OrderId==id).ToList();    
+                        var list_combo=context.OrderComboDetails.Where(o => o.OrderId == id).ToList();
+                        var list_camping=context.OrderCampingGearDetails.Where(o=>o.OrderId == id).ToList();
+                        var list_combofoot=context.OrderFoodComboDetails.Where(o=>o.OrderId==id).ToList();
+                        context.RemoveRange(list_ticket);
+                        context.RemoveRange(list_foot);
+                        context.RemoveRange(list_camping);
+                        context.RemoveRange(list_combofoot);
+                        context.RemoveRange(list_combo);
+                        context.SaveChanges();
+                        context.Remove(order);
+                        context.SaveChanges();
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+
+            }
+
+
+
+        }
+
+        public static bool CreateOrder(OrderDTO order, OrderTicketDetailDTO order_ticket, OrderCampingGearDetailDTO order_camping_gear, OrderFoodDetailDTO order_food, OrderFoodComboDetailDTO order_foot_combo, OrderComboDetailDTO order_combo)
+        {
+            if(order_combo!=null)
+            {
+
+            }
+            else
+            {
+                if (order_ticket != null)
+                {
+
+                }
+            }
+
+
+            return false;
+        }
     }
 }

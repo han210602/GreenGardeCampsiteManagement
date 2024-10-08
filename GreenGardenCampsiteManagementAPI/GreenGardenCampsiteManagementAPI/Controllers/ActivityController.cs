@@ -21,7 +21,7 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
 
             try
             {
-                return Ok(_repo.GetAllActivities);
+                return Ok(_repo.GetAllActivities().ToList());
             }
             catch (Exception ex)
             {

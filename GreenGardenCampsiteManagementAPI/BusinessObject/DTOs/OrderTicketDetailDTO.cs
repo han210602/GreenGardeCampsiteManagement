@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace BusinessObject.DTOs
 {
-    internal class OrderTicketDetailDTO
+    public class OrderTicketDetailDTO
     {
+        public int TicketId { get; set; }
+        public int? Quantity { get; set; }
+        public string? Description { get; set; }
     }
 }
