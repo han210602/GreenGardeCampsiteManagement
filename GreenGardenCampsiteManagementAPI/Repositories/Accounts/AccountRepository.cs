@@ -14,24 +14,39 @@ namespace Repositories.Accounts
     {
         private readonly IConfiguration _configuration;
 
-        // Inject IConfiguration to pass it to AccountDAO
+      
         public AccountRepository(IConfiguration configuration)
         {
             _configuration = configuration;
         }
 
-        //public void CreateAccount(Account a)
-        //{
-        //    AccountDAO.CreateAccount(a);
-        //}
         public List<ViewUserDTO> GetAllAccount()
         {
             return AccountDAO.GetAllAccounts();
         }
+
         public string Login(AccountDTO a)
         {
-            // Call the static Login method in AccountDAO and pass _configuration
+           
             return AccountDAO.Login(a, _configuration);
+        }
+
+        public async Task<string> SendResetPassword(string email)
+        {
+            
+            return await AccountDAO.SendResetPassword(email, _configuration);
+        }
+
+        public async Task<string> Register(Register a, string enteredCode)
+        {
+            
+            return await AccountDAO.Register(a, enteredCode, _configuration);
+        }
+
+        public async Task<string> SendVerificationCode(string email)
+        {
+            
+            return await AccountDAO.SendVerificationCode(email, _configuration);
         }
     }
 }

@@ -6,9 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Repositories.Accounts;
 using Repositories.Activities;
-using Repositories.IReponsitory;
 using Repositories.Orders;
-using Repositories.Reponsitory;
 using System.Security.Claims;
 using System.Text;
 
@@ -66,7 +64,7 @@ builder.Services.AddAuthentication(options =>
 //builder.Services.AddScoped<IOrderTicketDetailReponsitory, OrderTicketDetailReponsitory>();
 //builder.Services.AddScoped<ITicketCategoryReponsitory, TicketCategoryReponsitory>();
 //builder.Services.AddScoped<ITicketReponsitory, TicketReponsitory>();
-builder.Services.AddScoped<IUserReponsitory, UserReponsitory>();
+//builder.Services.AddScoped<IUserReponsitory, UserReponsitory>();
 builder.Services.AddScoped<IOrderRepository,OrderRepository>();
 builder.Services.AddScoped<IActivityRepository, ActiviyRepository>();
 

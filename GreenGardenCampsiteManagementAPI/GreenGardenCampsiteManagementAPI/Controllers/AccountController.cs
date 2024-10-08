@@ -2,9 +2,11 @@
 using AutoMapper;
 using BusinessObject.DTOs;
 using BusinessObject.Models;
+using DataAccess.DAO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Repositories.Accounts;
 
 namespace GreenGardenCampsiteManagementAPI.Controllers
@@ -56,19 +58,66 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-        //[HttpPost("Register")]
-        //public ActionResult<Account> Register(Account request)
-        //{
-        //    Account a = new Account
-        //    {
-        //        AccountId = request.AccountId,
-        //        Email = request.Email,
-        //        Password = request.Password,
-        //        Fullname = request.Fullname,
+        [HttpPost("SendVerificationCode")]
+        public async Task<IActionResult> SendVerificationCode([FromBody] string email)
+        {
+            try
+            {
+                var verificationCodeMessage = await _repo.SendVerificationCode(email);
 
-        //    };
-        //    _repo.CreateAccount(a);
-        //    return NoContent();
-        //}
+          
+
+                return Ok(verificationCodeMessage);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPost("Register")]
+        public async Task<IActionResult> Register([FromBody] Register registerRequest, string enteredCode)
+        {
+            try
+            {
+             
+                var registerResponse = await _repo.Register(registerRequest, enteredCode);
+
+     
+                if (registerResponse == null)
+                {
+                    return BadRequest("Registration failed.");
+                }
+
+              
+                return Ok(registerResponse);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+
+        [HttpPost("SendResetPasswordEmail/{email}")]
+        public async Task<IActionResult> SendResetPasswordEmail(string email)
+        {
+            try
+            {
+                // Await the asynchronous method
+                var response = await _repo.SendResetPassword(email);
+
+                return Content(response, "application/json");
+            }
+            catch (Exception ex)
+            {
+                // Log the exception if needed (optional)
+                Console.WriteLine($"Error: {ex.Message}");
+
+                return StatusCode(500, new { Message = ex.Message });
+            }
+        }
+
+
     }
 }

@@ -10,8 +10,10 @@ namespace Repositories.Accounts
 {
     public interface IAccountRepository
     {
-        //void CreateAccount(Account a);
         List<ViewUserDTO> GetAllAccount();
         string Login(AccountDTO a);
+        Task<string> SendResetPassword(string email);
+        Task<string> Register(Register a, string enteredCode); 
+        Task<string> SendVerificationCode(string email); 
     }
 }
