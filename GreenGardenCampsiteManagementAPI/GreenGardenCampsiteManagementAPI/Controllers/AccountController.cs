@@ -106,79 +106,73 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
         {
             try
             {
-                
                 var response = await _repo.SendResetPassword(email);
-
                 return Content(response, "application/json");
             }
             catch (Exception ex)
             {
-                
                 Console.WriteLine($"Error: {ex.Message}");
-
                 return StatusCode(500, new { Message = ex.Message });
             }
         }
+
         [HttpPut("UpdateProfile")]
         public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfile updateProfile)
         {
             if (updateProfile == null)
             {
-                return BadRequest("Dữ liệu không hợp lệ.");
+                return BadRequest("Invalid data.");
             }
 
             if (updateProfile.UserId <= 0)
             {
-                return BadRequest("ID người dùng không hợp lệ.");
+                return BadRequest("Invalid user ID.");
             }
 
             try
             {
                 var message = await _repo.UpdateProfile(updateProfile);
 
-               
-                if (message == "Cập nhật thông tin thành công.")
+                if (message == "Profile updated successfully.")
                 {
-                    return Ok(message); 
+                    return Ok(message);
                 }
                 else
                 {
-                    return NotFound(message); 
+                    return NotFound(message);
                 }
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message); 
+                return StatusCode(500, ex.Message);
             }
         }
+
         [HttpPut("ChangePassword")]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePassword changePasswordDto)
         {
             if (changePasswordDto == null)
             {
-                return BadRequest("Dữ liệu không hợp lệ.");
+                return BadRequest("Invalid data.");
             }
 
             try
             {
-                var message = await _repo.ChangePassword(changePasswordDto); 
+                var message = await _repo.ChangePassword(changePasswordDto);
 
-                if (message == "Cập nhật mật khẩu thành công.")
+                if (message == "Password updated successfully.")
                 {
-                    return Ok(message); 
+                    return Ok(message);
                 }
                 else
                 {
-                    return BadRequest(message); 
+                    return BadRequest(message);
                 }
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message); 
+                return StatusCode(500, ex.Message);
             }
         }
-
-
-
     }
 }
