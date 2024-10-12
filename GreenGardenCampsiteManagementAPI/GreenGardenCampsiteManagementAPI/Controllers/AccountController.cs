@@ -24,6 +24,7 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
             _repo = repo;
             _mapper = mapper;
         }
+        [Authorize(Policy = "AdminAndEmployeePolicy")]
         [HttpGet("GetAllAccounts")]
         public IActionResult GetAllAccounts()
         {

@@ -43,13 +43,13 @@ builder.Services.AddAuthentication(options =>
         ValidIssuer = builder.Configuration["Jwt:Issuer"],
         ValidAudience = builder.Configuration["Jwt:Audience"],
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
-        RoleClaimType = ClaimTypes.Role
+        RoleClaimType = "RoleId" // Xác định claim type cho RoleId
     };
 });
 
 // Đăng ký các repository vào DI container
 
-builder.Services.AddScoped<IOrderRepository,OrderRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IActivityRepository, ActiviyRepository>();
 builder.Services.AddScoped<IComboRepository, ComboRepository>();
 builder.Services.AddScoped<ICampingGearRepository, CampingGearRepository>();
@@ -59,6 +59,19 @@ builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 
 // Đăng ký AutoMapper
 builder.Services.AddSingleton<IMapper>(MapperInstanse.GetMapper());
+
+// Cấu hình các policy cho từng RoleId
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminPolicy", policy =>
+        policy.RequireClaim("RoleId", "1"));
+    options.AddPolicy("EmployeePolicy", policy =>
+        policy.RequireClaim("RoleId", "2"));
+    options.AddPolicy("CustomerPolicy", policy =>
+        policy.RequireClaim("RoleId", "3"));
+    options.AddPolicy("AdminAndEmployeePolicy", policy =>
+       policy.RequireRole("1", "2"));
+});
 
 // Cấu hình Swagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();
