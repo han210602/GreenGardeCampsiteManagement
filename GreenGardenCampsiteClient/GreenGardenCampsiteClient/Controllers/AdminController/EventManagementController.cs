@@ -2,14 +2,9 @@
 
 namespace GreenGardenCampsiteClient.Controllers.AdminController
 {
-    public class CustomerManagementController : Controller
+    public class EventManagementController : Controller
     {
         public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult CreateCustomer()
         {
             return View();
         }
