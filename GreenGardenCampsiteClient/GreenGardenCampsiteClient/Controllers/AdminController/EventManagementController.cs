@@ -8,5 +8,9 @@ namespace GreenGardenCampsiteClient.Controllers.AdminController
         {
             return View();
         }
+        public IActionResult CreateEvent()
+        {
+            return View();
+        }
     }
 }

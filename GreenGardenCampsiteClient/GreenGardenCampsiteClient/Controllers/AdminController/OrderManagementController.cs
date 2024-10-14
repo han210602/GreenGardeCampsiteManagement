@@ -5,9 +5,6 @@ namespace GreenGardenCampsiteClient.Controllers.AdminController
 {
     public class OrderManagementController : Controller
     {
-
-
-
         private HttpClient _httpClient;
 
         public OrderManagementController()
