@@ -84,7 +84,7 @@ namespace GreenGardenCampsiteClient.Controllers.AdminController
             return RedirectToAction("Index");
 
         }
-        public IActionResult CreateOrder(int idcategory)
+        public IActionResult OrderTickets(int idcategory)
         {
 
             List<TicketCategoryVM> categories = GetDataFromApi<List<TicketCategoryVM>>("https://localhost:7298/api/Ticket/GetAllTicketCategories");
@@ -105,7 +105,7 @@ namespace GreenGardenCampsiteClient.Controllers.AdminController
 
 
 
-            return View("CreateOrder");
+            return View("OrderTickets");
         }
 
         public IActionResult OrderCampingGears(int idcategory)
@@ -144,10 +144,7 @@ namespace GreenGardenCampsiteClient.Controllers.AdminController
             return View("OrderFoodAndDrinks");
         }
 
-        public IActionResult UpdateOrder()
-        {
-            return View("UpdateOrder");
-        }
+        
 
         public IActionResult OrderDetails()
         {

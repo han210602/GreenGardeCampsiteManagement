@@ -1,4 +1,7 @@
-﻿.selection-width{
+﻿
+
+
+.selection-width{
     width: 200px;
 }
 
@@ -28,7 +31,7 @@
 
     /* Header styles */
     .table thead th {
-        background-color: #003c00; /* Màu xanh lá cây đậm */
+        background-color: #026345; /* Màu xanh lá cây đậm */
         color: white;
         font-weight: bold;
     }
@@ -47,47 +50,11 @@
         }
 
 /* Button styles */
-.btn {
+/*.btn {
     border-radius: 5px;
-}
+    background-color: #28a745;
+}*/
 
 
-/* Pagination styles */
-.pagination {
-    justify-content: center;
-    margin-top: 20px;
-}
 
-    /* Styles for page items */
-    .pagination .page-item {
-        margin: 0 5px; /* Khoảng cách giữa các nút */
-    }
 
-    /* Styles for page links */
-    .pagination .page-link {
-        border-radius: 5px; /* Bo góc cho nút */
-        background-color: #4CAF50; /* Màu nền xanh lá cây */
-        color: white; /* Màu chữ trắng */
-        padding: 10px 15px; /* Khoảng cách bên trong */
-        border: none; /* Xóa viền */
-        transition: background-color 0.3s; /* Hiệu ứng chuyển màu */
-    }
-
-        /* Hover effect for page links */
-        .pagination .page-link:hover {
-            background-color: #45a049; /* Màu nền khi hover */
-        }
-
-    /* Active page link */
-    .pagination .page-item.active .page-link {
-        background-color: #388e3c; /* Màu nền cho trang đang hoạt động */
-        color: white; /* Màu chữ trắng */
-        font-weight: bold; /* Đậm chữ */
-    }
-
-/* Disabled state for previous and next buttons */
-.btn[disabled] {
-    background-color: #ccc; /* Màu nền cho nút vô hiệu hóa */
-    color: #666; /* Màu chữ cho nút vô hiệu hóa */
-    cursor: not-allowed; /* Con trỏ cho nút vô hiệu hóa */
-}

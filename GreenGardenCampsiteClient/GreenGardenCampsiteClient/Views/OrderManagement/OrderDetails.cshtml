@@ -17,8 +17,12 @@
                 <input type="text" class="form-control" id="customerName" name="customerName" required>
             </div>
             <div class="col-md-3">
+                <label for="phone" class="form-label">Số điện thoại</label>
+                <input type="text" class="form-control" id="phone" name="phone" required>
+            </div>
+            <div class="col-md-3">
                 <label for="orderDate" class="form-label">Ngày sử dụng</label>
-                <input type="text" class="form-control" id="orderDate" name="orderDate" required>
+                <input type="datetime-local" class="form-control" id="orderDate" name="orderDate" required>
             </div>
         </div>
         <br />
@@ -26,7 +30,7 @@
         <div class="row g-2 mb-3">
         <h2>Vé đã đặt</h2>
             <div class="col-md-3">
-                <a href="#">Cập nhật vé</a>
+                <a style="background-color: #28a745;" class="btn btn-primary" href="#">Cập nhật vé</a>
             </div>
         </div>
         <table class="table table-striped table-bordered">
@@ -108,7 +112,7 @@
         </table>
 
         <a href="/OrderManagement/Index" class="btn btn-secondary">Quay lại</a>
-        <button type="submit" class="btn btn-primary">Tạo order</button>
+        <button type="submit" class="btn btn-primary" style="background-color: #28a745;">Tạo order</button>
 
 
 
