@@ -1,0 +1,266 @@
+﻿.card-container {
+    text-align: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.intro-wrap {
+; /* Adjust this to the background color of your choice */
+    color: white; /* Ensures text is readable on dark backgrounds */
+    padding: 50px 0; /* Adds some padding for spacing */
+    width: 100vw; /* Ensures it takes the full width of the viewport */
+    text-align: center;
+    margin-bottom: 30px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+    .intro-wrap h1 {
+        font-size: 2.5rem; /* Adjust the font size of the h1 */
+        font-weight: 700; /* Make it bold using the 700 weight */
+        font-family: 'Source Serif Pro', serif; /* Apply 'Source Serif Pro' font to the h1 */
+        color: #333; /* Adjust text color if needed */
+        margin-bottom: 10px; /* Spacing below the heading */
+    }
+
+    .intro-wrap p {
+        font-size: 1.125rem; /* Adjust the font size of the paragraph */
+        font-weight: 400; /* Normal font weight */
+        font-family: 'Inter', sans-serif; /* Apply 'Inter' font to the paragraph */
+        color: #000; /* Text color for the paragraph */
+    }
+
+.card-container .card {
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    margin: 0 15px;
+    width: 250px;
+    display: inline-block;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .card-container .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
+    }
+
+.card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.card h3 {
+    font-size: 1.2rem;
+    color: #333;
+    margin: 15px 0 10px;
+}
+
+.card p {
+    font-size: 0.95rem;
+    color: #666;
+    padding: 0 15px 15px;
+    line-height: 1.6;
+}
+
+.text-black {
+    color: #333;
+}
+
+.section {
+    background-color: #026345;
+    padding: 40px;
+}
+
+.content-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+
+.text-block {
+    width: 45%;
+    text-align: start;
+    font-size: 1.1rem;
+}
+
+    .text-block h2 {
+        padding-bottom: 1rem;
+        color: #edf0f2;
+    }
+
+    .text-block p {
+        text-decoration: none;
+        color: #edf0f2;
+        font-style: normal;
+        font-weight: 400;
+    }
+
+.image-block {
+    position: relative;
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+    .image-block img {
+        width: 49%;
+        height: 350px;
+        object-fit: cover;
+        border-radius: 6px;
+        box-shadow: -1px 1px 62px -18px rgba(0, 0, 0, 0.19);
+    }
+
+        .image-block img:first-child {
+            width: 48%;
+        }
+
+        .image-block img:last-child {
+            width: 48%;
+        }
+
+
+
+
+
+
+
+
+
+
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.services-section {
+    text-align: center;
+    padding: 50px 20px;
+    background-color: #fff;
+    margin-bottom:30px;
+    margin-top:30px
+}
+.heading-with-line {
+    display: inline-block;
+    position: relative;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+    .heading-with-line::after {
+        content: "";
+        display: block;
+        width: 40px; /* Adjust the width of the line */
+        height: 3px; /* Adjust the thickness of the line */
+        background-color: #333; /* Adjust the color of the line */
+        margin: 10px auto 0; /* Space above the line */
+        position: relative;
+    }
+    .services-section h2 {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .services-section .description {
+        max-width: 600px;
+        margin: 0 auto;
+        color: #777;
+        line-height: 1.6;
+        margin-bottom:20px;
+    }
+
+.services-layout {
+    display: flex;
+    gap: 20px;
+    align-items: stretch; /* Ensure the image and forms have equal height */
+    margin-top: 40px;
+    max-width: 1200px; /* Set a maximum width for the whole section */
+    margin: 0 auto; /* Center the layout */
+    
+}
+
+.service-image {
+    flex: 1; /* Let the image take equal space */
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 45%; /* Control the width of the image */
+}
+
+    .service-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 15px; /* Add rounded corners to the image */
+        max-height: 100%; /* Ensure the image scales proportionally */
+    }
+
+.services-grid {
+    display: grid;
+    flex: 1; /* Let the forms take the remaining space */
+    grid-template-columns: repeat(2, 1fr); /* Two forms per row */
+    gap: 20px;
+    max-width: 50%; /* Limit the forms' section width */
+}
+
+.service {
+    background-color: #f7f7f7;
+    border-radius: 10px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%; /* Make sure the forms stretch to match the height of the image */
+}
+
+    .service h3 {
+        margin: 20px 0 10px;
+        font-size: 1.5em;
+        color: #333;
+    }
+
+    .service p {
+        color: #777;
+        font-size: 1em;
+    }
+
+    .service .icon {
+        font-size: 3em;
+        color: #2e93e5;
+        margin-bottom: 15px;
+    }
+
+    .service:hover {
+        background-color: #fff;
+    }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .services-layout {
+        flex-direction: column; /* Stack the image and forms vertically on small screens */
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr; /* Stack the forms vertically on small screens */
+        max-width: 100%; /* Ensure the forms take full width on mobile */
+    }
+
+    .service-image {
+        max-width: 100%; /* Ensure the image takes full width on mobile */
+        height: auto; /* Adjust height for responsive view */
+    }
+}

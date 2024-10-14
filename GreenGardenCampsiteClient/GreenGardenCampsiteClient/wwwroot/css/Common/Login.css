@@ -1,0 +1,56 @@
+﻿body {
+    background-color: #f8f9fa;
+    font-family: 'Arial', sans-serif;
+}
+
+.logo img {
+    max-width: 150px; /* Tăng kích thước logo */
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 32px; /* Phóng to tiêu đề */
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+p {
+    font-size: 18px; /* Phóng to văn bản mô tả */
+    color: #7f8c8d;
+    text-align: left;
+}
+
+form {
+    background-color: #ffffff;
+    border-radius: 10px;
+}
+
+.form-label {
+    font-size: 18px; /* Phóng to nhãn form */
+}
+
+input.form-control-lg {
+    font-size: 16px; /* Phóng to văn bản trong ô nhập */
+}
+
+.btn-primary {
+    background-color: #3b5998;
+    border: none;
+}
+
+    .btn-primary:hover {
+        background-color: #2e4679;
+    }
+
+.btn-white {
+    background-color: #ffff;
+    border: none;
+}
+
+    .btn-white:hover {
+        background-color: #c33c2f;
+    }
+
+.w-48 {
+    width: 48%;
+}

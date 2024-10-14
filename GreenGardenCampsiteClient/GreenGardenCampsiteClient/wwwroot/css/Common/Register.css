@@ -1,0 +1,74 @@
+﻿/* Đặt phông chữ và kiểu chung cho trang */
+body {
+    font-family: 'Inter', sans-serif;
+
+    padding: 20px;
+}
+
+/* Hiệu ứng logo và tiêu đề */
+.logo img {
+    width: 120px; /* Tăng kích thước của logo */
+    height: 120px;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-left: 30px; /* Đẩy logo sang phải */
+}
+
+h2 {
+    font-family: 'Source Serif Pro', serif;
+    font-weight: 700;
+    font-size: 2.5rem; /* Tăng kích thước tiêu đề */
+    color: #2e7d32;
+    margin-left: 30px; /* Đẩy tiêu đề sang phải */
+}
+
+p {
+    font-size: 1.2rem; /* Tăng kích thước văn bản mô tả */
+    color: #616161;
+    max-width: 350px;
+    margin-left: 30px; /* Đẩy văn bản mô tả sang phải */
+}
+
+/* Phong cách cho form đăng ký */
+form {
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    background: #fff;
+}
+
+/* Phong cách cho các ô input */
+.form-control {
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    transition: border-color 0.3s ease;
+}
+
+    .form-control:focus {
+        border-color: #64b5f6;
+        box-shadow: 0 0 0 0.2rem rgba(100, 181, 246, 0.25);
+    }
+
+/* Nút đăng ký với hiệu ứng gradient */
+.btn-gradient {
+    background: linear-gradient(135deg, #64b5f6, #4caf50);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    font-weight: 700;
+    transition: background 0.3s ease;
+}
+
+    .btn-gradient:hover {
+        background: linear-gradient(135deg, #42a5f5, #388e3c);
+    }
+
+/* Link đăng nhập */
+.text-center a {
+    color: #64b5f6;
+    transition: color 0.3s ease;
+}
+
+    .text-center a:hover {
+        color: #388e3c;
+    }

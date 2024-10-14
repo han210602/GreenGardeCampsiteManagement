@@ -1,0 +1,231 @@
+﻿body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+.card-container {
+    text-align: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.intro-wrap {
+    ; /* Adjust this to the background color of your choice */
+    color: white; /* Ensures text is readable on dark backgrounds */
+    padding: 50px 0; /* Adds some padding for spacing */
+    width: 100vw; /* Ensures it takes the full width of the viewport */
+    text-align: center;
+    margin-bottom: 30px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+    .intro-wrap h1 {
+        font-size: 2.5rem; /* Adjust the font size of the h1 */
+        font-weight: 700; /* Make it bold using the 700 weight */
+        font-family: 'Source Serif Pro', serif; /* Apply 'Source Serif Pro' font to the h1 */
+        color: #333; /* Adjust text color if needed */
+        margin-bottom: 10px; /* Spacing below the heading */
+    }
+
+    .intro-wrap p {
+        font-size: 1.125rem; /* Adjust the font size of the paragraph */
+        font-weight: 400; /* Normal font weight */
+        font-family: 'Inter', sans-serif; /* Apply 'Inter' font to the paragraph */
+        color: #000; /* Text color for the paragraph */
+    }
+
+.card-container .card {
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    margin: 0 15px;
+    width: 250px;
+    display: inline-block;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .card-container .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
+    }
+
+.card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.card h3 {
+    font-size: 1.2rem;
+    color: #333;
+    margin: 15px 0 10px;
+}
+
+.card p {
+    font-size: 0.95rem;
+    color: #666;
+    padding: 0 15px 15px;
+    line-height: 1.6;
+}
+
+.menu-container {
+    display: flex;
+    justify-content: flex-start; /* Aligns the menu to the left */
+    padding: 20px;
+}
+.menu-header {
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
+    color: white;
+    background-color: #00593E; /* Green header background */
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    letter-spacing: 1px;
+    position: relative; /* For positioning the underline */
+}
+
+    /* Underline effect for the header with more spacing */
+    .menu-header::after {
+        content: '';
+        display: block;
+        width: 100%;
+        height: 3px; /* Thickness of the underline */
+        background-color: #00593E; /* Color of the underline */
+        position: absolute;
+        bottom: -10px; /* Increased space from the text */
+        left: 0;
+    }
+/* Left Menu Styling */
+.menu-left {
+    width: 20%;
+/*    background-color: #ffff;*/
+    padding: 20px;
+/*    border-right: 2px solid #ddd;*/
+margin-right:20px;
+    
+}
+
+    .menu-left ul {
+        list-style: none;
+        padding: 0;
+    }
+
+        .menu-left ul li {
+            padding: 15px 0;
+            font-size: 18px;
+            font-weight: bold;
+            color: #0a3b2c;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+            .menu-left ul li:hover {
+                color: #d1402f;
+                background-color: #f0e1cc;
+                padding-left: 10px;
+            }
+
+/* Right Content Styling */
+.menu-right {
+    width: 80%;
+    padding-left: 20px;
+}
+
+.sort-dropdown {
+    margin-bottom: 20px;
+}
+
+    .sort-dropdown label {
+        font-size: 18px;
+        margin-right: 10px;
+        color: #333;
+    }
+
+    .sort-dropdown select {
+        padding: 8px 12px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+/* Menu Item Styling */
+.menu-item {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    gap: 20px; /* space between the items */
+}
+
+.item-card {
+/*   // background-color: #fff;
+*/    padding: 15px;
+    /*border: 1px solid #ddd;*/
+/*   // border-radius: 10px;
+*/ /*box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);*/
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+    .item-card:hover {
+        transform: scale(1.05);
+        box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .item-card img {
+        width: 261px; /* Reduce the width to 60% of the container */
+        height: 233px; /* Ensure height adjusts automatically */
+        max-height: 500px; /* Set a maximum height to increase verticality */
+        object-fit: cover; /* Keep the aspect ratio while covering the area */
+        border-radius: 10px;
+        margin-bottom: 15px;
+    }
+    .item-card h3 {
+        margin: 10px 0;
+        font-size: 18px; /* Adjusted the size for larger images */
+        color: #333;
+    }
+
+    .item-card .price {
+        color: #d1402f;
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+
+    .item-card button {
+        padding: 8px 15px;
+        background-color: #d1402f;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .item-card button:hover {
+            background-color: #a02d22;
+        }
+
+/* Responsive Design for Mobile */
+@media (max-width: 768px) {
+    .menu-container {
+        padding: 10px;
+    }
+
+    .menu-left ul {
+        flex-direction: column;
+    }
+
+    .sort-dropdown select {
+        width: 100%;
+    }
+
+    .item-card img {
+        max-width: 100%;
+    }
+}

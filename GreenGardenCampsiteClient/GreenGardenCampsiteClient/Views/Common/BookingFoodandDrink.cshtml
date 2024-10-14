@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thực Đơn</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Source+Serif+Pro:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="~/css/Common/BookingFoodandDrink.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="menu-container">
+        <div class="menu-left">
+            <div class="menu-header">THỰC ĐƠN</div>
+
+            <ul>
+                <li>Món Cá</li>
+                <li>Món Gà-Vịt-Ngan</li>
+                <li>Món Bò,Trâu</li>
+                <li>Món Phụ</li>
+                <li>Đồ Nướng BBQ</li>
+                <li>Combo</li>
+          
+            </ul>
+        </div>
+        <div class="menu-right">
+            <div class="sort-dropdown">
+                <label for="sort">Sắp xếp theo:</label>
+                <select id="sort">
+                    <option value="default">Mặc định</option>
+                    <option value="price-low-high">Giá: Thấp đến Cao</option>
+                    <option value="price-high-low">Giá: Cao đến Thấp</option>
+                    <option value="popularity">Phổ biến</option>
+                    <option value="newest">Mới nhất</option>
+                </select>
+            </div>
+            <div class="menu-item">
+                <div class="item-card">
+                    <img src="https://i.ytimg.com/vi/XL0XM1uYuY8/maxresdefault.jpg" alt="Nộm bò">
+                    <h3>Cá trắm đen nướng</h3>
+                    <p class="price">165.000₫</p>
+                    <button>Đặt món</button>
+                </div>
+                <div class="item-card">
+                    <img src="https://i.ytimg.com/vi/XL0XM1uYuY8/maxresdefault.jpg" alt="Bánh tráng cuốn heo quay">
+                    <h3>Cá trắm trắng nướng</h3>
+                    <p class="price">165.000₫</p>
+                    <button>Đặt món</button>
+                </div>
+                <div class="item-card">
+                    <img src="https://i.ytimg.com/vi/XL0XM1uYuY8/maxresdefault.jpg" alt="Bò tơ cuốn bánh tráng">
+                    <h3>Cá chép nướng</h3>
+                    <p class="price">169.000₫</p>
+                    <button>Đặt món</button>
+                </div>
+                <div class="item-card">
+                    <img src="https://i.ytimg.com/vi/XL0XM1uYuY8/maxresdefault.jpg" alt="Bò tơ cuốn bánh tráng">
+                    <h3>Lẩu cá trắm nướng</h3>
+                    <p class="price">169.000₫</p>
+                    <button>Đặt món</button>
+                </div>
+                <div class="item-card">
+                    <img src="https://i.ytimg.com/vi/XL0XM1uYuY8/maxresdefault.jpg" alt="Nộm bò">
+                    <h3>Lẩu Cá chép om dưa</h3>
+                    <p class="price">165.000₫</p>
+                    <button>Đặt món</button>
+                </div>
+                <div class="item-card">
+                    <img src="https://i.ytimg.com/vi/XL0XM1uYuY8/maxresdefault.jpg" alt="Nộm bò">
+                    <h3>Cá chép/trắm tráng hấp bia,sả</h3>
+                    <p class="price">165.000₫</p>
+                    <button>Đặt món</button>
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</body>
+<script src="script.js"></script>
+
+</html>
