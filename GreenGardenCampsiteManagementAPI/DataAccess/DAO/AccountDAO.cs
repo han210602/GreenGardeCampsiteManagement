@@ -72,25 +72,31 @@ namespace DataAccess.DAO
 
             throw new Exception("Invalid email or password.");
         }
-        private static readonly ConcurrentDictionary<string, string> VerificationCodes = new ConcurrentDictionary<string, string>();
+        private static readonly ConcurrentDictionary<string, (string Code, DateTime Expiration)> VerificationCodes = new ConcurrentDictionary<string, (string, DateTime)>();
 
         public static async Task<string> Register(Register registerDto, string enteredCode, IConfiguration configuration)
         {
             using (var context = new GreenGardenContext())
             {
-
-                if (!VerificationCodes.TryGetValue(registerDto.Email, out var verificationCode) || verificationCode != enteredCode)
+                if (!VerificationCodes.TryGetValue(registerDto.Email, out var storedCodeInfo) ||
+                    storedCodeInfo.Code != enteredCode)
                 {
                     throw new Exception("Mã xác thực không đúng.");
                 }
 
+                // Kiểm tra mã đã hết hạn chưa
+                if (DateTime.UtcNow > storedCodeInfo.Expiration)
+                {
+                    VerificationCodes.TryRemove(registerDto.Email, out _); // Xóa mã xác thực đã hết hạn
+                    throw new Exception("Mã xác thực đã hết hạn.");
+                }
 
+                // Kiểm tra email đã tồn tại chưa
                 var existingUser = context.Users.SingleOrDefault(u => u.Email == registerDto.Email);
                 if (existingUser != null)
                 {
                     throw new Exception("Email đã được đăng ký.");
                 }
-
 
                 var newUser = new User
                 {
@@ -98,7 +104,7 @@ namespace DataAccess.DAO
                     LastName = registerDto.LastName,
                     PhoneNumber = registerDto.PhoneNumber,
                     Email = registerDto.Email,
-                    Password = registerDto.Password, // Đảm bảo rằng mật khẩu đã được băm
+                    Password = registerDto.Password,
                     IsActive = true,
                     CreatedAt = DateTime.Now,
                     RoleId = 3
@@ -106,13 +112,11 @@ namespace DataAccess.DAO
 
                 try
                 {
-
                     context.Users.Add(newUser);
                     await context.SaveChangesAsync();
 
-
+                    // Xóa mã xác thực khi đăng ký thành công
                     VerificationCodes.TryRemove(registerDto.Email, out _);
-
 
                     var response = new
                     {
@@ -133,17 +137,15 @@ namespace DataAccess.DAO
             }
         }
 
-        public static async Task<string> SendVerificationCode(string email, IConfiguration configuration)
+                public static async Task<string> SendVerificationCode(string email, IConfiguration configuration)
         {
-
             var verificationCode = GenerateVerificationCode();
 
-
-            VerificationCodes[email] = verificationCode;
-
+            // Thiết lập thời gian hết hạn là 120 giây (2 phút)
+            var expirationTime = DateTime.UtcNow.AddSeconds(120);
+            VerificationCodes[email] = (verificationCode, expirationTime);
 
             await SendVerificationEmail(email, verificationCode, configuration);
-
             return "Mã xác thực đã được gửi đến email của bạn.";
         }
 
