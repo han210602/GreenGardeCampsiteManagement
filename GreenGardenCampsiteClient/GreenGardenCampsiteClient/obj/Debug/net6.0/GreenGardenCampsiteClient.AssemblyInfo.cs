@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GreenGardenCampsiteClient")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d686b788cd8c459f2456e7dd595d369f3fab0802")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d09bcd5764cd7d4da08bd2e1bd417c39a511566e")]
 [assembly: System.Reflection.AssemblyProductAttribute("GreenGardenCampsiteClient")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GreenGardenCampsiteClient")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

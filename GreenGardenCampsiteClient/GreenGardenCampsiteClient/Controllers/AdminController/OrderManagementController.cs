@@ -14,9 +14,24 @@ namespace GreenGardenCampsiteClient.Controllers.AdminController
             return View("CreateOrder");
         }
 
+        public IActionResult OrderCampingGears()
+        {
+            return View("OrderCampingGears");
+        }
+
+        public IActionResult OrderFoodAndDrinks()
+        {
+            return View("OrderFoodAndDrinks");
+        }
+
         public IActionResult UpdateOrder()
         {
             return View("UpdateOrder");
+        }
+
+        public IActionResult OrderDetails()
+        {
+            return View("OrderDetails");
         }
 
     }
