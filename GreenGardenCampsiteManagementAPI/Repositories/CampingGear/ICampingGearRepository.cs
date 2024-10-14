@@ -10,6 +10,8 @@ namespace Repositories.CampingGear
     public interface ICampingGearRepository
     {
         List<CampingGearDTO> GetAllCampingGears();
+        List<CampingCategoryDTO> GetAllCampingGearCategories();
+
         void AddCampingGear(AddCampingGearDTO gearDto);
         void UpdateCampingGear(UpdateCampingGearDTO gearDto);
         List<CampingGearDTO> GetCampingGearsByCategoryId(int categoryId);

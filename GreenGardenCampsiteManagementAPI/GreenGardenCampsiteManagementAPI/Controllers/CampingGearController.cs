@@ -28,7 +28,19 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
-
+        [HttpGet("GetAllCampingGearCategories")]
+        public IActionResult GetAllCampingGearCategories()
+        {
+            try
+            {
+                var campingGears = _repo.GetAllCampingGearCategories();
+                return Ok(campingGears);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
         [HttpPost("AddCampingGear")]
         public IActionResult AddCampingGear([FromBody] AddCampingGearDTO gearDto)
         {

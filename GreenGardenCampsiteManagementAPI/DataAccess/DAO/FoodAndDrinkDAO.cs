@@ -87,5 +87,20 @@ namespace DataAccess.DAO
             return items;
         }
 
+        public static List<FoodAndDrinkCategoryDTO> GetAllFoodAndDrinkCategories()
+        {
+            var items = context.FoodAndDrinkCategories
+
+                .Select(item => new FoodAndDrinkCategoryDTO
+                {
+                    CategoryId = item.CategoryId,
+                    CategoryName = item.CategoryName,
+                    Description = item.Description,
+                    CreatedAt = item.CreatedAt,
+
+                }).ToList();
+
+            return items;
+        }
     }
 }

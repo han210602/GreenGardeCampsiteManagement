@@ -83,5 +83,19 @@ namespace DataAccess.DAO
                 }).ToList();
             return campingGears;
         }
+
+        public static List<CampingCategoryDTO> GetAllCampingGearCategories()
+        {
+            var campingGears = context.CampingCategories
+
+                .Select(gear => new CampingCategoryDTO
+                {
+                    GearCategoryId = gear.GearCategoryId,
+                    GearCategoryName = gear.GearCategoryName,
+                    Description = gear.Description,
+                    CreatedAt = gear.CreatedAt,
+                }).ToList();
+            return campingGears;
+        }
     }
 }

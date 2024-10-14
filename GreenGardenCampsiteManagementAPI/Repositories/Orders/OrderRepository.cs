@@ -20,6 +20,11 @@ namespace Repositories.Orders
             return OrderDAO.CreateOrder(order, order_ticket, order_camping_gear, order_food, order_foot_combo, order_combo);
         }
 
+        public bool CancelDeposit(int id)
+        {
+            return OrderDAO.CancelDeposit(id);
+        }
+
         public bool CreateComboOrder(OrderDTO order, OrderCampingGearDetailDTO order_camping_gear, OrderFoodDetailDTO order_food, OrderFoodComboDetailDTO order_foot_combo, OrderComboDetailDTO order_combo)
         {
             throw new NotImplementedException();
@@ -50,6 +55,11 @@ namespace Repositories.Orders
         {
             return OrderDAO.GetOrderDetail(id);
 
+        }
+
+        public bool UpdateActivityOrder(int idorder, int idactivity)
+        {
+            return OrderDAO.UpdateActivityOrder(idorder, idactivity);
         }
 
         public bool UpdateOrder(OrderDTO order, OrderTicketDetailDTO order_ticket, OrderCampingGearDetailDTO order_camping_gear, OrderFoodDetailDTO order_food, OrderFoodComboDetailDTO order_foot_combo, OrderComboDetailDTO order_combo)

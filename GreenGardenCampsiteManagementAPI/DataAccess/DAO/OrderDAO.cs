@@ -35,6 +35,7 @@ namespace DataAccess.DAO
                             TotalAmount = o.TotalAmount,
                             AmountPayable = o.AmountPayable,
                             StatusOrder = o.StatusOrder,
+                            ActivityId=o.ActivityId,
                             ActivityName = o.Activity.ActivityName
                         })
                         .ToList();
@@ -293,6 +294,61 @@ namespace DataAccess.DAO
             }
             return order;
 
+        }
+
+        public static bool UpdateActivityOrder(int idorder, int idactivity)
+        {
+            try
+            {
+                using (var context = new GreenGardenContext())
+                {
+                    var order = context.Orders.FirstOrDefault(o => o.OrderId == idorder);
+                    if (order != null)
+                    {
+                        order.ActivityId = idactivity;
+                        context.SaveChanges();
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+
+            }
+        }
+
+        public static bool CancelDeposit(int id)
+        {
+            try
+            {
+                using (var context = new GreenGardenContext())
+                {
+                    var order = context.Orders.FirstOrDefault(o => o.OrderId == id);
+                    if ((order != null))
+                    {
+
+                        order.StatusOrder = false;
+                        order.AmountPayable = order.TotalAmount;
+                        order.Deposit = 0;
+                        context.SaveChanges();
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+
+            }
         }
     }
 }

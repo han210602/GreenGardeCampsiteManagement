@@ -11,11 +11,13 @@ namespace Repositories.Orders
      {
         List<OrderDTO> GetAllOrders();
         OrderDetailDTO GetOrderDetail(int id);
-        bool EnterDeposit(int id,decimal money);
+        bool EnterDeposit(int id, decimal money);
+        bool CancelDeposit(int id);
         bool DeleteOrder(int id);
+        bool UpdateActivityOrder(int idorder, int idactivity);
         bool CreateUniqueOrder(
              OrderDTO order
-            ,List<OrderTicketDetailDTO> order_ticket
+            , List<OrderTicketDetailDTO> order_ticket
             , List<OrderCampingGearDetailDTO> order_camping_gear
             , List<OrderFoodDetailDTO> order_food
             , List<OrderFoodComboDetailDTO> order_foot_combo

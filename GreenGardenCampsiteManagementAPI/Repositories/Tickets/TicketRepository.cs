@@ -28,5 +28,9 @@ namespace Repositories.Tickets
         {
             TicketDAO.UpdateTicket(ticketDto);
         }
+        public List<TicketCategoryDTO> GetAllTicketCategories()
+        {
+            return TicketDAO.GetAllTicketCategories();
+        }
     }
 }

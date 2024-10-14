@@ -64,6 +64,30 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+        [HttpPut("UpdateActivityOrder/{idorder}/{idactivity}")]
+        public IActionResult UpdateActivityOrder(int idorder, int idactivity)
+        {
+            try
+            {
+                return Ok(_repo.UpdateActivityOrder(idorder, idactivity));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+        [HttpPut("CancelDeposit/{id}")]
+        public IActionResult CancelDeposit(int id)
+        {
+            try
+            {
+                return Ok(_repo.CancelDeposit(id));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
         [HttpPut("DeleteOrder/{id}")]
         public IActionResult DeleteOrder(int id)
         {

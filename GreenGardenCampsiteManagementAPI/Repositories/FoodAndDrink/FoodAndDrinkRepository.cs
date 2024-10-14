@@ -27,5 +27,11 @@ namespace Repositories.FoodAndDrink
         {
             FoodAndDrinkDAO.UpdateFoodOrDrink(item); // Gọi phương thức trong DAO
         }
+
+        public List<FoodAndDrinkCategoryDTO> GetAllFoodAndDrinkCategories()
+        {
+            return FoodAndDrinkDAO.GetAllFoodAndDrinkCategories();
+
+        }
     }
 }

@@ -29,6 +29,19 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+        [HttpGet("GetAllFoodAndDrinkCategories")]
+        public IActionResult GetAllFoodAndDrinkCategories()
+        {
+            try
+            {
+                var items = _repo.GetAllFoodAndDrinkCategories();
+                return Ok(items);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
         [HttpGet("GetFoodAndDrinkByCategory/{categoryId}")]
         public IActionResult GetFoodAndDrinkByCategory(int categoryId)
         {

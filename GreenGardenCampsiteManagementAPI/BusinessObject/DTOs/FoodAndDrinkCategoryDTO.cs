@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace BusinessObject.DTOs
 {
-    internal class FoodAndDrinkCategoryDTO
+   public class FoodAndDrinkCategoryDTO
     {
+        public int CategoryId { get; set; }
+        public string CategoryName { get; set; } = null!;
+        public string? Description { get; set; }
+        public DateTime? CreatedAt { get; set; }
     }
 }

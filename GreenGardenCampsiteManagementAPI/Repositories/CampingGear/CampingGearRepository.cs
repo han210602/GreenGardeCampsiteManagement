@@ -29,5 +29,10 @@ namespace Repositories.CampingGear
         {
             return CampingGearDAO.GetCampingGearsByCategoryId(categoryId);
         }
+
+        public List<CampingCategoryDTO> GetAllCampingGearCategories()
+        {
+            return CampingGearDAO.GetAllCampingGearCategories();
+        }
     }
 }

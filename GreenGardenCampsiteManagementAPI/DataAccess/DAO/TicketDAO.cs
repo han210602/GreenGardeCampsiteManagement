@@ -66,5 +66,21 @@ namespace DataAccess.DAO
                 }).ToList();
             return tickets;
         }
+
+        public static List<TicketCategoryDTO> GetAllTicketCategories()
+        {
+            var tickets = context.TicketCategories
+
+                .Select(ticket => new TicketCategoryDTO
+                {
+                    TicketCategoryId = ticket.TicketCategoryId,
+                    TicketCategoryName = ticket.TicketCategoryName
+                    ,
+                    Description = ticket.Description,
+                    CreatedAt = ticket.CreatedAt,
+
+                }).ToList();
+            return tickets;
+        }
     }
 }
