@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Ky9\\SEP\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient.csproj": {}
+    "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient.csproj": {}
   },
   "projects": {
-    "E:\\Ky9\\SEP\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient.csproj": {
+    "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Ky9\\SEP\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient.csproj",
+        "projectUniqueName": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient.csproj",
         "projectName": "GreenGardenClient",
-        "projectPath": "E:\\Ky9\\SEP\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient.csproj",
-        "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-        "outputPath": "E:\\Ky9\\SEP\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient\\obj\\",
+        "projectPath": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient.csproj",
+        "packagesPath": "C:\\Users\\PCT\\.nuget\\packages\\",
+        "outputPath": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\PCT\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
@@ -35,11 +33,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -64,7 +57,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
         }
       }
     }

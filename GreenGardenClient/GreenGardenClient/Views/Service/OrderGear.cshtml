@@ -1,4 +1,9 @@
-﻿<!doctype html>
+﻿@using GreenGardenClient.Models;
+@{
+    var campingGears = ViewBag.CampingGears as List<CampingGearVM>;
+    var campingCategories = ViewBag.CampingCategories as List<CampingCategoryVM>;
+}
+<!doctype html>
 <html lang="en">
 
 <head>
@@ -105,6 +110,33 @@
                     display: block; /* Hiện menu thả xuống khi hover vào mục Services */
                 }
 
+                .sort-dropdown {
+                    margin: 20px 0; /* Khoảng cách trên và dưới */
+                }
+
+                    .sort-dropdown label {
+                        font-weight: bold;
+                        margin-right: 10px; /* Khoảng cách giữa label và dropdown */
+                    }
+
+                    .sort-dropdown select {
+                        padding: 10px; /* Khoảng cách bên trong cho dropdown */
+                        border: 1px solid #ccc; /* Đường viền */
+                        border-radius: 5px; /* Bo góc cho dropdown */
+                        background-color: #fff; /* Màu nền */
+                        font-size: 16px; /* Kích thước chữ */
+                        transition: border-color 0.3s; /* Hiệu ứng chuyển màu khi hover */
+                    }
+
+                        .sort-dropdown select:hover {
+                            border-color: #007bff; /* Đổi màu viền khi hover */
+                        }
+
+                        .sort-dropdown select:focus {
+                            outline: none; /* Bỏ viền mặc định khi dropdown được chọn */
+                            border-color: #007bff; /* Đổi màu viền khi được chọn */
+                        }
+
             </style>
             <script>
                 $(document).ready(function () {
@@ -136,15 +168,22 @@
             </div>
         </div>
 
-
-        <div class="site-section">
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const mainContent = document.getElementById('main-content');
+                if (mainContent) {
+                    mainContent.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        </script>
+        <div class="site-section" id="main-content">
             <div class="container">
                 <div class="row justify-content-center text-center">
                     <div class="col-md-7">
                         <div class="heading-39101 mb-5">
-                            <span class="backdrop text-center">Journey</span>
-                            <span class="subtitle-39191">Journey</span>
-                            <h3>Your Journey Starts Here</h3>
+                            <span class="backdrop text-center">GreenGarden</span>
+                            <span class="subtitle-39191">Dụng cụ</span>
+                            <h3>Danh sách dụng cụ</h3>
                         </div>
                     </div>
                 </div>
@@ -152,100 +191,97 @@
                     <!-- Cột bên trái: Danh sách category -->
                     <div class="col-lg-3 col-md-4 mb-4" data-aos="fade-up">
                         <div class="category-list">
-                            <h4 class="mb-4">Categories</h4>
+                            <h4 class="mb-4">Đồ Dùng</h4>
                             <ul class="list-group">
-                                <li class="list-group-item"><a href="#">All</a></li>
-                                <li class="list-group-item"><a href="#">Adventure</a></li>
-                                <li class="list-group-item"><a href="#">Nature</a></li>
-                                <li class="list-group-item"><a href="#">Wildlife</a></li>
-                                <li class="list-group-item"><a href="#">Cultural</a></li>
-                                <li class="list-group-item"><a href="#">Beach</a></li>
+                                <li class="list-group-item">
+                                    <a class="@(ViewBag.CurrentCategoryId == null ? "active-category" : "")"
+                                       href="@Url.Action("OrderGear", "Service", new { sortBy = ViewBag.SortBy })">Tất cả</a>
+                                </li>
+                                @foreach (var category in campingCategories)
+                                {
+                                    <li class="list-group-item">
+                                        <a class="@(ViewBag.CurrentCategoryId == category.GearCategoryId ? "active-category" : "")"
+                                           href="@Url.Action("OrderGear", "Service", new { categoryId = category.GearCategoryId, sortBy = ViewBag.SortBy })">
+                                            @category.GearCategoryName
+                                        </a>
+                                    </li>
+                                }
                             </ul>
                         </div>
                     </div>
 
                     <!-- Cột bên phải: Danh sách sản phẩm -->
                     <div class="col-lg-9 col-md-8">
+                        <div class="sort-dropdown">
+                            <label for="sort">Sắp xếp theo:</label>
+                            <select id="sort" onchange="sortCampingGears()">
+                                @if (ViewBag.SortBy == "1")
+                                {
+                                    <option value="0">Mặc định</option>
+                                    <option value="1" selected>Giá: Thấp đến Cao</option>
+                                    <option value="2">Giá: Cao đến Thấp</option>
+                                    <option value="3">Phổ biến</option>
+                                    <option value="4">Mới nhất</option>
+                                }
+                                else if (ViewBag.SortBy == "2")
+                                {
+                                    <option value="0">Mặc định</option>
+                                    <option value="1">Giá: Thấp đến Cao</option>
+                                    <option value="2" selected>Giá: Cao đến Thấp</option>
+                                    <option value="3">Phổ biến</option>
+                                    <option value="4">Mới nhất</option>
+                                }
+                                else if (ViewBag.SortBy == "3")
+                                {
+                                    <option value="0">Mặc định</option>
+                                    <option value="1">Giá: Thấp đến Cao</option>
+                                    <option value="2">Giá: Cao đến Thấp</option>
+                                    <option value="3" selected>Phổ biến</option>
+                                    <option value="4">Mới nhất</option>
+                                }
+                                else if (ViewBag.SortBy == "4")
+                                {
+                                    <option value="0">Mặc định</option>
+                                    <option value="1">Giá: Thấp đến Cao</option>
+                                    <option value="2">Giá: Cao đến Thấp</option>
+                                    <option value="3">Phổ biến</option>
+                                    <option value="4" selected>Mới nhất</option>
+                                }
+                                else
+                                {
+                                    <option value="0" selected>Mặc định</option>
+                                    <option value="1">Giá: Thấp đến Cao</option>
+                                    <option value="2">Giá: Cao đến Thấp</option>
+                                    <option value="3">Phổ biến</option>
+                                    <option value="4">Mới nhất</option>
+
+                                }
+
+                            </select>
+                        </div>
                         <div class="row">
-                            <!-- Hàng đầu tiên -->
-                            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
-                                <div class="listing-item">
-                                    <div class="listing-image">
-                                        <img src="~/images/img_1.jpg" alt="Image" class="img-fluid">
+                            @if (campingGears != null && campingGears.Any())
+                            {
+                                foreach (var item in campingGears)
+                                {
+                                    <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
+                                        <div class="listing-item">
+                                            <div class="listing-image">
+                                                <img src="~/images/img_1.jpg" alt="Image" class="img-fluid"> <!-- Cập nhật hình ảnh -->
+                                            </div>
+                                            <div class="listing-item-content">
+                                                <h2 class="px-3 mb-1 category bg-primary">@item.RentalPrice.ToString("N0") ₫</h2>
+                                                <h2 class="mb-2"><a href="@Url.Action("Detail", "CampingGear", new { id = item.GearId })">@item.GearName</a></h2> <!-- Thay đổi link sản phẩm -->
+                                                <a href="@Url.Action("Book", "CampingGear", new { id = item.GearId })" class="btn btn-primary">Đặt Ngay</a> <!-- Thay đổi link đặt hàng -->
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="listing-item-content">
-                                        <h2 class="px-3 mb-1 category bg-primary">$200.00</h2>
-                                        <h2 class="mb-2"><a href="trip-single.html">Dignissimos debitis</a></h2>
-                                        <a href="book.html" class="btn btn-primary">Đặt</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
-                                <div class="listing-item">
-                                    <div class="listing-image">
-                                        <img src="~/images/img_2.jpg" alt="Image" class="img-fluid">
-                                    </div>
-                                    <div class="listing-item-content">
-                                        <h2 class="px-3 mb-1 category bg-primary" href="#">$390.00</h2>
-                                        <h2 class="mb-2"><a href="trip-single.html">Consectetur adipisicing</a></h2>
-                                        <a href="book.html" class="btn btn-primary">Đặt</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
-                                <div class="listing-item">
-                                    <div class="listing-image">
-                                        <img src="~/images/img_3.jpg" alt="Image" class="img-fluid">
-                                    </div>
-                                    <div class="listing-item-content">
-                                        <h2 class="px-3 mb-1 category bg-primary" href="#">$180.00</h2>
-                                        <h2 class="mb-2"><a href="trip-single.html">Temporibus aperiam</a></h2>
-                                        <a href="book.html" class="btn btn-primary">Đặt</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Hàng thứ hai -->
-                            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
-                                <div class="listing-item">
-                                    <div class="listing-image">
-                                        <img src="~/images/img_4.jpg" alt="Image" class="img-fluid">
-                                    </div>
-                                    <div class="listing-item-content">
-                                        <h2 class="px-3 mb-1 category bg-primary" href="#">$600.00</h2>
-                                        <h2 class="mb-2"><a href="trip-single.html">Expedita fugiat</a></h2>
-                                        <a href="book.html" class="btn btn-primary">Đặt</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
-                                <div class="listing-item">
-                                    <div class="listing-image">
-                                        <img src="~/images/img_5.jpg" alt="Image" class="img-fluid">
-                                    </div>
-                                    <div class="listing-item-content">
-                                        <h2 class="px-3 mb-1 category bg-primary" href="#">$330.00</h2>
-                                        <h2 class="mb-2"><a href="trip-single.html">Consectetur adipisicing</a></h2>
-                                        <a href="book.html" class="btn btn-primary">Đặt</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
-                                <div class="listing-item">
-                                    <div class="listing-image">
-                                        <img src="~/images/img_6.jpg" alt="Image" class="img-fluid">
-                                    </div>
-                                    <div class="listing-item-content">
-                                        <h2 class="px-3 mb-1 category bg-primary" href="#">$450.00</h2>
-                                        <h2 class="mb-2"><a href="trip-single.html">Consectetur Amet</a></h2>
-                                        <a href="book.html" class="btn btn-primary">Đặt</a>
-                                    </div>
-                                </div>
-                            </div>
+                                }
+                            }
+                            else
+                            {
+                                <p>Không có dữ liệu để hiển thị.</p>
+                            }
                         </div>
                     </div>
                 </div>
@@ -254,6 +290,8 @@
         </div>
 
 
+
+</body>
         <footer class="site-footer bg-light">
             <div class="container">
                 <div class="row">
@@ -337,8 +375,15 @@
     <script src="~/js/aos.js"></script>
 
     <script src="~/js/main.js"></script>
+    <script>
+        function sortCampingGears() {
+            const sortValue = document.getElementById("sort").value;
+            const categoryId = '@ViewBag.CurrentCategoryId'; // Lấy categoryId hiện tại từ ViewBag nếu có
+            const url = `@Url.Action("OrderGear", "Service")?categoryId=${categoryId}&sortBy=${sortValue}`;
+            window.location.href = url;
+        }
 
-</body>
+    </script>
 
 </html>
 

@@ -3,6 +3,9 @@
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+// Đăng ký IHttpClientFactory
+builder.Services.AddHttpClient(); // Thêm dòng này để đăng ký IHttpClientFactory
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
