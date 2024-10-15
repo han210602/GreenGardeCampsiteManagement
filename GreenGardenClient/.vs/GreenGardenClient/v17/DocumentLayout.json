@@ -1,0 +1,258 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\admin\\Desktop\\GreenGardenClient\\GreenGardenClient\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\GreenGardenClient\\GreenGardenClient\\greengardenclient\\controllers\\commoncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\controllers\\commoncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\GreenGardenClient\\GreenGardenClient\\greengardenclient\\controllers\\servicecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\controllers\\servicecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\GreenGardenClient\\GreenGardenClient\\greengardenclient\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\GreenGardenClient\\GreenGardenClient\\greengardenclient\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\GreenGardenClient\\GreenGardenClient\\greengardenclient\\views\\service\\orderticket.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\views\\service\\orderticket.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\GreenGardenClient\\GreenGardenClient\\greengardenclient\\views\\service\\ordergear.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\views\\service\\ordergear.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\GreenGardenClient\\GreenGardenClient\\greengardenclient\\views\\service\\orderfoodanddrink.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\views\\service\\orderfoodanddrink.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\GreenGardenClient\\GreenGardenClient\\greengardenclient\\views\\service\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\views\\service\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|c:\\users\\admin\\desktop\\greengardenclient\\greengardenclient\\greengardenclient\\views\\service\\fooddetail.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\views\\service\\fooddetail.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|c:\\users\\admin\\desktop\\greengardenclient\\greengardenclient\\greengardenclient\\views\\common\\resetpassword.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\views\\common\\resetpassword.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\GreenGardenClient\\GreenGardenClient\\greengardenclient\\views\\common\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\views\\common\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\GreenGardenClient\\GreenGardenClient\\greengardenclient\\views\\common\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\views\\common\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\GreenGardenClient\\GreenGardenClient\\greengardenclient\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\GreenGardenClient\\GreenGardenClient\\greengardenclient\\views\\trips.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\views\\trips.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 318,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "OrderTicket.cshtml",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient\\Views\\Service\\OrderTicket.cshtml",
+              "RelativeDocumentMoniker": "GreenGardenClient\\Views\\Service\\OrderTicket.cshtml",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient\\Views\\Service\\OrderTicket.cshtml",
+              "RelativeToolTip": "GreenGardenClient\\Views\\Service\\OrderTicket.cshtml",
+              "ViewState": "AQIAACoAAAAAAAAAAAAuwHkAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-15T15:26:00.641Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "GreenGardenClient\\Views\\Home\\Index.cshtml",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "GreenGardenClient\\Views\\Home\\Index.cshtml",
+              "ViewState": "AQIAACoAAAAAAAAAAAAAAHoAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-15T15:26:00.651Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "CommonController.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient\\Controllers\\CommonController.cs",
+              "RelativeDocumentMoniker": "GreenGardenClient\\Controllers\\CommonController.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient\\Controllers\\CommonController.cs",
+              "RelativeToolTip": "GreenGardenClient\\Controllers\\CommonController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABoAAAAWAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-15T15:26:00.632Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ServiceController.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient\\Controllers\\ServiceController.cs",
+              "RelativeDocumentMoniker": "GreenGardenClient\\Controllers\\ServiceController.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient\\Controllers\\ServiceController.cs",
+              "RelativeToolTip": "GreenGardenClient\\Controllers\\ServiceController.cs",
+              "ViewState": "AQIAAAgAAAAAAAAAAAAAwBoAAAAWAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-15T15:26:00.648Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "GreenGardenClient\\Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "GreenGardenClient\\Controllers\\HomeController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-15T15:26:00.657Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "OrderGear.cshtml",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient\\Views\\Service\\OrderGear.cshtml",
+              "RelativeDocumentMoniker": "GreenGardenClient\\Views\\Service\\OrderGear.cshtml",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient\\Views\\Service\\OrderGear.cshtml",
+              "RelativeToolTip": "GreenGardenClient\\Views\\Service\\OrderGear.cshtml",
+              "ViewState": "AQIAAFoAAAAAAAAAAAAuwHkAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-15T15:26:00.639Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "OrderFoodAndDrink.cshtml",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient\\Views\\Service\\OrderFoodAndDrink.cshtml",
+              "RelativeDocumentMoniker": "GreenGardenClient\\Views\\Service\\OrderFoodAndDrink.cshtml",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient\\Views\\Service\\OrderFoodAndDrink.cshtml",
+              "RelativeToolTip": "GreenGardenClient\\Views\\Service\\OrderFoodAndDrink.cshtml",
+              "ViewState": "AQIAAFwAAAAAAAAAAAAuwHsAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-15T15:26:00.634Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "index.cshtml",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient\\Views\\Service\\index.cshtml",
+              "RelativeDocumentMoniker": "GreenGardenClient\\Views\\Service\\index.cshtml",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient\\Views\\Service\\index.cshtml",
+              "RelativeToolTip": "GreenGardenClient\\Views\\Service\\index.cshtml",
+              "ViewState": "AQIAAFoAAAAAAAAAAAAuwHkAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-15T15:26:00.645Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "FoodDetail.cshtml",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient\\Views\\Service\\FoodDetail.cshtml",
+              "RelativeDocumentMoniker": "GreenGardenClient\\Views\\Service\\FoodDetail.cshtml",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient\\Views\\Service\\FoodDetail.cshtml",
+              "RelativeToolTip": "GreenGardenClient\\Views\\Service\\FoodDetail.cshtml",
+              "ViewState": "AQIAAGUAAAAAAAAAAAAuwIQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-15T16:01:53.895Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "ResetPassword.cshtml",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient\\Views\\Common\\ResetPassword.cshtml",
+              "RelativeDocumentMoniker": "GreenGardenClient\\Views\\Common\\ResetPassword.cshtml",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient\\Views\\Common\\ResetPassword.cshtml",
+              "RelativeToolTip": "GreenGardenClient\\Views\\Common\\ResetPassword.cshtml",
+              "ViewState": "AQIAAGMAAAAAAAAAAAAuwIIAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-15T15:25:59.997Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Register.cshtml",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient\\Views\\Common\\Register.cshtml",
+              "RelativeDocumentMoniker": "GreenGardenClient\\Views\\Common\\Register.cshtml",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient\\Views\\Common\\Register.cshtml",
+              "RelativeToolTip": "GreenGardenClient\\Views\\Common\\Register.cshtml",
+              "ViewState": "AQIAAGMAAAAAAAAAAAAuwIIAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-15T15:26:00.624Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Login.cshtml",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient\\Views\\Common\\Login.cshtml",
+              "RelativeDocumentMoniker": "GreenGardenClient\\Views\\Common\\Login.cshtml",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient\\Views\\Common\\Login.cshtml",
+              "RelativeToolTip": "GreenGardenClient\\Views\\Common\\Login.cshtml",
+              "ViewState": "AQIAACkAAAAAAAAAAAAuwIIAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-15T15:26:00.629Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient\\Program.cs",
+              "RelativeDocumentMoniker": "GreenGardenClient\\Program.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient\\Program.cs",
+              "RelativeToolTip": "GreenGardenClient\\Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-15T15:26:00.637Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "trips.html",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient\\Views\\trips.html",
+              "RelativeDocumentMoniker": "GreenGardenClient\\Views\\trips.html",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient\\Views\\trips.html",
+              "RelativeToolTip": "GreenGardenClient\\Views\\trips.html",
+              "ViewState": "AQIAAPoAAAAAAAAAAAAowCYBAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2024-10-15T15:26:00.644Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

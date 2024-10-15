@@ -1,0 +1,245 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Login &mdash; Website Template by Colorlib</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,700,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/fonts/icomoon/style.css">
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="~/css/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="~/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="~/fonts/flaticon/font/flaticon.css">
+    <link rel="stylesheet" href="~/css/aos.css">
+    <link rel="stylesheet" href="~/css/style.css">
+
+    <style>
+        .form-container {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 80%; /* Đặt chiều rộng form là 80% */
+        }
+
+        .bg-image {
+            background-image: url('~/images/hero_1.jpg');
+            background-size: cover;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .footer-heading {
+            color: #333;
+        }
+
+            .footer-heading a {
+                color: #666;
+            }
+    </style>
+</head>
+
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+    <div class="site-wrap" id="home-section">
+        <header class="site-navbar site-navbar-target" role="banner">
+            <div class="container">
+                <div class="row align-items-center position-relative">
+                    <div class="col-3 ">
+                        <div class="site-logo">
+                            <a href="index.html" class="font-weight-bold">
+                                <img src="~/images/logo.png" alt="Image" class="img-fluid">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-9 text-right">
+                        <nav class="site-navigation text-right ml-auto d-none d-lg-block" role="navigation">
+                            <ul class="site-menu main-menu js-clone-nav ml-auto ">
+                                <li><a href="/Home" class="nav-link">Trang chủ</a></li>
+                                <li><a href="about.html" class="nav-link">Sự kiện</a></li>
+                                <li class="has-dropdown">
+                                    <a href="/Service" class="nav-link">Dịch vụ</a>
+                                    <ul class="dropdown">
+                                        <li><a href="/Service/OrderTicket" class="nav-link">Danh sách vé</a></li>
+                                        <li><a href="/Service/OrderFoodAndDrink" class="nav-link">Danh sách đồ ăn</a></li>
+                                        <li><a href="/Service/OrderGear" class="nav-link">Danh sách dụng cụ</a></li>
+                                    </ul>
+                                </li>
+
+                                <li><a href="blog.html" class="nav-link">Liên hệ</a></li>
+                                <li>
+                                    <a href="/Common/Login" class="nav-link">Đăng nhập</a>
+                                    <a href="/Common/Register" class="nav-link">Đăng Ký</a>
+                                </li>
+
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <style>
+                .site-menu .dropdown {
+                    display: none; /* Ẩn menu thả xuống */
+                    position: absolute; /* Để menu thả xuống xuất hiện bên dưới mục Services */
+                    text-align: center;
+                    background: #f0f0f0; /* Màu nền xám nhẹ cho menu thả xuống */
+                    padding: 10px; /* Khoảng cách bên trong */
+                    z-index: 999; /* Đảm bảo nó nằm trên các phần tử khác */
+                }
+
+
+                    .site-menu .dropdown li {
+                        display: block; /* Hiển thị các mục theo chiều dọc */
+                        margin: 5px 0; /* Khoảng cách giữa các mục theo chiều dọc */
+                    }
+
+                        .site-menu .dropdown li a {
+                            padding: 5px 10px; /* Thêm khoảng cách bên trong cho các liên kết */
+                            text-decoration: none; /* Bỏ gạch chân cho các liên kết */
+                            color: #333; /* Màu chữ cho các liên kết */
+                            transition: background-color 0.3s; /* Hiệu ứng chuyển màu nền */
+                        }
+
+                            .site-menu .dropdown li a:hover {
+                                background-color: #e0e0e0; /* Màu nền khi hover vào các liên kết */
+                            }
+
+                .site-menu .has-dropdown:hover .dropdown {
+                    display: block; /* Hiện menu thả xuống khi hover vào mục Services */
+                }
+
+            </style>
+            <script>
+                $(document).ready(function () {
+                    $('.has-dropdown').hover(
+                        function () {
+                            $(this).find('.dropdown').stop(true, true).slideDown(200);
+                        },
+                        function () {
+                            $(this).find('.dropdown').stop(true, true).slideUp(200);
+                        }
+                    );
+                });
+            </script>
+        </header>
+        <div class="site-section">
+            <div class="container-fluid">
+                <div class="row">
+                    <!-- Thiết lập chiều cao cho hàng -->
+                    <!-- Phía bên trái: Logo hoặc hình ảnh -->
+                    <div class="col-md-6 d-flex align-items-center justify-content-center">
+                        <div class="text-center text-white">
+                            <h1 class="display-4">Chaof mừng đến với chúng tôi</h1>
+                        </div>
+                    </div>
+
+                    <!-- Phía bên phải: Form đăng nhập -->
+                    <div class="col-md-6 d-flex align-items-center justify-content-center">
+                        <form class="p-5 bg-light" style="border-radius: 10px; width: 400px;">
+                            <h2 class="text-center">Đăng Nhập</h2>
+
+                            <div class="form-group">
+                                <label for="email">Email:</label>
+                                <input type="email" class="form-control" id="email" placeholder="Nhập email của bạn" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Mật khẩu:</label>
+                                <input type="password" class="form-control" id="password" placeholder="Nhập mật khẩu" required>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-block">Đăng Nhập</button>
+                            <p class="text-center mt-3"><a href="#">Quên mật khẩu?</a></p>
+                            <p class="text-center">Chưa có tài khoản? <a href="#">Đăng ký</a></p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <footer class="site-footer bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <h2 class="footer-heading mb-3">Instagram</h2>
+                        <div class="row">
+                            <div class="col-4 gal_col">
+                                <a href="#"><img src="~/images/insta_1.jpg" alt="Image" class="img-fluid"></a>
+                            </div>
+                            <div class="col-4 gal_col">
+                                <a href="#"><img src="~/images/insta_2.jpg" alt="Image" class="img-fluid"></a>
+                            </div>
+                            <div class="col-4 gal_col">
+                                <a href="#"><img src="~/images/insta_3.jpg" alt="Image" class="img-fluid"></a>
+                            </div>
+                            <div class="col-4 gal_col">
+                                <a href="#"><img src="~/images/insta_4.jpg" alt="Image" class="img-fluid"></a>
+                            </div>
+                            <div class="col-4 gal_col">
+                                <a href="#"><img src="~/images/insta_5.jpg" alt="Image" class="img-fluid"></a>
+                            </div>
+                            <div class="col-4 gal_col">
+                                <a href="#"><img src="~/images/insta_6.jpg" alt="Image" class="img-fluid"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8 ml-auto">
+                        <div class="row">
+                            <div class="col-lg-6 ml-auto">
+                                <h2 class="footer-heading mb-4">Quick Links</h2>
+                                <ul class="list-unstyled">
+                                    <li><a href="#">About Us</a></li>
+                                    <li><a href="#">Testimonials</a></li>
+                                    <li><a href="#">Terms of Service</a></li>
+                                    <li><a href="#">Privacy</a></li>
+                                    <li><a href="#">Contact Us</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-6">
+                                <h2 class="footer-heading mb-4">Newsletter</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt odio iure animi ullam quam, deleniti rem!</p>
+                                <form action="#" class="d-flex" class="subscribe">
+                                    <input type="text" class="form-control mr-3" placeholder="Email">
+                                    <input type="submit" value="Send" class="btn btn-primary">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row pt-5 mt-5 text-center">
+                    <div class="col-md-12">
+                        <div class="border-top pt-5">
+                            <p>
+                                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart text-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="~/js/jquery-3.3.1.min.js"></script>
+    <script src="~/js/jquery-migrate-3.0.0.js"></script>
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/owl.carousel.min.js"></script>
+    <script src="~/js/jquery.sticky.js"></script>
+    <script src="~/js/jquery.waypoints.min.js"></script>
+    <script src="~/js/jquery.animateNumber.min.js"></script>
+    <script src="~/js/jquery.fancybox.min.js"></script>
+    <script src="~/js/jquery.stellar.min.js"></script>
+    <script src="~/js/jquery.easing.1.3.js"></script>
+    <script src="~/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/js/isotope.pkgd.min.js"></script>
+    <script src="~/js/aos.js"></script>
+    <script src="~/js/main.js"></script>
+</body>
+
+</html>
