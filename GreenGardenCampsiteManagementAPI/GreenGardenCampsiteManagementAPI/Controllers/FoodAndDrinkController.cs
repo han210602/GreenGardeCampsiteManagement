@@ -42,17 +42,13 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
-        [HttpGet("GetFoodAndDrinkByCategory/{categoryId}")]
-        public IActionResult GetFoodAndDrinkByCategory(int categoryId)
+        [HttpGet("GetFoodAndDrinksBySort")]
+        public IActionResult GetFoodAndDrinksBySort([FromQuery] int? categoryId, [FromQuery] int? sortBy)
         {
             try
             {
-                var tickets = _repo.GetFADByCategoryId(categoryId);
-                if (tickets == null || tickets.Count == 0)
-                {
-                    return NotFound("No FoodAndDrink found for the specified category ID.");
-                }
-                return Ok(tickets);
+                var campingGears = _repo.GetFoodAndDrinksBySort(categoryId, sortBy);
+                return Ok(campingGears);
             }
             catch (Exception ex)
             {

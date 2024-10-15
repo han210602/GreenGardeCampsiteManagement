@@ -12,7 +12,7 @@ namespace Repositories.FoodAndDrink
         List<FoodAndDrinkDTO> GetAllFoodAndDrink();
         List<FoodAndDrinkCategoryDTO> GetAllFoodAndDrinkCategories();
 
-        List<FoodAndDrinkDTO> GetFADByCategoryId(int categoryId);
+        List<FoodAndDrinkDTO> GetFoodAndDrinksBySort(int? categoryId, int? sortBy);
         void AddFoodOrDrink(AddFoodOrDrinkDTO item);
         void UpdateFoodOrDrink(UpdateFoodOrDrinkDTO item);
     }

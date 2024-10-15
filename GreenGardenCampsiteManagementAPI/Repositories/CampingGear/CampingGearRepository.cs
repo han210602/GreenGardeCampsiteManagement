@@ -25,14 +25,15 @@ namespace Repositories.CampingGear
             CampingGearDAO.UpdateCampingGear(gearDto);
         }
 
-        public List<CampingGearDTO> GetCampingGearsByCategoryId(int categoryId)
-        {
-            return CampingGearDAO.GetCampingGearsByCategoryId(categoryId);
-        }
+     
 
         public List<CampingCategoryDTO> GetAllCampingGearCategories()
         {
             return CampingGearDAO.GetAllCampingGearCategories();
+        }
+        public List<CampingGearDTO> GetCampingGearsBySort(int? categoryId, int? sortBy)
+        {
+            return CampingGearDAO.GetCampingGearsBySort(categoryId, sortBy);
         }
     }
 }

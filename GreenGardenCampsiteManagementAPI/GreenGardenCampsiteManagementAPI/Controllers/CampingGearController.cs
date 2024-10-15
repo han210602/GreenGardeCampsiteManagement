@@ -79,24 +79,19 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-
-        [HttpGet("GetCampingGearsByCategoryId/{categoryId}")]
-        public IActionResult GetCampingGearsByCategoryId(int categoryId)
+        [HttpGet("GetCampingGearsBySort")]
+        public IActionResult GetCampingGearsBySort([FromQuery] int? categoryId, [FromQuery] int? sortBy)
         {
             try
             {
-                var campingGears = _repo.GetCampingGearsByCategoryId(categoryId);
-                if (campingGears == null || campingGears.Count == 0)
-                {
-                    return NotFound("No camping gear found for the specified category ID.");
-                }
-
+                var campingGears = _repo.GetCampingGearsBySort(categoryId, sortBy);
                 return Ok(campingGears);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+
     }
 }

@@ -43,7 +43,7 @@ namespace BusinessObject.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string connectionString = "server=.;database=GreenGarden;uid=sa;pwd=123;TrustServerCertificate=True";
+            string connectionString = "server=MSI\\SQL2019;database=GreenGarden;uid=sa;pwd=123;TrustServerCertificate=True";
             optionsBuilder.UseSqlServer(connectionString);
 
         }

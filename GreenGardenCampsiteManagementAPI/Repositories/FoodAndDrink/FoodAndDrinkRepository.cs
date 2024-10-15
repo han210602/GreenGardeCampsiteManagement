@@ -14,10 +14,7 @@ namespace Repositories.FoodAndDrink
         {
             return FoodAndDrinkDAO.GetAllFoodAndDrink();
         }
-        public List<FoodAndDrinkDTO> GetFADByCategoryId(int categoryId)
-        {
-            return FoodAndDrinkDAO.GetFADByCategoryId(categoryId);
-        }
+       
         public void AddFoodOrDrink(AddFoodOrDrinkDTO item)
         {
             FoodAndDrinkDAO.AddFoodAndDrink(item);
@@ -32,6 +29,10 @@ namespace Repositories.FoodAndDrink
         {
             return FoodAndDrinkDAO.GetAllFoodAndDrinkCategories();
 
+        }
+        public List<FoodAndDrinkDTO> GetFoodAndDrinksBySort(int? categoryId, int? sortBy)
+        {
+            return FoodAndDrinkDAO.GetFoodAndDrinksBySort(categoryId, sortBy);
         }
     }
 }

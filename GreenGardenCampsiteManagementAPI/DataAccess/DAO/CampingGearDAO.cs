@@ -65,24 +65,7 @@ namespace DataAccess.DAO
             campingGear.ImgUrl = gearDto.ImgUrl;
             context.SaveChanges();
         }
-        public static List<CampingGearDTO> GetCampingGearsByCategoryId(int categoryId)
-        {
-            var campingGears = context.CampingGears
-                .Include(gear => gear.GearCategory)
-                .Where(gear => gear.GearCategoryId == categoryId)
-                .Select(gear => new CampingGearDTO
-                {
-                    GearId = gear.GearId,
-                    GearName = gear.GearName,
-                    QuantityAvailable = gear.QuantityAvailable,
-                    RentalPrice = gear.RentalPrice,
-                    Description = gear.Description,
-                    CreatedAt = gear.CreatedAt,
-                    GearCategoryName = gear.GearCategory.GearCategoryName,
-                    ImgUrl = gear.ImgUrl
-                }).ToList();
-            return campingGears;
-        }
+    
 
         public static List<CampingCategoryDTO> GetAllCampingGearCategories()
         {
@@ -97,5 +80,64 @@ namespace DataAccess.DAO
                 }).ToList();
             return campingGears;
         }
+
+        public static List<CampingGearDTO> GetCampingGearsBySort(int? categoryId, int? sortBy)
+        {
+            var query = context.CampingGears
+                .Include(gear => gear.GearCategory)
+                .AsQueryable();
+
+            // Lọc theo danh mục nếu categoryId được cung cấp
+            if (categoryId.HasValue)
+            {
+                query = query.Where(gear => gear.GearCategoryId == categoryId.Value);
+            }
+
+            // Kiểm tra và sắp xếp theo tiêu chí được chỉ định
+            if (sortBy.HasValue)
+            {
+                switch (sortBy.Value)
+                {
+                    case 1: // Sắp xếp theo giá từ thấp đến cao
+                        query = query.OrderBy(gear => gear.RentalPrice);
+                        break;
+                    case 2: // Sắp xếp theo giá từ cao đến thấp
+                        query = query.OrderByDescending(gear => gear.RentalPrice);
+                        break;
+                    case 3: // Sắp xếp theo ngày tạo mới nhất
+                        query = query.OrderByDescending(gear => gear.CreatedAt);
+                        break;
+                    case 4: // Sắp xếp theo độ phổ biến
+                        query = query.OrderByDescending(gear => gear.QuantityAvailable); // hoặc một tiêu chí khác
+                        break;
+                    default:
+                        // Không thực hiện sắp xếp nếu sortBy không hợp lệ
+                        break;
+                }
+            }
+            else
+            {
+                
+                query = query; 
+
+            // Chọn các thuộc tính cần thiết
+            var campingGears = query.Select(gear => new CampingGearDTO
+            {
+                GearId = gear.GearId,
+                GearName = gear.GearName,
+                QuantityAvailable = gear.QuantityAvailable,
+                RentalPrice = gear.RentalPrice,
+                Description = gear.Description,
+                CreatedAt = gear.CreatedAt,
+                GearCategoryName = gear.GearCategory.GearCategoryName,
+                ImgUrl = gear.ImgUrl
+            }).ToList();
+
+            return campingGears;
+        }
+
+
     }
+
 }
+

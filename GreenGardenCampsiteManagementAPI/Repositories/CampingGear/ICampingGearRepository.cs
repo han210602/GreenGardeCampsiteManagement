@@ -14,6 +14,6 @@ namespace Repositories.CampingGear
 
         void AddCampingGear(AddCampingGearDTO gearDto);
         void UpdateCampingGear(UpdateCampingGearDTO gearDto);
-        List<CampingGearDTO> GetCampingGearsByCategoryId(int categoryId);
+        List<CampingGearDTO> GetCampingGearsBySort(int? categoryId, int? sortBy);
     }
 }
