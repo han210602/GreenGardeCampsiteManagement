@@ -117,8 +117,9 @@ namespace DataAccess.DAO
             }
             else
             {
-                
+                // Sắp xếp mặc định nếu sortBy là null
                 query = query; 
+            }
 
             // Chọn các thuộc tính cần thiết
             var campingGears = query.Select(gear => new CampingGearDTO
