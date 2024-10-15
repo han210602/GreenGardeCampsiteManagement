@@ -9,65 +9,69 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = GreenGardenCampsiteClient
 build_property.RootNamespace = GreenGardenCampsiteClient
-build_property.ProjectDir = D:\GreenGardenCampsiteClient\GreenGardenCampsiteClient\
+build_property.ProjectDir = D:\SEP490\GreenGardenCampsiteManagement\GreenGardenCampsiteClient\GreenGardenCampsiteClient\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = D:\GreenGardenCampsiteClient\GreenGardenCampsiteClient
+build_property.MSBuildProjectDirectory = D:\SEP490\GreenGardenCampsiteManagement\GreenGardenCampsiteClient\GreenGardenCampsiteClient
 build_property._RazorSourceGeneratorDebug = 
 
-[D:/GreenGardenCampsiteClient/GreenGardenCampsiteClient/Views/Common/BookingCampingGear.cshtml]
+[D:/SEP490/GreenGardenCampsiteManagement/GreenGardenCampsiteClient/GreenGardenCampsiteClient/Views/Common/BookingCampingGear.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tbW9uXEJvb2tpbmdDYW1waW5nR2Vhci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/GreenGardenCampsiteClient/GreenGardenCampsiteClient/Views/Common/BookingCombo.cshtml]
+[D:/SEP490/GreenGardenCampsiteManagement/GreenGardenCampsiteClient/GreenGardenCampsiteClient/Views/Common/BookingCombo.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tbW9uXEJvb2tpbmdDb21iby5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/GreenGardenCampsiteClient/GreenGardenCampsiteClient/Views/Common/BookingFoodandDrink.cshtml]
+[D:/SEP490/GreenGardenCampsiteManagement/GreenGardenCampsiteClient/GreenGardenCampsiteClient/Views/Common/BookingFoodandDrink.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tbW9uXEJvb2tpbmdGb29kYW5kRHJpbmsuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/GreenGardenCampsiteClient/GreenGardenCampsiteClient/Views/Common/BookingTicket.cshtml]
+[D:/SEP490/GreenGardenCampsiteManagement/GreenGardenCampsiteClient/GreenGardenCampsiteClient/Views/Common/BookingTicket.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tbW9uXEJvb2tpbmdUaWNrZXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/GreenGardenCampsiteClient/GreenGardenCampsiteClient/Views/Common/Home.cshtml]
+[D:/SEP490/GreenGardenCampsiteManagement/GreenGardenCampsiteClient/GreenGardenCampsiteClient/Views/Common/Home.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tbW9uXEhvbWUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/GreenGardenCampsiteClient/GreenGardenCampsiteClient/Views/Common/Index.cshtml]
+[D:/SEP490/GreenGardenCampsiteManagement/GreenGardenCampsiteClient/GreenGardenCampsiteClient/Views/Common/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tbW9uXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/GreenGardenCampsiteClient/GreenGardenCampsiteClient/Views/Common/Login.cshtml]
+[D:/SEP490/GreenGardenCampsiteManagement/GreenGardenCampsiteClient/GreenGardenCampsiteClient/Views/Common/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tbW9uXExvZ2luLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/GreenGardenCampsiteClient/GreenGardenCampsiteClient/Views/Common/Register.cshtml]
+[D:/SEP490/GreenGardenCampsiteManagement/GreenGardenCampsiteClient/GreenGardenCampsiteClient/Views/Common/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tbW9uXFJlZ2lzdGVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/GreenGardenCampsiteClient/GreenGardenCampsiteClient/Views/Common/Service.cshtml]
+[D:/SEP490/GreenGardenCampsiteManagement/GreenGardenCampsiteClient/GreenGardenCampsiteClient/Views/Common/ResetPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tbW9uXFJlc2V0UGFzc3dvcmQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SEP490/GreenGardenCampsiteManagement/GreenGardenCampsiteClient/GreenGardenCampsiteClient/Views/Common/Service.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tbW9uXFNlcnZpY2UuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/GreenGardenCampsiteClient/GreenGardenCampsiteClient/Views/Shared/Error.cshtml]
+[D:/SEP490/GreenGardenCampsiteManagement/GreenGardenCampsiteClient/GreenGardenCampsiteClient/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/GreenGardenCampsiteClient/GreenGardenCampsiteClient/Views/Shared/_ValidationScriptsPartial.cshtml]
+[D:/SEP490/GreenGardenCampsiteManagement/GreenGardenCampsiteClient/GreenGardenCampsiteClient/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/GreenGardenCampsiteClient/GreenGardenCampsiteClient/Views/_ViewImports.cshtml]
+[D:/SEP490/GreenGardenCampsiteManagement/GreenGardenCampsiteClient/GreenGardenCampsiteClient/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/GreenGardenCampsiteClient/GreenGardenCampsiteClient/Views/_ViewStart.cshtml]
+[D:/SEP490/GreenGardenCampsiteManagement/GreenGardenCampsiteClient/GreenGardenCampsiteClient/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/GreenGardenCampsiteClient/GreenGardenCampsiteClient/Views/Shared/_Layout.cshtml]
+[D:/SEP490/GreenGardenCampsiteManagement/GreenGardenCampsiteClient/GreenGardenCampsiteClient/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-cyte8i188w

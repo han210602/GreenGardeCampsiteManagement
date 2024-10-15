@@ -2452,26 +2452,25 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ADMIN\\.nuget\\packages\\": {}
+    "C:\\Users\\PCT\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient.csproj",
+      "projectUniqueName": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient.csproj",
       "projectName": "GreenGardenCampsiteClient",
-      "projectPath": "D:\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient.csproj",
-      "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-      "outputPath": "D:\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\obj\\",
+      "projectPath": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient.csproj",
+      "packagesPath": "C:\\Users\\PCT\\.nuget\\packages\\",
+      "outputPath": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\PCT\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

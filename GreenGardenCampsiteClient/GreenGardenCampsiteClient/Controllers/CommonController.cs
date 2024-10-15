@@ -1,5 +1,7 @@
 ﻿using GreenGardenCampsiteClient.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
@@ -25,8 +27,45 @@ namespace GreenGardenCampsiteClient.Controllers
             return View();
         }
 
-        public IActionResult BookingFoodandDrink()
+        public async Task<IActionResult> BookingFoodAndDrink()
         {
+            var foodAndDrink = await GetDataFromApiAsync<List<FoodAndDrinkVM>>("https://localhost:7298/api/FoodAndDrink/GetAllFoodAndDrink");
+
+            // Lấy danh sách danh mục thiết bị cắm trại
+            var foodAndDrinkCategories = await GetDataFromApiAsync<List<FoodAndDrinkCategoryVM>>("https://localhost:7298/api/FoodAndDrink/GetAllFoodAndDrinkCategories");
+
+            // Đưa dữ liệu vào ViewBag
+            ViewBag.FoodAndDrink = foodAndDrink;
+            ViewBag.FoodAndDrinkCategories = foodAndDrinkCategories;  // Thêm danh sách danh mục vào ViewBag
+
+            return View();
+            
+        }
+        [HttpGet]
+        [Route("booking-food-drink")]
+        public async Task<IActionResult> BookingFoodAndDrink(int? categoryId, int? sortBy)
+        {
+            ViewBag.CurrentCategoryId = categoryId; // Lưu lại categoryId hiện tại để hiển thị active
+
+            // Xây dựng URL cho API
+            string apiUrl = $"https://localhost:7298/api/FoodAndDrink/GetFoodAndDrinksBySort?";
+
+            if (categoryId.HasValue)
+            {
+                apiUrl += $"categoryId={categoryId.Value}&";
+            }
+
+            if (sortBy.HasValue)
+            {
+                apiUrl += $"sortBy={sortBy.Value}";
+            }
+
+            var foodAndDrink = await GetDataFromApiAsync<List<FoodAndDrinkVM>>(apiUrl);
+            var foodAndDrinkCategories = await GetDataFromApiAsync<List<FoodAndDrinkCategoryVM>>("https://localhost:7298/api/FoodAndDrink/GetAllFoodAndDrinkCategories");
+            ViewBag.SortBy = sortBy.HasValue ? sortBy.Value.ToString() : "0";
+            ViewBag.FoodAndDrink = foodAndDrink;
+            ViewBag.FoodAndDrinkCategories = foodAndDrinkCategories;
+
             return View();
         }
 
@@ -36,7 +75,71 @@ namespace GreenGardenCampsiteClient.Controllers
         }
 
 
-        public IActionResult BookingCampingGear()
+        public async Task<IActionResult> BookingCampingGear()
+        {
+            // Lấy danh sách thiết bị cắm trại
+            var campingGears = await GetDataFromApiAsync<List<CampingGearVM>>("https://localhost:7298/api/CampingGear/GetAllCampingGears");
+
+            // Lấy danh sách danh mục thiết bị cắm trại
+            var campingCategories = await GetDataFromApiAsync<List<CampingCategoryVM>>("https://localhost:7298/api/CampingGear/GetAllCampingGearCategories");
+
+            // Đưa dữ liệu vào ViewBag
+            ViewBag.CampingGears = campingGears;
+            ViewBag.CampingCategories = campingCategories;  // Thêm danh sách danh mục vào ViewBag
+
+            return View();
+        }
+        [HttpGet]
+        [Route("booking-camping-gear")]
+        public async Task<IActionResult> BookingCampingGear(int? categoryId, int? sortBy)
+        {
+            ViewBag.CurrentCategoryId = categoryId; // Lưu lại categoryId hiện tại để hiển thị active
+
+            // Xây dựng URL cho API
+            string apiUrl = $"https://localhost:7298/api/CampingGear/GetCampingGearsBySort?";
+
+            if (categoryId.HasValue)
+            {
+                apiUrl += $"categoryId={categoryId.Value}&";
+            }
+
+            if (sortBy.HasValue)
+            {
+                apiUrl += $"sortBy={sortBy.Value}";
+            }
+
+            var campingGears = await GetDataFromApiAsync<List<CampingGearVM>>(apiUrl);
+            var campingCategories = await GetDataFromApiAsync<List<CampingCategoryVM>>("https://localhost:7298/api/CampingGear/GetAllCampingGearCategories");
+            ViewBag.SortBy = sortBy.HasValue ? sortBy.Value.ToString() : "0";
+            ViewBag.CampingGears = campingGears;
+            ViewBag.CampingCategories = campingCategories;
+
+            return View();
+        }
+
+
+
+
+
+        private async Task<T> GetDataFromApiAsync<T>(string apiUrl)
+        {
+            using (var client = _clientFactory.CreateClient())
+            {
+                var response = await client.GetAsync(apiUrl);
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = await response.Content.ReadFromJsonAsync<T>();
+                    return data!;
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = $"Không thể lấy dữ liệu từ API: {response.StatusCode}";
+                    return default!;
+                }
+            }
+        }
+
+        public IActionResult ResetPassword()
         {
             return View();
         }
@@ -252,7 +355,42 @@ namespace GreenGardenCampsiteClient.Controllers
         }
 
 
+        [HttpPost]
+        public async Task<IActionResult> ForgotPassword(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                ViewBag.Message = "Vui lòng nhập email.";
+                return View("ResetPassword"); // Return to the ResetPassword view with the message
+            }
 
+            try
+            {
+                // Create an HttpClient instance using _clientFactory
+                var client = _clientFactory.CreateClient();
+
+                // Call the API to send the reset password email
+                var response = await client.PostAsync($"https://localhost:7298/api/Account/SendResetPasswordEmail/{email}", null);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    ViewBag.Message = "Đã gửi email đặt lại mật khẩu. Vui lòng kiểm tra email của bạn.";
+                    return RedirectToAction("Home"); // Redirect to Home if the email was sent successfully
+                }
+                else
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    ViewBag.Message = $"Không thể gửi email đặt lại mật khẩu: {errorContent}";
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = $"Đã xảy ra lỗi: {ex.Message}";
+            }
+
+            return View("ResetPassword"); // Return to ResetPassword view with the error message if needed
+        }
+       
         public IActionResult BookingCombo()
         {
 
