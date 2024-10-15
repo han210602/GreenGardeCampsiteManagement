@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Rxyc5Diz9xvyf49r4Rr+thYl8Sd/dj4i2ydQt+2MFzs=",
+  "Hash": "SAsxphqL5VdsyHblR/GHFW0FX7JmIMdSclKu1MDGopI=",
   "Source": "GreenGardenCampsiteClient",
   "BasePath": "_content/GreenGardenCampsiteClient",
   "Mode": "Default",
@@ -243,6 +243,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\Admin\\ordermanagement.js"
+    },
+    {
+      "Identity": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\wwwroot\\js\\Admin\\ordertickets.js",
+      "SourceId": "GreenGardenCampsiteClient",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\wwwroot\\",
+      "BasePath": "_content/GreenGardenCampsiteClient",
+      "RelativePath": "js/Admin/ordertickets.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\Admin\\ordertickets.js"
     },
     {
       "Identity": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\wwwroot\\js\\site.js",

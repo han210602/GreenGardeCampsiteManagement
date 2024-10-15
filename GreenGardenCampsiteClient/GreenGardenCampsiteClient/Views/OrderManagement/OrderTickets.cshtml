@@ -1,101 +1,235 @@
-﻿<!DOCTYPE html>
+﻿@if (ViewBag.Notification != null)
+{
+    <div id="notification" class="notification">
+        @ViewBag.Notification
+    </div>
+}
+
+@section Scripts {
+    <script>
+        // Nếu có thông báo (không null), hiển thị thông báo
+        var notificationMessage = "@ViewBag.Notification";
+        if (notificationMessage) {
+            var notificationElement = document.getElementById("notification");
+
+            // Hiển thị thông báo với hiệu ứng fade in
+            notificationElement.style.display = "block"; // Hiển thị phần tử
+            setTimeout(function () {
+                notificationElement.classList.add("show");
+            }, 100); // Trễ 100ms để đảm bảo CSS transition hoạt động
+
+            // Ẩn thông báo sau 3 giây (hiệu ứng mờ dần)
+            setTimeout(function () {
+                notificationElement.classList.remove("show");
+                notificationElement.classList.add("hide");
+
+                // Sau khi hiệu ứng fade out hoàn tất, ẩn thông báo hoàn toàn
+                setTimeout(function () {
+                    notificationElement.style.display = "none";
+                }, 1000); // Chờ 1 giây để hiệu ứng mờ hoàn tất
+            }, 3000); // Thông báo hiển thị trong 3 giây trước khi bắt đầu fade out
+        }
+    </script>
+    <style>
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+            width: 250px;
+            opacity: 0; /* Ban đầu thông báo bị ẩn */
+            transition: opacity 1s ease-in-out; /* Hiệu ứng fade in và fade out */
+        }
+
+            .notification.show {
+                opacity: 1; /* Hiển thị thông báo */
+            }
+
+            .notification.hide {
+                opacity: 0; /* Mờ dần khi ẩn */
+            }
+    </style>
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tạo order vé mới</title>
     <link href="~/css/Admin/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T387870TPpwcgR8m7+UP+7X/qOH3b6T1QjsDuUp25/7YkG79664NVoIPd35N72q10" crossorigin="anonymous">
 </head>
 <body>
-    <div class="container mt-4">
-        <h2>Đặt vé</h2><br />
 
-        <div class="row g-2 mb-6">
-            <div class="col-md-6">
-                <label for="customerName" class="form-label">Tên khách hàng</label>
-                <input type="text" class="form-control" id="customerName" name="customerName" required>
-            </div>
-            <div class="col-md-3">
-                <label for="phone" class="form-label">Số điện thoại</label>
-                <input type="text" class="form-control" id="phone" name="phone" required>
-            </div>
-            <div class="col-md-3">
-                <label for="orderDate" class="form-label">Ngày sử dụng</label>
-                <input type="datetime-local" class="form-control" id="orderDate" name="orderDate" required>
-            </div>
-        </div>
-        <br />
-        <script>
-            function change() {
-                document.getElementById("fr").submit();
+    <style>
+        .tabs {
+            display: flex;
+            justify-content: space-around;
+            border-bottom: 2px solid #28a745; /* Đường viền dưới màu xanh lá */
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .tab {
+
+            padding: 10px 20px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: background-color 0.3s, border-color 0.3s;
+            color: #28a745; /* Màu chữ mặc định là xanh lá */
+        }
+
+            .tab:hover {
+                background-color: #c3e6cb; /* Màu nền khi hover */
             }
-        </script>
-        <div class="col-md-3">
-            <form id="fr" asp-controller="OrderManagement" asp-action="CreateOrder" method="get">
+
+            .tab.active {
+                background-color: #218838; /* Màu nền khi tab đang hoạt động */
+                color: white; /* Màu chữ khi tab đang hoạt động */
+                border-bottom: 2px solid #218838; /* Đường viền dưới của tab hoạt động */
+            }
+
+        .tab-content.active {
+           
+            background-color: white; /* Màu nền cho tab đang hoạt động */
+            padding: 20px; /* Thêm padding nếu cần */
+            border: 1px solid #28a745; /* Đường viền màu xanh lá nếu muốn */
+            border-radius: 5px; /* Bo góc cho đường viền */
+        }
+
+        .tab-content {
+            
+            background-color: white; /* Màu nền cho tab đang hoạt động */
+            padding: 20px; /* Thêm padding nếu cần */
+            border: 1px solid #28a745; /* Đường viền màu xanh lá nếu muốn */
+            border-radius: 5px; /* Bo góc cho đường viền */
+        }
 
 
-                <select name="idcategory" class="form-select" onchange="change()">
-                    <option value="0">
-                        All
-                    </option>
-                    @foreach (TicketCategoryVM item in ViewBag.categories)
-                    {
-                        if (item.TicketCategoryId.Equals(ViewBag.idcategory))
-                        {
-                            <option value="@item.TicketCategoryId" selected>
-                                @item.TicketCategoryName
-                            </option>
-                        }
-                        else
-                        {
-                            <option value="@item.TicketCategoryId">
-                                @item.TicketCategoryName
-                            </option>
 
-                        }
+    </style>
+
+
+    <div class="container mt-4">
+
+        <div class="row g-2 mb-3 tabs">
+            <div class="col-md-3 tab active" onclick="switchTab('ticket')">Đặt Vé</div>
+            <div class="col-md-3 tab" onclick="switchTab('combo')">Đặt Combo</div>
+       </div>
+
+       
+            <div id="ticket" class="tab-content active">
+
+                <div class="row g-2 mb-6">
+                    <div class="col-md-6">
+                        <label for="customerName" class="form-label">Tên khách hàng</label>
+                        <input type="text" class="form-control" id="customerName" name="customerName" required>
+                    </div>
+                <div class="col-md-3">
+                    <label for="phone" class="form-label">Số điện thoại</label>
+                    <input type="text" class="form-control" id="phone" name="phone" required>
+                </div>
+                    <div class="col-md-3">
+                        <label for="orderDate" class="form-label">Ngày sử dụng</label>
+                        <input type="datetime-local" class="form-control" id="orderDate" name="orderdate" required>
+                    </div>
+                </div>
+                <br />
+                <script>
+                    function change() {
+                        document.getElementById("fr1").submit();
+
+
                     }
-                </select>
-            </form>
-        </div>
+                </script>
+                <div class="col-md-3">
+                    <form id="fr1" asp-controller="OrderManagement" asp-action="OrderTickets" method="get">
 
 
-        <table class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th>Mã vẽ</th>
-                    <th>Tên vé</th>
-                    <th>Hình ảnh</th>
-                    <th>Giá</th>
-                    <th>Số lượng</th>
+                        <select name="idcategory" class="form-select" onchange="change()">
+                            <option value="0">
+                                All
+                            </option>
+                            @foreach (TicketCategoryVM item in ViewBag.categories)
+                            {
+                                if (item.TicketCategoryId.Equals(ViewBag.idcategory))
+                                {
+                                    <option value="@item.TicketCategoryId" selected>
+                                        @item.TicketCategoryName
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="@item.TicketCategoryId">
+                                        @item.TicketCategoryName
+                                    </option>
 
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (TicketVM item in ViewBag.tickets)
-                {
-                    <tr>
-                        <td>@item.TicketId</td>
-                        <td>@item.TicketName</td>
-                        <td>@item.ImgUrl</td>
-                        <td>@item.Price</td>
-                        <td>
-                            <input type="number" min="0" value="0" style="width: 100px;">
-                        </td>
+                                }
+                            }
+                        </select>
+                    </form>
+                </div>
+                <form asp-controller="OrderManagement" asp-action="AddToCart" method="get">
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Mã vẽ</th>
+                                <th>Tên vé</th>
+                                <th>Hình ảnh</th>
+                                <th>Giá</th>
+                                <th>Số lượng</th>
 
-                    </tr>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (TicketVM item in ViewBag.tickets)
+                            {
+                                <tr>
+                                    <td>@item.TicketId</td>
+                                    <td>@item.TicketName</td>
+                                    <td>@item.ImgUrl</td>
+                                    <td>@item.Price</td>
+                                    <td>
+                                        <input type="text" value="@item.TicketId" hidden name="TicketIds">
+                                        <input type="text" value="@item.TicketName" hidden name="Name">
+                                        <input type="number" value="@item.Price" hidden name="Prices">
+                                        <input type="number" min="0" value="@item.Quantity" style="width: 100px;" name="Quantities">
+
+                                    </td>
+                                </tr>
 
 
-                }
-            </tbody>
-        </table>
+                            }
+                        </tbody>
+                    </table>
+                <button style="background-color: #28a745; margin-bottom: 5px" type="submit" class="btn btn-primary">
+                        <i class="bi bi-cart"></i> Add to Cart
+                    </button>
 
-        <a href="/OrderManagement/Index" class="btn btn-secondary">Quay lại</a>
-        <a href="/OrderManagement/OrderCampingGears" class="btn btn-primary" style="background-color: #28a745;">Tiếp tục</a>
+                </form>
 
+                <a href="/OrderManagement/Index" class="btn btn-secondary">Quay lại</a>
+            <a href="/OrderManagement/OrderCampingGears" class="btn btn-primary" style="background-color: #28a745;">Tiếp tục</a>
+            </div>
+
+
+            <div id="combo" class="tab-content">
+
+            </div>
 
     </div>
-
+      
+   
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C8fC7N6'e6OzTO+648+pGdO/d6k4l726DwN13j0xV7V7+x70863161b" crossorigin="anonymous"></script>
+    <script src="~/js/Admin/ordertickets.js"></script>
 </body>
 </html>

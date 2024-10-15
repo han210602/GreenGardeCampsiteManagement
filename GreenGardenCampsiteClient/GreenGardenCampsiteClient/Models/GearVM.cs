@@ -10,5 +10,6 @@
         public DateTime? CreatedAt { get; set; }
         public string GearCategoryName { get; set; }
         public string? ImgUrl { get; set; }
+        public int Quantity { get; set; }
     }
 }

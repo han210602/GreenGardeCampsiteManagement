@@ -60,3 +60,6 @@ C:\Users\Nguyen Thanh Hau\Desktop\New folder\GreenGardenCampsiteManagement\Green
 C:\Users\Nguyen Thanh Hau\Desktop\New folder\GreenGardenCampsiteManagement\GreenGardenCampsiteClient\GreenGardenCampsiteClient\obj\Debug\net6.0\GreenGardenCampsiteClient.pdb
 C:\Users\Nguyen Thanh Hau\Desktop\New folder\GreenGardenCampsiteManagement\GreenGardenCampsiteClient\GreenGardenCampsiteClient\obj\Debug\net6.0\GreenGardenCampsiteClient.genruntimeconfig.cache
 C:\Users\Nguyen Thanh Hau\Desktop\New folder\GreenGardenCampsiteManagement\GreenGardenCampsiteClient\GreenGardenCampsiteClient\obj\Debug\net6.0\ref\GreenGardenCampsiteClient.dll
+C:\Users\Nguyen Thanh Hau\Desktop\New folder\GreenGardenCampsiteManagement\GreenGardenCampsiteClient\GreenGardenCampsiteClient\obj\Debug\net6.0\GreenGardenCampsiteClient.csproj.AssemblyReference.cache
+C:\Users\Nguyen Thanh Hau\Desktop\New folder\GreenGardenCampsiteManagement\GreenGardenCampsiteClient\GreenGardenCampsiteClient\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\Nguyen Thanh Hau\Desktop\New folder\GreenGardenCampsiteManagement\GreenGardenCampsiteClient\GreenGardenCampsiteClient\obj\Debug\net6.0\GreenGar.6EEE2FD9.Up2Date

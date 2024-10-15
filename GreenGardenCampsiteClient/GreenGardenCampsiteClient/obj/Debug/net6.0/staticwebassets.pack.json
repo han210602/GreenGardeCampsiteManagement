@@ -45,6 +45,10 @@
       "PackagePath": "staticwebassets\\js\\Admin\\ordermanagement.js"
     },
     {
+      "Id": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\wwwroot\\js\\Admin\\ordertickets.js",
+      "PackagePath": "staticwebassets\\js\\Admin\\ordertickets.js"
+    },
+    {
       "Id": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },
