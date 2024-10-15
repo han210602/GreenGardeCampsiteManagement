@@ -103,6 +103,8 @@
             padding: 20px; /* Thêm padding nếu cần */
             border: 1px solid #28a745; /* Đường viền màu xanh lá nếu muốn */
             border-radius: 5px; /* Bo góc cho đường viền */
+            height: 700px;
+
         }
 
         .tab-content {
@@ -111,6 +113,7 @@
             padding: 20px; /* Thêm padding nếu cần */
             border: 1px solid #28a745; /* Đường viền màu xanh lá nếu muốn */
             border-radius: 5px; /* Bo góc cho đường viền */
+            height: 700px;
         }
 
 
@@ -127,7 +130,15 @@
 
        
             <div id="ticket" class="tab-content active">
+            <style>
+                .tab-content {
+                    display: block;
+                }
 
+                    .tab-content.active {
+                        display: none;
+                    }
+            </style>
                 <div class="row g-2 mb-6">
                     <div class="col-md-6">
                         <label for="customerName" class="form-label">Tên khách hàng</label>
@@ -222,7 +233,16 @@
 
 
             <div id="combo" class="tab-content">
+                <style>
+                .tab-content.active {
+                    display: block;
+                }
 
+                .tab-content {
+                    display: none;
+                }
+                </style>
+                <h3>khong co gi</h3>
             </div>
 
     </div>

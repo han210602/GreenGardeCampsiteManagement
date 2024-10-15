@@ -3,24 +3,32 @@
   "WorkspaceRootPath": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{7371E88A-0E1F-489F-A66B-C1AE7E523591}|GreenGardenCampsiteClient\\GreenGardenCampsiteClient.csproj|c:\\users\\nguyen thanh hau\\desktop\\new folder\\greengardencampsitemanagement\\greengardencampsiteclient\\greengardencampsiteclient\\views\\ordermanagement\\ordertickets.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{7371E88A-0E1F-489F-A66B-C1AE7E523591}|GreenGardenCampsiteClient\\GreenGardenCampsiteClient.csproj|solutionrelative:greengardencampsiteclient\\views\\ordermanagement\\ordertickets.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7371E88A-0E1F-489F-A66B-C1AE7E523591}|GreenGardenCampsiteClient\\GreenGardenCampsiteClient.csproj|c:\\users\\nguyen thanh hau\\desktop\\new folder\\greengardencampsitemanagement\\greengardencampsiteclient\\greengardencampsiteclient\\wwwroot\\js\\admin\\ordertickets.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{7371E88A-0E1F-489F-A66B-C1AE7E523591}|GreenGardenCampsiteClient\\GreenGardenCampsiteClient.csproj|solutionrelative:greengardencampsiteclient\\wwwroot\\js\\admin\\ordertickets.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7371E88A-0E1F-489F-A66B-C1AE7E523591}|GreenGardenCampsiteClient\\GreenGardenCampsiteClient.csproj|c:\\users\\nguyen thanh hau\\desktop\\new folder\\greengardencampsitemanagement\\greengardencampsiteclient\\greengardencampsiteclient\\wwwroot\\css\\admin\\styles.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{7371E88A-0E1F-489F-A66B-C1AE7E523591}|GreenGardenCampsiteClient\\GreenGardenCampsiteClient.csproj|solutionrelative:greengardencampsiteclient\\wwwroot\\css\\admin\\styles.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+      "AbsoluteMoniker": "D:0:0:{7371E88A-0E1F-489F-A66B-C1AE7E523591}|GreenGardenCampsiteClient\\GreenGardenCampsiteClient.csproj|c:\\users\\nguyen thanh hau\\desktop\\new folder\\greengardencampsitemanagement\\greengardencampsiteclient\\greengardencampsiteclient\\views\\ordermanagement\\orderdetails.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{7371E88A-0E1F-489F-A66B-C1AE7E523591}|GreenGardenCampsiteClient\\GreenGardenCampsiteClient.csproj|solutionrelative:greengardencampsiteclient\\views\\ordermanagement\\orderdetails.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{7371E88A-0E1F-489F-A66B-C1AE7E523591}|GreenGardenCampsiteClient\\GreenGardenCampsiteClient.csproj|c:\\users\\nguyen thanh hau\\desktop\\new folder\\greengardencampsitemanagement\\greengardencampsiteclient\\greengardencampsiteclient\\views\\ordermanagement\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{7371E88A-0E1F-489F-A66B-C1AE7E523591}|GreenGardenCampsiteClient\\GreenGardenCampsiteClient.csproj|solutionrelative:greengardencampsiteclient\\views\\ordermanagement\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{7371E88A-0E1F-489F-A66B-C1AE7E523591}|GreenGardenCampsiteClient\\GreenGardenCampsiteClient.csproj|c:\\users\\nguyen thanh hau\\desktop\\new folder\\greengardencampsitemanagement\\greengardencampsiteclient\\greengardencampsiteclient\\wwwroot\\css\\admin\\styles.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{7371E88A-0E1F-489F-A66B-C1AE7E523591}|GreenGardenCampsiteClient\\GreenGardenCampsiteClient.csproj|solutionrelative:greengardencampsiteclient\\wwwroot\\css\\admin\\styles.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7371E88A-0E1F-489F-A66B-C1AE7E523591}|GreenGardenCampsiteClient\\GreenGardenCampsiteClient.csproj|c:\\users\\nguyen thanh hau\\desktop\\new folder\\greengardencampsitemanagement\\greengardencampsiteclient\\greengardencampsiteclient\\views\\ordermanagement\\ordercampinggears.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{7371E88A-0E1F-489F-A66B-C1AE7E523591}|GreenGardenCampsiteClient\\GreenGardenCampsiteClient.csproj|solutionrelative:greengardencampsiteclient\\views\\ordermanagement\\ordercampinggears.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{7371E88A-0E1F-489F-A66B-C1AE7E523591}|GreenGardenCampsiteClient\\GreenGardenCampsiteClient.csproj|c:\\users\\nguyen thanh hau\\desktop\\new folder\\greengardencampsitemanagement\\greengardencampsiteclient\\greengardencampsiteclient\\views\\ordermanagement\\orderfoodanddrinks.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{7371E88A-0E1F-489F-A66B-C1AE7E523591}|GreenGardenCampsiteClient\\GreenGardenCampsiteClient.csproj|solutionrelative:greengardencampsiteclient\\views\\ordermanagement\\orderfoodanddrinks.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7371E88A-0E1F-489F-A66B-C1AE7E523591}|GreenGardenCampsiteClient\\GreenGardenCampsiteClient.csproj|c:\\users\\nguyen thanh hau\\desktop\\new folder\\greengardencampsitemanagement\\greengardencampsiteclient\\greengardencampsiteclient\\views\\ordermanagement\\ordertickets.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{7371E88A-0E1F-489F-A66B-C1AE7E523591}|GreenGardenCampsiteClient\\GreenGardenCampsiteClient.csproj|solutionrelative:greengardencampsiteclient\\views\\ordermanagement\\ordertickets.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7371E88A-0E1F-489F-A66B-C1AE7E523591}|GreenGardenCampsiteClient\\GreenGardenCampsiteClient.csproj|c:\\users\\nguyen thanh hau\\desktop\\new folder\\greengardencampsitemanagement\\greengardencampsiteclient\\greengardencampsiteclient\\wwwroot\\js\\admin\\ordertickets.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{7371E88A-0E1F-489F-A66B-C1AE7E523591}|GreenGardenCampsiteClient\\GreenGardenCampsiteClient.csproj|solutionrelative:greengardencampsiteclient\\wwwroot\\js\\admin\\ordertickets.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{7371E88A-0E1F-489F-A66B-C1AE7E523591}|GreenGardenCampsiteClient\\GreenGardenCampsiteClient.csproj|c:\\users\\nguyen thanh hau\\desktop\\new folder\\greengardencampsitemanagement\\greengardencampsiteclient\\greengardencampsiteclient\\controllers\\admincontroller\\ordermanagementcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -35,10 +43,6 @@
       "RelativeMoniker": "D:0:0:{7371E88A-0E1F-489F-A66B-C1AE7E523591}|GreenGardenCampsiteClient\\GreenGardenCampsiteClient.csproj|solutionrelative:greengardencampsiteclient\\views\\ordermanagement\\cart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7371E88A-0E1F-489F-A66B-C1AE7E523591}|GreenGardenCampsiteClient\\GreenGardenCampsiteClient.csproj|c:\\users\\nguyen thanh hau\\desktop\\new folder\\greengardencampsitemanagement\\greengardencampsiteclient\\greengardencampsiteclient\\views\\ordermanagement\\ordercampinggears.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{7371E88A-0E1F-489F-A66B-C1AE7E523591}|GreenGardenCampsiteClient\\GreenGardenCampsiteClient.csproj|solutionrelative:greengardencampsiteclient\\views\\ordermanagement\\ordercampinggears.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{7371E88A-0E1F-489F-A66B-C1AE7E523591}|GreenGardenCampsiteClient\\GreenGardenCampsiteClient.csproj|c:\\users\\nguyen thanh hau\\desktop\\new folder\\greengardencampsitemanagement\\greengardencampsiteclient\\greengardencampsiteclient\\models\\foodanddrinkvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7371E88A-0E1F-489F-A66B-C1AE7E523591}|GreenGardenCampsiteClient\\GreenGardenCampsiteClient.csproj|solutionrelative:greengardencampsiteclient\\models\\foodanddrinkvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -49,10 +53,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{7371E88A-0E1F-489F-A66B-C1AE7E523591}|GreenGardenCampsiteClient\\GreenGardenCampsiteClient.csproj|c:\\users\\nguyen thanh hau\\desktop\\new folder\\greengardencampsitemanagement\\greengardencampsiteclient\\greengardencampsiteclient\\models\\ticketvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7371E88A-0E1F-489F-A66B-C1AE7E523591}|GreenGardenCampsiteClient\\GreenGardenCampsiteClient.csproj|solutionrelative:greengardencampsiteclient\\models\\ticketvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7371E88A-0E1F-489F-A66B-C1AE7E523591}|GreenGardenCampsiteClient\\GreenGardenCampsiteClient.csproj|c:\\users\\nguyen thanh hau\\desktop\\new folder\\greengardencampsitemanagement\\greengardencampsiteclient\\greengardencampsiteclient\\views\\ordermanagement\\orderdetails.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{7371E88A-0E1F-489F-A66B-C1AE7E523591}|GreenGardenCampsiteClient\\GreenGardenCampsiteClient.csproj|solutionrelative:greengardencampsiteclient\\views\\ordermanagement\\orderdetails.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{7371E88A-0E1F-489F-A66B-C1AE7E523591}|GreenGardenCampsiteClient\\GreenGardenCampsiteClient.csproj|c:\\users\\nguyen thanh hau\\desktop\\new folder\\greengardencampsitemanagement\\greengardencampsiteclient\\greengardencampsiteclient\\views\\employeemanagement\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -174,19 +174,85 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 3,
               "Title": "OrderCampingGears.cshtml",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\Views\\OrderManagement\\OrderCampingGears.cshtml",
               "RelativeDocumentMoniker": "GreenGardenCampsiteClient\\Views\\OrderManagement\\OrderCampingGears.cshtml",
               "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\Views\\OrderManagement\\OrderCampingGears.cshtml",
               "RelativeToolTip": "GreenGardenCampsiteClient\\Views\\OrderManagement\\OrderCampingGears.cshtml",
-              "ViewState": "AgIAAEIAAAAAAAAAAAAAAE4AAABvAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAFgAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-10-11T12:44:31.112Z"
+              "WhenOpened": "2024-10-11T12:44:31.112Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "OrderTickets.cshtml",
+              "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\Views\\OrderManagement\\OrderTickets.cshtml",
+              "RelativeDocumentMoniker": "GreenGardenCampsiteClient\\Views\\OrderManagement\\OrderTickets.cshtml",
+              "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\Views\\OrderManagement\\OrderTickets.cshtml",
+              "RelativeToolTip": "GreenGardenCampsiteClient\\Views\\OrderManagement\\OrderTickets.cshtml",
+              "ViewState": "AgIAAIQAAAAAAAAAAAAAAI4AAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-14T06:18:22.794Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "OrderFoodAndDrinks.cshtml",
+              "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\Views\\OrderManagement\\OrderFoodAndDrinks.cshtml",
+              "RelativeDocumentMoniker": "GreenGardenCampsiteClient\\Views\\OrderManagement\\OrderFoodAndDrinks.cshtml",
+              "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\Views\\OrderManagement\\OrderFoodAndDrinks.cshtml",
+              "RelativeToolTip": "GreenGardenCampsiteClient\\Views\\OrderManagement\\OrderFoodAndDrinks.cshtml",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAAACMAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-11T13:01:46.14Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ordertickets.js",
+              "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\wwwroot\\js\\Admin\\ordertickets.js",
+              "RelativeDocumentMoniker": "GreenGardenCampsiteClient\\wwwroot\\js\\Admin\\ordertickets.js",
+              "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\wwwroot\\js\\Admin\\ordertickets.js",
+              "RelativeToolTip": "GreenGardenCampsiteClient\\wwwroot\\js\\Admin\\ordertickets.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAIwBAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2024-10-15T08:54:40.3Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "OrderDetails.cshtml",
+              "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\Views\\OrderManagement\\OrderDetails.cshtml",
+              "RelativeDocumentMoniker": "GreenGardenCampsiteClient\\Views\\OrderManagement\\OrderDetails.cshtml",
+              "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\Views\\OrderManagement\\OrderDetails.cshtml",
+              "RelativeToolTip": "GreenGardenCampsiteClient\\Views\\OrderManagement\\OrderDetails.cshtml",
+              "ViewState": "AgIAAF0AAAAAAAAAAAAAAGgAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-13T09:00:27.415Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\Views\\OrderManagement\\Index.cshtml",
+              "RelativeDocumentMoniker": "GreenGardenCampsiteClient\\Views\\OrderManagement\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\Views\\OrderManagement\\Index.cshtml",
+              "RelativeToolTip": "GreenGardenCampsiteClient\\Views\\OrderManagement\\Index.cshtml",
+              "ViewState": "AgIAAGMAAAAAAAAAAAAAAG8AAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-07T07:39:32.472Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -196,7 +262,7 @@
               "RelativeDocumentMoniker": "GreenGardenCampsiteClient\\wwwroot\\css\\Admin\\styles.css",
               "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\wwwroot\\css\\Admin\\styles.css",
               "RelativeToolTip": "GreenGardenCampsiteClient\\wwwroot\\css\\Admin\\styles.css",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAAABsAAAAaAAAAAAAAAA==",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAABsAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
               "WhenOpened": "2024-10-04T06:10:27.926Z",
               "EditorCaption": ""
@@ -204,31 +270,6 @@
             {
               "$type": "Document",
               "DocumentIndex": 7,
-              "Title": "Cart.cshtml",
-              "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\Views\\OrderManagement\\Cart.cshtml",
-              "RelativeDocumentMoniker": "GreenGardenCampsiteClient\\Views\\OrderManagement\\Cart.cshtml",
-              "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\Views\\OrderManagement\\Cart.cshtml",
-              "RelativeToolTip": "GreenGardenCampsiteClient\\Views\\OrderManagement\\Cart.cshtml",
-              "ViewState": "AgIAABsAAAAAAAAAAAAAAHIAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-10-15T08:14:02.57Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "OrderTickets.cshtml",
-              "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\Views\\OrderManagement\\OrderTickets.cshtml",
-              "RelativeDocumentMoniker": "GreenGardenCampsiteClient\\Views\\OrderManagement\\OrderTickets.cshtml",
-              "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\Views\\OrderManagement\\OrderTickets.cshtml",
-              "RelativeToolTip": "GreenGardenCampsiteClient\\Views\\OrderManagement\\OrderTickets.cshtml",
-              "ViewState": "AgIAAFsAAAAAAAAAAAAkwGQAAAALAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-10-14T06:18:22.794Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
               "Title": "OrderManagementController.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\Controllers\\AdminController\\OrderManagementController.cs",
               "RelativeDocumentMoniker": "GreenGardenCampsiteClient\\Controllers\\AdminController\\OrderManagementController.cs",
@@ -240,46 +281,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "OrderFoodAndDrinks.cshtml",
-              "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\Views\\OrderManagement\\OrderFoodAndDrinks.cshtml",
-              "RelativeDocumentMoniker": "GreenGardenCampsiteClient\\Views\\OrderManagement\\OrderFoodAndDrinks.cshtml",
-              "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\Views\\OrderManagement\\OrderFoodAndDrinks.cshtml",
-              "RelativeToolTip": "GreenGardenCampsiteClient\\Views\\OrderManagement\\OrderFoodAndDrinks.cshtml",
-              "ViewState": "AgIAADMAAAAAAAAAAAAowE0AAABpAAAAAAAAAA==",
+              "DocumentIndex": 9,
+              "Title": "Cart.cshtml",
+              "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\Views\\OrderManagement\\Cart.cshtml",
+              "RelativeDocumentMoniker": "GreenGardenCampsiteClient\\Views\\OrderManagement\\Cart.cshtml",
+              "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\Views\\OrderManagement\\Cart.cshtml",
+              "RelativeToolTip": "GreenGardenCampsiteClient\\Views\\OrderManagement\\Cart.cshtml",
+              "ViewState": "AgIAABsAAAAAAAAAAAAAAHIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-10-11T13:01:46.14Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-15T08:14:02.57Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ordertickets.js",
-              "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\wwwroot\\js\\Admin\\ordertickets.js",
-              "RelativeDocumentMoniker": "GreenGardenCampsiteClient\\wwwroot\\js\\Admin\\ordertickets.js",
-              "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\wwwroot\\js\\Admin\\ordertickets.js",
-              "RelativeToolTip": "GreenGardenCampsiteClient\\wwwroot\\js\\Admin\\ordertickets.js",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2024-10-15T08:54:40.3Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\Views\\OrderManagement\\Index.cshtml",
-              "RelativeDocumentMoniker": "GreenGardenCampsiteClient\\Views\\OrderManagement\\Index.cshtml",
-              "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\Views\\OrderManagement\\Index.cshtml",
-              "RelativeToolTip": "GreenGardenCampsiteClient\\Views\\OrderManagement\\Index.cshtml",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABIAAACIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-10-07T07:39:32.472Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\Program.cs",
               "RelativeDocumentMoniker": "GreenGardenCampsiteClient\\Program.cs",
@@ -291,7 +305,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "TicketVM.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\Models\\TicketVM.cs",
               "RelativeDocumentMoniker": "GreenGardenCampsiteClient\\Models\\TicketVM.cs",
@@ -303,7 +317,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "GearVM.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\Models\\GearVM.cs",
               "RelativeDocumentMoniker": "GreenGardenCampsiteClient\\Models\\GearVM.cs",
@@ -315,7 +329,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "FoodAndDrinkVM.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\Models\\FoodAndDrinkVM.cs",
               "RelativeDocumentMoniker": "GreenGardenCampsiteClient\\Models\\FoodAndDrinkVM.cs",
@@ -324,18 +338,6 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-15T08:16:59.179Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "OrderDetails.cshtml",
-              "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\Views\\OrderManagement\\OrderDetails.cshtml",
-              "RelativeDocumentMoniker": "GreenGardenCampsiteClient\\Views\\OrderManagement\\OrderDetails.cshtml",
-              "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteClient\\GreenGardenCampsiteClient\\Views\\OrderManagement\\OrderDetails.cshtml",
-              "RelativeToolTip": "GreenGardenCampsiteClient\\Views\\OrderManagement\\OrderDetails.cshtml",
-              "ViewState": "AgIAAGAAAAAAAAAAAAAIwHIAAABXAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-10-13T09:00:27.415Z"
             },
             {
               "$type": "Document",

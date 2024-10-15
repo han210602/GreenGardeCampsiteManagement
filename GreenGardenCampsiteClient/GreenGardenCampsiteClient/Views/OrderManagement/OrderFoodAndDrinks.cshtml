@@ -15,6 +15,7 @@
                 document.getElementById("fr").submit();
             }
         </script>
+        <div class="row g-2 mb-6">
         <div class="col-md-3">
             <form id="fr" asp-controller="OrderManagement" asp-action="OrderFoodAndDrinks" method="get">
 
@@ -42,7 +43,10 @@
                 </select>
             </form>
         </div>
-
+        <div class="col-md-6">
+            <input type="text" id="searchInput" class="form-control" placeholder="Tìm kiếm..">
+        </div>
+       </div>
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
