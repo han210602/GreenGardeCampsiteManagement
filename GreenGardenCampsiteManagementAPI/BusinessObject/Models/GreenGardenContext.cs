@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.Extensions.Configuration;
 
 namespace BusinessObject.Models
 {
@@ -43,9 +42,10 @@ namespace BusinessObject.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string connectionString = "server=MSI\\SQL2019;database=GreenGarden;uid=sa;pwd=123;TrustServerCertificate=True";
-            optionsBuilder.UseSqlServer(connectionString);
-
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer("server=localhost;database=GreenGarden;uid=sa;pwd=123;TrustServerCertificate=True");
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -450,6 +450,11 @@ namespace BusinessObject.Models
                 entity.Property(e => e.OrderUsageDate)
                     .HasColumnType("datetime")
                     .HasColumnName("order_usage_date");
+
+                entity.Property(e => e.PhoneCustomer)
+                    .HasMaxLength(15)
+                    .IsUnicode(false)
+                    .HasColumnName("phone_customer");
 
                 entity.Property(e => e.StatusOrder)
                     .HasColumnName("status_order")

@@ -11,8 +11,8 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
-        private IOrderRepository _repo;
-        public OrderController(IOrderRepository repo)
+        private IOrderManagementRepository _repo;
+        public OrderController(IOrderManagementRepository repo)
         {
             _repo = repo;
         }
@@ -28,12 +28,36 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+        [HttpGet("GetListOrderGearByUsageDate/{usagedate}")]
+        public IActionResult GetListOrderGearByUsageDate(DateTime usagedate)
+        {
+            try
+            {
+                return Ok(_repo.GetListOrderGearByUsageDate(usagedate).ToList());
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
         [HttpPost("CreateUniqueOrder")]
         public IActionResult CreateUniqueOrder([FromBody] CreateUniqueOrderRequest order) 
         {
             try
             {
-                return Ok(_repo.CreateUniqueOrder(order.Order,order.OrderTicket, order.OrderCampingGear, order.OrderFood, order.OrderFoodCombo));
+                return Ok(_repo.CreateUniqueOrder(order));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+        [HttpPost("CreateComboOrder")]
+        public IActionResult CreateComboOrder([FromBody] CreateComboOrderRequest order)
+        {
+            try
+            {
+                return Ok(_repo.CreateComboOrder(order));
             }
             catch (Exception ex)
             {
@@ -103,12 +127,5 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
 
 
     }
-    public class CreateUniqueOrderRequest
-    {
-        public OrderDTO Order { get; set; }
-        public List<OrderTicketDetailDTO> OrderTicket { get; set; }
-        public List<OrderCampingGearDetailDTO> OrderCampingGear { get; set; }
-        public List<OrderFoodDetailDTO> OrderFood { get; set; }
-        public List<OrderFoodComboDetailDTO> OrderFoodCombo { get; set; }
-    }
+    
 }

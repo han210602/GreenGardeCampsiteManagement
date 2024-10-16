@@ -50,7 +50,7 @@ builder.Services.AddAuthentication(options =>
 });
 
 // Đăng ký các repository vào DI container
-builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IOrderManagementRepository, OrderManagementRepository>();
 builder.Services.AddScoped<IActivityRepository, ActiviyRepository>();
 builder.Services.AddScoped<IComboRepository, ComboRepository>();
 builder.Services.AddScoped<ICampingGearRepository, CampingGearRepository>();

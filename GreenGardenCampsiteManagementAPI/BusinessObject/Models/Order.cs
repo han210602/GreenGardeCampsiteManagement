@@ -25,6 +25,7 @@ namespace BusinessObject.Models
         public decimal AmountPayable { get; set; }
         public bool? StatusOrder { get; set; }
         public int? ActivityId { get; set; }
+        public string? PhoneCustomer { get; set; }
 
         public virtual Activity? Activity { get; set; }
         public virtual User? Customer { get; set; }

@@ -9,6 +9,7 @@ namespace BusinessObject.DTOs
     public class OrderTicketDetailDTO
     {
         public int TicketId { get; set; }
+
         public string Name { get; set; }
 
         public int? Quantity { get; set; }
@@ -16,5 +17,12 @@ namespace BusinessObject.DTOs
         public decimal Price { get; set; }
 
         public string? Description { get; set; }
+    }
+    public class OrderTicketAddlDTO
+    {
+        public int TicketId { get; set; }
+        public int OrderId { get; set; }
+        public int? Quantity { get; set; }
+
     }
 }
