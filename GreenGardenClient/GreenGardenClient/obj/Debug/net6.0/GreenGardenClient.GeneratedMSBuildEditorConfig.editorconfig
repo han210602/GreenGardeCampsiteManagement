@@ -9,81 +9,81 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = GreenGardenClient
 build_property.RootNamespace = GreenGardenClient
-build_property.ProjectDir = D:\GreenGardenClient\GreenGardenClient\
+build_property.ProjectDir = D:\SEP490\GreenGardenCampsiteManagement\GreenGardenClient\GreenGardenClient\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = D:\GreenGardenClient\GreenGardenClient
+build_property.MSBuildProjectDirectory = D:\SEP490\GreenGardenCampsiteManagement\GreenGardenClient\GreenGardenClient
 build_property._RazorSourceGeneratorDebug = 
 
-[D:/GreenGardenClient/GreenGardenClient/Views/Common/Event.cshtml]
+[D:/SEP490/GreenGardenCampsiteManagement/GreenGardenClient/GreenGardenClient/Views/Common/Event.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tbW9uXEV2ZW50LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/GreenGardenClient/GreenGardenClient/Views/Common/Index.cshtml]
+[D:/SEP490/GreenGardenCampsiteManagement/GreenGardenClient/GreenGardenClient/Views/Common/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tbW9uXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/GreenGardenClient/GreenGardenClient/Views/Common/Login.cshtml]
+[D:/SEP490/GreenGardenCampsiteManagement/GreenGardenClient/GreenGardenClient/Views/Common/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tbW9uXExvZ2luLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/GreenGardenClient/GreenGardenClient/Views/Common/Register.cshtml]
+[D:/SEP490/GreenGardenCampsiteManagement/GreenGardenClient/GreenGardenClient/Views/Common/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tbW9uXFJlZ2lzdGVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/GreenGardenClient/GreenGardenClient/Views/Common/ResetPassword.cshtml]
+[D:/SEP490/GreenGardenCampsiteManagement/GreenGardenClient/GreenGardenClient/Views/Common/ResetPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tbW9uXFJlc2V0UGFzc3dvcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/GreenGardenClient/GreenGardenClient/Views/EmployeeManagement/Index.cshtml]
+[D:/SEP490/GreenGardenCampsiteManagement/GreenGardenClient/GreenGardenClient/Views/EmployeeManagement/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVNYW5hZ2VtZW50XEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/GreenGardenClient/GreenGardenClient/Views/Home/Index.cshtml]
+[D:/SEP490/GreenGardenCampsiteManagement/GreenGardenClient/GreenGardenClient/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/GreenGardenClient/GreenGardenClient/Views/OrderManagement/Cart.cshtml]
+[D:/SEP490/GreenGardenCampsiteManagement/GreenGardenClient/GreenGardenClient/Views/OrderManagement/Cart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJNYW5hZ2VtZW50XENhcnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/GreenGardenClient/GreenGardenClient/Views/OrderManagement/CreateOrder.cshtml]
+[D:/SEP490/GreenGardenCampsiteManagement/GreenGardenClient/GreenGardenClient/Views/OrderManagement/CreateOrder.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJNYW5hZ2VtZW50XENyZWF0ZU9yZGVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/GreenGardenClient/GreenGardenClient/Views/OrderManagement/Index.cshtml]
+[D:/SEP490/GreenGardenCampsiteManagement/GreenGardenClient/GreenGardenClient/Views/OrderManagement/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJNYW5hZ2VtZW50XEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/GreenGardenClient/GreenGardenClient/Views/OrderManagement/OrderFood.cshtml]
+[D:/SEP490/GreenGardenCampsiteManagement/GreenGardenClient/GreenGardenClient/Views/OrderManagement/OrderFood.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJNYW5hZ2VtZW50XE9yZGVyRm9vZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/GreenGardenClient/GreenGardenClient/Views/OrderManagement/OrderGear.cshtml]
+[D:/SEP490/GreenGardenCampsiteManagement/GreenGardenClient/GreenGardenClient/Views/OrderManagement/OrderGear.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJNYW5hZ2VtZW50XE9yZGVyR2Vhci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/GreenGardenClient/GreenGardenClient/Views/OrderManagement/OrderTicket.cshtml]
+[D:/SEP490/GreenGardenCampsiteManagement/GreenGardenClient/GreenGardenClient/Views/OrderManagement/OrderTicket.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJNYW5hZ2VtZW50XE9yZGVyVGlja2V0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/GreenGardenClient/GreenGardenClient/Views/Service/FoodDetail.cshtml]
+[D:/SEP490/GreenGardenCampsiteManagement/GreenGardenClient/GreenGardenClient/Views/Service/FoodDetail.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VydmljZVxGb29kRGV0YWlsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/GreenGardenClient/GreenGardenClient/Views/Service/index.cshtml]
+[D:/SEP490/GreenGardenCampsiteManagement/GreenGardenClient/GreenGardenClient/Views/Service/index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VydmljZVxpbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/GreenGardenClient/GreenGardenClient/Views/Service/OrderFoodAndDrink.cshtml]
+[D:/SEP490/GreenGardenCampsiteManagement/GreenGardenClient/GreenGardenClient/Views/Service/OrderFoodAndDrink.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VydmljZVxPcmRlckZvb2RBbmREcmluay5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/GreenGardenClient/GreenGardenClient/Views/Service/OrderGear.cshtml]
+[D:/SEP490/GreenGardenCampsiteManagement/GreenGardenClient/GreenGardenClient/Views/Service/OrderGear.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VydmljZVxPcmRlckdlYXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/GreenGardenClient/GreenGardenClient/Views/Service/OrderTicket.cshtml]
+[D:/SEP490/GreenGardenCampsiteManagement/GreenGardenClient/GreenGardenClient/Views/Service/OrderTicket.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VydmljZVxPcmRlclRpY2tldC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

@@ -1,5 +1,9 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-
+@using GreenGardenClient.Models;
+@{
+    var foodAndDrink = ViewBag.FoodAndDrink as List<FoodAndDrinkVM>;
+    var foodAndDrinkCategories = ViewBag.FoodAndDrinkCategories as List<FoodAndDrinkCategoryVM>;
+}
 <!doctype html>
 <html lang="en">
 
@@ -59,8 +63,8 @@
                                 <li class="has-dropdown">
                                     <a href="/Service" class="nav-link">Dịch vụ</a>
                                     <ul class="dropdown">
-                                        <li ><a href="/Service/OrderTicket" class="nav-link">Danh sách vé</a></li>
-                                        <li><a href="/Service/OrderFoodAndDrink"  class="active" class="nav-link">Danh sách đồ ăn</a></li>
+                                        <li><a href="/Service/OrderTicket" class="nav-link">Danh sách vé</a></li>
+                                        <li><a href="/Service/OrderFoodAndDrink" class="nav-link">Danh sách đồ ăn</a></li>
                                         <li><a href="/Service/OrderGear" class="nav-link">Danh sách dụng cụ</a></li>
                                     </ul>
                                 </li>
@@ -107,6 +111,33 @@
                     display: block; /* Hiện menu thả xuống khi hover vào mục Services */
                 }
 
+                .sort-dropdown {
+                    margin: 20px 0; /* Khoảng cách trên và dưới */
+                }
+
+                    .sort-dropdown label {
+                        font-weight: bold;
+                        margin-right: 10px; /* Khoảng cách giữa label và dropdown */
+                    }
+
+                    .sort-dropdown select {
+                        padding: 10px; /* Khoảng cách bên trong cho dropdown */
+                        border: 1px solid #ccc; /* Đường viền */
+                        border-radius: 5px; /* Bo góc cho dropdown */
+                        background-color: #fff; /* Màu nền */
+                        font-size: 16px; /* Kích thước chữ */
+                        transition: border-color 0.3s; /* Hiệu ứng chuyển màu khi hover */
+                    }
+
+                        .sort-dropdown select:hover {
+                            border-color: #007bff; /* Đổi màu viền khi hover */
+                        }
+
+                        .sort-dropdown select:focus {
+                            outline: none; /* Bỏ viền mặc định khi dropdown được chọn */
+                            border-color: #007bff; /* Đổi màu viền khi được chọn */
+                        }
+
             </style>
             <script>
                 $(document).ready(function () {
@@ -123,29 +154,29 @@
         </header>
 
 
-        <div class="ftco-blocks-cover-1">
-            <div class="site-section-cover overlay" style="background-image: url('@Url.Content("~/images/hero_1.jpg")')">
-                <div class="container">
-                    <div class="row align-items-center justify-content-center text-center">
-                        <div class="col-md-5" data-aos="fade-up">
-                            <h1 class="mb-3 text-white">Trips List</h1>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta veritatis in tenetur doloremque, maiores doloribus officia iste. Dolores.</p>
+        @*        <div class="ftco-blocks-cover-1">
+        <div class="site-section-cover overlay" style="background-image: url('@Url.Content("~/images/hero_1.jpg")')">
+        <div class="container">
+        <div class="row align-items-center justify-content-center text-center">
+        <div class="col-md-5" data-aos="fade-up">
+        <h1 class="mb-3 text-white">Trips List</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta veritatis in tenetur doloremque, maiores doloribus officia iste. Dolores.</p>
 
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
-
+        </div>
+        </div>
+        </div>
+        </div>
+        *@
 
         <div class="site-section">
             <div class="container">
                 <div class="row justify-content-center text-center">
                     <div class="col-md-7">
                         <div class="heading-39101 mb-5">
-                            <span class="backdrop text-center">Journey</span>
-                            <span class="subtitle-39191">Journey</span>
-                            <h3>Your Journey Starts Here</h3>
+                            <span class="backdrop text-center">GreenGarden</span>
+                            <span class="subtitle-39191">Đồ ăn-Đồ uống</span>
+                            <h3>Danh sách đồ ăn-đồ uống</h3>
                         </div>
                     </div>
                 </div>
@@ -153,200 +184,194 @@
                     <!-- Cột bên trái: Danh sách category -->
                     <div class="col-lg-3 col-md-4 mb-4" data-aos="fade-up">
                         <div class="category-list">
-                            <h4 class="mb-4">Categories</h4>
+                            <h4 class="mb-4">Loại đồ ăn-đồ uống</h4>
                             <ul class="list-group">
-                                <li class="list-group-item"><a href="#">All</a></li>
-                                <li class="list-group-item"><a href="#">Adventure</a></li>
-                                <li class="list-group-item"><a href="#">Nature</a></li>
-                                <li class="list-group-item"><a href="#">Wildlife</a></li>
-                                <li class="list-group-item"><a href="#">Cultural</a></li>
-                                <li class="list-group-item"><a href="#">Beach</a></li>
+                                <li class="list-group-item">
+                                    <a class="@(ViewBag.CurrentCategoryId == null ? "active-category" : "")"
+                                       href="@Url.Action("OrderFoodAndDrink", "Service", new { sortBy = ViewBag.SortBy })">Tất cả</a>
+                                </li>
+                                @foreach (var category in ViewBag.FoodAndDrinkCategories)
+                                {
+                                    <li class="list-group-item">
+                                        <a class="@(ViewBag.CurrentCategoryId == category.CategoryId ? "active-category" : "")"
+                                           href="@Url.Action("OrderFoodAndDrink", "Service", new { categoryId = category.CategoryId, sortBy = ViewBag.SortBy })">
+                                            @category.CategoryName
+                                        </a>
+                                    </li>
+                                }
                             </ul>
                         </div>
                     </div>
 
                     <!-- Cột bên phải: Danh sách sản phẩm -->
                     <div class="col-lg-9 col-md-8">
-                        <div class="row">
-                            <!-- Hàng đầu tiên -->
-                            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
-                                <div class="listing-item">
-                                    <div class="listing-image">
-                                        <img src="~/images/img_1.jpg" alt="Image" class="img-fluid">
-                                    </div>
-                                    <div class="listing-item-content">
-                                        <h2 class="px-3 mb-1 category bg-primary">$200.00</h2>
-                                        <h2 class="mb-2"><a href="trip-single.html">Dignissimos debitis</a></h2>
-                                        <a href="book.html" class="btn btn-primary">Đặt</a>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="sort-dropdown">
+                            <label for="sort">Sắp xếp theo:</label>
+                            <select id="sort" onchange="sortFoodAndDrink()">
+                                @if (ViewBag.SortBy == "1")
+                                {
+                                    <option value="0">Mặc định</option>
+                                    <option value="1" selected>Giá: Thấp đến Cao</option>
+                                    <option value="2">Giá: Cao đến Thấp</option>
+                                    <option value="3">Phổ biến</option>
+                                    <option value="4">Mới nhất</option>
+                                }
+                                else if (ViewBag.SortBy == "2")
+                                {
+                                    <option value="0">Mặc định</option>
+                                    <option value="1">Giá: Thấp đến Cao</option>
+                                    <option value="2" selected>Giá: Cao đến Thấp</option>
+                                    <option value="3">Phổ biến</option>
+                                    <option value="4">Mới nhất</option>
+                                }
+                                else if (ViewBag.SortBy == "3")
+                                {
+                                    <option value="0">Mặc định</option>
+                                    <option value="1">Giá: Thấp đến Cao</option>
+                                    <option value="2">Giá: Cao đến Thấp</option>
+                                    <option value="3" selected>Phổ biến</option>
+                                    <option value="4">Mới nhất</option>
+                                }
+                                else if (ViewBag.SortBy == "4")
+                                {
+                                    <option value="0">Mặc định</option>
+                                    <option value="1">Giá: Thấp đến Cao</option>
+                                    <option value="2">Giá: Cao đến Thấp</option>
+                                    <option value="3">Phổ biến</option>
+                                    <option value="4" selected>Mới nhất</option>
+                                }
+                                else
+                                {
+                                    <option value="0" selected>Mặc định</option>
+                                    <option value="1">Giá: Thấp đến Cao</option>
+                                    <option value="2">Giá: Cao đến Thấp</option>
+                                    <option value="3">Phổ biến</option>
+                                    <option value="4">Mới nhất</option>
 
-                            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
-                                <div class="listing-item">
-                                    <div class="listing-image">
-                                        <img src="~/images/img_2.jpg" alt="Image" class="img-fluid">
-                                    </div>
-                                    <div class="listing-item-content">
-                                        <h2 class="px-3 mb-1 category bg-primary" href="#">$390.00</h2>
-                                        <h2 class="mb-2"><a href="trip-single.html">Consectetur adipisicing</a></h2>
-                                        <a href="book.html" class="btn btn-primary">Đặt</a>
-                                    </div>
-                                </div>
-                            </div>
+                                }
 
-                            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
-                                <div class="listing-item">
-                                    <div class="listing-image">
-                                        <img src="~/images/img_3.jpg" alt="Image" class="img-fluid">
-                                    </div>
-                                    <div class="listing-item-content">
-                                        <h2 class="px-3 mb-1 category bg-primary" href="#">$180.00</h2>
-                                        <h2 class="mb-2"><a href="trip-single.html">Temporibus aperiam</a></h2>
-                                        <a href="book.html" class="btn btn-primary">Đặt</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Hàng thứ hai -->
-                            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
-                                <div class="listing-item">
-                                    <div class="listing-image">
-                                        <img src="~/images/img_3.jpg" alt="Image" class="img-fluid">
-                                    </div>
-                                    <div class="listing-item-content">
-                                        <h2 class="px-3 mb-1 category bg-primary" href="#">$600.00</h2>
-                                        <h2 class="mb-2"><a href="trip-single.html">Expedita fugiat</a></h2>
-                                        <a href="book.html" class="btn btn-primary">Đặt</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
-                                <div class="listing-item">
-                                    <div class="listing-image">
-                                        <img src="~/images/img_3.jpg" alt="Image" class="img-fluid">
-                                    </div>
-                                    <div class="listing-item-content">
-                                        <h2 class="px-3 mb-1 category bg-primary" href="#">$330.00</h2>
-                                        <h2 class="mb-2"><a href="trip-single.html">Consectetur adipisicing</a></h2>
-                                        <a href="book.html" class="btn btn-primary">Đặt</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
-                                <div class="listing-item">
-                                    <div class="listing-image">
-                                        <img src="~/images/img_3.jpg" alt="Image" class="img-fluid">
-                                    </div>
-                                    <div class="listing-item-content">
-                                        <h2 class="px-3 mb-1 category bg-primary" href="#">$450.00</h2>
-                                        <h2 class="mb-2"><a href="trip-single.html">Consectetur Amet</a></h2>
-                                        <a href="book.html" class="btn btn-primary">Đặt</a>
-                                    </div>
-                                </div>
-                            </div>
+                            </select>
                         </div>
+                        <div class="row">
+                            @if (foodAndDrink != null && foodAndDrink.Any())
+                            {
+                                foreach (var item in foodAndDrink)
+                                {
+                                    <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
+                                        <div class="listing-item">
+                                            <div class="listing-image">
+                                                <img src="~/images/img_1.jpg" alt="Image" class="img-fluid"> <!-- Cập nhật hình ảnh -->
+                                            </div>
+                                            <div class="listing-item-content">
+                                                <h2 class="px-3 mb-1 category bg-primary">@item.Price.ToString("N0") ₫</h2>
+                                                <h2 class="mb-2"><a href="@Url.Action("Detail", "CampingGear", new { id = item.ItemId })">@item.ItemName</a></h2> <!-- Thay đổi link sản phẩm -->
+                                                <a href="@Url.Action("Book", "CampingGear", new { id = item.ItemId })" class="btn btn-primary">Đặt Ngay</a> <!-- Thay đổi link đặt hàng -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <p>Không có dữ liệu để hiển thị.</p>
+                            }
+                        </div>
+
                     </div>
                 </div>
             </div>
+
+            <footer class="site-footer bg-light">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <h2 class="footer-heading mb-3">Instagram</h2>
+                            <div class="row">
+                                <div class="col-4 gal_col">
+                                    <a href="#"><img src="~/images/insta_1.jpg" alt="Image" class="img-fluid"></a>
+                                </div>
+                                <div class="col-4 gal_col">
+                                    <a href="#"><img src="~/images/insta_2.jpg" alt="Image" class="img-fluid"></a>
+                                </div>
+                                <div class="col-4 gal_col">
+                                    <a href="#"><img src="~/images/insta_3.jpg" alt="Image" class="img-fluid"></a>
+                                </div>
+                                <div class="col-4 gal_col">
+                                    <a href="#"><img src="~/images/insta_4.jpg" alt="Image" class="img-fluid"></a>
+                                </div>
+                                <div class="col-4 gal_col">
+                                    <a href="#"><img src="~/images/insta_5.jpg" alt="Image" class="img-fluid"></a>
+                                </div>
+                                <div class="col-4 gal_col">
+                                    <a href="#"><img src="~/images/insta_6.jpg" alt="Image" class="img-fluid"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-8 ml-auto">
+                            <div class="row">
+                                <div class="col-lg-6 ml-auto">
+                                    <h2 class="footer-heading mb-4">Quick Links</h2>
+                                    <ul class="list-unstyled">
+                                        <li><a href="#">About Us</a></li>
+                                        <li><a href="#">Testimonials</a></li>
+                                        <li><a href="#">Terms of Service</a></li>
+                                        <li><a href="#">Privacy</a></li>
+                                        <li><a href="#">Contact Us</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-lg-6">
+                                    <h2 class="footer-heading mb-4">Newsletter</h2>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt odio iure animi ullam quam, deleniti rem!</p>
+                                    <form action="#" class="d-flex" class="subscribe">
+                                        <input type="text" class="form-control mr-3" placeholder="Email">
+                                        <input type="submit" value="Send" class="btn btn-primary">
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-5 mt-5 text-center">
+                        <div class="col-md-12">
+                            <div class="border-top pt-5">
+                                <p>
+                                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart text-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </footer>
 
         </div>
 
+        <script src="~/js/jquery-3.3.1.min.js"></script>
+        <script src="~/js/jquery-migrate-3.0.0.js"></script>
+        <script src="~/js/popper.min.js"></script>
+        <script src="~/js/bootstrap.min.js"></script>
+        <script src="~/js/owl.carousel.min.js"></script>
+        <script src="~/js/jquery.sticky.js"></script>
+        <script src="~/js/jquery.waypoints.min.js"></script>
+        <script src="~/js/jquery.animateNumber.min.js"></script>
+        <script src="~/js/jquery.fancybox.min.js"></script>
+        <script src="~/js/jquery.stellar.min.js"></script>
+        <script src="~/js/jquery.easing.1.3.js"></script>
+        <script src="~/js/bootstrap-datepicker.min.js"></script>
+        <script src="~/js/isotope.pkgd.min.js"></script>
+        <script src="~/js/aos.js"></script>
 
-        <footer class="site-footer bg-light">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-3">
-                        <h2 class="footer-heading mb-3">Instagram</h2>
-                        <div class="row">
-                            <div class="col-4 gal_col">
-                                <a href="#"><img src="~/images/insta_1.jpg" alt="Image" class="img-fluid"></a>
-                            </div>
-                            <div class="col-4 gal_col">
-                                <a href="#"><img src="~/images/insta_2.jpg" alt="Image" class="img-fluid"></a>
-                            </div>
-                            <div class="col-4 gal_col">
-                                <a href="#"><img src="~/images/insta_3.jpg" alt="Image" class="img-fluid"></a>
-                            </div>
-                            <div class="col-4 gal_col">
-                                <a href="#"><img src="~/images/insta_4.jpg" alt="Image" class="img-fluid"></a>
-                            </div>
-                            <div class="col-4 gal_col">
-                                <a href="#"><img src="~/images/insta_5.jpg" alt="Image" class="img-fluid"></a>
-                            </div>
-                            <div class="col-4 gal_col">
-                                <a href="#"><img src="~/images/insta_6.jpg" alt="Image" class="img-fluid"></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-8 ml-auto">
-                        <div class="row">
-                            <div class="col-lg-6 ml-auto">
-                                <h2 class="footer-heading mb-4">Quick Links</h2>
-                                <ul class="list-unstyled">
-                                    <li><a href="#">About Us</a></li>
-                                    <li><a href="#">Testimonials</a></li>
-                                    <li><a href="#">Terms of Service</a></li>
-                                    <li><a href="#">Privacy</a></li>
-                                    <li><a href="#">Contact Us</a></li>
-                                </ul>
-                            </div>
-                            <div class="col-lg-6">
-                                <h2 class="footer-heading mb-4">Newsletter</h2>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt odio iure animi ullam quam, deleniti rem!</p>
-                                <form action="#" class="d-flex" class="subscribe">
-                                    <input type="text" class="form-control mr-3" placeholder="Email">
-                                    <input type="submit" value="Send" class="btn btn-primary">
-                                </form>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="row pt-5 mt-5 text-center">
-                    <div class="col-md-12">
-                        <div class="border-top pt-5">
-                            <p>
-                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart text-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                            </p>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </footer>
-
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init({
-            duration: 1200, // Đặt thời gian cho hiệu ứng (tùy chọn)
-        });
-    </script>
-    <script src="~/js/jquery-3.3.1.min.js"></script>
-    <script src="~/js/jquery-migrate-3.0.0.js"></script>
-    <script src="~/js/popper.min.js"></script>
-    <script src="~/js/bootstrap.min.js"></script>
-    <script src="~/js/owl.carousel.min.js"></script>
-    <script src="~/js/jquery.sticky.js"></script>
-    <script src="~/js/jquery.waypoints.min.js"></script>
-    <script src="~/js/jquery.animateNumber.min.js"></script>
-    <script src="~/js/jquery.fancybox.min.js"></script>
-    <script src="~/js/jquery.stellar.min.js"></script>
-    <script src="~/js/jquery.easing.1.3.js"></script>
-    <script src="~/js/bootstrap-datepicker.min.js"></script>
-    <script src="~/js/isotope.pkgd.min.js"></script>
-    <script src="~/js/aos.js"></script>
-    <script src="~/js/main.js"></script>
-
+        <script src="~/js/main.js"></script>
+        <script>
+            function sortFoodAndDrink() {
+                const sortValue = document.getElementById("sort").value;
+                const categoryId = '@ViewBag.CurrentCategoryId'; // Lấy categoryId hiện tại từ ViewBag nếu có
+                const url = `@Url.Action("OrderFoodAndDrink", "Service")?categoryId=${categoryId}&sortBy=${sortValue}`;
+                window.location.href = url;
+            }
+        </script>
 </body>
 
 </html>
-
-
-
-
