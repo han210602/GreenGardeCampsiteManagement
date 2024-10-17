@@ -1,0 +1,420 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Trips &mdash; Website Template by Colorlib</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,700,900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="~/css/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="~/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="~/fonts/flaticon/font/flaticon.css">
+    <link rel="stylesheet" href="css/aos.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+
+
+
+</head>
+
+
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+
+
+    <div class="site-wrap" id="home-section">
+
+        <div class="site-mobile-menu site-navbar-target">
+            <div class="site-mobile-menu-header">
+                <div class="site-mobile-menu-close mt-3">
+                    <span class="icon-close2 js-menu-toggle"></span>
+                </div>
+            </div>
+            <div class="site-mobile-menu-body"></div>
+        </div>
+
+
+
+        <header class="site-navbar site-navbar-target" role="banner">
+            <div class="container">
+                <div class="row align-items-center position-relative">
+                    <div class="col-3 ">
+                        <div class="site-logo">
+                            <a href="index.html" class="font-weight-bold">
+                                <img src="~/images/logo.jpg" alt="Image" class="img-fluid">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-9 text-right">
+                        <nav class="site-navigation text-right ml-auto d-none d-lg-block" role="navigation">
+                            <ul class="site-menu main-menu js-clone-nav ml-auto ">
+                                <li class="active"><a href="/Home" class="nav-link">Trang chủ</a></li>
+                                <li><a href="/Common/Event" class="nav-link">Sự kiện</a></li>
+                                <li class="has-dropdown">
+                                    <a href="/Service" class="nav-link">Dịch vụ</a>
+                                    <ul class="dropdown">
+                                        <li><a href="/Service/OrderTicket" class="nav-link">Danh sách vé</a></li>
+                                        <li><a href="/Service/OrderFoodAndDrink" class="nav-link">Danh sách đồ ăn</a></li>
+                                        <li><a href="/Service/OrderGear" class="nav-link">Danh sách dụng cụ</a></li>
+                                    </ul>
+                                </li>
+
+                                <li><a href="blog.html" class="nav-link">Liên hệ</a></li>
+                                <li>
+                                    <a href="/Common/Login" class="nav-link">Đăng nhập</a>
+                                    <a href="/Common/Register" class="nav-link">Đăng Ký</a>
+                                </li>
+
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <style>
+                .site-menu .dropdown {
+                    display: none; /* Ẩn menu thả xuống */
+                    position: absolute; /* Để menu thả xuống xuất hiện bên dưới mục Services */
+                    text-align: center;
+                    background: #f0f0f0; /* Màu nền xám nhẹ cho menu thả xuống */
+                    padding: 10px; /* Khoảng cách bên trong */
+                    z-index: 999; /* Đảm bảo nó nằm trên các phần tử khác */
+                }
+
+
+                    .site-menu .dropdown li {
+                        display: block; /* Hiển thị các mục theo chiều dọc */
+                        margin: 5px 0; /* Khoảng cách giữa các mục theo chiều dọc */
+                    }
+
+                        .site-menu .dropdown li a {
+                            padding: 5px 10px; /* Thêm khoảng cách bên trong cho các liên kết */
+                            text-decoration: none; /* Bỏ gạch chân cho các liên kết */
+                            color: #333; /* Màu chữ cho các liên kết */
+                            transition: background-color 0.3s; /* Hiệu ứng chuyển màu nền */
+                        }
+
+                            .site-menu .dropdown li a:hover {
+                                background-color: #e0e0e0; /* Màu nền khi hover vào các liên kết */
+                            }
+
+                .site-menu .has-dropdown:hover .dropdown {
+                    display: block; /* Hiện menu thả xuống khi hover vào mục Services */
+                }
+
+            </style>
+            <script>
+                $(document).ready(function () {
+                    $('.has-dropdown').hover(
+                        function () {
+                            $(this).find('.dropdown').stop(true, true).slideDown(200);
+                        },
+                        function () {
+                            $(this).find('.dropdown').stop(true, true).slideUp(200);
+                        }
+                    );
+                });
+            </script>
+        </header>
+     
+
+
+        <div class="ftco-blocks-cover-1">
+            <div class="site-section-cover overlay" style="background-image: url('images/p22.jpg')">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-md-5" data-aos="fade-right">
+                            <h1 class="mb-3 text-white">Lợi ích khi đến với Sông quê</h1>
+                            <p>
+                                Khi đến với Sông Quê Green Garden, bạn sẽ được tận hưởng nhiều tiện ích tuyệt vời
+                                như khuôn viên cắm trại rộng rãi, không gian lý tưởng cho tiệc ngoài trời và
+                                Thỏa sức check-in tại vườn và tận hưởng không khí trong lành.
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="site-section py-5">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <div class="heading-39101 mb-5">
+                            <span class="backdrop">Câu chuyện</span>
+                            <span class="subtitle-39191">Về chúng tôi</span>
+                            <h3>Về chúng tôi</h3>
+                        </div>
+                        <p>Sông Quê Green Garden là điểm đến tiên phong tại Việt Nam, mang lại không gian thiên nhiên tĩnh lặng và đầy đủ tiện nghi</p>
+                        <p>Lấy cảm hứng từ tinh thần công bằng và hòa bình như Hogwarts, khu trại giúp du khách tạm quên những lo toan và tìm lại sự bình yên, kết nối với giá trị chân thật trong cuộc sống.</p>
+                    </div>
+                    <div class="col-md-6" data-aos="fade-right">
+                        <img src="images/picture3.jpg" alt="Image" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="site-section">
+
+            <div class="container">
+                <div class="row justify-content-center text-center">
+                    <div class="col-md-7">
+                        <div class="heading-39101 mb-5">
+                            <span class="backdrop text-center">Dịch Vụ</span>
+                            <span class="subtitle-39191">Dịch Vụ</span>
+                            <h3>Những dịch vụ nổi bật</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
+                        <div class="listing-item">
+                            <div class="listing-image">
+                                <img src="~/images/picture4.jpg" alt="Image" class="img-fluid">
+                            </div>
+                            <div class="listing-item-content">
+
+                                <h2 class="mb-1"><a href="trip-single.html">Câu Cá</a></h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
+                        <div class="listing-item">
+                            <div class="listing-image">
+                                <img src="~/images/picture10.jpg" alt="Image" class="img-fluid">
+                            </div>
+                            <div class="listing-item-content">
+          <h2 class="mb-1"><a href="trip-single.html">Khu Vui chơi</a></h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
+                        <div class="listing-item">
+                            <div class="listing-image">
+                                <img src="~/images/picture11.jpg" alt="Image" class="img-fluid">
+                            </div>
+                            <div class="listing-item-content">
+                                <h2 class="mb-1"><a href="trip-single.html">Tổ chức sự kiện</a></h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
+                        <div class="listing-item">
+                            <div class="listing-image">
+                                <img src="~/images/picture7.jpg" alt="Image" class="img-fluid">
+                            </div>
+                            <div class="listing-item-content">
+
+                                <h2 class="mb-1"><a href="trip-single.html">Họp nhóm</a></h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
+                        <div class="listing-item">
+                            <div class="listing-image">
+                                <img src="~/images/picture16.jpg" alt="Image" class="img-fluid">
+                            </div>
+                            <div class="listing-item-content">
+
+                                <h2 class="mb-1"><a href="trip-single.html">Đặt đồ ăn</a></h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
+                        <div class="listing-item">
+                            <div class="listing-image">
+                                <img src="~/images/picture17.jpg" alt="Image" class="img-fluid">
+                            </div>
+                            <div class="listing-item-content">
+
+                                <h2 class="mb-1"><a href="trip-single.html">Thuê lều</a></h2>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+        <div class="site-section">
+
+            <div class="container">
+                <div class="row justify-content-center text-center">
+                    <div class="col-md-10">
+                        <div class="heading-39101 mb-5">
+                            <span class="backdrop text-center">Bài Viết</span>
+                            <span class="subtitle-39191">Mới nhất</span>
+                            <h3>Về bài viết</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="post-entry-1 h-100">
+                            <a href="single.html">
+                                <img src="images/picture10.jpg" alt="Image"
+                                     class="img-fluid">
+                            </a>
+                            <div class="post-entry-1-contents">
+
+                                <h2><a href="single.html">Làm Việc nhóm</a></h2>
+                                <span class="meta d-inline-block mb-3">13/10/2024 <span class="mx-2">by</span> <a href="#">Nhân viên</a></span>
+                                <p>Nơi giúp trẻ em tìm được niềm vui mới sau những tuần học căng thẳng</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="post-entry-1 h-100">
+                            <a href="single.html">
+                                <img src="images/picture13.jpg" alt="Image"
+                                     class="img-fluid">
+                            </a>
+                            <div class="post-entry-1-contents">
+
+                                <h2><a href="single.html">Họp lớp</a></h2>
+                                <span class="meta d-inline-block mb-3">13/10/2024<span class="mx-2">by</span> <a href="#">Admin</a></span>
+                                <p>Đây là dịp để mọi người gặp nhau sau bao lâu xa cách</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="post-entry-1 h-100">
+                            <a href="single.html">
+                                <img src="images/picture11.jpg" alt="Image"
+                                     class="img-fluid">
+                            </a>
+                            <div class="post-entry-1-contents">
+
+                                <h2><a href="single.html">Hội thảo mới nhất</a></h2>
+                                <span class="meta d-inline-block mb-3">13/10/2024 <span class="mx-2">by</span> <a href="#">Admin</a></span>
+                                <p>Nơi chia sẻ những kinh nghiệm bài học về du lịch nông nghiệp.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="site-section bg-image overlay" style="background-image: url('images/picture2.jpg')">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-7 text-center">
+                        <h2 class="font-weight-bold text-white">Hãy đến và trải nghiệm với chúng tôi</h2>
+                        <p class="text-white">
+                            Hãy cùng nhau trải nghiệm vẻ đẹp tự nhiên của Sông Quê Green Garden!
+                        </p>
+                        <p class="mb-0"><a href="#" class="btn btn-primary text-white py-3 px-4">Tham gia ngay!</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="site-footer bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <h2 class="footer-heading mb-3">Facebook</h2>
+                        <div class="row">
+                            <div class="col-4 gal_col">
+                                <a href="#"><img src="images/Picture1.jpg" alt="Image" class="img-fluid"></a>
+                            </div>
+                            <div class="col-4 gal_col">
+                                <a href="#"><img src="images/Picture8.jpg" alt="Image" class="img-fluid"></a>
+                            </div>
+                            <div class="col-4 gal_col">
+                                <a href="#"><img src="images/Picture7.jpg" alt="Image" class="img-fluid"></a>
+                            </div>
+                            <div class="col-4 gal_col">
+                                <a href="#"><img src="images/Picture4.jpg" alt="Image" class="img-fluid"></a>
+                            </div>
+                            <div class="col-4 gal_col">
+                                <a href="#"><img src="images/Picture13.jpg" alt="Image" class="img-fluid"></a>
+                            </div>
+                            <div class="col-4 gal_col">
+                                <a href="#"><img src="images/Picture6.jpg" alt="Image" class="img-fluid"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8 ml-auto">
+                        <div class="row">
+                            <div class="col-lg-6 ml-auto">
+                                <h2 class="footer-heading mb-4">Truy cập nhanh</h2>
+                                <ul class="list-unstyled">
+                                    <li><a href="#">Facebook</a></li>
+                                    <li><a href="#">Instagram</a></li>
+                                    <li><a href="#">Tiktok</a></li>
+
+                                </ul>
+                            </div>
+                            <div class="col-lg-6">
+                                <h2 class="footer-heading mb-4">Phản hồi</h2>
+                                <p>Nơi bạn đưa ra những phản hồi về dịch vụ,nhân viên tại sông quê</p>
+                                <form action="#" class="d-flex" class="subscribe">
+                                    <input type="text" class="form-control mr-3" placeholder="Phản hồi">
+                                    <input type="submit" value="Send" class="btn btn-primary">
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+        </footer>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1200, // Đặt thời gian cho hiệu ứng (tùy chọn)
+        });
+    </script>
+
+    <script src="~/js/jquery-3.3.1.min.js"></script>
+    <script src="~/js/jquery-migrate-3.0.0.js"></script>
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/owl.carousel.min.js"></script>
+    <script src="~/js/jquery.sticky.js"></script>
+    <script src="~/js/jquery.waypoints.min.js"></script>
+    <script src="~/js/jquery.animateNumber.min.js"></script>
+    <script src="~/js/jquery.fancybox.min.js"></script>
+    <script src="~/js/jquery.stellar.min.js"></script>
+    <script src="~/js/jquery.easing.1.3.js"></script>
+    <script src="~/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/js/isotope.pkgd.min.js"></script>
+    <script src="~/js/aos.js"></script>
+
+    <script src="~/js/main.js"></script>
+
+</body>
+
+</html>
+
