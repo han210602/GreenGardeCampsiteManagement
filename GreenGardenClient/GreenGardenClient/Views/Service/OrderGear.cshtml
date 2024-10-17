@@ -137,41 +137,23 @@
                             border-color: #007bff; /* Đổi màu viền khi được chọn */
                         }
 
-                #filterForm {
-                    display: none; /* Ban đầu ẩn bộ lọc */
-                    width: 25%;
-                    float: left;
-                    margin-right: 10px;
+
+                .filter-form label {
+                    font-weight: bold; /* Đậm nhấn nhá cho tiêu đề */
+                    white-space: nowrap; /* Ngăn chữ label xuống dòng */
                 }
 
-                #gearList {
-                    width: 100%; /* Khi bộ lọc ẩn, sản phẩm chiếm toàn bộ màn hình */
-                    float: none;
+                .filter-form select {
+                    border-radius: 0.25rem; /* Làm cho các ô chọn trông mềm mại hơn */
+                    border: 1px solid #ced4da; /* Màu viền chuẩn */
+                    transition: border-color 0.2s; /* Hiệu ứng chuyển tiếp mượt mà */
                 }
 
-                /* Kiểu dáng icon ẩn/hiện bộ lọc */
-                .filter-toggle-icon {
-                    position: fixed;
-                    top: 20px;
-                    left: 20px;
-                    cursor: pointer;
-                    font-size: 24px;
-                    background: #007bff;
-                    color: white;
-                    padding: 8px;
-                    border-radius: 50%;
-                    z-index: 1000;
-                }
+                    .filter-form select:focus {
+                        border-color: #80bdff; /* Màu viền khi ô chọn được kích hoạt */
+                        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Hiệu ứng bóng đổ khi focus */
+                    }
 
-                /* Khi bộ lọc được hiển thị */
-                .filter-visible #filterForm {
-                    display: block; /* Hiện bộ lọc khi bật */
-                }
-
-                .filter-visible #gearList {
-                    width: 75%; /* Khi bộ lọc hiện, sản phẩm chiếm 75% */
-                    float: right;
-                }
 
             </style>
             <script>
@@ -188,42 +170,47 @@
             </script>
         </header>
 
-        <div class="site-wrap" id="home-section">
-            <!-- Icon để ẩn/hiện bộ lọc -->
-            <div id="filterToggleIcon" class="filter-toggle-icon">
-                <i class="icon-filter">☰</i> <!-- Thay bằng icon CSS phù hợp nếu có -->
-            </div>
-            <div class="site-section">
-                <div class="container">
-                    <div class="row justify-content-center text-center">
-                        <div class="col-md-7">
-                            <div class="heading-39101 mb-5">
-                                <span class="subtitle-39191">Đồ dùng</span>
-                                <h3>Danh sách đồ dùng</h3>
-                            </div>
+
+        <div class="site-section">
+            <div class="container">
+                <div class="row justify-content-center text-center">
+                    <div class="col-md-7">
+                        <div class="heading-39101 mb-5">
+                            <span class="backdrop text-center">GreenGarden</span>
+                            <span class="subtitle-39191">Đồ dùng</span>
+                            <h3>Danh sách đồ dùng</h3>
                         </div>
                     </div>
-                    <div class="row">
-                        <!-- Cột bên trái: Bộ lọc -->
-                        <div id="filterForm" data-aos="fade-up">
-                            <div class="filter-form">
-                                <h4 class="mb-4">Bộ lọc</h4>
-                                <form method="get" action="@Url.Action("OrderGear", "Service")">
-                                    <!-- Bộ lọc theo Loại đồ dùng -->
-                                    <div class="sort-dropdown">
-                                        <label for="sort">Sắp xếp theo:</label>
+                </div>
+                <div class="row">
+                    <!-- Cột bên trái: Bộ lọc -->
+                    <div data-aos="fade-up">
+                        <div class="filter-form">
+                            <h4 class="mb-4">Bộ lọc
+                                <div id="filterToggleIcon" class="filter-toggle-icon">
+                                    <i class="icon-filter">☰</i> <!-- Thay bằng icon CSS phù hợp nếu có -->
+                                </div>
+
+                            </h4>
+                            <div id="filterContainer" style="display: none;">
+                            <form id="filterForm" method="get" action="@Url.Action("OrderGear", "Service")">
+                                <input type="hidden" name="sortBy" id="sortByInput" value="@ViewBag.SortBy" />
+                                <div class="row">
+                                    <!-- Bộ lọc Sắp xếp theo -->
+                                    <div class="col-lg-4 col-md-4 mb-3 d-flex align-items-center">
+                                        <label for="sort" class="mr-2">Sắp xếp theo:</label>
                                         <select id="sort" name="sortBy" class="form-control">
                                             <option value="0" @(ViewBag.SortBy == null || ViewBag.SortBy == "0" ? "selected" : "")>Mặc định</option>
                                             <option value="1" @(ViewBag.SortBy == "1" ? "selected" : "")>Giá: Thấp đến Cao</option>
                                             <option value="2" @(ViewBag.SortBy == "2" ? "selected" : "")>Giá: Cao đến Thấp</option>
                                             <option value="3" @(ViewBag.SortBy == "3" ? "selected" : "")>Tên: A-Z</option>
                                             <option value="4" @(ViewBag.SortBy == "4" ? "selected" : "")>Tên: Z-A</option>
-                                            <option value="1" @(ViewBag.Popularity == "1" ? "selected" : "")>Phổ biến</option>
-                                            <option value="2" @(ViewBag.Popularity == "2" ? "selected" : "")>Mới nhất</option>
                                         </select>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="categoryFilter">Loại đồ dùng</label>
+
+                                    <!-- Bộ lọc Loại đồ dùng -->
+                                    <div class="col-lg-4 col-md-4 mb-3 d-flex align-items-center">
+                                        <label for="categoryFilter" class="mr-2">Loại đồ dùng:</label>
                                         <select id="categoryFilter" name="categoryId" class="form-control">
                                             <option value="">Tất cả</option>
                                             @foreach (var category in campingCategories)
@@ -234,9 +221,10 @@
                                             }
                                         </select>
                                     </div>
-                                    <!-- Bộ lọc theo Giá -->
-                                    <div class="form-group">
-                                        <label for="priceFilter">Giá</label>
+
+                                    <!-- Bộ lọc Giá -->
+                                    <div class="col-lg-4 col-md-4 mb-3 d-flex align-items-center">
+                                        <label for="priceFilter" class="mr-2">Giá:</label>
                                         <select id="priceFilter" name="priceRange" class="form-control">
                                             <option value="">Tất cả</option>
                                             <option value="1" @(ViewBag.PriceRange == "1" ? "selected" : "")>Dưới 100,000 ₫</option>
@@ -244,18 +232,16 @@
                                             <option value="3" @(ViewBag.PriceRange == "3" ? "selected" : "")>Trên 200,000 ₫</option>
                                         </select>
                                     </div>
-                                    <!-- Bộ lọc theo Độ phổ biến -->
-                               
-                                    
-                                </form>
-                            </div>
+                                </div>
+                            </form>
                         </div>
-
-                        <!-- Cột bên phải: Danh sách sản phẩm -->
-                        <div id="gearList" class="row col-lg-9 col-md-8">
+                    </div>
 
 
-                            @* Danh sách sản phẩm *@
+                    </div>
+                    <!-- Cột bên phải: Danh sách sản phẩm -->
+                    <div class="col-lg-12">
+                        <div id="gearList" class="row">
                             @if (campingGears != null && campingGears.Any())
                             {
                                 foreach (var item in campingGears)
@@ -282,7 +268,6 @@
                     </div>
                 </div>
             </div>
-
 
 
 
@@ -371,35 +356,31 @@
         <script src="~/js/aos.js"></script>
 
         <script src="~/js/main.js"></script>
+
         <script>
-    $(document).ready(function () {
-        // Cập nhật danh sách khi thay đổi bộ lọc
-        function updateGearList() {
-            const filters = {
-                categoryId: $('#categoryFilter').val(),
-                priceRange: $('#priceFilter').val(),
-                popularity: $('#popularityFilter').val(),
-                sortBy: $('#sort').val()
-            };
+            $(document).ready(function () {
+                $('#filterToggleIcon').on('click', function () {
+                    $('#filterContainer').toggle(); // Ẩn/hiện bộ lọc khi nhấn vào biểu tượng
+                });
 
-            $.get('@Url.Action("OrderGear", "Service")', filters, function (data) {
-                $('#gearList').html($(data).find('#gearList').html());
+                // Cập nhật danh sách sản phẩm khi thay đổi bộ lọc
+                function updateGearList() {
+                    const filters = {
+                        categoryId: $('#categoryFilter').val(),
+                        priceRange: $('#priceFilter').val(),
+                        sortBy: $('#sort').val()
+                    };
+
+                    $.get('@Url.Action("OrderGear", "Service")', filters, function (data) {
+                        $('#gearList').html($(data).find('#gearList').html());
+                    });
+                }
+
+                $('#categoryFilter, #priceFilter, #sort').on('change', function () {
+                    updateGearList();
+                });
             });
-        }
-
-        // Thay đổi hiển thị danh sách khi click icon lọc
-        $('#filterToggleIcon').click(function () {
-            $('body').toggleClass('filter-visible');
-        });
-
-        // Bắt sự kiện khi thay đổi bộ lọc hoặc sắp xếp
-        $('#categoryFilter, #priceFilter, #popularityFilter, #sort').on('change', function () {
-            updateGearList();
-        });
-    });
-</script>
-
-
+        </script>
 </body>
 </html>
 
