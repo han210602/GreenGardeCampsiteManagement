@@ -19,6 +19,12 @@ namespace Repositories.Orders
         bool CreateUniqueOrder(CreateUniqueOrderRequest order);
         List<OrderCampingGearByUsageDateDTO> GetListOrderGearByUsageDate(DateTime usagedate);
         bool CreateComboOrder(CreateComboOrderRequest order);
+        bool UpdateOrder(OrderAddDTO order);
+        bool UpdateTicket(List<OrderTicketAddlDTO>tickets);
+        bool UpdateGear(List<OrderCampingGearAddDTO> gears);
+        bool UpdateFood(List<OrderFoodAddDTO> foods);
+        bool UpdateCombo(List<OrderComboAddDTO> combos);
+        bool UpdateComboFood(List<OrderFoodComboAddDTO> foodcombos);
 
     }
 }

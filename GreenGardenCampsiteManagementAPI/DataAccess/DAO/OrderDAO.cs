@@ -597,5 +597,173 @@ namespace DataAccess.DAO
 
 
         }
+
+        public static bool UpdateTicket(List<OrderTicketAddlDTO> tickets)
+        {
+            try
+            {
+                using (var context = new GreenGardenContext())
+                {
+                    
+                    
+                    if (tickets[0].TicketId != 0)
+                    {
+                        var list = context.OrderTicketDetails.Where(s => s.OrderId == tickets[0].OrderId);
+                        context.OrderTicketDetails.RemoveRange(list);
+                        var newlist = tickets.Select(s => new OrderTicketDetail()
+                        {
+                            OrderId = s.OrderId,
+                            TicketId = s.TicketId,
+                            Quantity = s.Quantity,
+
+                        });
+                        context.OrderTicketDetails.AddRange(newlist);
+                    }
+                    else
+                    {
+                        DeleteOrder(tickets[0].OrderId);
+                    }
+                    
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+
+            }
+
+
+        }
+        public static bool UpdateGear(List<OrderCampingGearAddDTO> tickets)
+        {
+            try
+            {
+                using (var context = new GreenGardenContext())
+                {
+                    var list = context.OrderCampingGearDetails.Where(s => s.OrderId == tickets[0].OrderId);
+                    context.OrderCampingGearDetails.RemoveRange(list);
+                    if (tickets[0].GearId != 0)
+                    {
+                        var newlist = tickets.Select(s => new OrderCampingGearDetail()
+                        {
+                            OrderId = s.OrderId,
+                            GearId = s.GearId,
+                            Quantity = s.Quantity,
+
+                        });
+                        context.OrderCampingGearDetails.AddRange(newlist);
+                    }
+                  
+                    context.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+
+            }
+
+
+        }
+        public static bool UpdateFood(List<OrderFoodAddDTO> tickets)
+        {
+            try
+            {
+                using (var context = new GreenGardenContext())
+                {
+                    var list = context.OrderFoodDetails.Where(s => s.OrderId == tickets[0].OrderId);
+                    context.OrderFoodDetails.RemoveRange(list);
+                    if (tickets[0].ItemId != 0)
+                    {
+                        var newlist = tickets.Select(s => new OrderFoodDetail()
+                        {
+                            OrderId = s.OrderId,
+                            ItemId = s.ItemId,
+                            Quantity = s.Quantity,
+
+                        });
+                        context.OrderFoodDetails.AddRange(newlist);
+                    }
+                    context.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+
+            }
+
+
+        }
+        public static bool UpdateCombo(List<OrderComboAddDTO> tickets)
+        {
+            try
+            {
+                using (var context = new GreenGardenContext())
+                {
+                    if (tickets[0].ComboId != 0)
+                    {
+                        var list = context.OrderComboDetails.Where(s => s.OrderId == tickets[0].OrderId);
+                        context.OrderComboDetails.RemoveRange(list);
+                        var newlist = tickets.Select(s => new OrderComboDetail()
+                        {
+                            OrderId = s.OrderId,
+                            ComboId = s.ComboId,
+                            Quantity = s.Quantity,
+
+                        });
+                        context.OrderComboDetails.AddRange(newlist);
+                    }
+                    else
+                    {
+                        DeleteOrder(tickets[0].OrderId);
+                    }
+                    
+                    context.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+
+            }
+
+
+        }
+        public static bool UpdateFoodCombo(List<OrderFoodComboAddDTO> tickets)
+        {
+            try
+            {
+                using (var context = new GreenGardenContext())
+                {
+                    var list = context.OrderComboDetails.Where(s => s.OrderId == tickets[0].OrderId);
+                    context.OrderComboDetails.RemoveRange(list);
+                    if (tickets[0].ComboId != 0)
+                    {
+                        var newlist = tickets.Select(s => new OrderFoodComboDetail()
+                        {
+                            OrderId = s.OrderId,
+                            ComboId = s.ComboId,
+                            Quantity = s.Quantity,
+
+                        });
+                        context.OrderFoodComboDetails.AddRange(newlist);
+                    }
+                    context.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+
+            }
+
+
+        }
     }
 }

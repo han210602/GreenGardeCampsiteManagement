@@ -61,6 +61,35 @@ namespace Repositories.Orders
             return OrderDAO.UpdateActivityOrder(idorder, idactivity);
         }
 
-        
+        public bool UpdateCombo(List<OrderComboAddDTO> combos)
+        {
+            return OrderDAO.UpdateCombo(combos);
+        }
+
+        public bool UpdateComboFood(List<OrderFoodComboAddDTO> foodcombos)
+        {
+            return OrderDAO.UpdateFoodCombo(foodcombos);
+        }
+
+        public bool UpdateFood(List<OrderFoodAddDTO> foods)
+        {
+            return OrderDAO.UpdateFood(foods);
+        }
+
+        public bool UpdateGear(List<OrderCampingGearAddDTO> gears)
+        {
+            return OrderDAO.UpdateGear(gears);
+        }
+
+        public bool UpdateOrder(OrderAddDTO order)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool UpdateTicket(List<OrderTicketAddlDTO> tickets)
+        {
+            return OrderDAO.UpdateTicket(tickets);
+
+        }
     }
 }
