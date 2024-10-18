@@ -105,13 +105,14 @@ namespace GreenGardenClient.Controllers
         }
         [HttpGet]
         [Route("order-food-drink")]
-        public async Task<IActionResult> OrderFoodAndDrink(int? categoryId, int? sortBy)
+        public async Task<IActionResult> OrderFoodAndDrink(int? categoryId, int? sortBy, int? priceRange)
         {
             ViewBag.CurrentCategoryId = categoryId; // Lưu lại categoryId hiện tại để hiển thị active
 
             // Xây dựng URL cho API
-            string apiUrl = $"https://localhost:7298/api/FoodAndDrink/GetFoodAndDrinksBySort?";
+            string apiUrl = "https://localhost:7298/api/FoodAndDrink/GetFoodAndDrinksBySort?";
 
+            // Thêm các tham số vào URL
             if (categoryId.HasValue)
             {
                 apiUrl += $"categoryId={categoryId.Value}&";
@@ -119,12 +120,23 @@ namespace GreenGardenClient.Controllers
 
             if (sortBy.HasValue)
             {
-                apiUrl += $"sortBy={sortBy.Value}";
+                apiUrl += $"sortBy={sortBy.Value}&";
             }
 
+            if (priceRange.HasValue)
+            {
+                apiUrl += $"priceRange={priceRange.Value}&";
+            }
+
+
+            // Gọi API lấy dữ liệu về đồ ăn và thức uống
             var foodAndDrink = await GetDataFromApiAsync<List<FoodAndDrinkVM>>(apiUrl);
+            // Gọi API lấy dữ liệu về danh mục đồ ăn và thức uống
             var foodAndDrinkCategories = await GetDataFromApiAsync<List<FoodAndDrinkCategoryVM>>("https://localhost:7298/api/FoodAndDrink/GetAllFoodAndDrinkCategories");
-            ViewBag.SortBy = sortBy.HasValue ? sortBy.Value.ToString() : "0";
+
+            // Cập nhật ViewBag với các giá trị cần thiết
+            ViewBag.SortBy = sortBy.HasValue ? sortBy.Value.ToString() : "0"; // Sắp xếp
+            ViewBag.PriceRange = priceRange.HasValue ? priceRange.Value.ToString() : null; // Khoảng giá
             ViewBag.FoodAndDrink = foodAndDrink;
             ViewBag.FoodAndDrinkCategories = foodAndDrinkCategories;
 
@@ -135,8 +147,49 @@ namespace GreenGardenClient.Controllers
             return View();
         }
 
-        public IActionResult OrderTicket()
+        public async Task<IActionResult> OrderTicket()
         {
+            var ticket = await GetDataFromApiAsync<List<TicketVM>>("https://localhost:7298/api/Ticket/GetAllTickets");
+            var ticketCategory = await GetDataFromApiAsync<List<TicketCategoryVM>>("https://localhost:7298/api/Ticket/GetAllTicketCategories");
+
+            ViewBag.Ticket = ticket;
+            ViewBag.TicketCategories = ticketCategory;
+
+
+            return View();
+        }
+        [HttpGet]
+        [Route("order-ticket")]
+        public async Task<IActionResult> OrderTicket(int? categoryId, int? sortBy)
+        {
+            ViewBag.CurrentCategoryId = categoryId; // Lưu lại categoryId hiện tại để hiển thị active
+
+            // Xây dựng URL cho API
+            string apiUrl = "https://localhost:7298/api/Ticket/GetTicketsByCategoryAndSort?";
+
+            // Thêm các tham số vào URL
+            if (categoryId.HasValue)
+            {
+                apiUrl += $"categoryId={categoryId.Value}&";
+            }
+
+            if (sortBy.HasValue)
+            {
+                apiUrl += $"sort={sortBy.Value}&";
+            }
+
+
+
+            // Gọi API lấy dữ liệu về đồ ăn và thức uống
+            var ticket = await GetDataFromApiAsync<List<TicketVM>>(apiUrl);
+            // Gọi API lấy dữ liệu về danh mục đồ ăn và thức uống
+            var ticketCategory = await GetDataFromApiAsync<List<TicketCategoryVM>>("https://localhost:7298/api/Ticket/GetAllTicketCategories");
+
+            // Cập nhật ViewBag với các giá trị cần thiết
+            ViewBag.SortBy = sortBy.HasValue ? sortBy.Value.ToString() : "0"; // Sắp xếp          
+            ViewBag.Ticket = ticket;
+            ViewBag.TicketCategories = ticketCategory;
+
             return View();
         }
     }

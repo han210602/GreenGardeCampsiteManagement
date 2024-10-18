@@ -1,4 +1,9 @@
-﻿<!doctype html>
+﻿@using GreenGardenClient.Models;
+@{
+    var ticket = ViewBag.Ticket as List<TicketVM>;
+    var ticketCategories = ViewBag.TicketCategories as List<TicketCategoryVM>;
+}
+<!doctype html>
 <html lang="en">
 
 <head>
@@ -364,7 +369,7 @@
         </header>
 
 
-        <div class="ftco-blocks-cover-1">
+       @* <div class="ftco-blocks-cover-1">
             <div class="site-section-cover overlay" style="background-image: url('@Url.Content("~/images/p22.jpg")')">
                 <div class="container">
                     <div class="row align-items-center justify-content-center text-center">
@@ -376,7 +381,7 @@
                 </div>
             </div>
         </div>
-
+*@
 
         <div class="site-section">
             <div class="container">
@@ -391,114 +396,81 @@
             </div>
             <div class="row">
             <!-- Cột bên trái: Danh sách category -->
-            <div class="col-lg-3 col-md-4 mb-4" data-aos="fade-up">
-            <div class="category-list">
-            <h4 class="mb-4">Categories</h4>
-            <ul class="list-group">
-            <li class="list-group-item"><a href="#">Tất cả</a></li>
-            <li class="list-group-item"><a href="#">Vé trẻ em</a></li>
-            <li class="list-group-item"><a href="#">Vé người lớn</a></li>
-            <li class="list-group-item"><a href="#">Vé Combo</a></li>
-            <li class="list-group-item"><a href="#">Vé theo đoàn</a></li>
-            <li class="list-group-item"><a href="#">Vé đặc biệt</a></li>
-            </ul>
-            </div>
-            </div>
+                    <div class="col-lg-3 col-md-4 mb-4" data-aos="fade-up">
+                        <div class="category-list">
+                            <h4 class="mb-4">Các loại vé</h4>
+                            <ul id="categoryFilter" class="list-group">
+
+                                <li class="list-group-item">
+                                    <a class="@(ViewBag.CurrentCategoryId == null ? "active-category" : "")"
+                                       href="@Url.Action("OrderTicket", "Service", new { sortBy = ViewBag.SortBy })">Tất cả</a>
+                                </li>
+                                @foreach (var category in ticketCategories)
+                                    {
+                                        <li class="list-group-item">
+                                        <a href="@Url.Action("OrderTicket", new { categoryId = category.TicketCategoryId, sortBy = ViewBag.SortBy  })">@category.TicketCategoryName</a>
+                                        </li>
+                                    }
+                                
+                            </ul>
+                        </div>
+                    </div>
+
 
             <!-- Cột bên phải: Danh sách sản phẩm -->
             <div class="col-lg-9 col-md-8">
 
                         <div class="filter-container" data-aos="fade-up">
                             <!-- Ngày sử dụng -->
-                            <div class="filter-item">
-                                <label for="start">Ngày sử dụng:</label>
-                                <input type="date" id="start" name="start-date" value="dd-MM-YYYY">
-                            </div>
 
                             <!-- Sắp xếp theo -->
                             <div class="filter-item">
                                 <label for="sort">Sắp xếp theo:</label>
-                                <select id="sort" name="sort">
-                                    <option value="discount">Giảm giá nhiều nhất</option>
-                                    <option value="price-asc">Giá tăng dần</option>
-                                    <option value="price-desc">Giá giảm dần</option>
+                                <select id="sort" name="sort" onchange="sortCampingGears()">
+                                    <option value="" @(ViewBag.sortBy == "" ? "selected" : "")>Mặc định</option>
+                                    <option value="1" @(ViewBag.sortBy == "1" ? "selected" : "")>Giá tăng dần</option>
+                                    <option value="2" @(ViewBag.sortBy == "2" ? "selected" : "")>Giá giảm dần</option>
                                 </select>
                             </div>
                         </div>
+                        <div  class="product-list" data-aos="fade-up">
+                            @if (ticket != null && ticket.Any())
+                            {
 
-                        <div class="product-list" data-aos="fade-up">
-                            <div class="product-item">
-                                <div class="product-image">
-                                    <img src="~/images/img_1.jpg" alt="Image" class="img-fluid">
-                                </div>
-                                <div class="product-content">
-                                    <h2><a href="trip-single.html">Vé người lớn </a></h2>
-                                    <div class="quantity-date-container">
-                                        <p><i class="fa fa-ticket"></i> Số Lượng: 50 vé</p>
-                                        <input type="date" class="styled-date">
-                                    </div>
+                                foreach (var item in ticket) // Sử dụng biến item cho từng vé
+                                {
+                                        <div class="product-item">
+                                            <div class="product-image">
+                                                <img src="~/images/img_1.jpg" alt="Image" class="img-fluid">
+                                            </div>
+                                            <div class="product-content">
+                                                <h2><a href="@Url.Action("TripSingle", new { id = item.TicketId })">@item.TicketName</a></h2> <!-- Sử dụng item.TicketId -->
+                                                <p><i class="fa fa-info-circle"></i> Mô tả: Vé đơn giúp bạn trải nghiệm không gian cắm trại và tổ chức tiệc ngoài trời rộng rãi. Du khách có thể thoải mái chụp ảnh check-in tại vườn, tham gia khu vui chơi bao gồm bể bơi ngoài trời, trượt cỏ</p>
 
-                                    <p><i class="fa fa-info-circle"></i> Mô tả: Vé đơn giúp bạn trải nghiệm không gian cắm trại và tổ chức tiệc ngoài trời rộng rãi. Du khách có thể thoải mái chụp ảnh check-in tại vườn, tham gia khu vui chơi bao gồm bể bơi ngoài trời, trượt cỏ</p>
-
-                                    <div class="price-quantity">
-                                        <p style="margin-bottom:1px" class="price"><i class="fa fa-money-bill-wave"></i> 600,000đ</p>
-                                        <div class="quantity-control">
-                                            <button class="btn-minus" onclick="decreaseQuantity('quantity-1')">-</button>
-                                            <input type="text" value="1" class="quantity" id="quantity-1">
-                                            <button class="btn-plus" onclick="increaseQuantity('quantity-1')">+</button>
-
-
-                                        </div>
-                                    </div>
-                                    <div class="btn-group">
-                                        <button class="add-to-cart">
-                                            <i class="fa fa-cart-shopping"></i> Thêm giỏ hàng
-                                        </button>
-                                        <button class="buy-now">Mua ngay</button>
-                              
-
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="product-item">
-                                <div class="product-image">
-                                    <img src="~/images/img_2.jpg" alt="Image" class="img-fluid">
-                                </div>
-                                <div class="product-content">
-                                    <h2><a href="trip-single.html">Vé  trẻ em </a></h2>
-                                    <div class="quantity-date-container">
-                                        <p><i class="fa fa-ticket"></i> Số Lượng: 50 vé</p>
-                                        <input type="date" class="styled-date">
-                                    </div>
-                                    <p><i class="fa fa-info-circle"></i> Mô tả: Vé đơn giúp bạn trải nghiệm không gian cắm trại và tổ chức tiệc ngoài trời rộng rãi. Du khách có thể thoải mái chụp ảnh check-in tại vườn, tham gia khu vui chơi bao gồm bể bơi ngoài trời, trượt cỏ</p>
-
-                                    <div class="details-row">
-                                        <div class="price-quantity">
-                                            <p style="margin-bottom:1px" class="price"><i class="fa fa-money-bill-wave"></i> 600,000đ</p>
-
-                                            <div class="quantity-control">
-                                                <button class="btn-minus" onclick="decreaseQuantity('quantity-1')">-</button>
-                                                <input type="text" value="1" class="quantity" id="quantity-1">
-                                                <button class="btn-plus" onclick="increaseQuantity('quantity-1')">+</button>
-                                                <input type="date" class="styled-date">
-
+                                                <div class="price-quantity">
+                                                    <p style="margin-bottom:1px" class="price"><i class="fa fa-money-bill-wave"></i> @item.Price.ToString("N0")đ</p> <!-- Sử dụng item.Price -->
+                                                    <div class="quantity-control">
+                                                        <button class="btn-minus" onclick="decreaseQuantity('quantity-@item.TicketId')">-</button>
+                                                        <input type="text" value="1" class="quantity" id="quantity-@item.TicketId"> <!-- Gắn ID duy nhất -->
+                                                        <button class="btn-plus" onclick="increaseQuantity('quantity-@item.TicketId')">+</button>
+                                                    </div>
+                                                </div>
+                                                <div class="btn-group">
+                                                    <button class="add-to-cart">
+                                                        <i class="fa fa-cart-shopping"></i> Thêm giỏ hàng
+                                                    </button>
+                                                    <button class="buy-now">Mua ngay</button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="btn-group">
-                                        <button class="add-to-cart">
-                                            <i class="fa fa-cart-shopping"></i> Thêm giỏ hàng
-                                        </button>
-                                        <button class="buy-now">Mua ngay</button>
-
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-
+                                    }
+                                }
+                            
+                            else
+                            {
+                                <p>Không có vé nào.</p>
+                            }
+                     
 
 
             </div>
@@ -584,7 +556,15 @@
     <script src="~/js/isotope.pkgd.min.js"></script>
     <script src="~/js/aos.js"></script>
     <script src="~/js/main.js"></script>
+        <script>
+            function sortCampingGears() {
+                const sortValue = document.getElementById("sort").value;
+                const categoryId = '@ViewBag.CurrentCategoryId'; // Lấy categoryId hiện tại từ ViewBag nếu có
+                const url = `@Url.Action("OrderTicket", "Service")?categoryId=${categoryId}&sortBy=${sortValue}`;
+                window.location.href = url;
+            }
 
+        </script>
 </body>
 
 </html>
