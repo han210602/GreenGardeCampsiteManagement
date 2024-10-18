@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessObject.DTOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,8 @@ namespace Repositories.Combo
 {
     public interface IComboRepository
     {
+        List<ComboDTO> Combos();
+
+
     }
 }

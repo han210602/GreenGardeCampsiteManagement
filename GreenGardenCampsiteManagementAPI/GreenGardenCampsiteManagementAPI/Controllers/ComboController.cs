@@ -14,5 +14,17 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
         {
             _repo = repo;
         }
+        [HttpGet("GetAllCombos")]
+        public IActionResult GetAllCombos()
+        {
+            try
+            {
+                return Ok(_repo.Combos());
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
     }
 }

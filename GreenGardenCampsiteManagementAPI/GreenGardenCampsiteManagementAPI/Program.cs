@@ -9,6 +9,7 @@ using Repositories.Accounts;
 using Repositories.Activities;
 using Repositories.CampingGear;
 using Repositories.Combo;
+using Repositories.ComboFood;
 using Repositories.FoodAndDrink;
 using Repositories.Orders;
 using Repositories.Tickets;
@@ -56,7 +57,9 @@ builder.Services.AddScoped<IComboRepository, ComboRepository>();
 builder.Services.AddScoped<ICampingGearRepository, CampingGearRepository>();
 builder.Services.AddScoped<IFoodAndDrinkRepository, FoodAndDrinkRepository>();
 builder.Services.AddScoped<ITicketRepository, TicketRepository>();
-builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<IAccountRepository, AccountRepository>(); 
+builder.Services.AddScoped<IComboFoodRepository, ComboFoodRepository>();
+
 
 // Đăng ký AutoMapper
 builder.Services.AddSingleton<IMapper>(MapperInstanse.GetMapper());
