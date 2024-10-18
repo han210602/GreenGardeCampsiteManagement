@@ -50,6 +50,8 @@ namespace BusinessObject.DTOs
         public decimal AmountPayable { get; set; }
         public bool? StatusOrder { get; set; }
         public string? ActivityId { get; set; }
+        public string? PhoneCustomer { get; set; }
+
         public virtual ICollection<OrderCampingGearDetailDTO> OrderCampingGearDetails { get; set; }
         public virtual ICollection<OrderComboDetailDTO> OrderComboDetails { get; set; }
         public virtual ICollection<OrderFoodComboDetailDTO> OrderFoodComboDetails { get; set; }

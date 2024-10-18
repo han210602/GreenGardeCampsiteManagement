@@ -170,7 +170,7 @@ namespace DataAccess.DAO
                                 TotalAmount = order.TotalAmount,
                                 AmountPayable = order.TotalAmount - order.Deposit,
                                 StatusOrder = true,
-                                ActivityId = 1002
+                                ActivityId = 1
                             };
                         }
                         else
@@ -185,7 +185,7 @@ namespace DataAccess.DAO
                                 TotalAmount = order.TotalAmount,
                                 AmountPayable = order.TotalAmount - order.Deposit,
                                 StatusOrder = false,
-                                ActivityId = 1,
+                                ActivityId = 2,
                                 PhoneCustomer = order.PhoneCustomer
                             };
                         }
@@ -342,7 +342,9 @@ namespace DataAccess.DAO
                             AmountPayable = o.AmountPayable,
                             StatusOrder = o.StatusOrder,
                             ActivityId = o.Activity.ActivityName,
-                            OrderTicketDetails=o.OrderTicketDetails.Select(o=>new OrderTicketDetailDTO
+                            PhoneCustomer = o.PhoneCustomer != null ? o.Customer.PhoneNumber : o.PhoneCustomer,
+
+                            OrderTicketDetails = o.OrderTicketDetails.Select(o=>new OrderTicketDetailDTO
                             {
                                 TicketId= o.TicketId,
                                 Name=o.Ticket.TicketName,
