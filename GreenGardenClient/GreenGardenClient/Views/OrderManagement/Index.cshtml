@@ -1,0 +1,446 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@using GreenGardenClient.Models
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Danh sách nhân viên | Quản trị Admin</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Main CSS-->
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <!-- or -->
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+
+    <!-- Font-icon css-->
+    <link rel="stylesheet" type="text/css"
+          href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+</head>
+
+<body onload="time()" class="app sidebar-mini rtl">
+
+    <!-- Sidebar menu-->
+
+    <aside class="app-sidebar">
+
+        <ul class="app-menu">
+
+            <li>
+                <a class="app-menu__item active" href="table-data-table.html">
+                    <i class='app-menu__icon bx bx-id-card'></i>
+                    <span class="app-menu__label">Quản lý Đơn hàng</span>
+                </a>
+            </li>
+            <li>
+                <a class="app-menu__item" href="#">
+                    <i class='app-menu__icon bx bx-user-voice'></i><span class="app-menu__label">Quản lý khách hàng</span>
+                </a>
+            </li>
+            <li>
+                <a class="app-menu__item" href="table-data-product.html">
+                    <i class='app-menu__icon bx bx-purchase-tag-alt'></i><span class="app-menu__label">Quản lý nhân viên</span>
+                </a>
+            </li>
+            <li>
+                <a class="app-menu__item" href="table-data-oder.html">
+                    <i class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Quản lý sản phẩm</span>
+                </a>
+            </li>
+
+        </ul>
+    </aside>
+    <main class="app-content">
+        <div class="app-title">
+            <ul class="app-breadcrumb breadcrumb side">
+                <li class="breadcrumb-item active"><a href="~/OrderManagement"><b>Danh sách các đơn đặt</b></a></li>
+            </ul>
+            <div id="clock"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="tile">
+                    <div class="tile-body">
+
+                        <div class="row element-button">
+                            <div class="col-sm-2">
+
+                                <a class="btn btn-add btn-sm" href="~/OrderManagement/CreateOrder" title="Thêm">
+                                    <i class="fas fa-plus"></i>
+                                    Tạo đơn mới
+                                </a>
+                            </div>
+
+                        </div>
+                        <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
+                               id="sampleTable">
+                            <thead>
+                                <tr>
+                                    <th>Mã đơn</th>
+                                    <th width="150">Khách hàng</th>
+                                    <th width ="150">Ngày sử dụng</th>
+                                    <th>Tiền cọc</th>
+                                    <th>Thu</th>
+                                    <th >Trạng thái</th>
+                                    <th>Hoạt động</th>
+                                    <th width ="200">Tính năng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (OrderVM item in ViewBag.dataorder)
+                                {
+
+                                    <tr>
+
+                                        <td><a asp-controller="Order" asp-action="OrderDetails" asp-route-idorder="@item.OrderId">#@item.OrderId</a></td>
+
+                                        <td>@item.CustomerName</td>
+                                        <td>@item.OrderUsageDate</td>
+                                        <td>@item.Deposit</td>
+                                        <td>@item.AmountPayable</td>
+                                        <style>
+                                            /* Background overlay for modal */
+                                            .modal {
+                                                display: none;
+                                                position: fixed;
+                                                z-index: 1000;
+                                                left: 0;
+                                                top: 0;
+                                                width: 100%;
+                                                height: 100%;
+                                                overflow: auto;
+                                                background-color: rgba(0, 0, 0, 0.5); /* Darker background */
+                                                padding-top: 60px;
+                                            }
+
+                                            /* Modal content styling */
+                                            .modal-content {
+                                                background-color: #fff;
+                                                margin: 5% auto;
+                                                padding: 20px;
+                                                border: 1px solid #ccc;
+                                                border-radius: 10px;
+                                                width: 30%;
+                                                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                                            }
+
+                                            /* Close button styling */
+                                            .close {
+                                                color: #333;
+                                                float: right;
+                                                font-size: 24px;
+                                                font-weight: bold;
+                                                cursor: pointer;
+                                            }
+
+                                                .close:hover {
+                                                    color: #ff0000; /* Red when hovered */
+                                                }
+
+                                            /* Button styling */
+                                            button {
+                                                background-color: #28a745; /* Green button to match your page */
+                                                color: white;
+                                                padding: 10px 20px;
+                                                margin-top: 15px;
+                                                border: none;
+                                                border-radius: 5px;
+                                                cursor: pointer;
+                                            }
+
+                                                button:hover {
+                                                    background-color: #218838; /* Darker green on hover */
+                                                }
+
+                                            /* Center text in table cells */
+                                           
+
+                                            /* Input field styling */
+                                            input[type="number"] {
+                                                width: 100%;
+                                                padding: 10px;
+                                                margin: 10px 0;
+                                                display: inline-block;
+                                                border: 1px solid #ccc;
+                                                border-radius: 4px;
+                                                box-sizing: border-box;
+                                            }
+
+                                            /* Heading styling */
+                                          
+
+                                            /* Form alignment */
+                                            .modal-content form {
+                                                display: flex;
+                                                flex-direction: column;
+                                                gap: 10px;
+                                            }
+                                        </style>
+
+                                        <script>
+                                            function showDepositForm(orderId) {
+                                                // Hiển thị modal
+                                                var modal = document.getElementById("modal-" + orderId);
+                                                modal.style.display = "block";
+                                            }
+
+                                            function closeModal(orderId) {
+                                                // Đóng modal
+                                                var modal = document.getElementById("modal-" + orderId);
+                                                modal.style.display = "none";
+                                            }
+                                            function change(orderId) {
+                                                document.getElementById("fr-" + orderId).submit();
+                                            }
+                                            function showCancelDepositConfirm(orderId) {
+                                                // Hiển thị modal xác nhận hủy cọc
+                                                var modal = document.getElementById("cancelModal-" + orderId);
+                                                modal.style.display = "block";
+                                            }
+
+                                            function closeCancelModal(orderId) {
+                                                // Đóng modal
+                                                var modal = document.getElementById("cancelModal-" + orderId);
+                                                modal.style.display = "none";
+                                            }
+
+                                            function confirmCancel(orderId) {
+                                                // Submit form hủy cọc
+                                                document.getElementById("cancelDepositForm-" + orderId).submit();
+                                            }
+                                        </script>
+                                        <div id="modal-@item.OrderId" class="modal">
+                                            <div class="modal-content">
+                                                <span class="close" onclick="closeModal(@item.OrderId)">&times;</span>
+                                                <h3>Nhập số tiền đặt cọc cho đơn hàng #@item.OrderId</h3>
+                                                <form asp-controller="OrderManagement" asp-action="EnterDeposit" method="post">
+                                                    <label for="depositAmount">Nhập số tiền đặt cọc:</label>
+                                                    <input type="number" name="money" id="money" min="0" required />
+
+                                                    <!-- Truyền OrderId thông qua input ẩn -->
+                                                    <input type="hidden" name="idorder" value="@item.OrderId" />
+
+                                                    <button type="submit">Xác nhận</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div id="cancelModal-@item.OrderId" class="modal">
+                                            <div class="modal-content">
+                                                <span class="close" onclick="closeCancelModal(@item.OrderId)">&times;</span>
+                                                <h3>Bạn có chắc chắn muốn hủy tiền cọc cho đơn hàng #@item.OrderId?</h3>
+                                                <form id="cancelDepositForm-@item.OrderId" asp-controller="OrderManagement" asp-action="CancelDeposit" method="post">
+                                                    <!-- Truyền OrderId thông qua input ẩn -->
+                                                    <input type="hidden" name="idorder" value="@item.OrderId" />
+                                                    <button type="button" onclick="confirmCancel(@item.OrderId)">Xác nhận</button>
+                                                    <button type="button" onclick="closeCancelModal(@item.OrderId)">Hủy</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <td>
+                                            @if (item.StatusOrder == false)
+                                            {
+                                                <button onclick="showDepositForm(@item.OrderId)">Đặt cọc</button>
+
+                                            }
+                                            else
+                                            {
+                                                <button style="background-color: red;" onclick="showCancelDepositConfirm(@item.OrderId)">Hủy cọc</button>
+                                            }
+
+                                        </td>
+                                        <td>
+                                            @if (item.ActivityId == 1)
+                                            {
+                                                <button class="btn btn-secondary">Đợi sử dụng</button> <!-- Light gray -->
+                                            }
+                                            else if (item.ActivityId == 2)
+                                            {
+                                                <button class="btn btn-primary">Đang sử dụng</button> <!-- Blue -->
+                                            }
+                                            else if (item.ActivityId == 3)
+                                            {
+                                                <button class="btn btn-warning">Đã thanh toán</button> <!-- Yellow -->
+                                            }
+                                            else
+                                            {
+                                                <button class="btn btn-danger">Đã hủy</button> <!-- Red -->
+                                            }
+
+
+                                        </td>
+                                        <td>
+                                            <style>
+                                                /* Custom styles to enhance the professional look */
+                                                .form-select-custom {
+                                                    padding: 10px;
+                                                    border-radius: 8px;
+                                                    border: 1px solid #ced4da;
+                                                    background-color: #f8f9fa;
+                                                    font-size: 16px;
+                                                    font-weight: 500;
+                                                    width: 100%; /* Full width */
+                                                    transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transition */
+                                                }
+
+                                                    .form-select-custom:focus {
+                                                        border-color: #80bdff;
+                                                        box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+                                                    }
+
+                                                /* Styling for the entire select container if needed */
+                                                .select-container {
+                                                    max-width: 500px; /* Optional to restrict max width */
+                                                    margin: 20px auto; /* Center on the page */
+                                                }
+                                            </style>
+                                             
+                                            <div class="d-flex align-items-center">
+                                                <form id="fr-@item.OrderId" asp-controller="OrderManagement" asp-action="UpdateActivityOrder" method="post">
+                                                <input type="hidden" name="idorder" value="@item.OrderId" />
+                                                    <select class="form-select form-select-custom" name="idactivity" onchange="change(@item.OrderId)" class="form-select">
+                                                    @foreach (ActivityVM activity in ViewBag.activities)
+                                                    {
+                                                        if (item.ActivityId == activity.ActivityId)
+                                                        {
+                                                            <option value="@activity.ActivityId" selected>
+                                                                @activity.ActivityName
+                                                            </option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@activity.ActivityId">
+                                                                @activity.ActivityName
+                                                            </option>
+                                                        }
+                                                    }
+                                                </select>
+                                               </form>
+                                                <!-- Trash can button -->
+                                                <button type="button" class="btn btn-danger ms-2" onclick="deleteItem(@item.OrderId)">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+   
+    <!-- Essential javascripts for application to work-->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="src/jquery.table2excel.js"></script>
+    <script src="js/main.js"></script>
+    <!-- The javascript plugin to display page loading on top-->
+    <script src="js/plugins/pace.min.js"></script>
+    <!-- Page specific javascripts-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+    <!-- Data table plugin-->
+    <script type="text/javascript" src="js/plugins/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="js/plugins/dataTables.bootstrap.min.js"></script>
+    <script type="text/javascript">$('#sampleTable').DataTable();</script>
+    <script>
+        function deleteRow(r) {
+            var i = r.parentNode.parentNode.rowIndex;
+            document.getElementById("myTable").deleteRow(i);
+        }
+        jQuery(function () {
+            jQuery(".trash").click(function () {
+                swal({
+                    title: "Cảnh báo",
+
+                    text: "Bạn có chắc chắn là muốn xóa nhân viên này?",
+                    buttons: ["Hủy bỏ", "Đồng ý"],
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            swal("Đã xóa thành công.!", {
+
+                            });
+                        }
+                    });
+            });
+        });
+        oTable = $('#sampleTable').dataTable();
+        $('#all').click(function (e) {
+            $('#sampleTable tbody :checkbox').prop('checked', $(this).is(':checked'));
+            e.stopImmediatePropagation();
+        });
+
+
+        //Thời Gian
+        function time() {
+            var today = new Date();
+            var weekday = new Array(7);
+            weekday[0] = "Chủ Nhật";
+            weekday[1] = "Thứ Hai";
+            weekday[2] = "Thứ Ba";
+            weekday[3] = "Thứ Tư";
+            weekday[4] = "Thứ Năm";
+            weekday[5] = "Thứ Sáu";
+            weekday[6] = "Thứ Bảy";
+            var day = weekday[today.getDay()];
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+            var yyyy = today.getFullYear();
+            var h = today.getHours();
+            var m = today.getMinutes();
+            var s = today.getSeconds();
+            m = checkTime(m);
+            s = checkTime(s);
+            nowTime = h + " giờ " + m + " phút " + s + " giây";
+            if (dd < 10) {
+                dd = '0' + dd
+            }
+            if (mm < 10) {
+                mm = '0' + mm
+            }
+            today = day + ', ' + dd + '/' + mm + '/' + yyyy;
+            tmp = '<span class="date"> ' + today + ' - ' + nowTime +
+                '</span>';
+            document.getElementById("clock").innerHTML = tmp;
+            clocktime = setTimeout("time()", "1000", "Javascript");
+
+            function checkTime(i) {
+                if (i < 10) {
+                    i = "0" + i;
+                }
+                return i;
+            }
+        }
+        //In dữ liệu
+        var myApp = new function () {
+            this.printTable = function () {
+                var tab = document.getElementById('sampleTable');
+                var win = window.open('', '', 'height=700,width=700');
+                win.document.write(tab.outerHTML);
+                win.document.close();
+                win.print();
+            }
+        }
+
+        $("#show-emp").on("click", function () {
+            $("#ModalUP").modal({ backdrop: false, keyboard: false })
+        });
+    </script>
+</body>
+
+</html>

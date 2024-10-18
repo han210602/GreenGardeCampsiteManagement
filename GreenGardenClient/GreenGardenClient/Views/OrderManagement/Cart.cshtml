@@ -1,0 +1,328 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@using GreenGardenClient.Models
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Danh sách nhân viên | Quản trị Admin</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Main CSS-->
+    <link rel="stylesheet" type="text/css" href="~/css/main.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <!-- or -->
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+
+    <!-- Font-icon css-->
+    <link rel="stylesheet" type="text/css"
+          href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+
+</head>
+
+<body onload="time()" class="app sidebar-mini rtl">
+
+    <!-- Sidebar menu-->
+
+    <aside class="app-sidebar">
+
+        <ul class="app-menu">
+
+            <li>
+                <a class="app-menu__item active" href="table-data-table.html">
+                    <i class='app-menu__icon bx bx-id-card'></i>
+                    <span class="app-menu__label">Quản lý Đơn hàng</span>
+                </a>
+            </li>
+            <li>
+                <a class="app-menu__item" href="#">
+                    <i class='app-menu__icon bx bx-user-voice'></i><span class="app-menu__label">Quản lý khách hàng</span>
+                </a>
+            </li>
+            <li>
+                <a class="app-menu__item" href="table-data-product.html">
+                    <i class='app-menu__icon bx bx-purchase-tag-alt'></i><span class="app-menu__label">Quản lý nhân viên</span>
+                </a>
+            </li>
+            <li>
+                <a class="app-menu__item" href="table-data-oder.html">
+                    <i class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Quản lý sản phẩm</span>
+                </a>
+            </li>
+
+        </ul>
+    </aside>
+    <main class="app-content">
+        <div class="app-title">
+            <ul class="app-breadcrumb breadcrumb side">
+                <li class="breadcrumb-item active"><a href="#"><b>Danh sách các đơn đặt</b></a><a href="#"><b>/Tạo đơn</b></a><a href="#"><b>/Giỏ hàng</b></a></li>
+            </ul>
+            <div id="clock"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="tile">
+                    <div class="tile-body">
+                        <div>
+                            <h5>Tên khách hàng:</h5>@ViewBag.order.CustomerName
+                            <br>
+                            <h5>Ngày sử dụng:</h5>@ViewBag.order.OrderUsageDate
+
+                            <h5>Số điện thoại:</h5>@ViewBag.order.PhoneCustomer
+
+                            <h5>Đồ đã đặt:</h5>
+                        </div>
+                        <hr />
+                        <form asp-controller="OrderManagement" asp-action="TicketCart" method="get">
+                            <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
+                                   id="sampleTable">
+                                <thead>
+                                    <tr>
+                                        <th width="150">Tên</th>
+                                        <th>Giá</th>
+                                        <th>Số lượng</th>
+                                        <th>Tổng tiền</th>
+                                        <th>Yêu cầu thêm</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                            
+                                    @foreach (TicketVM item in ViewBag.tickets)
+                                    {
+                                        <tr>
+                                            <td>@item.TicketName</td>
+                                            
+                                            <td>@item.Price</td>
+                                            <td>@item.Quantity</td>
+                                            <td>@(item.Price * item.Quantity)</td>
+                                            <td>-</td>
+
+                                         </tr>
+
+
+                                    }
+                                    <tr>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+
+                                    </tr>
+                                    @foreach (GearVM item in ViewBag.gears)
+                                    {
+                                        <tr>
+                                            <td>@item.GearName</td>
+                                            <td>@item.RentalPrice</td>
+                                            <td>@item.Quantity</td>
+                                            <td>@(item.RentalPrice * item.Quantity)</td>
+                                            <td>-</td>
+                                           
+
+                                        </tr>
+                                    }
+
+                                    <tr>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+
+                                    </tr>
+                                    @foreach (FoodAndDrinkVM item in ViewBag.foods)
+                                    {
+                                        <tr>
+                                            <td>@item.ItemName</td>
+                                            <td>@item.Price</td>
+                                            <td>@item.Quantity</td>
+                                            <td>@(item.Price * item.Quantity)</td>
+                                            <td>@item.Description</td>
+
+
+                                        </tr>
+                                    }
+                                    <tr>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+
+                                    </tr>
+                                    @foreach (ComboFoodVM item in ViewBag.combofoods)
+                                    {
+                                        <tr>
+                                            <td>@item.ComboName</td>
+                                            <td>@item.Price</td>
+                                            <td>@item.Quantity</td>
+                                            <td>@(item.Price * item.Quantity)</td>
+
+
+                                        </tr>
+                                    }
+                                    <tr>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+
+                                    </tr>
+                                    @foreach (ComboVM item in ViewBag.combos)
+                                    {
+                                        <tr>
+                                            <td>@item.ComboName</td>
+                                            <td>@item.Price</td>
+                                            <td>@item.Quantity</td>
+                                            <td>@(item.Price * item.Quantity)</td>
+                                            <td>@item.Description</td>
+
+
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="font-weight-bold">Tổng số tiền:</span>
+                                <div class="border rounded px-3 py-2 bg-light text-right">
+                                    <span class="font-weight-bold">@ViewBag.Total</span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex ">
+            <a href="~/OrderManagement/OrderFood" class="btn btn-secondary">Quay lại</a>
+            <a href="~/OrderManagement/DeleteCart" class="btn btn-primary">Xóa</a>
+            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#depositModal">Lên đơn ngay</a>
+
+            <!-- Modal structure -->
+            <div class="modal fade" id="depositModal" tabindex="-1" role="dialog" aria-labelledby="depositModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="depositModalLabel">Nhập số tiền cọc</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Form for deposit amount -->
+                            <form id="depositForm" asp-action="Order" asp-controller="OrderManagement" method="post">
+                                <div class="form-group">
+                                    <label for="depositAmount">Số tiền cọc</label>
+                                    <input hidden value="@ViewBag.Total" name="total"></input>
+                                    <input type="number" class="form-control" min="0" id="depositAmount" name="deposit" placeholder="Nhập số tiền cọc">
+                                
+                                
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <!-- Cancel button to close modal -->
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                            <!-- Submit button to submit the form -->
+                            <button type="button" class="btn btn-primary" onclick="submitDeposit()">Xác nhận</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        function submitDeposit() {
+            // Lấy giá trị từ form
+            var depositAmount = document.getElementById('depositAmount').value;
+
+            // Kiểm tra nếu chưa nhập số tiền cọc hoặc nếu số tiền nhập không hợp lệ
+            if (!depositAmount || depositAmount <= 0) {
+                alert("Vui lòng nhập số tiền cọc hợp lệ");
+                return;
+            }
+
+            // In giá trị của số tiền cọc vào console (để kiểm tra)
+            console.log("Số tiền cọc:", depositAmount);
+
+            // Gửi form
+            document.getElementById('depositForm').submit();
+
+            // Đóng modal sau khi form được gửi
+            $('#depositModal').modal('hide');
+        }
+    </script>
+    <!-- Essential javascripts for application to work-->
+    <script src="~/js/jquery-3.2.1.min.js"></script>
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="~/src/jquery.table2excel.js"></script>
+    <script src="~/js/main.js"></script>
+    <!-- The javascript plugin to display page loading on top-->
+    <script src="js/plugins/pace.min.js"></script>
+    <!-- Page specific javascripts-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+    <!-- Data table plugin-->
+    <script type="text/javascript" src="~/js/plugins/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/js/plugins/dataTables.bootstrap.min.js"></script>
+    
+    <script>
+
+       
+
+
+        function time() {
+            var today = new Date();
+            var weekday = new Array(7);
+            weekday[0] = "Chủ Nhật";
+            weekday[1] = "Thứ Hai";
+            weekday[2] = "Thứ Ba";
+            weekday[3] = "Thứ Tư";
+            weekday[4] = "Thứ Năm";
+            weekday[5] = "Thứ Sáu";
+            weekday[6] = "Thứ Bảy";
+            var day = weekday[today.getDay()];
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+            var yyyy = today.getFullYear();
+            var h = today.getHours();
+            var m = today.getMinutes();
+            var s = today.getSeconds();
+            m = checkTime(m);
+            s = checkTime(s);
+            nowTime = h + " giờ " + m + " phút " + s + " giây";
+            if (dd < 10) {
+                dd = '0' + dd
+            }
+            if (mm < 10) {
+                mm = '0' + mm
+            }
+            today = day + ', ' + dd + '/' + mm + '/' + yyyy;
+            tmp = '<span class="date"> ' + today + ' - ' + nowTime +
+                '</span>';
+            document.getElementById("clock").innerHTML = tmp;
+            clocktime = setTimeout("time()", "1000", "Javascript");
+
+            function checkTime(i) {
+                if (i < 10) {
+                    i = "0" + i;
+                }
+                return i;
+            }
+        }
+        ;
+    </script>
+</body>
+
+</html>
