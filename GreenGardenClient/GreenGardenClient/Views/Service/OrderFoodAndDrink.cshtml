@@ -256,7 +256,15 @@
                                             <div class="listing-item-content">
                                                 <h2 class="px-3 mb-1 category bg-primary">@item.Price.ToString("N0") ₫</h2>
                                                 <h2 class="mb-2"><a href="@Url.Action("Detail", "CampingGear", new { id = item.ItemId })">@item.ItemName</a></h2>
-                                                <a href="@Url.Action("Book", "CampingGear", new { id = item.ItemId })" class="btn btn-primary">Đặt Ngay</a>
+                                                <form method="post" action="/Service/AddToCart">
+                                                    <input type="hidden" name="ticketId" value="@item.ItemId" />
+                                                    <input type="hidden" name="ticketName" value="@item.ItemName" />
+                                                    <input type="hidden" name="price" value="@item.Price" />
+                                                    <input type="hidden" name="quantity" value="1" />
+                                                    <input type="hidden" name="redirectAction" value="OrderFoodAndDrink" />
+                                                    <button type="submit" class="btn btn-primary">Đặt ngay</button>
+                                                </form>
+
                                             </div>
                                         </div>
                                     </div>

@@ -456,9 +456,17 @@
                                                     </div>
                                                 </div>
                                                 <div class="btn-group">
-                                                    <button class="add-to-cart">
+                                                <form method="post" action="/Service/AddToCart">
+                                                    <input type="hidden" name="ticketId" value="@item.TicketId" />
+                                                    <input type="hidden" name="ticketName" value="@item.TicketName" />
+                                                    <input type="hidden" name="price" value="@item.Price" />
+                                                    <input type="hidden" name="quantity" value="1" min="1" />
+                                                    <input type="hidden" name="redirectAction" value="OrderTicket" />
+                                                    <button type="submit" class="add-to-cart">
                                                         <i class="fa fa-cart-shopping"></i> Thêm giỏ hàng
                                                     </button>
+                                               
+                                                </form>
                                                     <button class="buy-now">Mua ngay</button>
                                                 </div>
                                             </div>

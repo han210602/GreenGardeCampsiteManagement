@@ -1,5 +1,6 @@
 ﻿using GreenGardenClient.Models;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace GreenGardenClient.Controllers
 {
@@ -191,6 +192,76 @@ namespace GreenGardenClient.Controllers
             ViewBag.TicketCategories = ticketCategory;
 
             return View();
+        }
+
+        public IActionResult Cart()
+        {
+            var cartItems = GetCartItems();
+            return View(cartItems);
+        }
+
+        private List<CartItem> GetCartItems()
+        {
+            var session = HttpContext.Session.GetString("Cart");
+            if (session == null)
+            {
+                return new List<CartItem>();
+            }
+            return JsonConvert.DeserializeObject<List<CartItem>>(session);
+        }
+
+        // Cập nhật giỏ hàng vào Session
+        private void SaveCartItems(List<CartItem> cartItems)
+        {
+            var session = JsonConvert.SerializeObject(cartItems);
+            HttpContext.Session.SetString("Cart", session);
+        }
+        [HttpPost]
+        public IActionResult AddToCart(int ticketId, string ticketName, decimal price, int quantity, string redirectAction)
+        {
+            var cartItems = GetCartItems();
+            var existingItem = cartItems.FirstOrDefault(c => c.Id == ticketId);
+
+            if (existingItem != null)
+            {
+                // Nếu sản phẩm đã có trong giỏ, cập nhật số lượng
+                existingItem.Quantity += quantity;
+            }
+            else
+            {
+                // Nếu sản phẩm chưa có, thêm sản phẩm mới
+                var newItem = new CartItem
+                {
+                    Id = ticketId,
+                    Name = ticketName,
+                    Price = price,
+                    Quantity = quantity
+                };
+                cartItems.Add(newItem);
+            }
+
+            // Lưu giỏ hàng vào session
+            SaveCartItems(cartItems);
+
+            // Chuyển hướng đến trang phù hợp
+            return RedirectToAction(redirectAction);
+        }
+
+
+
+        // Xóa sản phẩm khỏi giỏ hàng
+        [HttpPost]
+        public IActionResult RemoveFromCart(int ticketId)
+        {
+            var cartItems = GetCartItems();
+            var item = cartItems.FirstOrDefault(c => c.Id == ticketId);
+            if (item != null)
+            {
+                cartItems.Remove(item);
+            }
+
+            SaveCartItems(cartItems);
+            return RedirectToAction("ViewCart");
         }
     }
 }
