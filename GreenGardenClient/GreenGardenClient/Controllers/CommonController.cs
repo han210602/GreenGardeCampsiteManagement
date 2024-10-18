@@ -52,6 +52,7 @@ namespace GreenGardenClient.Controllers
                             Secure = true,
                             Expires = DateTimeOffset.Now.AddHours(1)
                         });
+                        HttpContext.Session.SetInt32("RoleId", loginResponse.RoleId);
 
                         TempData["SuccessMessage"] = "Đăng nhập thành công!";
                         return RedirectToAction("Index", "Home");
@@ -187,38 +188,7 @@ namespace GreenGardenClient.Controllers
                 }
             }
         }
-        [HttpPost]
-        public async Task<IActionResult> ForgotPassword(string email)
-        {
-            if (string.IsNullOrWhiteSpace(email))
-            {
-                ViewBag.Message = "Vui lòng nhập email.";
-                return View("ResetPassword");
-            }
 
-            try
-            {
-                var client = _clientFactory.CreateClient();
-                var response = await client.PostAsync($"https://localhost:7298/api/Account/SendResetPasswordEmail/{email}", null);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    ViewBag.Message = "Đã gửi email đặt lại mật khẩu. Vui lòng kiểm tra email của bạn.";
-                    return RedirectToAction("Login"); // Redirect to the Login page after success
-                }
-                else
-                {
-                    var errorContent = await response.Content.ReadAsStringAsync();
-                    ViewBag.Message = $"Không thể gửi email đặt lại mật khẩu: {errorContent}";
-                }
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Message = $"Đã xảy ra lỗi: {ex.Message}";
-            }
-
-            return View("ResetPassword");
-        }
         public IActionResult ResetPassword()
         {
             return View();

@@ -1,6 +1,8 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @using GreenGardenClient.Models
+
+}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,7 +18,7 @@
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
 
     <!-- Font-icon css-->
-    <link rel="stylesheet" type="~/text/css"
+    <link rel="stylesheet" type="text/css"
           href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
@@ -57,50 +59,72 @@
         </ul>
     </aside>
     <main class="app-content">
-        
+        <div class="d-flex ">
+            <a href="~/OrderManagement/OrderFood" class="btn btn-secondary">Đặt đồ ăn</a>
+            <a href="~/OrderManagement/OrderComboFood" class="btn btn-primary">Đồ ăn theo combo</a>
+        </div>
         <div class="app-title">
             <ul class="app-breadcrumb breadcrumb side">
-                <li class="breadcrumb-item active"><a href="~/OrderManagement"><b>Danh sách các đơn đặt</b></a>-><a href="~/OrderManagement/CreateOrder"><b>Tạo đơn</b></a></li>
+                <li class="breadcrumb-item active"><a href="#"><b>Danh sách các đơn đặt</b></a><a href="#"><b>/Tạo đơn</b></a><a href="#"><b>/Đặt đồ ăn</b></a></li>
             </ul>
             <div id="clock"></div>
         </div>
+
         <div class="row">
             <div class="col-md-12">
                 <div class="tile">
-                    <div class="container mt-5">
-                        <form asp-controller="OrderManagement" asp-action="CreateOrder" method="post">
-                            <div class="mb-3">
-                                <label for="customer-name" class="form-label">Tên khách hàng:</label>
-                                <input type="text" value="@ViewBag.name" class="form-control" id="customer-name" name="name" placeholder="Nhập tên khách hàng" required>
-                            </div>
+                    <div class="tile-body">
+                        <form asp-controller="OrderManagement" asp-action="ComboFoodCart" method="get">
+                            <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
+                                   id="sampleTable">
+                                <thead>
+                                    <tr>
+                                        <th>Mã combo đồ ăn</th>
+                                        <th width="150">Tên combo đồ ăn</th>
+                                        <th width="150">Hình ảnh</th>
+                                        <th>Giá</th>
+                                        <th>Số lượng</th>
 
-                            <div class="mb-3">
-                                <label for="usage-date" class="form-label">Ngày sử dụng:</label>
-                                <input type="datetime-local" value="@ViewBag.usagedate" class="form-control" id="usage-date" name="usagedate" required>
-                            </div>
 
-                            <div class="mb-3">
-                                <label for="phone-number" class="form-label">Số điện thoại:</label>
-                                <input type="tel" value="@ViewBag.phone"class="form-control" id="phone-number" name="phone" placeholder="Nhập số điện thoại" pattern="[0-9]{10}" required >
-                            </div>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @foreach (ComboFoodVM item in ViewBag.gears)
+                                    {
+                                        <tr>
+                                            <td>#@item.ComboId</td>
+                                            <td>@item.ComboName</td>
+                                            <td>@item.ImgUrl</td>
+                                            <td>@item.Price</td>
+                                            <td>
+
+                                                <input type="text" value="@item.ComboId" hidden name="id">
+                                                <input type="text" value="@item.ComboName" hidden name="name">
+                                                <input type="number" value="@item.Price" hidden name="price">
+                                                <input type="number" min="0" style="width: 100px;" value="@item.Quantity" name="quantity">
+                                            </td>
+
+                                        </tr>
+                                    }
+
+
+                                </tbody>
+                            </table>
+                            <!-- Shopping Cart Button using Boxicons -->
                             <button type="submit" class="btn btn-primary">
                                 <i class='bx bx-cart'></i> <!-- Boxicons shopping cart icon -->
                             </button>
-                            
-                        </form>
-                        <div class="d-flex ">
-                            <a href="~/OrderManagement" class="btn btn-secondary">Quay lại</a>
-                            <a href="~/OrderManagement/OrderCombo" class="btn btn-warning">Đặt combo</a>
-                            <a href="~/OrderManagement/OrderTicket" class="btn btn-danger">Đặt vé</a>
 
-                           
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-        
-
+        <div class="d-flex ">
+            <a href="~/OrderManagement/OrderGear" class="btn btn-secondary">Quay lại</a>
+            <a href="~/OrderManagement/Cart" class="btn btn-primary">Tạo đơn ngay</a>
+        </div>
     </main>
 
 
@@ -108,11 +132,11 @@
     <script src="~/js/jquery-3.2.1.min.js"></script>
     <script src="~/js/popper.min.js"></script>
     <script src="~/js/bootstrap.min.js"></script>
-  
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="~/src/jquery.table2excel.js"></script>
     <script src="~/js/main.js"></script>
     <!-- The javascript plugin to display page loading on top-->
-    <script src="~/js/plugins/pace.min.js"></script>
+    <script src="js/plugins/pace.min.js"></script>
     <!-- Page specific javascripts-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
     <!-- Data table plugin-->
@@ -121,8 +145,13 @@
     <script type="text/javascript">$('#sampleTable').DataTable();</script>
     <script>
 
+        oTable = $('#sampleTable').dataTable();
+        $('#all').click(function (e) {
+            $('#sampleTable tbody :checkbox').prop('checked', $(this).is(':checked'));
+            e.stopImmediatePropagation();
+        });
 
-        //Thời Gian
+
         function time() {
             var today = new Date();
             var weekday = new Array(7);
@@ -162,20 +191,7 @@
                 return i;
             }
         }
-      
-        var myApp = new function () {
-            this.printTable = function () {
-                var tab = document.getElementById('sampleTable');
-                var win = window.open('', '', 'height=700,width=700');
-                win.document.write(tab.outerHTML);
-                win.document.close();
-                win.print();
-            }
-        }
-
-        $("#show-emp").on("click", function () {
-            $("#ModalUP").modal({ backdrop: false, keyboard: false })
-        });
+        ;
     </script>
 </body>
 

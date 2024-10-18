@@ -15,5 +15,7 @@
         public bool? StatusOrder { get; set; }
         public int? ActivityId { get; set; }
         public string? ActivityName { get; set; }
+        public string? PhoneCustomer { get; set; }
+
     }
 }

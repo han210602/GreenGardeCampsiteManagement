@@ -74,6 +74,9 @@
                             <h5>Tên khách hàng:</h5>@ViewBag.order.CustomerName
                             <br>
                             <h5>Ngày sử dụng:</h5>@ViewBag.order.OrderUsageDate
+
+                            <h5>Số điện thoại:</h5>@ViewBag.order.PhoneCustomer
+
                             <h5>Đồ đã đặt:</h5>
                         </div>
                         <hr />
@@ -146,27 +149,119 @@
 
                                         </tr>
                                     }
+                                    <tr>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+
+                                    </tr>
+                                    @foreach (ComboFoodVM item in ViewBag.combofoods)
+                                    {
+                                        <tr>
+                                            <td>@item.ComboName</td>
+                                            <td>@item.Price</td>
+                                            <td>@item.Quantity</td>
+                                            <td>@(item.Price * item.Quantity)</td>
+
+
+                                        </tr>
+                                    }
+                                    <tr>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+
+                                    </tr>
+                                    @foreach (ComboVM item in ViewBag.combos)
+                                    {
+                                        <tr>
+                                            <td>@item.ComboName</td>
+                                            <td>@item.Price</td>
+                                            <td>@item.Quantity</td>
+                                            <td>@(item.Price * item.Quantity)</td>
+                                            <td>@item.Description</td>
+
+
+                                        </tr>
+                                    }
                                 </tbody>
                             </table>
-                            <!-- Shopping Cart Button using Boxicons -->
-                            <button type="submit" class="btn btn-primary">
-                                <i class='bx bx-cart'></i> <!-- Boxicons shopping cart icon -->
-                            </button>
-
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="font-weight-bold">Tổng số tiền:</span>
+                                <div class="border rounded px-3 py-2 bg-light text-right">
+                                    <span class="font-weight-bold">@ViewBag.Total</span>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
         <div class="d-flex ">
-            <button type="button" class="btn btn-secondary">Quay lại</button>
-            <button type="button" class="btn btn-secondary">Xóa</button>
-            <button type="submit" class="btn btn-primary">Lên đơn ngay</button>
+            <a href="~/OrderManagement/OrderFood" class="btn btn-secondary">Quay lại</a>
+            <a href="~/OrderManagement/DeleteCart" class="btn btn-primary">Xóa</a>
+            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#depositModal">Lên đơn ngay</a>
+
+            <!-- Modal structure -->
+            <div class="modal fade" id="depositModal" tabindex="-1" role="dialog" aria-labelledby="depositModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="depositModalLabel">Nhập số tiền cọc</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Form for deposit amount -->
+                            <form id="depositForm" asp-action="Order" asp-controller="OrderManagement" method="post">
+                                <div class="form-group">
+                                    <label for="depositAmount">Số tiền cọc</label>
+                                    <input hidden value="@ViewBag.Total" name="total"></input>
+                                    <input type="number" class="form-control" min="0" id="depositAmount" name="deposit" placeholder="Nhập số tiền cọc">
+                                
+                                
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <!-- Cancel button to close modal -->
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                            <!-- Submit button to submit the form -->
+                            <button type="button" class="btn btn-primary" onclick="submitDeposit()">Xác nhận</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </main>
 
+    <script>
+        function submitDeposit() {
+            // Lấy giá trị từ form
+            var depositAmount = document.getElementById('depositAmount').value;
 
+            // Kiểm tra nếu chưa nhập số tiền cọc hoặc nếu số tiền nhập không hợp lệ
+            if (!depositAmount || depositAmount <= 0) {
+                alert("Vui lòng nhập số tiền cọc hợp lệ");
+                return;
+            }
+
+            // In giá trị của số tiền cọc vào console (để kiểm tra)
+            console.log("Số tiền cọc:", depositAmount);
+
+            // Gửi form
+            document.getElementById('depositForm').submit();
+
+            // Đóng modal sau khi form được gửi
+            $('#depositModal').modal('hide');
+        }
+    </script>
     <!-- Essential javascripts for application to work-->
     <script src="~/js/jquery-3.2.1.min.js"></script>
     <script src="~/js/popper.min.js"></script>
