@@ -11,6 +11,8 @@ namespace Repositories.Orders
      public interface IOrderManagementRepository
      {
         List<OrderDTO> GetAllOrders();
+        List<OrderDTO> GetAllOrderDepositAndUsing();
+
         OrderDetailDTO GetOrderDetail(int id);
         bool EnterDeposit(int id, decimal money);
         bool CancelDeposit(int id);

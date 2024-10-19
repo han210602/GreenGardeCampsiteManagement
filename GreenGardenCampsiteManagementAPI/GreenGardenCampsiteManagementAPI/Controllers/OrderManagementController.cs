@@ -28,6 +28,18 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+        [HttpGet("GetAllOrderDepositAndUsing")]
+        public IActionResult GetAllOrderDepositAndUsing()
+        {
+            try
+            {
+                return Ok(_repo.GetAllOrderDepositAndUsing().ToList());
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
         [HttpGet("GetListOrderGearByUsageDate/{usagedate}")]
         public IActionResult GetListOrderGearByUsageDate(DateTime usagedate)
         {

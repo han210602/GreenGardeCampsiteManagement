@@ -43,7 +43,11 @@ namespace Repositories.Orders
         {
             return OrderDAO.getAllOrder();
         }
+        public List<OrderDTO> GetAllOrderDepositAndUsing()
 
+        {
+            return OrderDAO.getAllOrderDepositAndUsing();
+        }
         public List<OrderCampingGearByUsageDateDTO> GetListOrderGearByUsageDate(DateTime usagedate)
         {
             return OrderDAO.GetListOrderGearByUsageDate( usagedate);

@@ -49,6 +49,45 @@ namespace DataAccess.DAO
             }
             return listProducts;
         }
+        public static List<OrderDTO> getAllOrderDepositAndUsing()
+        {
+            var listProducts = new List<OrderDTO>();
+            try
+            {
+                using (var context = new GreenGardenContext())
+                {
+                    listProducts = context.Orders
+                        .Include(u => u.Customer)
+                        .Include(e => e.Employee)
+                        .Include(a => a.Activity)
+                        .Where(o=>o.ActivityId==2 && o.StatusOrder==true)
+                        .Select(o => new OrderDTO()
+                        {
+                            OrderId = o.OrderId,
+                            CustomerId = o.CustomerId,
+                            EmployeeId = o.EmployeeId,
+                            EmployeeName = o.Employee.FirstName + "" + o.Employee.LastName,
+                            CustomerName = o.CustomerId != null ? o.Customer.FirstName + "" + o.Customer.LastName : o.CustomerName,
+                            PhoneCustomer = o.PhoneCustomer != null ? o.Customer.PhoneNumber : o.PhoneCustomer,
+                            OrderDate = o.OrderDate,
+                            OrderUsageDate = o.OrderUsageDate,
+                            Deposit = o.Deposit,
+                            TotalAmount = o.TotalAmount,
+                            AmountPayable = o.AmountPayable,
+                            StatusOrder = o.StatusOrder,
+                            ActivityId = o.ActivityId,
+                            ActivityName = o.Activity.ActivityName
+                        })
+                        .ToList();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return listProducts;
+        }
         public static bool EnterDeposit(int id, decimal money)
         {
             try
