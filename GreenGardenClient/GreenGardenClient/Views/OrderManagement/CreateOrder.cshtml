@@ -68,26 +68,43 @@
             <div class="col-md-12">
                 <div class="tile">
                     <div class="container mt-5">
-                        <form asp-controller="OrderManagement" asp-action="CreateOrder" method="post">
-                            <div class="mb-3">
-                                <label for="customer-name" class="form-label">Tên khách hàng:</label>
-                                <input type="text" value="@ViewBag.name" class="form-control" id="customer-name" name="name" placeholder="Nhập tên khách hàng" required>
-                            </div>
+                        <div class="container">
+                            <div class="row">
+                                <!-- Phần chứa form -->
+                                <div class="col-md-6">
+                                    <form asp-controller="OrderManagement" asp-action="CreateOrder" method="post">
+                                        <div class="mb-3">
+                                            <label for="customer-name" class="form-label">Tên khách hàng:</label>
+                                            <input type="text" value="@ViewBag.name" class="form-control" id="customer-name" name="name" placeholder="Nhập tên khách hàng" required>
+                                        </div>
 
-                            <div class="mb-3">
-                                <label for="usage-date" class="form-label">Ngày sử dụng:</label>
-                                <input type="datetime-local" value="@ViewBag.usagedate" class="form-control" id="usage-date" name="usagedate" required>
-                            </div>
+                                        <div class="mb-3">
+                                            <label for="usage-date" class="form-label">Ngày sử dụng:</label>
+                                            <input type="datetime-local" value="@ViewBag.usagedate" class="form-control" id="usage-date" name="usagedate" required>
+                                        </div>
 
-                            <div class="mb-3">
-                                <label for="phone-number" class="form-label">Số điện thoại:</label>
-                                <input type="tel" value="@ViewBag.phone"class="form-control" id="phone-number" name="phone" placeholder="Nhập số điện thoại" pattern="[0-9]{10}" required >
+                                        <div class="mb-3">
+                                            <label for="phone-number" class="form-label">Số điện thoại:</label>
+                                            <input type="tel" value="@ViewBag.phone" class="form-control" id="phone-number" name="phone" placeholder="Nhập số điện thoại" pattern="[0-9]{10}" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class='bx bx-cart'></i> <!-- Icon giỏ hàng -->
+                                        </button>
+                                    </form>
+                                </div>
+
+                                <!-- Phần chứa hướng dẫn đặt vé -->
+                                <div class="col-md-6">
+                                    <h5>Hướng dẫn đặt vé:</h5>
+                                    <ul>
+                                        <li>Vui lòng điền đầy đủ thông tin khách hàng.</li>
+                                        <li>Chọn ngày sử dụng phù hợp với lịch trình của bạn.</li>
+                                        <li>Đảm bảo số điện thoại chính xác để nhận thông tin xác nhận.</li>
+                                        <li>Nếu cần hỗ trợ, vui lòng liên hệ với chúng tôi.</li>
+                                    </ul>
+                                </div>
                             </div>
-                            <button type="submit" class="btn btn-primary">
-                                <i class='bx bx-cart'></i> <!-- Boxicons shopping cart icon -->
-                            </button>
-                            
-                        </form>
+                        </div>
                         <div class="d-flex ">
                             <a href="~/OrderManagement" class="btn btn-secondary">Quay lại</a>
                             <a href="~/OrderManagement/OrderCombo" class="btn btn-warning">Đặt combo</a>

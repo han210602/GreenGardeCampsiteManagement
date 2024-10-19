@@ -66,6 +66,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJNYW5hZ2VtZW50XE9yZGVyQ29tYm9Gb29kLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/admin/Desktop/GreenGardenClient/GreenGardenClient/Views/OrderManagement/OrderDetail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJNYW5hZ2VtZW50XE9yZGVyRGV0YWlsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/admin/Desktop/GreenGardenClient/GreenGardenClient/Views/OrderManagement/OrderFood.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJNYW5hZ2VtZW50XE9yZGVyRm9vZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -76,6 +80,26 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/admin/Desktop/GreenGardenClient/GreenGardenClient/Views/OrderManagement/OrderTicket.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJNYW5hZ2VtZW50XE9yZGVyVGlja2V0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/admin/Desktop/GreenGardenClient/GreenGardenClient/Views/OrderManagement/UpdateCombo.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJNYW5hZ2VtZW50XFVwZGF0ZUNvbWJvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/admin/Desktop/GreenGardenClient/GreenGardenClient/Views/OrderManagement/UpdateComboFood.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJNYW5hZ2VtZW50XFVwZGF0ZUNvbWJvRm9vZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/admin/Desktop/GreenGardenClient/GreenGardenClient/Views/OrderManagement/UpdateFood.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJNYW5hZ2VtZW50XFVwZGF0ZUZvb2QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/admin/Desktop/GreenGardenClient/GreenGardenClient/Views/OrderManagement/UpdateGear.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJNYW5hZ2VtZW50XFVwZGF0ZUdlYXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/admin/Desktop/GreenGardenClient/GreenGardenClient/Views/OrderManagement/UpdateTicket.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJNYW5hZ2VtZW50XFVwZGF0ZVRpY2tldC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/admin/Desktop/GreenGardenClient/GreenGardenClient/Views/Service/FoodDetail.cshtml]

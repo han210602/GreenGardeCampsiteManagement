@@ -1,0 +1,308 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model GreenGardenClient.Models.OrderDetailVM
+@using GreenGardenClient.Models
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Danh sách nhân viên | Quản trị Admin</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Main CSS-->
+    <link rel="stylesheet" type="text/css" href="~/css/main.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <!-- or -->
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+
+    <!-- Font-icon css-->
+    <link rel="stylesheet" type="text/css"
+          href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+
+</head>
+
+<body onload="time()" class="app sidebar-mini rtl">
+
+    <!-- Sidebar menu-->
+
+    <aside class="app-sidebar">
+
+        <ul class="app-menu">
+
+            <li>
+                <a class="app-menu__item active" href="table-data-table.html">
+                    <i class='app-menu__icon bx bx-id-card'></i>
+                    <span class="app-menu__label">Quản lý Đơn hàng</span>
+                </a>
+            </li>
+            <li>
+                <a class="app-menu__item" href="#">
+                    <i class='app-menu__icon bx bx-user-voice'></i><span class="app-menu__label">Quản lý khách hàng</span>
+                </a>
+            </li>
+            <li>
+                <a class="app-menu__item" href="table-data-product.html">
+                    <i class='app-menu__icon bx bx-purchase-tag-alt'></i><span class="app-menu__label">Quản lý nhân viên</span>
+                </a>
+            </li>
+            <li>
+                <a class="app-menu__item" href="table-data-oder.html">
+                    <i class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Quản lý sản phẩm</span>
+                </a>
+            </li>
+
+        </ul>
+    </aside>
+    <main class="app-content">
+        <div class="app-title">
+            <ul class="app-breadcrumb breadcrumb side">
+                <li class="breadcrumb-item active"><a href="#"><b>Danh sách các đơn đặt</b></a><a href="#"><b>/Tạo đơn</b></a><a href="#"><b>/Giỏ hàng</b></a></li>
+            </ul>
+            <div id="clock"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="tile">
+                    <div class="tile-body">
+                        <div>
+                        
+                            
+                            <div class="container">
+                                <div class="row mb-3">
+                                    <label class="col-sm-3 col-form-label"><h5>Mã đơn:</h5></label>
+                                    <div class="col-sm-9">
+                                        <p>#@Model.OrderId</p>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label class="col-sm-3 col-form-label"><h5>Tên khách hàng:</h5></label>
+                                    <div class="col-sm-9">
+                                        <p>@Model.CustomerName</p>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label class="col-sm-3 col-form-label"><h5>Số điện thoại:</h5></label>
+                                    <div class="col-sm-9">
+                                        <p>@Model.PhoneCustomer</p>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label class="col-sm-3 col-form-label"><h5>Ngày đặt đơn:</h5></label>
+                                    <div class="col-sm-9">
+                                        <p>@Model.OrderDate</p>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label class="col-sm-3 col-form-label"><h5>Ngày sử dụng:</h5></label>
+                                    <div class="col-sm-9">
+                                        <p>@Model.OrderUsageDate</p> <!-- Fixed closing </p> tag -->
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label class="col-sm-3 col-form-label"><h5>Tổng Tiền:</h5></label>
+                                    <div class="col-sm-9">
+                                        <p>@Model.TotalAmount</p> <!-- Fixed closing </p> tag -->
+                                    </div>
+                                </div>
+                                
+                            </div>
+
+
+                            <hr style="border: 1px solid #ccc;" />
+
+                            <div class="d-flex justify-content-between align-items-center">
+                                <label class="col-form-label mb-0"><h5>Đồ đã đặt:</h5></label>
+                                <div class="d-flex">
+                                    @if (Model.OrderTicketDetails != null && Model.OrderTicketDetails.Count > 0)
+                                    {
+                                        <a href="~/OrderManagement/OrderFood" class="btn btn-secondary me-2">Cập nhập vé</a>
+                                    }
+                                    else
+                                    {
+                                    <a href="~/OrderManagement/OrderFood" class="btn btn-secondary me-2">Cập nhập Combo</a>
+
+                                    }
+                                    <a href="~/OrderManagement/DeleteCart" class="btn btn-primary me-2">Cập nhập đồ ăn</a>
+                                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#depositModal">Cập nhập đồ thuê</a>
+                                </div>
+                            </div>
+                           
+                        </div>
+                        <hr />
+                        <form asp-controller="OrderManagement" asp-action="TicketCart" method="get">
+                            <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
+                                   id="sampleTable">
+                                <thead>
+                                    <tr>
+                                        <th width="150">Tên</th>
+                                        <th>Giá</th>
+                                        <th>Số lượng</th>
+                                        <th>Tổng tiền</th>
+                                        <th>Yêu cầu thêm</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @if (Model.OrderTicketDetails != null)
+                                    {
+                                        foreach (OrderTicketDetailDTO item in Model.OrderTicketDetails)
+                                        {
+                                            <tr style="background-color:#B29F80">
+                                                <td>@item.Name</td>
+
+                                                <td>@item.Price</td>
+                                                <td>@item.Quantity</td>
+                                                <td>@(item.Price * item.Quantity)</td>
+                                                <td>-</td>
+
+                                            </tr>
+
+
+                                        }
+                                    }
+                                    @if(Model.OrderComboDetails != null)
+                                    {
+                                      
+                                        @foreach (OrderComboDetailDTO item in Model.OrderComboDetails)
+                                        {
+                                            <tr style="background-color:#B29F80">
+                                                <td>@item.Name</td>
+                                                <td>@item.Price</td>
+                                                <td>@item.Quantity</td>
+                                                <td>@(item.Price * item.Quantity)</td>
+                                                <td>@item.Description</td>
+
+
+                                            </tr>
+                                        }
+                                    }
+                                    @if (Model.OrderCampingGearDetails != null)
+                                    {
+                                       
+                                        @foreach (OrderCampingGearDetailDTO item in Model.OrderCampingGearDetails)
+                                        {
+                                            <tr style="background-color:#C3B59B">
+                                                <td>@item.Name</td>
+                                                <td>@item.Price</td>
+                                                <td>@item.Quantity</td>
+                                                <td>@(item.Price * item.Quantity)</td>
+                                                <td>-</td>
+
+
+                                            </tr>
+                                        }
+                                    }
+                                    @if (Model.OrderFoodDetails != null)
+                                    {
+                                       
+                                        @foreach (OrderFoodDetailDTO item in Model.OrderFoodDetails)
+                                        {
+                                            <tr style="background-color:#D1C7A7">
+                                                <td>@item.Name</td>
+                                                <td>@item.Price</td>
+                                                <td>@item.Quantity</td>
+                                                <td>@(item.Price * item.Quantity)</td>
+                                                <td>@item.Description</td>
+
+
+                                            </tr>
+                                        }
+                                    }
+                                    @if (Model.OrderFoodComboDetails != null)
+                                    {
+                                       
+                                        @foreach(OrderFoodComboDetailDTO item in Model.OrderFoodComboDetails)
+                                        {
+                                            <tr style="background-color:#E8E1C4">
+                                                <td>@item.Name</td>
+                                                <td>@item.Price</td>
+                                                <td>@item.Quantity</td>
+                                                <td>@(item.Price * item.Quantity)</td>
+
+
+                                            </tr>
+                                        }
+                                    }
+                                   
+                                </tbody>
+                            </table>
+                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+    </main>
+
+   
+    <!-- Essential javascripts for application to work-->
+    <script src="~/js/jquery-3.2.1.min.js"></script>
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="~/src/jquery.table2excel.js"></script>
+    <script src="~/js/main.js"></script>
+    <!-- The javascript plugin to display page loading on top-->
+    <script src="js/plugins/pace.min.js"></script>
+    <!-- Page specific javascripts-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+    <!-- Data table plugin-->
+    <script type="text/javascript" src="~/js/plugins/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/js/plugins/dataTables.bootstrap.min.js"></script>
+
+    <script>
+
+
+
+
+        function time() {
+            var today = new Date();
+            var weekday = new Array(7);
+            weekday[0] = "Chủ Nhật";
+            weekday[1] = "Thứ Hai";
+            weekday[2] = "Thứ Ba";
+            weekday[3] = "Thứ Tư";
+            weekday[4] = "Thứ Năm";
+            weekday[5] = "Thứ Sáu";
+            weekday[6] = "Thứ Bảy";
+            var day = weekday[today.getDay()];
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+            var yyyy = today.getFullYear();
+            var h = today.getHours();
+            var m = today.getMinutes();
+            var s = today.getSeconds();
+            m = checkTime(m);
+            s = checkTime(s);
+            nowTime = h + " giờ " + m + " phút " + s + " giây";
+            if (dd < 10) {
+                dd = '0' + dd
+            }
+            if (mm < 10) {
+                mm = '0' + mm
+            }
+            today = day + ', ' + dd + '/' + mm + '/' + yyyy;
+            tmp = '<span class="date"> ' + today + ' - ' + nowTime +
+                '</span>';
+            document.getElementById("clock").innerHTML = tmp;
+            clocktime = setTimeout("time()", "1000", "Javascript");
+
+            function checkTime(i) {
+                if (i < 10) {
+                    i = "0" + i;
+                }
+                return i;
+            }
+        }
+        ;
+    </script>
+</body>
+
+</html>

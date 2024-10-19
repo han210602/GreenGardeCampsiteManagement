@@ -71,13 +71,34 @@
                 <div class="tile">
                     <div class="tile-body">
                         <div>
-                            <h5>Tên khách hàng:</h5>@ViewBag.order.CustomerName
-                            <br>
-                            <h5>Ngày sử dụng:</h5>@ViewBag.order.OrderUsageDate
+                            <div class="container">
+                                <div class="row mb-3">
+                                    <label class="col-sm-3 col-form-label"><h5>Tên khách hàng:</h5></label>
+                                    <div class="col-sm-9">
+                                        <p>@ViewBag.order.CustomerName</p>
+                                    </div>
+                                </div>
 
-                            <h5>Số điện thoại:</h5>@ViewBag.order.PhoneCustomer
+                                <div class="row mb-3">
+                                    <label class="col-sm-3 col-form-label"><h5>Ngày sử dụng:</h5></label>
+                                    <div class="col-sm-9">
+                                        <p>@ViewBag.order.OrderUsageDate</p> <!-- Fixed closing </p> tag -->
+                                    </div>
+                                </div>
 
-                            <h5>Đồ đã đặt:</h5>
+                                <div class="row mb-3">
+                                    <label class="col-sm-3 col-form-label"><h5>Số điện thoại:</h5></label>
+                                    <div class="col-sm-9">
+                                        <p>@ViewBag.order.PhoneCustomer</p>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <hr style="border: 1px solid #ccc;" />
+
+                            <label class="col-sm-3 col-form-label"><h5>Đồ đã đặt:</h5></label>
+
                         </div>
                         <hr />
                         <form asp-controller="OrderManagement" asp-action="TicketCart" method="get">
@@ -247,7 +268,7 @@
             var depositAmount = document.getElementById('depositAmount').value;
 
             // Kiểm tra nếu chưa nhập số tiền cọc hoặc nếu số tiền nhập không hợp lệ
-            if (!depositAmount || depositAmount <= 0) {
+            if (!depositAmount || depositAmount < 0) {
                 alert("Vui lòng nhập số tiền cọc hợp lệ");
                 return;
             }

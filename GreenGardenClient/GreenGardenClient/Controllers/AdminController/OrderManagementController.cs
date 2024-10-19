@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace GreenGardenClient.Controllers.AdminController
@@ -184,7 +185,7 @@ namespace GreenGardenClient.Controllers.AdminController
 
 
             }
-            TempData["Notification"] = "Lưu thành công!";
+            TempData["Notification"] = "Thêm vào giỏ hàng thành công! Hãy tiếp tục đặt đồ cắm trại nào.";
             HttpContext.Session.SetObjectAsJson("TicketCart", cart);
             return RedirectToAction("OrderTicket");
         }
@@ -467,12 +468,13 @@ namespace GreenGardenClient.Controllers.AdminController
             var gears = HttpContext.Session.GetObjectFromJson<List<GearVM>>("GearCart") ?? new List<GearVM>();
             var foods = HttpContext.Session.GetObjectFromJson<List<FoodAndDrinkVM>>("FoodCart") ?? new List<FoodAndDrinkVM>();
             var combofoods = HttpContext.Session.GetObjectFromJson<List<ComboFoodVM>>("ComboFoodCart") ?? new List<ComboFoodVM>();
+            var combos = HttpContext.Session.GetObjectFromJson<List<ComboVM>>("ComboCart") ?? new List<ComboVM>();
 
             // Retrieve JWT Token from cookies
 
 
             // Ensure there's at least one item to process (tickets, gears, etc.)
-            if (tickets.Any() || gears.Any() || foods.Any() || combofoods.Any())
+            if (tickets.Any())
             {
                 // Create order request
                 var orderRequest = new CreateUniqueOrderRequest
@@ -523,7 +525,70 @@ namespace GreenGardenClient.Controllers.AdminController
                     if (response.IsSuccessStatusCode)
                     {
                         var result = await response.Content.ReadAsStringAsync();
-                        return Ok(result);  // Return success message or redirect if needed
+                        return RedirectToAction("Index");  // Return success message or redirect if needed
+                    }
+                    else
+                    {
+                        var errorMessage = await response.Content.ReadAsStringAsync();
+                        return StatusCode((int)response.StatusCode, $"Error: {errorMessage}");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return StatusCode(500, $"Internal server error: {ex.Message}");
+                }
+            }
+            else
+            {
+                var orderRequest = new CreateComboOrderRequest
+                {
+                    Order = new OrderAddDTO
+                    {
+                        EmployeeId = 2,  // Assuming this is static for now
+                        CustomerName = orders.CustomerName,
+                        OrderUsageDate = orders.OrderUsageDate,
+                        Deposit = deposit,
+                        TotalAmount = total,
+                        PhoneCustomer = orders.PhoneCustomer,
+                    },
+                    OrderCombo = combos.Select(t => new OrderComboAddDTO
+                    {
+                        ComboId = t.ComboId,
+                        Quantity = t.Quantity,
+                    }).ToList(),
+                    OrderCampingGear = gears.Select(g => new OrderCampingGearAddDTO
+                    {
+                        GearId = g.GearId,
+                        Quantity = g.Quantity
+                    }).ToList(),
+                    OrderFood = foods.Select(f => new OrderFoodAddDTO
+                    {
+                        ItemId = f.ItemId,
+                        Quantity = f.Quantity
+                    }).ToList(),
+                    OrderFoodCombo = combofoods.Select(cf => new OrderFoodComboAddDTO
+                    {
+                        ComboId = cf.ComboId,
+                        Quantity = cf.Quantity
+                    }).ToList()
+                };
+
+                try
+                {
+
+                    var apiUrl = "https://localhost:7298/api/OrderManagement/CreateComboOrder";
+
+                    // Serialize request object to JSON
+                    var content = new StringContent(JsonConvert.SerializeObject(orderRequest), Encoding.UTF8, "application/json");
+
+                    // Make the API call
+                    var response = await _httpClient.PostAsync(apiUrl, content);
+
+                    // Process API response
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var result = await response.Content.ReadAsStringAsync();
+                        return RedirectToAction("Index");
                     }
                     else
                     {
@@ -559,6 +624,85 @@ namespace GreenGardenClient.Controllers.AdminController
             HttpContext.Session.Remove("ComboFoodCart");
             return RedirectToAction("Index");
 
+        }
+        [HttpGet]
+        public IActionResult OrderDetail(int id)
+        {
+            OrderDetailVM orderdata = GetDataFromApi<OrderDetailVM>($"https://localhost:7298/api/OrderManagement/GetOrderDetail/{id}");
+            HttpContext.Session.SetObjectAsJson("order", orderdata.OrderId);
+            HttpContext.Session.SetObjectAsJson("TicketUpdateCart", orderdata.OrderTicketDetails);
+            HttpContext.Session.SetObjectAsJson("ComboCart", orderdata.OrderComboDetails);
+            HttpContext.Session.SetObjectAsJson("ComboFoodCart", orderdata.OrderFoodComboDetails);
+            HttpContext.Session.SetObjectAsJson("FoodCart", orderdata.OrderFoodDetails);
+            HttpContext.Session.SetObjectAsJson("GearCart", orderdata.OrderCampingGearDetails);
+
+
+
+
+            return View("OrderDetail", orderdata);
+
+        }
+        [HttpGet]
+        public IActionResult UpdateTicket()
+        {
+            var ticketscart = HttpContext.Session.GetObjectFromJson<List<OrderTicketDetailDTO>>("TicketUpdateCart") ?? new List<OrderTicketDetailDTO>();
+            List<TicketVM> tickets = GetDataFromApi<List<TicketVM>>("https://localhost:7298/api/Ticket/GetAllTickets");
+
+            foreach (var item in ticketscart)
+            {
+                var ticket = tickets.ToList().FirstOrDefault(s => s.TicketId == item.TicketId);
+                if (ticket != null)
+                {
+                    ticket.Quantity = item.Quantity.Value;
+                }
+            }
+            if (TempData["Notification"] != null)
+            {
+                ViewBag.Notification = TempData["Notification"];
+            }
+            ViewBag.tickets = tickets;
+            return View("UpdateTicket");
+
+
+
+        }
+        [HttpPost]
+        public IActionResult UpdateTicket(List<int> TicketIds, List<string> Name, List<decimal> Prices, List<int> Quantities)
+        {
+            var cart = HttpContext.Session.GetObjectFromJson<List<TicketVM>>("TicketCart") ?? new List<TicketVM>();
+
+
+            for (int i = 0; i < TicketIds.Count; i++)
+            {
+
+                if (Quantities[i] > 0)
+                {
+                    var item = cart.FirstOrDefault(t => t.TicketId == TicketIds[i]);
+                    if (item != null)
+                    {
+                        item.Quantity = Quantities[i];
+                    }
+                    else
+                    {
+                        cart.Add(new TicketVM() { TicketId = TicketIds[i], TicketName = Name[i], Price = Prices[i], Quantity = Quantities[i] });
+
+                    }
+                }
+                else
+                {
+                    var item = cart.FirstOrDefault(t => t.TicketId == TicketIds[i]);
+                    if (item != null)
+                    {
+                        cart.Remove(item);
+                    }
+
+                }
+
+
+            }
+            TempData["Notification"] = "Thêm vào giỏ hàng thành công! Hãy tiếp tục đặt đồ cắm trại nào.";
+            HttpContext.Session.SetObjectAsJson("TicketCart", cart);
+            return RedirectToAction("OrderTicket");
         }
     }
 }

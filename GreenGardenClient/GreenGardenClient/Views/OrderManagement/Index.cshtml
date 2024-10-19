@@ -86,12 +86,13 @@
                                 <tr>
                                     <th>Mã đơn</th>
                                     <th width="150">Khách hàng</th>
+                                    <th >Số điện thoại</th>
                                     <th width ="150">Ngày sử dụng</th>
                                     <th>Tiền cọc</th>
                                     <th>Thu</th>
                                     <th >Trạng thái</th>
                                     <th>Hoạt động</th>
-                                    <th width ="200">Tính năng</th>
+                                    <th width ="180">Tính năng</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -100,9 +101,10 @@
 
                                     <tr>
 
-                                        <td><a asp-controller="Order" asp-action="OrderDetails" asp-route-idorder="@item.OrderId">#@item.OrderId</a></td>
+                                        <td><a asp-controller="OrderManagement" asp-action="OrderDetail" asp-route-id="@item.OrderId">#@item.OrderId</a></td>
 
                                         <td>@item.CustomerName</td>
+                                        <td>@item.PhoneCustomer</td>
                                         <td>@item.OrderUsageDate</td>
                                         <td>@item.Deposit</td>
                                         <td>@item.AmountPayable</td>
