@@ -1,4 +1,9 @@
-﻿<!doctype html>
+﻿﻿@using GreenGardenClient.Models;
+@{
+    var ticket = ViewBag.Ticket as List<TicketVM>;
+    var ticketCategories = ViewBag.TicketCategories as List<TicketCategoryVM>;
+}
+<!doctype html>
 <html lang="en">
 
 <head>
@@ -47,7 +52,7 @@
                     <div class="col-3 ">
                         <div class="site-logo">
                             <a href="index.html" class="font-weight-bold">
-                                <img src="~/images/logo.jpg" alt="Image" class="img-fluid">
+                                <img src="~/images/logo3.jpg" alt="Image" class="img-fluid">
                             </a>
                         </div>
                     </div>
@@ -228,7 +233,6 @@
                     display: flex;
                     align-items: center;
                     justify-content: space-between;
-                  
                     overflow: hidden;
                     width: 100px;
                     height: 40px; /* Đảm bảo chiều cao phù hợp */
@@ -238,7 +242,6 @@
                     .quantity-control button {
                         background-color: transparent;
                         border: none;
-                 
                         cursor: pointer;
                         font-size: 18px; /* Kích thước font cho dấu +/- */
                         color: #ff6f61; /* Màu của dấu trừ và cộng */
@@ -364,231 +367,216 @@
         </header>
 
 
-        <div class="ftco-blocks-cover-1">
-            <div class="site-section-cover overlay" style="background-image: url('@Url.Content("~/images/p22.jpg")')">
-                <div class="container">
-                    <div class="row align-items-center justify-content-center text-center">
-                        <div class="col-md-5" data-aos="fade-up">
-                            <h1 class="mb-3 text-white">Đặt vé</h1>
-                            <p>Dịch vụ đặt vé tại Sông Quê Green Garden Campin mang đến trải nghiệm thuận tiện và nhanh chóng cho du khách. Chỉ với vài thao tác đơn giản qua trang web, bạn có thể dễ dàng chọn loại vé phù hợp với nhu cầu</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        @* <div class="ftco-blocks-cover-1">
+        <div class="site-section-cover overlay" style="background-image: url('@Url.Content("~/images/p22.jpg")')">
+        <div class="container">
+        <div class="row align-items-center justify-content-center text-center">
+        <div class="col-md-5" data-aos="fade-up">
+        <h1 class="mb-3 text-white">Đặt vé</h1>
+        <p>Dịch vụ đặt vé tại Sông Quê Green Garden Campin mang đến trải nghiệm thuận tiện và nhanh chóng cho du khách. Chỉ với vài thao tác đơn giản qua trang web, bạn có thể dễ dàng chọn loại vé phù hợp với nhu cầu</p>
         </div>
-
+        </div>
+        </div>
+        </div>
+        </div>
+        *@
 
         <div class="site-section">
             <div class="container">
-            <div class="row justify-content-center text-center">
-            <div class="col-md-7">
-            <div class="heading-39101 mb-5">
-            <span class="backdrop text-center">Đặt vé</span>
+                <div class="row justify-content-center text-center">
+                    <div class="col-md-7">
+                        <div class="heading-39101 mb-5">
+                            <span class="backdrop text-center">Đặt vé</span>
                             <span class="subtitle-39191">Đặt vé</span>
-            <h3>Phần đặt vé tại đây</h3>
-            </div>
-            </div>
-            </div>
-            <div class="row">
-            <!-- Cột bên trái: Danh sách category -->
-            <div class="col-lg-3 col-md-4 mb-4" data-aos="fade-up">
-            <div class="category-list">
-            <h4 class="mb-4">Categories</h4>
-            <ul class="list-group">
-            <li class="list-group-item"><a href="#">Tất cả</a></li>
-            <li class="list-group-item"><a href="#">Vé trẻ em</a></li>
-            <li class="list-group-item"><a href="#">Vé người lớn</a></li>
-            <li class="list-group-item"><a href="#">Vé Combo</a></li>
-            <li class="list-group-item"><a href="#">Vé theo đoàn</a></li>
-            <li class="list-group-item"><a href="#">Vé đặc biệt</a></li>
-            </ul>
-            </div>
-            </div>
+                            <h3>Phần đặt vé tại đây</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- Cột bên trái: Danh sách category -->
+                    <div class="col-lg-3 col-md-4 mb-4" data-aos="fade-up">
+                        <div class="category-list">
+                            <h4 class="mb-4">Các loại vé</h4>
+                            <ul id="categoryFilter" class="list-group">
 
-            <!-- Cột bên phải: Danh sách sản phẩm -->
-            <div class="col-lg-9 col-md-8">
+                                <li class="list-group-item">
+                                    <a class="@(ViewBag.CurrentCategoryId == null ? "active-category" : "")"
+                                       href="@Url.Action("OrderTicket", "Service", new { sortBy = ViewBag.SortBy })">Tất cả</a>
+                                </li>
+                                @foreach (var category in ticketCategories)
+                                {
+                                    <li class="list-group-item">
+                                        <a href="@Url.Action("OrderTicket", new { categoryId = category.TicketCategoryId, sortBy = ViewBag.SortBy  })">@category.TicketCategoryName</a>
+                                    </li>
+                                }
+
+                            </ul>
+                        </div>
+                    </div>
+
+
+                    <!-- Cột bên phải: Danh sách sản phẩm -->
+                    <div class="col-lg-9 col-md-8">
 
                         <div class="filter-container" data-aos="fade-up">
                             <!-- Ngày sử dụng -->
+                            <!-- Sắp xếp theo -->
+                            <div class="filter-item">
+                                <label for="sort">Sắp xếp theo:</label>
+                                <select id="sort" name="sort" onchange="sortCampingGears()">
+                                    <option value="" @(ViewBag.sortBy == "" ? "selected" : "")>Mặc định</option>
+                                    <option value="1" @(ViewBag.sortBy == "1" ? "selected" : "")>Giá tăng dần</option>
+                                    <option value="2" @(ViewBag.sortBy == "2" ? "selected" : "")>Giá giảm dần</option>
+                                </select>
+                            </div>
                             <div class="filter-item">
                                 <label for="start">Ngày sử dụng:</label>
                                 <input type="date" id="start" name="start-date" value="dd-MM-YYYY">
                             </div>
-
-                            <!-- Sắp xếp theo -->
-                            <div class="filter-item">
-                                <label for="sort">Sắp xếp theo:</label>
-                                <select id="sort" name="sort">
-                                    <option value="discount">Giảm giá nhiều nhất</option>
-                                    <option value="price-asc">Giá tăng dần</option>
-                                    <option value="price-desc">Giá giảm dần</option>
-                                </select>
-                            </div>
                         </div>
-
                         <div class="product-list" data-aos="fade-up">
-                            <div class="product-item">
-                                <div class="product-image">
-                                    <img src="~/images/img_1.jpg" alt="Image" class="img-fluid">
-                                </div>
-                                <div class="product-content">
-                                    <h2><a href="trip-single.html">Vé người lớn </a></h2>
-                                    <div class="quantity-date-container">
-                                        <p><i class="fa fa-ticket"></i> Số Lượng: 50 vé</p>
-                                        <input type="date" class="styled-date">
-                                    </div>
+                            @if (ticket != null && ticket.Any())
+                            {
 
-                                    <p><i class="fa fa-info-circle"></i> Mô tả: Vé đơn giúp bạn trải nghiệm không gian cắm trại và tổ chức tiệc ngoài trời rộng rãi. Du khách có thể thoải mái chụp ảnh check-in tại vườn, tham gia khu vui chơi bao gồm bể bơi ngoài trời, trượt cỏ</p>
-
-                                    <div class="price-quantity">
-                                        <p style="margin-bottom:1px" class="price"><i class="fa fa-money-bill-wave"></i> 600,000đ</p>
-                                        <div class="quantity-control">
-                                            <button class="btn-minus" onclick="decreaseQuantity('quantity-1')">-</button>
-                                            <input type="text" value="1" class="quantity" id="quantity-1">
-                                            <button class="btn-plus" onclick="increaseQuantity('quantity-1')">+</button>
-
-
+                                foreach (var item in ticket) // Sử dụng biến item cho từng vé
+                                {
+                                    <div class="product-item">
+                                        <div class="product-image">
+                                            <img src="~/images/img_1.jpg" alt="Image" class="img-fluid">
                                         </div>
-                                    </div>
-                                    <div class="btn-group">
-                                        <button class="add-to-cart">
-                                            <i class="fa fa-cart-shopping"></i> Thêm giỏ hàng
-                                        </button>
-                                        <button class="buy-now">Mua ngay</button>
-                              
+                                        <div class="product-content">
+                                            <h2><a href="@Url.Action("TripSingle", new { id = item.TicketId })">@item.TicketName</a></h2> <!-- Sử dụng item.TicketId -->
+                                            <p><i class="fa fa-info-circle"></i> Mô tả: Vé đơn giúp bạn trải nghiệm không gian cắm trại và tổ chức tiệc ngoài trời rộng rãi. Du khách có thể thoải mái chụp ảnh check-in tại vườn, tham gia khu vui chơi bao gồm bể bơi ngoài trời, trượt cỏ</p>
 
-                                    </div>
-                                </div>
-                            </div>
+                                            <div class="price-quantity">
+                                                <p style="margin-bottom:1px" class="price"><i class="fa fa-money-bill-wave"></i> @item.Price.ToString("N0")đ</p> <!-- Sử dụng item.Price -->
+                                                <div class="quantity-control">
+                                                    <button class="btn-minus" onclick="decreaseQuantity('quantity-@item.TicketId')">-</button>
+                                                    <input type="text" value="1" class="quantity" id="quantity-@item.TicketId"> <!-- Gắn ID duy nhất -->
+                                                    <button class="btn-plus" onclick="increaseQuantity('quantity-@item.TicketId')">+</button>
+                                                </div>
+                                            </div>
+                                            <div class="btn-group">
+                                                <form method="post" action="/Service/AddToCart">
+                                                    <input type="hidden" name="Id" value="@item.TicketId" />
+                                                    <input type="hidden" name="Name" value="@item.TicketName" />
+                                                    <input type="hidden" name="CategoryName" value="@item.TicketCategoryName" />
+                                                    <input type="hidden" name="Type" value="Ticket" />
+                                                    <input type="hidden" name="TypeCategory" value="TicketCategory" />
+                                                    <input type="hidden" name="price" value="@item.Price" />
+                                                    <input type="hidden" name="quantity" value="1" min="1" />
+                                                    <input type="hidden" name="redirectAction" value="OrderTicket" />
+                                                    <button type="submit" class="add-to-cart">
+                                                        <i class="fa fa-cart-shopping"></i> Thêm giỏ hàng
+                                                    </button>
 
-                            <div class="product-item">
-                                <div class="product-image">
-                                    <img src="~/images/img_2.jpg" alt="Image" class="img-fluid">
-                                </div>
-                                <div class="product-content">
-                                    <h2><a href="trip-single.html">Vé  trẻ em </a></h2>
-                                    <div class="quantity-date-container">
-                                        <p><i class="fa fa-ticket"></i> Số Lượng: 50 vé</p>
-                                        <input type="date" class="styled-date">
-                                    </div>
-                                    <p><i class="fa fa-info-circle"></i> Mô tả: Vé đơn giúp bạn trải nghiệm không gian cắm trại và tổ chức tiệc ngoài trời rộng rãi. Du khách có thể thoải mái chụp ảnh check-in tại vườn, tham gia khu vui chơi bao gồm bể bơi ngoài trời, trượt cỏ</p>
-
-                                    <div class="details-row">
-                                        <div class="price-quantity">
-                                            <p style="margin-bottom:1px" class="price"><i class="fa fa-money-bill-wave"></i> 600,000đ</p>
-
-                                            <div class="quantity-control">
-                                                <button class="btn-minus" onclick="decreaseQuantity('quantity-1')">-</button>
-                                                <input type="text" value="1" class="quantity" id="quantity-1">
-                                                <button class="btn-plus" onclick="increaseQuantity('quantity-1')">+</button>
-                                                <input type="date" class="styled-date">
-
+                                                </form>
+                                                <button class="buy-now">Mua ngay</button>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="btn-group">
-                                        <button class="add-to-cart">
-                                            <i class="fa fa-cart-shopping"></i> Thêm giỏ hàng
-                                        </button>
-                                        <button class="buy-now">Mua ngay</button>
+                                }
+                            }
 
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
+                            else
+                            {
+                                <p>Không có vé nào.</p>
+                            }
 
 
-
-
-            </div>
-            </div>
-            </div>
-
-
-
-        </div>
-
-
-        <footer class="site-footer bg-light">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-3">
-                        <h2 class="footer-heading mb-3">Facebook</h2>
-                        <div class="row">
-                            <div class="col-4 gal_col">
-                                <a href="#"><img src="~/images/Picture1.jpg" alt="Image" class="img-fluid"></a>
-                            </div>
-                            <div class="col-4 gal_col">
-                                <a href="#"><img src="~/images/Picture8.jpg" alt="Image" class="img-fluid"></a>
-                            </div>
-                            <div class="col-4 gal_col">
-                                <a href="#"><img src="~/images/Picture7.jpg" alt="Image" class="img-fluid"></a>
-                            </div>
-                            <div class="col-4 gal_col">
-                                <a href="#"><img src="~/images/Picture4.jpg" alt="Image" class="img-fluid"></a>
-                            </div>
-                            <div class="col-4 gal_col">
-                                <a href="#"><img src="~/images/Picture13.jpg" alt="Image" class="img-fluid"></a>
-                            </div>
-                            <div class="col-4 gal_col">
-                                <a href="#"><img src="~/images/Picture6.jpg" alt="Image" class="img-fluid"></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-8 ml-auto">
-                        <div class="row">
-                            <div class="col-lg-6 ml-auto">
-                                <h2 class="footer-heading mb-4">Truy cập nhanh</h2>
-                                <ul class="list-unstyled">
-                                    <li><a href="#">Facebook</a></li>
-                                    <li><a href="#">Instagram</a></li>
-                                    <li><a href="#">Tiktok</a></li>
-
-                                </ul>
-                            </div>
-                            <div class="col-lg-6">
-                                <h2 class="footer-heading mb-4">Phản hồi</h2>
-                                <p>Nơi bạn đưa ra những phản hồi về dịch vụ,nhân viên tại sông quê</p>
-                                <form action="#" class="d-flex" class="subscribe">
-                                    <input type="text" class="form-control mr-3" placeholder="Phản hồi">
-                                    <input type="submit" value="Send" class="btn btn-primary">
-                                </form>
-                            </div>
 
                         </div>
                     </div>
                 </div>
 
-        </footer>
 
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init({
-            duration: 1200, // Đặt thời gian cho hiệu ứng (tùy chọn)
-        });
-    </script>
-    <script src="~/js/jquery-3.3.1.min.js"></script>
-    <script src="~/js/jquery-migrate-3.0.0.js"></script>
-    <script src="~/js/popper.min.js"></script>
-    <script src="~/js/bootstrap.min.js"></script>
-    <script src="~/js/owl.carousel.min.js"></script>
-    <script src="~/js/jquery.sticky.js"></script>
-    <script src="~/js/jquery.waypoints.min.js"></script>
-    <script src="~/js/jquery.animateNumber.min.js"></script>
-    <script src="~/js/jquery.fancybox.min.js"></script>
-    <script src="~/js/jquery.stellar.min.js"></script>
-    <script src="~/js/jquery.easing.1.3.js"></script>
-    <script src="~/js/bootstrap-datepicker.min.js"></script>
-    <script src="~/js/isotope.pkgd.min.js"></script>
-    <script src="~/js/aos.js"></script>
-    <script src="~/js/main.js"></script>
 
+            </div>
+
+
+            <footer class="site-footer bg-light">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <h2 class="footer-heading mb-3">Facebook</h2>
+                            <div class="row">
+                                <div class="col-4 gal_col">
+                                    <a href="#"><img src="~/images/Picture1.jpg" alt="Image" class="img-fluid"></a>
+                                </div>
+                                <div class="col-4 gal_col">
+                                    <a href="#"><img src="~/images/Picture8.jpg" alt="Image" class="img-fluid"></a>
+                                </div>
+                                <div class="col-4 gal_col">
+                                    <a href="#"><img src="~/images/Picture7.jpg" alt="Image" class="img-fluid"></a>
+                                </div>
+                                <div class="col-4 gal_col">
+                                    <a href="#"><img src="~/images/Picture4.jpg" alt="Image" class="img-fluid"></a>
+                                </div>
+                                <div class="col-4 gal_col">
+                                    <a href="#"><img src="~/images/Picture13.jpg" alt="Image" class="img-fluid"></a>
+                                </div>
+                                <div class="col-4 gal_col">
+                                    <a href="#"><img src="~/images/Picture6.jpg" alt="Image" class="img-fluid"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-8 ml-auto">
+                            <div class="row">
+                                <div class="col-lg-6 ml-auto">
+                                    <h2 class="footer-heading mb-4">Truy cập nhanh</h2>
+                                    <ul class="list-unstyled">
+                                        <li><a href="#">Facebook</a></li>
+                                        <li><a href="#">Instagram</a></li>
+                                        <li><a href="#">Tiktok</a></li>
+
+                                    </ul>
+                                </div>
+                                <div class="col-lg-6">
+                                    <h2 class="footer-heading mb-4">Phản hồi</h2>
+                                    <p>Nơi bạn đưa ra những phản hồi về dịch vụ,nhân viên tại sông quê</p>
+                                    <form action="#" class="d-flex" class="subscribe">
+                                        <input type="text" class="form-control mr-3" placeholder="Phản hồi">
+                                        <input type="submit" value="Send" class="btn btn-primary">
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+            </footer>
+
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
+        <script>
+            AOS.init({
+                duration: 1200, // Đặt thời gian cho hiệu ứng (tùy chọn)
+            });
+        </script>
+        <script src="~/js/jquery-3.3.1.min.js"></script>
+        <script src="~/js/jquery-migrate-3.0.0.js"></script>
+        <script src="~/js/popper.min.js"></script>
+        <script src="~/js/bootstrap.min.js"></script>
+        <script src="~/js/owl.carousel.min.js"></script>
+        <script src="~/js/jquery.sticky.js"></script>
+        <script src="~/js/jquery.waypoints.min.js"></script>
+        <script src="~/js/jquery.animateNumber.min.js"></script>
+        <script src="~/js/jquery.fancybox.min.js"></script>
+        <script src="~/js/jquery.stellar.min.js"></script>
+        <script src="~/js/jquery.easing.1.3.js"></script>
+        <script src="~/js/bootstrap-datepicker.min.js"></script>
+        <script src="~/js/isotope.pkgd.min.js"></script>
+        <script src="~/js/aos.js"></script>
+        <script src="~/js/main.js"></script>
+        <script>
+            function sortCampingGears() {
+                const sortValue = document.getElementById("sort").value;
+                const categoryId = '@ViewBag.CurrentCategoryId'; // Lấy categoryId hiện tại từ ViewBag nếu có
+                const url = `@Url.Action("OrderTicket", "Service")?categoryId=${categoryId}&sortBy=${sortValue}`;
+                window.location.href = url;
+            }
+
+        </script>
 </body>
 
 </html>
-
-
-
-
