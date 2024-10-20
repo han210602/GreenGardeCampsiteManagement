@@ -81,10 +81,11 @@ namespace DataAccess.DAO
             return campingGears;
         }
 
-        public static List<CampingGearDTO> GetCampingGearsBySort(int? categoryId, int? sortBy)
+        public static List<CampingGearDTO> GetCampingGears(int? categoryId, int? sortBy, int? priceRange, int? popularity)
         {
             var query = context.CampingGears
                 .Include(gear => gear.GearCategory)
+                .AsNoTracking() // Không theo dõi thực thể để cải thiện hiệu suất
                 .AsQueryable();
 
             // Lọc theo danh mục nếu categoryId được cung cấp
@@ -93,7 +94,43 @@ namespace DataAccess.DAO
                 query = query.Where(gear => gear.GearCategoryId == categoryId.Value);
             }
 
-            // Kiểm tra và sắp xếp theo tiêu chí được chỉ định
+            // Lọc theo khoảng giá
+            if (priceRange.HasValue)
+            {
+                switch (priceRange.Value)
+                {
+                    case 1: // Dưới 100,000
+                        query = query.Where(gear => gear.RentalPrice < 100000);
+                        break;
+                    case 2: // 100,000 - 300,000
+                        query = query.Where(gear => gear.RentalPrice >= 100000 && gear.RentalPrice <= 300000);
+                        break;
+                    case 3: // Trên 300,000
+                        query = query.Where(gear => gear.RentalPrice > 300000);
+                        break;
+                }
+            }
+
+            // Áp dụng sắp xếp nếu có tiêu chí sắp xếp hoặc độ phổ biến
+            bool isSorted = false;
+
+            // Sắp xếp theo độ phổ biến
+            if (popularity.HasValue && !sortBy.HasValue) // Ưu tiên `sortBy` nếu cả hai đều được yêu cầu
+            {
+                switch (popularity.Value)
+                {
+                    case 1: // Phổ biến nhất (số lượng có sẵn nhiều nhất)
+                        query = query.OrderByDescending(gear => gear.QuantityAvailable);
+                        isSorted = true;
+                        break;
+                    case 2: // Mới nhất (theo ngày tạo)
+                        query = query.OrderByDescending(gear => gear.CreatedAt);
+                        isSorted = true;
+                        break;
+                }
+            }
+
+            // Sắp xếp theo tiêu chí sortBy
             if (sortBy.HasValue)
             {
                 switch (sortBy.Value)
@@ -104,24 +141,23 @@ namespace DataAccess.DAO
                     case 2: // Sắp xếp theo giá từ cao đến thấp
                         query = query.OrderByDescending(gear => gear.RentalPrice);
                         break;
-                    case 3: // Sắp xếp theo ngày tạo mới nhất
-                        query = query.OrderByDescending(gear => gear.CreatedAt);
+                    case 3: // Sắp xếp theo tên từ A-Z
+                        query = query.OrderBy(gear => gear.GearName);
                         break;
-                    case 4: // Sắp xếp theo độ phổ biến
-                        query = query.OrderByDescending(gear => gear.QuantityAvailable); // hoặc một tiêu chí khác
-                        break;
-                    default:
-                        // Không thực hiện sắp xếp nếu sortBy không hợp lệ
+                    case 4: // Sắp xếp theo tên từ Z-A
+                        query = query.OrderByDescending(gear => gear.GearName);
                         break;
                 }
-            }
-            else
-            {
-                // Sắp xếp mặc định nếu sortBy là null
-                query = query; 
+                isSorted = true;
             }
 
-            // Chọn các thuộc tính cần thiết
+            // Sắp xếp mặc định (nếu không có tiêu chí sắp xếp nào)
+            if (!isSorted)
+            {
+                query = query; // Mặc định sắp xếp theo tên
+            }
+
+            // Chọn các thuộc tính cần thiết và chuyển đổi sang DTO
             var campingGears = query.Select(gear => new CampingGearDTO
             {
                 GearId = gear.GearId,

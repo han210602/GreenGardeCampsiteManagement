@@ -69,10 +69,11 @@ namespace DataAccess.DAO
 
             context.SaveChanges();
         }
-        public static List<FoodAndDrinkDTO> GetFoodAndDrinksBySort(int? categoryId, int? sortBy)
+        public static List<FoodAndDrinkDTO> GetFoodAndDrinks(int? categoryId, int? sortBy, int? priceRange)
         {
             var query = context.FoodAndDrinks
-                .Include(food => food.Category) // Đảm bảo bao gồm thông tin về danh mục
+                .Include(food => food.Category) // Bao gồm thông tin danh mục
+                .AsNoTracking() // Không theo dõi thực thể để cải thiện hiệu suất
                 .AsQueryable();
 
             // Lọc theo danh mục nếu categoryId được cung cấp
@@ -81,7 +82,29 @@ namespace DataAccess.DAO
                 query = query.Where(food => food.CategoryId == categoryId.Value);
             }
 
-            // Kiểm tra và sắp xếp theo tiêu chí được chỉ định
+            // Lọc theo khoảng giá
+            if (priceRange.HasValue)
+            {
+                switch (priceRange.Value)
+                {
+                    case 1: // Dưới 100,000
+                        query = query.Where(food => food.Price < 300000);
+                        break;
+                    case 2: // 100,000 - 300,000
+                        query = query.Where(food => food.Price >= 300000 && food.Price <= 500000);
+                        break;
+                    case 3: // Trên 300,000
+                        query = query.Where(food => food.Price >= 500000);
+                        break;
+                }
+            }
+
+            // Áp dụng sắp xếp nếu có tiêu chí sắp xếp hoặc độ phổ biến
+            bool isSorted = false;
+
+            // Sắp xếp theo độ phổ biến
+
+            // Sắp xếp theo tiêu chí sortBy
             if (sortBy.HasValue)
             {
                 switch (sortBy.Value)
@@ -92,24 +115,29 @@ namespace DataAccess.DAO
                     case 2: // Sắp xếp theo giá từ cao đến thấp
                         query = query.OrderByDescending(food => food.Price);
                         break;
-                    case 3: // Sắp xếp theo tên món ăn
-                        query = query.OrderBy(food => food.CreatedAt);
+                    case 3: // Sắp xếp theo ngày tạo mới nhất
+                        query = query.OrderByDescending(food => food.CreatedAt);
                         break;
                     case 4: // Sắp xếp theo số lượng có sẵn
                         query = query.OrderByDescending(food => food.QuantityAvailable);
                         break;
-                    default:
-                        // Không thực hiện sắp xếp nếu sortBy không hợp lệ
+                    case 5: // Sắp xếp theo số lượng có sẵn
+                        query = query.OrderByDescending(food => food.QuantityAvailable);
+                        break;
+                    case 6: // Sắp xếp theo số lượng có sẵn
+                        query = query.OrderByDescending(food => food.CreatedAt);
                         break;
                 }
-            }
-            else
-            {
-                // Nếu sortBy là null, có thể chọn sắp xếp mặc định theo ItemId
-                query = query; // Hoặc thuộc tính khác mà bạn muốn sắp xếp theo
+                isSorted = true;
             }
 
-            // Chọn các thuộc tính cần thiết
+            // Sắp xếp mặc định (nếu không có tiêu chí sắp xếp nào)
+            if (!isSorted)
+            {
+                query = query; // Mặc định sắp xếp theo tên món ăn
+            }
+
+            // Chuyển đổi sang DTO và lấy các thuộc tính cần thiết
             var foodAndDrinks = query.Select(food => new FoodAndDrinkDTO
             {
                 ItemId = food.ItemId,
@@ -123,7 +151,6 @@ namespace DataAccess.DAO
 
             return foodAndDrinks;
         }
-
 
         public static List<FoodAndDrinkCategoryDTO> GetAllFoodAndDrinkCategories()
         {

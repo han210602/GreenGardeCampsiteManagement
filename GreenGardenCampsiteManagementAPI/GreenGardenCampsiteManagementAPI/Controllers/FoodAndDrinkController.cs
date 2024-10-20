@@ -43,12 +43,13 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
             }
         }
         [HttpGet("GetFoodAndDrinksBySort")]
-        public IActionResult GetFoodAndDrinksBySort([FromQuery] int? categoryId, [FromQuery] int? sortBy)
+        public IActionResult GetFoodAndDrinksBySort([FromQuery] int? categoryId, [FromQuery] int? sortBy, [FromQuery] int? priceRange)
         {
             try
             {
-                var campingGears = _repo.GetFoodAndDrinksBySort(categoryId, sortBy);
-                return Ok(campingGears);
+                // Gọi đến Repository để lấy danh sách món ăn và đồ uống với các tiêu chí lọc
+                var foodAndDrinks = _repo.GetFoodAndDrinks(categoryId, sortBy, priceRange);
+                return Ok(foodAndDrinks);
             }
             catch (Exception ex)
             {

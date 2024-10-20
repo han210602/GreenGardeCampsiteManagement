@@ -43,7 +43,7 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
-        [HttpGet("GetTicketsByCategory/{categoryId}")] 
+        [HttpGet("GetTicketsByCategory/{categoryId}")]
         public IActionResult GetTicketsByCategory(int categoryId)
         {
             try
@@ -96,5 +96,23 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+        [HttpGet("GetTicketsByCategoryAndSort")]
+        public IActionResult GetTicketsByCategoryAndSort(int? categoryId, int? sort)
+        {
+            try
+            {
+                var tickets = _repo.GetTicketsByCategoryIdAndSort(categoryId, sort);
+                if (tickets == null || tickets.Count == 0)
+                {
+                    return NotFound("No tickets found for the specified category ID.");
+                }
+                return Ok(tickets);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
     }
 }

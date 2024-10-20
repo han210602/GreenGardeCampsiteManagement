@@ -80,11 +80,11 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
             }
         }
         [HttpGet("GetCampingGearsBySort")]
-        public IActionResult GetCampingGearsBySort([FromQuery] int? categoryId, [FromQuery] int? sortBy)
+        public IActionResult GetCampingGearsBySort([FromQuery] int? categoryId, [FromQuery] int? sortBy, [FromQuery] int? priceRange, [FromQuery] int? popularity)
         {
             try
             {
-                var campingGears = _repo.GetCampingGearsBySort(categoryId, sortBy);
+                var campingGears = _repo.GetCampingGearsBySort(categoryId, sortBy, priceRange, popularity);
                 return Ok(campingGears);
             }
             catch (Exception ex)
@@ -92,6 +92,7 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+
 
     }
 }

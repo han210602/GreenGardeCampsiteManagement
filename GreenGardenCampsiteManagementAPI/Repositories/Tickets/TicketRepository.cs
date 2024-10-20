@@ -8,17 +8,20 @@ using System.Threading.Tasks;
 
 namespace Repositories.Tickets
 {
-    public class TicketRepository:ITicketRepository
+    public class TicketRepository : ITicketRepository
     {
         public List<TicketDTO> GetAllTickets()
         {
             return TicketDAO.GetAllTickets();
         }
-        public List<TicketDTO> GetTicketsByCategoryId(int categoryId) 
+        public List<TicketDTO> GetTicketsByCategoryId(int categoryId)
         {
             return TicketDAO.GetTicketsByCategoryId(categoryId);
         }
-
+        public List<TicketDTO> GetTicketsByCategoryIdAndSort(int? categoryId, int? sort)
+        {
+            return TicketDAO.GetTicketsByCategoryIdAndSort(categoryId, sort); // Gọi phương thức từ TicketDAO
+        }
         public void AddTicket(AddTicket ticketDto)
         {
             TicketDAO.AddTicket(ticketDto);
