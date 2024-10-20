@@ -11,4 +11,10 @@
 
         public string TicketCategoryName { get; set; }
     }
+    public class UpdateTicketDTO
+    {
+        public int TicketId { get; set; }
+        public int OrderId { get; set; }
+        public int? Quantity { get; set; }
+    }
 }

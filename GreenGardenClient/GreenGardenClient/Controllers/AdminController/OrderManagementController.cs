@@ -603,7 +603,6 @@ namespace GreenGardenClient.Controllers.AdminController
             }
 
             // If no items to process, return the CreateOrder view
-            return View("Index");
         }
         [HttpGet]
         public async Task<IActionResult> DeleteCart()
@@ -667,42 +666,84 @@ namespace GreenGardenClient.Controllers.AdminController
 
         }
         [HttpPost]
-        public IActionResult UpdateTicket(List<int> TicketIds, List<string> Name, List<decimal> Prices, List<int> Quantities)
+        public async Task<IActionResult> UpdateTicket(List<int> TicketIds,  List<decimal> Prices, List<int> Quantities)
         {
-            var cart = HttpContext.Session.GetObjectFromJson<List<TicketVM>>("TicketCart") ?? new List<TicketVM>();
+            var order = HttpContext.Session.GetObjectFromJson<OrderVM>("OrderCart") ?? new OrderVM();
+            var ticketscart = HttpContext.Session.GetObjectFromJson<List<OrderTicketDetailDTO>>("TicketUpdateCart") ?? new List<OrderTicketDetailDTO>();
 
-
+            decimal total = 0;
+            List<UpdateTicketDTO> tickets = new List<UpdateTicketDTO>(); 
             for (int i = 0; i < TicketIds.Count; i++)
             {
 
                 if (Quantities[i] > 0)
                 {
-                    var item = cart.FirstOrDefault(t => t.TicketId == TicketIds[i]);
-                    if (item != null)
+                tickets.Add(new UpdateTicketDTO { TicketId = TicketIds[i],OrderId=order.OrderId ,Quantity = Quantities[i] });
+                    total += (decimal)Quantities[i] * Prices[i];
+                }
+                
+
+
+            }
+            decimal totalticket = 0;
+            foreach (var item in ticketscart)
+            {
+            totalticket+= (decimal)item.Quantity.Value*item.Price;
+            }
+
+            UpdateOrderDTO orderupdate=new UpdateOrderDTO()
+            {
+                OrderId = order.OrderId,
+                OrderUsageDate=order.OrderUsageDate,
+                TotalAmount=order.TotalAmount-totalticket+total,
+            };
+            var apiUrl = "https://localhost:7298/api/OrderManagement/UpdateTicket";
+            var apiUrl1 = "https://localhost:7298/api/OrderManagement/UpdateOrder";
+
+            // Serialize request objects to JSON
+            var content = new StringContent(JsonConvert.SerializeObject(tickets), Encoding.UTF8, "application/json");
+            var content1 = new StringContent(JsonConvert.SerializeObject(orderupdate), Encoding.UTF8, "application/json");
+
+            try
+            {
+                // Call to UpdateTicket API
+                var response = await _httpClient.PutAsync(apiUrl, content);
+                if (response.IsSuccessStatusCode)
+                {
+                    // Proceed to the next API call if the first one is successful
+                    var response1 = await _httpClient.PutAsync(apiUrl1, content1);
+
+                    if (response1.IsSuccessStatusCode)
                     {
-                        item.Quantity = Quantities[i];
+                        // Both updates were successful
+                        ViewBag.ResultMessage = "Ticket and Order updated successfully!";
+                        return RedirectToAction("Index"); // Replace "SuccessView" with your actual view
                     }
                     else
                     {
-                        cart.Add(new TicketVM() { TicketId = TicketIds[i], TicketName = Name[i], Price = Prices[i], Quantity = Quantities[i] });
-
+                        // Handle error for the second API call
+                        var errorMessage1 = await response1.Content.ReadAsStringAsync();
+                        ViewBag.ErrorMessage = $"Error updating order: {errorMessage1}";
+                        return View("ErrorView"); // Replace "ErrorView" with your actual error view
                     }
                 }
                 else
                 {
-                    var item = cart.FirstOrDefault(t => t.TicketId == TicketIds[i]);
-                    if (item != null)
-                    {
-                        cart.Remove(item);
-                    }
-
+                    // Handle error for the first API call
+                    var errorMessage = await response.Content.ReadAsStringAsync();
+                    ViewBag.ErrorMessage = $"Error updating tickets: {errorMessage}";
+                    return View("ErrorView"); // Replace "ErrorView" with your actual error view
                 }
-
-
             }
-            TempData["Notification"] = "Thêm vào giỏ hàng thành công! Hãy tiếp tục đặt đồ cắm trại nào.";
-            HttpContext.Session.SetObjectAsJson("TicketCart", cart);
-            return RedirectToAction("OrderTicket");
+            catch (Exception ex)
+            {
+                // Handle any exceptions that occur during the process
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+
+
+
         }
+
     }
 }

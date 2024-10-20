@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "OBVsHHq7l3VR537DvoetAYxdac8SumYdAcDCshRm7XlkXI3i9CcbY8EQvvL1VuixNLfvi5mIyx2++KLjIIsiNQ==",
+  "dgSpecHash": "Ab/kfO3NQLlRfvdGAe7QHrEjHENp2liW9DX2RCdwVyp3vMJRkepU3yILXRrXNAfdpq5pBPIIzumauTH9kBH9Lg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\admin\\Desktop\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient.csproj",
+  "projectFilePath": "C:\\Users\\admin\\Desktop\\Do an\\New folder\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\admin\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\admin\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\6.0.35\\microsoft.aspnetcore.authentication.jwtbearer.6.0.35.nupkg.sha512",

@@ -18,4 +18,11 @@
         public string? PhoneCustomer { get; set; }
 
     }
+    public class UpdateOrderDTO
+    {
+
+        public int OrderId { get; set; }
+        public DateTime? OrderUsageDate { get; set; }
+        public decimal TotalAmount { get; set; }
+    }
 }
