@@ -104,6 +104,25 @@
                     display: block; /* Hiện menu thả xuống khi hover vào mục Services */
                 }
 
+                .listPage{
+                    padding:10px;
+                    text-align:center;
+                    list-style:none;
+                }
+                .listPage li{
+                        background-color: #d99b53 !important;
+                      padding:20px;
+                      display:inline-block;
+                      margin:0 10px;
+                cursor:pointer;
+                
+                }
+
+                    .listPage .active{
+                        background-color: #d99b53 !important;
+                        color:#ffff;
+                    }
+                
             </style>
             <script>
                 $(document).ready(function () {
@@ -228,16 +247,64 @@
                         </div>
                     </div>
 
+
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="post-entry-1 h-100">
+                            <a href="single.html">
+                                <img src="~/images/picture13.jpg" alt="Image"
+                                     class="img-fluid">
+                            </a>
+                            <div class="post-entry-1-contents">
+
+                                <h2><a href="single.html">Cách làm việc nhóm</a></h2>
+                                <span class="meta d-inline-block mb-3">14/10/2024 <span class="mx-2">by</span> <a href="#">Nguyễn Đăng Hoàng</a></span>
+                                <p>Bạn muốn con em mình có thể học hỏi thêm kỹ năng mềm,kết bạn nhiều người thì sông quê là lựa chọn của bạn.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="post-entry-1 h-100">
+                            <a href="single.html">
+                                <img src="~/images/picture13.jpg" alt="Image"
+                                     class="img-fluid">
+                            </a>
+                            <div class="post-entry-1-contents">
+
+                                <h2><a href="single.html">Cách làm việc nhóm</a></h2>
+                                <span class="meta d-inline-block mb-3">14/10/2024 <span class="mx-2">by</span> <a href="#">Nguyễn Đăng Hoàng</a></span>
+                                <p>Bạn muốn con em mình có thể học hỏi thêm kỹ năng mềm,kết bạn nhiều người thì sông quê là lựa chọn của bạn.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="post-entry-1 h-100">
+                            <a href="single.html">
+                                <img src="~/images/picture13.jpg" alt="Image"
+                                     class="img-fluid">
+                            </a>
+                            <div class="post-entry-1-contents">
+
+                                <h2><a href="single.html">Cách làm việc nhóm</a></h2>
+                                <span class="meta d-inline-block mb-3">14/10/2024 <span class="mx-2">by</span> <a href="#">Nguyễn Đăng Hoàng</a></span>
+                                <p>Bạn muốn con em mình có thể học hỏi thêm kỹ năng mềm,kết bạn nhiều người thì sông quê là lựa chọn của bạn.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
+                <ul class="listPage">
+           
 
-                <div class="col-12 mt-5 text-center">
-                    <span class="p-3">1</span>
-                    <a href="#" class="p-3">2</a>
-                    <a href="#" class="p-3">3</a>
-                    <a href="#" class="p-3">4</a>
-                </div>
+                </ul>
 
+
+              @*  <div class="col-12 mt-5 text-center">
+                    <a href="#" class="p-3 page-number" data-page="1">1</a>
+                    <a href="#" class="p-3 page-number" data-page="2">2</a>
+                    <a href="#" class="p-3 page-number" data-page="3">3</a>
+                    <a href="#" class="p-3 page-number" data-page="4">4</a>
+                </div> 
+*@
             </div>
         </div> <!-- END .site-section -->
 
@@ -293,6 +360,42 @@
 
         </footer>
     </div>
+
+    <script>
+        let thispage = 1;
+        let limit = 6;
+        let list = document.querySelectorAll('.list .item');
+
+        function loadItem() {
+            let beginGet = limit * (thispage - 1);
+            let endGet = limit * thispage;
+
+            list.forEach((item, key) => {
+                if (key >= beginGet && key < endGet) {
+                    item.style.display = 'block'; // Hiển thị các mục trong khoảng này
+                } else {
+                    item.style.display = 'none';  // Ẩn các mục không nằm trong khoảng này
+                }
+            });
+        }
+
+        loadItem();
+
+        // Thêm sự kiện điều hướng trang nếu cần thiết (ví dụ: nút Next, Previous)
+        document.querySelector('.next').addEventListener('click', function () {
+            if (thispage * limit < list.length) {
+                thispage++;
+                loadItem();
+            }
+        });
+
+        document.querySelector('.prev').addEventListener('click', function () {
+            if (thispage > 1) {
+                thispage--;
+                loadItem();
+            }
+        });
+    </script>
 
     <script src="~/js/jquery-3.3.1.min.js"></script>
     <script src="~/js/jquery-migrate-3.0.0.js"></script>

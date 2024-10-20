@@ -53,6 +53,10 @@ namespace GreenGardenClient.Controllers
                             Expires = DateTimeOffset.Now.AddHours(1)
                         });
 
+                        // Optionally, save UserId and RoleId in session or TempData
+                        HttpContext.Session.SetInt32("UserId", loginResponse.UserId); // Save UserId
+                        HttpContext.Session.SetInt32("RoleId", loginResponse.RoleId); // Save RoleId
+
                         TempData["SuccessMessage"] = "Đăng nhập thành công!";
                         return RedirectToAction("Index", "Home");
                     }

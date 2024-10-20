@@ -209,6 +209,10 @@
       "PackagePath": "staticwebassets\\images\\Picture1.jpg"
     },
     {
+      "Id": "D:\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\images.png",
+      "PackagePath": "staticwebassets\\images\\images.png"
+    },
+    {
       "Id": "D:\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\img_1.jpg",
       "PackagePath": "staticwebassets\\images\\img_1.jpg"
     },

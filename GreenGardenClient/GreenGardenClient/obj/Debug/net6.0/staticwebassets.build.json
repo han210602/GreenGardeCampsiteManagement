@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "jmC/VWRssTQniVGn8azCqFUud0rMpmGlqrE1lglqBc8=",
+  "Hash": "bpesPO24CYjQjtJtGR5pRu2CqHVTSYPLdTXyDh5dTA4=",
   "Source": "GreenGardenClient",
   "BasePath": "_content/GreenGardenClient",
   "Mode": "Default",
@@ -882,6 +882,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\.DS_Store"
+    },
+    {
+      "Identity": "D:\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\images.png",
+      "SourceId": "GreenGardenClient",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\GreenGardenClient\\GreenGardenClient\\wwwroot\\",
+      "BasePath": "_content/GreenGardenClient",
+      "RelativePath": "images/images.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\images.png"
     },
     {
       "Identity": "D:\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\img_1.jpg",
