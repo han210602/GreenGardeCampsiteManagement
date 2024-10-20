@@ -647,8 +647,9 @@ namespace DataAccess.DAO
                 {
                     
                     
-                    if (tickets[0].TicketId != 0)
+                    if (tickets[0].OrderId != 0)
                     {
+                        Console.WriteLine("ddđ" + tickets[0].OrderId);
                         var list = context.OrderTicketDetails.Where(s => s.OrderId == tickets[0].OrderId);
                         context.OrderTicketDetails.RemoveRange(list);
                         var newlist = tickets.Select(s => new OrderTicketDetail()
@@ -664,7 +665,7 @@ namespace DataAccess.DAO
                     {
                         DeleteOrder(tickets[0].OrderId);
                     }
-                    
+                    context.SaveChanges();
                     return true;
                 }
             }
@@ -796,6 +797,37 @@ namespace DataAccess.DAO
                     }
                     context.SaveChanges();
                     return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+
+            }
+
+
+        }
+
+        public static bool UpdateOrder(UpdateOrderDTO order)
+        {
+
+            try
+            {
+                using (var context = new GreenGardenContext())
+                {
+                    var item = context.Orders.FirstOrDefault(s=>s.OrderId==order.OrderId);
+                    if(item != null) {
+                        item.OrderUsageDate = order.OrderUsageDate;
+                        item.TotalAmount=order.TotalAmount;
+                        item.AmountPayable = order.TotalAmount = item.Deposit;
+                        context.SaveChanges();
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
                 }
             }
             catch (Exception ex)

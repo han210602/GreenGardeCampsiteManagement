@@ -196,7 +196,18 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
-
+        [HttpPut("UpdateOrder")]
+        public IActionResult UpdateOrder([FromBody] UpdateOrderDTO order)
+        {
+            try
+            {
+                return Ok(_repo.UpdateOrder(order));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
 
     }
     
