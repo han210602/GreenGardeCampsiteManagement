@@ -1,4 +1,4 @@
-﻿﻿@using GreenGardenClient.Models;
+﻿﻿﻿@using GreenGardenClient.Models;
 @{
     var campingGears = ViewBag.CampingGears as List<GearVM>;
     var campingCategories = ViewBag.CampingCategories as List<GearCategoryVM>;
@@ -50,7 +50,7 @@
                     <div class="col-3 ">
                         <div class="site-logo">
                             <a href="index.html" class="font-weight-bold">
-                                <img src="~/images/logo3.png" alt="Image" class="img-fluid">
+                                <img src="~/images/logo.jpg" alt="Image" class="img-fluid">
                             </a>
                         </div>
                     </div>
@@ -367,7 +367,12 @@
         <script src="~/js/aos.js"></script>
 
         <script src="~/js/main.js"></script>
-
+        <script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
+        <script>
+            AOS.init({
+                duration: 1200, // Đặt thời gian cho hiệu ứng (tùy chọn)
+            });
+        </script>
         <script>
             $(document).ready(function () {
                 $('#filterToggleIcon').on('click', function () {
