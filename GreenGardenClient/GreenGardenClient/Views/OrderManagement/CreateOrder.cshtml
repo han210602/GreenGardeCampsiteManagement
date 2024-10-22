@@ -1,5 +1,5 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-
+@model GreenGardenClient.Models.OrderVM
 @using GreenGardenClient.Models
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +23,39 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 
 </head>
-
+@{
+    if (ViewBag.Notification != null)
+    {
+        <div id="notification" class="alert alert-warning" role="alert">
+            @ViewBag.Notification
+        </div>
+    }
+}
+<style>
+    #notification {
+        position: fixed;
+        top: 20px; /* Khoảng cách từ đầu trang */
+        right: 20px; /* Khoảng cách từ bên phải */
+        z-index: 1050; /* Đảm bảo thông báo nằm trên các phần tử khác */
+        opacity: 1; /* Bắt đầu với độ mờ là 1 */
+        transition: opacity 1s ease-out, transform 1s ease-out; /* Hiệu ứng chuyển đổi cho độ mờ và biến đổi */
+        transform: translateY(-10px); /* Đưa thông báo lên một chút */
+        width: auto; /* Hoặc thay đổi thành một giá trị cụ thể, ví dụ: 300px */
+        max-width: 300px; /* Giới hạn chiều rộng tối đa */
+        padding: 15px; /* Khoảng cách bên trong cho thông báo */
+    }
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        if ($("#notification").length) {
+            setTimeout(function () {
+                $("#notification").css("opacity", "0"); // Đặt độ mờ thành 0
+                $("#notification").css("transform", "translateY(10px)"); // Đưa thông báo xuống một chút khi ẩn
+            }, 3000); // Sau 3 giây
+        }
+    });
+</script>
 <body onload="time()" class="app sidebar-mini rtl">
 
     <!-- Sidebar menu-->
@@ -75,17 +107,17 @@
                                     <form asp-controller="OrderManagement" asp-action="CreateOrder" method="post">
                                         <div class="mb-3">
                                             <label for="customer-name" class="form-label">Tên khách hàng:</label>
-                                            <input type="text" value="@ViewBag.name" class="form-control" id="customer-name" name="name" placeholder="Nhập tên khách hàng" required>
+                                            <input type="text" value="@Model.CustomerName" class="form-control" id="customer-name" name="name" placeholder="Nhập tên khách hàng" required>
                                         </div>
 
                                         <div class="mb-3">
                                             <label for="usage-date" class="form-label">Ngày sử dụng:</label>
-                                            <input type="datetime-local" value="@ViewBag.usagedate" class="form-control" id="usage-date" name="usagedate" required>
+                                            <input type="datetime-local" value="@ViewBag.date" class="form-control" id="usage-date" name="usagedate" required>
                                         </div>
 
                                         <div class="mb-3">
                                             <label for="phone-number" class="form-label">Số điện thoại:</label>
-                                            <input type="tel" value="@ViewBag.phone" class="form-control" id="phone-number" name="phone" placeholder="Nhập số điện thoại" pattern="[0-9]{10}" required>
+                                            <input type="tel" value="@Model.PhoneCustomer" class="form-control" id="phone-number" name="phone" placeholder="Nhập số điện thoại" pattern="[0-9]{10}" required>
                                         </div>
                                         <button type="submit" class="btn btn-primary">
                                             <i class='bx bx-cart'></i> <!-- Icon giỏ hàng -->

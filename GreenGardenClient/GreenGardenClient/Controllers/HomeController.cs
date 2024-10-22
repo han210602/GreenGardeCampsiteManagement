@@ -17,8 +17,18 @@ namespace GreenGardenClient.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public IActionResult Logout()
+        {
+            // Clear all session data
+            HttpContext.Session.Clear();
 
- 
+            // Remove the JWT token cookie
+            Response.Cookies.Delete("JWTToken");
+
+             return RedirectToAction("Index");
+        }
+
 
 
     }

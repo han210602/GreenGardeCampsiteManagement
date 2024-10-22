@@ -12,4 +12,10 @@
         public string? ImgUrl { get; set; }
         public int Quantity { get; set; }
     }
+    public class OrderCampingGearByUsageDateDTO
+    {
+        public int GearId { get; set; }
+        public int? Quantity { get; set; }
+    }
+
 }

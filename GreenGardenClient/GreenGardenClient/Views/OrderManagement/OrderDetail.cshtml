@@ -65,178 +65,178 @@
             </ul>
             <div id="clock"></div>
         </div>
-
+    
         <div class="row">
             <div class="col-md-12">
                 <div class="tile">
-                    <div class="tile-body">
-                        <div>
-                        
-                            
-                            <div class="container">
-                                <div class="row mb-3">
-                                    <label class="col-sm-3 col-form-label"><h5>Mã đơn:</h5></label>
-                                    <div class="col-sm-9">
-                                        <p>#@Model.OrderId</p>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label class="col-sm-3 col-form-label"><h5>Tên khách hàng:</h5></label>
-                                    <div class="col-sm-9">
-                                        <p>@Model.CustomerName</p>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label class="col-sm-3 col-form-label"><h5>Số điện thoại:</h5></label>
-                                    <div class="col-sm-9">
-                                        <p>@Model.PhoneCustomer</p>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label class="col-sm-3 col-form-label"><h5>Ngày đặt đơn:</h5></label>
-                                    <div class="col-sm-9">
-                                        <p>@Model.OrderDate</p>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label class="col-sm-3 col-form-label"><h5>Ngày sử dụng:</h5></label>
-                                    <div class="col-sm-9">
-                                        <p>@Model.OrderUsageDate</p> <!-- Fixed closing </p> tag -->
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label class="col-sm-3 col-form-label"><h5>Tổng Tiền:</h5></label>
-                                    <div class="col-sm-9">
-                                        <p>@Model.TotalAmount</p> <!-- Fixed closing </p> tag -->
-                                    </div>
-                                </div>
-                                
-                            </div>
-
-
-                            <hr style="border: 1px solid #ccc;" />
-
-                            <div class="d-flex justify-content-between align-items-center">
-                                <label class="col-form-label mb-0"><h5>Đồ đã đặt:</h5></label>
-                                <div class="d-flex">
-                                    @if (Model.OrderTicketDetails != null && Model.OrderTicketDetails.Count > 0)
-                                    {
-                                        <a href="~/OrderManagement/UpdateTicket" class="btn btn-secondary me-2">Cập nhập vé</a>
-                                    }
-                                    else
-                                    {
-                                    <a href="~/OrderManagement/OrderFood" class="btn btn-secondary me-2">Cập nhập Combo</a>
-
-                                    }
-                                    <a href="~/OrderManagement/DeleteCart" class="btn btn-primary me-2">Cập nhập đồ ăn</a>
-                                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#depositModal">Cập nhập đồ thuê</a>
+                    <div class="d-flex justify-content-start">
+                        <!-- Centers horizontally -->
+                        <div class="container">
+                            <div class="row mb-3">
+                                <label class="col-sm-3 col-form-label"><h5>Mã đơn:</h5></label>
+                                <div class="col-sm-9">
+                                    <p>#@Model.OrderId</p>
                                 </div>
                             </div>
-                           
+                            <div class="row mb-3">
+                                <label class="col-sm-3 col-form-label"><h5>Tên khách hàng:</h5></label>
+                                <div class="col-sm-9">
+                                    <p>@Model.CustomerName</p>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-3 col-form-label"><h5>Số điện thoại:</h5></label>
+                                <div class="col-sm-9">
+                                    <p>@Model.PhoneCustomer</p>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-3 col-form-label"><h5>Ngày đặt đơn:</h5></label>
+                                <div class="col-sm-9">
+                                    <p>@Model.OrderDate</p>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-3 col-form-label"><h5>Ngày sử dụng:</h5></label>
+                                <div class="col-sm-9">
+                                    <p>@Model.OrderUsageDate</p>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-3 col-form-label"><h5>Tổng Tiền:</h5></label>
+                                <div class="col-sm-9">
+                                    <p>@Model.TotalAmount</p>
+                                </div>
+                            </div>
                         </div>
-                        <hr />
-                        <form asp-controller="OrderManagement" asp-action="TicketCart" method="get">
-                            <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
-                                   id="sampleTable">
-                                <thead>
-                                    <tr>
-                                        <th width="150">Tên</th>
-                                        <th>Giá</th>
-                                        <th>Số lượng</th>
-                                        <th>Tổng tiền</th>
-                                        <th>Yêu cầu thêm</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
 
-                                    @if (Model.OrderTicketDetails != null)
-                                    {
-                                        foreach (OrderTicketDetailDTO item in Model.OrderTicketDetails)
-                                        {
-                                            <tr style="background-color:#B29F80">
-                                                <td>@item.Name</td>
-
-                                                <td>@item.Price</td>
-                                                <td>@item.Quantity</td>
-                                                <td>@(item.Price * item.Quantity)</td>
-                                                <td>-</td>
-
-                                            </tr>
-
-
-                                        }
-                                    }
-                                    @if(Model.OrderComboDetails != null)
-                                    {
-                                      
-                                        @foreach (OrderComboDetailDTO item in Model.OrderComboDetails)
-                                        {
-                                            <tr style="background-color:#B29F80">
-                                                <td>@item.Name</td>
-                                                <td>@item.Price</td>
-                                                <td>@item.Quantity</td>
-                                                <td>@(item.Price * item.Quantity)</td>
-                                                <td>@item.Description</td>
-
-
-                                            </tr>
-                                        }
-                                    }
-                                    @if (Model.OrderCampingGearDetails != null)
-                                    {
-                                       
-                                        @foreach (OrderCampingGearDetailDTO item in Model.OrderCampingGearDetails)
-                                        {
-                                            <tr style="background-color:#C3B59B">
-                                                <td>@item.Name</td>
-                                                <td>@item.Price</td>
-                                                <td>@item.Quantity</td>
-                                                <td>@(item.Price * item.Quantity)</td>
-                                                <td>-</td>
-
-
-                                            </tr>
-                                        }
-                                    }
-                                    @if (Model.OrderFoodDetails != null)
-                                    {
-                                       
-                                        @foreach (OrderFoodDetailDTO item in Model.OrderFoodDetails)
-                                        {
-                                            <tr style="background-color:#D1C7A7">
-                                                <td>@item.Name</td>
-                                                <td>@item.Price</td>
-                                                <td>@item.Quantity</td>
-                                                <td>@(item.Price * item.Quantity)</td>
-                                                <td>@item.Description</td>
-
-
-                                            </tr>
-                                        }
-                                    }
-                                    @if (Model.OrderFoodComboDetails != null)
-                                    {
-                                       
-                                        @foreach(OrderFoodComboDetailDTO item in Model.OrderFoodComboDetails)
-                                        {
-                                            <tr style="background-color:#E8E1C4">
-                                                <td>@item.Name</td>
-                                                <td>@item.Price</td>
-                                                <td>@item.Quantity</td>
-                                                <td>@(item.Price * item.Quantity)</td>
-
-
-                                            </tr>
-                                        }
-                                    }
-                                   
-                                </tbody>
-                            </table>
-                            
-                        </form>
+                        <!-- Display status based on ActivityId -->
+                        <div class="badge-container">
+                            @if (Model.ActivityId == 1)
+                            {
+                                <div class="badge bg-warning">Đang đợi sử dụng</div>
+                            }
+                            else if (Model.ActivityId == 2)
+                            {
+                                <div class="badge bg-primary">Đang sử dụng</div>
+                            }
+                            else if (Model.ActivityId == 3)
+                            {
+                                <div class="badge bg-success">Đã thanh toán</div>
+                            }
+                            else
+                            {
+                                <div class="badge bg-danger">Hủy</div>
+                            }
+                        </div>
                     </div>
+
+                    <hr style="border: 1px solid #ccc;" />
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <label class="col-form-label mb-0"><h5>Đồ đã đặt:</h5></label>
+                        @if (Model.ActivityId == 1 || Model.ActivityId == 2)
+                        {
+                            <div class="d-flex">
+                                @if (Model.OrderTicketDetails != null && Model.OrderTicketDetails.Count > 0)
+                                {
+                                    <a href="~/OrderManagement/UpdateTicket" class="btn btn-secondary me-2">Cập nhập vé</a>
+                                }
+                                else
+                                {
+                                    <a href="~/OrderManagement/UpdateCombo" class="btn btn-secondary me-2">Cập nhập Combo</a>
+                                }
+                                <a href="~/OrderManagement/UpdateGear" class="btn btn-primary me-2">Cập nhập đồ thuê</a>
+                                <a href="~/OrderManagement/UpdateFood" class="btn btn-primary me-2">Cập nhập đồ ăn</a>
+                            </div>
+                        }
+                    </div>
+
+                    <hr />
+
+                    <form asp-controller="OrderManagement" asp-action="TicketCart" method="get">
+                        <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0" id="sampleTable">
+                            <thead>
+                                <tr>
+                                    <th width="150">Tên</th>
+                                    <th>Giá</th>
+                                    <th>Số lượng</th>
+                                    <th>Tổng tiền</th>
+                                    <th>Yêu cầu thêm</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.OrderTicketDetails != null)
+                                {
+                                    foreach (var item in Model.OrderTicketDetails)
+                                    {
+                                        <tr style="background-color:#B29F80">
+                                            <td>@item.Name</td>
+                                            <td>@item.Price</td>
+                                            <td>@item.Quantity</td>
+                                            <td>@(item.Price * item.Quantity)</td>
+                                            <td>-</td>
+                                        </tr>
+                                    }
+                                }
+                                @if (Model.OrderComboDetails != null)
+                                {
+                                    foreach (var item in Model.OrderComboDetails)
+                                    {
+                                        <tr style="background-color:#B29F80">
+                                            <td>@item.Name</td>
+                                            <td>@item.Price</td>
+                                            <td>@item.Quantity</td>
+                                            <td>@(item.Price * item.Quantity)</td>
+                                            <td>@item.Description</td>
+                                        </tr>
+                                    }
+                                }
+                                @if (Model.OrderCampingGearDetails != null)
+                                {
+                                    foreach (var item in Model.OrderCampingGearDetails)
+                                    {
+                                        <tr style="background-color:#C3B59B">
+                                            <td>@item.Name</td>
+                                            <td>@item.Price</td>
+                                            <td>@item.Quantity</td>
+                                            <td>@(item.Price * item.Quantity)</td>
+                                            <td>-</td>
+                                        </tr>
+                                    }
+                                }
+                                @if (Model.OrderFoodDetails != null)
+                                {
+                                    foreach (var item in Model.OrderFoodDetails)
+                                    {
+                                        <tr style="background-color:#D1C7A7">
+                                            <td>@item.Name</td>
+                                            <td>@item.Price</td>
+                                            <td>@item.Quantity</td>
+                                            <td>@(item.Price * item.Quantity)</td>
+                                            <td>@item.Description</td>
+                                        </tr>
+                                    }
+                                }
+                                @if (Model.OrderFoodComboDetails != null)
+                                {
+                                    foreach (var item in Model.OrderFoodComboDetails)
+                                    {
+                                        <tr style="background-color:#E8E1C4">
+                                            <td>@item.Name</td>
+                                            <td>@item.Price</td>
+                                            <td>@item.Quantity</td>
+                                            <td>@(item.Price * item.Quantity)</td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </form>
                 </div>
             </div>
+
+            
         </div>
        
     </main>

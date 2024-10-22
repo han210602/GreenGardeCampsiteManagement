@@ -1,4 +1,5 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
 @using GreenGardenClient.Models
 <!DOCTYPE html>
@@ -22,9 +23,42 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0-alpha1/css/bootstrap.min.css">
 
 </head>
-
+@{
+    if (ViewBag.Notification != null)
+    {
+        <div id="notification" class="alert alert-warning" role="alert">
+            @ViewBag.Notification
+        </div>
+    }
+}
+<style>
+    #notification {
+        position: fixed;
+        top: 20px; /* Khoảng cách từ đầu trang */
+        right: 20px; /* Khoảng cách từ bên phải */
+        z-index: 1050; /* Đảm bảo thông báo nằm trên các phần tử khác */
+        opacity: 1; /* Bắt đầu với độ mờ là 1 */
+        transition: opacity 1s ease-out, transform 1s ease-out; /* Hiệu ứng chuyển đổi cho độ mờ và biến đổi */
+        transform: translateY(-10px); /* Đưa thông báo lên một chút */
+        width: auto; /* Hoặc thay đổi thành một giá trị cụ thể, ví dụ: 300px */
+        max-width: 300px; /* Giới hạn chiều rộng tối đa */
+        padding: 15px; /* Khoảng cách bên trong cho thông báo */
+    }
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        if ($("#notification").length) {
+            setTimeout(function () {
+                $("#notification").css("opacity", "0"); // Đặt độ mờ thành 0
+                $("#notification").css("transform", "translateY(10px)"); // Đưa thông báo xuống một chút khi ẩn
+            }, 3000); // Sau 3 giây
+        }
+    });
+</script>
 <body onload="time()" class="app sidebar-mini rtl">
 
     <!-- Sidebar menu-->
@@ -58,6 +92,21 @@
         </ul>
     </aside>
     <main class="app-content">
+        <div style="position: absolute; top: 0; right: 0;" class="d-flex align-items-center">
+            <!-- Back Icon with Link (Larger Icon) -->
+            <a href="~/Home" class="nav-link me-2" style="font-size: 1.5rem;">
+                <!-- Increase font size for the icon -->
+                <i class="bi bi-arrow-left-circle"></i> <!-- Bootstrap Icon -->
+            </a>
+
+            <!-- Greeting Link (Larger Text) -->
+            <a href="~/Common/UpdateProfile" class="nav-link" style="font-size: 1.5rem;">
+                <!-- Increase font size for the text -->
+                Xin chào: @HttpContextAccessor.HttpContext.Session.GetString("Email")
+            </a>
+        </div>
+
+
         <div class="app-title">
             <ul class="app-breadcrumb breadcrumb side">
                 <li class="breadcrumb-item active"><a href="~/OrderManagement"><b>Danh sách các đơn đặt</b></a></li>
@@ -84,15 +133,15 @@
                                id="sampleTable">
                             <thead>
                                 <tr>
-                                    <th>Mã đơn</th>
-                                    <th width="150">Khách hàng</th>
-                                    <th >Số điện thoại</th>
-                                    <th width ="150">Ngày sử dụng</th>
-                                    <th>Tiền cọc</th>
-                                    <th>Thu</th>
-                                    <th >Trạng thái</th>
-                                    <th>Hoạt động</th>
-                                    <th width ="180">Tính năng</th>
+                                    <th width="5%">Mã đơn</th>
+                                    <th width="10%">Khách hàng</th>
+                                    <th width="10%">Số điện thoại</th>
+                                    <th width="10%">Ngày sử dụng</th>
+                                    <th width="5%">Tiền cọc</th>
+                                    <th width="5%">Thu</th>
+                                    <th width ="5%">Trạng thái</th>
+                                    <th width="5%">Hoạt động</th>
+                                    <th width="15%">Tính năng</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -119,16 +168,16 @@
                                                 width: 100%;
                                                 height: 100%;
                                                 overflow: auto;
-                                                background-color: rgba(0, 0, 0, 0.5); /* Darker background */
+                                                background-color: rgba(0, 0, 0, 0.5); /* Màu nền tối */
                                                 padding-top: 60px;
                                             }
 
                                             /* Modal content styling */
                                             .modal-content {
-                                                background-color: #fff;
+                                                background-color: #fefefe; /* Màu trắng */
                                                 margin: 5% auto;
                                                 padding: 20px;
-                                                border: 1px solid #ccc;
+                                                border: 1px solid #f5f5dc; /* Màu be nhạt nhất (beige) */
                                                 border-radius: 10px;
                                                 width: 30%;
                                                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -144,13 +193,13 @@
                                             }
 
                                                 .close:hover {
-                                                    color: #ff0000; /* Red when hovered */
+                                                    color: #ff0000; /* Đổi màu thành đỏ khi hover */
                                                 }
 
                                             /* Button styling */
                                             button {
-                                                background-color: #28a745; /* Green button to match your page */
-                                                color: white;
+                                                background-color: #f5f5dc; /* Màu be nhạt */
+                                                color: #333;
                                                 padding: 10px 20px;
                                                 margin-top: 15px;
                                                 border: none;
@@ -159,11 +208,8 @@
                                             }
 
                                                 button:hover {
-                                                    background-color: #218838; /* Darker green on hover */
+                                                    background-color: #e0e0c0; /* Màu be tối hơn khi hover */
                                                 }
-
-                                            /* Center text in table cells */
-                                           
 
                                             /* Input field styling */
                                             input[type="number"] {
@@ -174,10 +220,8 @@
                                                 border: 1px solid #ccc;
                                                 border-radius: 4px;
                                                 box-sizing: border-box;
+                                                background-color: #fefefe; /* Nền trắng */
                                             }
-
-                                            /* Heading styling */
-                                          
 
                                             /* Form alignment */
                                             .modal-content form {
@@ -185,6 +229,7 @@
                                                 flex-direction: column;
                                                 gap: 10px;
                                             }
+
                                         </style>
 
                                         <script>
@@ -220,44 +265,53 @@
                                             }
                                         </script>
                                         <div id="modal-@item.OrderId" class="modal">
-                                            <div class="modal-content">
-                                                <span class="close" onclick="closeModal(@item.OrderId)">&times;</span>
-                                                <h3>Nhập số tiền đặt cọc cho đơn hàng #@item.OrderId</h3>
+                                            <div class="modal-content p-4">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <h3 class="modal-title">Nhập số tiền đặt cọc cho đơn hàng #@item.OrderId</h3>
+                                                    <span class="close" onclick="closeModal(@item.OrderId)">&times;</span>
+                                                </div>
                                                 <form asp-controller="OrderManagement" asp-action="EnterDeposit" method="post">
-                                                    <label for="depositAmount">Nhập số tiền đặt cọc:</label>
-                                                    <input type="number" name="money" id="money" min="0" required />
+                                                    <label for="depositAmount" class="form-label">Nhập số tiền đặt cọc:</label>
+                                                    <input type="number" name="money" id="money" class="form-control" min="0" required />
 
                                                     <!-- Truyền OrderId thông qua input ẩn -->
                                                     <input type="hidden" name="idorder" value="@item.OrderId" />
 
-                                                    <button type="submit">Xác nhận</button>
+                                                    <div class="d-flex justify-content-end mt-3">
+                                                        <button type="submit" class="btn btn-primary">Xác nhận</button>
+                                                    </div>
                                                 </form>
                                             </div>
                                         </div>
+
                                         <div id="cancelModal-@item.OrderId" class="modal">
-                                            <div class="modal-content">
-                                                <span class="close" onclick="closeCancelModal(@item.OrderId)">&times;</span>
-                                                <h3>Bạn có chắc chắn muốn hủy tiền cọc cho đơn hàng #@item.OrderId?</h3>
+                                            <div class="modal-content p-4">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <h3 class="modal-title">Hủy tiền cọc cho đơn hàng #@item.OrderId?</h3>
+                                                    <span class="close" onclick="closeCancelModal(@item.OrderId)">&times;</span>
+                                                </div>
                                                 <form id="cancelDepositForm-@item.OrderId" asp-controller="OrderManagement" asp-action="CancelDeposit" method="post">
                                                     <!-- Truyền OrderId thông qua input ẩn -->
                                                     <input type="hidden" name="idorder" value="@item.OrderId" />
-                                                    <button type="button" onclick="confirmCancel(@item.OrderId)">Xác nhận</button>
-                                                    <button type="button" onclick="closeCancelModal(@item.OrderId)">Hủy</button>
+                                                    <div class="d-flex justify-content-end gap-2 mt-3">
+                                                        <button type="button" onclick="confirmCancel(@item.OrderId)" class="btn btn-danger">Xác nhận</button>
+                                                        <button type="button" onclick="closeCancelModal(@item.OrderId)" class="btn btn-secondary">Hủy</button>
+                                                    </div>
                                                 </form>
                                             </div>
                                         </div>
+
                                         <td>
                                             @if (item.StatusOrder == false)
                                             {
-                                                <button onclick="showDepositForm(@item.OrderId)">Đặt cọc</button>
-
+                                                <button class="btn btn-success" onclick="showDepositForm(@item.OrderId)">Đặt cọc</button>
                                             }
                                             else
                                             {
-                                                <button style="background-color: red;" onclick="showCancelDepositConfirm(@item.OrderId)">Hủy cọc</button>
+                                                <button class="btn btn-danger" onclick="showCancelDepositConfirm(@item.OrderId)">Hủy cọc</button>
                                             }
-
                                         </td>
+
                                         <td>
                                             @if (item.ActivityId == 1)
                                             {
@@ -303,33 +357,34 @@
                                                     margin: 20px auto; /* Center on the page */
                                                 }
                                             </style>
-                                             
-                                            <div class="d-flex align-items-center">
-                                                <form id="fr-@item.OrderId" asp-controller="OrderManagement" asp-action="UpdateActivityOrder" method="post">
-                                                <input type="hidden" name="idorder" value="@item.OrderId" />
-                                                    <select class="form-select form-select-custom" name="idactivity" onchange="change(@item.OrderId)" class="form-select">
-                                                    @foreach (ActivityVM activity in ViewBag.activities)
-                                                    {
-                                                        if (item.ActivityId == activity.ActivityId)
+
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <form id="fr-@item.OrderId" asp-controller="OrderManagement" asp-action="UpdateActivityOrder" method="post" class="d-flex">
+                                                    <input type="hidden" name="idorder" value="@item.OrderId" />
+                                                    <select class="form-select form-select-custom me-2" name="idactivity" onchange="change(@item.OrderId)">
+                                                        @foreach (ActivityVM activity in ViewBag.activities)
                                                         {
-                                                            <option value="@activity.ActivityId" selected>
-                                                                @activity.ActivityName
-                                                            </option>
+                                                            if (item.ActivityId == activity.ActivityId)
+                                                            {
+                                                                <option value="@activity.ActivityId" selected>
+                                                                    @activity.ActivityName
+                                                                </option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@activity.ActivityId">
+                                                                    @activity.ActivityName
+                                                                </option>
+                                                            }
                                                         }
-                                                        else
-                                                        {
-                                                            <option value="@activity.ActivityId">
-                                                                @activity.ActivityName
-                                                            </option>
-                                                        }
-                                                    }
-                                                </select>
-                                               </form>
+                                                    </select>
+                                                </form>
                                                 <!-- Trash can button -->
-                                                <button type="button" class="btn btn-danger ms-2" onclick="deleteItem(@item.OrderId)">
+                                                <button type="button" class="btn btn-danger" onclick="deleteItem(@item.OrderId)">
                                                     <i class="bi bi-trash"></i>
                                                 </button>
                                             </div>
+
                                         </td>
 
                                     </tr>

@@ -1,4 +1,6 @@
-﻿<!doctype html>
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+<!doctype html>
 <html lang="en">
 
 <head>
@@ -70,8 +72,38 @@
 
                                 <li><a href="blog.html" class="nav-link">Liên hệ</a></li>
                                 <li>
-                                    <a href="/Common/Login" class="nav-link">Đăng nhập</a>
-                                    <a href="/Common/Register" class="nav-link">Đăng Ký</a>
+                                    @if (HttpContextAccessor.HttpContext.Session.GetString("Email") == null)
+                                    {
+                                        <a href="/Common/Login" class="nav-link">Đăng nhập</a>
+                                        <a href="/Common/Register" class="nav-link">Đăng Ký</a>
+                                    }
+                                    else
+                                    {
+                                    <li class="has-dropdown">
+                                        <a href="~/Common/UpdateProfile" class="nav-link">Xin chào:  @HttpContextAccessor.HttpContext.Session.GetString("Email")</a>
+                                        <ul class="dropdown">
+                                        @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId")==1)
+                                            {
+                                            <li><a href="~/OrderManagement" class="nav-link">Quản lí</a></li>
+                                                <li><a href="~/Home/Logout" class="nav-link">Đăng xuất</a></li>
+                                                }
+                                            else if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 2)
+                                            {
+                                            <li><a href="~/Service/OrderTicket" class="nav-link">Quản lí</a></li>
+                                                <li><a href="~/Home/Logout" class="nav-link">Đăng xuất</a></li>
+                                                }
+                                            else
+                                            {
+                                           
+                                                <li><a href="~/Service/OrderTicket" class="nav-link">Lịch sử đặt hàng</a></li>
+                                                <li><a href="~/Service/OrderFoodAndDrink" class="nav-link">Giỏ hàng</a></li>
+                                                <li><a href="~/Home/Logout" class="nav-link">Đăng xuất</a></li>
+                                            
+                                            }
+                                        </ul>
+                                        </li>
+                                    }
+
                                 </li>
 
                             </ul>

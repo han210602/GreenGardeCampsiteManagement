@@ -117,7 +117,7 @@
                                             
                                     @foreach (TicketVM item in ViewBag.tickets)
                                     {
-                                        <tr>
+                                        <tr style="background-color:#B29F80">
                                             <td>@item.TicketName</td>
                                             
                                             <td>@item.Price</td>
@@ -129,17 +129,21 @@
 
 
                                     }
-                                    <tr>
-                                        <td>-</td>
-                                        <td>-</td>
-                                        <td>-</td>
-                                        <td>-</td>
-                                        <td>-</td>
+                                    @foreach (ComboVM item in ViewBag.combos)
+                                    {
+                                        <tr style="background-color:#B29F80">
+                                            <td>@item.ComboName</td>
+                                            <td>@item.Price</td>
+                                            <td>@item.Quantity</td>
+                                            <td>@(item.Price * item.Quantity)</td>
+                                            <td>@item.Description</td>
 
-                                    </tr>
+
+                                        </tr>
+                                    }
                                     @foreach (GearVM item in ViewBag.gears)
                                     {
-                                        <tr>
+                                        <tr style="background-color:#C3B59B">
                                             <td>@item.GearName</td>
                                             <td>@item.RentalPrice</td>
                                             <td>@item.Quantity</td>
@@ -150,17 +154,10 @@
                                         </tr>
                                     }
 
-                                    <tr>
-                                        <td>-</td>
-                                        <td>-</td>
-                                        <td>-</td>
-                                        <td>-</td>
-                                        <td>-</td>
-
-                                    </tr>
+                                   
                                     @foreach (FoodAndDrinkVM item in ViewBag.foods)
                                     {
-                                        <tr>
+                                        <tr style="background-color:#D1C7A7">
                                             <td>@item.ItemName</td>
                                             <td>@item.Price</td>
                                             <td>@item.Quantity</td>
@@ -170,17 +167,10 @@
 
                                         </tr>
                                     }
-                                    <tr>
-                                        <td>-</td>
-                                        <td>-</td>
-                                        <td>-</td>
-                                        <td>-</td>
-                                        <td>-</td>
-
-                                    </tr>
+                                 
                                     @foreach (ComboFoodVM item in ViewBag.combofoods)
                                     {
-                                        <tr>
+                                        <tr style="background-color:#E8E1C4">
                                             <td>@item.ComboName</td>
                                             <td>@item.Price</td>
                                             <td>@item.Quantity</td>
@@ -189,26 +179,8 @@
 
                                         </tr>
                                     }
-                                    <tr>
-                                        <td>-</td>
-                                        <td>-</td>
-                                        <td>-</td>
-                                        <td>-</td>
-                                        <td>-</td>
-
-                                    </tr>
-                                    @foreach (ComboVM item in ViewBag.combos)
-                                    {
-                                        <tr>
-                                            <td>@item.ComboName</td>
-                                            <td>@item.Price</td>
-                                            <td>@item.Quantity</td>
-                                            <td>@(item.Price * item.Quantity)</td>
-                                            <td>@item.Description</td>
-
-
-                                        </tr>
-                                    }
+                                 
+                                   
                                 </tbody>
                             </table>
                             <div class="d-flex justify-content-between align-items-center">

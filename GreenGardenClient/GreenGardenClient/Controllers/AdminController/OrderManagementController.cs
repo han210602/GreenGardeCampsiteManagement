@@ -29,13 +29,17 @@ namespace GreenGardenClient.Controllers.AdminController
 
 
 
-            // Thêm JWT token vào header của yêu cầu
+            
             List<OrderVM> orderdata = GetDataFromApi<List<OrderVM>>("https://localhost:7298/api/OrderManagement/GetAllOrders");
             List<ActivityVM> activities = GetDataFromApi<List<ActivityVM>>("https://localhost:7298/api/Activity/GetAllActivities");
 
             ViewBag.dataorder = orderdata;
 
             ViewBag.activities = activities;
+            if (TempData["Notification"] != null)
+            {
+                ViewBag.Notification = TempData["Notification"];
+            }
             return View();
 
 
@@ -50,12 +54,13 @@ namespace GreenGardenClient.Controllers.AdminController
 
                 string apiUrl = $"https://localhost:7298/api/OrderManagement/UpdateActivityOrder/{idorder}/{idactivity}";
 
-
+                TempData["Notification"] = "Cập nhập trạng thái đơn thành công!";
                 HttpResponseMessage response = _httpClient.PutAsync(apiUrl, null).Result;
 
             }
             catch (Exception ex)
             {
+                TempData["Notification"] = "Cập nhập trạng thái đơn thất bại!";
 
             }
             return RedirectToAction("Index");
@@ -70,6 +75,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
                 // Construct the API URL with the parameters
                 string apiUrl = $"https://localhost:7298/api/OrderManagement/EnterDeposit/{idorder}/{money}";
+                TempData["Notification"] = "Đặt cọc thành công!";
 
                 // Send the PUT request
                 HttpResponseMessage response = _httpClient.PutAsync(apiUrl, null).Result;
@@ -77,6 +83,7 @@ namespace GreenGardenClient.Controllers.AdminController
             }
             catch (Exception ex)
             {
+                TempData["Notification"] = "Xảy ra lỗi trong quá trình cọc!";
 
             }
             return RedirectToAction("Index");
@@ -91,6 +98,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
                 // Construct the API URL with the parameters
                 string apiUrl = $"https://localhost:7298/api/OrderManagement/CancelDeposit/{idorder}";
+                TempData["Notification"] = "Hủy đặt cọc thành công!";
 
                 // Send the PUT request
                 HttpResponseMessage response = _httpClient.PutAsync(apiUrl, null).Result;
@@ -98,6 +106,7 @@ namespace GreenGardenClient.Controllers.AdminController
             }
             catch (Exception ex)
             {
+                TempData["Notification"] = "Xảy ra lỗi trong quá trình hủy cọc!";
 
             }
             return RedirectToAction("Index");
@@ -106,7 +115,16 @@ namespace GreenGardenClient.Controllers.AdminController
         public IActionResult CreateOrder()
         {
             var orders = HttpContext.Session.GetObjectFromJson<OrderVM>("OrderCart") ?? new OrderVM();
+            if (orders.OrderUsageDate != null)
+            {
+                string date = orders.OrderUsageDate.Value.ToString("yyyy-MM-ddTHH:mm");
+                ViewBag.date = date;
 
+            }
+            if (TempData["Notification"] != null)
+            {
+                ViewBag.Notification = TempData["Notification"];
+            }
             return View(orders);
 
 
@@ -114,17 +132,16 @@ namespace GreenGardenClient.Controllers.AdminController
         [HttpPost]
         public IActionResult CreateOrder(string name, DateTime usagedate, string phone)
         {
-            var cart = HttpContext.Session.GetObjectFromJson<OrderVM>("OrderCart") ?? new OrderVM();
-            cart = new OrderVM()
+            var cart = HttpContext.Session.GetObjectFromJson<OrderVM>("OrderCart") ?? new OrderVM()
             {
                 CustomerName = name,
                 OrderUsageDate = usagedate,
                 PhoneCustomer = phone
-
             };
-            TempData["Notification"] = "Lưu thành công!";
+           
+            TempData["Notification"] = "Lưu thành công thông tin khách hàng!";
             HttpContext.Session.SetObjectAsJson("OrderCart", cart);
-            return View("CreateOrder");
+            return RedirectToAction("CreateOrder");
 
 
         }
@@ -192,8 +209,22 @@ namespace GreenGardenClient.Controllers.AdminController
         public IActionResult OrderGear()
         {
             var ticketscart = HttpContext.Session.GetObjectFromJson<List<GearVM>>("GearCart") ?? new List<GearVM>();
+            var orders = HttpContext.Session.GetObjectFromJson<OrderVM>("OrderCart") ?? new OrderVM();
+            string formattedDate = orders.OrderUsageDate.Value.ToString("yyyy-MM-dd");
 
             List<GearVM> tickets = GetDataFromApi<List<GearVM>>("https://localhost:7298/api/CampingGear/GetAllCampingGears");
+            List<OrderCampingGearByUsageDateDTO> ordergear = GetDataFromApi<List<OrderCampingGearByUsageDateDTO>>($"https://localhost:7298/api/OrderManagement/GetListOrderGearByUsageDate/{formattedDate}");
+            foreach (var item in tickets)
+            {
+                var ticket = ordergear.ToList().Where(s => s.GearId == item.GearId);
+                if (ticket != null)
+                {
+                    foreach(var item1 in ticket)
+                    {
+                        item.QuantityAvailable = item.QuantityAvailable - item1.Quantity.Value;
+                    }
+                }
+            }
 
             foreach (var item in ticketscart)
             {
@@ -204,13 +235,17 @@ namespace GreenGardenClient.Controllers.AdminController
                 }
             }
 
-
+            if (TempData["Notification"] != null)
+            {
+                ViewBag.Notification = TempData["Notification"];
+            }
             ViewBag.gears = tickets;
             return View("OrderGear");
         }
         public IActionResult GearCart(List<int> id, List<string> name, List<decimal> price, List<int> quantity)
         {
             var cart = HttpContext.Session.GetObjectFromJson<List<GearVM>>("GearCart") ?? new List<GearVM>();
+            var orders = HttpContext.Session.GetObjectFromJson<OrderVM>("OrderCart") ?? new OrderVM();
 
 
             for (int i = 0; i < id.Count; i++)
@@ -243,7 +278,10 @@ namespace GreenGardenClient.Controllers.AdminController
 
 
             }
-            HttpContext.Session.SetObjectAsJson("GearCart", cart);
+
+            HttpContext.Session.SetObjectAsJson("GearCart", cart); 
+            TempData["Notification"] = "Thêm vào giỏ hàng thành công. Hãy tiếp tục đặt đồ ăn nào";
+
             return RedirectToAction("OrderGear");
         }
         public IActionResult OrderFood()
@@ -262,7 +300,10 @@ namespace GreenGardenClient.Controllers.AdminController
                 }
             }
 
-
+            if (TempData["Notification"] != null)
+            {
+                ViewBag.Notification = TempData["Notification"];
+            }
             ViewBag.gears = foodAndDrinks;
             return View("OrderFood");
         }
@@ -301,6 +342,8 @@ namespace GreenGardenClient.Controllers.AdminController
 
 
             }
+            TempData["Notification"] = "Thêm vào giỏ hàng thành công! Nếu không còn thay đổi gì thì lên đơn thôi nào.";
+
             HttpContext.Session.SetObjectAsJson("FoodCart", cart);
             return RedirectToAction("OrderFood");
         }
@@ -318,7 +361,10 @@ namespace GreenGardenClient.Controllers.AdminController
                     ticket.Quantity = item.Quantity;
                 }
             }
-
+            if (TempData["Notification"] != null)
+            {
+                ViewBag.Notification = TempData["Notification"];
+            }
 
             ViewBag.gears = tickets;
             return View("OrderComboFood");
@@ -358,6 +404,8 @@ namespace GreenGardenClient.Controllers.AdminController
 
 
             }
+            TempData["Notification"] = "Thêm vào giỏ hàng thành công! Nếu không còn thay đổi gì thì lên đơn thôi nào.";
+
             HttpContext.Session.SetObjectAsJson("ComboFoodCart", cart);
             return RedirectToAction("OrderComboFood");
         }
@@ -376,7 +424,10 @@ namespace GreenGardenClient.Controllers.AdminController
                 }
             }
 
-
+            if (TempData["Notification"] != null)
+            {
+                ViewBag.Notification = TempData["Notification"];
+            }
             ViewBag.gears = tickets;
             return View("OrderCombo");
         }
@@ -415,6 +466,8 @@ namespace GreenGardenClient.Controllers.AdminController
 
 
             }
+            TempData["Notification"] = "Thêm vào giỏ hàng thành công.";
+
             HttpContext.Session.SetObjectAsJson("ComboCart", cart);
             return RedirectToAction("OrderCombo");
         }
@@ -517,7 +570,7 @@ namespace GreenGardenClient.Controllers.AdminController
 
                     // Serialize request object to JSON
                     var content = new StringContent(JsonConvert.SerializeObject(orderRequest), Encoding.UTF8, "application/json");
-
+                    Console.WriteLine(content);
                     // Make the API call
                     var response = await _httpClient.PostAsync(apiUrl, content);
 
@@ -525,17 +578,22 @@ namespace GreenGardenClient.Controllers.AdminController
                     if (response.IsSuccessStatusCode)
                     {
                         var result = await response.Content.ReadAsStringAsync();
+                        TempData["Notification"] = "Tạo đơn thành công.";
+
                         return RedirectToAction("Index");  // Return success message or redirect if needed
                     }
                     else
                     {
                         var errorMessage = await response.Content.ReadAsStringAsync();
-                        return StatusCode((int)response.StatusCode, $"Error: {errorMessage}");
+                        TempData["Notification"] = "Tạo đơn thất bại.";
+                        return RedirectToAction("Index");  // Return success message or redirect if needed
                     }
                 }
                 catch (Exception ex)
                 {
-                    return StatusCode(500, $"Internal server error: {ex.Message}");
+                    TempData["Notification"] = "Xảy ra lỗi ngoài luồng khi tạo đơn.";
+
+                    return RedirectToAction("Index");  // Return success message or redirect if needed
                 }
             }
             else
@@ -588,17 +646,22 @@ namespace GreenGardenClient.Controllers.AdminController
                     if (response.IsSuccessStatusCode)
                     {
                         var result = await response.Content.ReadAsStringAsync();
-                        return RedirectToAction("Index");
+                        TempData["Notification"] = "Tạo đơn thành công.";
+
+                        return RedirectToAction("Index");  // Return success message or redirect if needed
                     }
                     else
                     {
                         var errorMessage = await response.Content.ReadAsStringAsync();
-                        return StatusCode((int)response.StatusCode, $"Error: {errorMessage}");
+                        TempData["Notification"] = "Tạo đơn thất bại.";
+                        return RedirectToAction("Index");  // Return success message or redirect if needed
                     }
                 }
                 catch (Exception ex)
                 {
-                    return StatusCode(500, $"Internal server error: {ex.Message}");
+                    TempData["Notification"] = "Xảy ra lỗi ngoài luồng khi tạo đơn.";
+
+                    return RedirectToAction("Index");  // Return success message or redirect if needed
                 }
             }
 
@@ -628,12 +691,18 @@ namespace GreenGardenClient.Controllers.AdminController
         public IActionResult OrderDetail(int id)
         {
             OrderDetailVM orderdata = GetDataFromApi<OrderDetailVM>($"https://localhost:7298/api/OrderManagement/GetOrderDetail/{id}");
-            HttpContext.Session.SetObjectAsJson("order", orderdata.OrderId);
+            UpdateOrderDTO updateorder = new UpdateOrderDTO()
+            {
+                OrderId = orderdata.OrderId,
+                OrderUsageDate = orderdata.OrderUsageDate,
+                TotalAmount= orderdata.TotalAmount, 
+            };
+            HttpContext.Session.SetObjectAsJson("order", updateorder);
             HttpContext.Session.SetObjectAsJson("TicketUpdateCart", orderdata.OrderTicketDetails);
-            HttpContext.Session.SetObjectAsJson("ComboCart", orderdata.OrderComboDetails);
-            HttpContext.Session.SetObjectAsJson("ComboFoodCart", orderdata.OrderFoodComboDetails);
-            HttpContext.Session.SetObjectAsJson("FoodCart", orderdata.OrderFoodDetails);
-            HttpContext.Session.SetObjectAsJson("GearCart", orderdata.OrderCampingGearDetails);
+            HttpContext.Session.SetObjectAsJson("ComboUpdateCart", orderdata.OrderComboDetails);
+            HttpContext.Session.SetObjectAsJson("ComboFoodUpdateCart", orderdata.OrderFoodComboDetails);
+            HttpContext.Session.SetObjectAsJson("FoodUpdateCart", orderdata.OrderFoodDetails);
+            HttpContext.Session.SetObjectAsJson("GearUpdateCart", orderdata.OrderCampingGearDetails);
 
 
 
@@ -666,40 +735,51 @@ namespace GreenGardenClient.Controllers.AdminController
 
         }
         [HttpPost]
-        public async Task<IActionResult> UpdateTicket(List<int> TicketIds,  List<decimal> Prices, List<int> Quantities)
+        public async Task<IActionResult> UpdateTicket(List<int> TicketIds, List<decimal> Prices, List<int> Quantities)
         {
-            var order = HttpContext.Session.GetObjectFromJson<OrderVM>("OrderCart") ?? new OrderVM();
+            var order = HttpContext.Session.GetObjectFromJson<UpdateOrderDTO>("order") ?? new UpdateOrderDTO();
             var ticketscart = HttpContext.Session.GetObjectFromJson<List<OrderTicketDetailDTO>>("TicketUpdateCart") ?? new List<OrderTicketDetailDTO>();
 
             decimal total = 0;
-            List<UpdateTicketDTO> tickets = new List<UpdateTicketDTO>(); 
+            List<OrderTicketAddlDTO> tickets = new List<OrderTicketAddlDTO>();
             for (int i = 0; i < TicketIds.Count; i++)
             {
 
+
                 if (Quantities[i] > 0)
                 {
-                tickets.Add(new UpdateTicketDTO { TicketId = TicketIds[i],OrderId=order.OrderId ,Quantity = Quantities[i] });
+
+                    tickets.Add(new OrderTicketAddlDTO { TicketId = TicketIds[i], OrderId = order.OrderId, Quantity = Quantities[i] });
                     total += (decimal)Quantities[i] * Prices[i];
                 }
-                
+
 
 
             }
             decimal totalticket = 0;
             foreach (var item in ticketscart)
             {
-            totalticket+= (decimal)item.Quantity.Value*item.Price;
+                totalticket += (decimal)item.Quantity.Value * item.Price;
             }
 
-            UpdateOrderDTO orderupdate=new UpdateOrderDTO()
+            if (tickets.Count == 0)
+            {
+                tickets.Add(new OrderTicketAddlDTO
+                {
+                    TicketId = 0,
+                    OrderId = order.OrderId,
+                    Quantity = 0
+                });
+            }
+            UpdateOrderDTO orderupdate = new UpdateOrderDTO()
             {
                 OrderId = order.OrderId,
-                OrderUsageDate=order.OrderUsageDate,
-                TotalAmount=order.TotalAmount-totalticket+total,
+                OrderUsageDate = order.OrderUsageDate,
+                TotalAmount = order.TotalAmount - totalticket + total,
             };
             var apiUrl = "https://localhost:7298/api/OrderManagement/UpdateTicket";
             var apiUrl1 = "https://localhost:7298/api/OrderManagement/UpdateOrder";
-
+            Console.WriteLine(tickets.Count);
             // Serialize request objects to JSON
             var content = new StringContent(JsonConvert.SerializeObject(tickets), Encoding.UTF8, "application/json");
             var content1 = new StringContent(JsonConvert.SerializeObject(orderupdate), Encoding.UTF8, "application/json");
@@ -707,11 +787,11 @@ namespace GreenGardenClient.Controllers.AdminController
             try
             {
                 // Call to UpdateTicket API
-                var response = await _httpClient.PutAsync(apiUrl, content);
+                var response = await _httpClient.PostAsync(apiUrl, content);
                 if (response.IsSuccessStatusCode)
                 {
                     // Proceed to the next API call if the first one is successful
-                    var response1 = await _httpClient.PutAsync(apiUrl1, content1);
+                    var response1 = await _httpClient.PostAsync(apiUrl1, content1);
 
                     if (response1.IsSuccessStatusCode)
                     {
@@ -743,6 +823,452 @@ namespace GreenGardenClient.Controllers.AdminController
 
 
 
+        }
+        public IActionResult UpdateGear()
+        {
+            var ticketscart = HttpContext.Session.GetObjectFromJson<List<OrderCampingGearDetailDTO>>("GearUpdateCart") ?? new List<OrderCampingGearDetailDTO>();
+            var order = HttpContext.Session.GetObjectFromJson<UpdateOrderDTO>("order") ?? new UpdateOrderDTO();
+            string formattedDate = order.OrderUsageDate.Value.ToString("yyyy-MM-dd");
+
+            List<GearVM> tickets = GetDataFromApi<List<GearVM>>("https://localhost:7298/api/CampingGear/GetAllCampingGears");
+            List<OrderCampingGearByUsageDateDTO> ordergear = GetDataFromApi<List<OrderCampingGearByUsageDateDTO>>($"https://localhost:7298/api/OrderManagement/GetListOrderGearByUsageDate/{formattedDate}");
+            foreach (var item in tickets)
+            {
+                var ticket = ordergear.ToList().Where(s => s.GearId == item.GearId);
+                if (ticket != null)
+                {
+                    foreach (var item1 in ticket)
+                    {
+                        item.QuantityAvailable = item.QuantityAvailable - item1.Quantity.Value;
+                    }
+                }
+            }
+
+            foreach (var item in ticketscart)
+            {
+                var ticket = tickets.ToList().FirstOrDefault(s => s.GearId == item.GearId);
+                if (ticket != null)
+                {
+                    ticket.Quantity = item.Quantity.Value;
+                }
+            }
+
+
+            ViewBag.gears = tickets;
+            return View("UpdateGear");
+        }
+        [HttpPost]
+        public async Task<IActionResult> UpdateGear(List<int> id, List<decimal> price, List<int> quantity)
+        {
+            var order = HttpContext.Session.GetObjectFromJson<UpdateOrderDTO>("order") ?? new UpdateOrderDTO();
+            var ticketscart = HttpContext.Session.GetObjectFromJson<List<OrderCampingGearDetailDTO>>("GearUpdateCart") ?? new List<OrderCampingGearDetailDTO>();
+
+            decimal total = 0;
+            List<OrderCampingGearAddDTO> tickets = new List<OrderCampingGearAddDTO>();
+            for (int i = 0; i < id.Count; i++)
+            {
+
+
+                if (quantity[i] > 0)
+                {
+
+                    tickets.Add(new OrderCampingGearAddDTO { GearId = id[i], OrderId = order.OrderId, Quantity = quantity[i] });
+                    total += (decimal)quantity[i] * price[i];
+                }
+
+
+
+            }
+            decimal totalticket = 0;
+            foreach (var item in ticketscart)
+            {
+                totalticket += (decimal)item.Quantity.Value * item.Price;
+            }
+
+            if (tickets.Count == 0)
+            {
+                tickets.Add(new OrderCampingGearAddDTO
+                {
+                    GearId = 0,
+                    OrderId = order.OrderId,
+                    Quantity = 0
+                });
+            }
+            UpdateOrderDTO orderupdate = new UpdateOrderDTO()
+            {
+                OrderId = order.OrderId,
+                OrderUsageDate = order.OrderUsageDate,
+                TotalAmount = order.TotalAmount - totalticket + total,
+            };
+            var apiUrl = "https://localhost:7298/api/OrderManagement/UpdateCampingGear";
+            var apiUrl1 = "https://localhost:7298/api/OrderManagement/UpdateOrder";
+            Console.WriteLine(tickets.Count);
+            // Serialize request objects to JSON
+            var content = new StringContent(JsonConvert.SerializeObject(tickets), Encoding.UTF8, "application/json");
+            var content1 = new StringContent(JsonConvert.SerializeObject(orderupdate), Encoding.UTF8, "application/json");
+
+            try
+            {
+                // Call to UpdateTicket API
+                var response = await _httpClient.PutAsync(apiUrl, content);
+                if (response.IsSuccessStatusCode)
+                {
+                    // Proceed to the next API call if the first one is successful
+                    var response1 = await _httpClient.PostAsync(apiUrl1, content1);
+
+                    if (response1.IsSuccessStatusCode)
+                    {
+                        // Both updates were successful
+                        ViewBag.ResultMessage = "Ticket and Order updated successfully!";
+                        return RedirectToAction("Index"); // Replace "SuccessView" with your actual view
+                    }
+                    else
+                    {
+                        // Handle error for the second API call
+                        var errorMessage1 = await response1.Content.ReadAsStringAsync();
+                        ViewBag.ErrorMessage = $"Error updating order: {errorMessage1}";
+                        return View("ErrorView"); // Replace "ErrorView" with your actual error view
+                    }
+                }
+                else
+                {
+                    // Handle error for the first API call
+                    var errorMessage = await response.Content.ReadAsStringAsync();
+                    ViewBag.ErrorMessage = $"Error updating tickets: {errorMessage}";
+                    return View("ErrorView"); // Replace "ErrorView" with your actual error view
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions that occur during the process
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+
+        }
+
+        public IActionResult UpdateFood()
+        {
+            var ticketscart = HttpContext.Session.GetObjectFromJson<List<OrderFoodDetailDTO>>("FoodUpdateCart") ?? new List<OrderFoodDetailDTO>();
+
+            List<FoodAndDrinkVM> foodAndDrinks = GetDataFromApi<List<FoodAndDrinkVM>>("https://localhost:7298/api/FoodAndDrink/GetAllFoodAndDrink");
+
+            foreach (var item in ticketscart)
+            {
+                var ticket = foodAndDrinks.ToList().FirstOrDefault(s => s.ItemId == item.ItemId);
+                if (ticket != null)
+                {
+                    ticket.Description = item.Description;
+                    ticket.Quantity = item.Quantity.Value;
+                }
+            }
+
+
+            ViewBag.gears = foodAndDrinks;
+            return View("UpdateFood");
+        }
+        [HttpPost]
+        public async Task<IActionResult> UpdateFood(List<int> id,  List<decimal> price, List<int> quantity, List<string> description)
+        {
+            var order = HttpContext.Session.GetObjectFromJson<UpdateOrderDTO>("order") ?? new UpdateOrderDTO();
+            var ticketscart = HttpContext.Session.GetObjectFromJson<List<OrderFoodDetailDTO>>("FoodUpdateCart") ?? new List<OrderFoodDetailDTO>();
+
+            decimal total = 0;
+            List<OrderFoodAddDTO> tickets = new List<OrderFoodAddDTO>();
+            for (int i = 0; i < id.Count; i++)
+            {
+
+
+                if (quantity[i] > 0)
+                {
+
+                    tickets.Add(new OrderFoodAddDTO { ItemId = id[i], OrderId = order.OrderId, Quantity = quantity[i] });
+                    total += (decimal)quantity[i] * price[i];
+                }
+
+
+
+            }
+            decimal totalticket = 0;
+            foreach (var item in ticketscart)
+            {
+                totalticket += (decimal)item.Quantity.Value * item.Price;
+            }
+
+            if (tickets.Count == 0)
+            {
+                tickets.Add(new OrderFoodAddDTO
+                {
+                    ItemId = 0,
+                    OrderId = order.OrderId,
+                    Quantity = 0
+                });
+            }
+            UpdateOrderDTO orderupdate = new UpdateOrderDTO()
+            {
+                OrderId = order.OrderId,
+                OrderUsageDate = order.OrderUsageDate,
+                TotalAmount = (order.TotalAmount - totalticket) + total,
+            };
+            var apiUrl = "https://localhost:7298/api/OrderManagement/UpdateFoodAndDrink";
+            var apiUrl1 = "https://localhost:7298/api/OrderManagement/UpdateOrder";
+            Console.WriteLine(tickets.Count);
+            // Serialize request objects to JSON
+            var content = new StringContent(JsonConvert.SerializeObject(tickets), Encoding.UTF8, "application/json");
+            var content1 = new StringContent(JsonConvert.SerializeObject(orderupdate), Encoding.UTF8, "application/json");
+
+            try
+            {
+                // Call to UpdateTicket API
+                var response = await _httpClient.PutAsync(apiUrl, content);
+                if (response.IsSuccessStatusCode)
+                {
+                    // Proceed to the next API call if the first one is successful
+                    var response1 = await _httpClient.PostAsync(apiUrl1, content1);
+
+                    if (response1.IsSuccessStatusCode)
+                    {
+                        // Both updates were successful
+                        ViewBag.ResultMessage = "Ticket and Order updated successfully!";
+                        return RedirectToAction("Index"); // Replace "SuccessView" with your actual view
+                    }
+                    else
+                    {
+                        // Handle error for the second API call
+                        var errorMessage1 = await response1.Content.ReadAsStringAsync();
+                        ViewBag.ErrorMessage = $"Error updating order: {errorMessage1}";
+                        return View("ErrorView"); // Replace "ErrorView" with your actual error view
+                    }
+                }
+                else
+                {
+                    // Handle error for the first API call
+                    var errorMessage = await response.Content.ReadAsStringAsync();
+                    ViewBag.ErrorMessage = $"Error updating tickets: {errorMessage}";
+                    return View("ErrorView"); // Replace "ErrorView" with your actual error view
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions that occur during the process
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+
+
+        }
+
+
+        public IActionResult UpdateComboFood()
+        {
+            var ticketscart = HttpContext.Session.GetObjectFromJson<List<OrderFoodComboDetailDTO>>("ComboFoodUpdateCart") ?? new List<OrderFoodComboDetailDTO>();
+
+            List<ComboFoodVM> tickets = GetDataFromApi<List<ComboFoodVM>>("https://localhost:7298/api/ComboFood/GetAllOrders");
+
+            foreach (var item in ticketscart)
+            {
+                var ticket = tickets.ToList().FirstOrDefault(s => s.ComboId == item.ComboId);
+                if (ticket != null)
+                {
+                    ticket.Quantity = item.Quantity.Value;
+                }
+            }
+
+
+            ViewBag.gears = tickets;
+            return View("UpdateComboFood");
+        }
+        [HttpPost]
+        public async Task<IActionResult> UpdateComboFood(List<int> id, List<decimal> price, List<int> quantity)
+        {
+            var order = HttpContext.Session.GetObjectFromJson<UpdateOrderDTO>("order") ?? new UpdateOrderDTO();
+            var ticketscart = HttpContext.Session.GetObjectFromJson<List<OrderFoodComboDetailDTO>>("ComboFoodUpdateCart") ?? new List<OrderFoodComboDetailDTO>();
+
+            decimal total = 0;
+            List<OrderFoodComboAddDTO> tickets = new List<OrderFoodComboAddDTO>();
+            for (int i = 0; i < id.Count; i++)
+            {
+
+
+                if (quantity[i] > 0)
+                {
+
+                    tickets.Add(new OrderFoodComboAddDTO { ComboId = id[i], OrderId = order.OrderId, Quantity = quantity[i] });
+                    total += (decimal)quantity[i] * price[i];
+                }
+
+
+
+            }
+            decimal totalticket = 0;
+            foreach (var item in ticketscart)
+            {
+                totalticket += (decimal)item.Quantity.Value * item.Price;
+            }
+
+            if (tickets.Count == 0)
+            {
+                tickets.Add(new OrderFoodComboAddDTO
+                {
+                    ComboId = 0,
+                    OrderId = order.OrderId,
+                    Quantity = 0
+                });
+            }
+            UpdateOrderDTO orderupdate = new UpdateOrderDTO()
+            {
+                OrderId = order.OrderId,
+                OrderUsageDate = order.OrderUsageDate,
+                TotalAmount = (order.TotalAmount - totalticket) + total,
+            };
+            var apiUrl = "https://localhost:7298/api/OrderManagement/UpdateFoodCombo";
+            var apiUrl1 = "https://localhost:7298/api/OrderManagement/UpdateOrder";
+  
+            var content = new StringContent(JsonConvert.SerializeObject(tickets), Encoding.UTF8, "application/json");
+            var content1 = new StringContent(JsonConvert.SerializeObject(orderupdate), Encoding.UTF8, "application/json");
+
+            try
+            {
+                // Call to UpdateTicket API
+                var response = await _httpClient.PutAsync(apiUrl, content);
+                if (response.IsSuccessStatusCode)
+                {
+                    // Proceed to the next API call if the first one is successful
+                    var response1 = await _httpClient.PostAsync(apiUrl1, content1);
+
+                    if (response1.IsSuccessStatusCode)
+                    {
+                        // Both updates were successful
+                        ViewBag.ResultMessage = "Ticket and Order updated successfully!";
+                        return RedirectToAction("Index"); // Replace "SuccessView" with your actual view
+                    }
+                    else
+                    {
+                        // Handle error for the second API call
+                        var errorMessage1 = await response1.Content.ReadAsStringAsync();
+                        ViewBag.ErrorMessage = $"Error updating order: {errorMessage1}";
+                        return View("ErrorView"); // Replace "ErrorView" with your actual error view
+                    }
+                }
+                else
+                {
+                    // Handle error for the first API call
+                    var errorMessage = await response.Content.ReadAsStringAsync();
+                    ViewBag.ErrorMessage = $"Error updating tickets: {errorMessage}";
+                    return View("ErrorView"); // Replace "ErrorView" with your actual error view
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions that occur during the process
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+        public IActionResult UpdateCombo()
+        {
+            var ticketscart = HttpContext.Session.GetObjectFromJson<List<ComboVM>>("ComboUpdateCart") ?? new List<ComboVM>();
+
+            List<ComboVM> tickets = GetDataFromApi<List<ComboVM>>("https://localhost:7298/api/Combo/GetAllCombos");
+
+            foreach (var item in ticketscart)
+            {
+                var ticket = tickets.ToList().FirstOrDefault(s => s.ComboId == item.ComboId);
+                if (ticket != null)
+                {
+                    ticket.Quantity = item.Quantity;
+                }
+            }
+
+
+            ViewBag.gears = tickets;
+            return View("UpdateCombo");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateCombo(List<int> id, List<decimal> price, List<int> quantity)
+        {
+            var order = HttpContext.Session.GetObjectFromJson<UpdateOrderDTO>("order") ?? new UpdateOrderDTO();
+            var ticketscart = HttpContext.Session.GetObjectFromJson<List<OrderComboDetailDTO>>("ComboUpdateCart") ?? new List<OrderComboDetailDTO>();
+
+            decimal total = 0;
+            List<OrderComboAddDTO> tickets = new List<OrderComboAddDTO>();
+            for (int i = 0; i < id.Count; i++)
+            {
+
+
+                if (quantity[i] > 0)
+                {
+
+                    tickets.Add(new OrderComboAddDTO { ComboId = id[i], OrderId = order.OrderId, Quantity = quantity[i] ,Description="string"});
+                    total += (decimal)quantity[i] * price[i];
+                }
+
+
+
+            }
+            decimal totalticket = 0;
+            foreach (var item in ticketscart)
+            {
+                totalticket += (decimal)item.Quantity.Value * item.Price;
+            }
+
+            if (tickets.Count == 0)
+            {
+                tickets.Add(new OrderComboAddDTO
+                {
+                    ComboId = 0,
+                    OrderId = order.OrderId,
+                    Quantity = 0,
+                    Description = "string"
+                });
+            }
+            UpdateOrderDTO orderupdate = new UpdateOrderDTO()
+            {
+                OrderId = order.OrderId,
+                OrderUsageDate = order.OrderUsageDate,
+                TotalAmount = order.TotalAmount - totalticket + total,
+            };
+            var apiUrl = "https://localhost:7298/api/OrderManagement/UpdateCombo";
+            var apiUrl1 = "https://localhost:7298/api/OrderManagement/UpdateOrder";
+            Console.WriteLine(tickets.Count);
+            // Serialize request objects to JSON
+            var content = new StringContent(JsonConvert.SerializeObject(tickets), Encoding.UTF8, "application/json");
+            var content1 = new StringContent(JsonConvert.SerializeObject(orderupdate), Encoding.UTF8, "application/json");
+
+            try
+            {
+                // Call to UpdateTicket API
+                var response = await _httpClient.PutAsync(apiUrl, content);
+                if (response.IsSuccessStatusCode)
+                {
+                    // Proceed to the next API call if the first one is successful
+                    var response1 = await _httpClient.PostAsync(apiUrl1, content1);
+
+                    if (response1.IsSuccessStatusCode)
+                    {
+                        // Both updates were successful
+                        ViewBag.ResultMessage = "Ticket and Order updated successfully!";
+                        return RedirectToAction("Index"); // Replace "SuccessView" with your actual view
+                    }
+                    else
+                    {
+                        // Handle error for the second API call
+                        var errorMessage1 = await response1.Content.ReadAsStringAsync();
+                        ViewBag.ErrorMessage = $"Error updating order: {errorMessage1}";
+                        return View("ErrorView"); // Replace "ErrorView" with your actual error view
+                    }
+                }
+                else
+                {
+                    // Handle error for the first API call
+                    var errorMessage = await response.Content.ReadAsStringAsync();
+                    ViewBag.ErrorMessage = $"Error updating tickets: {errorMessage}";
+                    return View("ErrorView"); // Replace "ErrorView" with your actual error view
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions that occur during the process
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
     }

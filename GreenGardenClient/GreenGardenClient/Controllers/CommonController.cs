@@ -23,7 +23,7 @@ namespace GreenGardenClient.Controllers
         {
             return View();
         }
-
+       
         [HttpPost]
         public async Task<IActionResult> Login(string email, string password)
         {
@@ -53,7 +53,7 @@ namespace GreenGardenClient.Controllers
                             Expires = DateTimeOffset.Now.AddHours(1)
                         });
                         HttpContext.Session.SetInt32("RoleId", loginResponse.RoleId);
-
+                        HttpContext.Session.SetString("Email", loginResponse.Email);
                         TempData["SuccessMessage"] = "Đăng nhập thành công!";
                         return RedirectToAction("Index", "Home");
                     }
@@ -197,6 +197,9 @@ namespace GreenGardenClient.Controllers
         {
             return View();
         }
-
+        public IActionResult UpdateProfile()
+        {
+            return View("UpdateProfile");
+        }
     }
 }
