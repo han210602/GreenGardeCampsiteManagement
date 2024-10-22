@@ -76,7 +76,7 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
-        [HttpPut("UpdateTicket")]
+        [HttpPost("UpdateTicket")]
         public IActionResult UpdateTicket([FromBody] List<OrderTicketAddlDTO> ticket)
         {
             try
@@ -196,7 +196,7 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
-        [HttpPut("UpdateOrder")]
+        [HttpPost("UpdateOrder")]
         public IActionResult UpdateOrder([FromBody] UpdateOrderDTO order)
         {
             try

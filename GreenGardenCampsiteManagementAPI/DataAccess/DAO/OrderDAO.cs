@@ -29,7 +29,7 @@ namespace DataAccess.DAO
                             EmployeeId = o.EmployeeId,
                             EmployeeName = o.Employee.FirstName + "" + o.Employee.LastName,
                             CustomerName = o.CustomerId != null ? o.Customer.FirstName + "" + o.Customer.LastName : o.CustomerName,
-                            PhoneCustomer = o.PhoneCustomer != null?o.Customer.PhoneNumber:o.PhoneCustomer,
+                            PhoneCustomer = o.PhoneCustomer == null ? o.Customer.PhoneNumber : o.PhoneCustomer,
                             OrderDate = o.OrderDate,
                             OrderUsageDate = o.OrderUsageDate,
                             Deposit = o.Deposit,
@@ -380,8 +380,9 @@ namespace DataAccess.DAO
                             TotalAmount = o.TotalAmount,
                             AmountPayable = o.AmountPayable,
                             StatusOrder = o.StatusOrder,
-                            ActivityId = o.Activity.ActivityName,
-                            PhoneCustomer = o.PhoneCustomer != null ? o.Customer.PhoneNumber : o.PhoneCustomer,
+                            ActivityId = o.ActivityId,
+                            ActivityName=o.Activity.ActivityName,
+                            PhoneCustomer = o.PhoneCustomer == null ? o.Customer.PhoneNumber : o.PhoneCustomer,
 
                             OrderTicketDetails = o.OrderTicketDetails.Select(o=>new OrderTicketDetailDTO
                             {
@@ -647,11 +648,12 @@ namespace DataAccess.DAO
                 {
                     
                     
-                    if (tickets[0].OrderId != 0)
+                    if (tickets[0].TicketId != 0)
                     {
-                        Console.WriteLine("ddđ" + tickets[0].OrderId);
                         var list = context.OrderTicketDetails.Where(s => s.OrderId == tickets[0].OrderId);
                         context.OrderTicketDetails.RemoveRange(list);
+                        context.SaveChanges();
+
                         var newlist = tickets.Select(s => new OrderTicketDetail()
                         {
                             OrderId = s.OrderId,
@@ -685,6 +687,8 @@ namespace DataAccess.DAO
                 {
                     var list = context.OrderCampingGearDetails.Where(s => s.OrderId == tickets[0].OrderId);
                     context.OrderCampingGearDetails.RemoveRange(list);
+                    context.SaveChanges();
+
                     if (tickets[0].GearId != 0)
                     {
                         var newlist = tickets.Select(s => new OrderCampingGearDetail()
@@ -717,6 +721,8 @@ namespace DataAccess.DAO
                 {
                     var list = context.OrderFoodDetails.Where(s => s.OrderId == tickets[0].OrderId);
                     context.OrderFoodDetails.RemoveRange(list);
+                    context.SaveChanges();
+
                     if (tickets[0].ItemId != 0)
                     {
                         var newlist = tickets.Select(s => new OrderFoodDetail()
@@ -750,6 +756,8 @@ namespace DataAccess.DAO
                     {
                         var list = context.OrderComboDetails.Where(s => s.OrderId == tickets[0].OrderId);
                         context.OrderComboDetails.RemoveRange(list);
+                        context.SaveChanges();
+
                         var newlist = tickets.Select(s => new OrderComboDetail()
                         {
                             OrderId = s.OrderId,
@@ -782,8 +790,10 @@ namespace DataAccess.DAO
             {
                 using (var context = new GreenGardenContext())
                 {
-                    var list = context.OrderComboDetails.Where(s => s.OrderId == tickets[0].OrderId);
-                    context.OrderComboDetails.RemoveRange(list);
+                    var list = context.OrderFoodComboDetails.Where(s => s.OrderId == tickets[0].OrderId);
+                    context.OrderFoodComboDetails.RemoveRange(list);
+                    context.SaveChanges();
+
                     if (tickets[0].ComboId != 0)
                     {
                         var newlist = tickets.Select(s => new OrderFoodComboDetail()
