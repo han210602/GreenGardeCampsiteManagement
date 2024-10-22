@@ -1,6 +1,11 @@
 ﻿using GreenGardenClient.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using System.Globalization;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 
 namespace GreenGardenClient.Controllers
 {
@@ -46,10 +51,9 @@ namespace GreenGardenClient.Controllers
             ViewBag.CampingGears = campingGears;
             ViewBag.CampingCategories = campingCategories;  // Thêm danh sách danh mục vào ViewBag
 
-            return View();
+            return View("OrderGear");
         }
         [HttpGet]
-        [Route("order-gear")]
         public async Task<IActionResult> OrderGear(int? categoryId, int? sortBy, int? priceRange, string popularity)
         {
             ViewBag.CurrentCategoryId = categoryId; // Lưu lại categoryId hiện tại để hiển thị active
@@ -87,7 +91,7 @@ namespace GreenGardenClient.Controllers
             ViewBag.CampingGears = campingGears;
             ViewBag.CampingCategories = campingCategories;
 
-            return View();
+            return View("OrderGear");
         }
 
 
@@ -102,10 +106,9 @@ namespace GreenGardenClient.Controllers
             ViewBag.FoodAndDrink = foodAndDrink;
             ViewBag.FoodAndDrinkCategories = foodAndDrinkCategories;  // Thêm danh sách danh mục vào ViewBag
 
-            return View();
+            return View("OrderFoodAndDrink");
         }
         [HttpGet]
-        [Route("order-food-drink")]
         public async Task<IActionResult> OrderFoodAndDrink(int? categoryId, int? sortBy, int? priceRange)
         {
             ViewBag.CurrentCategoryId = categoryId; // Lưu lại categoryId hiện tại để hiển thị active
@@ -141,7 +144,7 @@ namespace GreenGardenClient.Controllers
             ViewBag.FoodAndDrink = foodAndDrink;
             ViewBag.FoodAndDrinkCategories = foodAndDrinkCategories;
 
-            return View();
+            return View("OrderFoodAndDrink");
         }
         public IActionResult FoodDetail()
         {
@@ -157,10 +160,9 @@ namespace GreenGardenClient.Controllers
             ViewBag.TicketCategories = ticketCategory;
 
 
-            return View();
+            return View("OrderTicket");
         }
         [HttpGet]
-        [Route("order-ticket")]
         public async Task<IActionResult> OrderTicket(int? categoryId, int? sortBy)
         {
             ViewBag.CurrentCategoryId = categoryId; // Lưu lại categoryId hiện tại để hiển thị active
@@ -191,7 +193,7 @@ namespace GreenGardenClient.Controllers
             ViewBag.Ticket = ticket;
             ViewBag.TicketCategories = ticketCategory;
 
-            return View();
+            return View("OrderTicket");
         }
 
         public IActionResult Cart()
@@ -217,39 +219,61 @@ namespace GreenGardenClient.Controllers
             HttpContext.Session.SetString("Cart", session);
         }
         [HttpPost]
-        public IActionResult AddToCart(int Id, string Name, string CategoryName, string Type, string TypeCategory, decimal price, int quantity, string redirectAction)
+        public IActionResult AddToCart(int Id, string Name, string CategoryName, string Type, string TypeCategory, decimal price, int quantity, string usageDate, string redirectAction)
         {
             var cartItems = GetCartItems();
-            // Tìm sản phẩm dựa trên Id và Type để tránh trùng lặp giữa các loại
             var existingItem = cartItems.FirstOrDefault(c => c.Id == Id && c.Type == Type && c.TypeCategory == TypeCategory);
 
+            // Chuyển đổi từ chuỗi ngày sang DateTime
+            DateTime parsedDate;
+            if (!DateTime.TryParseExact(usageDate, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out parsedDate))
+            {
+                parsedDate = DateTime.Now; // Hoặc giá trị mặc định nếu không parse được
+            }
 
             if (existingItem != null)
             {
-                // Nếu sản phẩm đã có trong giỏ, cập nhật số lượng
                 existingItem.Quantity += quantity;
             }
             else
             {
-                // Nếu sản phẩm chưa có, thêm sản phẩm mới
                 var newItem = new CartItem
                 {
                     Id = Id,
                     Name = Name,
                     CategoryName = CategoryName,
                     Type = Type,
-                    TypeCategory= TypeCategory,// Gán loại sản phẩm
+                    TypeCategory = TypeCategory,
                     Price = price,
-                    Quantity = quantity
+                    Quantity = quantity,
+                    UsageDate = parsedDate // Gán ngày sử dụng đã được chuyển đổi
                 };
                 cartItems.Add(newItem);
             }
 
-            // Lưu giỏ hàng vào session
+            SaveCartItems(cartItems);
+            return RedirectToAction(redirectAction);
+        }
+
+        [HttpPost]
+        public IActionResult UpdateUsageDate(string usageDate, int ticketId)
+        {
+            // Tìm vé theo ticketId và cập nhật ngày mới
+            var cartItems = GetCartItems();
+            var ticket = cartItems.FirstOrDefault(t => t.Id == ticketId);
+            if (ticket != null)
+            {
+                // Parse lại ngày sử dụng và gán cho vé
+                if (DateTime.TryParse(usageDate, out DateTime parsedDate))
+                {
+                    ticket.UsageDate = parsedDate; // Cập nhật ngày sử dụng mới
+                }
+            }
+
             SaveCartItems(cartItems);
 
-            // Chuyển hướng đến trang phù hợp
-            return RedirectToAction(redirectAction);
+            // Trả về view cập nhật lại thông tin vé bên OrderTicket
+            return RedirectToAction("Cart");
         }
 
 
@@ -288,7 +312,7 @@ namespace GreenGardenClient.Controllers
         {
             return View();
         }
-      
+
         public IActionResult Checkout()
         {
             return View();
@@ -298,5 +322,101 @@ namespace GreenGardenClient.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public async Task<IActionResult> Order()
+        {
+            // Retrieve cart items from session
+            var cartItems = GetCartItems();
+
+            // Ensure there's at least one item in the cart
+            if (!cartItems.Any())
+            {
+                TempData["Notification"] = "Giỏ hàng của bạn trống!";
+                return RedirectToAction("Cart");
+            }
+
+            try
+            {
+                // Create a new HttpClient instance from the factory
+                var client = _clientFactory.CreateClient();
+
+                // Classify cart items into different categories
+                var tickets = cartItems.Where(c => c.Type == "Ticket" && c.TypeCategory == "TicketCategory").ToList();
+                var gears = cartItems.Where(c => c.Type == "Gear" && c.TypeCategory == "GearCategory").ToList();
+                var foods = cartItems.Where(c => c.Type == "Food" && c.TypeCategory == "FoodCategory").ToList();
+                var combofoods = cartItems.Where(c => c.TypeCategory == "Combo").ToList();
+
+                // Assuming all cart items share the same usage date
+                var usageDate = cartItems.First().UsageDate;
+
+                // Calculate total amount
+                var totalAmount = cartItems.Sum(item => item.TotalPrice);
+
+                // Create the order request
+                var orderRequest = new CheckOut
+                {
+                    Order = new CustomerOrderAddDTO
+                    {
+                        CustomerId = 1003,  // Use actual customer ID
+                        CustomerName = "Test Customer",  // Replace with actual customer data
+                        OrderDate = DateTime.Now,
+                        OrderUsageDate = usageDate,
+                        Deposit = 0,
+                        TotalAmount = totalAmount,
+                        PhoneCustomer = "1234567890"  // Replace with actual phone number
+                    },
+                    OrderTicket = tickets.Select(t => new CustomerOrderTicketAddlDTO
+                    {
+                        TicketId = t.Id,
+                        Quantity = t.Quantity
+                    }).ToList(),
+                    OrderCampingGear = gears.Select(g => new CustomerOrderCampingGearAddDTO
+                    {
+                        GearId = g.Id,
+                        Quantity = g.Quantity
+                    }).ToList(),
+                    OrderFood = foods.Select(f => new CustomerOrderFoodAddDTO
+                    {
+                        ItemId = f.Id,
+                        Quantity = f.Quantity,
+                        Description = f.Name
+                    }).ToList(),
+                    OrderFoodCombo = combofoods.Select(cf => new CustomerOrderFoodComboAddDTO
+                    {
+                        ComboId = cf.Id,
+                        Quantity = cf.Quantity
+                    }).ToList()
+                };
+
+                // Serialize the order request to JSON
+                var content = new StringContent(JsonConvert.SerializeObject(orderRequest), Encoding.UTF8, "application/json");
+
+                // Use the client from IHttpClientFactory to make the API call
+                var apiUrl = "https://localhost:7298/api/OrderManagement/CheckOut";
+                var response = await client.PostAsync(apiUrl, content);
+
+                // Handle the API response
+                if (response.IsSuccessStatusCode)
+                {
+                    // Clear the cart after successful checkout
+                    HttpContext.Session.Remove("Cart");  // This clears the cart items in the session
+
+                    TempData["Notification"] = "Đặt hàng thành công!";
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    var errorMessage = await response.Content.ReadAsStringAsync();
+                    TempData["Notification"] = $"Lỗi khi đặt hàng: {errorMessage}";
+                    return RedirectToAction("Cart");
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["Notification"] = $"Lỗi hệ thống: {ex.Message}";
+                return RedirectToAction("Cart");
+            }
+        }
+
     }
 }

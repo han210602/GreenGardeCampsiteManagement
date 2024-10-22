@@ -249,7 +249,7 @@
                                 foreach (var item in foodAndDrink)
                                 {
                                     <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
-                                        <div class="listing-item">
+                                        <div class="listing-item" id="product-@item.ItemId">
                                             <div class="listing-image">
                                                 <img src="~/images/img_1.jpg" alt="Image" class="img-fluid">
                                             </div>
@@ -264,8 +264,9 @@
                                                     <input type="hidden" name="TypeCategory" value="FoodAnDrinkCategory" />
                                                     <input type="hidden" name="price" value="@item.Price" />
                                                     <input type="hidden" name="quantity" value="1" />
+                                                    <input type="hidden" id="hidden-date-@item.ItemId" name="usageDate" />
                                                     <input type="hidden" name="redirectAction" value="OrderFoodAndDrink" />
-                                                    <button type="submit" class="btn btn-primary">Đặt ngay</button>
+                                                    <button type="submit" class="btn btn-primary" onclick="return setUsageDate('@item.ItemId')">Đặt ngay</button>
                                                 </form>
 
                                             </div>
@@ -375,6 +376,7 @@
                 duration: 1200, // Đặt thời gian cho hiệu ứng (tùy chọn)
             });
         </script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
             $(document).ready(function () {
                 $('#filterToggleIcon').on('click', function () {
@@ -398,6 +400,46 @@
                     updateGearList();
                 });
             });
+            function setUsageDate(itemId) {
+                var savedDate = sessionStorage.getItem('usageDateForAll');
+
+                // Nếu đã có ngày lưu trong sessionStorage, sử dụng ngày đó và submit form mà không hiển thị popup
+                if (savedDate) {
+                    document.getElementById('hidden-date-' + itemId).value = savedDate;
+                    document.querySelector(`#product-${itemId} form`).submit();
+                } else {
+                    // Hiển thị popup yêu cầu chọn ngày nếu chưa có ngày nào được lưu
+                    Swal.fire({
+                        title: 'Vui lòng chọn ngày sử dụng!',
+                        input: 'date',
+                        inputAttributes: {
+                            min: new Date().toISOString().split('T')[0] // Đặt giá trị min là ngày hiện tại
+                        },
+                        inputPlaceholder: 'yyyy-MM-dd',
+                        showCancelButton: true,
+                        confirmButtonText: 'Xác nhận',
+                        cancelButtonText: 'Hủy',
+                        inputValidator: (value) => {
+                            if (!value) {
+                                return 'Bạn cần nhập ngày sử dụng!';
+                            }
+                            return null;
+                        }
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            var usageDate = result.value;
+
+                            // Lưu ngày sử dụng vào sessionStorage cho các vé sau trong cùng một phiên
+                            sessionStorage.setItem('usageDateForAll', usageDate);
+
+                            // Đặt ngày sử dụng vào input ẩn và submit form
+                            document.getElementById('hidden-date-' + itemId).value = usageDate;
+                            document.querySelector(`#product-${itemId} form`).submit();
+                        }
+                    });
+                }
+                return false;
+            }
         </script>
 </body>
 </html>

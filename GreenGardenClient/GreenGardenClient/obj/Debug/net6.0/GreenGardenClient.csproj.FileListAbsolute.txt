@@ -274,7 +274,6 @@ C:\Users\admin\Desktop\GreenGardenClient\GreenGardenClient\obj\Debug\net6.0\refi
 C:\Users\admin\Desktop\GreenGardenClient\GreenGardenClient\obj\Debug\net6.0\GreenGardenClient.pdb
 C:\Users\admin\Desktop\GreenGardenClient\GreenGardenClient\obj\Debug\net6.0\GreenGardenClient.genruntimeconfig.cache
 C:\Users\admin\Desktop\GreenGardenClient\GreenGardenClient\obj\Debug\net6.0\ref\GreenGardenClient.dll
-D:\SEP490\GreenGardenCampsiteManagement\GreenGardenClient\GreenGardenClient\bin\Debug\net6.0\Views\prepros-6.config
 D:\SEP490\GreenGardenCampsiteManagement\GreenGardenClient\GreenGardenClient\bin\Debug\net6.0\appsettings.Development.json
 D:\SEP490\GreenGardenCampsiteManagement\GreenGardenClient\GreenGardenClient\bin\Debug\net6.0\appsettings.json
 D:\SEP490\GreenGardenCampsiteManagement\GreenGardenClient\GreenGardenClient\bin\Debug\net6.0\GreenGardenClient.staticwebassets.runtime.json

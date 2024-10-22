@@ -429,62 +429,52 @@
                                     <option value="2" @(ViewBag.sortBy == "2" ? "selected" : "")>Giá giảm dần</option>
                                 </select>
                             </div>
-                            <div class="filter-item">
-                                <label for="start">Ngày sử dụng:</label>
-                                <input type="date" id="start" name="start-date" value="dd-MM-YYYY">
-                            </div>
                         </div>
                         <div class="product-list" data-aos="fade-up">
                             @if (ticket != null && ticket.Any())
                             {
-
-                                foreach (var item in ticket) // Sử dụng biến item cho từng vé
+                                foreach (var item in ticket)
                                 {
-                                    <div class="product-item">
+                                    <div class="product-item" id="product-@item.TicketId">
                                         <div class="product-image">
                                             <img src="~/images/img_1.jpg" alt="Image" class="img-fluid">
                                         </div>
                                         <div class="product-content">
-                                            <h2><a href="@Url.Action("TripSingle", new { id = item.TicketId })">@item.TicketName</a></h2> <!-- Sử dụng item.TicketId -->
-                                            <p><i class="fa fa-info-circle"></i> Mô tả: Vé đơn giúp bạn trải nghiệm không gian cắm trại và tổ chức tiệc ngoài trời rộng rãi. Du khách có thể thoải mái chụp ảnh check-in tại vườn, tham gia khu vui chơi bao gồm bể bơi ngoài trời, trượt cỏ</p>
+                                            <h2><a href="@Url.Action("TripSingle", new { id = item.TicketId })">@item.TicketName</a></h2>
+                                            <p><i class="fa fa-info-circle"></i> Mô tả: Vé đơn giúp bạn trải nghiệm không gian cắm trại và tổ chức tiệc ngoài trời rộng rãi.</p>
 
                                             <div class="price-quantity">
-                                                <p style="margin-bottom:1px" class="price"><i class="fa fa-money-bill-wave"></i> @item.Price.ToString("N0")đ</p> <!-- Sử dụng item.Price -->
+                                                <p style="margin-bottom:1px" class="price"><i class="fa fa-money-bill-wave"></i> @item.Price.ToString("N0")đ</p>
                                                 <div class="quantity-control">
                                                     <button class="btn-minus" onclick="decreaseQuantity('quantity-@item.TicketId')">-</button>
-                                                    <input type="text" value="1" class="quantity" id="quantity-@item.TicketId"> <!-- Gắn ID duy nhất -->
+                                                    <input type="text" value="1" class="quantity" id="quantity-@item.TicketId">
                                                     <button class="btn-plus" onclick="increaseQuantity('quantity-@item.TicketId')">+</button>
                                                 </div>
                                             </div>
-                                            <div class="btn-group">
-                                                <form method="post" action="/Service/AddToCart">
-                                                    <input type="hidden" name="Id" value="@item.TicketId" />
-                                                    <input type="hidden" name="Name" value="@item.TicketName" />
-                                                    <input type="hidden" name="CategoryName" value="@item.TicketCategoryName" />
-                                                    <input type="hidden" name="Type" value="Ticket" />
-                                                    <input type="hidden" name="TypeCategory" value="TicketCategory" />
-                                                    <input type="hidden" name="price" value="@item.Price" />
-                                                    <input type="hidden" name="quantity" value="1" min="1" />
-                                                    <input type="hidden" name="redirectAction" value="OrderTicket" />
-                                                    <button type="submit" class="add-to-cart">
-                                                        <i class="fa fa-cart-shopping"></i> Thêm giỏ hàng
-                                                    </button>
 
-                                                </form>
-                                                <button class="buy-now">Mua ngay</button>
-                                            </div>
+                                            <form method="post" action="/Service/AddToCart">
+                                                <input type="hidden" name="Id" value="@item.TicketId" />
+                                                <input type="hidden" name="Name" value="@item.TicketName" />
+                                                <input type="hidden" name="CategoryName" value="@item.TicketCategoryName" />
+                                                <input type="hidden" name="Type" value="Ticket" />
+                                                <input type="hidden" name="TypeCategory" value="TicketCategory" />
+                                                <input type="hidden" name="price" value="@item.Price" />
+                                                <input type="hidden" name="quantity" value="1" />
+                                                <!-- Input ẩn để lưu ngày sử dụng được chọn -->
+                                                <input type="hidden" id="hidden-date-@item.TicketId" name="usageDate" />
+                                                <input type="hidden" name="redirectAction" value="OrderTicket" />
+                                                <button type="submit" class="add-to-cart" onclick="return setUsageDate('@item.TicketId')">
+                                                    <i class="fa fa-cart-shopping"></i> Thêm giỏ hàng
+                                                </button>
+                                            </form>
                                         </div>
                                     </div>
                                 }
                             }
-
                             else
                             {
                                 <p>Không có vé nào.</p>
                             }
-
-
-
                         </div>
                     </div>
                 </div>
@@ -550,9 +540,10 @@
         <script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
         <script>
             AOS.init({
-                duration: 1200, // Đặt thời gian cho hiệu ứng (tùy chọn)
+                duration: 1200,
             });
         </script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="~/js/jquery-3.3.1.min.js"></script>
         <script src="~/js/jquery-migrate-3.0.0.js"></script>
         <script src="~/js/popper.min.js"></script>
@@ -575,8 +566,62 @@
                 const url = `@Url.Action("OrderTicket", "Service")?categoryId=${categoryId}&sortBy=${sortValue}`;
                 window.location.href = url;
             }
+            function setUsageDate(ticketId) {
+                var savedDate = sessionStorage.getItem('usageDateForAll');
+
+                // Nếu đã có ngày lưu trong sessionStorage, sử dụng ngày đó và submit form mà không hiển thị popup
+                if (savedDate) {
+                    document.getElementById('hidden-date-' + ticketId).value = savedDate;
+                    document.querySelector(`#product-${ticketId} form`).submit();
+                } else {
+                    // Hiển thị popup yêu cầu chọn ngày nếu chưa có ngày nào được lưu
+                    Swal.fire({
+                        title: 'Vui lòng chọn ngày sử dụng!',
+                        input: 'date',
+                        inputAttributes: {
+                            min: new Date().toISOString().split('T')[0] // Đặt giá trị min là ngày hiện tại
+                        },
+                        inputPlaceholder: 'yyyy-MM-dd',
+                        showCancelButton: true,
+                        confirmButtonText: 'Xác nhận',
+                        cancelButtonText: 'Hủy',
+                        inputValidator: (value) => {
+                            if (!value) {
+                                return 'Bạn cần nhập ngày sử dụng!';
+                            }
+                            return null;
+                        }
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            var usageDate = result.value;
+
+                            // Lưu ngày sử dụng vào sessionStorage cho các vé sau trong cùng một phiên
+                            sessionStorage.setItem('usageDateForAll', usageDate);
+
+                            // Đặt ngày sử dụng vào input ẩn và submit form
+                            document.getElementById('hidden-date-' + ticketId).value = usageDate;
+                            document.querySelector(`#product-${ticketId} form`).submit();
+                        }
+                    });
+                }
+                return false;
+            }
+
 
         </script>
+
+        <style>
+            /* CSS để hiển thị placeholder cho input date */
+            input[type="date"]::before {
+                content: attr(placeholder);
+                color: #aaa;
+            }
+
+            input[type="date"]:focus::before,
+            input[type="date"]:valid::before {
+                content: '';
+            }
+        </style>
 </body>
 
 </html>

@@ -192,7 +192,12 @@
             <div class="row">
                 <div class="col-md-8">
                     <h3>Giỏ hàng</h3>
-
+                    <div>
+                        Ngày sử dụng(tháng-ngày-năm):
+                        <!-- Thêm input date để thay đổi ngày sử dụng trong giỏ hàng -->
+                        <input type="date" id="cart-usage-date" value="@Model.FirstOrDefault()?.UsageDate.ToString("yyyy-MM-dd")"
+                               onchange="updateCartDate(this.value)">
+                    </div>
                     @foreach (var item in Model)
                     {
                         <div class="cart-item d-flex mb-3" id="cart-item-@item.Id">
@@ -220,7 +225,12 @@
                         <p>Đã cọc: 0đ</p>
                         <p>Tổng: <span id="totalPriceFinal">@Model.Sum(item => item.TotalPrice).ToString("N0")</span> đ</p>
                         <button class="btn btn-dark">Quay lại dịch vụ</button>
-                        <button class="btn btn-dark">Thanh toán</button>
+                        <!-- Remove the existing form's submit button -->
+                        <form id="paymentForm" asp-controller="Service" asp-action="Order" method="post">
+                            <button type="button" class="btn btn-dark" onclick="submitPayment()">Thanh toán</button>
+                        </form>
+
+
                     </div>
                 </div>
             </div>
@@ -284,13 +294,30 @@
         </footer>
 
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init({
-            duration: 1200, // Đặt thời gian cho hiệu ứng (tùy chọn)
-        });
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+
+    <script src="~/js/jquery-3.3.1.min.js"></script>
+    <script src="~/js/jquery-migrate-3.0.0.js"></script>
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/owl.carousel.min.js"></script>
+    <script src="~/js/jquery.sticky.js"></script>
+    <script src="~/js/jquery.waypoints.min.js"></script>
+    <script src="~/js/jquery.animateNumber.min.js"></script>
+    <script src="~/js/jquery.fancybox.min.js"></script>
+    <script src="~/js/jquery.stellar.min.js"></script>
+    <script src="~/js/jquery.easing.1.3.js"></script>
+    <script src="~/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/js/isotope.pkgd.min.js"></script>
+    <script src="~/js/aos.js"></script>
+    <script src="~/js/main.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
+        <script>
+            AOS.init({
+                duration: 1200, // Đặt thời gian cho hiệu ứng (tùy chọn)
+            });
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
         <script>
             function incrementQuantity(itemId, price) {
@@ -341,6 +368,7 @@
                 });
             }
 
+
             function removeCartItem(itemId) {
                 $.ajax({
                     url: '/Service/RemoveFromCart',
@@ -348,31 +376,66 @@
                     data: { ticketId: itemId },
                     success: function () {
                         $('#cart-item-' + itemId).remove();
-                        updateTotalPrice(); // Cập nhật lại tổng giá trị giỏ hàng sau khi xóa sản phẩm
+                        updateTotalPrice();
+
+                        // Kiểm tra nếu giỏ hàng trống thì xóa ngày sử dụng trong sessionStorage
+                        if ($('.cart-item').length === 0) {
+                            sessionStorage.removeItem('usageDateForAll');
+                        }
                     },
                     error: function () {
                         alert('Có lỗi xảy ra khi xóa sản phẩm.');
                     }
                 });
             }
+
+            // Hàm xử lý khi thay đổi ngày sử dụng trong giỏ hàng
+            function updateCartDate(newDate, ticketId) {
+                // Cập nhật ngày sử dụng trong sessionStorage cho tất cả các vé
+                sessionStorage.setItem('usageDateForAll', newDate);
+
+                // Optional: Cập nhật ngày sử dụng trên server (nếu cần)
+                $.ajax({
+                    url: '/Service/UpdateUsageDate',
+                    type: 'POST',
+                    data: { usageDate: newDate, ticketId: ticketId }, // Chuyển cả ticketId
+                    success: function () {
+                        alert('Ngày sử dụng đã được cập nhật.');
+
+                    },
+                    error: function () {
+                        alert('Có lỗi xảy ra khi cập nhật ngày sử dụng.');
+                    }
+                });
+            }
+
+            function submitPayment() {
+                $.ajax({
+                    url: '/Service/Order',
+                    type: 'POST',
+                    data: $('#paymentForm').serialize(), // Serialize the form data
+                    success: function (response) {
+                        // Xóa giỏ hàng trên giao diện
+                        $('.cart-item').remove(); // Xóa tất cả các mục trong giỏ hàng
+                        $('#totalPrice').text('0'); // Đặt tổng giá về 0
+                        $('#totalPriceFinal').text('0'); // Đặt tổng giá cuối cùng về 0
+
+                        // Hiển thị thông báo thành công
+                        alert('Thanh toán thành công!');
+                        if ($('.cart-item').length === 0) {
+                            sessionStorage.removeItem('usageDateForAll');
+                        }
+
+                        // Optionally, bạn có thể chuyển hướng đến một trang thành công
+                        // window.location.href = '/PaymentSuccess';
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle error response, show an error message
+                        alert('Có lỗi xảy ra khi thanh toán. Vui lòng thử lại.');
+                    }
+                });
+            }
         </script>
-
-
-        <script src="~/js/jquery-3.3.1.min.js"></script>
-    <script src="~/js/jquery-migrate-3.0.0.js"></script>
-    <script src="~/js/popper.min.js"></script>
-    <script src="~/js/bootstrap.min.js"></script>
-    <script src="~/js/owl.carousel.min.js"></script>
-    <script src="~/js/jquery.sticky.js"></script>
-    <script src="~/js/jquery.waypoints.min.js"></script>
-    <script src="~/js/jquery.animateNumber.min.js"></script>
-    <script src="~/js/jquery.fancybox.min.js"></script>
-    <script src="~/js/jquery.stellar.min.js"></script>
-    <script src="~/js/jquery.easing.1.3.js"></script>
-    <script src="~/js/bootstrap-datepicker.min.js"></script>
-    <script src="~/js/isotope.pkgd.min.js"></script>
-    <script src="~/js/aos.js"></script>
-    <script src="~/js/main.js"></script>
 </body>
 
 </html>
