@@ -64,6 +64,18 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+        [HttpPost("CheckOut")]
+        public IActionResult CheckOut([FromBody] CheckOut order)
+        {
+            try
+            {
+                return Ok(_repo.CheckOut(order));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
         [HttpPost("CreateComboOrder")]
         public IActionResult CreateComboOrder([FromBody] CreateComboOrderRequest order)
         {

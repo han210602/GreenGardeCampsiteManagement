@@ -27,7 +27,10 @@ namespace Repositories.Orders
         {
             return OrderDAO.CreateUniqueOrder(order);
         }
-
+        public bool CheckOut(CheckOut order)
+        {
+            return OrderDAO.CheckOut(order);
+        }
         public bool DeleteOrder(int id)
         {
             return OrderDAO.DeleteOrder(id);

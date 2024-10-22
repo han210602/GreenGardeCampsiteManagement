@@ -14,4 +14,12 @@ namespace BusinessObject.DTOs
         public List<OrderFoodAddDTO> OrderFood { get; set; }
         public List<OrderFoodComboAddDTO> OrderFoodCombo { get; set; }
     }
+    public class CheckOut
+    {
+        public CustomerOrderAddDTO Order { get; set; }
+        public List<OrderTicketAddlDTO> OrderTicket { get; set; }
+        public List<OrderCampingGearAddDTO> OrderCampingGear { get; set; }
+        public List<OrderFoodAddDTO> OrderFood { get; set; }
+        public List<OrderFoodComboAddDTO> OrderFoodCombo { get; set; }
+    }
 }

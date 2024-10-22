@@ -39,6 +39,19 @@ namespace BusinessObject.DTOs
 
        
     }
+    public class CustomerOrderAddDTO
+    {
+
+
+        public int? CustomerId { get; set; }
+        public string? CustomerName { get; set; }
+        public DateTime? OrderUsageDate { get; set; }
+        public decimal TotalAmount { get; set; }
+
+        public string? PhoneCustomer { get; set; }
+
+
+    }
     public class UpdateOrderDTO
     {
 

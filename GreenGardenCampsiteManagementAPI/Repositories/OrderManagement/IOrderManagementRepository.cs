@@ -18,6 +18,7 @@ namespace Repositories.Orders
         bool CancelDeposit(int id);
         bool DeleteOrder(int id);
         bool UpdateActivityOrder(int idorder, int idactivity);
+        bool CheckOut(CheckOut order);
         bool CreateUniqueOrder(CreateUniqueOrderRequest order);
         List<OrderCampingGearByUsageDateDTO> GetListOrderGearByUsageDate(DateTime usagedate);
         bool CreateComboOrder(CreateComboOrderRequest order);
