@@ -12,8 +12,9 @@ namespace Repositories.Orders
      {
         List<OrderDTO> GetAllOrders();
         List<OrderDTO> GetAllOrderDepositAndUsing();
-
+        List<CustomerOrderDTO> GetCustomerOrders(int customerId);
         OrderDetailDTO GetOrderDetail(int id);
+        CustomerOrderDetailDTO GetCustomerOrderDetail(int customerId);
         bool EnterDeposit(int id, decimal money);
         bool CancelDeposit(int id);
         bool DeleteOrder(int id);

@@ -44,7 +44,7 @@ namespace BusinessObject.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("server=.;database=GreenGarden;uid=sa;pwd=123;TrustServerCertificate=True");
+                optionsBuilder.UseSqlServer("server=MSI\\SQL2019;database=GreenGarden;uid=sa;pwd=123;TrustServerCertificate=True");
             }
         }
 

@@ -11,6 +11,7 @@ namespace Repositories.Accounts
     public interface IAccountRepository
     {
         List<ViewUserDTO> GetAllAccount();
+        ViewUserDTO GetAccountById(int id);
         string Login(AccountDTO a);
         Task<string> SendResetPassword(string email);
         Task<string> Register(Register a, string enteredCode); 

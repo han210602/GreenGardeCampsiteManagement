@@ -46,6 +46,10 @@ namespace Repositories.Orders
         {
             return OrderDAO.getAllOrder();
         }
+        public List<CustomerOrderDTO> GetCustomerOrders(int customerId)
+        {
+            return OrderDAO.GetCustomerOrders(customerId);
+        }
         public List<OrderDTO> GetAllOrderDepositAndUsing()
 
         {
@@ -60,6 +64,11 @@ namespace Repositories.Orders
         public OrderDetailDTO GetOrderDetail(int id)
         {
             return OrderDAO.GetOrderDetail(id);
+
+        }
+        public CustomerOrderDetailDTO GetCustomerOrderDetail(int customerId)
+        {
+            return OrderDAO.GetCustomerOrderDetail(customerId);
 
         }
 

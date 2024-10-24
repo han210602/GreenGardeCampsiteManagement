@@ -24,6 +24,10 @@ namespace Repositories.Accounts
         {
             return AccountDAO.GetAllAccounts();
         }
+        public ViewUserDTO GetAccountById(int id)
+        {
+            return AccountDAO.GetAccountById(id);
+        }
 
         public string Login(AccountDTO a)
         {

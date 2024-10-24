@@ -28,6 +28,18 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+        [HttpGet("GetCustomerOrders")]
+        public IActionResult GetCustomerOrders(int customerId)
+        {
+            try
+            {
+                return Ok(_repo.GetCustomerOrders(customerId).ToList());
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
         [HttpGet("GetAllOrderDepositAndUsing")]
         public IActionResult GetAllOrderDepositAndUsing()
         {
@@ -154,6 +166,18 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
             try
             {
                 return Ok(_repo.GetOrderDetail(id));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+        [HttpGet("GetCustomerOrderDetail/{id}")]
+        public IActionResult GetCustomerOrderDetail(int id)
+        {
+            try
+            {
+                return Ok(_repo.GetCustomerOrderDetail(id));
             }
             catch (Exception ex)
             {

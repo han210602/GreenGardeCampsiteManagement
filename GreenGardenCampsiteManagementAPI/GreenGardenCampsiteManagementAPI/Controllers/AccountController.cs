@@ -39,7 +39,20 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+        [HttpGet("GetAccountById")]
+        public IActionResult GetAccountById(int id)
+        {
+            try
+            {
 
+                var user = _repo.GetAccountById(id);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
         [HttpPost("Login")]
         public IActionResult Login([FromBody] AccountDTO loginRequest)
         {

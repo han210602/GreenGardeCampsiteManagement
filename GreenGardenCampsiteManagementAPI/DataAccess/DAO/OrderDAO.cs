@@ -49,6 +49,42 @@ namespace DataAccess.DAO
             }
             return listProducts;
         }
+        public static List<CustomerOrderDTO> GetCustomerOrders(int customerId)
+        {
+            var customerOrders = new List<CustomerOrderDTO>();
+            try
+            {
+                using (var context = new GreenGardenContext())
+                {
+                    customerOrders = context.Orders
+                        .Where(o => o.CustomerId == customerId) // Filter by CustomerId
+                        .Include(u => u.Customer)
+                        .Include(a => a.Activity)
+                        .Select(o => new CustomerOrderDTO()
+                        {
+                            OrderId = o.OrderId,
+                            CustomerId = o.CustomerId,
+                            CustomerName = o.CustomerId != null ? o.Customer.FirstName + " " + o.Customer.LastName : o.CustomerName,
+                            PhoneCustomer = o.PhoneCustomer == null ? o.Customer.PhoneNumber : o.PhoneCustomer,
+                            OrderDate = o.OrderDate,
+                            OrderUsageDate = o.OrderUsageDate,
+                            Deposit = o.Deposit,
+                            TotalAmount = o.TotalAmount,
+                            AmountPayable = o.AmountPayable,
+                            StatusOrder = o.StatusOrder,
+                            ActivityId = o.ActivityId,
+                            ActivityName = o.Activity.ActivityName
+                        })
+                        .ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return customerOrders;
+        }
+
         public static List<OrderDTO> getAllOrderDepositAndUsing()
         {
             var listProducts = new List<OrderDTO>();
@@ -432,6 +468,83 @@ namespace DataAccess.DAO
             }
             return order;
 
+        }
+        public static CustomerOrderDetailDTO GetCustomerOrderDetail(int orderId)
+        {
+            CustomerOrderDetailDTO orderDetail = new CustomerOrderDetailDTO();
+            try
+            {
+                using (var context = new GreenGardenContext())
+                {
+                    orderDetail = context.Orders
+                        .Include(o => o.OrderTicketDetails).ThenInclude(t => t.Ticket)
+                        .Include(o => o.OrderFoodDetails).ThenInclude(f => f.Item)
+                        .Include(o => o.OrderCampingGearDetails).ThenInclude(g => g.Gear)
+                        .Include(o => o.OrderComboDetails).ThenInclude(c => c.Combo)
+                        .Include(o => o.OrderFoodComboDetails).ThenInclude(fc => fc.Combo)
+                        .Select(o => new CustomerOrderDetailDTO()
+                        {
+                            OrderId = o.OrderId,
+                            CustomerName = o.CustomerId != null ? o.Customer.FirstName + " " + o.Customer.LastName : o.CustomerName,
+                            PhoneCustomer = o.PhoneCustomer == null ? o.Customer.PhoneNumber : o.PhoneCustomer,
+                            OrderDate = o.OrderDate,
+                            OrderUsageDate = o.OrderUsageDate,
+                            Deposit = o.Deposit,
+                            TotalAmount = o.TotalAmount,
+                            AmountPayable = o.AmountPayable,
+                            StatusOrder = o.StatusOrder,
+                            ActivityId = o.ActivityId,
+                            ActivityName = o.Activity.ActivityName,
+
+                            OrderTicketDetails = o.OrderTicketDetails.Select(ot => new OrderTicketDetailDTO
+                            {
+                                TicketId = ot.TicketId,
+                                Name = ot.Ticket.TicketName,
+                                Quantity = ot.Quantity,
+                                Price = ot.Quantity.Value * ot.Ticket.Price,
+                                Description = ot.Description,
+                            }).ToList(),
+
+                            OrderCampingGearDetails = o.OrderCampingGearDetails.Select(og => new OrderCampingGearDetailDTO
+                            {
+                                GearId = og.GearId,
+                                Name = og.Gear.GearName,
+                                Quantity = og.Quantity,
+                                Price = og.Quantity.Value * og.Gear.RentalPrice,
+                            }).ToList(),
+
+                            OrderFoodDetails = o.OrderFoodDetails.Select(of => new OrderFoodDetailDTO
+                            {
+                                ItemId = of.ItemId,
+                                Name = of.Item.ItemName,
+                                Quantity = of.Quantity,
+                                Price = of.Quantity.Value * of.Item.Price,
+                            }).ToList(),
+
+                            OrderFoodComboDetails = o.OrderFoodComboDetails.Select(ofc => new OrderFoodComboDetailDTO
+                            {
+                                ComboId = ofc.ComboId,
+                                Name = ofc.Combo.ComboName,
+                                Quantity = ofc.Quantity,
+                                Price = ofc.Quantity.Value * ofc.Combo.Price,
+                            }).ToList(),
+
+                            OrderComboDetails = o.OrderComboDetails.Select(oc => new OrderComboDetailDTO
+                            {
+                                ComboId = oc.ComboId,
+                                Name = oc.Combo.ComboName,
+                                Quantity = oc.Quantity,
+                                Price = oc.Quantity.Value * oc.Combo.Price,
+                            }).ToList()
+
+                        }).FirstOrDefault(o => o.OrderId == orderId);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return orderDetail;
         }
 
         public static bool UpdateActivityOrder(int idorder, int idactivity)

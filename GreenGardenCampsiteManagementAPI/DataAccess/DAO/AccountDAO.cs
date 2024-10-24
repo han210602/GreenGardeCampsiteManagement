@@ -271,6 +271,34 @@ namespace DataAccess.DAO
                 return users;
             }
         }
+        public static ViewUserDTO GetAccountById(int userId)
+        {
+            using (var context = new GreenGardenContext())
+            {
+                // Retrieve the user with the given UserId from the database and map it to ViewUserDTO
+                var user = context.Users
+                    .Where(u => u.UserId == userId)
+                    .Select(user => new ViewUserDTO
+                    {
+                        UserId = user.UserId,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        Email = user.Email,
+                        Password = user.Password,
+                        PhoneNumber = user.PhoneNumber,
+                        Address = user.Address,
+                        DateOfBirth = user.DateOfBirth,
+                        Gender = user.Gender,
+                        ProfilePictureUrl = user.ProfilePictureUrl,
+                        IsActive = user.IsActive,
+                        CreatedAt = user.CreatedAt,
+                        RoleId = user.RoleId
+                    })
+                    .FirstOrDefault(); // Returns null if no user is found
+
+                return user;
+            }
+        }
         public static async Task<string> UpdateProfile(UpdateProfile updateProfileDto)
         {
             using (var context = new GreenGardenContext())
