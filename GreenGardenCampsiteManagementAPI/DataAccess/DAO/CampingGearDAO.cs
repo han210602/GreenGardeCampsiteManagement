@@ -31,6 +31,26 @@ namespace DataAccess.DAO
                 }).ToList();
             return campingGears;
         }
+        public static CampingGearDTO GetCampingGearDetail(int gearId)
+        {
+            var campingGear = context.CampingGears
+                .Include(gear => gear.GearCategory)
+                .Where(gear => gear.GearId == gearId) // Filter by GearId
+                .Select(gear => new CampingGearDTO
+                {
+                    GearId = gear.GearId,
+                    GearName = gear.GearName,
+                    QuantityAvailable = gear.QuantityAvailable,
+                    RentalPrice = gear.RentalPrice,
+                    Description = gear.Description,
+                    CreatedAt = gear.CreatedAt,
+                    GearCategoryName = gear.GearCategory.GearCategoryName,
+                    ImgUrl = gear.ImgUrl
+                })
+                .FirstOrDefault(); // Return the first match or null if not found
+
+            return campingGear;
+        }
 
         public static void AddCampingGear(AddCampingGearDTO gearDto)
         {

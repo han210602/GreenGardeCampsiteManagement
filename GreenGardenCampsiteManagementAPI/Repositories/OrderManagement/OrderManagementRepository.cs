@@ -46,9 +46,9 @@ namespace Repositories.Orders
         {
             return OrderDAO.getAllOrder();
         }
-        public List<CustomerOrderDTO> GetCustomerOrders(int customerId)
+        public List<CustomerOrderDTO> GetCustomerOrders(int customerId, bool? statusOrder, int? activityId)
         {
-            return OrderDAO.GetCustomerOrders(customerId);
+            return OrderDAO.GetCustomerOrders(customerId,statusOrder,activityId);
         }
         public List<OrderDTO> GetAllOrderDepositAndUsing()
 

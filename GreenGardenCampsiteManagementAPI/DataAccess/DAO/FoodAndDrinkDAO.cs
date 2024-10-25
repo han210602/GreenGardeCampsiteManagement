@@ -30,6 +30,26 @@ namespace DataAccess.DAO
 
             return items;
         }
+        public static FoodAndDrinkDTO GetFoodAndDrinkDetail(int itemId)
+        {
+            var item = context.FoodAndDrinks
+                .Include(x => x.Category)
+                .Where(i => i.ItemId == itemId) // Filter by ItemId
+                .Select(i => new FoodAndDrinkDTO
+                {
+                    ItemId = i.ItemId,
+                    ItemName = i.ItemName,
+                    Price = i.Price,
+                    QuantityAvailable = i.QuantityAvailable,
+                    Description = i.Description,
+                    CategoryName = i.Category.CategoryName,
+                    ImgUrl = i.ImgUrl
+                })
+                .FirstOrDefault(); // Return the first match or null if not found
+
+            return item;
+        }
+
 
 
         public static void AddFoodAndDrink(AddFoodOrDrinkDTO item)

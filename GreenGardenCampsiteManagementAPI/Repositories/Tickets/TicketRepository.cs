@@ -14,6 +14,10 @@ namespace Repositories.Tickets
         {
             return TicketDAO.GetAllTickets();
         }
+        public TicketDTO GetTicketDetail(int id)
+        {
+            return TicketDAO.GetTicketDetail(id);
+        }
         public List<TicketDTO> GetTicketsByCategoryId(int categoryId)
         {
             return TicketDAO.GetTicketsByCategoryId(categoryId);

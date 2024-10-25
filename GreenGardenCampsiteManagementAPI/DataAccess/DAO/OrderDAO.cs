@@ -49,7 +49,7 @@ namespace DataAccess.DAO
             }
             return listProducts;
         }
-        public static List<CustomerOrderDTO> GetCustomerOrders(int customerId)
+        public static List<CustomerOrderDTO> GetCustomerOrders(int customerId, bool? statusOrder = null, int? activityId = null)
         {
             var customerOrders = new List<CustomerOrderDTO>();
             try
@@ -57,7 +57,9 @@ namespace DataAccess.DAO
                 using (var context = new GreenGardenContext())
                 {
                     customerOrders = context.Orders
-                        .Where(o => o.CustomerId == customerId) // Filter by CustomerId
+                        .Where(o => o.CustomerId == customerId
+                                    && (statusOrder == null || o.StatusOrder == statusOrder)
+                                    && (activityId == null || o.ActivityId == activityId)) // Additional filters
                         .Include(u => u.Customer)
                         .Include(a => a.Activity)
                         .Select(o => new CustomerOrderDTO()
@@ -84,6 +86,8 @@ namespace DataAccess.DAO
             }
             return customerOrders;
         }
+
+
 
         public static List<OrderDTO> getAllOrderDepositAndUsing()
         {

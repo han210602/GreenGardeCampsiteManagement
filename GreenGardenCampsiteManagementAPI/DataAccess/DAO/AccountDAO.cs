@@ -60,6 +60,8 @@ namespace DataAccess.DAO
                     {
                         Token = tokenString,
                         UserName = user.FirstName + " " + user.LastName,
+                        UserId = user.UserId,
+                        ProfilePictureUrl = user.ProfilePictureUrl,
                         Email = user.Email,
                         Phone = user.PhoneNumber,
                         RoleId = (int)user.RoleId // Add RoleId to response

@@ -29,11 +29,11 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
             }
         }
         [HttpGet("GetCustomerOrders")]
-        public IActionResult GetCustomerOrders(int customerId)
+        public IActionResult GetCustomerOrders(int customerId, bool? statusOrder, int? activityId)
         {
             try
             {
-                return Ok(_repo.GetCustomerOrders(customerId).ToList());
+                return Ok(_repo.GetCustomerOrders(customerId, statusOrder, activityId).ToList());
             }
             catch (Exception ex)
             {

@@ -14,7 +14,10 @@ namespace Repositories.FoodAndDrink
         {
             return FoodAndDrinkDAO.GetAllFoodAndDrink();
         }
-
+        public FoodAndDrinkDTO GetFoodAndDrinkDetail(int itemId)
+        {
+            return FoodAndDrinkDAO.GetFoodAndDrinkDetail(itemId);
+        }
         public void AddFoodOrDrink(AddFoodOrDrinkDTO item)
         {
             FoodAndDrinkDAO.AddFoodAndDrink(item);

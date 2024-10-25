@@ -24,7 +24,22 @@ namespace DataAccess.DAO
                 }).ToList();
             return tickets;
         }
+        public static TicketDTO GetTicketDetail(int ticketId)
+        {
+            var ticket = context.Tickets
+                .Include(t => t.TicketCategory)
+                .Where(t => t.TicketId == ticketId)
+                .Select(t => new TicketDTO
+                {
+                    TicketId = t.TicketId,
+                    TicketName = t.TicketName,
+                    Price = t.Price,
+                    TicketCategoryName = t.TicketCategory.TicketCategoryName
+                })
+                .FirstOrDefault(); // Return the first match or null if not found
 
+            return ticket;
+        }
         public static void AddTicket(AddTicket ticketDto)
         {
             var ticket = new Ticket

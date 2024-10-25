@@ -11,7 +11,7 @@ namespace Repositories.CampingGear
     {
         List<CampingGearDTO> GetAllCampingGears();
         List<CampingCategoryDTO> GetAllCampingGearCategories();
-
+        CampingGearDTO GetCampingGearDetail(int gearId);
         void AddCampingGear(AddCampingGearDTO gearDto);
         void UpdateCampingGear(UpdateCampingGearDTO gearDto);
 

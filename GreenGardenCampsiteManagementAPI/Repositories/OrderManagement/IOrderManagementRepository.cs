@@ -12,7 +12,7 @@ namespace Repositories.Orders
      {
         List<OrderDTO> GetAllOrders();
         List<OrderDTO> GetAllOrderDepositAndUsing();
-        List<CustomerOrderDTO> GetCustomerOrders(int customerId);
+        List<CustomerOrderDTO> GetCustomerOrders(int customerId, bool? statusOrder, int? activityId);
         OrderDetailDTO GetOrderDetail(int id);
         CustomerOrderDetailDTO GetCustomerOrderDetail(int customerId);
         bool EnterDeposit(int id, decimal money);
