@@ -59,7 +59,7 @@ namespace DataAccess.DAO
                     var response = new LoginResponseDTO
                     {
                         Token = tokenString,
-                        UserName = user.FirstName + " " + user.LastName,
+                        FullName = user.FirstName + " " + user.LastName,
                         UserId = user.UserId,
                         ProfilePictureUrl = user.ProfilePictureUrl,
                         Email = user.Email,

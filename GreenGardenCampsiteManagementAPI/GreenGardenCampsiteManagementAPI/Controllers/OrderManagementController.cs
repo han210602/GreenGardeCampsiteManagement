@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BusinessObject.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Repositories.Accounts;
@@ -16,12 +17,27 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
         {
             _repo = repo;
         }
+        [Authorize("AdminAndEmployeePolicy")]
+
         [HttpGet("GetAllOrders")]
         public IActionResult GetAllOrders()
         {
             try
             {
                 return Ok(_repo.GetAllOrders().ToList());
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+        [Authorize("AdminAndEmployeePolicy")]
+        [HttpGet("GetAllOrderOnline")]
+        public IActionResult GetAllOrderOnline()
+        {
+            try
+            {
+                return Ok(_repo.GetAllOrderOnline().ToList());
             }
             catch (Exception ex)
             {
@@ -52,6 +68,8 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+        [Authorize("AdminAndEmployeePolicy")]
+
         [HttpGet("GetListOrderGearByUsageDate/{usagedate}")]
         public IActionResult GetListOrderGearByUsageDate(DateTime usagedate)
         {
@@ -64,6 +82,8 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+        [Authorize("AdminAndEmployeePolicy")]
+
         [HttpPost("CreateUniqueOrder")]
         public IActionResult CreateUniqueOrder([FromBody] CreateUniqueOrderRequest order) 
         {
@@ -76,6 +96,8 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+       
+
         [HttpPost("CheckOut")]
         public IActionResult CheckOut([FromBody] CheckOut order)
         {
@@ -88,6 +110,8 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+        [Authorize("AdminAndEmployeePolicy")]
+
         [HttpPost("CreateComboOrder")]
         public IActionResult CreateComboOrder([FromBody] CreateComboOrderRequest order)
         {
@@ -100,6 +124,8 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+        [Authorize("AdminAndEmployeePolicy")]
+
         [HttpPost("UpdateTicket")]
         public IActionResult UpdateTicket([FromBody] List<OrderTicketAddlDTO> ticket)
         {
@@ -112,6 +138,8 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+        [Authorize("AdminAndEmployeePolicy")]
+
         [HttpPut("UpdateCampingGear")]
         public IActionResult UpdateCampingGear([FromBody] List<OrderCampingGearAddDTO> ticket)
         {
@@ -124,6 +152,8 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+        [Authorize("AdminAndEmployeePolicy")]
+
         [HttpPut("UpdateFoodAndDrink")]
         public IActionResult UpdateFoodAndDrink([FromBody] List<OrderFoodAddDTO> ticket)
         {
@@ -136,6 +166,8 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+        [Authorize("AdminAndEmployeePolicy")]
+
         [HttpPut("UpdateFoodCombo")]
         public IActionResult UpdateFoodCombo([FromBody] List<OrderFoodComboAddDTO> ticket)
         {
@@ -148,6 +180,8 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+        [Authorize("AdminAndEmployeePolicy")]
+
         [HttpPut("UpdateCombo")]
         public IActionResult UpdateCombo([FromBody] List<OrderComboAddDTO> ticket)
         {
@@ -160,6 +194,8 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+        [Authorize("AdminAndEmployeePolicy")]
+
         [HttpGet("GetOrderDetail/{id}")]
         public IActionResult GetOrderDetail(int id)
         {
@@ -184,6 +220,8 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+        [Authorize("AdminPolicy")]
+
         [HttpPut("EnterDeposit/{id}/{money}")]
         public IActionResult EnterDeposit(int id,decimal money)
         {
@@ -196,6 +234,8 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+        [Authorize("AdminAndEmployeePolicy")]
+
         [HttpPut("UpdateActivityOrder/{idorder}/{idactivity}")]
         public IActionResult UpdateActivityOrder(int idorder, int idactivity)
         {
@@ -208,6 +248,8 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+        [Authorize("AdminPolicy")]
+
         [HttpPut("CancelDeposit/{id}")]
         public IActionResult CancelDeposit(int id)
         {
@@ -220,6 +262,8 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+        [Authorize("AdminPolicy")]
+
         [HttpPut("DeleteOrder/{id}")]
         public IActionResult DeleteOrder(int id)
         {
@@ -232,6 +276,8 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+        [Authorize("AdminAndEmployeePolicy")]
+
         [HttpPost("UpdateOrder")]
         public IActionResult UpdateOrder([FromBody] UpdateOrderDTO order)
         {

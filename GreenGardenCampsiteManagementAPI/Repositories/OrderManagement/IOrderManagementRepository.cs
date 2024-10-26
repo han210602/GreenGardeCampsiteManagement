@@ -11,6 +11,8 @@ namespace Repositories.Orders
      public interface IOrderManagementRepository
      {
         List<OrderDTO> GetAllOrders();
+        List<OrderDTO> GetAllOrderOnline();
+
         List<OrderDTO> GetAllOrderDepositAndUsing();
         List<CustomerOrderDTO> GetCustomerOrders(int customerId, bool? statusOrder, int? activityId);
         OrderDetailDTO GetOrderDetail(int id);

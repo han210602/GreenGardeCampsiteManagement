@@ -249,7 +249,9 @@ namespace DataAccess.DAO
                                 TotalAmount = order.TotalAmount,
                                 AmountPayable = order.TotalAmount - order.Deposit,
                                 StatusOrder = true,
-                                ActivityId = 1
+                                ActivityId = 1,
+                                PhoneCustomer = order.PhoneCustomer
+
                             };
                         }
                         else
@@ -429,7 +431,7 @@ namespace DataAccess.DAO
                                 TicketId= o.TicketId,
                                 Name=o.Ticket.TicketName,
                                 Quantity=o.Quantity,
-                                Price=o.Quantity.Value*o.Ticket.Price,
+                                Price=o.Ticket.Price,
                                 Description=o.Description,
                             }).ToList(),
                            OrderCampingGearDetails=o.OrderCampingGearDetails.Select(o=> new OrderCampingGearDetailDTO 
@@ -445,21 +447,21 @@ namespace DataAccess.DAO
                                ItemId=o.ItemId,
                                Name=o.Item.ItemName,
                                Quantity=o.Quantity,
-                               Price = o.Quantity.Value * o.Item.Price,
+                               Price =o.Item.Price,
                            }).ToList(),
                            OrderFoodComboDetails = o.OrderFoodComboDetails.Select(o => new OrderFoodComboDetailDTO
                            {
                                ComboId=o.ComboId,
                                Name = o.Combo.ComboName,
                                Quantity = o.Quantity,
-                               Price = o.Quantity.Value * o.Combo.Price,
+                               Price =o.Combo.Price,
                            }).ToList(),
                             OrderComboDetails = o.OrderComboDetails.Select(o => new OrderComboDetailDTO
                            {
                                ComboId=o.ComboId,
                                Name = o.Combo.ComboName,
                                Quantity = o.Quantity,
-                               Price = o.Quantity.Value * o.Combo.Price,
+                               Price =  o.Combo.Price,
                            }).ToList()
 
                         }).FirstOrDefault(o=>o.OrderId==id);
@@ -505,7 +507,7 @@ namespace DataAccess.DAO
                                 TicketId = ot.TicketId,
                                 Name = ot.Ticket.TicketName,
                                 Quantity = ot.Quantity,
-                                Price = ot.Quantity.Value * ot.Ticket.Price,
+                                Price = ot.Ticket.Price,
                                 Description = ot.Description,
                             }).ToList(),
 
@@ -514,7 +516,7 @@ namespace DataAccess.DAO
                                 GearId = og.GearId,
                                 Name = og.Gear.GearName,
                                 Quantity = og.Quantity,
-                                Price = og.Quantity.Value * og.Gear.RentalPrice,
+                                Price =  og.Gear.RentalPrice,
                             }).ToList(),
 
                             OrderFoodDetails = o.OrderFoodDetails.Select(of => new OrderFoodDetailDTO
@@ -522,7 +524,7 @@ namespace DataAccess.DAO
                                 ItemId = of.ItemId,
                                 Name = of.Item.ItemName,
                                 Quantity = of.Quantity,
-                                Price = of.Quantity.Value * of.Item.Price,
+                                Price =  of.Item.Price,
                             }).ToList(),
 
                             OrderFoodComboDetails = o.OrderFoodComboDetails.Select(ofc => new OrderFoodComboDetailDTO
@@ -530,7 +532,7 @@ namespace DataAccess.DAO
                                 ComboId = ofc.ComboId,
                                 Name = ofc.Combo.ComboName,
                                 Quantity = ofc.Quantity,
-                                Price = ofc.Quantity.Value * ofc.Combo.Price,
+                                Price =  ofc.Combo.Price,
                             }).ToList(),
 
                             OrderComboDetails = o.OrderComboDetails.Select(oc => new OrderComboDetailDTO
@@ -538,7 +540,7 @@ namespace DataAccess.DAO
                                 ComboId = oc.ComboId,
                                 Name = oc.Combo.ComboName,
                                 Quantity = oc.Quantity,
-                                Price = oc.Quantity.Value * oc.Combo.Price,
+                                Price =  oc.Combo.Price,
                             }).ToList()
 
                         }).FirstOrDefault(o => o.OrderId == orderId);
@@ -576,7 +578,46 @@ namespace DataAccess.DAO
 
             }
         }
+        public static List<OrderDTO> getAllOrderOnline()
+        {
+            var listProducts = new List<OrderDTO>();
+            try
+            {
+                using (var context = new GreenGardenContext())
+                {
+                    listProducts = context.Orders
+                        .Include(u => u.Customer)
+                        .Include(e => e.Employee)
+                        .Include(a => a.Activity).Where(s => s.ActivityId == 1)
+                        .Select(o => new OrderDTO()
+                        {
+                            OrderId = o.OrderId,
+                            CustomerId = o.CustomerId,
+                            EmployeeId = o.EmployeeId,
+                            EmployeeName = o.Employee.FirstName + "" + o.Employee.LastName,
+                            CustomerName = o.CustomerId != null ? o.Customer.FirstName + "" + o.Customer.LastName : o.CustomerName,
+                            PhoneCustomer = o.PhoneCustomer == null ? o.Customer.PhoneNumber : o.PhoneCustomer,
+                            OrderDate = o.OrderDate,
+                            OrderUsageDate = o.OrderUsageDate,
+                            Deposit = o.Deposit,
+                            TotalAmount = o.TotalAmount,
+                            AmountPayable = o.AmountPayable,
+                            StatusOrder = o.StatusOrder,
+                            ActivityId = o.ActivityId,
+                            ActivityName = o.Activity.ActivityName
+                        })
+                        .ToList();
+                }
 
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return listProducts;
+
+
+        }
         public static bool CancelDeposit(int id)
         {
             try
@@ -670,7 +711,9 @@ namespace DataAccess.DAO
                                 TotalAmount = order.TotalAmount,
                                 AmountPayable = order.TotalAmount - order.Deposit,
                                 StatusOrder = true,
-                                ActivityId = 1
+                                ActivityId = 1,
+                                PhoneCustomer = order.PhoneCustomer
+
                             };
                         }
                         else

@@ -17,7 +17,11 @@ namespace Repositories.Orders
         {
             return OrderDAO.CancelDeposit(id);
         }
+        public List<OrderDTO> GetAllOrderOnline()
+        {
+            return OrderDAO.getAllOrderOnline();
 
+        }
         public bool CreateComboOrder(CreateComboOrderRequest order)
         {
             return OrderDAO.CreateComboOrder(order);
