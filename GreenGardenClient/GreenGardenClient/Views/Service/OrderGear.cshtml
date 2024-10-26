@@ -102,8 +102,49 @@
 
                                 <li><a href="blog.html" class="nav-link">Liên hệ</a></li>
                                 <li>
-                                    <a href="/Common/Login" class="nav-link">Đăng nhập</a>
-                                    <a href="/Common/Register" class="nav-link">Đăng Ký</a>
+                                    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+                                    @if (HttpContextAccessor.HttpContext.Session.GetString("Email") == null)
+                                    {
+                                        <a href="/Common/Login" class="nav-link">Đăng nhập</a>
+                                        <a href="/Common/Register" class="nav-link">Đăng Ký</a>
+                                    }
+                                    else
+                                    {
+
+
+                                    <li class="has-dropdown">
+                                        <a href="~/Common/UpdateProfile" class="nav-link" style="display: flex; align-items: center;">
+                                            <div style="width: 30px; height: 30px; border-radius: 50%; overflow: hidden; margin-right: 8px;">
+                                                <img src="~/images/img_1.jpg" alt="Trang cá nhân" style="width: 100%; height: 100%; object-fit: cover;">
+                                            </div>
+                                                @HttpContextAccessor.HttpContext.Session.GetString("Fullname")
+                                        </a>
+
+
+                                        <ul class="dropdown">
+                                                @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 1)
+                                                {
+                                                <li><a href="~/OrderManagement" class="nav-link">Quản lí</a></li>
+                                                <li><a href="~/Home/Logout" class="nav-link">Đăng xuất</a></li>
+                                                }
+                                                else if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 2)
+                                                {
+                                                <li><a href="~/Service/OrderTicket" class="nav-link">Quản lí</a></li>
+                                                <li><a href="~/Home/Logout" class="nav-link">Đăng xuất</a></li>
+                                                }
+                                                else
+                                                {
+
+                                                <li><a href="~/Service/OrderTicket" class="nav-link">Lịch sử đặt hàng</a></li>
+                                                <li><a href="~/Service/OrderFoodAndDrink" class="nav-link">Giỏ hàng</a></li>
+                                                <li><a href="~/Home/Logout" class="nav-link">Đăng xuất</a></li>
+
+                                                }
+                                        </ul>
+                                    </li>
+                                    }
+
                                 </li>
 
                             </ul>
@@ -285,22 +326,23 @@
                                             </div>
                                             <div class="listing-item-content">
                                                 <h2 class="px-3 mb-1 category bg-primary">@item.RentalPrice.ToString("N0") ₫</h2>
-                                                <h2 class="mb-2"><a href="@Url.Action("Detail", "CampingGear", new { id = item.GearId })">@item.GearName</a></h2>
-                                                <form method="post" action="/Service/AddToCart">
-                                                    <input type="hidden" name="Id" value="@item.GearId" />
-                                                    <input type="hidden" name="Name" value="@item.GearName" />
-                                                    <input type="hidden" name="CategoryName" value="@item.GearCategoryName" />
-                                                    <input type="hidden" name="Type" value="Gear" />
-                                                    <input type="hidden" name="TypeCategory" value="GearCategory" />
-                                                    <input type="hidden" name="price" value="@item.RentalPrice" />
-                                                    <input type="hidden" id="hidden-date-@item.GearId" name="usageDate" />
-                                                    <input type="hidden" name="quantity" value="1" min="1" />
-                                                    <input type="hidden" name="redirectAction" value="OrderGear" />
-                                                    <button type="submit" class="btn btn-primary" onclick="return setUsageDate('@item.GearId')"> <i class="fa fa-cart-shopping"></i>Đặt ngay</button>
-                                                </form>
+                                                <h2 class="mb-2">@item.GearName</h2>
 
-
-                                               
+                                                <div class="button-container d-flex justify-content-between align-items-center">
+                                                    <form method="post" action="/Service/AddToCart" class="d-flex align-items-center">
+                                                        <input type="hidden" name="Id" value="@item.GearId" />
+                                                        <input type="hidden" name="Name" value="@item.GearName" />
+                                                        <input type="hidden" name="CategoryName" value="@item.GearCategoryName" />
+                                                        <input type="hidden" name="Type" value="Gear" />
+                                                        <input type="hidden" name="TypeCategory" value="GearCategory" />
+                                                        <input type="hidden" name="price" value="@item.RentalPrice" />
+                                                        <input type="hidden" id="hidden-date-@item.GearId" name="usageDate" />
+                                                        <input type="hidden" name="quantity" value="1" min="1" />
+                                                        <input type="hidden" name="redirectAction" value="OrderGear" />
+                                                        <button type="submit" class="btn btn-primary" onclick="return setUsageDate('@item.GearId')"> <i class="fa fa-cart-shopping"></i>Đặt ngay</button>
+                                                    </form>
+                                                    <a href="@Url.Action("CampingGearDetail", "Service", new { gearId = item.GearId })" class="btn btn-secondary ml-2">Xem chi tiết</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

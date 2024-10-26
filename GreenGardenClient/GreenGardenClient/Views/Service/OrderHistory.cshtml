@@ -1,4 +1,9 @@
-﻿<!doctype html>
+﻿﻿﻿@using GreenGardenClient.Models;
+@{
+    var customerOrders = ViewBag.CustomerOrder as List<CustomerOrderVM>;
+    var activity = ViewBag.Activity as List<ActivityVM>;
+}
+<!doctype html>
 <html lang="en">
 
 <head>
@@ -148,6 +153,7 @@
                     flex-direction: column;
                     justify-content: center;
                 }
+
                 .item-title {
                     font-weight: bold;
                 }
@@ -163,9 +169,9 @@
                 }
 
                     .btn-purple:hover {
-                    background-color: #d99b53 !important;
-                    color: white !important;
-                }
+                        background-color: #d99b53 !important;
+                        color: white !important;
+                    }
                 /* Tạo dấu gạch ngang giữa các sản phẩm */
                 .divider {
                     border-top: 1px solid #ddd;
@@ -187,21 +193,6 @@
             </script>
         </header>
 
-
-
-        <div class="ftco-blocks-cover-1">
-            <div class="site-section-cover overlay" style="background-image: url('@Url.Content("~/images/hero_1.jpg")')">
-                <div class="container">
-                    <div class="row align-items-center justify-content-center text-center">
-                        <div class="col-md-5" data-aos="fade-up">
-                            <h1 class="mb-3 text-white">Trips List</h1>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta veritatis in tenetur doloremque, maiores doloribus officia iste. Dolores.</p>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="site-section">
             <div class="container">
                 <div class="row justify-content-center text-center">
@@ -214,100 +205,84 @@
                     </div>
                 </div>
                 <div class="row">
-                    <!-- Cột bên trái: Danh sách category -->
                     <div class="col-lg-3 col-md-4 mb-4" data-aos="fade-up">
                         <div class="category-list">
                             <h4 class="mb-4">Tình Trạng</h4>
-                            <ul class="list-group">
-                                <li class="list-group-item"><a href="#">Tất cả</a></li>
-                                <li class="list-group-item"><a href="#">Đang chờ</a></li>
-                                <li class="list-group-item"><a href="#">Đã đặt</a></li>
-                                <li class="list-group-item"><a href="#">Đã huỷ</a></li>
-                   
+                            <ul id="categoryFilter" class="list-group">
+                                <li class="list-group-item">
+                                    <a class="@(ViewBag.CurrentCategoryId == null ? "active-category" : "")"
+                                       href="@Url.Action("OrderHistory", "Service", new { activityId = (int?)null })">Tất cả</a>
+                                </li>
+                                @foreach (var category in activity)
+                                {
+                                    <li class="list-group-item">
+                                        <a href="@Url.Action("OrderHistory", "Service", new { activityId = category.ActivityId })"
+                                           class="@(ViewBag.CurrentCategoryId == category.ActivityId ? "active-category" : "")">
+                                            @category.ActivityName
+                                        </a>
+                                    </li>
+                                }
                             </ul>
                         </div>
                     </div>
 
+
                     <div class="col-lg-9 col-md-8" data-aos="fade-up">
-                            <div class="container">
-                                <div class="order-card">
-                                    <div class="d-flex justify-content-between">
-                                        <span class="order-title">Đơn đặt: 2</span>
-                                        <span>Ngày đặt: 13/10/2024</span>
-                                        <a href="#" class="text-primary">Đang chờ</a>
-                                    </div>
-
-                                    <!-- Sản phẩm 1 -->
-                                    <div class="item-card">
-                                        <img src="~/images/img_1.jpg" alt="White & Red Nike Athletic Shoe">
-                                        <div class="item-details">
-                                            <p class="item-title">Vé người lớn</p>
-                                            <p>Số lượng: 10</p>
-                                            <p class="item-price">$49.00</p>
-                                        </div>
-                                        <div class="buttons">
-                                            <button class="btn btn-purple btn-block">Đặt lại</button>
-                                            <button class="btn btn-secondary btn-block mt-2">Dịch vụ tương tự</button>
-                                        </div>
-                                    </div>
-
-                                    <!-- Dấu gạch ngang giữa sản phẩm 1 và 2 -->
-                                    <div class="divider"></div>
-
-                                    <!-- Sản phẩm 2 -->
-                                    <div class="item-card">
-                                        <img src="~/images/img_1.jpg" alt="Nike Black and White">
-                                        <div class="item-details">
-                                            <p class="item-title">Vé trẻ em</p>
-                                            <p>Số lượng: 10</p>
-                                            <p class="item-price">$49.00</p>
-                                        </div>
-                                        <div class="buttons">
-                                            <button class="btn btn-purple btn-block">Đặt lại</button>
-                                            <button class="btn btn-secondary btn-block mt-2">Dịch vụ tương tự</button>
-                                        </div>
-                                    </div>
-                                <div class="divider"></div>
-                                <div class="d-flex justify-content-between">
-                                    <span class="order-title">Đơn đặt: 2</span>
-                                    <span>Ngày đặt: 14/10/2024</span>
-                                    <a href="#" class="text-primary">Đang chờ</a>
-                                </div>
-
-                                <div class="item-card">
-                                    <img src="~/images/img_1.jpg" alt="White & Red Nike Athletic Shoe">
-                                    <div class="item-details">
-                                        <p class="item-title">Vé người lớn</p>
-                                        <p>Số lượng: 10</p>
-                                        <p class="item-price">$49.00</p>
-                                    </div>
-                                    <div class="buttons">
-                                        <button class="btn btn-purple btn-block">Đặt lại</button>
-                                        <button class="btn btn-secondary btn-block mt-2">Dịch vụ tương tự</button>
-                                    </div>
-                                </div>
-
-                                <!-- Dấu gạch ngang giữa sản phẩm 1 và 2 -->
-                                <div class="divider"></div>
-
-                                <!-- Sản phẩm 2 -->
-                                <div class="item-card">
-                                    <img src="~/images/img_1.jpg" alt="Nike Black and White">
-                                    <div class="item-details">
-                                        <p class="item-title">Vé trẻ em</p>
-                                        <p>Số lượng: 10</p>
-                                        <p class="item-price">$49.00</p>
-                                    </div>
-                                    <div class="buttons">
-                                        <button class="btn btn-purple btn-block">Đặt lại</button>
-                                        <button class="btn btn-secondary btn-block mt-2">Dịch vụ tương tự</button>
-                                    </div>
-                                </div>
-                                </div>
+                        <div class="filter-container" data-aos="fade-up">
+                            <!-- Sort Dropdown -->
+                            <div class="filter-item">
+                                <label for="sort">Lọc theo:</label>
+                                <select id="sort" name="sort" onchange="sortCampingGears()">
+                                    <option value="" @(ViewBag.OrderStatus == null ? "selected" : "")>Tất cả</option>
+                                    <option value="true" @(ViewBag.OrderStatus == true ? "selected" : "")>Đã cọc</option>
+                                    <option value="false" @(ViewBag.OrderStatus == false ? "selected" : "")>Chưa cọc</option>
+                                </select>
                             </div>
+                        </div>
 
+                        <div class="container">
+                            <div class="order-card">
+                                @if (customerOrders != null && customerOrders.Any())
+                                {
+                                    foreach (var order in customerOrders)
+                                    {
+                                        <div class="divider"></div>
+                                        <div class="d-flex justify-content-between">
+                                            <span class="order-title">Đơn đặt: @order.OrderId</span>
+                                            <span>Ngày đặt: @order.OrderDate</span>
+                                            <p class="text-primary">@order.ActivityName</p>
+                                        </div>
 
-        </div>
+                                        <div class="item-card">
+                                            <img src="~/images/img_1.jpg" alt="">
+                                            <div class="item-details">
+                                                <p class="item-title">Ngày sử dụng: @order.OrderUsageDate</p>
+                                                @if (order.StatusOrder == true)
+                                                {
+                                                    <p>Trạng thái: Đã cọc</p>
+                                                }
+                                                else
+                                                {
+                                                    <p>Trạng thái: chưa cọc</p>
+                                                }
+
+                                                <p class="item-price">Tổng tiền: @order.TotalAmount.ToString("N0") đ</p>
+                                            </div>
+                                            <div class="buttons">
+                                                <a href="@Url.Action("OrderDetailHistory", "Service", new { orderId = @order.OrderId })" class="btn btn-purple btn-block">Xem chi tiết</a>
+                                                <button class="btn btn-secondary btn-block mt-2">Hủy</button>
+                                            </div>
+                                        </div>
+                                        <div class="divider"></div>
+                                    }
+                                }
+                                else
+                                {
+                                    <p>Không có đơn hàng nào.</p>
+                                }
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -372,6 +347,23 @@
             duration: 1200, // Đặt thời gian cho hiệu ứng (tùy chọn)
         });
     </script>
+        <script>
+            function sortCampingGears() {
+                const orderStatus = document.getElementById("sort").value;
+                const customerId = '@(ViewBag.CustomerId ?? "1003")';
+                const activityId = '@(ViewBag.CurrentCategoryId ?? "null")';
+
+                // Construct the URL for filtering
+                let url = `/Service/OrderHistory?customerId=${customerId}`;
+                if (activityId !== "null") url += `&activityId=${activityId}`;
+                if (orderStatus) url += `&statusOrder=${orderStatus}`;
+
+                window.location.href = url;
+            }
+
+    </script>
+
+    </script>
     <script src="~/js/jquery-3.3.1.min.js"></script>
     <script src="~/js/jquery-migrate-3.0.0.js"></script>
     <script src="~/js/popper.min.js"></script>
@@ -388,7 +380,54 @@
     <script src="~/js/aos.js"></script>
 
     <script src="~/js/main.js"></script>
+    <style>
+        .filter-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
 
+        .filter-item {
+            font-weight: bold;
+            color: #333;
+        }
+
+            .filter-item label {
+                margin-right: 10px;
+                font-size: 1rem;
+                color: #333;
+            }
+
+            .filter-item select {
+                padding: 5px 10px;
+                font-size: 1rem;
+                border-radius: 5px;
+                border: 1px solid #ddd;
+                background-color: #f0f0f0;
+                transition: border-color 0.3s, box-shadow 0.3s;
+            }
+
+                .filter-item select:focus {
+                    border-color: #d99b53;
+                    box-shadow: 0 0 5px rgba(217, 155, 83, 0.5);
+                    outline: none;
+                }
+
+                .filter-item select option {
+                    padding: 10px;
+                    background-color: #fff;
+                }
+
+                    .filter-item select option:hover {
+                        background-color: #e0e0e0;
+                    }
+
+        .active-category {
+            font-weight: bold;
+            color: #d99b53;
+        }
+
+    </style>
 </body>
 
 </html>

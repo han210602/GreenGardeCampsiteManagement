@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\css\\.DS_Store"
     },
     {
+      "Id": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\css\\Order tracking.css",
+      "PackagePath": "staticwebassets\\css\\Order tracking.css"
+    },
+    {
       "Id": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\css\\aos.css",
       "PackagePath": "staticwebassets\\css\\aos.css"
     },
@@ -207,6 +211,10 @@
     {
       "Id": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\Picture1.jpg",
       "PackagePath": "staticwebassets\\images\\Picture1.jpg"
+    },
+    {
+      "Id": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\doan1.jpg",
+      "PackagePath": "staticwebassets\\images\\doan1.jpg"
     },
     {
       "Id": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\img_1.jpg",

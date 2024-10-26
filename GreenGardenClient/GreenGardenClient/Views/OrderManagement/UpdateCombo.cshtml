@@ -1,4 +1,5 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
 @using GreenGardenClient.Models
 
@@ -30,32 +31,135 @@
 
     <!-- Sidebar menu-->
 
-    <aside class="app-sidebar">
-
-        <ul class="app-menu">
-
+    <header class="app-header">
+        <a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
+        <ul class="app-nav">
+            <!-- User Menu-->
             <li>
-                <a class="app-menu__item active" href="table-data-table.html">
+                <a class="app-nav__item" href="~/Home">
+                    <i class='bx bx-log-out bx-rotate-180'></i>
+                </a>
+            </li>
+        </ul>
+    </header>
+
+    <!-- Sidebar menu-->
+    <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+    <aside class="app-sidebar">
+        <div class="app-sidebar__user">
+            <img class="app-sidebar__user-avatar" src="~/images/img_1.jpg" width="50px" alt="User Image">
+            <div>
+                <p class="app-sidebar__user-designation">Xin chào</p>
+
+                <p class="app-sidebar__user-name"><b>@HttpContextAccessor.HttpContext.Session.GetString("Fullname")</b></p>
+            </div>
+        </div>
+        <hr>
+        <ul class="app-menu">
+            <style>
+             
+                .app-menu__item.selected {
+                    font-weight: bold;
+                }
+
+              
+
+                
+
+            </style>
+            <li>
+                <a class="app-menu__item" href="table-data-oder.html">
+                    <i class='app-menu__icon bx bx-task'></i>
+                    <span class="app-menu__label">Thống kê</span>
+                </a>
+            </li>
+            <li class="has-submenu" style="display:block" id="manageOrdersMenu">
+                <a class="app-menu__item active" href="javascript:void(0)" id="manageOrders">
                     <i class='app-menu__icon bx bx-id-card'></i>
                     <span class="app-menu__label">Quản lý Đơn hàng</span>
                 </a>
+                <!-- Mục con -->
+                <ul class="submenu">
+                    <li>
+                        <a href="~/OrderManagement/OrderOnline" class="app-menu__item" id="orderOnline">
+                            <i class='bx bx-notepad'></i>
+                            Đơn đặt trước
+                        </a>
+                    </li>
+                    <li>
+                        <a href="~/OrderManagement/OrderUsing" class="app-menu__item" id="orderUsing">
+                            <i class='bx bx-time-five'></i>
+                            Đơn đang sử dụng
+                        </a>
+                    </li>
+                    <li>
+                        <a href="~/OrderManagement/OrderCheckOut" class="app-menu__item" id="orderCheckOut">
+                            <i class='bx bx-check-circle'></i>
+                            Đơn đã thanh toán
+                        </a>
+                    </li>
+                    <li>
+                        <a href="~/OrderManagement/OrderCancel" class="app-menu__item" id="orderCancel">
+                            <i class='bx bx-x-circle'></i> <!-- Thay đổi biểu tượng -->
+                            Đơn đã hủy
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="~/OrderManagement/CreateOrder" class="app-menu__item" id="createOrder">
+                            <i class='bx bx-plus'></i>
+                            Tạo đơn mới
+                        </a>
+                    </li>
+                </ul>
             </li>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    var currentUrl = window.location.pathname;
+                    var manageOrdersMenu = document.getElementById("manageOrdersMenu");
+
+                    // Kiểm tra các URL và thêm lớp selected tương ứng
+                    if (currentUrl.includes("OrderOnline")) {
+                        document.getElementById("orderOnline").classList.add("selected");
+                        manageOrdersMenu.classList.add("selected");
+                    } else if (currentUrl.includes("OrderUsing")) {
+                        document.getElementById("orderUsing").classList.add("selected");
+                        manageOrdersMenu.classList.add("selected");
+                    } else if (currentUrl.includes("OrderCheckOut")) {
+                        document.getElementById("orderCheckOut").classList.add("selected");
+                        manageOrdersMenu.classList.add("selected");
+                    } else if (currentUrl.includes("OrderCancel")) {
+                        document.getElementById("orderCancel").classList.add("selected");
+                        manageOrdersMenu.classList.add("selected");
+                    } else if (currentUrl.includes("CreateOrder")) {
+                        document.getElementById("createOrder").classList.add("selected");
+                        manageOrdersMenu.classList.add("selected");
+                    } else if (currentUrl.includes("UpdateCombo")) {
+                        document.getElementById("orderUsing").classList.add("selected");
+                        manageOrdersMenu.classList.add("selected");
+                    }
+                });
+            </script>
+
             <li>
                 <a class="app-menu__item" href="#">
-                    <i class='app-menu__icon bx bx-user-voice'></i><span class="app-menu__label">Quản lý khách hàng</span>
+                    <i class='app-menu__icon bx bx-user-voice'></i>
+                    <span class="app-menu__label">Quản lý khách hàng</span>
                 </a>
             </li>
             <li>
                 <a class="app-menu__item" href="table-data-product.html">
-                    <i class='app-menu__icon bx bx-purchase-tag-alt'></i><span class="app-menu__label">Quản lý nhân viên</span>
+                    <i class='app-menu__icon bx bx-purchase-tag-alt'></i>
+                    <span class="app-menu__label">Quản lý nhân viên</span>
                 </a>
             </li>
             <li>
                 <a class="app-menu__item" href="table-data-oder.html">
-                    <i class='app-menu__icon bx bx-task'></i><span class="app-menu__label">Quản lý sản phẩm</span>
+                    <i class='app-menu__icon bx bx-task'></i>
+                    <span class="app-menu__label">Quản lý sản phẩm</span>
                 </a>
             </li>
-
         </ul>
     </aside>
     <main class="app-content">
@@ -106,7 +210,7 @@
                                 </tbody>
                             </table>
                             <div class="d-flex ">
-                                <a href="~/OrderManagement/CreateOrder" class="btn btn-secondary">Quay lại</a>
+                                <a asp-controller="OrderManagement" asp-action="OrderDetail" asp-route-id="@ViewBag.id" class="btn btn-secondary">Quay lại</a>
                                 <button type="submit" class="btn btn-primary">Lưu</button>
 
 

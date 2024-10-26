@@ -7,9 +7,7 @@
         public decimal Price { get; set; }
         public string? ImgUrl { get; set; }
         public int Quantity { get; set; }
-       
-
-        public string TicketCategoryName { get; set; }
+       public string TicketCategoryName { get; set; }
     }
     public class UpdateTicketDTO
     {

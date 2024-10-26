@@ -146,11 +146,188 @@ namespace GreenGardenClient.Controllers
 
             return View("OrderFoodAndDrink");
         }
-        public IActionResult FoodDetail()
+        [HttpGet("FoodDetail")]
+        public async Task<IActionResult> FoodDetail(int itemId)
         {
-            return View();
+            var apiUrl = $"https://localhost:7298/api/FoodAndDrink/GetFoodAndDrinkDetail?itemId={itemId}";
+
+            try
+            {
+                var client = _clientFactory.CreateClient();
+                var response = await client.GetAsync(apiUrl);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    var foodAndDrink = JsonConvert.DeserializeObject<FoodAndDrinkVM>(content);
+
+                    if (foodAndDrink != null)
+                    {
+                        ViewBag.FoodAndDrink = foodAndDrink;
+                        return View("FoodDetail", foodAndDrink); // Updated view name
+                    }
+                    else
+                    {
+                        TempData["ErrorMessage"] = "Invalid data!";
+                        return RedirectToAction("Error"); // Redirect to a dedicated error view
+                    }
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = $"Failed to retrieve data from API: {response.StatusCode}";
+                    return RedirectToAction("Error");
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"System error: {ex.Message}";
+                return RedirectToAction("Error");
+            }
+        }
+        [HttpGet("CampingGearDetail")]
+        public async Task<IActionResult> CampingGearDetail(int gearId)
+        {
+            var apiUrl = $"https://localhost:7298/api/CampingGear/GetCampingGearDetail?id={gearId}";
+
+            try
+            {
+                var client = _clientFactory.CreateClient();
+                var response = await client.GetAsync(apiUrl);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    var campingGear = JsonConvert.DeserializeObject<GearVM>(content);
+
+                    if (campingGear != null)
+                    {
+                        ViewBag.CampingGear = campingGear;
+                        return View("CampingGearDetail", campingGear); // Updated view name
+                    }
+                    else
+                    {
+                        TempData["ErrorMessage"] = "Invalid data!";
+                        return RedirectToAction("Error"); // Redirect to a dedicated error view
+                    }
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = $"Failed to retrieve data from API: {response.StatusCode}";
+                    return RedirectToAction("Error");
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"System error: {ex.Message}";
+                return RedirectToAction("Error");
+            }
+        }
+    
+        [HttpGet("TicketDetail")]
+        public async Task<IActionResult> TicketDetail(int ticketId)
+        {
+            var apiUrl = $"https://localhost:7298/api/Ticket/GetTicketDetail?id={ticketId}";
+
+            try
+            {
+                var client = _clientFactory.CreateClient();
+                var response = await client.GetAsync(apiUrl);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    var ticket = JsonConvert.DeserializeObject<TicketVM>(content);
+
+                    if (ticket != null)
+                    {
+                        ViewBag.Ticket = ticket;
+                        return View("TicketDetail", ticket); // Updated view name
+                    }
+                    else
+                    {
+                        TempData["ErrorMessage"] = "Invalid data!";
+                        return RedirectToAction("Error"); // Redirect to a dedicated error view
+                    }
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = $"Failed to retrieve data from API: {response.StatusCode}";
+                    return RedirectToAction("Error");
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"System error: {ex.Message}";
+                return RedirectToAction("Error");
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> OrderHistory(int customerId = 1003, bool? statusOrder = null, int? activityId = null)
+        {
+            ViewBag.CurrentCategoryId = activityId; // Set current category for highlighting
+            ViewBag.OrderStatus = statusOrder; // Set current order status for sorting
+
+            // Build API URL dynamically based on filters
+            string apiUrl = $"https://localhost:7298/api/OrderManagement/GetCustomerOrders?customerId={customerId}";
+            if (activityId.HasValue)
+            {
+                apiUrl += $"&activityId={activityId.Value}";
+            }
+            if (statusOrder.HasValue)
+            {
+                apiUrl += $"&statusOrder={statusOrder.Value.ToString().ToLower()}";
+            }
+
+            // Fetch data from APIs
+            var order = await GetDataFromApiAsync<List<CustomerOrderVM>>(apiUrl);
+            var activity = await GetDataFromApiAsync<List<ActivityVM>>("https://localhost:7298/api/Activity/GetAllActivities");
+
+            // Pass data to View
+            ViewBag.CustomerOrder = order;
+            ViewBag.Activity = activity;
+            ViewBag.CustomerId = customerId;
+
+            return View("OrderHistory");
         }
 
+
+        public async Task<IActionResult> OrderDetailHistory(int orderId)
+        {
+            var apiUrl = $"https://localhost:7298/api/OrderManagement/GetCustomerOrderDetail/{orderId}";
+
+            try
+            {
+                var client = _clientFactory.CreateClient();
+                var response = await client.GetAsync(apiUrl);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    var orderDetail = JsonConvert.DeserializeObject<OrderDetailVM>(content);
+
+                    if (orderDetail != null)
+                    {
+                        ViewBag.OrderDetail = orderDetail;
+                        return View("OrderDetailHistory", orderDetail); // Updated view name
+                    }
+                    else
+                    {
+                        TempData["ErrorMessage"] = "Invalid data!";
+                        return RedirectToAction("Error"); // Redirect to a dedicated error view
+                    }
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = $"Failed to retrieve data from API: {response.StatusCode}";
+                    return RedirectToAction("Error");
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"System error: {ex.Message}";
+                return RedirectToAction("Error");
+            }
+        }
         public async Task<IActionResult> OrderTicket()
         {
             var ticket = await GetDataFromApiAsync<List<TicketVM>>("https://localhost:7298/api/Ticket/GetAllTickets");
@@ -252,7 +429,23 @@ namespace GreenGardenClient.Controllers
             }
 
             SaveCartItems(cartItems);
-            return RedirectToAction(redirectAction);
+            if (redirectAction == "FoodDetail")
+            {
+                return RedirectToAction(redirectAction, new { itemId = Id });
+            }
+            else if (redirectAction == "CampingGearDetail")
+            {
+                return RedirectToAction(redirectAction, new { gearId = Id });
+            }
+            else if (redirectAction == "TicketDetail")
+            {
+                return RedirectToAction(redirectAction, new { ticketId = Id });
+            }
+            else
+            {
+                return RedirectToAction(redirectAction);
+            }
+
         }
 
         [HttpPost]
@@ -343,7 +536,7 @@ namespace GreenGardenClient.Controllers
                 // Classify cart items into different categories
                 var tickets = cartItems.Where(c => c.Type == "Ticket" && c.TypeCategory == "TicketCategory").ToList();
                 var gears = cartItems.Where(c => c.Type == "Gear" && c.TypeCategory == "GearCategory").ToList();
-                var foods = cartItems.Where(c => c.Type == "Food" && c.TypeCategory == "FoodCategory").ToList();
+                var foods = cartItems.Where(c => c.Type == "FoodAndDrink" && c.TypeCategory == "FoodAndDrinkCategory").ToList();
                 var combofoods = cartItems.Where(c => c.TypeCategory == "Combo").ToList();
 
                 // Assuming all cart items share the same usage date

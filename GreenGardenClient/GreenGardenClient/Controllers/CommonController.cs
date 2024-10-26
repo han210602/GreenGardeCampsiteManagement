@@ -53,7 +53,10 @@ namespace GreenGardenClient.Controllers
                             Expires = DateTimeOffset.Now.AddHours(1)
                         });
                         HttpContext.Session.SetInt32("RoleId", loginResponse.RoleId);
+                        HttpContext.Session.SetInt32("UserId", loginResponse.UserId);
                         HttpContext.Session.SetString("Email", loginResponse.Email);
+                        HttpContext.Session.SetString("Fullname", loginResponse.FullName);
+                        HttpContext.Session.SetString("Img", loginResponse.ProfilePictureUrl);
                         TempData["SuccessMessage"] = "Đăng nhập thành công!";
                         return RedirectToAction("Index", "Home");
                     }

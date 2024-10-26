@@ -1,5 +1,4 @@
 ﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
-
 <!doctype html>
 <html lang="en">
 
@@ -80,7 +79,14 @@
                                     else
                                     {
                                     <li class="has-dropdown">
-                                        <a href="~/Common/UpdateProfile" class="nav-link">Xin chào:  @HttpContextAccessor.HttpContext.Session.GetString("Email")</a>
+                                        <a href="~/Common/UpdateProfile" class="nav-link" style="display: flex; align-items: center;">
+                                            <div style="width: 30px; height: 30px; border-radius: 50%; overflow: hidden; margin-right: 8px;">
+                                                <img src="~/images/img_1.jpg" alt="Trang cá nhân" style="width: 100%; height: 100%; object-fit: cover;">
+                                            </div>
+                                                @HttpContextAccessor.HttpContext.Session.GetString("Fullname")
+                                        </a>
+
+
                                         <ul class="dropdown">
                                         @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId")==1)
                                             {
@@ -89,7 +95,7 @@
                                                 }
                                             else if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 2)
                                             {
-                                            <li><a href="~/Service/OrderTicket" class="nav-link">Quản lí</a></li>
+                                                <li><a href="~/OrderManagement/OrderOnline" class="nav-link">Quản lí</a></li>
                                                 <li><a href="~/Home/Logout" class="nav-link">Đăng xuất</a></li>
                                                 }
                                             else
