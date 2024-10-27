@@ -11,6 +11,11 @@ namespace Repositories.ComboFood
 {
     public class ComboFoodRepository : IComboFoodRepository
     {
+        public ComboFoodDetailDTO ComboFoodDetail(int id)
+        {
+            return FoodComboDAO.getComboFoodDetail(id);
+        }
+
         public List<ComboFoodDTO> ComboFoods()
         {
             return FoodComboDAO.getAllComboFoods();

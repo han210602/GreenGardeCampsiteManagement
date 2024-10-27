@@ -10,6 +10,12 @@ namespace Repositories.Combo
 {
     public class ComboRepository : IComboRepository
     {
+        public ComboDetail ComboDetail(int id)
+        {
+            return ComboDAO.GetComboDetail(id);
+
+        }
+
         public List<ComboDTO> Combos()
         {
             return ComboDAO.GetListCombo();

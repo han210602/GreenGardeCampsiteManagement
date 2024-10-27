@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace BusinessObject.DTOs
 {
-    internal class FootComboItemDTO
+    public class FootComboItemDTO
     {
+        public int ItemId { get; set; }
+        public string ItemName { get; set; } = null!;
+        public int? Quantity { get; set; }
     }
 }

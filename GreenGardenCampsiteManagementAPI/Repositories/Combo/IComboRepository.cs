@@ -10,7 +10,7 @@ namespace Repositories.Combo
     public interface IComboRepository
     {
         List<ComboDTO> Combos();
-
+        ComboDetail ComboDetail(int id);
 
     }
 }

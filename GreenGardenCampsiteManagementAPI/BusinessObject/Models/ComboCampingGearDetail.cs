@@ -13,4 +13,5 @@ namespace BusinessObject.Models
         public virtual Combo Combo { get; set; } = null!;
         public virtual CampingGear Gear { get; set; } = null!;
     }
+
 }
