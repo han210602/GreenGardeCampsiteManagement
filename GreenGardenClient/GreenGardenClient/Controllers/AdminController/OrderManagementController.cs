@@ -553,6 +553,16 @@ namespace GreenGardenClient.Controllers.AdminController
 
 
         }
+        public IActionResult ComboDetail(int id, int quantity)
+        {
+
+            ComboDetailVM foodAndDrinks = GetDataFromApi<ComboDetailVM>($"https://localhost:7298/api/Combo/GetComboDetail/{id}");
+
+            foodAndDrinks.Quantity = quantity;
+            return View("ComboDetail", foodAndDrinks);
+
+
+        }
         [HttpPost]
         public IActionResult FoodDetailCart(int id, string name,decimal price,int quantity)
         {

@@ -1,4 +1,6 @@
-﻿﻿﻿@using GreenGardenClient.Models;
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+﻿﻿
+@using GreenGardenClient.Models;
 @{
     var campingGears = ViewBag.CampingGears as List<GearVM>;
     var campingCategories = ViewBag.CampingCategories as List<GearCategoryVM>;
@@ -12,6 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,700,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <link rel="stylesheet" href="~/fonts/icomoon/style.css">
 
@@ -89,8 +92,8 @@
                     <div class="col-9 text-right">
                         <nav class="site-navigation text-right ml-auto d-none d-lg-block" role="navigation">
                             <ul class="site-menu main-menu js-clone-nav ml-auto ">
-                                <li><a href="/Home" class="nav-link">Trang chủ</a></li>
-                                <li><a href="about.html" class="nav-link">Sự kiện</a></li>
+                                <li class="active"><a href="/Home" class="nav-link">Trang chủ</a></li>
+                                <li><a href="/Common/Event" class="nav-link">Sự kiện</a></li>
                                 <li class="has-dropdown">
                                     <a href="/Service" class="nav-link">Dịch vụ</a>
                                     <ul class="dropdown">
@@ -102,8 +105,6 @@
 
                                 <li><a href="blog.html" class="nav-link">Liên hệ</a></li>
                                 <li>
-                                    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
-
                                     @if (HttpContextAccessor.HttpContext.Session.GetString("Email") == null)
                                     {
                                         <a href="/Common/Login" class="nav-link">Đăng nhập</a>
@@ -111,8 +112,6 @@
                                     }
                                     else
                                     {
-
-
                                     <li class="has-dropdown">
                                         <a href="~/Common/UpdateProfile" class="nav-link" style="display: flex; align-items: center;">
                                             <div style="width: 30px; height: 30px; border-radius: 50%; overflow: hidden; margin-right: 8px;">
@@ -125,27 +124,37 @@
                                         <ul class="dropdown">
                                                 @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 1)
                                                 {
-                                                <li><a href="~/OrderManagement" class="nav-link">Quản lí</a></li>
+                                                <li><a href="~/DashBoard" class="nav-link">Quản lí</a></li>
                                                 <li><a href="~/Home/Logout" class="nav-link">Đăng xuất</a></li>
                                                 }
                                                 else if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 2)
                                                 {
-                                                <li><a href="~/Service/OrderTicket" class="nav-link">Quản lí</a></li>
+                                                <li><a href="~/OrderManagement/OrderOnline" class="nav-link">Quản lí</a></li>
                                                 <li><a href="~/Home/Logout" class="nav-link">Đăng xuất</a></li>
                                                 }
                                                 else
                                                 {
 
-                                                <li><a href="~/Service/OrderTicket" class="nav-link">Lịch sử đặt hàng</a></li>
-                                                <li><a href="~/Service/OrderFoodAndDrink" class="nav-link">Giỏ hàng</a></li>
+                                                <li><a href="~/Service/OrderHistory" class="nav-link">Lịch sử đặt hàng</a></li>
+                                                <li><a href="~/Service/Cart" class="nav-link">Giỏ hàng</a></li>
                                                 <li><a href="~/Home/Logout" class="nav-link">Đăng xuất</a></li>
 
                                                 }
                                         </ul>
+
                                     </li>
                                     }
 
                                 </li>
+                                @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 3)
+                                {
+                                    <li>
+                                        <a href="~/Service/Cart" class="nav-link">
+                                            <i class="fas fa-shopping-cart"></i>
+                                        </a>
+                                    </li>
+
+                                }
 
                             </ul>
                         </nav>

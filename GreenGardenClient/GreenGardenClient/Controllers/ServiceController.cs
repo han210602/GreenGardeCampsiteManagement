@@ -486,18 +486,28 @@ namespace GreenGardenClient.Controllers
             return RedirectToAction("Cart");
         }
         [HttpPost]
-        public IActionResult UpdateCartItemQuantity(int ticketId, int newQuantity)
+        public IActionResult UpdateCartItemQuantity(int ticketId, int newQuantity, string type, string typeCategory)
         {
+            // Retrieve the cart items
             var cartItems = GetCartItems();
-            var item = cartItems.FirstOrDefault(c => c.Id == ticketId);
+
+            // Find the specific item in the cart based on the composite key
+            var item = cartItems.FirstOrDefault(c => c.Id == ticketId && c.Type == type && c.TypeCategory == typeCategory);
 
             if (item != null)
             {
-                item.Quantity = newQuantity; // Cập nhật số lượng
+                // Update the quantity
+                item.Quantity = newQuantity;
+            }
+            else
+            {
+                // If no item matches, consider adding it as a new entry if desired
             }
 
+            // Save the updated cart items
             SaveCartItems(cartItems);
-            return Ok(); // Trả về kết quả thành công
+
+            return Ok();
         }
 
 

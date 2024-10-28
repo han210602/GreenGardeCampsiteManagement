@@ -249,15 +249,18 @@
 
     .app-sidebar__user {
         display: flex;
+        flex-direction: column;
         align-items: center;
-        padding: 10px 15px;
     }
+
 
     .app-sidebar__user-avatar {
+        width: 100px; /* hoặc một giá trị cụ thể khác tùy thuộc vào kích thước bạn muốn */
+        height: 100px; /* cần phải bằng width */
         border-radius: 50%;
         margin-right: 10px;
+        object-fit: cover; /* Đảm bảo hình ảnh không bị méo */
     }
-
     .app-sidebar__user-name {
         margin: 0;
         font-weight: bold;
@@ -348,6 +351,21 @@
             background-color: #ddd;
         }
 
+    .product-details a {
+        display: inline-block;
+        padding: 5px 5px; /* Reduce padding to make the button smaller */
+        font-size: 10px; /* Smaller font size */
+        font-weight: bold;
+        color: #fff;
+        background-color: #efba6c;
+        text-decoration: none; /* Remove underline */
+        border-radius: 5px; /* Rounded corners */
+        transition: background-color 0.3s ease; /* Smooth hover transition */
+    }
+
+        .product-details a:hover {
+            background-color: #efba6c; /* Darker blue on hover */
+        }
 </style>
 <body onload="time()" class="app sidebar-mini rtl">
     <header class="app-header">
@@ -376,21 +394,22 @@
         <hr>
         <ul class="app-menu">
             <style>
-               
+
 
                 .app-menu__item.selected {
                     font-weight: bold;
                 }
 
-               
-
             </style>
-            <li>
-                <a class="app-menu__item" href="table-data-oder.html">
-                    <i class='app-menu__icon bx bx-task'></i>
-                    <span class="app-menu__label">Thống kê</span>
-                </a>
-            </li>
+            @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 1)
+            {
+                <li>
+                    <a class="app-menu__item" href="~/DashBoard">
+                        <i class='app-menu__icon bx bx-task'></i>
+                        <span class="app-menu__label">Thống kê</span>
+                    </a>
+                </li>
+            }
             <li class="has-submenu" style="display:block" id="manageOrdersMenu">
                 <a class="app-menu__item active" href="javascript:void(0)" id="manageOrders">
                     <i class='app-menu__icon bx bx-id-card'></i>
@@ -416,6 +435,8 @@
                             Đơn đã thanh toán
                         </a>
                     </li>
+
+
                     <li>
                         <a href="~/OrderManagement/OrderCancel" class="app-menu__item" id="orderCancel">
                             <i class='bx bx-x-circle'></i> <!-- Thay đổi biểu tượng -->
@@ -456,27 +477,37 @@
                     }
                 });
             </script>
-
-            <li>
-                <a class="app-menu__item" href="#">
-                    <i class='app-menu__icon bx bx-user-voice'></i>
-                    <span class="app-menu__label">Quản lý khách hàng</span>
-                </a>
-            </li>
-            <li>
-                <a class="app-menu__item" href="table-data-product.html">
-                    <i class='app-menu__icon bx bx-purchase-tag-alt'></i>
-                    <span class="app-menu__label">Quản lý nhân viên</span>
-                </a>
-            </li>
             <li>
                 <a class="app-menu__item" href="table-data-oder.html">
                     <i class='app-menu__icon bx bx-task'></i>
                     <span class="app-menu__label">Quản lý sản phẩm</span>
                 </a>
             </li>
+            <li>
+                <a class="app-menu__item" href="table-data-oder.html">
+                    <i class='app-menu__icon bx bx-calendar-event'></i>
+                    <span class="app-menu__label">Quản lý sự kiện</span>
+                </a>
+            </li>
+            @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 1)
+            {
+                <li>
+                    <a class="app-menu__item" href="#">
+                        <i class='app-menu__icon bx bx-user-voice'></i>
+                        <span class="app-menu__label">Quản lý khách hàng</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="app-menu__item" href="table-data-product.html">
+                        <i class='app-menu__icon bx bx-purchase-tag-alt'></i>
+                        <span class="app-menu__label">Quản lý nhân viên</span>
+                    </a>
+                </li>
+            }
+
         </ul>
     </aside>
+
 
     <main class="app-content">
         <div class="app-title">
@@ -509,8 +540,9 @@
                                         <div class="product-name">@item.ComboName</div>
                                         <div class="product-description">@item.Description</div>
                                         <div class="product-price">
-                                            @item.Price
+                                            @String.Format("{0:0,0} ₫", @item.Price)
                                         </div>
+                                        <a asp-controller="OrderManagement" asp-action="ComboDetail" asp-route-id="@item.ComboId" asp-route-quantity="@item.Quantity">Xem chi tiết</a>
                                     </div>
                                     <div class="quantity-control">
                                         <button class="btn-quantity btn-decrease">-</button>
@@ -521,6 +553,7 @@
                                         <input type="text" value="@item.ComboName" hidden name="name">
                                         <input type="number" value="@item.Price" hidden name="price">
                                     </div>
+
                                 </div>
 
 

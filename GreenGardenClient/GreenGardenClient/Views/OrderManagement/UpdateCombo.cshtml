@@ -57,22 +57,22 @@
         <hr>
         <ul class="app-menu">
             <style>
-             
+
+
                 .app-menu__item.selected {
                     font-weight: bold;
                 }
 
-              
-
-                
-
             </style>
-            <li>
-                <a class="app-menu__item" href="table-data-oder.html">
-                    <i class='app-menu__icon bx bx-task'></i>
-                    <span class="app-menu__label">Thống kê</span>
-                </a>
-            </li>
+            @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 1)
+            {
+                <li>
+                    <a class="app-menu__item" href="~/DashBoard">
+                        <i class='app-menu__icon bx bx-task'></i>
+                        <span class="app-menu__label">Thống kê</span>
+                    </a>
+                </li>
+            }
             <li class="has-submenu" style="display:block" id="manageOrdersMenu">
                 <a class="app-menu__item active" href="javascript:void(0)" id="manageOrders">
                     <i class='app-menu__icon bx bx-id-card'></i>
@@ -98,6 +98,8 @@
                             Đơn đã thanh toán
                         </a>
                     </li>
+
+
                     <li>
                         <a href="~/OrderManagement/OrderCancel" class="app-menu__item" id="orderCancel">
                             <i class='bx bx-x-circle'></i> <!-- Thay đổi biểu tượng -->
@@ -123,7 +125,7 @@
                     if (currentUrl.includes("OrderOnline")) {
                         document.getElementById("orderOnline").classList.add("selected");
                         manageOrdersMenu.classList.add("selected");
-                    } else if (currentUrl.includes("OrderUsing")) {
+                    } else if (currentUrl.includes("UpdateCombo")) {
                         document.getElementById("orderUsing").classList.add("selected");
                         manageOrdersMenu.classList.add("selected");
                     } else if (currentUrl.includes("OrderCheckOut")) {
@@ -135,31 +137,37 @@
                     } else if (currentUrl.includes("CreateOrder")) {
                         document.getElementById("createOrder").classList.add("selected");
                         manageOrdersMenu.classList.add("selected");
-                    } else if (currentUrl.includes("UpdateCombo")) {
-                        document.getElementById("orderUsing").classList.add("selected");
-                        manageOrdersMenu.classList.add("selected");
                     }
                 });
             </script>
-
-            <li>
-                <a class="app-menu__item" href="#">
-                    <i class='app-menu__icon bx bx-user-voice'></i>
-                    <span class="app-menu__label">Quản lý khách hàng</span>
-                </a>
-            </li>
-            <li>
-                <a class="app-menu__item" href="table-data-product.html">
-                    <i class='app-menu__icon bx bx-purchase-tag-alt'></i>
-                    <span class="app-menu__label">Quản lý nhân viên</span>
-                </a>
-            </li>
             <li>
                 <a class="app-menu__item" href="table-data-oder.html">
                     <i class='app-menu__icon bx bx-task'></i>
                     <span class="app-menu__label">Quản lý sản phẩm</span>
                 </a>
             </li>
+            <li>
+                <a class="app-menu__item" href="table-data-oder.html">
+                    <i class='app-menu__icon bx bx-calendar-event'></i>
+                    <span class="app-menu__label">Quản lý sự kiện</span>
+                </a>
+            </li>
+            @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 1)
+            {
+                <li>
+                    <a class="app-menu__item" href="#">
+                        <i class='app-menu__icon bx bx-user-voice'></i>
+                        <span class="app-menu__label">Quản lý khách hàng</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="app-menu__item" href="table-data-product.html">
+                        <i class='app-menu__icon bx bx-purchase-tag-alt'></i>
+                        <span class="app-menu__label">Quản lý nhân viên</span>
+                    </a>
+                </li>
+            }
+
         </ul>
     </aside>
     <main class="app-content">
@@ -196,7 +204,7 @@
                                             <td>#@item.ComboId</td>
                                             <td>@item.ComboName</td>
                                             <td>@item.ImgUrl</td>
-                                            <td>@item.Price</td>
+                                            <td>  @String.Format("{0:0,0} ₫", @item.Price)</td>
                                             <td>
                                                 <input type="text" value="@item.ComboId" hidden name="id">
                                                 <input type="number" value="@item.Price" hidden name="price">

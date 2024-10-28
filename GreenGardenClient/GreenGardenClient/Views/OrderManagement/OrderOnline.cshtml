@@ -249,14 +249,18 @@
 
     .app-sidebar__user {
         display: flex;
+        flex-direction: column;
         align-items: center;
-        padding: 10px 15px;
     }
 
     .app-sidebar__user-avatar {
+        width: 100px; /* hoặc một giá trị cụ thể khác tùy thuộc vào kích thước bạn muốn */
+        height: 100px; /* cần phải bằng width */
         border-radius: 50%;
         margin-right: 10px;
+        object-fit: cover; /* Đảm bảo hình ảnh không bị méo */
     }
+
 
     .app-sidebar__user-name {
         margin: 0;
@@ -383,12 +387,15 @@
                 
 
             </style>
-            <li>
-                <a class="app-menu__item" href="~/DashBoard">
-                    <i class='app-menu__icon bx bx-task'></i>
-                    <span class="app-menu__label">Thống kê</span>
-                </a>
-            </li>
+            @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 1)
+            {
+                <li>
+                    <a class="app-menu__item" href="~/DashBoard">
+                        <i class='app-menu__icon bx bx-task'></i>
+                        <span class="app-menu__label">Thống kê</span>
+                    </a>
+                </li>
+            }
             <li class="has-submenu" style="display:block" id="manageOrdersMenu">
                 <a class="app-menu__item active" href="javascript:void(0)" id="manageOrders">
                     <i class='app-menu__icon bx bx-id-card'></i>
@@ -468,19 +475,21 @@
                     <span class="app-menu__label">Quản lý sự kiện</span>
                 </a>
             </li>
-            <li>
-                <a class="app-menu__item" href="#">
-                    <i class='app-menu__icon bx bx-user-voice'></i>
-                    <span class="app-menu__label">Quản lý khách hàng</span>
-                </a>
-            </li>
-            <li>
-                <a class="app-menu__item" href="table-data-product.html">
+             @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 1)
+            {
+                <li>
+                    <a class="app-menu__item" href="#">
+                        <i class='app-menu__icon bx bx-user-voice'></i>
+                        <span class="app-menu__label">Quản lý khách hàng</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="app-menu__item" href="table-data-product.html">
                     <i class='app-menu__icon bx bx-purchase-tag-alt'></i>
                     <span class="app-menu__label">Quản lý nhân viên</span>
                 </a>
             </li>
-            
+            }
 
         </ul>
     </aside>
@@ -509,22 +518,24 @@
                                 <th width="5%">Thu</th>
                                 <th width="5%">Trạng thái</th>
                                 <th width="15%">Tính năng</th>
+                             
+
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (OrderVM item in ViewBag.dataorder)
                             {
 
-                                <tr class="@(item.ActivityId==1002 ? "disabled-row" : "")">
+                                <tr onclick ="window.location.href='@Url.Action("OrderDetail", "OrderManagement", new { id = item.OrderId })'">
 
                                     <td><a asp-controller="OrderManagement" asp-action="OrderDetail" asp-route-id="@item.OrderId">#@item.OrderId</a></td>
-
                                     <td>@item.CustomerName</td>
                                     <td>@item.PhoneCustomer</td>
                                     <td>@item.OrderDate</td>
                                     <td>@item.OrderUsageDate</td>
-                                    <td>@item.Deposit</td>
-                                    <td>@item.AmountPayable</td>
+                                    <td>@String.Format("{0:0,0} ₫", item.Deposit)</td>
+                                    <td>@String.Format("{0:0,0} ₫", item.AmountPayable)</td>
+
                                     <style>
                                         /* Background overlay for modal */
                                         .modal {
@@ -675,11 +686,11 @@
                                         <td>
                                             @if (item.StatusOrder == false)
                                             {
-                                                <button class="btn btn-success" onclick="showDepositForm(@item.OrderId)">Đặt cọc</button>
+                                                <button class="btn btn-success" onclick="showDepositForm(@item.OrderId); event.stopPropagation();">Đặt cọc</button>
                                             }
                                             else
                                             {
-                                                <button class="btn btn-danger" onclick="showCancelDepositConfirm(@item.OrderId)">Hủy cọc</button>
+                                                <button class="btn btn-danger" onclick="showCancelDepositConfirm(@item.OrderId); event.stopPropagation();">Hủy cọc</button>
                                             }
                                         </td>
                                     }
@@ -721,7 +732,7 @@
                                         <div class="d-flex align-items-center justify-content-between">
                                             <form id="fr-@item.OrderId" asp-controller="OrderManagement" asp-action="UpdateActivityOrder" method="post" class="d-flex">
                                                 <input type="hidden" name="idorder" value="@item.OrderId" />
-                                                <select class="form-select form-select-custom me-2" name="idactivity" onchange="change(@item.OrderId)">
+                                                <select class="form-select form-select-custom me-2" name="idactivity" onchange="change(@item.OrderId); event.stopPropagation();">
                                                     @foreach (ActivityVM activity in ViewBag.activities)
                                                     {
                                                         if (item.ActivityId == activity.ActivityId)
@@ -744,6 +755,9 @@
 
                                     </td>
 
+
+
+                                 
                                 </tr>
                             }
 

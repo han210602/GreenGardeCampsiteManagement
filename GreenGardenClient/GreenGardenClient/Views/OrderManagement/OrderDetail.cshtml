@@ -4,6 +4,41 @@
 @model GreenGardenClient.Models.OrderDetailVM
 @using GreenGardenClient.Models
 
+}
+@{
+    if (ViewBag.Notification != null)
+    {
+        <div id="notification" class="alert alert-warning" role="alert">
+            @ViewBag.Notification
+        </div>
+    }
+}
+<style>
+    #notification {
+        position: fixed;
+        top: 20px; /* Khoảng cách từ đầu trang */
+        right: 20px; /* Khoảng cách từ bên phải */
+        z-index: 1050; /* Đảm bảo thông báo nằm trên các phần tử khác */
+        opacity: 1; /* Bắt đầu với độ mờ là 1 */
+        transition: opacity 1s ease-out, transform 1s ease-out; /* Hiệu ứng chuyển đổi cho độ mờ và biến đổi */
+        transform: translateY(-10px); /* Đưa thông báo lên một chút */
+        width: auto; /* Hoặc thay đổi thành một giá trị cụ thể, ví dụ: 300px */
+        max-width: 300px; /* Giới hạn chiều rộng tối đa */
+        padding: 15px; /* Khoảng cách bên trong cho thông báo */
+    }
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        if ($("#notification").length) {
+            setTimeout(function () {
+                $("#notification").css("opacity", "0"); // Đặt độ mờ thành 0
+                $("#notification").css("transform", "translateY(10px)"); // Đưa thông báo xuống một chút khi ẩn
+            }, 3000); // Sau 3 giây
+        }
+    });
+</script>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -139,13 +174,16 @@
 
     .app-sidebar__user {
         display: flex;
+        flex-direction: column;
         align-items: center;
-        padding: 10px 15px;
     }
 
     .app-sidebar__user-avatar {
+        width: 100px; /* hoặc một giá trị cụ thể khác tùy thuộc vào kích thước bạn muốn */
+        height: 100px; /* cần phải bằng width */
         border-radius: 50%;
         margin-right: 10px;
+        object-fit: cover; /* Đảm bảo hình ảnh không bị méo */
     }
 
     .app-sidebar__user-name {
@@ -253,7 +291,7 @@
         <ul class="app-nav">
             <!-- User Menu-->
             <li>
-                <a class="app-nav__item" href="~/Home">
+                <a class="app-nav__item" href="/index.html">
                     <i class='bx bx-log-out bx-rotate-180'></i>
                 </a>
             </li>
@@ -274,21 +312,22 @@
         <hr>
         <ul class="app-menu">
             <style>
-               
+
 
                 .app-menu__item.selected {
                     font-weight: bold;
                 }
 
-             
-
             </style>
-            <li>
-                <a class="app-menu__item" href="table-data-oder.html">
-                    <i class='app-menu__icon bx bx-task'></i>
-                    <span class="app-menu__label">Thống kê</span>
-                </a>
-            </li>
+            @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 1)
+            {
+                <li>
+                    <a class="app-menu__item" href="~/DashBoard">
+                        <i class='app-menu__icon bx bx-task'></i>
+                        <span class="app-menu__label">Thống kê</span>
+                    </a>
+                </li>
+            }
             <li class="has-submenu" style="display:block" id="manageOrdersMenu">
                 <a class="app-menu__item active" href="javascript:void(0)" id="manageOrders">
                     <i class='app-menu__icon bx bx-id-card'></i>
@@ -314,6 +353,8 @@
                             Đơn đã thanh toán
                         </a>
                     </li>
+
+
                     <li>
                         <a href="~/OrderManagement/OrderCancel" class="app-menu__item" id="orderCancel">
                             <i class='bx bx-x-circle'></i> <!-- Thay đổi biểu tượng -->
@@ -351,46 +392,51 @@
                     } else if (currentUrl.includes("CreateOrder")) {
                         document.getElementById("createOrder").classList.add("selected");
                         manageOrdersMenu.classList.add("selected");
-                    } else if (currentUrl.includes("OrderDetail")) {
-                        document.getElementById("orderUsing").classList.add("selected");
-                        manageOrdersMenu.classList.add("selected");
                     }
                 });
             </script>
-
-            <li>
-                <a class="app-menu__item" href="#">
-                    <i class='app-menu__icon bx bx-user-voice'></i>
-                    <span class="app-menu__label">Quản lý khách hàng</span>
-                </a>
-            </li>
-            <li>
-                <a class="app-menu__item" href="table-data-product.html">
-                    <i class='app-menu__icon bx bx-purchase-tag-alt'></i>
-                    <span class="app-menu__label">Quản lý nhân viên</span>
-                </a>
-            </li>
             <li>
                 <a class="app-menu__item" href="table-data-oder.html">
                     <i class='app-menu__icon bx bx-task'></i>
                     <span class="app-menu__label">Quản lý sản phẩm</span>
                 </a>
             </li>
+            <li>
+                <a class="app-menu__item" href="table-data-oder.html">
+                    <i class='app-menu__icon bx bx-calendar-event'></i>
+                    <span class="app-menu__label">Quản lý sự kiện</span>
+                </a>
+            </li>
+            @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 1)
+            {
+                <li>
+                    <a class="app-menu__item" href="#">
+                        <i class='app-menu__icon bx bx-user-voice'></i>
+                        <span class="app-menu__label">Quản lý khách hàng</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="app-menu__item" href="table-data-product.html">
+                        <i class='app-menu__icon bx bx-purchase-tag-alt'></i>
+                        <span class="app-menu__label">Quản lý nhân viên</span>
+                    </a>
+                </li>
+            }
+
         </ul>
     </aside>
 
     <main class="app-content">
-        <hr hidden>
         <div class="app-title">
             <ul class="app-breadcrumb breadcrumb side">
-                <li class="breadcrumb-item active"><a href="#"><b>Danh sách các đơn đặt</b></a><a href="#"><b>/Tạo đơn</b></a><a href="#"><b>/Đặt vé</b></a></li>
+                <li class="breadcrumb-item active">Quản lí đơn hàng/Chi tiết đơn hàng</li>
             </ul>
             <div id="clock"></div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="tile">
-                    
+                    <div class="tile-body">
 
                         <div class="order-info">
                             <div class="row d-flex justify-content-center">
@@ -415,37 +461,44 @@
                                     <p><strong>Ngày sử dụng:</strong>@Model.OrderUsageDate</p>
                                 </div>
                                 <div class="col-md-4">
-                                    <p>
-                                        <strong>Tổng Tiền:</strong> @Model.TotalAmount.ToString("C2", new System.Globalization.CultureInfo("vi-VN"))
-                                    </p>
+                                    <strong>Tổng Tiền:</strong> @Model.TotalAmount.ToString("C2", new System.Globalization.CultureInfo("vi-VN"))
                                 </div>
                             </div>
                         </div>
                         <div class="progress-track">
                             <ul id="progressbar">
-                                @if(Model.ActivityId==1){
-                                <li class="step0 active " id="step1">Đợi sử dụng</li>
-                                <li class="step0 text-center" id="step2">Đang sử dụng</li>
-                                <li class="step0 text-right" id="step3">Đã thanh toán</li>
-                                }else if(Model.ActivityId==2){
-                                <li class="step0 active " id="step1">Đợi sử dụng</li>
-                                <li class="step0 active text-center" id="step2">Đang sử dụng</li>
-                                <li class="step0  text-right" id="step3">Đã thanh toán</li>
-                                }else if(Model.ActivityId==3){
-                                <li class="step0 active " id="step1">Đợi sử dụng</li>
-                                <li class="step0 active text-center" id="step2">Đang sử dụng</li>
-                                <li class="step0 active text-right" id="step3">Đã thanh toán</li>
-                                }else{
-                                <li class="step0  " id="step1">Đợi sử dụng</li>
-                                <li class="step0 text-center" id="step2">Đang sử dụng</li>
-                                <li class="step0 text-right" id="step3">Đã thanh toán</li>
-                                
+                                @if (Model.ActivityId == 1002)
+                                {
+                                    <li class="step0 active " id="step1">Hủy</li>
+                                    <li class="step0 text-center"id="step2">Đợi sử dụng</li>
+                                    <li class="step0 text-right" id="step3">Đang sử dụng</li>
+                                    <li class="step0 text-right" id="step4">Đã thanh toán </li>
+                                }
+                                else
+                                @if (Model.ActivityId == 1)
+                                {
+                                    <li class="step0 active " id="step1">Hủy</li>
+                                    <li class="step0 text-center active " id="step2">Đợi sử dụng</li>
+                                    <li class="step0 text-right" id="step3">Đang sử dụng</li>
+                                    <li class="step0 text-right" id="step4">Đã thanh toán </li>
+                                }
+                                else
+                                @if (Model.ActivityId == 2)
+                                {
+                                    <li class="step0 active " id="step1">Hủy</li>
+                                    <li class="step0 text-center active" id="step2">Đợi sử dụng</li>
+                                    <li class="step0 text-right active" id="step3">Đang sử dụng</li>
+                                    <li class="step0 text-right" id="step4">Đã thanh toán </li>
+                                }
+                                else
+                                {
+                                    <li class="step0 active " id="step1">Hủy</li>
+                                    <li class="step0 text-center active" id="step2">Đợi sử dụng</li>
+                                    <li class="step0 text-right active" id="step3">Đang sử dụng</li>
+                                    <li class="step0 text-right active" id="step3">Đã thanh toán </li>
                                 }
                             </ul>
                         </div>
-
-
-                        
                         <div class="d-flex justify-content-end align-items-center">
                             @if (Model.ActivityId == 2)
                             {
@@ -463,6 +516,8 @@
                                 </div>
                             }
                         </div>
+
+                        <hr>
                         <div class="container mt-5">
                             <h2 class="text-start mb-4">Đồ đã đặt</h2>
                             <table class="invoice-table">
@@ -480,11 +535,11 @@
                                     {
                                         foreach (var item in Model.OrderTicketDetails)
                                         {
-                                            <tr >
+                                            <tr>
                                                 <td>@item.Name</td>
-                                                <td>@item.Price</td>
+                                                <td>@String.Format("{0:0,0} ₫", @item.Price)</td>
                                                 <td>@item.Quantity</td>
-                                                <td>@(item.Price * item.Quantity)</td>
+                                                <td>@String.Format("{0:0,0} ₫", item.Price * item.Quantity)</td>
                                                 <td>-</td>
                                             </tr>
                                         }
@@ -493,11 +548,12 @@
                                     {
                                         foreach (var item in Model.OrderComboDetails)
                                         {
-                                            <tr >
+                                            <tr>
                                                 <td>@item.Name</td>
                                                 <td>@item.Price</td>
                                                 <td>@item.Quantity</td>
-                                                <td>@(item.Price * item.Quantity)</td>
+                                                <td>@String.Format("{0:0,0} ₫", item.Price * item.Quantity)</td>
+
                                                 <td>@item.Description</td>
                                             </tr>
                                         }
@@ -506,11 +562,12 @@
                                     {
                                         foreach (var item in Model.OrderCampingGearDetails)
                                         {
-                                            <tr >
+                                            <tr>
                                                 <td>@item.Name</td>
-                                                <td>@item.Price</td>
+                                                <td>@String.Format("{0:0,0} ₫", @item.Price)</td>
                                                 <td>@item.Quantity</td>
-                                                <td>@(item.Price * item.Quantity)</td>
+                                                <td>@String.Format("{0:0,0} ₫", item.Price * item.Quantity)</td>
+
                                                 <td>-</td>
                                             </tr>
                                         }
@@ -521,9 +578,10 @@
                                         {
                                             <tr>
                                                 <td>@item.Name</td>
-                                                <td>@item.Price</td>
+                                                <td>@String.Format("{0:0,0} ₫", @item.Price)</td>
                                                 <td>@item.Quantity</td>
-                                                <td>@(item.Price * item.Quantity)</td>
+                                                <td>@String.Format("{0:0,0} ₫", item.Price * item.Quantity)</td>
+
                                                 <td>@item.Description</td>
                                             </tr>
                                         }
@@ -532,38 +590,45 @@
                                     {
                                         foreach (var item in Model.OrderFoodComboDetails)
                                         {
-                                            <tr >
+                                            <tr>
                                                 <td>@item.Name</td>
-                                                <td>@item.Price</td>
+                                                <td>@String.Format("{0:0,0} ₫", @item.Price)</td>
                                                 <td>@item.Quantity</td>
-                                                <td>@(item.Price * item.Quantity)</td>
+                                                <td>@String.Format("{0:0,0} ₫", item.Price * item.Quantity)</td>
+
                                             </tr>
                                         }
                                     }
                                 </tbody>
                             </table>
-                        <div class="total-section d-flex justify-content-between align-items-center p-3 bg-light border rounded">
-                            <p class="text-danger font-weight-bold mb-0">Tổng tiền thanh toán: @Model.AmountPayable</p>
+                            <div class="total-section d-flex justify-content-between align-items-center p-3 bg-light border rounded">
+                                <p class="text-danger font-weight-bold mb-0">Tổng tiền thanh toán: @String.Format("{0:0,0} ₫", @Model.AmountPayable)</p>
 
-                            @if(Model.ActivityId==2){
-                                <form class="mb-0" asp-controller="OrderManagement" asp-action="UpdateActivityOrder" method="post">
-                                    <input type="number" hidden name="idorder" value="@Model.OrderId" />
-                                    <input type="number" hidden name="idactivity" value="3" />
-                                    <input type="submit" class="btn btn-primary font-weight-bold" name="idorder" value="Thanh toán" />
-                                </form>
-                            }
+                                @if (Model.ActivityId == 2)
+                                {
+                                    <form class="mb-0" asp-controller="OrderManagement" asp-action="UpdateActivityOrder" method="post">
+                                        <input type="number" hidden name="idorder" value="@Model.OrderId" />
+                                        <input type="number" hidden name="idactivity" value="3" />
+                                        <input type="submit" class="btn btn-primary font-weight-bold" name="idorder" value="Thanh toán" />
+                                    </form>
+                                }
+                            </div>
                         </div>
-                        </div>
 
 
 
-                   
+                    </div>
                 </div>
             </div>
         </div>
 
 
-      
+        <div class="d-flex ">
+            <a href="~/OrderManagement/CreateOrder" class="btn btn-secondary">Quay lại</a>
+            <a href="~/OrderManagement/OrderGear" class="btn btn-primary">Đặt đồ cắm trại</a>
+
+
+        </div>
 
     </main>
 
