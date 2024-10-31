@@ -129,7 +129,7 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, new { Message = ex.Message });
             }
         }
-
+        [Authorize]
         [HttpPost("UpdateProfile")]
         public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfile updateProfile)
         {
@@ -163,7 +163,7 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
         }
 
 
-
+        [Authorize]
         [HttpPost("ChangePassword")]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePassword changePasswordDto)
         {

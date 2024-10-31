@@ -1220,5 +1220,34 @@ namespace DataAccess.DAO
 
 
         }
+        public static void UpdateActivity(int orderId)
+        {
+            try
+            {
+                using (var context = new GreenGardenContext())
+                {
+                    // Tìm đơn hàng theo OrderId
+                    var order = context.Orders.FirstOrDefault(o => o.OrderId == orderId);
+
+                    if (order != null)
+                    {
+                        // Cập nhật ActivityId thành 1002
+                        order.ActivityId = 1002;
+
+                        // Lưu thay đổi vào cơ sở dữ liệu
+                        context.SaveChanges();
+                    }
+                    else
+                    {
+                        throw new Exception("Không tìm thấy đơn hàng với OrderId: " + orderId);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi khi cập nhật ActivityId: " + ex.Message);
+            }
+        }
+
     }
 }

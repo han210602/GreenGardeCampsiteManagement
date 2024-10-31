@@ -10,6 +10,7 @@ using Repositories.Activities;
 using Repositories.CampingGear;
 using Repositories.Combo;
 using Repositories.ComboFood;
+using Repositories.Events;
 using Repositories.FoodAndDrink;
 using Repositories.Orders;
 using Repositories.Tickets;
@@ -60,6 +61,7 @@ builder.Services.AddScoped<IFoodAndDrinkRepository, FoodAndDrinkRepository>();
 builder.Services.AddScoped<ITicketRepository, TicketRepository>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IEventRepository, EventRepository>();
 builder.Services.AddScoped<IComboFoodRepository, ComboFoodRepository>();
 
 

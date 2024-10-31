@@ -110,6 +110,20 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+        [HttpPost("ChangeCustomerActivity")]
+        public IActionResult ChangeCustomerActivity(int orderId)
+        {
+            try
+            {
+                _repo.UpdateActivity(orderId);
+                return Ok("Activity updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
         [HttpPost("CheckOutComboOrder")]
         public IActionResult CheckOutComboOrder([FromBody] CheckoutCombo order)
         {

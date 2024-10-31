@@ -32,6 +32,6 @@ namespace Repositories.Orders
         bool UpdateFood(List<OrderFoodAddDTO> foods);
         bool UpdateCombo(List<OrderComboAddDTO> combos);
         bool UpdateComboFood(List<OrderFoodComboAddDTO> foodcombos);
-
+        void UpdateActivity(int orderId);
     }
 }
