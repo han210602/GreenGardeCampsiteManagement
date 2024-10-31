@@ -85,7 +85,7 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
         [Authorize("AdminAndEmployeePolicy")]
 
         [HttpPost("CreateUniqueOrder")]
-        public IActionResult CreateUniqueOrder([FromBody] CreateUniqueOrderRequest order) 
+        public IActionResult CreateUniqueOrder([FromBody] CreateUniqueOrderRequest order)
         {
             try
             {
@@ -96,7 +96,7 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
-       
+
 
         [HttpPost("CheckOut")]
         public IActionResult CheckOut([FromBody] CheckOut order)
@@ -104,6 +104,18 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
             try
             {
                 return Ok(_repo.CheckOut(order));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+        [HttpPost("CheckOutComboOrder")]
+        public IActionResult CheckOutComboOrder([FromBody] CheckoutCombo order)
+        {
+            try
+            {
+                return Ok(_repo.CheckOutComboOrder(order));
             }
             catch (Exception ex)
             {
@@ -223,11 +235,11 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
         [Authorize("AdminPolicy")]
 
         [HttpPut("EnterDeposit/{id}/{money}")]
-        public IActionResult EnterDeposit(int id,decimal money)
+        public IActionResult EnterDeposit(int id, decimal money)
         {
             try
             {
-                return Ok(_repo.EnterDeposit(id,money));
+                return Ok(_repo.EnterDeposit(id, money));
             }
             catch (Exception ex)
             {
@@ -292,5 +304,5 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
         }
 
     }
-    
+
 }

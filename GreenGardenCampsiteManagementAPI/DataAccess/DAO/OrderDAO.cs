@@ -77,6 +77,7 @@ namespace DataAccess.DAO
                             ActivityId = o.ActivityId,
                             ActivityName = o.Activity.ActivityName
                         })
+                        .OrderByDescending(o => o.OrderDate) // Sort by OrderDate in descending order
                         .ToList();
                 }
             }
@@ -86,7 +87,6 @@ namespace DataAccess.DAO
             }
             return customerOrders;
         }
-
 
 
         public static List<OrderDTO> getAllOrderDepositAndUsing()
@@ -1114,6 +1114,111 @@ namespace DataAccess.DAO
 
 
         }
+        public static bool CheckoutComboOrder(CheckoutCombo order_request)
+        {
 
+
+            var order = order_request.Order;
+            var order_combo = order_request.OrderCombo;
+            var order_camping_gear = order_request.OrderCampingGear;
+            var order_food = order_request.OrderFood;
+            var order_foot_combo = order_request.OrderFoodCombo;
+
+
+            try
+            {
+                using (var context = new GreenGardenContext())
+                {
+
+                    if (order_combo == null)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+
+                        Order newOrder;
+
+
+                        newOrder = new Order
+                        {
+                            CustomerId = order.CustomerId,
+                            CustomerName = order.CustomerName,
+                            OrderUsageDate = order.OrderUsageDate,
+                            OrderDate = DateTime.Now,
+                            Deposit = 0,
+                            TotalAmount = order.TotalAmount,
+                            AmountPayable = order.TotalAmount,
+                            StatusOrder = false,
+                            ActivityId = 1,
+                            PhoneCustomer = order.PhoneCustomer
+                        };
+
+                        // Add the order and save to the database
+                        context.Orders.Add(newOrder);
+                        context.SaveChanges();
+
+                        int id = newOrder.OrderId;
+
+
+                        List<OrderComboDetail> tickets = order_combo.Select(t => new OrderComboDetail
+                        {
+                            ComboId = t.ComboId,
+                            OrderId = id,
+                            Quantity = t.Quantity,
+                        }).ToList();
+                        context.OrderComboDetails.AddRange(tickets);
+
+                        if (order_camping_gear != null)
+                        {
+                            List<OrderCampingGearDetail> gears = order_camping_gear.Select(g => new OrderCampingGearDetail
+                            {
+                                GearId = g.GearId,
+                                Quantity = g.Quantity,
+                                OrderId = id,
+                            }).ToList();
+                            context.OrderCampingGearDetails.AddRange(gears);
+                            context.SaveChanges();
+
+                        }
+                        if (order_food != null)
+                        {
+                            List<OrderFoodDetail> foods = order_food.Select(f => new OrderFoodDetail
+                            {
+                                OrderId = id,
+                                ItemId = f.ItemId,
+                                Quantity = f.Quantity,
+                                Description = f.Description,
+                            }).ToList();
+                            context.OrderFoodDetails.AddRange(foods);
+                            context.SaveChanges();
+
+                        }
+                        if (order_foot_combo != null)
+                        {
+                            List<OrderFoodComboDetail> foodCombos = order_foot_combo.Select(c => new OrderFoodComboDetail
+                            {
+                                OrderId = id,
+                                ComboId = c.ComboId,
+                                Quantity = c.Quantity,
+                            }).ToList();
+                            context.OrderFoodComboDetails.AddRange(foodCombos);
+                            context.SaveChanges();
+
+                        }
+                        return true;
+                    }
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+
+            }
+
+
+        }
     }
 }

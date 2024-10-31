@@ -130,14 +130,16 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
             }
         }
 
-        [HttpPut("UpdateProfile")]
+        [HttpPost("UpdateProfile")]
         public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfile updateProfile)
         {
+            // Check if the incoming updateProfile object is null
             if (updateProfile == null)
             {
                 return BadRequest("Invalid data.");
             }
 
+            // Validate the user ID
             if (updateProfile.UserId <= 0)
             {
                 return BadRequest("Invalid user ID.");
@@ -145,24 +147,24 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
 
             try
             {
-                var message = await _repo.UpdateProfile(updateProfile);
+                // Call the repository method to update the user profile
+                await _repo.UpdateProfile(updateProfile); // Assuming UpdateProfile is async
 
-                if (message == "Profile updated successfully.")
-                {
-                    return Ok(message);
-                }
-                else
-                {
-                    return NotFound(message);
-                }
+                // Return a success response
+                return Ok("Profile updated successfully.");
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                // Log the exception (optional)
+                // _logger.LogError(ex, "An error occurred while updating the profile.");
+
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
 
-        [HttpPut("ChangePassword")]
+
+
+        [HttpPost("ChangePassword")]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePassword changePasswordDto)
         {
             if (changePasswordDto == null)

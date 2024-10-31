@@ -17,6 +17,7 @@ namespace Repositories.Orders
         List<CustomerOrderDTO> GetCustomerOrders(int customerId, bool? statusOrder, int? activityId);
         OrderDetailDTO GetOrderDetail(int id);
         CustomerOrderDetailDTO GetCustomerOrderDetail(int customerId);
+        bool CheckOutComboOrder(CheckoutCombo order);
         bool EnterDeposit(int id, decimal money);
         bool CancelDeposit(int id);
         bool DeleteOrder(int id);

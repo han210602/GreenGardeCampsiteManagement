@@ -11,7 +11,7 @@ namespace Repositories.Orders
 {
     public class OrderManagementRepository : IOrderManagementRepository
     {
-     
+
 
         public bool CancelDeposit(int id)
         {
@@ -35,6 +35,10 @@ namespace Repositories.Orders
         {
             return OrderDAO.CheckOut(order);
         }
+        public bool CheckOutComboOrder(CheckoutCombo order)
+        {
+            return OrderDAO.CheckoutComboOrder(order);
+        }
         public bool DeleteOrder(int id)
         {
             return OrderDAO.DeleteOrder(id);
@@ -52,7 +56,7 @@ namespace Repositories.Orders
         }
         public List<CustomerOrderDTO> GetCustomerOrders(int customerId, bool? statusOrder, int? activityId)
         {
-            return OrderDAO.GetCustomerOrders(customerId,statusOrder,activityId);
+            return OrderDAO.GetCustomerOrders(customerId, statusOrder, activityId);
         }
         public List<OrderDTO> GetAllOrderDepositAndUsing()
 
@@ -61,7 +65,7 @@ namespace Repositories.Orders
         }
         public List<OrderCampingGearByUsageDateDTO> GetListOrderGearByUsageDate(DateTime usagedate)
         {
-            return OrderDAO.GetListOrderGearByUsageDate( usagedate);
+            return OrderDAO.GetListOrderGearByUsageDate(usagedate);
 
         }
 

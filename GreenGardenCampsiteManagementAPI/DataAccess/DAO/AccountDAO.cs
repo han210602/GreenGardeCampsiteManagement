@@ -63,6 +63,7 @@ namespace DataAccess.DAO
                         UserId = user.UserId,
                         ProfilePictureUrl = user.ProfilePictureUrl,
                         Email = user.Email,
+                        Password = user.Password,
                         Phone = user.PhoneNumber,
                         RoleId = (int)user.RoleId // Add RoleId to response
                     };
