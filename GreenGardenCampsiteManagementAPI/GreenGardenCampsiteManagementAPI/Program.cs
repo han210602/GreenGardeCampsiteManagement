@@ -13,6 +13,7 @@ using Repositories.ComboFood;
 using Repositories.FoodAndDrink;
 using Repositories.Orders;
 using Repositories.Tickets;
+using Repositories.Users;
 using System.Security.Claims;
 using System.Text;
 
@@ -57,7 +58,8 @@ builder.Services.AddScoped<IComboRepository, ComboRepository>();
 builder.Services.AddScoped<ICampingGearRepository, CampingGearRepository>();
 builder.Services.AddScoped<IFoodAndDrinkRepository, FoodAndDrinkRepository>();
 builder.Services.AddScoped<ITicketRepository, TicketRepository>();
-builder.Services.AddScoped<IAccountRepository, AccountRepository>(); 
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IComboFoodRepository, ComboFoodRepository>();
 
 

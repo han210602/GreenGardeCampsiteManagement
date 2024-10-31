@@ -20,31 +20,42 @@ namespace DataAccess.DAO
     public class AccountDAO
     {
         // Assuming you have a list of User objects
+        private static Dictionary<string, int> loginAttempts = new Dictionary<string, int>();
+
         public static string Login(AccountDTO a, IConfiguration configuration)
         {
             using (var context = new GreenGardenContext())
             {
-                // Retrieve the user from the database context
-                var user = context.Users.SingleOrDefault(u => u.Email == a.Email && u.Password == a.Password);
-
-                if (user != null)
+                // Retrieve the user by email
+                var user = context.Users.SingleOrDefault(u => u.Email == a.Email);
+                // Check if the user exists and is active
+                if (user == null || user.IsActive == false)
                 {
-                    // Define the JWT claims, including the RoleId
+                    throw new Exception("Invalid email or account inactive.");
+                }
+
+                // Check if the password is correct
+                if (user.Password == a.Password)
+                {
+                    // Reset login attempts on success
+                    if (loginAttempts.ContainsKey(a.Email))
+                    {
+                        loginAttempts[a.Email] = 0;
+                    }
+
+                    // Define JWT claims, including RoleId
                     var claims = new[]
                     {
                 new Claim(JwtRegisteredClaimNames.Sub, configuration["Jwt:Subject"]),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString(), ClaimValueTypes.Integer64),
                 new Claim("UserId", user.UserId.ToString()),
                 new Claim("Email", user.Email),
-                new Claim("RoleId", user.RoleId.ToString()) // Add RoleId claim
+                new Claim("RoleId", user.RoleId.ToString())
             };
 
-                    // Create security key and signing credentials
+                    // Create JWT token
                     var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
                     var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-                    // Create the JWT token
                     var token = new JwtSecurityToken(
                         issuer: configuration["Jwt:Issuer"],
                         audience: configuration["Jwt:Audience"],
@@ -52,10 +63,8 @@ namespace DataAccess.DAO
                         expires: DateTime.UtcNow.AddMinutes(60),
                         signingCredentials: signIn);
 
-                    // Generate the token string
                     var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
 
-                    // Create a response DTO with RoleId
                     var response = new LoginResponseDTO
                     {
                         Token = tokenString,
@@ -63,18 +72,37 @@ namespace DataAccess.DAO
                         UserId = user.UserId,
                         ProfilePictureUrl = user.ProfilePictureUrl,
                         Email = user.Email,
-                        Password = user.Password,
                         Phone = user.PhoneNumber,
-                        RoleId = (int)user.RoleId // Add RoleId to response
+                        RoleId = (int)user.RoleId
                     };
 
-                    // Return the response as a JSON string
                     return JsonSerializer.Serialize(response);
                 }
-            }
+                else
+                {
+                    // Track login attempts
+                    if (!loginAttempts.ContainsKey(a.Email))
+                    {
+                        loginAttempts[a.Email] = 1;
+                    }
+                    else
+                    {
+                        loginAttempts[a.Email]++;
+                    }
 
-            throw new Exception("Invalid email or password.");
+                    // Deactivate if attempts reach 5
+                    if (loginAttempts[a.Email] >= 5)
+                    {
+                        user.IsActive = false;
+                        context.SaveChanges();
+                        throw new Exception("Account has been locked due to too many failed login attempts.");
+                    }
+
+                    throw new Exception("Invalid email or password.");
+                }
+            }
         }
+
         private static readonly ConcurrentDictionary<string, (string Code, DateTime Expiration)> VerificationCodes = new ConcurrentDictionary<string, (string, DateTime)>();
 
         public static async Task<string> Register(Register registerDto, string enteredCode, IConfiguration configuration)
@@ -140,7 +168,7 @@ namespace DataAccess.DAO
             }
         }
 
-                public static async Task<string> SendVerificationCode(string email, IConfiguration configuration)
+       public static async Task<string> SendVerificationCode(string email, IConfiguration configuration)
         {
             var verificationCode = GenerateVerificationCode();
 
@@ -160,7 +188,7 @@ namespace DataAccess.DAO
 
         private static async Task SendVerificationEmail(string email, string verificationCode, IConfiguration configuration)
         {
-            var fromAddress = new MailAddress("CustomerService94321@gmail.com", "Dịch vụ Khách hàng");
+            var fromAddress = new MailAddress("CustomerService94321@gmail.com", "SongQue Green Garden");
             var toAddress = new MailAddress(email);
             const string fromPassword = "lwrtmwkgshlqaycp";
             const string subject = "Mã xác thực đăng ký";
