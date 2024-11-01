@@ -42,24 +42,36 @@
 <html lang="en">
 
 <head>
-    <title>Danh sách nhân viên | Quản trị Admin</title>
+    <title>Quản lí đơn hàng | Đơn đặt trước</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Main CSS-->
+
+    <!-- Main CSS -->
     <link rel="stylesheet" type="text/css" href="~/css/main.css">
+
+    <!-- Boxicons CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
-    <!-- or -->
-    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
 
-    <!-- Font-icon css-->
-    <link rel="stylesheet" type="text/css"
-          href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+
+    <!-- jQuery CSS and JS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+    <!-- DataTables CSS and JS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 
+    <!-- SweetAlert JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <style>
+        /* Định nghĩa hiệu ứng nhấp nháy */
+        .highlight-row {
+            background-color: rgba(144, 238, 144, 0.3); /* Màu xanh lá nhạt ban đầu */
+        }
+    </style>
 
 
 </head>
@@ -348,7 +360,12 @@
             font-size: 18px; /* Kích thước icon */
         }
 
-        
+    .btn.active {
+        background-color: #007bff; /* Màu nền khi đang kích hoạt */
+        color: white;
+        border-color: #007bff; /* Cùng màu với màu nền */
+    }
+
 </style>
 <body onload="time()" class="app sidebar-mini rtl">
     <header class="app-header">
@@ -367,7 +384,7 @@
     <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
     <aside class="app-sidebar" >
         <div class="app-sidebar__user">
-            <img class="app-sidebar__user-avatar" src="~/images/img_1.jpg" width="50px" alt="User Image">
+            <img class="app-sidebar__user-avatar" src="@HttpContextAccessor.HttpContext.Session.GetString("Img")" width="50px" alt="User Image">
             <div>
                 <p class="app-sidebar__user-designation">Xin chào</p>
 
@@ -504,256 +521,228 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="tile">
-                   
+                    <div class="d-flex gap-3">
+                        <a href="~/OrderManagement/OrderOnline" class="btn btn-outline-primary active">
+                            <i class="fas fa-list-ul"></i> Tất cả
+                        </a>
+                        <a href="~/OrderManagement/OrderToday" class="btn btn-outline-success">
+                            <i class="fas fa-calendar-day"></i> Hôm nay
+                        </a>
+                    </div>
+
                     <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
                            id="sampleTable">
                         <thead>
                             <tr>
-                                <th width="5%">Mã đơn</th>
-                                <th width="10%">Khách hàng</th>
-                                <th width="10%">Số điện thoại</th>
-                                <th width="10%">Ngày đặt</th>
-                                <th width="10%">Ngày sử dụng</th>
-                                <th width="5%">Tiền cọc</th>
-                                <th width="5%">Thu</th>
-                                <th width="5%">Trạng thái</th>
-                                <th width="15%">Tính năng</th>
-                             
+                                <th width="8%">Mã đơn</th>           <!-- Order ID -->
+                                <th width="15%">Khách hàng</th>      <!-- Customer Name -->
+                                <th width="10%">Số điện thoại</th>   <!-- Phone Number -->
+                                <th width="12%">Ngày đặt</th>         <!-- Order Date -->
+                                <th width="12%">Ngày sử dụng</th>     <!-- Usage Date -->
+                                <th width="10%">Tiền cọc</th>        <!-- Deposit -->
+                                <th width="10%">Tổng tiền</th>   
+                                <!-- Income -->
+                                @if(HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 1)
+                                {
+                                    <th width="10%">Tính năng</th>       <!-- Total Amount -->
+                                }
+
+
 
                             </tr>
+                           
                         </thead>
                         <tbody>
                             @foreach (OrderVM item in ViewBag.dataorder)
                             {
 
-                                <tr onclick ="window.location.href='@Url.Action("OrderDetail", "OrderManagement", new { id = item.OrderId })'">
-
-                                    <td><a asp-controller="OrderManagement" asp-action="OrderDetail" asp-route-id="@item.OrderId">#@item.OrderId</a></td>
-                                    <td>@item.CustomerName</td>
-                                    <td>@item.PhoneCustomer</td>
-                                    <td>@item.OrderDate</td>
-                                    <td>@item.OrderUsageDate</td>
-                                    <td>@String.Format("{0:0,0} ₫", item.Deposit)</td>
-                                    <td>@String.Format("{0:0,0} ₫", item.AmountPayable)</td>
-
-                                    <style>
-                                        /* Background overlay for modal */
-                                        .modal {
-                                            display: none;
-                                            position: fixed;
-                                            z-index: 1000;
-                                            left: 0;
-                                            top: 0;
-                                            width: 100%;
-                                            height: 100%;
-                                            overflow: auto;
-                                            background-color: rgba(0, 0, 0, 0.5); /* Màu nền tối */
-                                            padding-top: 60px;
-                                        }
-
-                                        /* Modal content styling */
-                                        .modal-content {
-                                            background-color: #fefefe; /* Màu trắng */
-                                            margin: 5% auto;
-                                            padding: 20px;
-                                            border: 1px solid #f5f5dc; /* Màu be nhạt nhất (beige) */
-                                            border-radius: 10px;
-                                            width: 30%;
-                                            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-                                        }
-
-                                        /* Close button styling */
-                                        .close {
-                                            color: #333;
-                                            float: right;
-                                            font-size: 24px;
-                                            font-weight: bold;
-                                            cursor: pointer;
-                                        }
-
-                                            .close:hover {
-                                                color: #ff0000; /* Đổi màu thành đỏ khi hover */
-                                            }
-
-                                        /* Button styling */
-                                        button {
-                                            background-color: #f5f5dc; /* Màu be nhạt */
-                                            color: #333;
-                                            padding: 10px 20px;
-                                            margin-top: 15px;
-                                            border: none;
-                                            border-radius: 5px;
-                                            cursor: pointer;
-                                        }
-
-                                            button:hover {
-                                                background-color: #e0e0c0; /* Màu be tối hơn khi hover */
-                                            }
-
-                                        /* Input field styling */
-                                        input[type="number"] {
-                                            width: 100%;
-                                            padding: 10px;
-                                            margin: 10px 0;
-                                            display: inline-block;
-                                            border: 1px solid #ccc;
-                                            border-radius: 4px;
-                                            box-sizing: border-box;
-                                            background-color: #fefefe; /* Nền trắng */
-                                        }
-
-                                        /* Form alignment */
-                                        .modal-content form {
-                                            display: flex;
-                                            flex-direction: column;
-                                            gap: 10px;
-                                        }
-
-                                    </style>
-
-                                    <script>
-                                        function showDepositForm(orderId) {
-                                            // Hiển thị modal
-                                            var modal = document.getElementById("modal-" + orderId);
-                                            modal.style.display = "block";
-                                        }
-
-                                        function closeModal(orderId) {
-                                            // Đóng modal
-                                            var modal = document.getElementById("modal-" + orderId);
-                                            modal.style.display = "none";
-                                        }
-                                        function change(orderId) {
-                                            document.getElementById("fr-" + orderId).submit();
-                                        }
-                                        function showCancelDepositConfirm(orderId) {
-                                            // Hiển thị modal xác nhận hủy cọc
-                                            var modal = document.getElementById("cancelModal-" + orderId);
-                                            modal.style.display = "block";
-                                        }
-
-                                        function closeCancelModal(orderId) {
-                                            // Đóng modal
-                                            var modal = document.getElementById("cancelModal-" + orderId);
-                                            modal.style.display = "none";
-                                        }
-
-                                        function confirmCancel(orderId) {
-                                            // Submit form hủy cọc
-                                            document.getElementById("cancelDepositForm-" + orderId).submit();
-                                        }
-                                    </script>
-                                    <div id="modal-@item.OrderId" class="modal">
-                                        <div class="modal-content p-4">
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <h3 class="modal-title">Nhập số tiền đặt cọc cho đơn hàng #@item.OrderId</h3>
-                                                <span class="close" onclick="closeModal(@item.OrderId)">&times;</span>
-                                            </div>
-                                            <form asp-controller="OrderManagement" asp-action="EnterDeposit" method="post">
-                                                <label for="depositAmount" class="form-label">Nhập số tiền đặt cọc:</label>
-                                                <input type="number" name="money" id="money" class="form-control" min="0" required />
-
-                                                <!-- Truyền OrderId thông qua input ẩn -->
-                                                <input type="hidden" name="idorder" value="@item.OrderId" />
-
-                                                <div class="d-flex justify-content-end mt-3">
-                                                    <button type="submit" class="btn btn-primary">Xác nhận</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-
-                                    <div id="cancelModal-@item.OrderId" class="modal">
-                                        <div class="modal-content p-4">
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <h3 class="modal-title">Hủy tiền cọc cho đơn hàng #@item.OrderId?</h3>
-                                                <span class="close" onclick="closeCancelModal(@item.OrderId)">&times;</span>
-                                            </div>
-                                            <form id="cancelDepositForm-@item.OrderId" asp-controller="OrderManagement" asp-action="CancelDeposit" method="post">
-                                                <!-- Truyền OrderId thông qua input ẩn -->
-                                                <input type="hidden" name="idorder" value="@item.OrderId" />
-                                                <div class="d-flex justify-content-end gap-2 mt-3">
-                                                    <button type="button" onclick="confirmCancel(@item.OrderId)" class="btn btn-danger">Xác nhận</button>
-                                                    <button type="button" onclick="closeCancelModal(@item.OrderId)" class="btn btn-secondary">Hủy</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-
-                                    @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 1)
-                                    {
-
-                                        <td>
-                                            @if (item.StatusOrder == false)
-                                            {
-                                                <button class="btn btn-success" onclick="showDepositForm(@item.OrderId); event.stopPropagation();">Đặt cọc</button>
-                                            }
-                                            else
-                                            {
-                                                <button class="btn btn-danger" onclick="showCancelDepositConfirm(@item.OrderId); event.stopPropagation();">Hủy cọc</button>
-                                            }
-                                        </td>
-                                    }
-                                    else
-                                    {
-                                        <td>
-                                        <button class="btn btn-success">Đã cọc</button>
-                                        </td>
-                                    }
-
+                                <tr onclick="window.location.href='@Url.Action("OrderDetail", "OrderManagement", new { id = item.OrderId })'"
+                                    class="@(item.StatusOrder == true ? "highlight-row" : "")">
 
 
                                     <td>
+                                        <a asp-controller="OrderManagement" asp-action="OrderDetail" asp-route-id="@item.OrderId">#@item.OrderId</a>
+                                    </td>
+                                    <td>@item.CustomerName</td>
+                                    <td>@item.PhoneCustomer</td>
+                                    <td>@item.OrderDate?.ToString("hh:mm:ss tt dd/MM/yyyy")</td>
+                                    <td>@item.OrderUsageDate?.ToString("hh:mm:ss tt dd/MM/yyyy")</td>
+                                    <td class="text-right">@String.Format("{0:0,0} ₫", item.Deposit)</td>
+                                    <td class="text-right">@String.Format("{0:0,0} ₫", @item.TotalAmount)</td>
+                                    
                                         <style>
-                                            /* Custom styles to enhance the professional look */
-                                            .form-select-custom {
-                                                padding: 10px;
-                                                border-radius: 8px;
-                                                border: 1px solid #ced4da;
-                                                background-color: #f8f9fa;
-                                                font-size: 16px;
-                                                font-weight: 500;
-                                                width: 100%; /* Full width */
-                                                transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transition */
+                                            /* Background overlay for modal */
+                                            .modal {
+                                                display: none;
+                                                position: fixed;
+                                                z-index: 1000;
+                                                left: 0;
+                                                top: 0;
+                                                width: 100%;
+                                                height: 100%;
+                                                overflow: auto;
+                                                background-color: rgba(0, 0, 0, 0.5); /* Màu nền tối */
+                                                padding-top: 60px;
                                             }
 
-                                                .form-select-custom:focus {
-                                                    border-color: #80bdff;
-                                                    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+                                            /* Modal content styling */
+                                            .modal-content {
+                                                background-color: #fefefe; /* Màu trắng */
+                                                margin: 5% auto;
+                                                padding: 20px;
+                                                border: 1px solid #f5f5dc; /* Màu be nhạt nhất (beige) */
+                                                border-radius: 10px;
+                                                width: 30%;
+                                                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                                            }
+
+                                            /* Close button styling */
+                                            .close {
+                                                color: #333;
+                                                float: right;
+                                                font-size: 24px;
+                                                font-weight: bold;
+                                                cursor: pointer;
+                                            }
+
+                                                .close:hover {
+                                                    color: #ff0000; /* Đổi màu thành đỏ khi hover */
                                                 }
 
-                                            /* Styling for the entire select container if needed */
-                                            .select-container {
-                                                max-width: 500px; /* Optional to restrict max width */
-                                                margin: 20px auto; /* Center on the page */
+                                            /* Button styling */
+                                            button {
+                                                background-color: #f5f5dc; /* Màu be nhạt */
+                                                color: #333;
+                                                padding: 10px 20px;
+                                                margin-top: 15px;
+                                                border: none;
+                                                border-radius: 5px;
+                                                cursor: pointer;
                                             }
+
+                                                button:hover {
+                                                    background-color: #e0e0c0; /* Màu be tối hơn khi hover */
+                                                }
+
+                                            /* Input field styling */
+                                            input[type="number"] {
+                                                width: 100%;
+                                                padding: 10px;
+                                                margin: 10px 0;
+                                                display: inline-block;
+                                                border: 1px solid #ccc;
+                                                border-radius: 4px;
+                                                box-sizing: border-box;
+                                                background-color: #fefefe; /* Nền trắng */
+                                            }
+
+                                            /* Form alignment */
+                                            .modal-content form {
+                                                display: flex;
+                                                flex-direction: column;
+                                                gap: 10px;
+                                            }
+
                                         </style>
 
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <form id="fr-@item.OrderId" asp-controller="OrderManagement" asp-action="UpdateActivityOrder" method="post" class="d-flex">
-                                                <input type="hidden" name="idorder" value="@item.OrderId" />
-                                                <select class="form-select form-select-custom me-2" name="idactivity" onchange="change(@item.OrderId); event.stopPropagation();">
-                                                    @foreach (ActivityVM activity in ViewBag.activities)
-                                                    {
-                                                        if (item.ActivityId == activity.ActivityId)
-                                                        {
-                                                            <option value="@activity.ActivityId" selected>
-                                                                @activity.ActivityName
-                                                            </option>
-                                                        }
-                                                        else
-                                                        {
-                                                            <option value="@activity.ActivityId">
-                                                                @activity.ActivityName
-                                                            </option>
-                                                        }
-                                                    }
-                                                </select>
-                                            </form>
-                                           
-                                        </div>
+                                        <script>
+                                            function showDepositForm(orderId) {
+                                                // Hiển thị modal
+                                                var modal = document.getElementById("modal-" + orderId);
+                                                modal.style.display = "block";
+                                            }
 
-                                    </td>
+                                            function closeModal(orderId) {
+                                                // Đóng modal
+                                                var modal = document.getElementById("modal-" + orderId);
+                                                modal.style.display = "none";
+                                            }
+                                            function change(orderId) {
+                                                if (confirm("Bạn có chắc chắn muốn chuyển sang trạng thái đang sử dụng không?")) {
+                                                    document.getElementById("fr-" + orderId).submit();
+                                                }
+                                            }
+                                            function showCancelDepositConfirm(orderId) {
+                                                // Hiển thị modal xác nhận hủy cọc
+                                                var modal = document.getElementById("cancelModal-" + orderId);
+                                                modal.style.display = "block";
+                                            }
+
+                                            function closeCancelModal(orderId) {
+                                                // Đóng modal
+                                                var modal = document.getElementById("cancelModal-" + orderId);
+                                                modal.style.display = "none";
+                                            }
+
+                                            function confirmCancel(orderId) {
+                                                // Submit form hủy cọc
+                                                document.getElementById("cancelDepositForm-" + orderId).submit();
+                                            }
+                                        </script>
+
+
+                                        @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 1)
+                                        {
+                                            <div id="modal-@item.OrderId" class="modal">
+                                                <div class="modal-content p-4">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <h3 class="modal-title">Nhập số tiền đặt cọc cho đơn hàng #@item.OrderId</h3>
+                                                        <span class="close" onclick="closeModal(@item.OrderId)">&times;</span>
+                                                    </div>
+                                                    <form asp-controller="OrderManagement" asp-action="EnterDeposit" method="post">
+                                                        <label for="depositAmount" class="form-label">Nhập số tiền đặt cọc:</label>
+                                                        <input type="number" name="money" id="money" class="form-control" min="0" required />
+
+                                                        <!-- Truyền OrderId thông qua input ẩn -->
+                                                        <input type="hidden" name="idorder" value="@item.OrderId" />
+                                                        <input type="text" hidden name="page" value="0" />
+
+                                                        <div class="d-flex justify-content-end mt-3">
+                                                            <button type="submit" class="btn btn-primary">Xác nhận</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+
+                                            <div id="cancelModal-@item.OrderId" class="modal">
+                                                <div class="modal-content p-4">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <h3 class="modal-title">Hủy tiền cọc cho đơn hàng #@item.OrderId?</h3>
+                                                        <span class="close" onclick="closeCancelModal(@item.OrderId)">&times;</span>
+                                                    </div>
+                                                    <form id="cancelDepositForm-@item.OrderId" asp-controller="OrderManagement" asp-action="CancelDeposit" method="post">
+                                                        <!-- Truyền OrderId thông qua input ẩn -->
+                                                        <input type="text" hidden name="idorder" value="@item.OrderId" />
+                                                        <input type="text" hidden name="page" value="0" />
+                                                        <div class="d-flex justify-content-end gap-2 mt-3">
+                                                            <button type="button" onclick="confirmCancel(@item.OrderId)" class="btn btn-danger">Xác nhận</button>
+                                                            <button type="button" onclick="closeCancelModal(@item.OrderId)" class="btn btn-secondary">Hủy</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+
+
+                                        <td style="text-align: center; padding: 0;">
+                                            <div class="d-flex justify-content-center align-items-center" style="gap: 10px; margin-top: -2px;">
+                                                @if (item.StatusOrder == false)
+                                                {
+                                                    <button class="btn btn-success" onclick="showDepositForm(@item.OrderId); event.stopPropagation();">Đặt cọc</button>
+                                                }
+                                                else
+                                                {
+                                                <button class="btn btn-danger" onclick="showCancelDepositConfirm(@item.OrderId); event.stopPropagation();">Hủy cọc</button>
+
+                                                }
+                                            </div>
+                                        </td>
+
+                                                
+                                     
+                                        }
+                                       
+
+                                    
 
 
 
@@ -796,6 +785,19 @@
     <script type="text/javascript" src="~/js/plugins/dataTables.bootstrap.min.js"></script>
     <script type="text/javascript">$('#sampleTable').DataTable();</script>
     <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const rows = document.querySelectorAll(".highlight-row");
+
+            rows.forEach(row => {
+                let isLight = true;
+
+                // Thiết lập khoảng thời gian để thay đổi màu nền
+                setInterval(() => {
+                    row.style.backgroundColor = isLight ? "rgba(144, 238, 144, 0.5)" : "rgba(144, 238, 144, 0.3)";
+                    isLight = !isLight;
+                }, 1000); // Nhấp nháy mỗi 1 giây
+            });
+        });
 
         oTable = $('#sampleTable').dataTable();
         $('#all').click(function (e) {

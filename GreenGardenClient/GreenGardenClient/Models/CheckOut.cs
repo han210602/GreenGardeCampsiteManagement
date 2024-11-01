@@ -8,7 +8,21 @@
         public List<CustomerOrderFoodAddDTO> OrderFood { get; set; }
         public List<CustomerOrderFoodComboAddDTO> OrderFoodCombo { get; set; }
     }
-
+    public class CheckOutComboOrderRequest
+    {
+        public CustomerOrderAddDTO Order { get; set; }
+        public List<CustomerOrderComboAddDTO> OrderCombo { get; set; }
+        public List<CustomerOrderCampingGearAddDTO> OrderCampingGear { get; set; }
+        public List<CustomerOrderFoodAddDTO> OrderFood { get; set; }
+        public List<CustomerOrderFoodComboAddDTO> OrderFoodCombo { get; set; }
+    }
+    public class CustomerOrderComboAddDTO
+    {
+        public int ComboId { get; set; }
+        public int OrderId { get; set; }
+        public int? Quantity { get; set; }
+        public string? Description { get; set; }
+    }
     public class CustomerOrderAddDTO
     {
         public int? CustomerId { get; set; }

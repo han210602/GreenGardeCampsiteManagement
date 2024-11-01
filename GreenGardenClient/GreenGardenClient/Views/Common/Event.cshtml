@@ -53,18 +53,19 @@
                     <div class="col-9 text-right">
                         <nav class="site-navigation text-right ml-auto d-none d-lg-block" role="navigation">
                             <ul class="site-menu main-menu js-clone-nav ml-auto ">
-                                <li class="active"><a href="/Home" class="nav-link">Trang chủ</a></li>
-                                <li><a href="/Common/Event" class="nav-link">Sự kiện</a></li>
+                                <li><a href="/Home" class="nav-link">Trang chủ</a></li>
+                                <li class="active"><a href="/Common/Event" class="nav-link">Sự kiện</a></li>
                                 <li class="has-dropdown">
                                     <a href="/Service" class="nav-link">Dịch vụ</a>
                                     <ul class="dropdown">
+                                        <li><a href="/Service/ComboList" class="nav-link">Danh sách combo vé</a></li>
                                         <li><a href="/Service/OrderTicket" class="nav-link">Danh sách vé</a></li>
                                         <li><a href="/Service/OrderFoodAndDrink" class="nav-link">Danh sách đồ ăn</a></li>
                                         <li><a href="/Service/OrderGear" class="nav-link">Danh sách dụng cụ</a></li>
                                     </ul>
                                 </li>
 
-                                <li><a href="blog.html" class="nav-link">Liên hệ</a></li>
+                                <li><a href="~/Common/Contact" class="nav-link">Liên hệ</a></li>
                                 <li>
                                     @if (HttpContextAccessor.HttpContext.Session.GetString("Email") == null)
                                     {
@@ -290,57 +291,6 @@
             </div>
         </div> <!-- END .site-section -->
 
-        <footer class="site-footer bg-light">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-3">
-                        <h2 class="footer-heading mb-3">Facebook</h2>
-                        <div class="row">
-                            <div class="col-4 gal_col">
-                                <a href="#"><img src="~/images/Picture1.jpg" alt="Image" class="img-fluid"></a>
-                            </div>
-                            <div class="col-4 gal_col">
-                                <a href="#"><img src="~/images/Picture8.jpg" alt="Image" class="img-fluid"></a>
-                            </div>
-                            <div class="col-4 gal_col">
-                                <a href="#"><img src="~/images/Picture7.jpg" alt="Image" class="img-fluid"></a>
-                            </div>
-                            <div class="col-4 gal_col">
-                                <a href="#"><img src="~/images/Picture4.jpg" alt="Image" class="img-fluid"></a>
-                            </div>
-                            <div class="col-4 gal_col">
-                                <a href="#"><img src="~/images/Picture13.jpg" alt="Image" class="img-fluid"></a>
-                            </div>
-                            <div class="col-4 gal_col">
-                                <a href="#"><img src="~/images/Picture6.jpg" alt="Image" class="img-fluid"></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-8 ml-auto">
-                        <div class="row">
-                            <div class="col-lg-6 ml-auto">
-                                <h2 class="footer-heading mb-4">Truy cập nhanh</h2>
-                                <ul class="list-unstyled">
-                                    <li><a href="#">Facebook</a></li>
-                                    <li><a href="#">Instagram</a></li>
-                                    <li><a href="#">Tiktok</a></li>
-
-                                </ul>
-                            </div>
-                            <div class="col-lg-6">
-                                <h2 class="footer-heading mb-4">Phản hồi</h2>
-                                <p>Nơi bạn đưa ra những phản hồi về dịch vụ,nhân viên tại sông quê</p>
-                                <form action="#" class="d-flex" class="subscribe">
-                                    <input type="text" class="form-control mr-3" placeholder="Phản hồi">
-                                    <input type="submit" value="Send" class="btn btn-primary">
-                                </form>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-        </footer>
     </div>
 
     <script src="~/js/jquery-3.3.1.min.js"></script>

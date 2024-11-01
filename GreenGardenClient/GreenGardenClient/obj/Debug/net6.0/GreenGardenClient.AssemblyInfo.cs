@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GreenGardenClient")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a8e1d6bba95638f627ae7a3d0a2ea5291b6d8f47")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("GreenGardenClient")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GreenGardenClient")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

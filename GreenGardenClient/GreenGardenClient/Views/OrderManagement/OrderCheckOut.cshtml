@@ -42,25 +42,31 @@
 <html lang="en">
 
 <head>
-    <title>Danh sách nhân viên | Quản trị Admin</title>
+    <title>Quản lí đơn hàng | Đơn đã thanh toán</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Main CSS-->
+
+    <!-- Main CSS -->
     <link rel="stylesheet" type="text/css" href="~/css/main.css">
+
+    <!-- Boxicons CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
-    <!-- or -->
-    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
 
-    <!-- Font-icon css-->
-    <link rel="stylesheet" type="text/css"
-          href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+
+    <!-- jQuery CSS and JS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+    <!-- DataTables CSS and JS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 
-
+    <!-- SweetAlert JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+ 
 
 </head>
 <header class="app-header">
@@ -78,6 +84,12 @@
     </ul>
 </header>
 <style>
+  
+    /* Định nghĩa hiệu ứng nhấp nháy */
+    .highlight-row {
+        background-color: rgba(144, 238, 144, 0.3); /* Màu xanh lá nhạt ban đầu */
+    }
+
     .product-card {
         padding: 15px;
         margin-bottom: 15px;
@@ -505,47 +517,41 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="tile">
-                   
-                    <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
-                           id="sampleTable">
-                        <thead>
+                    <table class="table table-hover table-bordered" id="sampleTable">
+                        <thead class="thead-light">
                             <tr>
-                                <th width="5%">Mã đơn</th>
-                                <th width="10%">Khách hàng</th>
-                                <th width="10%">Số điện thoại</th>
-                                <th width="10%">Ngày đặt</th>
-                                <th width="10%">Ngày sử dụng</th>
-                                <th width="5%">Tiền cọc</th>
-                                <th width="5%">Thu</th>
-                                <th width="5%">Tổng tiền</th>
-                                <th width="15%">Trạng thái</th>
+                                <th width="2%"></th>      <!-- Status -->
+
+                                <th width="8%">Mã đơn</th>           <!-- Order ID -->
+                                <th width="13%">Khách hàng</th>      <!-- Customer Name -->
+                                <th width="12%">Số điện thoại</th>   <!-- Phone Number -->
+                                <th width="12%">Ngày đặt</th>         <!-- Order Date -->
+                                <th width="12%">Ngày sử dụng</th>     <!-- Usage Date -->
+                                <th class="text-right" width="12%">Tiền cọc</th>        <!-- Deposit -->
+                                <th class="text-right" width="12%">Thu</th>             <!-- Income -->
+                                <th class="text-right" width="12%">Tổng tiền</th>       <!-- Total Amount -->
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (OrderVM item in ViewBag.dataorder)
                             {
-
-                                <tr class="@(item.ActivityId==1002 ? "disabled-row" : "")">
-
-                                    <td><a asp-controller="OrderManagement" asp-action="OrderDetail" asp-route-id="@item.OrderId">#@item.OrderId</a></td>
-
+                                <tr onclick="window.location.href='@Url.Action("OrderDetail", "OrderManagement", new { id = item.OrderId })'"
+                                    class="@(item.OrderUsageDate.Value.ToString("dd/MM/yyyy").Equals(DateTime.Now.ToString("dd/MM/yyyy")) ? "highlight-row" : "")">
+                                    <td><i class="fas fa-check-circle" style="color: green;"></i></td>
+                                    <td>#@item.OrderId</td>
                                     <td>@item.CustomerName</td>
                                     <td>@item.PhoneCustomer</td>
-                                    <td>@item.OrderDate</td>
-                                    <td>@item.OrderUsageDate</td>
-                                    <td>@String.Format("{0:0,0} ₫", item.Deposit)</td>
-                                    <td>@String.Format("{0:0,0} ₫", item.AmountPayable)</td>
-                                    <td>@String.Format("{0:0,0} ₫", @item.TotalAmount)</td>
-
-                                    <td>
-                                        Đã Thanh Toán
-                                    </td>
-
+                                    <td>@item.OrderDate?.ToString("hh:mm:ss tt dd/MM/yyyy")</td>
+                                    <td>@item.OrderUsageDate?.ToString("hh:mm:ss tt dd/MM/yyyy")</td>
+                                    <td class="text-right">@String.Format("{0:0,0} ₫", item.Deposit)</td>
+                                    <td class="text-right">@String.Format("{0:0,0} ₫", item.AmountPayable)</td>
+                                    <td class="text-right">@String.Format("{0:0,0} ₫", @item.TotalAmount)</td>
                                 </tr>
                             }
-
                         </tbody>
                     </table>
+
+                    
                 </div>
             </div>
 
@@ -561,6 +567,7 @@
         });
 
     </script>
+  
 
 
 
@@ -579,7 +586,21 @@
     <script type="text/javascript" src="~/js/plugins/dataTables.bootstrap.min.js"></script>
     <script type="text/javascript">$('#sampleTable').DataTable();</script>
     <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const rows = document.querySelectorAll(".highlight-row");
 
+            rows.forEach(row => {
+                let isLight = true;
+
+                // Thiết lập khoảng thời gian để thay đổi màu nền
+                setInterval(() => {
+                    row.style.backgroundColor = isLight ? "rgba(144, 238, 144, 0.5)" : "rgba(144, 238, 144, 0.3)";
+                    isLight = !isLight;
+                }, 1000); // Nhấp nháy mỗi 1 giây
+            });
+        });
+
+      
         oTable = $('#sampleTable').dataTable();
         $('#all').click(function (e) {
             $('#sampleTable tbody :checkbox').prop('checked', $(this).is(':checked'));
@@ -628,6 +649,7 @@
         }
         ;
     </script>
+
 </body>
 
 </html>

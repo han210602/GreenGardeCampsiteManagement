@@ -60,18 +60,19 @@
                     <div class="col-9 text-right">
                         <nav class="site-navigation text-right ml-auto d-none d-lg-block" role="navigation">
                             <ul class="site-menu main-menu js-clone-nav ml-auto ">
-                                <li class="active"><a href="/Home" class="nav-link">Trang chủ</a></li>
+                                <li><a href="/Home" class="nav-link">Trang chủ</a></li>
                                 <li><a href="/Common/Event" class="nav-link">Sự kiện</a></li>
                                 <li class="has-dropdown">
                                     <a href="/Service" class="nav-link">Dịch vụ</a>
                                     <ul class="dropdown">
+                                        <li><a href="/Service/ComboList" class="nav-link">Danh sách combo vé</a></li>
                                         <li><a href="/Service/OrderTicket" class="nav-link">Danh sách vé</a></li>
                                         <li><a href="/Service/OrderFoodAndDrink" class="nav-link">Danh sách đồ ăn</a></li>
                                         <li><a href="/Service/OrderGear" class="nav-link">Danh sách dụng cụ</a></li>
                                     </ul>
                                 </li>
 
-                                <li><a href="blog.html" class="nav-link">Liên hệ</a></li>
+                                <li><a href="~/Common/Contact" class="nav-link">Liên hệ</a></li>
                                 <li>
                                     @if (HttpContextAccessor.HttpContext.Session.GetString("Email") == null)
                                     {
@@ -103,7 +104,7 @@
                                                 else
                                                 {
 
-                                                <li><a href="~/Service/OrderHistory" class="nav-link">Lịch sử đặt hàng</a></li>
+                                                <li class="active"><a href="~/Service/OrderHistory" class="nav-link">Lịch sử đặt hàng</a></li>
                                                 <li><a href="~/Service/Cart" class="nav-link">Giỏ hàng</a></li>
                                                 <li><a href="~/Home/Logout" class="nav-link">Đăng xuất</a></li>
 
@@ -117,7 +118,7 @@
                                 @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 3)
                                 {
                                     <li>
-                                        <a href="~/Service/Cart" class="nav-link">
+                                        <a href="~/Service/Cart"  class="nav-link">
                                             <i class="fas fa-shopping-cart"></i>
                                         </a>
                                     </li>
@@ -126,7 +127,6 @@
 
                             </ul>
                         </nav>
-
                     </div>
                 </div>
             </div>
@@ -319,10 +319,40 @@
 
                                                 <p class="item-price">Tổng tiền: @order.TotalAmount.ToString("N0") đ</p>
                                             </div>
-                                            <div class="buttons">
-                                                <a href="@Url.Action("OrderDetailHistory", "Service", new { orderId = @order.OrderId })" class="btn btn-purple btn-block">Xem chi tiết</a>
-                                                <button class="btn btn-secondary btn-block mt-2">Hủy</button>
-                                            </div>
+                                            @if (order.StatusOrder == true && order.ActivityId == 1)
+                                            {
+                                                <div class="buttons">
+                                                    <a href="@Url.Action("OrderDetailHistory", "Service", new { orderId = @order.OrderId })" class="btn btn-purple btn-block">Xem chi tiết</a>
+                                                    <p class="btn btn-secondary btn-block mt-2">Đã cọc</p>
+                                                </div>
+                                            }
+                                            else if (order.StatusOrder == false && order.ActivityId == 1)
+                                            {
+                                                <div class="buttons">
+                                                    <a href="@Url.Action("OrderDetailHistory", "Service", new { orderId = @order.OrderId })" class="btn btn-purple btn-block">Xem chi tiết</a>
+                                                    <button class="btn btn-secondary btn-block mt-2">Hủy</button>
+                                                </div>
+                                            }
+                                            else if (order.ActivityId == 2)
+                                            {
+                                                <div class="buttons">
+                                                    <a href="@Url.Action("OrderDetailHistory", "Service", new { orderId = @order.OrderId })" class="btn btn-purple btn-block">Xem chi tiết</a>
+                                                    <button class="btn btn-secondary btn-block mt-2">Yêu cầu thanh toán</button>
+                                                </div>
+                                            }
+                                            else if (order.ActivityId == 3)
+                                            {
+                                                <div class="buttons">
+                                                    <a href="@Url.Action("OrderDetailHistory", "Service", new { orderId = @order.OrderId })" class="btn btn-purple btn-block">Xem chi tiết</a>
+                                                </div>
+                                            }
+                                            else if (order.ActivityId == 4)
+                                            {
+                                                <div class="buttons">
+                                                    <a href="@Url.Action("OrderDetailHistory", "Service", new { orderId = @order.OrderId })" class="btn btn-purple btn-block">Xem chi tiết</a>
+                                                    <p class="btn btn-secondary btn-block mt-2">Yêu cầu thanh toa</p>
+                                                </div>
+                                            }
                                         </div>
                                         <div class="divider"></div>
                                     }
@@ -337,80 +367,27 @@
                 </div>
             </div>
         </div>
-
-
-        <footer class="site-footer bg-light">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-3">
-                        <h2 class="footer-heading mb-3">Facebook</h2>
-                        <div class="row">
-                            <div class="col-4 gal_col">
-                                <a href="#"><img src="~/images/Picture1.jpg" alt="Image" class="img-fluid"></a>
-                            </div>
-                            <div class="col-4 gal_col">
-                                <a href="#"><img src="~/images/Picture8.jpg" alt="Image" class="img-fluid"></a>
-                            </div>
-                            <div class="col-4 gal_col">
-                                <a href="#"><img src="~/images/Picture7.jpg" alt="Image" class="img-fluid"></a>
-                            </div>
-                            <div class="col-4 gal_col">
-                                <a href="#"><img src="~/images/Picture4.jpg" alt="Image" class="img-fluid"></a>
-                            </div>
-                            <div class="col-4 gal_col">
-                                <a href="#"><img src="~/images/Picture13.jpg" alt="Image" class="img-fluid"></a>
-                            </div>
-                            <div class="col-4 gal_col">
-                                <a href="#"><img src="~/images/Picture6.jpg" alt="Image" class="img-fluid"></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-8 ml-auto">
-                        <div class="row">
-                            <div class="col-lg-6 ml-auto">
-                                <h2 class="footer-heading mb-4">Truy cập nhanh</h2>
-                                <ul class="list-unstyled">
-                                    <li><a href="#">Facebook</a></li>
-                                    <li><a href="#">Instagram</a></li>
-                                    <li><a href="#">Tiktok</a></li>
-
-                                </ul>
-                            </div>
-                            <div class="col-lg-6">
-                                <h2 class="footer-heading mb-4">Phản hồi</h2>
-                                <p>Nơi bạn đưa ra những phản hồi về dịch vụ,nhân viên tại sông quê</p>
-                                <form action="#" class="d-flex" class="subscribe">
-                                    <input type="text" class="form-control mr-3" placeholder="Phản hồi">
-                                    <input type="submit" value="Send" class="btn btn-primary">
-                                </form>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-        </footer>
-
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({
             duration: 1200, // Đặt thời gian cho hiệu ứng (tùy chọn)
         });
     </script>
-        <script>
-            function sortCampingGears() {
-                const orderStatus = document.getElementById("sort").value;
-                const customerId = '@(ViewBag.CustomerId ?? "1003")';
-                const activityId = '@(ViewBag.CurrentCategoryId ?? "null")';
+    <script>
+        function sortCampingGears() {
+            const orderStatus = document.getElementById("sort").value;
+            const customerId = '@(ViewBag.CustomerId ?? "1003")';
+            const activityId = '@(ViewBag.CurrentCategoryId ?? "null")';
 
-                // Construct the URL for filtering
-                let url = `/Service/OrderHistory?customerId=${customerId}`;
-                if (activityId !== "null") url += `&activityId=${activityId}`;
-                if (orderStatus) url += `&statusOrder=${orderStatus}`;
+            // Construct the URL for filtering
+            let url = `/Service/OrderHistory?customerId=${customerId}`;
+            if (activityId !== "null") url += `&activityId=${activityId}`;
+            if (orderStatus) url += `&statusOrder=${orderStatus}`;
 
-                window.location.href = url;
-            }
+            window.location.href = url;
+        }
 
     </script>
 
@@ -480,7 +457,57 @@
 
     </style>
 </body>
+<footer class="site-footer bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <h2 class="footer-heading mb-3">Facebook</h2>
+                <div class="row">
+                    <div class="col-4 gal_col">
+                        <a href="#"><img src="~/images/Picture1.jpg" alt="Image" class="img-fluid"></a>
+                    </div>
+                    <div class="col-4 gal_col">
+                        <a href="#"><img src="~/images/Picture8.jpg" alt="Image" class="img-fluid"></a>
+                    </div>
+                    <div class="col-4 gal_col">
+                        <a href="#"><img src="~/images/Picture7.jpg" alt="Image" class="img-fluid"></a>
+                    </div>
+                    <div class="col-4 gal_col">
+                        <a href="#"><img src="~/images/Picture4.jpg" alt="Image" class="img-fluid"></a>
+                    </div>
+                    <div class="col-4 gal_col">
+                        <a href="#"><img src="~/images/Picture13.jpg" alt="Image" class="img-fluid"></a>
+                    </div>
+                    <div class="col-4 gal_col">
+                        <a href="#"><img src="~/images/Picture6.jpg" alt="Image" class="img-fluid"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8 ml-auto">
+                <div class="row">
+                    <div class="col-lg-6 ml-auto">
+                        <h2 class="footer-heading mb-4">Truy cập nhanh</h2>
+                        <ul class="list-unstyled">
+                            <li><a href="#">Facebook</a></li>
+                            <li><a href="#">Instagram</a></li>
+                            <li><a href="#">Tiktok</a></li>
 
+                        </ul>
+                    </div>
+                    <div class="col-lg-6">
+                        <h2 class="footer-heading mb-4">Phản hồi</h2>
+                        <p>Nơi bạn đưa ra những phản hồi về dịch vụ,nhân viên tại sông quê</p>
+                        <form action="#" class="d-flex" class="subscribe">
+                            <input type="text" class="form-control mr-3" placeholder="Phản hồi">
+                            <input type="submit" value="Send" class="btn btn-primary">
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+</footer>
 </html>
 
 

@@ -2457,11 +2457,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\admin\\Desktop\\git\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient.csproj",
+      "projectUniqueName": "C:\\Users\\admin\\Documents\\Zalo Received Files\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient.csproj",
       "projectName": "GreenGardenClient",
-      "projectPath": "C:\\Users\\admin\\Desktop\\git\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient.csproj",
+      "projectPath": "C:\\Users\\admin\\Documents\\Zalo Received Files\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient.csproj",
       "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\admin\\Desktop\\git\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\obj\\",
+      "outputPath": "C:\\Users\\admin\\Documents\\Zalo Received Files\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",

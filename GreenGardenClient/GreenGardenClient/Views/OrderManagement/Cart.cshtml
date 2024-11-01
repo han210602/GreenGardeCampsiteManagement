@@ -569,35 +569,93 @@
 
             <!-- Modal structure -->
             <div class="modal fade" id="depositModal" tabindex="-1" role="dialog" aria-labelledby="depositModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
+                <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="depositModalLabel">Nhập số tiền cọc</h5>
+                            <h5 class="modal-title" id="depositModalLabel">Đặt cọc</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <!-- Form for deposit amount -->
+                            <!-- Deposit Form -->
                             <form id="depositForm" asp-action="Order" asp-controller="OrderManagement" method="post">
                                 <div class="form-group">
                                     <label for="depositAmount">Số tiền cọc</label>
-                                    <input hidden value="@ViewBag.Total" name="total"></input>
-                                    <input type="number" class="form-control" min="0" id="depositAmount" name="deposit" placeholder="Nhập số tiền cọc">
+                                    <input type="hidden" value="@ViewBag.Total" name="total" />
+
+                                    <!-- Deposit Amount Display (Fixed Width) -->
+                                    <div class="d-flex justify-content-center mb-3">
+                                        <input type="text" class="form-control text-right font-weight-bold" id="depositAmountDisplay" name="depositDisplay" readonly value="0 VND" style="width: 200px;">
+                                        <input type="hidden" id="depositAmount" name="deposit" value="0" />
+                                    </div>
+
+                                    <!-- Percentage Buttons with Calculated Amounts -->
+                                    <div class="mt-3 text-center">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <button type="button" class="btn btn-outline-secondary w-100 mx-1 my-1" onclick="setDeposit(0)">
+                                                    0 VND
+                                                </button>
+                                            </div>
+                                            <div class="col-4">
+                                                <button type="button" class="btn btn-outline-secondary w-100 mx-1 my-1" onclick="setDeposit(0.2)">
+                                                    @(Math.Round((decimal)ViewBag.Total * 0.2m).ToString("N0")) VND
+                                                </button>
+                                            </div>
+                                            <div class="col-4">
+                                                <button type="button" class="btn btn-outline-secondary w-100 mx-1 my-1" onclick="setDeposit(0.4)">
+                                                    @(Math.Round((decimal)ViewBag.Total * 0.4m).ToString("N0")) VND
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <button type="button" class="btn btn-outline-secondary w-100 mx-1 my-1" onclick="setDeposit(0.6)">
+                                                    @(Math.Round((decimal)ViewBag.Total * 0.6m).ToString("N0")) VND
+                                                </button>
+                                            </div>
+                                            <div class="col-4">
+                                                <button type="button" class="btn btn-outline-secondary w-100 mx-1 my-1" onclick="setDeposit(0.8)">
+                                                    @(Math.Round((decimal)ViewBag.Total * 0.8m).ToString("N0")) VND
+                                                </button>
+                                            </div>
+                                            <div class="col-4">
+                                                <button type="button" class="btn btn-outline-secondary w-100 mx-1 my-1" onclick="setDeposit(1)">
+                                                    @(Math.Round((decimal)ViewBag.Total * 1m).ToString("N0")) VND
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
 
 
+                                    <!-- Action Buttons -->
+                                    <div class="mt-4 text-center">
+                                        <button type="submit" class="btn btn-primary mr-2">Xác nhận</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="resetDeposit()">Hủy</button>
+                                    </div>
                                 </div>
                             </form>
-                        </div>
-                        <div class="modal-footer">
-                            <!-- Cancel button to close modal -->
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                            <!-- Submit button to submit the form -->
-                            <button type="button" class="btn btn-primary" onclick="submitDeposit()">Xác nhận</button>
+                            <!-- End of Deposit Form -->
                         </div>
                     </div>
                 </div>
             </div>
+
+            <script>
+                const totalAmount = @ViewBag.Total;
+
+                function setDeposit(percentage) {
+                    const deposit = Math.round(totalAmount * percentage);
+                    document.getElementById("depositAmountDisplay").value = deposit.toLocaleString("vi-VN") + " VND";
+                    document.getElementById("depositAmount").value = deposit;
+                }
+
+                function resetDeposit() {
+                    document.getElementById("depositAmountDisplay").value = "0 VND";
+                    document.getElementById("depositAmount").value = 0;
+                }
+            </script>
 
         </div>
 
@@ -624,27 +682,7 @@
 
 
     </script>
-    <script>
-        function submitDeposit() {
-            // Lấy giá trị từ form
-            var depositAmount = document.getElementById('depositAmount').value;
-
-            // Kiểm tra nếu chưa nhập số tiền cọc hoặc nếu số tiền nhập không hợp lệ
-            if (!depositAmount || depositAmount < 0) {
-                alert("Vui lòng nhập số tiền cọc hợp lệ");
-                return;
-            }
-
-            // In giá trị của số tiền cọc vào console (để kiểm tra)
-            console.log("Số tiền cọc:", depositAmount);
-
-            // Gửi form
-            document.getElementById('depositForm').submit();
-
-            // Đóng modal sau khi form được gửi
-            $('#depositModal').modal('hide');
-        }
-    </script>
+   
 
 
     <script>

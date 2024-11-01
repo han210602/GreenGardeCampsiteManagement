@@ -30,39 +30,7 @@
     <link rel="stylesheet" href="~/css/style.css">
 
 </head>
-@{
-    if (ViewBag.Notification != null)
-    {
-        <div id="notification" class="alert alert-warning" role="alert">
-            @ViewBag.Notification
-        </div>
-    }
-}
-<style>
-    #notification {
-        position: fixed;
-        top: 20px; /* Khoảng cách từ đầu trang */
-        right: 20px; /* Khoảng cách từ bên phải */
-        z-index: 1050; /* Đảm bảo thông báo nằm trên các phần tử khác */
-        opacity: 1; /* Bắt đầu với độ mờ là 1 */
-        transition: opacity 1s ease-out, transform 1s ease-out; /* Hiệu ứng chuyển đổi cho độ mờ và biến đổi */
-        transform: translateY(-10px); /* Đưa thông báo lên một chút */
-        width: auto; /* Hoặc thay đổi thành một giá trị cụ thể, ví dụ: 300px */
-        max-width: 300px; /* Giới hạn chiều rộng tối đa */
-        padding: 15px; /* Khoảng cách bên trong cho thông báo */
-    }
-</style>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function () {
-        if ($("#notification").length) {
-            setTimeout(function () {
-                $("#notification").css("opacity", "0"); // Đặt độ mờ thành 0
-                $("#notification").css("transform", "translateY(10px)"); // Đưa thông báo xuống một chút khi ẩn
-            }, 3000); // Sau 3 giây
-        }
-    });
-</script>
+
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
 
 
@@ -77,7 +45,39 @@
             <div class="site-mobile-menu-body"></div>
         </div>
 
-
+        @{
+            if (TempData["Notification"] != null)
+            {
+                <div id="notification" class="alert alert-warning" role="alert">
+                    Thêm vào giỏ hàng thành công
+                </div>
+            }
+        }
+        <style>
+            #notification {
+                position: fixed;
+                top: 20px; /* Khoảng cách từ đầu trang */
+                right: 20px; /* Khoảng cách từ bên phải */
+                z-index: 1050; /* Đảm bảo thông báo nằm trên các phần tử khác */
+                opacity: 1; /* Bắt đầu với độ mờ là 1 */
+                transition: opacity 1s ease-out, transform 1s ease-out; /* Hiệu ứng chuyển đổi cho độ mờ và biến đổi */
+                transform: translateY(-10px); /* Đưa thông báo lên một chút */
+                width: auto; /* Hoặc thay đổi thành một giá trị cụ thể, ví dụ: 300px */
+                max-width: 300px; /* Giới hạn chiều rộng tối đa */
+                padding: 15px; /* Khoảng cách bên trong cho thông báo */
+            }
+        </style>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                if ($("#notification").length) {
+                    setTimeout(function () {
+                        $("#notification").css("opacity", "0"); // Đặt độ mờ thành 0
+                        $("#notification").css("transform", "translateY(10px)"); // Đưa thông báo xuống một chút khi ẩn
+                    }, 3000); // Sau 3 giây
+                }
+            });
+        </script>
 
         <header class="site-navbar site-navbar-target" role="banner">
             <div class="container">
@@ -92,18 +92,19 @@
                     <div class="col-9 text-right">
                         <nav class="site-navigation text-right ml-auto d-none d-lg-block" role="navigation">
                             <ul class="site-menu main-menu js-clone-nav ml-auto ">
-                                <li class="active"><a href="/Home" class="nav-link">Trang chủ</a></li>
+                                <li><a href="/Home" class="nav-link">Trang chủ</a></li>
                                 <li><a href="/Common/Event" class="nav-link">Sự kiện</a></li>
                                 <li class="has-dropdown">
-                                    <a href="/Service" class="nav-link">Dịch vụ</a>
+                                    <a href="/Service" class="active" class="nav-link">Dịch vụ</a>
                                     <ul class="dropdown">
+                                        <li><a href="/Service/ComboList" class="nav-link">Danh sách combo vé</a></li>
                                         <li><a href="/Service/OrderTicket" class="nav-link">Danh sách vé</a></li>
-                                        <li><a href="/Service/OrderFoodAndDrink" class="nav-link">Danh sách đồ ăn</a></li>
+                                        <li class="active"><a href="/Service/OrderFoodAndDrink" class="nav-link">Danh sách đồ ăn</a></li>
                                         <li><a href="/Service/OrderGear" class="nav-link">Danh sách dụng cụ</a></li>
                                     </ul>
                                 </li>
 
-                                <li><a href="blog.html" class="nav-link">Liên hệ</a></li>
+                                <li><a href="~/Common/Contact" class="nav-link">Liên hệ</a></li>
                                 <li>
                                     @if (HttpContextAccessor.HttpContext.Session.GetString("Email") == null)
                                     {
@@ -236,6 +237,58 @@
                         box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Hiệu ứng bóng đổ khi focus */
                     }
 
+                .button-container {
+                    margin-top: 10px; /* Khoảng cách phía trên nếu cần */
+                }
+
+                    .button-container form,
+                    .button-container a {
+                        margin: 0px 7px; /* Khoảng cách giữa các nút */
+                    }
+
+                .pagination {
+                    display: flex;
+                    list-style: none;
+                    justify-content: center;
+                    align-items: center;
+                    padding: 0;
+                }
+
+                    .pagination .page-item {
+                        margin: 0 5px;
+                    }
+
+                    .pagination .page-link {
+                        color: #efba6c;
+                        border-radius: 5px;
+                        padding: 8px 12px;
+                        border: 1px solid #dee2e6;
+                        text-decoration: none;
+                        background-color: white;
+                        transition: background-color 0.3s, color 0.3s;
+                    }
+
+                        .pagination .page-link:hover {
+                            background-color: #efba6c;
+                            ;
+                            color: white;
+                        }
+
+                    .pagination .page-item.active .page-link {
+                        background-color: #efba6c;
+                        ;
+                        color: white;
+                        border-color: #efba6c;
+                    }
+
+                    .pagination .page-item.disabled .page-link {
+                        color: #6c757d;
+                        pointer-events: none;
+                        background-color: #e9ecef;
+                        border-color: #e9ecef;
+                    }
+
+
             </style>
             <script>
                 $(document).ready(function () {
@@ -251,15 +304,30 @@
             </script>
         </header>
 
+        @if (TempData["Error"] != null)
+        {
+            var userId = HttpContextAccessor.HttpContext.Session.GetInt32("UserId");
+            var userRole = HttpContextAccessor.HttpContext.Session.GetString("RoleId");
 
+            <div class="alert alert-warning" role="alert" style="text-align: center;">
+                @if (userId == null) // Kiểm tra xem người dùng có đăng nhập không
+                {
+                    <span>Bạn chưa đăng nhập, vui lòng <a href="@Url.Action("Login", "Common")">đăng nhập</a> để thêm vào giỏ hàng.</span>
+                }
+                else if (userRole != "3") // Kiểm tra xem người dùng có quyền khách hàng không
+                {
+                    <span>Vui lòng đăng nhập với quyền khách hàng để thêm vào giỏ hàng!</span>
+                }
+            </div>
+        }
         <div class="site-section">
             <div class="container">
                 <div class="row justify-content-center text-center">
                     <div class="col-md-7">
                         <div class="heading-39101 mb-5">
                             <span class="backdrop text-center">GreenGarden</span>
-                            <span class="subtitle-39191">Đồ dùng</span>
-                            <h3>Danh sách đồ dùng</h3>
+                            <span class="subtitle-39191">Đồ đồ dùng</span>
+                            <h3>Danh sách đồ dùng cắm trại</h3>
                         </div>
                     </div>
                 </div>
@@ -287,6 +355,8 @@
                                                 <option value="2" @(ViewBag.SortBy == "2" ? "selected" : "")>Giá: Cao đến Thấp</option>
                                                 <option value="3" @(ViewBag.SortBy == "3" ? "selected" : "")>Tên: A-Z</option>
                                                 <option value="4" @(ViewBag.SortBy == "4" ? "selected" : "")>Tên: Z-A</option>
+                                                <option value="1" @(ViewBag.Popularity == "1" ? "selected" : "")>Phổ biến</option>
+                                                <option value="1" @(ViewBag.Popularity == "2" ? "selected" : "")>Mới nhất</option>
                                             </select>
                                         </div>
 
@@ -328,31 +398,36 @@
                             {
                                 foreach (var item in campingGears)
                                 {
-                                    <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
+                                    <div class="product-card col-lg-4 col-md-6 mb-4" data-aos="fade-up">
                                         <div class="listing-item" id="product-@item.GearId">
                                             <div class="listing-image">
                                                 <img src="~/images/img_1.jpg" alt="Image" class="img-fluid">
                                             </div>
                                             <div class="listing-item-content">
                                                 <h2 class="px-3 mb-1 category bg-primary">@item.RentalPrice.ToString("N0") ₫</h2>
-                                                <h2 class="mb-2">@item.GearName</h2>
+                                                <h2 class="mb-2">
+                                                    @item.GearName
+                                                </h2>
 
-                                                <div class="button-container d-flex justify-content-between align-items-center">
-                                                    <form method="post" action="/Service/AddToCart" class="d-flex align-items-center">
+                                                <div class="button-container d-flex align-items-center">
+                                                    <form method="post" action="/Service/AddToCart" class="d-flex align-items-center me-2">
+                                                        <!-- Thêm lớp 'me-2' để tạo khoảng cách bên phải -->
                                                         <input type="hidden" name="Id" value="@item.GearId" />
                                                         <input type="hidden" name="Name" value="@item.GearName" />
                                                         <input type="hidden" name="CategoryName" value="@item.GearCategoryName" />
                                                         <input type="hidden" name="Type" value="Gear" />
                                                         <input type="hidden" name="TypeCategory" value="GearCategory" />
                                                         <input type="hidden" name="price" value="@item.RentalPrice" />
+                                                        <input type="hidden" name="quantity" value="1" />
                                                         <input type="hidden" id="hidden-date-@item.GearId" name="usageDate" />
-                                                        <input type="hidden" name="quantity" value="1" min="1" />
                                                         <input type="hidden" name="redirectAction" value="OrderGear" />
-                                                        <button type="submit" class="btn btn-primary" onclick="return setUsageDate('@item.GearId')"> <i class="fa fa-cart-shopping"></i>Đặt ngay</button>
+                                                        <button type="submit" class="btn btn-primary" onclick="return setUsageDate('@item.GearId')">Thêm <i class="fas fa-shopping-cart"></i></button>
                                                     </form>
-                                                    <a href="@Url.Action("CampingGearDetail", "Service", new { gearId = item.GearId })" class="btn btn-secondary ml-2">Xem chi tiết</a>
+                                                    <a href="@Url.Action("CampingGearDetail", "Service", new { gearId = item.GearId })" class="btn btn-secondary ms-2">Xem chi tiết</a> <!-- Thêm lớp 'ms-2' để tạo khoảng cách bên trái -->
                                                 </div>
+
                                             </div>
+
                                         </div>
                                     </div>
                                 }
@@ -366,167 +441,307 @@
                 </div>
             </div>
 
-
-
-
-
-            <footer class="site-footer bg-light">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-3">
-                            <h2 class="footer-heading mb-3">Instagram</h2>
-                            <div class="row">
-                                <div class="col-4 gal_col">
-                                    <a href="#"><img src="~/images/insta_1.jpg" alt="Image" class="img-fluid"></a>
-                                </div>
-                                <div class="col-4 gal_col">
-                                    <a href="#"><img src="~/images/insta_2.jpg" alt="Image" class="img-fluid"></a>
-                                </div>
-                                <div class="col-4 gal_col">
-                                    <a href="#"><img src="~/images/insta_3.jpg" alt="Image" class="img-fluid"></a>
-                                </div>
-                                <div class="col-4 gal_col">
-                                    <a href="#"><img src="~/images/insta_4.jpg" alt="Image" class="img-fluid"></a>
-                                </div>
-                                <div class="col-4 gal_col">
-                                    <a href="#"><img src="~/images/insta_5.jpg" alt="Image" class="img-fluid"></a>
-                                </div>
-                                <div class="col-4 gal_col">
-                                    <a href="#"><img src="~/images/insta_6.jpg" alt="Image" class="img-fluid"></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-8 ml-auto">
-                            <div class="row">
-                                <div class="col-lg-6 ml-auto">
-                                    <h2 class="footer-heading mb-4">Quick Links</h2>
-                                    <ul class="list-unstyled">
-                                        <li><a href="#">About Us</a></li>
-                                        <li><a href="#">Testimonials</a></li>
-                                        <li><a href="#">Terms of Service</a></li>
-                                        <li><a href="#">Privacy</a></li>
-                                        <li><a href="#">Contact Us</a></li>
-                                    </ul>
-                                </div>
-                                <div class="col-lg-6">
-                                    <h2 class="footer-heading mb-4">Newsletter</h2>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt odio iure animi ullam quam, deleniti rem!</p>
-                                    <form action="#" class="d-flex" class="subscribe">
-                                        <input type="text" class="form-control mr-3" placeholder="Email">
-                                        <input type="submit" value="Send" class="btn btn-primary">
-                                    </form>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row pt-5 mt-5 text-center">
-                        <div class="col-md-12">
-                            <div class="border-top pt-5">
-                                <p>
-                                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart text-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                                </p>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </footer>
-
         </div>
 
-        <script src="~/js/jquery-3.3.1.min.js"></script>
-        <script src="~/js/jquery-migrate-3.0.0.js"></script>
-        <script src="~/js/popper.min.js"></script>
-        <script src="~/js/bootstrap.min.js"></script>
-        <script src="~/js/owl.carousel.min.js"></script>
-        <script src="~/js/jquery.sticky.js"></script>
-        <script src="~/js/jquery.waypoints.min.js"></script>
-        <script src="~/js/jquery.animateNumber.min.js"></script>
-        <script src="~/js/jquery.fancybox.min.js"></script>
-        <script src="~/js/jquery.stellar.min.js"></script>
-        <script src="~/js/jquery.easing.1.3.js"></script>
-        <script src="~/js/bootstrap-datepicker.min.js"></script>
-        <script src="~/js/isotope.pkgd.min.js"></script>
-        <script src="~/js/aos.js"></script>
 
-        <script src="~/js/main.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
-        <script>
-            AOS.init({
-                duration: 1200, // Đặt thời gian cho hiệu ứng (tùy chọn)
-            });
-        </script>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script>
-            $(document).ready(function () {
-                $('#filterToggleIcon').on('click', function () {
-                    $('#filterContainer').toggle(); // Ẩn/hiện bộ lọc khi nhấn vào biểu tượng
-                });
+    </div>
+    <nav aria-label="Page navigation">
+        <ul id="pagination" class="pagination">
+            <li class="page-item first-page"><a href="#" class="page-link">«</a></li>
+            <li class="page-item prev-page"><a href="#" class="page-link">‹</a></li>
+            <!-- Các trang sẽ được tạo động bằng JavaScript -->
+            <li class="page-item next-page"><a href="#" class="page-link">›</a></li>
+            <li class="page-item last-page"><a href="#" class="page-link">»</a></li>
+        </ul>
+    </nav>
 
-                // Cập nhật danh sách sản phẩm khi thay đổi bộ lọc
-                function updateGearList() {
-                    const filters = {
-                        categoryId: $('#categoryFilter').val(),
-                        priceRange: $('#priceFilter').val(),
-                        sortBy: $('#sort').val()
-                    };
+    <script>
+        $(document).ready(function () {
+            var itemsPerPage = 6; // Number of products per page
+            var currentPage = 1;  // Current page
 
-                    $.get('@Url.Action("OrderGear", "Service")', filters, function (data) {
-                        $('#gearList').html($(data).find('#gearList').html());
-                    });
-                }
+            // Initialize AOS on the initial page load
+            AOS.init();
 
-                $('#categoryFilter, #priceFilter, #sort').on('change', function () {
-                    updateGearList();
-                });
-            });
+            // Function to display items for the current page
+            function showPage(page) {
+                var items = $('.product-card'); // Get all filtered products
+                items.hide(); // Hide all items initially
 
+                // Calculate the start and end items for the current page
+                var startItem = (page - 1) * itemsPerPage;
+                var endItem = Math.min(startItem + itemsPerPage, items.length);
 
-            function setUsageDate(gearId) {
-                var savedDate = sessionStorage.getItem('usageDateForAll');
+                // Show items for the current page with fade-in effect
+                items.slice(startItem, endItem).fadeIn();
 
-                // Nếu đã có ngày lưu trong sessionStorage, sử dụng ngày đó và submit form mà không hiển thị popup
-                if (savedDate) {
-                    document.getElementById('hidden-date-' + gearId).value = savedDate;
-                    document.querySelector(`#product-${gearId} form`).submit();
-                } else {
-                    // Hiển thị popup yêu cầu chọn ngày nếu chưa có ngày nào được lưu
-                    Swal.fire({
-                        title: 'Vui lòng chọn ngày sử dụng!',
-                        input: 'date',
-                        inputAttributes: {
-                            min: new Date().toISOString().split('T')[0] // Đặt giá trị min là ngày hiện tại
-                        },
-                        inputPlaceholder: 'yyyy-MM-dd',
-                        showCancelButton: true,
-                        confirmButtonText: 'Xác nhận',
-                        cancelButtonText: 'Hủy',
-                        inputValidator: (value) => {
-                            if (!value) {
-                                return 'Bạn cần nhập ngày sử dụng!';
-                            }
-                            return null;
-                        }
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            var usageDate = result.value;
+                console.log(`Displaying items ${startItem + 1} to ${endItem} on page ${page}`);
 
-                            // Lưu ngày sử dụng vào sessionStorage cho các vé sau trong cùng một phiên
-                            sessionStorage.setItem('usageDateForAll', usageDate);
+                // Update pagination buttons
+                $('#pagination .page-item').removeClass('active');
+                $('#pagination .page-item[data-page="' + page + '"]').addClass('active');
 
-                            // Đặt ngày sử dụng vào input ẩn và submit form để thêm sản phẩm vào giỏ hàng
-                            document.getElementById('hidden-date-' + gearId).value = usageDate;
-                            document.querySelector(`#product-${gearId} form`).submit(); // Submit form ngay sau khi chọn ngày
-                        }
-                    });
-                }
-                return false; // Ngăn việc submit form mặc định
+                // Toggle arrow buttons' disabled states
+                $('.prev-page').toggleClass('disabled', page === 1);
+                $('.next-page').toggleClass('disabled', page === Math.ceil(items.length / itemsPerPage));
+                $('.first-page').toggleClass('disabled', page === 1);
+                $('.last-page').toggleClass('disabled', page === Math.ceil(items.length / itemsPerPage));
+
+                // Refresh AOS to apply animations on the visible items
+                AOS.refresh();
             }
 
+            // Function to create pagination buttons dynamically based on the number of items
+            function updatePagination() {
+                var items = $('.product-card'); // Get all filtered products
+                var totalPages = Math.ceil(items.length / itemsPerPage);
 
-        </script>
+                console.log("Total items after filtering:", items.length);
+                console.log("Total pages after filtering:", totalPages);
+
+                // Clear old pagination buttons, except for arrow buttons
+                $('#pagination').find('.page-item:not(.first-page, .prev-page, .next-page, .last-page)').remove();
+
+                // Only add pagination buttons if there are pages to display
+                if (totalPages > 1) {
+                    for (var i = 1; i <= totalPages; i++) {
+                        $('<li class="paginate_button page-item" data-page="' + i + '"><a href="#" class="page-link">' + i + '</a></li>').insertBefore('.next-page');
+                    }
+                }
+
+                // Attach click events to each pagination button
+                $('#pagination .page-item[data-page]').off('click').on('click', function (e) {
+                    e.preventDefault();
+                    var page = $(this).data('page');
+                    if (page) {
+                        currentPage = page;
+                        showPage(currentPage);
+                    }
+                });
+
+                // Display the first page of items after initializing pagination
+                setTimeout(() => showPage(1), 100); // Added timeout for execution delay
+            }
+
+            // Click event for the "First Page" button
+            $('.first-page').off('click').on('click', function (e) {
+                e.preventDefault();
+                if (!$(this).hasClass('disabled')) {
+                    currentPage = 1;
+                    showPage(currentPage);
+                }
+            });
+
+            // Click event for the "Previous Page" button
+            $('.prev-page').off('click').on('click', function (e) {
+                e.preventDefault();
+                if (!$(this).hasClass('disabled') && currentPage > 1) {
+                    currentPage--;
+                    showPage(currentPage);
+                }
+            });
+
+            // Click event for the "Next Page" button
+            $('.next-page').off('click').on('click', function (e) {
+                e.preventDefault();
+                var items = $('.product-card'); // Get all products
+                var totalPages = Math.ceil(items.length / itemsPerPage);
+                if (!$(this).hasClass('disabled') && currentPage < totalPages) {
+                    currentPage++;
+                    showPage(currentPage);
+                }
+            });
+
+            // Click event for the "Last Page" button
+            $('.last-page').off('click').on('click', function (e) {
+                e.preventDefault();
+                var items = $('.product-card'); // Get all products
+                var totalPages = Math.ceil(items.length / itemsPerPage);
+                if (!$(this).hasClass('disabled')) {
+                    currentPage = totalPages;
+                    showPage(currentPage);
+                }
+            });
+
+            // Function to initialize pagination on page load or after filter change
+            function initializePagination() {
+                currentPage = 1; // Reset to the first page
+                updatePagination(); // Update pagination buttons based on current items
+                console.log("Pagination initialized to page 1");
+            }
+
+            // Update product list when filters are changed (specific for Order Gear)
+            function updateGearList() {
+                const filters = {
+                    categoryId: $('#categoryFilter').val(),
+                    priceRange: $('#priceFilter').val(),
+                    sortBy: $('#sort').val()
+                };
+
+                // Fetch data from the server with applied filters
+                $.get('@Url.Action("OrderGear", "Service")', filters, function (data) {
+                    // Update #gearList with the filtered products
+                    $('#gearList').html($(data).find('#gearList').html());
+
+                    // Reinitialize pagination after filtering
+                    initializePagination(); // Reset pagination based on the new filtered items
+                    AOS.refresh(); // Refresh AOS for animations
+                });
+            }
+
+            // Bind filter change events to update product list and pagination
+            $('#categoryFilter, #priceFilter, #sort').on('change', function () {
+                updateGearList();
+            });
+
+            // Initialize pagination and AOS when the page loads
+            initializePagination();
+            AOS.init();
+        });
+    </script>
+
+
+
+    <script src="~/js/jquery-3.3.1.min.js"></script>
+    <script src="~/js/jquery-migrate-3.0.0.js"></script>
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/owl.carousel.min.js"></script>
+    <script src="~/js/jquery.sticky.js"></script>
+    <script src="~/js/jquery.waypoints.min.js"></script>
+    <script src="~/js/jquery.animateNumber.min.js"></script>
+    <script src="~/js/jquery.fancybox.min.js"></script>
+    <script src="~/js/jquery.stellar.min.js"></script>
+    <script src="~/js/jquery.easing.1.3.js"></script>
+    <script src="~/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/js/isotope.pkgd.min.js"></script>
+    <script src="~/js/aos.js"></script>
+
+    <script src="~/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1200, // Đặt thời gian cho hiệu ứng (tùy chọn)
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function () {
+            $('#filterToggleIcon').on('click', function () {
+                $('#filterContainer').toggle(); // Ẩn/hiện bộ lọc khi nhấn vào biểu tượng
+            });
+
+            // Cập nhật danh sách sản phẩm khi thay đổi bộ lọc
+            function updateGearList() {
+                const filters = {
+                    categoryId: $('#categoryFilter').val(),
+                    priceRange: $('#priceFilter').val(),
+                    sortBy: $('#sort').val()
+                };
+
+                $.get('@Url.Action("OrderGear", "Service")', filters, function (data) {
+                    $('#gearList').html($(data).find('#gearList').html());
+                });
+            }
+
+            $('#categoryFilter, #priceFilter, #sort').on('change', function () {
+                updateGearList();
+            });
+        });
+        function setUsageDate(gearId) {
+            const savedDate = sessionStorage.getItem('usageDateForAll');
+            const savedTime = sessionStorage.getItem('usageTimeForAll');
+
+            if (savedDate && savedTime) {
+                // Use the saved date and time if they exist
+                document.getElementById('hidden-date-' + gearId).value = `${savedDate} ${savedTime}`;
+                document.querySelector(`#product-${gearId} form`).submit();
+            } else {
+                // Show the popup to select both date and time if not previously saved
+                Swal.fire({
+                    title: 'Chọn ngày và giờ sử dụng',
+                    html:
+                        '<input type="date" id="usage-date" class="swal2-input" min="' + new Date().toISOString().split('T')[0] + '">' +
+                        '<input type="time" id="usage-time" class="swal2-input">',
+                    showCancelButton: true,
+                    confirmButtonText: 'Xác nhận',
+                    cancelButtonText: 'Hủy',
+                    preConfirm: () => {
+                        const date = document.getElementById('usage-date').value;
+                        const time = document.getElementById('usage-time').value;
+                        if (!date || !time) {
+                            Swal.showValidationMessage('Bạn cần nhập cả ngày và giờ sử dụng!');
+                            return false;
+                        }
+                        return { date, time };
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        const { date, time } = result.value;
+                        sessionStorage.setItem('usageDateForAll', date);
+                        sessionStorage.setItem('usageTimeForAll', time);
+
+                        // Set both date and time in the hidden input for the form
+                        document.getElementById('hidden-date-' + gearId).value = `${date} ${time}`;
+                        document.querySelector(`#product-${gearId} form`).submit();
+                    }
+                });
+            }
+            return false;
+        }
+
+
+    </script>
 </body>
+<footer class="site-footer bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <h2 class="footer-heading mb-3">Facebook</h2>
+                <div class="row">
+                    <div class="col-4 gal_col">
+                        <a href="#"><img src="~/images/Picture1.jpg" alt="Image" class="img-fluid"></a>
+                    </div>
+                    <div class="col-4 gal_col">
+                        <a href="#"><img src="~/images/Picture8.jpg" alt="Image" class="img-fluid"></a>
+                    </div>
+                    <div class="col-4 gal_col">
+                        <a href="#"><img src="~/images/Picture7.jpg" alt="Image" class="img-fluid"></a>
+                    </div>
+                    <div class="col-4 gal_col">
+                        <a href="#"><img src="~/images/Picture4.jpg" alt="Image" class="img-fluid"></a>
+                    </div>
+                    <div class="col-4 gal_col">
+                        <a href="#"><img src="~/images/Picture13.jpg" alt="Image" class="img-fluid"></a>
+                    </div>
+                    <div class="col-4 gal_col">
+                        <a href="#"><img src="~/images/Picture6.jpg" alt="Image" class="img-fluid"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8 ml-auto">
+                <div class="row">
+                    <div class="col-lg-6 ml-auto">
+                        <h2 class="footer-heading mb-4">Truy cập nhanh</h2>
+                        <ul class="list-unstyled">
+                            <li><a href="#">Facebook</a></li>
+                            <li><a href="#">Instagram</a></li>
+                            <li><a href="#">Tiktok</a></li>
+
+                        </ul>
+                    </div>
+                    <div class="col-lg-6">
+                        <h2 class="footer-heading mb-4">Phản hồi</h2>
+                        <p>Nơi bạn đưa ra những phản hồi về dịch vụ,nhân viên tại sông quê</p>
+                        <form action="#" class="d-flex" class="subscribe">
+                            <input type="text" class="form-control mr-3" placeholder="Phản hồi">
+                            <input type="submit" value="Send" class="btn btn-primary">
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+</footer>
 </html>

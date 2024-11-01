@@ -352,6 +352,78 @@
             background-color: #ddd;
         }
 
+    .product-details a {
+        display: inline-block;
+        padding: 5px 5px; /* Reduce padding to make the button smaller */
+        font-size: 10px; /* Smaller font size */
+        font-weight: bold;
+        color: #fff;
+        background-color: #efba6c;
+        text-decoration: none; /* Remove underline */
+        border-radius: 5px; /* Rounded corners */
+        transition: background-color 0.3s ease; /* Smooth hover transition */
+    }
+
+        .product-details a:hover {
+            background-color: #efba6c; /* Darker blue on hover */
+        }
+
+    .filter-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    /* Căn chỉnh các nút lọc con bên trái của nút filter */
+    #filterButtons {
+        position: absolute;
+        right: 100%; /* Đặt bên trái của nút lọc */
+        top: 0; /* Căn ngang hàng */
+        display: flex;
+        flex-direction: row; /* Sắp xếp theo hàng ngang */
+        gap: 10px; /* Khoảng cách giữa các nút */
+        padding: 5px;
+        z-index: 10; /* Đảm bảo các nút lọc nổi lên trên */
+        margin-top: -10px;
+    }
+
+    /* Thiết lập mặc định ẩn */
+    .d-none {
+        display: none;
+    }
+
+    .btn-booking i,
+    .btn-booking {
+        color: #4CAF50; /* Màu xanh lá cho Đặt vé */
+    }
+
+    .btn-tools i,
+    .btn-tools {
+        color: #FF0000; /* Màu cam cho Đặt dụng cụ */
+    }
+
+    .btn-booking i,
+    .btn-booking span {
+        color: #4CAF50; /* Màu xanh lá cây cho Đặt vé */
+    }
+
+    /* Đổi màu cho icon và chữ "Đặt dụng cụ" */
+    .btn-tools i,
+    .btn-tools span {
+        color: #FF0000; /* Màu cam cho Đặt dụng cụ */
+    }
+
+
+    .btn-booking:hover i,
+    .btn-tools:hover i,
+    .btn-order-food:hover i,
+    .btn-combo-food:hover i,
+    .btn-booking:hover,
+    .btn-tools:hover,
+    .btn-order-food:hover,
+    .btn-combo-food:hover {
+        opacity: 0.8; /* Hiệu ứng mờ khi hover */
+    }
 </style>
 <body onload="time()" class="app sidebar-mini rtl">
     <header class="app-header">
@@ -504,55 +576,186 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="tile">
-                    <form asp-controller="OrderManagement" asp-action="GearCart" method="get">
 
                         <div class="tile-body">
+                        <div class="top-bar d-flex justify-content-between align-items-center">
+                            <!-- Search bar on the left -->
                             <div class="search-container">
-                                <label for="searchInput">Tìm kiếm:</label>
+                                <label for="searchInput" class="mr-2 font-weight-bold">Tìm kiếm:</label>
                                 <input type="search" id="searchInput" class="form-control form-control-sm" placeholder="Nhập từ khóa..." aria-controls="sampleTable">
                             </div>
 
 
+                            <div class="filter-container d-flex align-items-center position-relative ml-auto">
+                                <!-- Các nút lọc ẩn hiện ở bên trái nút lọc -->
+                                <div id="filterButtons" class="filter-buttons d-none">
+                                    @if (@HttpContextAccessor.HttpContext.Session.GetString("TicketCart") != null)
+                                    {
+                                        <a href="~/OrderManagement/OrderTicket" class="btn btn-booking mr-2">
 
+                                            <i class="fas fa-ticket-alt"></i> <span>Đặt vé</span>
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a href="~/OrderManagement/OrderCombo" class="btn btn-booking mr-2">
+
+                                            <i class="fas fa-ticket-alt"></i> <span>Đặt Combo</span>
+                                        </a>
+                                    }
+
+                                    <a href="~/OrderManagement/OrderGear" class="btn btn-tools mr-2">
+                                        <i class="fas fa-tools"></i> <span>Đặt dụng cụ</span>
+                                    </a>
+                                    <a href="~/OrderManagement/OrderFood" class="btn btn-order-food active-link mr-2">
+                                        <i class="fas fa-utensils"></i> Đặt đồ ăn
+                                    </a>
+                                    <a href="~/OrderManagement/OrderComboFood" class="btn btn-combo-food">
+                                        <i class="fas fa-box"></i> Đồ ăn theo combo
+                                    </a>
+                                </div>
+
+                                <button onclick="toggleFilterButtons()" class="btn btn-filter">
+                                    <i id="filterIcon" class="fas fa-ellipsis-v"></i>
+                                </button>
+                            </div>
+
+                        </div>
+                        <script>
+                            function toggleFilterButtons() {
+                                var filterIcon = document.getElementById("filterIcon");
+                                var filterButtons = document.getElementById("filterButtons");
+
+                                // Ẩn/hiện các nút lọc con
+                                filterButtons.classList.toggle("d-none");
+
+                                // Đổi biểu tượng khi nhấn
+                                if (filterButtons.classList.contains("d-none")) {
+                                    filterIcon.classList.remove("fa-times");
+                                    filterIcon.classList.add("fa-ellipsis-v");
+                                } else {
+                                    filterIcon.classList.remove("fa-ellipsis-v");
+                                    filterIcon.classList.add("fa-times");
+                                }
+                            }
+                        </script>
+
+
+                        <form>
                             @foreach (GearVM item in ViewBag.gears)
                             {
+                                <div class="product-card">
+                                    <div class="product-image">
+                                        <img src="~/images/img_1.jpg" alt="Bạc Xỉu">
+                                    </div>
+                                    <div class="product-details">
+                                        <div class="product-name">@item.GearName</div>
+                                        <div class="product-description">@item.GearCategoryName</div>
+                                        <div class="product-price">
+                                            @String.Format("{0:0,0} ₫", @item.RentalPrice)
+                                        </div>
+                                        <div class="remaining-quantity">
+                                            <p>Còn lại: <span class="remaining-quantity-value">@item.QuantityAvailable</span></p>
+                                            <a asp-action="GearDetail" asp-controller="OrderManagement" asp-route-id="@item.GearId" asp-route-quantity="@item.Quantity" asp-route-quantityavai="@item.QuantityAvailable">Chi tiết</a>
+                                        </div>
+                                    </div>
+                                    <div class="quantity-control">
+                                        <button type="button" class="btn-quantity btn-decrease">-</button>
+                                        <span class="quantity-value">@item.Quantity</span>
+                                        <button type="button" class="btn-quantity btn-increase">+</button>
 
-                                          <div class="product-card">
-        <div class="product-image">
-            <img src="~/images/img_1.jpg" alt="Bạc Xỉu">
-        </div>
-        <div class="product-details">
-                                        <div class="product-name"><a asp-action="GearDetail" asp-controller="OrderManagement" asp-route-id="@item.GearId" asp-route-quantity="@item.Quantity" asp-route-quantityavai="@item.QuantityAvailable">@item.GearName</a></div>
-            <div class="product-description">Cà phê phin với sữa đặc Việt Nam.</div>
-            <div class="product-price">
-                                            @String.Format("{0:0,0} ₫",@item.RentalPrice)
-            </div>
-            <div class="remaining-quantity">
-                <p>Còn lại: <span class="remaining-quantity-value">@item.QuantityAvailable</span></p>
-            </div>
-        </div>
-        <div class="quantity-control">
-            <button type="button" class="btn-quantity btn-decrease">-</button>
-            <span class="quantity-value">@item.Quantity</span>
-            <button type="button" class="btn-quantity btn-increase">+</button>
-
-            <!-- Các input ẩn để gửi dữ liệu -->
-            <input class="quantity-input" hidden name="quantity" value="@item.Quantity" max="@item.QuantityAvailable" />
-                                        <input type ="number" hidden value="@item.QuantityAvailable" name="quantityavai" />
-
-            <input type="text" value="@item.GearId" hidden name="id">
-            <input type="text" value="@item.GearName" hidden name="name">
-            <input type="number" value="@item.RentalPrice" hidden name="price">
-        </div>
-    </div>
-
-
+                                        <!-- Hidden inputs to send data -->
+                                        <input class="quantity-input" hidden name="quantity" value="@item.Quantity" max="@item.QuantityAvailable" />
+                                        <input type="number" hidden value="@item.QuantityAvailable" name="quantityavai" />
+                                        <input type="text" value="@item.GearId" hidden name="id">
+                                        <input type="text" value="@item.GearName" hidden name="name">
+                                        <input type="number" value="@item.RentalPrice" hidden name="price">
+                                    </div>
+                                </div>
                             }
-                        </div>
+                        </form>
+
+                        <script>
+                            $(document).ready(function () {
+                                // Function to send AJAX request
+                                function submitForm(id, name, price, quantity, quantityavai) {
+                                    const url = `/OrderManagement/GearDetailCart?id=${id}&name=${encodeURIComponent(name)}&price=${price}&quantity=${quantity}&quantityavai=${quantityavai}`;
+
+                                    fetch(url, {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/x-www-form-urlencoded',
+                                        }
+                                    })
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            console.log('Success:', data);
+                                        })
+                                        .catch((error) => {
+                                            console.error('Error:', error);
+                                        });
+                                }
+
+                                // Increase quantity
+                                $('.btn-increase').click(function (e) {
+                                    const quantityElement = $(this).siblings('.quantity-value');
+                                    const hiddenInput = $(this).siblings('.quantity-input');
+                                    const remainingQuantityElement = $(this).closest('.product-card').find('.remaining-quantity-value');
+                                    let currentQuantity = parseInt(quantityElement.text());
+                                    let remainingQuantity = parseInt(remainingQuantityElement.text());
+
+                                    // Check if the current quantity is less than the available quantity
+                                    if (remainingQuantity > 0) {
+                                        currentQuantity += 1;
+                                        remainingQuantity -= 1;
+
+                                        // Update displayed quantity and hidden input
+                                        quantityElement.text(currentQuantity);
+                                        hiddenInput.val(currentQuantity);
+                                        remainingQuantityElement.text(remainingQuantity);
+
+                                        // Gather necessary data and call submitForm
+                                        const id = $(this).siblings('input[name="id"]').val();
+                                        const name = $(this).siblings('input[name="name"]').val();
+                                        const price = $(this).siblings('input[name="price"]').val();
+                                        submitForm(id, name, price, currentQuantity, remainingQuantity);
+                                    } else {
+                                        alert("Không thể tăng thêm, đã đạt tới số lượng tối đa.");
+                                    }
+                                });
+
+                                // Decrease quantity
+                                $('.btn-decrease').click(function (e) {
+                                    const quantityElement = $(this).siblings('.quantity-value');
+                                    const hiddenInput = $(this).siblings('.quantity-input');
+                                    const remainingQuantityElement = $(this).closest('.product-card').find('.remaining-quantity-value');
+                                    let currentQuantity = parseInt(quantityElement.text());
+                                    let remainingQuantity = parseInt(remainingQuantityElement.text());
+
+                                    // Check if the current quantity is greater than 0
+                                    if (currentQuantity > 0) {
+                                        currentQuantity -= 1;
+                                        remainingQuantity += 1;
+
+                                        // Update displayed quantity and hidden input
+                                        quantityElement.text(currentQuantity);
+                                        hiddenInput.val(currentQuantity);
+                                        remainingQuantityElement.text(remainingQuantity);
+
+                                        // Gather necessary data and call submitForm
+                                        const id = $(this).siblings('input[name="id"]').val();
+                                        const name = $(this).siblings('input[name="name"]').val();
+                                        const price = $(this).siblings('input[name="price"]').val();
+                                        submitForm(id, name, price, currentQuantity, remainingQuantity);
+                                    } else {
+                                        alert("Không thể giảm số lượng dưới 0.");
+                                    }
+                                });
+                            });
+                        </script>
+
                         <div class="container-pagination-cart">
-                            <button type="submit" class="btn btn-primary">
-                                <i class='bx bx-cart'></i> <!-- Boxicons shopping cart icon -->
-                            </button>
+
 
                             <div id="pagination" class="dataTables_paginate paging_simple_numbers">
                                 <ul class="pagination">
@@ -562,19 +765,15 @@
                                 </ul>
                             </div>
                         </div>
-                    </form>
 
                 </div>
             </div>
 
         </div>
 
-        <div class="d-flex ">
-            <a href="~/OrderManagement/OrderTicket" class="btn btn-secondary">Quay lại</a>
-            <a href="~/OrderManagement/OrderFood" class="btn btn-primary">Đặt đồ ăn</a>
-
-
-        </div>
+            <div class="d-flex ">
+                <a href="~/OrderManagement/Cart" class="btn btn-primary">Tạo đơn ngay</a>
+            </div>
 
     </main>
     <script>
@@ -699,146 +898,8 @@
 
 
     </script>
-    <script>
-        $(document).ready(function () {
-            // Tăng số lượng
-            $('.btn-increase').click(function (e) {
-                e.preventDefault(); // Ngăn submit form
-                var quantityElement = $(this).siblings('.quantity-value');
-                var hiddenInput = $(this).siblings('.quantity-input');
-                var remainingQuantityElement = $(this).closest('.product-card').find('.remaining-quantity-value');
-                var currentQuantity = parseInt(quantityElement.text());
-                var remainingQuantity = parseInt(remainingQuantityElement.text());
-
-                // Kiểm tra nếu số lượng hiện tại nhỏ hơn số lượng còn lại
-                if ( remainingQuantity>0) {
-                    quantityElement.text(currentQuantity + 1);
-                    hiddenInput.val(currentQuantity + 1);  // Cập nhật giá trị của input ẩn
-                    remainingQuantityElement.text(remainingQuantity - 1);  // Giảm số lượng còn lại
-                } else {
-                    alert("Không thể tăng thêm, đã đạt tới số lượng tối đa.");
-                }
-            });
-
-            // Giảm số lượng
-            $('.btn-decrease').click(function (e) {
-                e.preventDefault(); // Ngăn submit form
-                var quantityElement = $(this).siblings('.quantity-value');
-                var hiddenInput = $(this).siblings('.quantity-input');
-                var remainingQuantityElement = $(this).closest('.product-card').find('.remaining-quantity-value');
-                var currentQuantity = parseInt(quantityElement.text());
-                var remainingQuantity = parseInt(remainingQuantityElement.text());
-
-                // Kiểm tra nếu số lượng hiện tại lớn hơn 0
-                if (currentQuantity > 0) {
-                    quantityElement.text(currentQuantity - 1);
-                    hiddenInput.val(currentQuantity - 1);  // Cập nhật giá trị của input ẩn
-                    remainingQuantityElement.text(remainingQuantity + 1);  // Tăng số lượng còn lại
-                } else {
-                    alert("Không thể giảm số lượng dưới 0.");
-                }
-            });
-        });
 
 
-    </script>
-    @*<script>
-    $(document).ready(function () {
-    var itemsPerPage = 3; // Số sản phẩm hiển thị trên mỗi trang
-    var currentPage = 1;  // Trang hiện tại
-    var totalItems = $('.product-card').length; // Tổng số sản phẩm
-    var totalPages = Math.ceil(totalItems / itemsPerPage); // Tổng số trang
-
-    // Hàm hiển thị sản phẩm cho trang hiện tại
-    function showPage(page) {
-    // Ẩn tất cả sản phẩm
-    $('.product-card').hide();
-
-    // Hiển thị sản phẩm của trang hiện tại
-    var startItem = (page - 1) * itemsPerPage;
-    var endItem = startItem + itemsPerPage;
-
-    $('.product-card').slice(startItem, endItem).show();
-
-    // Cập nhật nút phân trang
-    $('#pagination .page-item').removeClass('active');
-    $('#pagination .page-item[data-page="' + page + '"]').addClass('active');
-
-    // Kiểm tra trạng thái nút Lùi và Tiếp
-    if (page == 1) {
-    $('#prev-page').addClass('disabled');
-    } else {
-    $('#prev-page').removeClass('disabled');
-    }
-
-    if (page == totalPages) {
-    $('#next-page').addClass('disabled');
-    } else {
-    $('#next-page').removeClass('disabled');
-    }
-    }
-
-    // Tạo các nút phân trang
-    for (var i = 1; i <= totalPages; i++) {
-    $('<li class="paginate_button page-item" data-page="' + i + '"><a href="#" class="page-link">' + i + '</a></li>').insertBefore('#next-page');
-    }
-
-    // Xử lý sự kiện khi bấm vào các nút số trang
-    $('#pagination').on('click', '.page-item', function (e) {
-    e.preventDefault();
-    var page = $(this).data('page');
-    if (page) {
-    currentPage = page;
-    showPage(currentPage);
-    }
-    });
-
-    // Xử lý sự kiện khi bấm vào nút Lùi
-    $('#prev-page').click(function (e) {
-    e.preventDefault();
-    if (currentPage > 1) {
-    currentPage--;
-    showPage(currentPage);
-    }
-    });
-
-    // Xử lý sự kiện khi bấm vào nút Tiếp
-    $('#next-page').click(function (e) {
-    e.preventDefault();
-    if (currentPage < totalPages) {
-    currentPage++;
-    showPage(currentPage);
-    }
-    });
-
-    // Hiển thị trang đầu tiên
-    showPage(currentPage);
-    });
-
-
-    </script>
-
-
-    <script>
-    // Khi trang được tải, gán sự kiện cho trường tìm kiếm
-    $(document).ready(function () {
-    // Lắng nghe sự kiện khi người dùng nhập vào ô tìm kiếm
-    $('#searchInput').on('keyup', function () {
-    // Lấy giá trị từ ô tìm kiếm và chuyển thành chữ thường để không phân biệt chữ hoa/chữ thường
-    var searchValue = $(this).val().toLowerCase();
-
-    // Lặp qua tất cả các dòng sản phẩm trong bảng
-    $('.product-card').filter(function () {
-    // Lấy văn bản của sản phẩm, mô tả, và giá, rồi kiểm tra xem nó có khớp với giá trị tìm kiếm không
-    $(this).toggle($(this).text().toLowerCase().indexOf(searchValue) > -1);
-    });
-    });
-    });
-
-
-
-    </script>*@
-    <!-- Essential javascripts for application to work-->
     <script src="~/js/jquery-3.2.1.min.js"></script>
     <script src="~/js/popper.min.js"></script>
     <script src="~/js/bootstrap.min.js"></script>

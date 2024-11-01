@@ -53,6 +53,7 @@
     <!-- or -->
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <!-- Font-icon css-->
     <link rel="stylesheet" type="text/css"
@@ -110,13 +111,37 @@
             padding: 10px;
         }
 
-        .invoice-table tbody tr {
-            border-bottom: 2px solid green; /* Horizontal line between rows */
-        }
+            .invoice-table td:first-child, .invoice-table th:first-child {
+                text-align: left;
+            }
 
-        .invoice-table thead th {
-            border-bottom: 2px solid green; /* Horizontal line under header */
-        }
+            .invoice-table td:nth-child(2), .invoice-table th:nth-child(2) {
+                text-align: left;
+            }
+
+    .currency-symbol {
+        margin-left: 5px;
+    }
+
+
+
+
+    /* Right-align the "Tổng tiền" column */
+    .invoice-table td:last-child, .invoice-table th:last-child {
+        text-align: right;
+    }
+    /* Right-align the "Tổng tiền" column */
+    .invoice-table td:last-child, .invoice-table th:last-child {
+        text-align: right;
+    }
+
+    .invoice-table tbody tr {
+        border-bottom: 2px solid #D3D3D3; /* Horizontal line between rows */
+    }
+
+    .invoice-table thead th {
+        border-bottom: 2px solid #D3D3D3; /* Horizontal line under header */
+    }
 
     .total-row {
         font-weight: bold;
@@ -284,6 +309,43 @@
         margin-bottom: 30px;
     }
 
+    .total-section {
+        width: 250px; /* Adjust width as necessary */
+    }
+
+        .total-section .label {
+            text-align: left;
+            width: 100px; /* Make sure labels are aligned */
+            font-size: 1rem;
+        }
+
+        .total-section .amount {
+            text-align: right;
+            font-weight: bold;
+            font-size: 1rem;
+            white-space: nowrap; /* Prevents line break between amount and currency */
+        }
+
+    .text-danger {
+        color: #dc3545; /* Red color for "Thanh toán" */
+    }
+
+    .currency-symbol {
+        font-weight: normal; /* Make the currency symbol normal weight for better appearance */
+        margin-left: 2px; /* Small space between amount and currency */
+    }
+
+    /* Remove shadow and borders around the modal */
+    .modal-content {
+        box-shadow: none; /* Removes shadow around the modal */
+        border: none; /* Removes any border */
+    }
+
+    /* Optional: Customize modal background if desired */
+    .modal-content {
+        background-color: white;
+    }
+
 </style>
 <body onload="time()" class="app sidebar-mini rtl">
     <header class="app-header">
@@ -439,212 +501,267 @@
                     <div class="tile-body">
 
                         <div class="order-info">
-                            <div class="order-info">
-                                <div class="row d-flex justify-content-center">
-                                    <!-- 3 mục trên hàng đầu tiên -->
-                                    <div class="col-md-4">
-                                        <p><strong>Tên khách hàng:</strong>@ViewBag.order.CustomerName</p>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <p><strong>Ngày sử dụng:</strong>@ViewBag.order.OrderUsageDate</p>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <p><strong>Số điện thoại:</strong>@ViewBag.order.PhoneCustomer</p>
-                                    </div>
+                            <div class="row d-flex justify-content-center">
+                                <!-- 3 mục trên hàng đầu tiên -->
+                                <div class="col-md-4">
+                                    <p><strong>Mã đơn:</strong>#@Model.OrderId</p>
                                 </div>
+                                <div class="col-md-4">
+                                    <p><strong>Tên khách hàng:</strong>@Model.CustomerName</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <p><strong>Số điện thoại:</strong>@Model.PhoneCustomer</p>
+                                </div>
+                            </div>
+                            <div class="row d-flex justify-content-center">
 
+                                <!-- 3 mục trên hàng thứ hai -->
+                                <div class="col-md-4">
+                                    <p><strong>Ngày đặt đơn:</strong> @Model.OrderDate</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <p><strong>Ngày sử dụng:</strong>@Model.OrderUsageDate</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <strong>Tổng Tiền:</strong> @Model.TotalAmount.ToString("C2", new System.Globalization.CultureInfo("vi-VN"))
+                                </div>
                             </div>
                         </div>
                         <div class="progress-track">
                             <ul id="progressbar">
-                               
-                                    <li class="step0  " id="step1">Hủy</li>
-                                    <li class="step0 text-center " id="step2">Đợi sử dụng</li>
-                                    <li class="step0 text-right " id="step3">Đang sử dụng</li>
-                                    <li class="step0 text-right" id="step3">Đã thanh toán </li>
-                              
+                                @if (Model.ActivityId == 1002)
+                                {
+                                    <li class="step0 active " id="step1">Hủy</li>
+                                    <li class="step0 text-center" id="step2">Đợi sử dụng</li>
+                                    <li class="step0 text-right" id="step3">Đang sử dụng</li>
+                                    <li class="step0 text-right" id="step4">Đã thanh toán </li>
+                                }
+                                else
+                                @if (Model.ActivityId == 1)
+                                {
+                                    <li class="step0 active " id="step1">Hủy</li>
+                                    <li class="step0 text-center active " id="step2">Đợi sử dụng</li>
+                                    <li class="step0 text-right" id="step3">Đang sử dụng</li>
+                                    <li class="step0 text-right" id="step4">Đã thanh toán </li>
+                                }
+                                else
+                                @if (Model.ActivityId == 2)
+                                {
+                                    <li class="step0 active " id="step1">Hủy</li>
+                                    <li class="step0 text-center active" id="step2">Đợi sử dụng</li>
+                                    <li class="step0 text-right active" id="step3">Đang sử dụng</li>
+                                    <li class="step0 text-right" id="step4">Đã thanh toán </li>
+                                }
+                                else
+                                {
+                                    <li class="step0 active " id="step1">Hủy</li>
+                                    <li class="step0 text-center active" id="step2">Đợi sử dụng</li>
+                                    <li class="step0 text-right active" id="step3">Đang sử dụng</li>
+                                    <li class="step0 text-right active" id="step3">Đã thanh toán </li>
+                                }
                             </ul>
                         </div>
-                    
+
 
                         <hr>
+                        <div class="d-flex justify-content-end align-items-center">
+                            @if (Model.ActivityId == 2)
+                            {
+                                <div class="d-flex">
+                                    @if (Model.OrderTicketDetails != null && Model.OrderTicketDetails.Count > 0)
+                                    {
+                                        <a href="~/OrderManagement/UpdateTicket" class="btn btn-link">
+                                            <i class="fas fa-ticket-alt"></i> Cập nhập vé
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a href="~/OrderManagement/UpdateCombo" class="btn btn-link">
+                                            <i class="fas fa-box"></i> Cập nhập Combo
+                                        </a>
+                                    }
+                                    <a href="~/OrderManagement/UpdateGear" class="btn btn-link">
+                                        <i class="fas fa-cogs"></i> Cập nhập đồ thuê
+                                    </a>
+                                    <a href="~/OrderManagement/UpdateFood" class="btn btn-link">
+                                        <i class="fas fa-utensils"></i> Cập nhập đồ ăn
+                                    </a>
+                                </div>
+
+                            }
+                        </div>
                         <div class="container mt-5">
                             <h2 class="text-start mb-4">Đồ đã đặt</h2>
                             <table class="invoice-table">
                                 <thead>
                                     <tr>
-                                        <th>Tên</th>
+                                        <th class="text-start">Tên</th>
                                         <th>Giá</th>
                                         <th>Số Lượng</th>
                                         <th>Tổng tiền</th>
-                                        <th>Yêu cầu thêm</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (TicketVM item in ViewBag.tickets)
+                                    @if (Model.OrderTicketDetails != null)
                                     {
-                                        <tr>
-                                            <td>@item.TicketName</td>
-
-                                            <td>@String.Format("{0:0,0} ₫", @item.Price)</td>
-                                            <td>@item.Quantity</td>
-                                            <td>@(item.Price * item.Quantity)</td>
-                                            <td>-</td>
-
-                                        </tr>
-
-
+                                        foreach (var item in Model.OrderTicketDetails)
+                                        {
+                                            <tr>
+                                                <td class="text-start">@item.Name</td>
+                                                <td>@String.Format("{0:0,0}", @item.Price)<span class="currency-symbol"> ₫</span></td>
+                                                <td>@item.Quantity</td>
+                                                <td>@String.Format("{0:0,0} ₫", item.Price * item.Quantity)</td>
+                                            </tr>
+                                        }
                                     }
-                                    @foreach (ComboVM item in ViewBag.combos)
+                                    @if (Model.OrderComboDetails != null)
                                     {
-                                        <tr>
-                                            <td>@item.ComboName</td>
-                                            <td>@String.Format("{0:0,0} ₫", @item.Price)</td>
-                                            <td>@item.Quantity</td>
-                                            <td>@(item.Price * item.Quantity)</td>
-                                            <td>@item.Description</td>
+                                        foreach (var item in Model.OrderComboDetails)
+                                        {
+                                            <tr>
+                                                <td class="text-start">@item.Name</td>
+                                                <td>@String.Format("{0:0,0}", @item.Price)<span class="currency-symbol"> ₫</span></td>
+                                                <td>@item.Quantity</td>
+                                                <td>@String.Format("{0:0,0} ₫", item.Price * item.Quantity)</td>
 
-
-                                        </tr>
+                                            </tr>
+                                        }
                                     }
-                                    @foreach (GearVM item in ViewBag.gears)
+                                    @if (Model.OrderCampingGearDetails != null)
                                     {
-                                        <tr>
-                                            <td>@item.GearName</td>
-                                            <td>@String.Format("{0:0,0} ₫", @item.RentalPrice)</td>
-                                            <td>@item.Quantity</td>
-                                            <td>@(item.RentalPrice * item.Quantity)</td>
-                                            <td>-</td>
+                                        foreach (var item in Model.OrderCampingGearDetails)
+                                        {
+                                            <tr>
+                                                <td class="text-start">@item.Name</td>
+                                                <td>@String.Format("{0:0,0}", @item.Price)<span class="currency-symbol"> ₫</span></td>
+                                                <td>@item.Quantity</td>
+                                                <td>@String.Format("{0:0,0} ₫", item.Price * item.Quantity)</td>
 
-
-                                        </tr>
+                                            </tr>
+                                        }
                                     }
-
-
-                                    @foreach (FoodAndDrinkVM item in ViewBag.foods)
+                                    @if (Model.OrderFoodDetails != null)
                                     {
-                                        <tr>
-                                            <td>@item.ItemName</td>
-                                            <td>@String.Format("{0:0,0} ₫", @item.Price)</td>
-                                            <td>@item.Quantity</td>
-                                            <td>@(item.Price * item.Quantity)</td>
-                                            <td>@item.Description</td>
+                                        foreach (var item in Model.OrderFoodDetails)
+                                        {
+                                            <tr>
+                                                <td class="text-start">@item.Name</td>
+                                                <td>@String.Format("{0:0,0}", @item.Price)<span class="currency-symbol"> ₫</span></td>
+                                                <td>@item.Quantity</td>
+                                                <td>@String.Format("{0:0,0} ₫", item.Price * item.Quantity)</td>
 
-
-                                        </tr>
+                                            </tr>
+                                        }
                                     }
-
-                                    @foreach (ComboFoodVM item in ViewBag.combofoods)
+                                    @if (Model.OrderFoodComboDetails != null)
                                     {
-                                        <tr>
-                                            <td>@item.ComboName</td>
-                                            <td>@String.Format("{0:0,0} ₫", @item.Price)</td>
-                                            <td>@item.Quantity</td>
-                                            <td>@(item.Price * item.Quantity)</td>
+                                        foreach (var item in Model.OrderFoodComboDetails)
+                                        {
+                                            <tr>
+                                                <td class="text-start">@item.Name</td>
+                                                <td>@String.Format("{0:0,0}", @item.Price)<span class="currency-symbol"> ₫</span></td>
+                                                <td>@item.Quantity</td>
+                                                <td>@String.Format("{0:0,0} ₫", item.Price * item.Quantity)</td>
 
-
-                                        </tr>
+                                            </tr>
+                                        }
                                     }
                                 </tbody>
                             </table>
-                            <div class="total-section">
 
+                            <div class="container mt-5 d-flex justify-content-end">
+                                <div class="total-section">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span class="label">Tổng tiền:</span>
+                                        <span class="amount">@String.Format("{0:0,0}", @Model.TotalAmount) <span class="currency-symbol">₫</span></span>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span class="label">Đã cọc:</span>
+                                        <span class="amount">@String.Format("{0:0,0}", @Model.Deposit) <span class="currency-symbol">₫</span></span>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-3">
+                                        <span class="label font-weight-bold">Thanh toán:</span>
+                                        <span class="amount text-danger font-weight-bold" style="font-size: 1.2rem;">@String.Format("{0:0,0}", @Model.AmountPayable) <span class="currency-symbol">₫</span></span>
+                                    </div>
 
-                                <p class="text-red">Tổng tiền thanh toán:@String.Format("{0:0,0} ₫", @ViewBag.Total) </p>
-                            </div>
-                        </div>
+                                    <!-- Right-aligned Payment Button -->
+                                   
+                                    <div class="d-flex justify-content-end">
+                                        @if (Model.ActivityId == 1)
+                                        {
+                                            <form class="mb-0" asp-controller="OrderManagement" asp-action="UpdateActivityOrder" method="post">
+                                                <input type="number" hidden name="idorder" value="@Model.OrderId" />
+                                                <input type="number" hidden name="idactivity" value="2"/>
 
+                                            </form>
+                                        }
+                                        else if (Model.ActivityId == 2)
+                                        {
+                                            <form class="mb-0" asp-controller="OrderManagement" asp-action="UpdateActivityOrder" method="post">
+                                                <input type="number" hidden name="idorder" value="@Model.OrderId" />
+                                                <input type="number" hidden name="idactivity" value="3" />
+                                                <button type="button" class="btn btn-success font-weight-bold px-4 py-2" style="font-size: 1.1rem; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" data-bs-toggle="modal" data-bs-target="#confirmModal">
+                                                    Thanh toán
+                                                </button>
 
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="d-flex ">
-            <a href="~/OrderManagement/OrderFood" class="btn btn-secondary">Quay lại</a>
-            <a href="~/OrderManagement/DeleteCart" class="btn btn-primary">Xóa</a>
-            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#depositModal">Lên đơn ngay</a>
-
-            <!-- Modal structure -->
-            <div class="modal fade" id="depositModal" tabindex="-1" role="dialog" aria-labelledby="depositModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="depositModalLabel">Nhập số tiền cọc</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <!-- Form for deposit amount -->
-                            <form id="depositForm" asp-action="Order" asp-controller="OrderManagement" method="post">
-                                <div class="form-group">
-                                    <label for="depositAmount">Số tiền cọc</label>
-                                    <input hidden value="@ViewBag.Total" name="total"></input>
-                                    <input type="number" class="form-control" min="0" id="depositAmount" name="deposit" placeholder="Nhập số tiền cọc">
-
-
+                                            </form>
+                                        }
+                                        <!-- Button that triggers the modal -->
+                                       
+                                    </div>
                                 </div>
-                            </form>
+                            </div>
+
+                            <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="confirmModalLabel">Xác nhận thanh toán</h5>
+                                        </div>
+                                        
+                                            @if (Model.ActivityId == 1)
+                                            {
+                                            <div class="modal-body">
+                                                Xác nhận đơn chuyển sang trang thái đang sử dụng.
+                                            </div>
+                                            }
+                                            else if (Model.ActivityId == 2)
+                                            {
+                                            <div class="modal-body">
+                                            Xác nhận thanh toán
+                                            </div >
+                                            }
+                                        
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                            <button type="button" class="btn btn-success" id="confirmPaymentBtn">Đồng ý</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
-                        <div class="modal-footer">
-                            <!-- Cancel button to close modal -->
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                            <!-- Submit button to submit the form -->
-                            <button type="button" class="btn btn-primary" onclick="submitDeposit()">Xác nhận</button>
-                        </div>
+
+
+
                     </div>
                 </div>
             </div>
-
         </div>
+
+
+
 
     </main>
 
 
     <script>
-
-        // Hàm mở modal và hiển thị ảnh phóng to
-        function openModal() {
-            var modal = document.getElementById("imageModal");
-            var img = document.getElementById("productImage");
-            var modalImg = document.getElementById("zoomedImage");
-
-            modal.style.display = "block";
-            modalImg.src = img.src; // Hiển thị ảnh trong modal
-        }
-
-        // Hàm đóng modal khi nhấp vào biểu tượng đóng
-        function closeModal() {
-            var modal = document.getElementById("imageModal");
-            modal.style.display = "none";
-        }
-
-
+        document.getElementById('confirmPaymentBtn').addEventListener('click', function () {
+            // Find the payment form and submit it
+            document.querySelector('.total-section form').submit();
+        });
     </script>
-    <script>
-        function submitDeposit() {
-            // Lấy giá trị từ form
-            var depositAmount = document.getElementById('depositAmount').value;
 
-            // Kiểm tra nếu chưa nhập số tiền cọc hoặc nếu số tiền nhập không hợp lệ
-            if (!depositAmount || depositAmount < 0) {
-                alert("Vui lòng nhập số tiền cọc hợp lệ");
-                return;
-            }
-
-            // In giá trị của số tiền cọc vào console (để kiểm tra)
-            console.log("Số tiền cọc:", depositAmount);
-
-            // Gửi form
-            document.getElementById('depositForm').submit();
-
-            // Đóng modal sau khi form được gửi
-            $('#depositModal').modal('hide');
-        }
-    </script>
 
 
     <script>

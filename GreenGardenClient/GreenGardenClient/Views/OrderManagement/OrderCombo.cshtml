@@ -78,6 +78,62 @@
     </ul>
 </header>
 <style>
+    .filter-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    /* Căn chỉnh các nút lọc con bên trái của nút filter */
+    #filterButtons {
+        position: absolute;
+        right: 100%; /* Đặt bên trái của nút lọc */
+        top: 0; /* Căn ngang hàng */
+        display: flex;
+        flex-direction: row; /* Sắp xếp theo hàng ngang */
+        gap: 10px; /* Khoảng cách giữa các nút */
+        padding: 5px;
+        z-index: 10; /* Đảm bảo các nút lọc nổi lên trên */
+        margin-top: -10px;
+    }
+
+    /* Thiết lập mặc định ẩn */
+    .d-none {
+        display: none;
+    }
+
+    .btn-booking i,
+    .btn-booking {
+        color: #4CAF50; /* Màu xanh lá cho Đặt vé */
+    }
+
+    .btn-tools i,
+    .btn-tools {
+        color: #FF0000; /* Màu cam cho Đặt dụng cụ */
+    }
+
+    .btn-booking i,
+    .btn-booking span {
+        color: #4CAF50; /* Màu xanh lá cây cho Đặt vé */
+    }
+
+    /* Đổi màu cho icon và chữ "Đặt dụng cụ" */
+    .btn-tools i,
+    .btn-tools span {
+        color: #FF0000; /* Màu cam cho Đặt dụng cụ */
+    }
+
+
+    .btn-booking:hover i,
+    .btn-tools:hover i,
+    .btn-order-food:hover i,
+    .btn-combo-food:hover i,
+    .btn-booking:hover,
+    .btn-tools:hover,
+    .btn-order-food:hover,
+    .btn-combo-food:hover {
+        opacity: 0.8; /* Hiệu ứng mờ khi hover */
+    }
     .product-card {
         padding: 15px;
         margin-bottom: 15px;
@@ -519,19 +575,73 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="tile">
-                    <form asp-controller="OrderManagement" asp-action="ComboCart" method="get">
 
                         <div class="tile-body">
-                            <div class="search-container">
-                                <label for="searchInput">Tìm kiếm:</label>
-                                <input type="search" id="searchInput" class="form-control form-control-sm" placeholder="Nhập từ khóa..." aria-controls="sampleTable">
+                            <div class="top-bar d-flex justify-content-between align-items-center">
+                                <!-- Search bar on the left -->
+                                <div class="search-container">
+                                    <label for="searchInput" class="mr-2 font-weight-bold">Tìm kiếm:</label>
+                                    <input type="search" id="searchInput" class="form-control form-control-sm" placeholder="Nhập từ khóa..." aria-controls="sampleTable">
+                                </div>
+
+
+                                <div class="filter-container d-flex align-items-center position-relative ml-auto">
+                                    <!-- Các nút lọc ẩn hiện ở bên trái nút lọc -->
+                                    <div id="filterButtons" class="filter-buttons d-none">
+                                        @if (@HttpContextAccessor.HttpContext.Session.GetString("TicketCart") != null)
+                                        {
+                                            <a href="~/OrderManagement/OrderTicket" class="btn btn-booking mr-2">
+
+                                                <i class="fas fa-ticket-alt"></i> <span>Đặt vé</span>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a href="~/OrderManagement/OrderCombo" class="btn btn-booking mr-2">
+
+                                                <i class="fas fa-ticket-alt"></i> <span>Đặt Combo</span>
+                                            </a>
+                                        }
+
+                                        <a href="~/OrderManagement/OrderGear" class="btn btn-tools mr-2">
+                                            <i class="fas fa-tools"></i> <span>Đặt dụng cụ</span>
+                                        </a>
+                                        <a href="~/OrderManagement/OrderFood" class="btn btn-order-food active-link mr-2">
+                                            <i class="fas fa-utensils"></i> Đặt đồ ăn
+                                        </a>
+                                        <a href="~/OrderManagement/OrderComboFood" class="btn btn-combo-food">
+                                            <i class="fas fa-box"></i> Đồ ăn theo combo
+                                        </a>
+                                    </div>
+
+                                    <button onclick="toggleFilterButtons()" class="btn btn-filter">
+                                        <i id="filterIcon" class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                </div>
+
                             </div>
+                            <script>
+                                function toggleFilterButtons() {
+                                    var filterIcon = document.getElementById("filterIcon");
+                                    var filterButtons = document.getElementById("filterButtons");
 
+                                    // Ẩn/hiện các nút lọc con
+                                    filterButtons.classList.toggle("d-none");
 
+                                    // Đổi biểu tượng khi nhấn
+                                    if (filterButtons.classList.contains("d-none")) {
+                                        filterIcon.classList.remove("fa-times");
+                                        filterIcon.classList.add("fa-ellipsis-v");
+                                    } else {
+                                        filterIcon.classList.remove("fa-ellipsis-v");
+                                        filterIcon.classList.add("fa-times");
+                                    }
+                                }
+                            </script>
 
+                        <form asp-controller="OrderManagement" asp-action="ComboCart" method="get">
                             @foreach (ComboVM item in ViewBag.gears)
                             {
-
                                 <div class="product-card">
                                     <div class="product-image">
                                         <img src="~/images/img_1.jpg" alt="Bạc Xỉu">
@@ -542,28 +652,92 @@
                                         <div class="product-price">
                                             @String.Format("{0:0,0} ₫", @item.Price)
                                         </div>
-                                        <a asp-controller="OrderManagement" asp-action="ComboDetail" asp-route-id="@item.ComboId" asp-route-quantity="@item.Quantity">Xem chi tiết</a>
+                                        <a asp-controller="OrderManagement" asp-action="ComboDetail" asp-route-id="@item.ComboId" asp-route-quantity="@item.Quantity">Chi tiết</a>
                                     </div>
                                     <div class="quantity-control">
-                                        <button class="btn-quantity btn-decrease">-</button>
+                                        <button class="btn-quantity btn-decrease" type="button">-</button>
                                         <span class="quantity-value">@item.Quantity</span>
-                                        <button class="btn-quantity btn-increase">+</button>
-                                        <input class="quantity-input" hidden name="quantity" value="@item.Quantity" />
-                                        <input type="text" value="@item.ComboId" hidden name="id">
-                                        <input type="text" value="@item.ComboName" hidden name="name">
-                                        <input type="number" value="@item.Price" hidden name="price">
+                                        <button class="btn-quantity btn-increase" type="button">+</button>
+                                        <input class="quantity-input" type="hidden" name="quantity" value="@item.Quantity" />
+                                        <input type="hidden" name="id" value="@item.ComboId">
+                                        <input type="hidden" name="name" value="@item.ComboName">
+                                        <input type="hidden" name="price" value="@item.Price">
                                     </div>
-
                                 </div>
-
-
                             }
+                        </form>
+
+                        <script>
+                            $(document).ready(function () {
+                                // Function to submit form data using AJAX
+                                function submitForm(id, name, price, quantity) {
+                                    const url = `/OrderManagement/ComboDetailCart`;
+
+                                    // Prepare data payload
+                                    const data = new URLSearchParams();
+                                    data.append("id", id);
+                                    data.append("name", name);
+                                    data.append("price", price);
+                                    data.append("quantity", quantity);
+
+                                    fetch(url, {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/x-www-form-urlencoded',
+                                        },
+                                        body: data.toString()
+                                    })
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            console.log('Success:', data);
+                                        })
+                                        .catch(error => {
+                                            console.error('Error:', error);
+                                        });
+                                }
+
+                                // Increase quantity
+                                $('.btn-increase').click(function () {
+                                    const quantityInput = $(this).siblings('.quantity-input');
+                                    let currentQuantity = parseInt(quantityInput.val()) + 1;
+
+                                    // Update quantity input value
+                                    quantityInput.val(currentQuantity);
+
+                                    // Gather necessary data
+                                    const id = $(this).siblings('input[name="id"]').val();
+                                    const name = $(this).siblings('input[name="name"]').val();
+                                    const price = $(this).siblings('input[name="price"]').val();
+
+                                    // Call submitForm
+                                    submitForm(id, name, price, currentQuantity);
+                                });
+
+                                // Decrease quantity
+                                $('.btn-decrease').click(function () {
+                                    const quantityInput = $(this).siblings('.quantity-input');
+                                    let currentQuantity = parseInt(quantityInput.val());
+
+                                    if (currentQuantity > 0) {
+                                        currentQuantity -= 1;
+
+                                        // Update quantity input value
+                                        quantityInput.val(currentQuantity);
+
+                                        // Gather necessary data
+                                        const id = $(this).siblings('input[name="id"]').val();
+                                        const name = $(this).siblings('input[name="name"]').val();
+                                        const price = $(this).siblings('input[name="price"]').val();
+
+                                        // Call submitForm
+                                        submitForm(id, name, price, currentQuantity);
+                                    }
+                                });
+                            });
+                        </script>
+
                         </div>
                         <div class="container-pagination-cart">
-                            <button type="submit" class="btn btn-primary">
-                                <i class='bx bx-cart'></i> <!-- Boxicons shopping cart icon -->
-                            </button>
-
                             <div id="pagination" class="dataTables_paginate paging_simple_numbers">
                                 <ul class="pagination">
                                     <li class="paginate_button page-item previous disabled" id="prev-page"><a href="#" class="page-link">Lùi</a></li>
@@ -572,7 +746,6 @@
                                 </ul>
                             </div>
                         </div>
-                    </form>
 
                 </div>
             </div>
@@ -580,10 +753,7 @@
         </div>
 
         <div class="d-flex ">
-            <a href="~/OrderManagement/CreateOrder" class="btn btn-secondary">Quay lại</a>
-            <a href="~/OrderManagement/OrderGear" class="btn btn-primary">Đặt đồ cắm trại</a>
-
-
+            <a href="~/OrderManagement/Cart" class="btn btn-primary">Tạo đơn ngay</a>
         </div>
 
     </main>

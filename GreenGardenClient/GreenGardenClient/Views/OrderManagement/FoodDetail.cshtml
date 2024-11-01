@@ -581,7 +581,7 @@
                                 <h4 class="product-price">@String.Format("{0:0,0} ₫", @Model.Price)</h4>
                             <div class="d-flex align-items-center quantity-control">
                                     <button class="btn btn-outline-secondary" onclick="ecreaseQuantity(event)">-</button>
-                                <input hidden name="id" value="@Model.ItemId"></input>
+                                    <input hidden name="id" value="@Model.ItemId"></input>
                                     <input hidden name="name" value="@Model.ItemName"></input>
                                     <input hidden name="price" value="@Model.Price"></input>
                                 <input type="number" id="quantity"  min="0" class="form-control mx-2 quantity-input" style="width: 60px;" value="@Model.Quantity" name="quantity">

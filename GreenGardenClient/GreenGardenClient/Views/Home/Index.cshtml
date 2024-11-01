@@ -64,13 +64,14 @@
                                 <li class="has-dropdown">
                                     <a href="/Service" class="nav-link">Dịch vụ</a>
                                     <ul class="dropdown">
+                                        <li><a href="/Service/ComboList" class="nav-link">Danh sách combo vé</a></li>
                                         <li><a href="/Service/OrderTicket" class="nav-link">Danh sách vé</a></li>
                                         <li><a href="/Service/OrderFoodAndDrink" class="nav-link">Danh sách đồ ăn</a></li>
                                         <li><a href="/Service/OrderGear" class="nav-link">Danh sách dụng cụ</a></li>
                                     </ul>
                                 </li>
 
-                                <li><a href="blog.html" class="nav-link">Liên hệ</a></li>
+                                <li><a href="~/Common/Contact" class="nav-link">Liên hệ</a></li>
                                 <li>
                                     @if (HttpContextAccessor.HttpContext.Session.GetString("Email") == null)
                                     {

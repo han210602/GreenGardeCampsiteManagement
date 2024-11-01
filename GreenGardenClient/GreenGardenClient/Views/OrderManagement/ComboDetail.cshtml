@@ -1,5 +1,6 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@model GreenGardenClient.Models.ComboDetailVM
 @using GreenGardenClient.Models
 
 }
@@ -188,8 +189,11 @@
     }
 
     .app-sidebar__user-avatar {
+        width: 100px; /* hoặc một giá trị cụ thể khác tùy thuộc vào kích thước bạn muốn */
+        height: 100px; /* cần phải bằng width */
         border-radius: 50%;
         margin-right: 10px;
+        object-fit: cover; /* Đảm bảo hình ảnh không bị méo */
     }
 
     .app-sidebar__user-name {
@@ -338,44 +342,44 @@
             text-decoration: none;
             cursor: pointer;
         }
-    /* Tổng thể card-text */
-    .card-text {
-        font-family: 'Arial', sans-serif;
-        font-size: 16px;
-        color: #333;
-        margin-bottom: 15px;
-    }
+/* Tổng thể card-text */
+.card-text {
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 15px;
+}
 
-        /* Đặt khoảng cách và canh giữa */
-        .card-text span {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
+/* Đặt khoảng cách và canh giữa */
+.card-text span {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
 
-        /* Khoảng cách icon với văn bản */
-        .card-text i {
-            margin-right: 8px;
-            font-size: 20px;
+/* Khoảng cách icon với văn bản */
+.card-text i {
+    margin-right: 8px;
+    font-size: 20px;
             color: #333; /* Màu icon */
-        }
+}
 
-        /* Màu sắc cho văn bản và khoảng cách */
-        .card-text .ml-2 {
-            margin-left: 10px;
-            color: #555;
-        }
+/* Màu sắc cho văn bản và khoảng cách */
+.card-text .ml-2 {
+    margin-left: 10px;
+    color: #555;
+}
 
-    /* Điều chỉnh cho d-flex flex-wrap */
-    .d-flex.flex-wrap {
-        gap: 10px;
-    }
+/* Điều chỉnh cho d-flex flex-wrap */
+.d-flex.flex-wrap {
+    gap: 10px;
+}
 
-    /* Styling cho số điện thoại */
-    .card-text span:first-child {
-        font-weight: bold;
-        color: #333;
-    }
+/* Styling cho số điện thoại */
+.card-text span:first-child {
+    font-weight: bold;
+    color: #333;
+}
 
     /* Canh thời gian gần hơn về bên trái */
     .card-text span:nth-child(2) {
@@ -385,23 +389,23 @@
         color: #28a745;
     }
 
-    /* Style cho thông tin đồ uống */
-    .card-text span:nth-child(3) {
-        color: #ff6347;
-    }
+/* Style cho thông tin đồ uống */
+.card-text span:nth-child(3) {
+    color: #ff6347;
+}
 
-    /* Style cho quy định chiều cao */
-    .card-text span:nth-child(4) {
-        color: #6c757d;
-        font-size: 14px;
-        line-height: 1.5;
-    }
+/* Style cho quy định chiều cao */
+.card-text span:nth-child(4) {
+    color: #6c757d;
+    font-size: 14px;
+    line-height: 1.5;
+}
 
-    /* Thêm hiệu ứng khi hover */
-    .card-text span:hover {
+/* Thêm hiệu ứng khi hover */
+.card-text span:hover {
         color: #333;
-        transition: color 0.3s ease-in-out;
-    }
+    transition: color 0.3s ease-in-out;
+}
 
     .dotted-line {
         border: none;
@@ -424,6 +428,51 @@
             color: #0056b3; /* Đổi màu khi hover */
         }
 
+    .quantity-container {
+        display: flex;
+        align-items: center;
+        font-size: 16px;
+        margin: 10px 0;
+    }
+
+        .quantity-container i {
+            margin-right: 8px;
+            color: black;
+            font-size: 18px;
+        }
+
+    .quantity-controls {
+        display: flex;
+        align-items: center;
+        margin-left: 10px;
+    }
+
+        .quantity-controls button {
+            padding: 5px 15px;
+            background-color: #f39c12;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 18px;
+            margin: 0 5px;
+        }
+
+            .quantity-controls button:hover {
+                background-color: #2980b9;
+            }
+
+        .quantity-controls input {
+            text-align: center;
+            width: 50px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            margin: 0 5px;
+        }
+
+ 
 </style>
 <body onload="time()" class="app sidebar-mini rtl">
     <header class="app-header">
@@ -444,65 +493,132 @@
         <div class="app-sidebar__user">
             <img class="app-sidebar__user-avatar" src="~/images/img_1.jpg" width="50px" alt="User Image">
             <div>
-                <p class="app-sidebar__user-name"><b>Võ Trường</b></p>
-                <p class="app-sidebar__user-designation">Chào mừng bạn trở lại</p>
+                <p class="app-sidebar__user-designation">Xin chào</p>
+
+                <p class="app-sidebar__user-name"><b>@HttpContextAccessor.HttpContext.Session.GetString("Fullname")</b></p>
             </div>
         </div>
         <hr>
         <ul class="app-menu">
-            <li class="has-submenu">
-                <a class="app-menu__item" href="javascript:void(0)" id="manageOrders">
+            <style>
+
+
+                .app-menu__item.selected {
+                    font-weight: bold;
+                }
+
+            </style>
+            @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 1)
+            {
+                <li>
+                    <a class="app-menu__item" href="~/DashBoard">
+                        <i class='app-menu__icon bx bx-task'></i>
+                        <span class="app-menu__label">Thống kê</span>
+                    </a>
+                </li>
+            }
+            <li class="has-submenu" style="display:block" id="manageOrdersMenu">
+                <a class="app-menu__item active" href="javascript:void(0)" id="manageOrders">
                     <i class='app-menu__icon bx bx-id-card'></i>
                     <span class="app-menu__label">Quản lý Đơn hàng</span>
                 </a>
                 <!-- Mục con -->
                 <ul class="submenu">
                     <li>
-                        <a href="#" class="app-menu__item">
-                            <i class='bx bx-notepad'></i> <!-- Icon cho "Đơn chưa sử dụng" -->
-                            Đơn chưa sử dụng
+                        <a href="~/OrderManagement/OrderOnline" class="app-menu__item" id="orderOnline">
+                            <i class='bx bx-notepad'></i>
+                            Đơn đặt trước
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="app-menu__item">
-                            <i class='bx bx-check-circle'></i> <!-- Icon cho "Đơn đã sử dụng" -->
-                            Đơn đã sử dụng
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="app-menu__item">
-                            <i class='bx bx-time-five'></i> <!-- Icon cho "Đơn đang sử dụng" -->
+                        <a href="~/OrderManagement/OrderUsing" class="app-menu__item" id="orderUsing">
+                            <i class='bx bx-time-five'></i>
                             Đơn đang sử dụng
                         </a>
                     </li>
-                </ul>
+                    <li>
+                        <a href="~/OrderManagement/OrderCheckOut" class="app-menu__item" id="orderCheckOut">
+                            <i class='bx bx-check-circle'></i>
+                            Đơn đã thanh toán
+                        </a>
+                    </li>
 
+
+                    <li>
+                        <a href="~/OrderManagement/OrderCancel" class="app-menu__item" id="orderCancel">
+                            <i class='bx bx-x-circle'></i> <!-- Thay đổi biểu tượng -->
+                            Đơn đã hủy
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="~/OrderManagement/CreateOrder" class="app-menu__item" id="createOrder">
+                            <i class='bx bx-plus'></i>
+                            Tạo đơn mới
+                        </a>
+                    </li>
+                </ul>
             </li>
-            <li>
-                <a class="app-menu__item" href="#">
-                    <i class='app-menu__icon bx bx-user-voice'></i>
-                    <span class="app-menu__label">Quản lý khách hàng</span>
-                </a>
-            </li>
-            <li>
-                <a class="app-menu__item" href="table-data-product.html">
-                    <i class='app-menu__icon bx bx-purchase-tag-alt'></i>
-                    <span class="app-menu__label">Quản lý nhân viên</span>
-                </a>
-            </li>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    var currentUrl = window.location.pathname;
+                    var manageOrdersMenu = document.getElementById("manageOrdersMenu");
+
+                    // Kiểm tra các URL và thêm lớp selected tương ứng
+                    if (currentUrl.includes("OrderOnline")) {
+                        document.getElementById("orderOnline").classList.add("selected");
+                        manageOrdersMenu.classList.add("selected");
+                    } else if (currentUrl.includes("OrderUsing")) {
+                        document.getElementById("orderUsing").classList.add("selected");
+                        manageOrdersMenu.classList.add("selected");
+                    } else if (currentUrl.includes("OrderCheckOut")) {
+                        document.getElementById("orderCheckOut").classList.add("selected");
+                        manageOrdersMenu.classList.add("selected");
+                    } else if (currentUrl.includes("OrderCancel")) {
+                        document.getElementById("orderCancel").classList.add("selected");
+                        manageOrdersMenu.classList.add("selected");
+                    } else if (currentUrl.includes("CreateOrder")) {
+                        document.getElementById("createOrder").classList.add("selected");
+                        manageOrdersMenu.classList.add("selected");
+                    }
+                });
+            </script>
             <li>
                 <a class="app-menu__item" href="table-data-oder.html">
                     <i class='app-menu__icon bx bx-task'></i>
                     <span class="app-menu__label">Quản lý sản phẩm</span>
                 </a>
             </li>
+            <li>
+                <a class="app-menu__item" href="table-data-oder.html">
+                    <i class='app-menu__icon bx bx-calendar-event'></i>
+                    <span class="app-menu__label">Quản lý sự kiện</span>
+                </a>
+            </li>
+            @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 1)
+            {
+                <li>
+                    <a class="app-menu__item" href="#">
+                        <i class='app-menu__icon bx bx-user-voice'></i>
+                        <span class="app-menu__label">Quản lý khách hàng</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="app-menu__item" href="table-data-product.html">
+                        <i class='app-menu__icon bx bx-purchase-tag-alt'></i>
+                        <span class="app-menu__label">Quản lý nhân viên</span>
+                    </a>
+                </li>
+            }
+
         </ul>
     </aside>
 
     <main class="app-content">
         <div class="app-title">
             <ul class="app-breadcrumb breadcrumb side">
-                <li class="breadcrumb-item active"><a href="#"><b>Danh sách các đơn đặt</b></a><a href="#"><b>/Tạo đơn</b></a><a href="#"><b>/Đặt vé</b></a></li>
+                <li class="breadcrumb-item active">Quản lí đơn hàng/Tạo đơn hàng/Chi tiết combo</li>
             </ul>
             <div id="clock"></div>
         </div>
@@ -530,13 +646,13 @@
                         <!-- Content Section -->
                         <div class="col-md-8">
                             <div class="card-body">
-                                <h5 class="card-title">Combo cho đoàn từ 5-10 người</h5>
+                                <h5 class="card-title">@Model.ComboName</h5>
                                 <p class="card-text d-flex flex-wrap justify-content-between">
                                     <span class="d-flex align-items-center">
                                         <i class="bi bi-geo-alt"></i>
                                         <span class="ml-2">Số Đt:0987327669 / 0964373999</span>
                                     </span>
-                                    <span class="d-flex align-items-center" ">
+                                    <span class="d-flex align-items-center">
                                         <i class="bi bi-calendar"></i>
                                         <span class="ml-2">Thời gian: 8h-23h</span>
                                     </span>
@@ -550,37 +666,62 @@
                                         <i class="bi bi-cup"></i> <!-- Icon cho đồ uống -->
                                         <span class="ml-2">Giá trên chưa bao gồm đồ uống</span>
                                     </span>
-                                    <span class="d-flex align-items-center">
-                                        <i class="fas fa-ruler-vertical"></i> <!-- Icon cho chiều cao -->
-                                        <span class="ml-2">Áp dụng với khách hàng từ 1,4m trở lên. Dưới 1,4m tính 70% giá combo niêm yết. Miễn phí cho trẻ em dưới 3 tuổi</span>
-                                    </span>
+                                   
 
                                 </p>
+                                <div style="display: flex; align-items: center;">
+                                    <h3 class="price">
+                                        <i class="fas fa-tag" style="margin-right: 10px;"></i>
+                                        <span style="color: red;">@String.Format("{0:0,0} ₫", @Model.Price)<small>/ khách</small></span>
+                                    </h3>
 
-
+                                </div>
                                 <hr class="dotted-line">
                                 <p>Combo bao gồm:</p>
                                 <ul>
                                     <li><a href="link-to-tent.html">Miễn phí vé vào cổng</a></li>
 
-                                    <li><a href="link-to-tent.html">Lều trại (2c) bao gồm 1 thảm xốp trải sàn</a></li>
-                                    <li><a href="link-to-bbq.html">Đồ nướng BBQ ngoài trời</a></li>
-                                    <li><a href="link-to-grill.html">Bếp nướng</a></li>
-                                    <li><a href="link-to-camping-table-chair.html">Bàn ghế Camping</a></li>
-                                    <li><a href="link-to-tent.html">Tăng bạt</a></li>
+                                    @foreach (var item in Model.ComboTicketDetails)
+                                    {
+                                        <li><a href="link-to-tent.html">@item.Name</a></li>
+
+                                    }
+                                    @foreach (var item in Model.ComboCampingGearDetails)
+                                    {
+                                        <li><a href="link-to-tent.html">@item.Name</a></li>
+
+                                    }
+                                    @foreach (var item in Model.ComboFootDetails)
+                                    {
+                                        <li><a href="link-to-tent.html">@item.Name</a></li>
+
+                                    }
+                                    
                                     <li><a href="link-to-playground.html">Khu vui chơi miễn phí: Bể bơi ngoài trời, trượt cỏ, chơi nhà bóng, chăm sóc vật nuôi...</a></li>
                                 </ul>
                                 <hr class="dotted-line">
-                                <h3 style="color:red; text-align:left;" class="price">
-                                    <i class="fas fa-coins" style="margin-right: 10px;"></i>
-                                    200.000đ <small>/ khách</small>
-                                </h3>
+                       <form asp-controller="OrderManagement" asp-action="ComboDetailCart" method="post">
+
+                                <div class="quantity-container">
+                                    <i class="fas fa-coins"></i> Số lượng:
+                                    <div class="quantity-controls">
+                                        <button onclick="decreaseValue(event)">−</button>
+                                        <input type="number" id="quantity"  value="@Model.Quantity" name="quantity" />
+                                        <input hidden name="id" value="@Model.ComboId"></input>
+                                        <input hidden name="name" value="@Model.ComboName"></input>
+                                        <input hidden name="price" value="@Model.Price"></input>
+                                        <button onclick="increaseValue(event)">+</button>
+                                    </div>
+
+                                </div>
+                                
                                 <div class="d-flex justify-content-end mt-3">
-                                    <button class="btn btn-primary me-2" onclick="addToCart()">Thêm vào giỏ hàng</button>
                                     <button class="btn btn-secondary" onclick="goBack()" style="margin-left:20px">Quay lại</button>
+
+                                    <button class="btn btn-primary me-2" onclick="addToCart()">Thêm vào giỏ hàng</button>
                                 </div>
 
-
+                                </form>
 
                             </div>
                         </div>
@@ -591,13 +732,34 @@
 
 
 
-       
+           
 
     </main>
 
 
 
+    <script>
+        function increaseValue(event) {
+            event.preventDefault(); // Prevent form submission
+            var value = parseInt(document.getElementById('quantity').value, 10);
+            value = isNaN(value) ? 0 : value;
+            value++;
+            document.getElementById('quantity').value = value;
+        }
 
+        function decreaseValue(event) {
+            event.preventDefault(); // Prevent form submission
+            var value = parseInt(document.getElementById('quantity').value, 10);
+            value = isNaN(value) ? 0 : value;
+            value = value > 0 ? value - 1 : 0;
+            document.getElementById('quantity').value = value;
+
+            // Show alert when value reaches 0
+            if (value === 0) {
+                alert("Số lượng đã giảm tới 0!");
+            }
+        }
+    </script>
 
     <script>
 
@@ -629,121 +791,7 @@
         });
 
     </script>
-    <script>
-        $(document).ready(function () {
-            var itemsPerPage = 3; // Số sản phẩm hiển thị trên mỗi trang
-            var currentPage = 1;  // Trang hiện tại
-            var totalItems = $('.product-card').length; // Tổng số sản phẩm ban đầu
-            var totalPages = Math.ceil(totalItems / itemsPerPage); // Tổng số trang ban đầu
-
-            // Hàm hiển thị sản phẩm cho trang hiện tại
-            function showPage(page, items) {
-                // Ẩn tất cả sản phẩm
-                $('.product-card').hide();
-
-                // Tính toán sản phẩm bắt đầu và kết thúc cho trang hiện tại
-                var startItem = (page - 1) * itemsPerPage;
-                var endItem = Math.min(startItem + itemsPerPage, items.length); // Đảm bảo không vượt quá số lượng sản phẩm
-
-                // Hiển thị sản phẩm của trang hiện tại
-                items.slice(startItem, endItem).show();
-
-                // Cập nhật nút phân trang
-                $('#pagination .page-item').removeClass('active');
-                $('#pagination .page-item[data-page="' + page + '"]').addClass('active');
-
-                // Kiểm tra trạng thái nút Lùi và Tiếp
-                if (page === 1) {
-                    $('#prev-page').addClass('disabled');
-                } else {
-                    $('#prev-page').removeClass('disabled');
-                }
-
-                if (page === Math.ceil(items.length / itemsPerPage)) {
-                    $('#next-page').addClass('disabled');
-                } else {
-                    $('#next-page').removeClass('disabled');
-                }
-            }
-
-            // Hàm cập nhật nút phân trang
-            function updatePagination(totalItems) {
-                $('#pagination').find('.page-item:not(#prev-page, #next-page)').remove(); // Xóa các nút trang cũ
-                var totalPages = Math.ceil(totalItems / itemsPerPage); // Tính lại tổng số trang
-
-                // Tạo các nút phân trang
-                for (var i = 1; i <= totalPages; i++) {
-                    $('<li class="paginate_button page-item" data-page="' + i + '"><a href="#" class="page-link">' + i + '</a></li>').insertBefore('#next-page');
-                }
-            }
-
-            // Xử lý sự kiện tìm kiếm
-            $('#searchInput').on('keyup', function () {
-                var searchValue = $(this).val().toLowerCase();
-
-                // Lọc sản phẩm dựa trên giá trị tìm kiếm
-                var filteredItems = $('.product-card').filter(function () {
-                    return $(this).text().toLowerCase().indexOf(searchValue) > -1;
-                });
-
-                if (filteredItems.length > 0) {
-                    // Nếu có tìm kiếm và kết quả tìm thấy
-                    updatePagination(filteredItems.length); // Cập nhật lại phân trang dựa trên số lượng kết quả
-                    currentPage = 1; // Đặt lại trang hiện tại về 1
-                    showPage(currentPage, filteredItems); // Hiển thị sản phẩm sau khi tìm kiếm
-                } else {
-                    // Nếu không có kết quả tìm kiếm, ẩn toàn bộ sản phẩm và làm trống phân trang
-                    $('.product-card').hide();
-                    $('#pagination').find('.page-item:not(#prev-page, #next-page)').remove(); // Xóa các nút trang
-                }
-            });
-
-            // Xử lý sự kiện khi bấm vào các nút số trang
-            $('#pagination').on('click', '.page-item', function (e) {
-                e.preventDefault();
-                var page = $(this).data('page');
-                if (page) {
-                    currentPage = page;
-                    var items = $('#searchInput').val() ? $('.product-card').filter(function () {
-                        return $(this).text().toLowerCase().indexOf($('#searchInput').val().toLowerCase()) > -1;
-                    }) : $('.product-card');
-                    showPage(currentPage, items);
-                }
-            });
-
-            // Xử lý sự kiện khi bấm vào nút Lùi
-            $('#prev-page').click(function (e) {
-                e.preventDefault();
-                if (currentPage > 1) {
-                    currentPage--;
-                    var items = $('#searchInput').val() ? $('.product-card').filter(function () {
-                        return $(this).text().toLowerCase().indexOf($('#searchInput').val().toLowerCase()) > -1;
-                    }) : $('.product-card');
-                    showPage(currentPage, items);
-                }
-            });
-
-            // Xử lý sự kiện khi bấm vào nút Tiếp
-            $('#next-page').click(function (e) {
-                e.preventDefault();
-                var items = $('#searchInput').val() ? $('.product-card').filter(function () {
-                    return $(this).text().toLowerCase().indexOf($('#searchInput').val().toLowerCase()) > -1;
-                }) : $('.product-card');
-                var totalItems = items.length;
-                var totalPages = Math.ceil(totalItems / itemsPerPage);
-                if (currentPage < totalPages) {
-                    currentPage++;
-                    showPage(currentPage, items);
-                }
-            });
-
-            // Hiển thị trang đầu tiên khi tải trang
-            updatePagination(totalItems); // Khởi tạo nút phân trang ban đầu
-            showPage(currentPage, $('.product-card')); // Hiển thị sản phẩm ban đầu
-        });
-
-
-    </script>
+    
     <script>
         // Hàm giảm số lượng sản phẩm
         function decreaseQuantity() {
@@ -767,7 +815,11 @@
 
 
     </script>
-   
+ 
+
+
+
+    </script>
     <script src="~/js/jquery-3.2.1.min.js"></script>
     <script src="~/js/popper.min.js"></script>
     <script src="~/js/bootstrap.min.js"></script>
@@ -831,6 +883,48 @@
             }
         }
         ;
+    </script>
+    <script>
+
+        // Hàm giảm số lượng sản phẩm
+        function decreaseQuantity(event) {
+            event.preventDefault(); // Ngăn không cho form submit khi bấm nút
+
+            let quantityInput = document.getElementById('quantity');
+            let remainingQuantitySpan = document.querySelector('.remaining-quantity-value');
+
+            let currentValue = parseInt(quantityInput.value);
+            let remainingQuantity = parseInt(remainingQuantitySpan.textContent);
+
+            if (currentValue > 0) {
+                quantityInput.value = currentValue - 1;
+                remainingQuantitySpan.textContent = remainingQuantity + 1; // Tăng số lượng còn lại
+            } else {
+                alert("Số lượng không thể nhỏ hơn 0");
+            }
+        }
+
+        // Hàm tăng số lượng sản phẩm
+        function increaseQuantity(event) {
+            event.preventDefault(); // Ngăn không cho form submit khi bấm nút
+
+            let quantityInput = document.getElementById('quantity');
+            let remainingQuantitySpan = document.querySelector('.remaining-quantity-value');
+
+            let currentValue = parseInt(quantityInput.value);
+            let remainingQuantity = parseInt(remainingQuantitySpan.textContent);
+
+            if (remainingQuantity > 0) { // Kiểm tra xem còn hàng hay không
+                quantityInput.value = currentValue + 1;
+                remainingQuantitySpan.textContent = remainingQuantity - 1; // Giảm số lượng còn lại
+            } else {
+                alert("Hết hàng");
+            }
+        }
+
+
+
+
     </script>
 </body>
 

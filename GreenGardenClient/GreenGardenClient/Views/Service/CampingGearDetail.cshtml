@@ -44,7 +44,39 @@
             <div class="site-mobile-menu-body"></div>
         </div>
 
-
+        @{
+            if (TempData["Notification"] != null)
+            {
+                <div id="notification" class="alert alert-warning" role="alert">
+                    Thêm vào giỏ hàng thành công
+                </div>
+            }
+        }
+        <style>
+            #notification {
+                position: fixed;
+                top: 20px; /* Khoảng cách từ đầu trang */
+                right: 20px; /* Khoảng cách từ bên phải */
+                z-index: 1050; /* Đảm bảo thông báo nằm trên các phần tử khác */
+                opacity: 1; /* Bắt đầu với độ mờ là 1 */
+                transition: opacity 1s ease-out, transform 1s ease-out; /* Hiệu ứng chuyển đổi cho độ mờ và biến đổi */
+                transform: translateY(-10px); /* Đưa thông báo lên một chút */
+                width: auto; /* Hoặc thay đổi thành một giá trị cụ thể, ví dụ: 300px */
+                max-width: 300px; /* Giới hạn chiều rộng tối đa */
+                padding: 15px; /* Khoảng cách bên trong cho thông báo */
+            }
+        </style>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                if ($("#notification").length) {
+                    setTimeout(function () {
+                        $("#notification").css("opacity", "0"); // Đặt độ mờ thành 0
+                        $("#notification").css("transform", "translateY(10px)"); // Đưa thông báo xuống một chút khi ẩn
+                    }, 3000); // Sau 3 giây
+                }
+            });
+        </script>
 
         <header class="site-navbar site-navbar-target" role="banner">
             <div class="container">
@@ -59,18 +91,19 @@
                     <div class="col-9 text-right">
                         <nav class="site-navigation text-right ml-auto d-none d-lg-block" role="navigation">
                             <ul class="site-menu main-menu js-clone-nav ml-auto ">
-                                <li class="active"><a href="/Home" class="nav-link">Trang chủ</a></li>
+                                <li ><a href="/Home" class="nav-link">Trang chủ</a></li>
                                 <li><a href="/Common/Event" class="nav-link">Sự kiện</a></li>
                                 <li class="has-dropdown">
-                                    <a href="/Service" class="nav-link">Dịch vụ</a>
+                                    <a href="/Service" class="active"  class="nav-link">Dịch vụ</a>
                                     <ul class="dropdown">
+                                        <li><a href="/Service/ComboList" class="nav-link">Danh sách combo vé</a></li>
                                         <li><a href="/Service/OrderTicket" class="nav-link">Danh sách vé</a></li>
                                         <li><a href="/Service/OrderFoodAndDrink" class="nav-link">Danh sách đồ ăn</a></li>
-                                        <li><a href="/Service/OrderGear" class="nav-link">Danh sách dụng cụ</a></li>
+                                        <li class ="active"><a href="/Service/OrderGear" class="nav-link">Danh sách dụng cụ</a></li>
                                     </ul>
                                 </li>
 
-                                <li><a href="blog.html" class="nav-link">Liên hệ</a></li>
+                                <li><a href="~/Common/Contact" class="nav-link">Liên hệ</a></li>
                                 <li>
                                     @if (HttpContextAccessor.HttpContext.Session.GetString("Email") == null)
                                     {
@@ -227,6 +260,49 @@
                     margin: 20px 0;
                 }
 
+                .quantity-container {
+                    display: flex;
+                    align-items: center;
+                    font-size: 16px;
+                    margin: 10px 0;
+                }
+
+                    .quantity-container i {
+                        margin-right: 8px;
+                        color: black;
+                        font-size: 18px;
+                    }
+
+                .quantity-controls {
+                    display: flex;
+                    align-items: center;
+                    margin-left: 10px;
+                }
+
+                    .quantity-controls button {
+                        padding: 5px 15px;
+                        background-color: #f39c12;
+                        color: white;
+                        border: none;
+                        cursor: pointer;
+                        border-radius: 4px;
+                        font-size: 18px;
+                        margin: 0 5px;
+                    }
+
+                        .quantity-controls button:hover {
+                            background-color: #2980b9;
+                        }
+
+                    .quantity-controls input {
+                        text-align: center;
+                        width: 50px;
+                        padding: 5px;
+                        border: 1px solid #ccc;
+                        border-radius: 4px;
+                        font-size: 16px;
+                        margin: 0 5px;
+                    }
             </style>
             <script>
                 $(document).ready(function () {
@@ -241,116 +317,98 @@
                 });
             </script>
         </header>
-
-
-        <div class="site-section">
-            <div class="container">
-                <div class="row justify-content-center text-center">
-                    <div class="col-md-7">
-                        <div class="heading-39101 mb-5">
-                            <span class="backdrop text-center">Chi tiết</span>
-                            <span class="subtitle-39191">Chi tiết</span>
-                            <h3>Đồ ăn-đồ uống</h3>
-                        </div>
-                    </div>
-                </div>
-
-
-
-                <div class="container mt-5">
-                    <div class="row">
-                        <!-- Phần bên trái: Ảnh lớn sản phẩm -->
-                        <div class="col-md-6">
-                            <img src="~/images/img_1.jpg" alt="Product Image" class="img-fluid" style="width: 100%; height: 400px; object-fit: cover; border-radius: 10px;">
-                        </div>
-
-                        <!-- Phần bên phải: Thông tin sản phẩm -->
-                        <div class="col-md-6" id="product-@campingGear.GearId">
-                            <h2 class="product-name">@campingGear.GearName </h2>
-                            <p class="product-description">@campingGear.Description</p>
-
-                            <div class="available-quantity">
-                                <strong>Số lượng có sẵn:</strong> <span class="quantity">@campingGear.QuantityAvailable</span>
-                            </div>
-
-                            <div class="quantity-selector mt-3">
-                                <label for="quantity" class="form-label">Chọn số lượng:</label>
-                                <input type="number" id="quantity" name="quantity" min="1" max="20" value="1" class="form-control" style="width: 100px;" onchange="updateHiddenQuantity()" />
-                            </div>
-                            <form method="post" action="/Service/AddToCart" class="d-flex align-items-center">
-                                <input type="hidden" name="Id" value="@campingGear.GearId" />
-                                <input type="hidden" name="Name" value="@campingGear.GearName" />
-                                <input type="hidden" name="CategoryName" value="@campingGear.GearCategoryName" />
-                                <input type="hidden" name="Type" value="FoodAnDrink" />
-                                <input type="hidden" name="TypeCategory" value="FoodAnDrinkCategory" />
-                                <input type="hidden" name="price" value="@campingGear.RentalPrice" />
-                                <input type="hidden" id="hidden-quantity" name="quantity" value="1" /> <!-- Hidden input for quantity -->
-                                <input type="hidden" id="hidden-date-@campingGear.GearId" name="usageDate" />
-                                <input type="hidden" name="redirectAction" value="OrderGear" />
-                                <button type="submit" class="btn btn-primary mt-4" onclick="return setUsageDate('@campingGear.GearId')">Thêm vào giỏ hàng</button>
-                            </form>
-
-                        </div>
-                    </div>
-                </div>
-
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-warning" role="alert" style="text-align: center;">
+                @TempData["Error"]
             </div>
+        }
+
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="tile">
+                        <div class="tile-body row">
+                            <!-- Image Section -->
+                            <div class="col-md-4">
+                                <div class="product-image position-relative">
+                                    <!-- Zoom Icon -->
+                                    <i class="zoom-icon fa fa-search-plus" onclick="openModal()" style="position: absolute; top: 10px; right: 10px; font-size: 24px; cursor: pointer;"></i>
+
+                                    <!-- Image -->
+                                    <img src="~/images/doan1.jpg" alt="Product Image" class="img-fluid img-thumbnail" id="productImage">
+                                </div>
+
+                                <!-- Modal for Zoomed Image -->
+                                <div id="imageModal" class="modal" onclick="closeModal()">
+                                    <span class="close">&times;</span>
+                                    <img class="modal-content" id="zoomedImage">
+                                </div>
+                            </div>
+
+                            <!-- Content Section -->
+                            <div class="col-md-8" id="product-@campingGear.GearId">
+                                <div class="card-body">
+                                    <h5 class="card-title">@campingGear.GearName</h5>
+                                    <p class="card-text d-flex flex-wrap justify-content-between">
+                                        <span class="d-flex align-items-center">
+                                            <i class="bi bi-geo-alt"></i>
+                                            <span class="ml-2"> Mô tả: @campingGear.Description</span>
+                                        </span>
+
+                                    </p>
+                                    <div style="display: flex; align-items: center;">
+                                        <h3 class="price">
+                                            <i class="fas fa-tag" style="margin-right: 10px;"></i>
+                                            <span style="color: red;">@campingGear.RentalPrice.ToString("N0") đ <small></small></span>
+                                        </h3>
+
+                                    </div>
+
+                                    <hr class="dotted-line">
+                                    <p>Số lượng còn: @campingGear.QuantityAvailable</p>
+                                    <hr class="dotted-line">
+                                    <div class="quantity-container">
+                                        <i class="fas fa-coins"></i> Số lượng:
+                                        <div class="quantity-controls">
+                                            <button onclick="decreaseQuantity()">−</button>
+                                            <input type="number" id="quantity" value="1" min="1" onchange="updateHiddenQuantity()" />
+                                            <button onclick="increaseQuantity()">+</button>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="d-flex justify-content-start mt-3">
+                                        <form method="post" action="/Service/AddToCart">
+                                            <input type="hidden" name="Id" value="@campingGear.GearId" />
+                                            <input type="hidden" name="Name" value="@campingGear.GearName" />
+                                            <input type="hidden" name="CategoryName" value="@campingGear.GearCategoryName" />
+                                            <input type="hidden" name="Type" value="Gear" />
+                                            <input type="hidden" name="TypeCategory" value="GearCategory" />
+                                            <input type="hidden" name="price" value="@campingGear.RentalPrice" />
+                                            <input type="hidden" id="hidden-quantity" name="quantity" value="1" /> <!-- Hidden input for quantity -->
+                                            <input type="hidden" id="hidden-date-@campingGear.GearId" name="usageDate" />
+                                            <input type="hidden" name="redirectAction" value="CampingGearDetail" />
+                                            <button type="submit" class="btn btn-primary mt-4" onclick="return setUsageDate('@campingGear.GearId')">Thêm vào giỏ hàng</button>
+                                        </form>
+                                        <a href="~/Service/OrderGear" class="btn btn-secondary  mt-4" style="margin-left:20px">Quay lại</a>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
 
-
-        <footer class="site-footer bg-light">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-3">
-                        <h2 class="footer-heading mb-3">Facebook</h2>
-                        <div class="row">
-                            <div class="col-4 gal_col">
-                                <a href="#"><img src="~/images/Picture1.jpg" alt="Image" class="img-fluid"></a>
-                            </div>
-                            <div class="col-4 gal_col">
-                                <a href="#"><img src="~/images/Picture8.jpg" alt="Image" class="img-fluid"></a>
-                            </div>
-                            <div class="col-4 gal_col">
-                                <a href="#"><img src="~/images/Picture7.jpg" alt="Image" class="img-fluid"></a>
-                            </div>
-                            <div class="col-4 gal_col">
-                                <a href="#"><img src="~/images/Picture4.jpg" alt="Image" class="img-fluid"></a>
-                            </div>
-                            <div class="col-4 gal_col">
-                                <a href="#"><img src="~/images/Picture13.jpg" alt="Image" class="img-fluid"></a>
-                            </div>
-                            <div class="col-4 gal_col">
-                                <a href="#"><img src="~/images/Picture6.jpg" alt="Image" class="img-fluid"></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-8 ml-auto">
-                        <div class="row">
-                            <div class="col-lg-6 ml-auto">
-                                <h2 class="footer-heading mb-4">Truy cập nhanh</h2>
-                                <ul class="list-unstyled">
-                                    <li><a href="#">Facebook</a></li>
-                                    <li><a href="#">Instagram</a></li>
-                                    <li><a href="#">Tiktok</a></li>
-
-                                </ul>
-                            </div>
-                            <div class="col-lg-6">
-                                <h2 class="footer-heading mb-4">Phản hồi</h2>
-                                <p>Nơi bạn đưa ra những phản hồi về dịch vụ,nhân viên tại sông quê</p>
-                                <form action="#" class="d-flex" class="subscribe">
-                                    <input type="text" class="form-control mr-3" placeholder="Phản hồi">
-                                    <input type="submit" value="Send" class="btn btn-primary">
-                                </form>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-        </footer>
-
     </div>
+
+   
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({
@@ -359,53 +417,85 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        function updateHiddenQuantity() {
-            // Get the selected quantity from the input field
-            var quantity = document.getElementById('quantity').value;
-
-            // Set the value of the hidden input field
-            document.getElementById('hidden-quantity').value = quantity;
+        function increaseQuantity() {
+            var quantityInput = document.getElementById('quantity');
+            var currentQuantity = parseInt(quantityInput.value, 10);
+            if (currentQuantity < 20) {  // Giới hạn số lượng tối đa là 20
+                quantityInput.value = currentQuantity + 1;
+                updateHiddenQuantity();
+            }
         }
-        function setUsageDate(gearId) {
-            var savedDate = sessionStorage.getItem('usageDateForAll');
 
-            // Nếu đã có ngày lưu trong sessionStorage, sử dụng ngày đó và submit form mà không hiển thị popup
+        function decreaseQuantity() {
+            var quantityInput = document.getElementById('quantity');
+            var currentQuantity = parseInt(quantityInput.value, 10);
+            if (currentQuantity > 1) {  // Giới hạn số lượng tối thiểu là 1
+                quantityInput.value = currentQuantity - 1;
+                updateHiddenQuantity();
+            }
+        }
+
+        function updateHiddenQuantity() {
+            var quantity = document.getElementById('quantity').value;
+            document.getElementById('hidden-quantity').value = quantity;
+            sessionStorage.setItem('selectedQuantity', quantity);
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var savedQuantity = sessionStorage.getItem('selectedQuantity');
+            if (savedQuantity) {
+                document.getElementById('quantity').value = savedQuantity;
+                document.getElementById('hidden-quantity').value = savedQuantity;
+            }
+
+            var savedDate = sessionStorage.getItem('usageDateForAll');
             if (savedDate) {
-                document.getElementById('hidden-date-' + gearId).value = savedDate;
+                document.getElementById('hidden-date-' + '@campingGear.GearId').value = savedDate;
+            }
+        });
+        function setUsageDate(gearId) {
+            const savedDate = sessionStorage.getItem('usageDateForAll');
+            const savedTime = sessionStorage.getItem('usageTimeForAll');
+
+            if (savedDate && savedTime) {
+                // Use the saved date and time if they exist
+                document.getElementById('hidden-date-' + gearId).value = `${savedDate} ${savedTime}`;
                 document.querySelector(`#product-${gearId} form`).submit();
             } else {
-                // Hiển thị popup yêu cầu chọn ngày nếu chưa có ngày nào được lưu
+                // Show the popup to select both date and time if not previously saved
                 Swal.fire({
-                    title: 'Vui lòng chọn ngày sử dụng!',
-                    input: 'date',
-                    inputAttributes: {
-                        min: new Date().toISOString().split('T')[0] // Đặt giá trị min là ngày hiện tại
-                    },
-                    inputPlaceholder: 'yyyy-MM-dd',
+                    title: 'Chọn ngày và giờ sử dụng',
+                    html:
+                        '<input type="date" id="usage-date" class="swal2-input" min="' + new Date().toISOString().split('T')[0] + '">' +
+                        '<input type="time" id="usage-time" class="swal2-input">',
                     showCancelButton: true,
                     confirmButtonText: 'Xác nhận',
                     cancelButtonText: 'Hủy',
-                    inputValidator: (value) => {
-                        if (!value) {
-                            return 'Bạn cần nhập ngày sử dụng!';
+                    preConfirm: () => {
+                        const date = document.getElementById('usage-date').value;
+                        const time = document.getElementById('usage-time').value;
+                        if (!date || !time) {
+                            Swal.showValidationMessage('Bạn cần nhập cả ngày và giờ sử dụng!');
+                            return false;
                         }
-                        return null;
+                        return { date, time };
                     }
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        var usageDate = result.value;
+                        const { date, time } = result.value;
+                        sessionStorage.setItem('usageDateForAll', date);
+                        sessionStorage.setItem('usageTimeForAll', time);
 
-                        // Lưu ngày sử dụng vào sessionStorage cho các vé sau trong cùng một phiên
-                        sessionStorage.setItem('usageDateForAll', usageDate);
-
-                        // Đặt ngày sử dụng vào input ẩn và submit form
-                        document.getElementById('hidden-date-' + gearId).value = usageDate;
+                        // Set both date and time in the hidden input for the form
+                        document.getElementById('hidden-date-' + gearId).value = `${date} ${time}`;
                         document.querySelector(`#product-${gearId} form`).submit();
                     }
                 });
             }
             return false;
         }
+
+
     </script>
     <script src="~/js/jquery-3.3.1.min.js"></script>
     <script src="~/js/jquery-migrate-3.0.0.js"></script>
@@ -425,7 +515,57 @@
     <script src="~/js/main.js"></script>
 
 </body>
+<footer class="site-footer bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <h2 class="footer-heading mb-3">Facebook</h2>
+                <div class="row">
+                    <div class="col-4 gal_col">
+                        <a href="#"><img src="~/images/Picture1.jpg" alt="Image" class="img-fluid"></a>
+                    </div>
+                    <div class="col-4 gal_col">
+                        <a href="#"><img src="~/images/Picture8.jpg" alt="Image" class="img-fluid"></a>
+                    </div>
+                    <div class="col-4 gal_col">
+                        <a href="#"><img src="~/images/Picture7.jpg" alt="Image" class="img-fluid"></a>
+                    </div>
+                    <div class="col-4 gal_col">
+                        <a href="#"><img src="~/images/Picture4.jpg" alt="Image" class="img-fluid"></a>
+                    </div>
+                    <div class="col-4 gal_col">
+                        <a href="#"><img src="~/images/Picture13.jpg" alt="Image" class="img-fluid"></a>
+                    </div>
+                    <div class="col-4 gal_col">
+                        <a href="#"><img src="~/images/Picture6.jpg" alt="Image" class="img-fluid"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8 ml-auto">
+                <div class="row">
+                    <div class="col-lg-6 ml-auto">
+                        <h2 class="footer-heading mb-4">Truy cập nhanh</h2>
+                        <ul class="list-unstyled">
+                            <li><a href="#">Facebook</a></li>
+                            <li><a href="#">Instagram</a></li>
+                            <li><a href="#">Tiktok</a></li>
 
+                        </ul>
+                    </div>
+                    <div class="col-lg-6">
+                        <h2 class="footer-heading mb-4">Phản hồi</h2>
+                        <p>Nơi bạn đưa ra những phản hồi về dịch vụ,nhân viên tại sông quê</p>
+                        <form action="#" class="d-flex" class="subscribe">
+                            <input type="text" class="form-control mr-3" placeholder="Phản hồi">
+                            <input type="submit" value="Send" class="btn btn-primary">
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+</footer>
 </html>
 
 
