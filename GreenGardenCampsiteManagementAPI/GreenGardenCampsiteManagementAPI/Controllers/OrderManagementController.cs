@@ -97,7 +97,7 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
             }
         }
 
-
+        [Authorize("CustomerPolicy")]
         [HttpPost("CheckOut")]
         public IActionResult CheckOut([FromBody] CheckOut order)
         {
@@ -110,6 +110,7 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+        [Authorize("CustomerPolicy")]
         [HttpPost("ChangeCustomerActivity")]
         public IActionResult ChangeCustomerActivity(int orderId)
         {
@@ -123,7 +124,7 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
-
+        [Authorize("CustomerPolicy")]
         [HttpPost("CheckOutComboOrder")]
         public IActionResult CheckOutComboOrder([FromBody] CheckoutCombo order)
         {
@@ -234,6 +235,7 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+        [Authorize("CustomerPolicy")]
         [HttpGet("GetCustomerOrderDetail/{id}")]
         public IActionResult GetCustomerOrderDetail(int id)
         {

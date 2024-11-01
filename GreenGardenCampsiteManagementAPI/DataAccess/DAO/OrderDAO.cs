@@ -439,7 +439,7 @@ namespace DataAccess.DAO
                                 GearId=o.GearId,
                                 Name=o.Gear.GearName,
                                 Quantity=o.Quantity,
-                                Price = o.Quantity.Value * o.Gear.RentalPrice,
+                                Price = o.Gear.RentalPrice,
 
                            }).ToList(),
                            OrderFoodDetails=o.OrderFoodDetails.Select(o=>new OrderFoodDetailDTO
@@ -989,7 +989,7 @@ namespace DataAccess.DAO
                     if(item != null) {
                         item.OrderUsageDate = order.OrderUsageDate;
                         item.TotalAmount=order.TotalAmount;
-                        item.AmountPayable = order.TotalAmount = item.Deposit;
+                        item.AmountPayable = order.TotalAmount - item.Deposit;
                         context.SaveChanges();
                         return true;
                     }
