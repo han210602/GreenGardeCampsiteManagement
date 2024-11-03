@@ -2684,11 +2684,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\Repositories\\Repositories.csproj",
+      "projectUniqueName": "D:\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\Repositories\\Repositories.csproj",
       "projectName": "Repositories",
-      "projectPath": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\Repositories\\Repositories.csproj",
+      "projectPath": "D:\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\Repositories\\Repositories.csproj",
       "packagesPath": "C:\\Users\\PCT\\.nuget\\packages\\",
-      "outputPath": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\Repositories\\obj\\",
+      "outputPath": "D:\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\Repositories\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\PCT\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -2704,11 +2704,11 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\BusinessObject.csproj": {
-              "projectPath": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\BusinessObject.csproj"
+            "D:\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\BusinessObject.csproj": {
+              "projectPath": "D:\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\BusinessObject.csproj"
             },
-            "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\DataAccess\\DataAccess.csproj": {
-              "projectPath": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\DataAccess\\DataAccess.csproj"
+            "D:\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\DataAccess\\DataAccess.csproj": {
+              "projectPath": "D:\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\DataAccess\\DataAccess.csproj"
             }
           }
         }

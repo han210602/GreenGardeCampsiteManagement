@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "BTNsvBZDNUv1Bxzl3pvyi/MHjWRNQvtZXW+V/vf2S1MMEEHSMVaeGNrH9sqYbzdKE8zGjSe1W9yODHObvwOCpw==",
+  "dgSpecHash": "2yskU44Tem+4bvK0px6/e463s1ezg370sVU78wISNax5J5fVr+FHGMRrPfgVO4Anj7UezWUvJRNSSb0i6p7PnQ==",
   "success": true,
-  "projectFilePath": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenCampsiteManagementAPI\\GreenGardenCampsiteManagementAPI.csproj",
+  "projectFilePath": "D:\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenCampsiteManagementAPI\\GreenGardenCampsiteManagementAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\PCT\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\PCT\\.nuget\\packages\\csvhelper\\32.0.3\\csvhelper.32.0.3.nupkg.sha512",

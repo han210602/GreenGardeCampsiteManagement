@@ -59,7 +59,7 @@ namespace DataAccess.DAO
                     customerOrders = context.Orders
                         .Where(o => o.CustomerId == customerId
                                     && (statusOrder == null || o.StatusOrder == statusOrder)
-                                    && (activityId == null || o.ActivityId == activityId)) // Additional filters
+                                    && (activityId == null || o.ActivityId == activityId))
                         .Include(u => u.Customer)
                         .Include(a => a.Activity)
                         .Select(o => new CustomerOrderDTO()
@@ -77,7 +77,8 @@ namespace DataAccess.DAO
                             ActivityId = o.ActivityId,
                             ActivityName = o.Activity.ActivityName
                         })
-                        .OrderByDescending(o => o.OrderDate) // Sort by OrderDate in descending order
+                        .OrderBy(o => o.ActivityId) // Sắp xếp theo ActivityId
+                        .ThenByDescending(o => o.OrderDate) // Sau đó sắp xếp theo OrderDate giảm dần
                         .ToList();
                 }
             }
@@ -87,7 +88,6 @@ namespace DataAccess.DAO
             }
             return customerOrders;
         }
-
 
         public static List<OrderDTO> getAllOrderDepositAndUsing()
         {
@@ -1220,7 +1220,7 @@ namespace DataAccess.DAO
 
 
         }
-        public static void UpdateActivity(int orderId)
+        public static bool UpdateActivity(int orderId)
         {
             try
             {
@@ -1236,10 +1236,11 @@ namespace DataAccess.DAO
 
                         // Lưu thay đổi vào cơ sở dữ liệu
                         context.SaveChanges();
+                        return true; // Trả về true nếu cập nhật thành công
                     }
                     else
                     {
-                        throw new Exception("Không tìm thấy đơn hàng với OrderId: " + orderId);
+                        return false; // Trả về false nếu không tìm thấy đơn hàng
                     }
                 }
             }
@@ -1248,6 +1249,7 @@ namespace DataAccess.DAO
                 throw new Exception("Lỗi khi cập nhật ActivityId: " + ex.Message);
             }
         }
+
 
     }
 }

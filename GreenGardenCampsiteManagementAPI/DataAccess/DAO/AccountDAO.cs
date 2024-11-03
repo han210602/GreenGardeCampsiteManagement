@@ -91,18 +91,12 @@ namespace DataAccess.DAO
                         loginAttempts[a.Email]++;
                     }
 
-                    // Deactivate if attempts reach 5
-                    if (loginAttempts[a.Email] >= 5)
-                    {
-                        user.IsActive = false;
-                        context.SaveChanges();
-                        throw new Exception("Account has been locked due to too many failed login attempts.");
-                    }
-
+                    // Throw an error message if the login attempt fails
                     throw new Exception("Invalid email or password.");
                 }
             }
         }
+
 
         private static readonly ConcurrentDictionary<string, (string Code, DateTime Expiration)> VerificationCodes = new ConcurrentDictionary<string, (string, DateTime)>();
 
