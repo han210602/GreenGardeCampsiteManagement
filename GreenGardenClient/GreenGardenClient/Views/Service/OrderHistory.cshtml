@@ -45,7 +45,7 @@
             <div class="site-mobile-menu-body"></div>
         </div>
 
-
+        
 
         <header class="site-navbar site-navbar-target" role="banner">
             <div class="container">
@@ -330,14 +330,16 @@
                                             {
                                                 <div class="buttons">
                                                     <a href="@Url.Action("OrderDetailHistory", "Service", new { orderId = @order.OrderId })" class="btn btn-purple btn-block">Xem chi tiết</a>
-                                                    <button class="btn btn-secondary btn-block mt-2">Hủy</button>
+                                                    <button type="button" class="btn btn-secondary btn-block mt-2 btn-cancel-order" data-orderid="@order.OrderId">Hủy</button>
+
+
                                                 </div>
                                             }
                                             else if (order.ActivityId == 2)
                                             {
                                                 <div class="buttons">
                                                     <a href="@Url.Action("OrderDetailHistory", "Service", new { orderId = @order.OrderId })" class="btn btn-purple btn-block">Xem chi tiết</a>
-                                                    <button class="btn btn-secondary btn-block mt-2">Yêu cầu thanh toán</button>
+                                                    <button class="btn btn-secondary btn-block mt-2">Đang sử dụng</button>
                                                 </div>
                                             }
                                             else if (order.ActivityId == 3)
@@ -346,11 +348,10 @@
                                                     <a href="@Url.Action("OrderDetailHistory", "Service", new { orderId = @order.OrderId })" class="btn btn-purple btn-block">Xem chi tiết</a>
                                                 </div>
                                             }
-                                            else if (order.ActivityId == 4)
+                                            else if (order.ActivityId == 1002)
                                             {
                                                 <div class="buttons">
-                                                    <a href="@Url.Action("OrderDetailHistory", "Service", new { orderId = @order.OrderId })" class="btn btn-purple btn-block">Xem chi tiết</a>
-                                                    <p class="btn btn-secondary btn-block mt-2">Yêu cầu thanh toa</p>
+                                                    <a href="@Url.Action("OrderDetailHistory", "Service", new { orderId = @order.OrderId })" class="btn btn-purple btn-block">Xem chi tiết</a>                                     
                                                 </div>
                                             }
                                         </div>
@@ -392,6 +393,39 @@
     </script>
 
     </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Sự kiện click cho nút hủy đơn hàng
+            $('.btn-cancel-order').on('click', function (e) {
+                e.preventDefault(); // Ngăn chặn hành động mặc định của nút
+
+                var orderId = $(this).data('orderid'); // Lấy orderId từ thuộc tính data
+                console.log(orderId); // Kiểm tra giá trị orderId
+
+                if (confirm('Bạn có chắc chắn muốn hủy đơn hàng này?')) {
+                    $.ajax({
+                        url: '@Url.Action("CancelOrder", "Service")', // Đường dẫn tới action CancelOrder
+                        type: 'POST',
+                        data: { orderId: orderId },
+                        success: function (result) {
+                            if (result.success) {
+                                alert(result.message);
+                                location.reload(); // Tải lại trang
+                            } else {
+                                alert(result.message); // Hiển thị thông báo lỗi
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.log(xhr.responseText); // Kiểm tra thông điệp lỗi từ server
+                            alert('Đã xảy ra lỗi: ' + error);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
     <script src="~/js/jquery-3.3.1.min.js"></script>
     <script src="~/js/jquery-migrate-3.0.0.js"></script>
     <script src="~/js/popper.min.js"></script>

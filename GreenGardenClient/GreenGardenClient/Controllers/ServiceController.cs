@@ -1,5 +1,7 @@
-﻿using GreenGardenClient.Models;
+﻿using GreenGardenClient.Hubs;
+using GreenGardenClient.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Globalization;
@@ -12,12 +14,14 @@ namespace GreenGardenClient.Controllers
     public class ServiceController : Controller
     {
         private readonly ILogger<ServiceController> _logger;
-        private readonly IHttpClientFactory _clientFactory; // Đảm bảo bạn đã khai báo IHttpClientFactory
+        private readonly IHttpClientFactory _clientFactory;// Đảm bảo bạn đã khai báo IHttpClientFactory
+        private readonly IHubContext<CartHub> _hubContext;
 
-        public ServiceController(ILogger<ServiceController> logger, IHttpClientFactory clientFactory)
+        public ServiceController(ILogger<ServiceController> logger, IHttpClientFactory clientFactory, IHubContext<CartHub> hubContext)
         {
+            _hubContext = hubContext;
             _logger = logger;
-            _clientFactory = clientFactory; // Khởi tạo IHttpClientFactory
+            _clientFactory = clientFactory;// Khởi tạo IHttpClientFactory
         }
         public IActionResult Index()
         {
@@ -332,9 +336,10 @@ namespace GreenGardenClient.Controllers
                 }
                 else
                 {
-                    TempData["ErrorMessage"] = "Vui lòng đăng nhập để xem lịch sử đặt hàng!";
-                    return RedirectToAction("Login"); // Redirect to login if token is not available
+                    TempData["ErrorMessage"] = "Không tìm thấy JWT token!";
+                    return RedirectToAction("Error");
                 }
+
 
                 // Fetch data from APIs
                 var order = await GetDataFromApiAsync<List<CustomerOrderVM>>(apiUrl);
@@ -373,15 +378,7 @@ namespace GreenGardenClient.Controllers
 
                 // Retrieve JWT token from cookies
                 var jwtToken = Request.Cookies["JWTToken"];
-                if (!string.IsNullOrEmpty(jwtToken))
-                {
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
-                }
-                else
-                {
-                    TempData["ErrorMessage"] = "Vui lòng đăng nhập để xem chi tiết đơn hàng!";
-                    return RedirectToAction("Login"); // Redirect to login if token is not available
-                }
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
 
                 var response = await client.GetAsync(apiUrl);
 
@@ -421,6 +418,41 @@ namespace GreenGardenClient.Controllers
             {
                 TempData["ErrorMessage"] = $"System error: {ex.Message}";
                 return RedirectToAction("Error");
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> CancelOrder(int orderId)
+        {
+            var apiUrl = $"https://localhost:7298/api/OrderManagement/ChangeCustomerActivity?orderId={orderId}";
+
+            try
+            {
+                var client = _clientFactory.CreateClient();
+
+                // Lấy JWT token từ cookies và thêm vào header
+                var jwtToken = Request.Cookies["JWTToken"];
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
+
+                // Gửi yêu cầu hủy đơn hàng
+                var response = await client.PostAsync(apiUrl, null);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return Json(new { success = true, message = "Hủy đơn hàng thành công!" });
+                }
+                else
+                {
+                    var errorMessage = await response.Content.ReadAsStringAsync();
+                    return Json(new { success = false, message = $"Lỗi khi hủy đơn hàng: {errorMessage}" });
+                }
+            }
+            catch (HttpRequestException httpEx)
+            {
+                return Json(new { success = false, message = $"Lỗi khi gửi yêu cầu: {httpEx.Message}" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = $"Lỗi hệ thống: {ex.Message}" });
             }
         }
 
@@ -493,90 +525,71 @@ namespace GreenGardenClient.Controllers
             HttpContext.Session.SetString("Cart", session);
         }
         [HttpPost]
-        public IActionResult AddToCart(int Id, string Name, string CategoryName, string Type, string TypeCategory, decimal price, int quantity, string usageDate, string redirectAction)
+        public async Task<IActionResult> AddToCartAsync(int Id, string Name, string CategoryName, string Type, string TypeCategory, decimal price, int quantity, string usageDate, string redirectAction)
         {
-            // Check if the user is logged in
+            // Kiểm tra người dùng đã đăng nhập chưa
             var userId = HttpContext.Session.GetInt32("UserId");
             var userRole = HttpContext.Session.GetInt32("RoleId");
 
             if (userId == null)
             {
-                TempData["Error"] = "Vui lòng đăng nhập để thêm vào giỏ hàng!";
-                return redirectAction switch
-                {
-                    "FoodDetail" => RedirectToAction(redirectAction, new { itemId = Id }),
-                    "CampingGearDetail" => RedirectToAction(redirectAction, new { gearId = Id }),
-                    "TicketDetail" => RedirectToAction(redirectAction, new { ticketId = Id }),
-                    "ComboDetail" => RedirectToAction(redirectAction, new { comboId = Id }),
-                    _ => RedirectToAction(redirectAction)
-                };
+                return Json(new { success = false, message = "Vui lòng đăng nhập để thêm vào giỏ hàng!" });
             }
 
             if (userRole != 3)
             {
-                TempData["Error"] = "Vui lòng đăng nhập với quyền khách hàng để thêm vào giỏ hàng!";
-                return redirectAction switch
-                {
-                    "FoodDetail" => RedirectToAction(redirectAction, new { itemId = Id }),
-                    "CampingGearDetail" => RedirectToAction(redirectAction, new { gearId = Id }),
-                    "TicketDetail" => RedirectToAction(redirectAction, new { ticketId = Id }),
-                    "ComboDetail" => RedirectToAction(redirectAction, new { comboId = Id }),
-                    _ => RedirectToAction(redirectAction)
-                };
+                return Json(new { success = false, message = "Vui lòng đăng nhập với quyền khách hàng để thêm vào giỏ hàng!" });
             }
 
+            // Lấy danh sách sản phẩm trong giỏ hàng từ session
             var cartItems = GetCartItems();
 
-            // Check if cart contains a ticket item while adding a combo or vice versa
+            // Kiểm tra nếu giỏ hàng chứa vé hoặc combo
             bool hasTicket = cartItems.Any(c => c.Type == "Ticket" && c.TypeCategory == "TicketCategory");
-            bool hasCombo = cartItems.Any(c => c.Type == "Combo" && c.TypeCategory == "ComboCategory");
+            bool hasCombo = cartItems.Any(c => c.Type == "Combo" && c.TypeCategory == "ComboCategory" || c.Id != Id);
 
-            if (hasCombo && Type == "Ticket")
+            // Nếu đang thêm một combo
+            if (Type == "Combo")
             {
-                TempData["Error"] = "Không thể thêm vé vào giỏ hàng vì đã có combo trong giỏ hàng.";
-                ViewBag.HasCombo = true; // For checking in the view
-                return redirectAction switch
+                // Kiểm tra nếu đã có một combo khác hoặc có vé trong giỏ hàng
+                if (hasCombo)
                 {
-                    "FoodDetail" => RedirectToAction(redirectAction, new { itemId = Id }),
-                    "CampingGearDetail" => RedirectToAction(redirectAction, new { gearId = Id }),
-                    "TicketDetail" => RedirectToAction(redirectAction, new { ticketId = Id }),
-                    "ComboDetail" => RedirectToAction(redirectAction, new { comboId = Id }),
-                    _ => RedirectToAction(redirectAction)
-                };
+                    return Json(new { success = false, message = "Giỏ hàng chỉ cho phép một loại combo duy nhất." });
+                }
+
+                if (hasTicket)
+                {
+                    return Json(new { success = false, message = "Không thể thêm combo vào giỏ hàng vì đã có vé trong giỏ hàng." });
+                }
             }
 
-            if (hasTicket && Type == "Combo")
+            // Nếu đang thêm một vé
+            if (Type == "Ticket")
             {
-                TempData["Error"] = "Không thể thêm combo vào giỏ hàng vì đã có vé trong giỏ hàng.";
-                ViewBag.HasTicket = true; // For checking in the view
-                return redirectAction switch
+                // Kiểm tra nếu đã có combo trong giỏ hàng
+                if (hasCombo)
                 {
-                    "FoodDetail" => RedirectToAction(redirectAction, new { itemId = Id }),
-                    "CampingGearDetail" => RedirectToAction(redirectAction, new { gearId = Id }),
-                    "TicketDetail" => RedirectToAction(redirectAction, new { ticketId = Id }),
-                    "ComboDetail" => RedirectToAction(redirectAction, new { comboId = Id }),
-                    _ => RedirectToAction(redirectAction)
-                };
+                    return Json(new { success = false, message = "Không thể thêm vé vào giỏ hàng vì đã có combo trong giỏ hàng." });
+                }
             }
 
-
-            var existingItem = cartItems.FirstOrDefault(c => c.Id == Id && c.Type == Type && c.TypeCategory == TypeCategory);
-
-            // Convert usage date from string to DateTime
-            // Convert usage date and time from string to DateTime
+            // Chuyển đổi usageDate từ chuỗi sang DateTime
             DateTime parsedDateTime;
             if (!DateTime.TryParseExact(usageDate, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out parsedDateTime))
             {
-                parsedDateTime = DateTime.Now; // Default value if parsing fails
+                parsedDateTime = DateTime.Now; // Giá trị mặc định nếu chuyển đổi thất bại
             }
 
+            // Kiểm tra nếu sản phẩm đã tồn tại trong giỏ hàng
+            var existingItem = cartItems.FirstOrDefault(c => c.Id == Id && c.Type == Type && c.TypeCategory == TypeCategory);
 
             if (existingItem != null)
             {
-                existingItem.Quantity += quantity; // Update quantity if item already exists in the cart
+                existingItem.Quantity += quantity; // Cập nhật số lượng nếu sản phẩm đã tồn tại
             }
             else
             {
+                // Thêm sản phẩm mới vào giỏ hàng
                 var newItem = new CartItem
                 {
                     Id = Id,
@@ -588,49 +601,43 @@ namespace GreenGardenClient.Controllers
                     Quantity = quantity,
                     UsageDate = parsedDateTime
                 };
-                cartItems.Add(newItem); // Add new item to the cart
+                cartItems.Add(newItem);
             }
-            ViewBag.HasTicket = hasTicket;
-            ViewBag.HasCombo = hasCombo;
-            SaveCartItems(cartItems); // Save updated cart items to session
 
-            // Set success notification message
-            TempData["Notification"] = "Thêm vào giỏ hàng thành công!";
+            await _hubContext.Clients.All.SendAsync("ReceiveCartUpdate", cartItems);
 
-            // Handle redirection based on redirectAction parameter
-            return redirectAction switch
-            {
-                "FoodDetail" => RedirectToAction(redirectAction, new { itemId = Id }),
-                "CampingGearDetail" => RedirectToAction(redirectAction, new { gearId = Id }),
-                "TicketDetail" => RedirectToAction(redirectAction, new { ticketId = Id }),
-                "ComboDetail" => RedirectToAction(redirectAction, new { comboId = Id }),
-                _ => RedirectToAction(redirectAction)
-            };
+            // Lưu giỏ hàng cập nhật vào session
+            SaveCartItems(cartItems);
+
+            // Trả về JSON cho AJAX với thông báo thành công
+            return Json(new { success = true, message = "Thêm vào giỏ hàng thành công!", cartItemCount = cartItems.Count });
         }
+
 
 
 
 
         [HttpPost]
-        public IActionResult UpdateUsageDate(string usageDate, int ticketId)
+        public IActionResult UpdateCartUsageDate(string usageDate)
         {
-            // Tìm vé theo ticketId và cập nhật ngày mới
-            var cartItems = GetCartItems();
-            var ticket = cartItems.FirstOrDefault(t => t.Id == ticketId);
-            if (ticket != null)
+            var cartItems = GetCartItems(); // Lấy danh sách giỏ hàng từ session
+
+            // Chuyển đổi ngày sử dụng thành DateTime
+            if (DateTime.TryParseExact(usageDate, "yyyy-MM-ddTHH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDateTime))
             {
-                // Parse lại ngày sử dụng và gán cho vé
-                if (DateTime.TryParse(usageDate, out DateTime parsedDate))
+                // Cập nhật ngày sử dụng cho từng mặt hàng trong giỏ hàng
+                foreach (var item in cartItems)
                 {
-                    ticket.UsageDate = parsedDate; // Cập nhật ngày sử dụng mới
+                    item.UsageDate = parsedDateTime; // Cập nhật ngày sử dụng
                 }
+
+                SaveCartItems(cartItems); // Lưu giỏ hàng vào session
+                return Json(new { success = true });
             }
 
-            SaveCartItems(cartItems);
-
-            // Trả về view cập nhật lại thông tin vé bên OrderTicket
-            return RedirectToAction("Cart");
+            return Json(new { success = false, message = "Ngày sử dụng không hợp lệ." });
         }
+
 
 
 
@@ -726,11 +733,6 @@ namespace GreenGardenClient.Controllers
             return View();
         }
 
-        public IActionResult OrderHistory()
-        {
-            return View();
-        }
-        [HttpPost]
         [HttpPost]
         public async Task<IActionResult> Order()
         {
@@ -767,7 +769,8 @@ namespace GreenGardenClient.Controllers
             {
                 // Create a new HttpClient instance from the factory
                 var client = _clientFactory.CreateClient();
-
+                var jwtToken = Request.Cookies["JWTToken"];
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
                 // Classify other cart items
                 var gears = cartItems.Where(c => c.Type == "Gear" && c.TypeCategory == "GearCategory").ToList();
                 var foods = cartItems.Where(c => c.Type == "FoodAndDrink" && c.TypeCategory == "FoodAndDrinkCategory").ToList();
@@ -828,7 +831,7 @@ namespace GreenGardenClient.Controllers
                     {
                         HttpContext.Session.Remove("Cart");
                         TempData["Notification"] = "Đặt hàng thành công!";
-                        return RedirectToAction("Index");
+                        return RedirectToAction("OrderHistory");
                     }
                     else
                     {

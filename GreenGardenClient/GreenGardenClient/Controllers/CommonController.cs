@@ -1,5 +1,6 @@
 ﻿using GreenGardenClient.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 namespace GreenGardenClient.Controllers
@@ -398,6 +399,8 @@ namespace GreenGardenClient.Controllers
             try
             {
                 var client = _clientFactory.CreateClient();
+                var jwtToken = Request.Cookies["JWTToken"];
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
                 // Serialize the updateProfile object into JSON
                 var jsonContent = new StringContent(JsonSerializer.Serialize(updateProfile), Encoding.UTF8, "application/json");
 

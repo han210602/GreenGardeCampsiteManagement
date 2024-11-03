@@ -437,18 +437,6 @@
             sessionStorage.setItem('selectedQuantity', quantity);
         }
 
-        document.addEventListener("DOMContentLoaded", function () {
-            var savedQuantity = sessionStorage.getItem('selectedQuantity');
-            if (savedQuantity) {
-                document.getElementById('quantity').value = savedQuantity;
-                document.getElementById('hidden-quantity').value = savedQuantity;
-            }
-
-            var savedDate = sessionStorage.getItem('usageDateForAll');
-            if (savedDate) {
-                document.getElementById('hidden-date-' + '@tickets.TicketId').value = savedDate;
-            }
-        });
         function setUsageDate(ticketId) {
             const savedDate = sessionStorage.getItem('usageDateForAll');
             const savedTime = sessionStorage.getItem('usageTimeForAll');
@@ -456,7 +444,7 @@
             if (savedDate && savedTime) {
                 // Use the saved date and time if they exist
                 document.getElementById('hidden-date-' + ticketId).value = `${savedDate} ${savedTime}`;
-                document.querySelector(`#product-${ticketId} form`).submit();
+                addToCart(ticketId); // Call addToCart function directly
             } else {
                 // Show the popup to select both date and time if not previously saved
                 Swal.fire({
@@ -484,14 +472,55 @@
 
                         // Set both date and time in the hidden input for the form
                         document.getElementById('hidden-date-' + ticketId).value = `${date} ${time}`;
-                        document.querySelector(`#product-${ticketId} form`).submit();
+                        addToCart(ticketId); // Call addToCart after date and time selection
                     }
                 });
             }
             return false;
         }
 
+        function addToCart(ticketId) {
+            const form = $(`#product-${ticketId}`).find('form');
+            const formData = form.serialize();
+
+            $.ajax({
+                type: "POST",
+                url: form.attr("action"),
+                data: formData,
+                success: function (response) {
+                    if (response.success) {
+                        // Nếu thêm vào giỏ hàng thành công
+                        Swal.fire({
+                            icon: "success",
+                            title: "Thành công",
+                            text: response.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    } else {
+                        // Nếu có lỗi (chưa đăng nhập hoặc sai vai trò)
+                        Swal.fire({
+                            icon: "error",
+                            title: "Thất bại ",
+                            text: response.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                },
+                error: function () {
+                    // Xử lý lỗi khi gọi AJAX thất bại
+                    Swal.fire({
+                        icon: "error",
+                        title: "Thất bại",
+                        text: "Đã có lỗi xảy ra, vui lòng thử lại.",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            });
         }
+
     </script>
     <script src="~/js/jquery-3.3.1.min.js"></script>
     <script src="~/js/jquery-migrate-3.0.0.js"></script>

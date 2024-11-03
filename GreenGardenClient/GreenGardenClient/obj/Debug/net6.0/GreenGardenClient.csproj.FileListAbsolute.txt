@@ -765,3 +765,5 @@ C:\Users\admin\Documents\Zalo Received Files\GreenGardenClient\GreenGardenClient
 C:\Users\admin\Documents\Zalo Received Files\GreenGardenClient\GreenGardenClient\GreenGardenClient\obj\Debug\net6.0\GreenGardenClient.pdb
 C:\Users\admin\Documents\Zalo Received Files\GreenGardenClient\GreenGardenClient\GreenGardenClient\obj\Debug\net6.0\GreenGardenClient.genruntimeconfig.cache
 C:\Users\admin\Documents\Zalo Received Files\GreenGardenClient\GreenGardenClient\GreenGardenClient\obj\Debug\net6.0\ref\GreenGardenClient.dll
+D:\SEP490\GreenGardenCampsiteManagement\GreenGardenClient\GreenGardenClient\bin\Debug\net6.0\libman.json
+D:\SEP490\GreenGardenCampsiteManagement\GreenGardenClient\GreenGardenClient\bin\Debug\net6.0\System.Net.WebSockets.WebSocketProtocol.dll

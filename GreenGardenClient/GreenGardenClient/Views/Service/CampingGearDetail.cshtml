@@ -389,7 +389,7 @@
                                             <input type="hidden" id="hidden-quantity" name="quantity" value="1" /> <!-- Hidden input for quantity -->
                                             <input type="hidden" id="hidden-date-@campingGear.GearId" name="usageDate" />
                                             <input type="hidden" name="redirectAction" value="CampingGearDetail" />
-                                            <button type="submit" class="btn btn-primary mt-4" onclick="return setUsageDate('@campingGear.GearId')">Thêm vào giỏ hàng</button>
+                                            <button type="button" class="btn btn-primary mt-4" onclick="setUsageDate('@campingGear.GearId')">Thêm vào giỏ hàng</button>
                                         </form>
                                         <a href="~/Service/OrderGear" class="btn btn-secondary  mt-4" style="margin-left:20px">Quay lại</a>
                                     </div>
@@ -441,28 +441,14 @@
             sessionStorage.setItem('selectedQuantity', quantity);
         }
 
-        document.addEventListener("DOMContentLoaded", function () {
-            var savedQuantity = sessionStorage.getItem('selectedQuantity');
-            if (savedQuantity) {
-                document.getElementById('quantity').value = savedQuantity;
-                document.getElementById('hidden-quantity').value = savedQuantity;
-            }
-
-            var savedDate = sessionStorage.getItem('usageDateForAll');
-            if (savedDate) {
-                document.getElementById('hidden-date-' + '@campingGear.GearId').value = savedDate;
-            }
-        });
         function setUsageDate(gearId) {
             const savedDate = sessionStorage.getItem('usageDateForAll');
             const savedTime = sessionStorage.getItem('usageTimeForAll');
 
             if (savedDate && savedTime) {
-                // Use the saved date and time if they exist
                 document.getElementById('hidden-date-' + gearId).value = `${savedDate} ${savedTime}`;
-                document.querySelector(`#product-${gearId} form`).submit();
+                addToCart(gearId);
             } else {
-                // Show the popup to select both date and time if not previously saved
                 Swal.fire({
                     title: 'Chọn ngày và giờ sử dụng',
                     html:
@@ -485,14 +471,40 @@
                         const { date, time } = result.value;
                         sessionStorage.setItem('usageDateForAll', date);
                         sessionStorage.setItem('usageTimeForAll', time);
-
-                        // Set both date and time in the hidden input for the form
                         document.getElementById('hidden-date-' + gearId).value = `${date} ${time}`;
-                        document.querySelector(`#product-${gearId} form`).submit();
+                        addToCart(gearId);
                     }
                 });
             }
             return false;
+        }
+
+        function addToCart(gearId) {
+            const form = $(`#product-${gearId}`).find('form');
+            const formData = form.serialize();
+
+            $.ajax({
+                type: "POST",
+                url: form.attr("action"),
+                data: formData,
+                success: function (response) {
+                    Swal.fire({
+                        icon: response.success ? "success" : "error",
+                        title: response.success ? "Thành công" : "Thất bại",
+                        text: response.message,
+                        showConfirmButton: !response.success,
+                        timer: response.success ? 1500 : null
+                    });
+                },
+                error: function () {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Lỗi",
+                        text: "Đã có lỗi xảy ra, vui lòng thử lại.",
+                        confirmButtonText: "OK"
+                    });
+                }
+            });
         }
 
 

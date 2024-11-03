@@ -317,6 +317,23 @@
                                 </div>
                                 <div class="divider"></div>
                             }
+                            @foreach (var item in orderDetail.OrderComboDetails)
+                            {
+                                <div class="divider"></div>
+                                <div class="item-card">
+                                    <img src="~/images/img_1.jpg" alt="White & Red Nike Athletic Shoe">
+                                    <div class="item-details">
+                                        <p></p>
+                                        <p class="item-title">@item.Name</p>
+                                        <p></p>
+                                    </div>
+                                    <div class="buttons">
+                                        <p class="btn btn-purple btn-block">Số lượng: @item.Quantity</p>
+                                        <p class="btn btn-secondary btn-block mt-2">Giá: @item.Price.ToString("N0") đ</p>
+                                    </div>
+                                </div>
+                                <div class="divider"></div>
+                            }
                         </div>
                     </div>
 
@@ -326,10 +343,10 @@
             <div class="site-section">
                 <div class="container">
                     <div class="row justify-content-between align-items-center">
-                        <div class="col-md-6 text-left">
+                        <div class="col-md-6 text-right">
                             <h1 style="font-size: larger" class="subtitle-39191">Tổng tiền: @orderDetail.TotalAmount.ToString("N0") đ</h1>
                         </div>
-                        <div class="col-md-6 text-right">
+                        <div class="col-md-6 text-left">
                             <a href="javascript:history.back()" class="btn btn-secondary">Quay lại</a>
                         </div>
                     </div>

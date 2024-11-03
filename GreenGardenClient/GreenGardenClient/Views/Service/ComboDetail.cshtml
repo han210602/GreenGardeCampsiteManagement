@@ -3,6 +3,7 @@
 @{
     var combo = ViewBag.Combo as ComboDetailVM;
 }
+
 <!doctype html>
 <html lang="en">
 
@@ -14,6 +15,7 @@
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,700,900&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="~/fonts/icomoon/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <link rel="stylesheet" href="~/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/css/bootstrap-datepicker.css">
@@ -94,9 +96,9 @@
                                 <li class="has-dropdown">
                                     <a href="/Service" class="active" class="nav-link">Dịch vụ</a>
                                     <ul class="dropdown">
-                                        <li><a href="/Service/ComboList" class="active" class="nav-link">Danh sách combo vé</a></li>
+                                        <li><a href="/Service/ComboList" class="nav-link">Danh sách combo vé</a></li>
                                         <li><a href="/Service/OrderTicket" class="nav-link">Danh sách vé</a></li>
-                                        <li><a href="/Service/OrderFoodAndDrink" class="nav-link">Danh sách đồ ăn</a></li>
+                                        <li class="active"><a href="/Service/OrderFoodAndDrink" class="nav-link">Danh sách đồ ăn</a></li>
                                         <li><a href="/Service/OrderGear" class="nav-link">Danh sách dụng cụ</a></li>
                                     </ul>
                                 </li>
@@ -301,7 +303,6 @@
                         font-size: 16px;
                         margin: 0 5px;
                     }
-
             </style>
             <script>
                 $(document).ready(function () {
@@ -323,235 +324,254 @@
                 @TempData["Error"]
             </div>
         }
-        <div class="site-section">
-            <div class="container">
-                <div class="row justify-content-center text-center">
-                    <div class="col-md-7">
-                        <div class="heading-39101 mb-5">
-                            <span class="backdrop text-center">Chi tiết</span>
-                            <span class="subtitle-39191">Chi tiết</span>
-                            <h3>Đồ Combo</h3>
-                        </div>
-                    </div>
-                </div>
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="tile">
+                        <div class="tile-body row">
+                            <!-- Image Section -->
+                            <div class="col-md-4">
+                                <div class="product-image position-relative">
+                                    <!-- Zoom Icon -->
+                                    <i class="zoom-icon fa fa-search-plus" onclick="openModal()" style="position: absolute; top: 10px; right: 10px; font-size: 24px; cursor: pointer;"></i>
 
+                                    <!-- Image -->
+                                    <img src="~/images/doan1.jpg" alt="Product Image" class="img-fluid img-thumbnail" id="productImage">
+                                </div>
 
+                                <!-- Modal for Zoomed Image -->
+                                <div id="imageModal" class="modal" onclick="closeModal()">
+                                    <span class="close">&times;</span>
+                                    <img class="modal-content" id="zoomedImage">
+                                </div>
+                            </div>
 
-                <div class="container mt-5">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="tile">
-                                <div class="tile-body row">
-                                    <!-- Image Section -->
-                                    <div class="col-md-4">
-                                        <div class="product-image position-relative">
-                                            <!-- Zoom Icon -->
-                                            <i class="zoom-icon fa fa-search-plus" onclick="openModal()" style="position: absolute; top: 10px; right: 10px; font-size: 24px; cursor: pointer;"></i>
+                            <!-- Content Section -->
+                            <div class="col-md-8" id="product-@combo.ComboId">
+                                <div class="card-body">
+                                    <h5 class="card-title">@combo.ComboName</h5>
+                                    <p class="card-text d-flex flex-wrap justify-content-between">
+                                        <span class="d-flex align-items-center">
+                                            <i class="bi bi-geo-alt"></i>
+                                            <span class="ml-2">Số Đt:0987327669 / 0964373999</span>
+                                        </span>
+                                        <span class="d-flex align-items-center">
+                                            <i class="bi bi-cup"></i> <!-- Icon cho đồ uống -->
+                                            <span class="ml-2">Giá trên chưa bao gồm đồ uống</span>
+                                        </span>
 
-                                            <!-- Image -->
-                                            <img src="~/images/doan1.jpg" alt="Product Image" class="img-fluid img-thumbnail" id="productImage">
+                                    </p>
+                                    <div style="display: flex; align-items: center;">
+                                        <h3 class="price">
+                                            <i class="fas fa-tag" style="margin-right: 10px;"></i>
+                                            <span style="color: red;">@combo.Price.ToString("N0") đ <small>/ khách</small></span>
+                                        </h3>
+
+                                    </div>
+                                    <hr class="dotted-line">
+                                    <p>Combo bao gồm:</p>
+                                    <ul>
+                                        <li>Miễn phí vé vào cổng</li>
+                                        @foreach (var item in combo.ComboCampingGearDetails)
+                                        {
+                                            <li>@item.Name</li>
+                                        }
+                                        @foreach (var item in combo.ComboFootDetails)
+                                        {
+                                            <li>@item.Name</li>
+                                        }
+                                        <li>Khu vui chơi miễn phí: Bể bơi ngoài trời, trượt cỏ, chơi nhà bóng, chăm sóc vật nuôi...</li>
+                                    </ul>
+                                    <hr class="dotted-line">
+
+                                    <div class="quantity-container">
+                                        <i class="fas fa-coins"></i> Số lượng:
+                                        <div class="quantity-controls">
+                                            <button onclick="decreaseQuantity()">−</button>
+                                            <input type="number" id="quantity" value="1" min="1" onchange="updateHiddenQuantity()" />
+                                            <button onclick="increaseQuantity()">+</button>
                                         </div>
 
-                                        <!-- Modal for Zoomed Image -->
-                                        <div id="imageModal" class="modal" onclick="closeModal()">
-                                            <span class="close">&times;</span>
-                                            <img class="modal-content" id="zoomedImage">
-                                        </div>
                                     </div>
 
-                                    <!-- Content Section -->
-                                    <div class="col-md-8" id="product-@combo.ComboId">
-                                        <div class="card-body">
-                                            <h5 class="card-title">@combo.ComboName</h5>
-                                            <p class="card-text d-flex flex-wrap justify-content-between">
-                                                <span class="d-flex align-items-center">
-                                                    <i class="bi bi-geo-alt"></i>
-                                                    <span class="ml-2">Số Đt:0987327669 / 0964373999</span>
-                                                </span>
-                                                <span class="d-flex align-items-center">
-                                                    <i class="bi bi-cup"></i> <!-- Icon cho đồ uống -->
-                                                    <span class="ml-2">Giá trên chưa bao gồm đồ uống</span>
-                                                </span>
-
-                                            </p>
-                                            <div style="display: flex; align-items: center;">
-                                                <h3 class="price">
-                                                    <i class="fas fa-tag" style="margin-right: 10px;"></i>
-                                                    <span style="color: red;">@combo.Price.ToString("N0") đ <small>/ khách</small></span>
-                                                </h3>
-
-                                            </div>
-                                            <hr class="dotted-line">
-                                            <p>Combo bao gồm:</p>
-                                            <ul>
-                                                <li>Miễn phí vé vào cổng</li>
-                                                @foreach (var item in combo.ComboCampingGearDetails)
-                                                {
-                                                    <li>@item.Name</li>
-                                                }
-                                                @foreach (var item in combo.ComboFootDetails)
-                                                {
-                                                    <li>@item.Name</li>
-                                                }
-                                                <li>Khu vui chơi miễn phí: Bể bơi ngoài trời, trượt cỏ, chơi nhà bóng, chăm sóc vật nuôi...</li>
-                                            </ul>
-                                            <hr class="dotted-line">
-
-                                            <div class="quantity-container">
-                                                <i class="fas fa-coins"></i> Số lượng:
-                                                <div class="quantity-controls">
-                                                    <button onclick="decreaseQuantity()">−</button>
-                                                    <input type="number" id="quantity" value="1" min="1" onchange="updateHiddenQuantity()" />
-                                                    <button onclick="increaseQuantity()">+</button>
-                                                </div>
-
-                                            </div>
-
-                                            <div class="d-flex justify-content-start mt-3">
-                                                <form method="post" action="/Service/AddToCart">
-                                                    <input type="hidden" name="Id" value="@combo.ComboId" />
-                                                    <input type="hidden" name="Name" value="@combo.ComboName" />
-                                                    <input type="hidden" name="CategoryName" value="Các loại Combo" />
-                                                    <input type="hidden" name="Type" value="Combo" />
-                                                    <input type="hidden" name="TypeCategory" value="ComboCategory" />
-                                                    <input type="hidden" name="price" value="@combo.Price" />
-                                                    <input type="hidden" id="hidden-quantity" name="quantity" value="1" /> <!-- Hidden input for quantity -->
-                                                    <input type="hidden" id="hidden-date-@combo.ComboId" name="usageDate" />
-                                                    <input type="hidden" name="redirectAction" value="ComboDetail" />
-                                                    <button type="submit" class="btn btn-primary mt-4" onclick="return setUsageDate('@combo.ComboId')">Thêm vào giỏ hàng</button>
-                                                </form>
-                                                <a href="~/Service/ComboList" class="btn btn-secondary  mt-4" style="margin-left:20px">Quay lại</a>
-                                            </div>
-
-
-
-                                        </div>
+                                    <div class="d-flex justify-content-start mt-3">
+                                        <form method="post" action="/Service/AddToCart">
+                                            <input type="hidden" name="Id" value="@combo.ComboId" />
+                                            <input type="hidden" name="Name" value="@combo.ComboName" />
+                                            <input type="hidden" name="CategoryName" value="ComboCategory" />
+                                            <input type="hidden" name="Type" value="Combo" />
+                                            <input type="hidden" name="TypeCategory" value="ComboCategory" />
+                                            <input type="hidden" name="price" value="@combo.Price" />
+                                            <input type="hidden" id="hidden-quantity" name="quantity" value="1" /> <!-- Hidden input for quantity -->
+                                            <input type="hidden" id="hidden-date-@combo.ComboId" name="usageDate" />
+                                            <input type="hidden" name="redirectAction" value="ComboDetail" />
+                                            <button type="submit" class="btn btn-primary mt-4" onclick="return setUsageDate('@combo.ComboId')">Thêm vào giỏ hàng</button>
+                                        </form>
+                                        <a href="~/Service/ComboList" class="btn btn-secondary  mt-4" style="margin-left:20px">Quay lại</a>
                                     </div>
+
+
+
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                </div>
-
-
-              </div>
             </div>
-            <script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
-            <script>
-                AOS.init({
-                    duration: 1200, // Đặt thời gian cho hiệu ứng (tùy chọn)
-                });
-            </script>
-            <script src="~/js/jquery-3.3.1.min.js"></script>
-            <script src="~/js/jquery-migrate-3.0.0.js"></script>
-            <script src="~/js/popper.min.js"></script>
-            <script src="~/js/bootstrap.min.js"></script>
-            <script src="~/js/owl.carousel.min.js"></script>
-            <script src="~/js/jquery.sticky.js"></script>
-            <script src="~/js/jquery.waypoints.min.js"></script>
-            <script src="~/js/jquery.animateNumber.min.js"></script>
-            <script src="~/js/jquery.fancybox.min.js"></script>
-            <script src="~/js/jquery.stellar.min.js"></script>
-            <script src="~/js/jquery.easing.1.3.js"></script>
-            <script src="~/js/bootstrap-datepicker.min.js"></script>
-            <script src="~/js/isotope.pkgd.min.js"></script>
-            <script src="~/js/aos.js"></script>
-            <script src="~/js/main.js"></script>
-            <script>
 
-                document.addEventListener("DOMContentLoaded", function () {
-                    const urlParams = new URLSearchParams(window.location.search);
-                    const itemId = urlParams.get('comboId');
 
-                    if (itemId) {
-                        // Lấy thông tin sản phẩm từ server dựa trên itemId hoặc sử dụng biến có sẵn
-                        console.log("Current Item ID from query string: " + comboId);
+        </div>
 
-                        // Thực hiện các thao tác khác để hiển thị dữ liệu chi tiết của sản phẩm nếu cần
-                        // Ví dụ: Gọi AJAX đến server để lấy chi tiết sản phẩm và cập nhật vào giao diện.
+    </div>
+
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1200, // Đặt thời gian cho hiệu ứng (tùy chọn)
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const itemId = urlParams.get('itemId');
+
+            if (itemId) {
+                // Lấy thông tin sản phẩm từ server dựa trên itemId hoặc sử dụng biến có sẵn
+                console.log("Current Item ID from query string: " + itemId);
+
+                // Thực hiện các thao tác khác để hiển thị dữ liệu chi tiết của sản phẩm nếu cần
+                // Ví dụ: Gọi AJAX đến server để lấy chi tiết sản phẩm và cập nhật vào giao diện.
+            }
+        });
+        function increaseQuantity() {
+            var quantityInput = document.getElementById('quantity');
+            var currentQuantity = parseInt(quantityInput.value, 10);
+            if (currentQuantity < 20) {  // Giới hạn số lượng tối đa là 20
+                quantityInput.value = currentQuantity + 1;
+                updateHiddenQuantity();
+            }
+        }
+
+        function decreaseQuantity() {
+            var quantityInput = document.getElementById('quantity');
+            var currentQuantity = parseInt(quantityInput.value, 10);
+            if (currentQuantity > 1) {  // Giới hạn số lượng tối thiểu là 1
+                quantityInput.value = currentQuantity - 1;
+                updateHiddenQuantity();
+            }
+        }
+
+        function updateHiddenQuantity() {
+            var quantity = document.getElementById('quantity').value;
+            document.getElementById('hidden-quantity').value = quantity;
+            sessionStorage.setItem('selectedQuantity', quantity);
+        }
+
+
+        function setUsageDate(comboId) {
+            const savedDate = sessionStorage.getItem('usageDateForAll');
+            const savedTime = sessionStorage.getItem('usageTimeForAll');
+
+            if (savedDate && savedTime) {
+                // Use the saved date and time if they exist
+                document.getElementById('hidden-date-' + comboId).value = `${savedDate} ${savedTime}`;
+                addToCart(comboId); // Call addToCart function directly
+            } else {
+                // Show the popup to select both date and time if not previously saved
+                Swal.fire({
+                    title: 'Chọn ngày và giờ sử dụng',
+                    html:
+                        '<input type="date" id="usage-date" class="swal2-input" min="' + new Date().toISOString().split('T')[0] + '">' +
+                        '<input type="time" id="usage-time" class="swal2-input">',
+                    showCancelButton: true,
+                    confirmButtonText: 'Xác nhận',
+                    cancelButtonText: 'Hủy',
+                    preConfirm: () => {
+                        const date = document.getElementById('usage-date').value;
+                        const time = document.getElementById('usage-time').value;
+                        if (!date || !time) {
+                            Swal.showValidationMessage('Bạn cần nhập cả ngày và giờ sử dụng!');
+                            return false;
+                        }
+                        return { date, time };
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        const { date, time } = result.value;
+                        sessionStorage.setItem('usageDateForAll', date);
+                        sessionStorage.setItem('usageTimeForAll', time);
+
+                        // Set both date and time in the hidden input for the form
+                        document.getElementById('hidden-date-' + comboId).value = `${date} ${time}`;
+                        addToCart(comboId); // Call addToCart after date and time selection
                     }
                 });
-                function increaseQuantity() {
-                    var quantityInput = document.getElementById('quantity');
-                    var currentQuantity = parseInt(quantityInput.value, 10);
-                    if (currentQuantity < 20) {  // Giới hạn số lượng tối đa là 20
-                        quantityInput.value = currentQuantity + 1;
-                        updateHiddenQuantity();
-                    }
-                }
+            }
+            return false;
+        }
 
-                function decreaseQuantity() {
-                    var quantityInput = document.getElementById('quantity');
-                    var currentQuantity = parseInt(quantityInput.value, 10);
-                    if (currentQuantity > 1) {  // Giới hạn số lượng tối thiểu là 1
-                        quantityInput.value = currentQuantity - 1;
-                        updateHiddenQuantity();
-                    }
-                }
+        function addToCart(comboId) {
+            const form = $(`#product-${comboId}`).find('form');
+            const formData = form.serialize();
 
-                function updateHiddenQuantity() {
-                    var quantity = document.getElementById('quantity').value;
-                    document.getElementById('hidden-quantity').value = quantity;
-                    sessionStorage.setItem('selectedQuantity', quantity);
-                }
-
-                document.addEventListener("DOMContentLoaded", function () {
-                    var savedQuantity = sessionStorage.getItem('selectedQuantity');
-                    if (savedQuantity) {
-                        document.getElementById('quantity').value = savedQuantity;
-                        document.getElementById('hidden-quantity').value = savedQuantity;
-                    }
-
-                    var savedDate = sessionStorage.getItem('usageDateForAll');
-                    if (savedDate) {
-                        document.getElementById('hidden-date-' + '@combo.ComboId').value = savedDate;
-                    }
-                });
-
-                function setUsageDate(comboId) {
-                    const savedDate = sessionStorage.getItem('usageDateForAll');
-                    const savedTime = sessionStorage.getItem('usageTimeForAll');
-
-                    if (savedDate && savedTime) {
-                        // Use the saved date and time if they exist
-                        document.getElementById('hidden-date-' + comboId).value = `${savedDate} ${savedTime}`;
-                        document.querySelector(`#product-${comboId} form`).submit();
-                    } else {
-                        // Show the popup to select both date and time if not previously saved
+            $.ajax({
+                type: "POST",
+                url: form.attr("action"),
+                data: formData,
+                success: function (response) {
+                    if (response.success) {
+                        // Nếu thêm vào giỏ hàng thành công
                         Swal.fire({
-                            title: 'Chọn ngày và giờ sử dụng',
-                            html:
-                                '<input type="date" id="usage-date" class="swal2-input" min="' + new Date().toISOString().split('T')[0] + '">' +
-                                '<input type="time" id="usage-time" class="swal2-input">',
-                            showCancelButton: true,
-                            confirmButtonText: 'Xác nhận',
-                            cancelButtonText: 'Hủy',
-                            preConfirm: () => {
-                                const date = document.getElementById('usage-date').value;
-                                const time = document.getElementById('usage-time').value;
-                                if (!date || !time) {
-                                    Swal.showValidationMessage('Bạn cần nhập cả ngày và giờ sử dụng!');
-                                    return false;
-                                }
-                                return { date, time };
-                            }
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                const { date, time } = result.value;
-                                sessionStorage.setItem('usageDateForAll', date);
-                                sessionStorage.setItem('usageTimeForAll', time);
-
-                                // Set both date and time in the hidden input for the form
-                                document.getElementById('hidden-date-' + comboId).value = `${date} ${time}`;
-                                document.querySelector(`#product-${comboId} form`).submit();
-                            }
+                            icon: "success",
+                            title: "Thành công",
+                            text: response.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    } else {
+                        // Nếu có lỗi (chưa đăng nhập hoặc sai vai trò)
+                        Swal.fire({
+                            icon: "error",
+                            title: "Thất bại",
+                            text: response.message,
+                            showConfirmButton: false,
+                            timer: 1500
                         });
                     }
-                    return false;
+                },
+                error: function () {
+                    // Xử lý lỗi khi gọi AJAX thất bại
+                    Swal.fire({
+                        icon: "error",
+                        title: "Thất bại",
+                        text: "Đã có lỗi xảy ra, vui lòng thử lại.",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                 }
-            </script>
+            });
+        }
+    </script>
+    <script src="~/js/jquery-3.3.1.min.js"></script>
+    <script src="~/js/jquery-migrate-3.0.0.js"></script>
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/owl.carousel.min.js"></script>
+    <script src="~/js/jquery.sticky.js"></script>
+    <script src="~/js/jquery.waypoints.min.js"></script>
+    <script src="~/js/jquery.animateNumber.min.js"></script>
+    <script src="~/js/jquery.fancybox.min.js"></script>
+    <script src="~/js/jquery.stellar.min.js"></script>
+    <script src="~/js/jquery.easing.1.3.js"></script>
+    <script src="~/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/js/isotope.pkgd.min.js"></script>
+    <script src="~/js/aos.js"></script>
+
+    <script src="~/js/main.js"></script>
 
 </body>
 <footer class="site-footer bg-light">
@@ -606,5 +626,8 @@
 
 </footer>
 </html>
+
+
+
 
 

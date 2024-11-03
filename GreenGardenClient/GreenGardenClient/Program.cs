@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using GreenGardenClient.Hubs;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
@@ -29,7 +30,7 @@ builder.Services.AddCors(options =>
         });
 });
 builder.Services.AddHttpContextAccessor(); // Register IHttpContextAccessor
-
+builder.Services.AddSignalR();
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -85,7 +86,8 @@ app.UseCookiePolicy(new CookiePolicyOptions
 });
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+app.MapHub<CartHub>("stock-hub");
+app.MapHub<CartHub>("/cart-hub");
 app.UseRouting();
 app.UseSession();
 app.UseAuthentication(); // Thêm UseAuthentication

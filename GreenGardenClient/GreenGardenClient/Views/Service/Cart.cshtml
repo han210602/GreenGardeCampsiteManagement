@@ -288,6 +288,7 @@
                                onchange="updateCartDate(this.value)">
 
                     </div>
+                    <div id="cartContainer">
                     @foreach (var item in Model)
                     {
                         <div class="cart-item d-flex mb-3" id="cart-item-@item.Id">
@@ -318,7 +319,7 @@
                         </div>
                     }
                 </div>
-
+                </div>
                 <!-- Tổng hóa đơn -->
                 <div class="col-md-4">
                     <div class="summary">
@@ -362,7 +363,52 @@
             });
         </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/lib/microsoft-signalr/signalr.min.js"></script>
+        <script>
+        const cartConnection = new signalR.HubConnectionBuilder()
+            .withUrl("/cart-hub")
+            .build();
 
+        cartConnection.start().then(function () {
+            console.log("CartHub connected");
+        }).catch(function (err) {
+            return console.error(err.toString());
+        });
+
+        // Lắng nghe sự kiện từ SignalR
+        cartConnection.on("ReceiveCartUpdate", function (cartItems) {
+            updateCart(cartItems); // Gọi hàm cập nhật giỏ hàng với dữ liệu từ server
+        });
+
+        // Hàm để cập nhật một sản phẩm trong giỏ hàng
+        function updateCart(cartItems) {
+            $('#cartContainer').empty(); // Xóa nội dung giỏ hàng hiện tại
+
+            // Thêm các sản phẩm mới vào giỏ hàng
+            $.each(cartItems, function (index, item) {
+                $('#cartContainer').append(`
+                    <div class="cart-item" id="cart-item-${item.id}">
+                                <img src="~/images//img_1.jpg" alt="${item.name}" class="img-thumbnail" style="width: 120px;">
+                        <div class="cart-item-details ml-3">
+                            <h5>${item.name}</h5>
+                            <p>${item.typeCategory}</p>
+                            <p>Giá: <span id="price_${item.id}-${item.type}-${item.typeCategory}">${item.price.toLocaleString()}</span> đ</p>
+                        </div>
+                        <div class="ml-auto d-flex align-items-center">
+                            <button class="btn btn-light" onclick="decrementQuantity(${item.id}, ${item.price}, '${item.type}', '${item.typeCategory}')">-</button>
+                            <input type="text" id="quantity_${item.id}-${item.type}-${item.typeCategory}" value="${item.quantity}" class="form-control text-center mx-2" style="width: 50px;" readonly>
+                            <button class="btn btn-light" onclick="incrementQuantity(${item.id}, ${item.price}, '${item.type}', '${item.typeCategory}')">+</button>
+                            <button class="btn btn-danger ml-2" onclick="removeCartItem(${item.id}, '${item.type}', '${item.typeCategory}')">Xóa</button>
+                        </div>
+                    </div>
+                `);
+            });
+
+            updateTotalPrice(); // Cập nhật tổng giá tiền nếu cần
+        }
+
+
+        </script>
         <script>
             function incrementQuantity(itemId, price, type, typeCategory) {
                 let quantityInput = document.getElementById(`quantity_${itemId}-${type}-${typeCategory}`);
@@ -450,64 +496,52 @@
                 });
             }
 
-            // Hàm xử lý khi thay đổi ngày sử dụng trong giỏ hàng
-            function updateCartDate(newDate, ticketId) {
-                // Cập nhật ngày sử dụng trong sessionStorage cho tất cả các vé
-                sessionStorage.setItem('usageDateForAll', newDate);
 
-                // Optional: Cập nhật ngày sử dụng trên server (nếu cần)
-                $.ajax({
-                    url: '/Service/UpdateUsageDate',
-                    type: 'POST',
-                    data: { usageDate: newDate, ticketId: ticketId }, // Chuyển cả ticketId
-                    success: function () {
-                        alert('Ngày sử dụng đã được cập nhật.');
 
-                    },
-                    error: function () {
-                        alert('Có lỗi xảy ra khi cập nhật ngày sử dụng.');
-                    }
-                });
+        function submitPayment() {
+            if (!confirm('Bạn có muốn đặt ngay?')) {
+                return; // Nếu người dùng chọn Cancel, thoát hàm
             }
-
-            function submitPayment() {
-                // Check if there are any tickets or combos in the cart
-                let hasTicketOrCombo = false;
-                document.querySelectorAll('.cart-item').forEach(function (item) {
-                    let typeCategory = item.querySelector('.cart-item-details p:nth-child(2)').innerText; // Gets the TypeCategory
-                    if (typeCategory === "TicketCategory" || typeCategory === "ComboCategory") {
-                        hasTicketOrCombo = true;
-                    }
-                });
-
-                // If there are no tickets or combos, show a notification and stop the order
-                if (!hasTicketOrCombo) {
-                    alert('Giỏ hàng của bạn cần có ít nhất một vé hoặc combo để đặt hàng!');
-                    return; // Exit the function
+            // Check if there are any tickets or combos in the cart
+            let hasTicketOrCombo = false;
+            document.querySelectorAll('.cart-item').forEach(function (item) {
+                let typeCategory = item.querySelector('.cart-item-details p:nth-child(2)').innerText; // Gets the TypeCategory
+                if (typeCategory === "TicketCategory" || typeCategory === "ComboCategory") {
+                    hasTicketOrCombo = true;
                 }
+            });
 
-                console.log($('#paymentForm').serialize()); // Log the serialized data
-
-                $.ajax({
-                    url: '/Service/Order',
-                    type: 'POST',
-                    data: $('#paymentForm').serialize(),
-                    success: function (response) {
-                        $('.cart-item').remove();
-                        $('#totalPrice').text('0');
-                        $('#totalPriceFinal').text('0');
-                        alert('Đặt đơn thành công!');
-
-                        if ($('.cart-item').length === 0) {
-                            sessionStorage.removeItem('usageDateForAll');
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        console.error(xhr); // Log the full error response
-                        alert('Đặt ngay thất bại. Vui lòng đăng nhập để đặt ngay');
-                    }
-                });
+            // If there are no tickets or combos, show a notification and stop the order
+            if (!hasTicketOrCombo) {
+                alert('Giỏ hàng của bạn cần có ít nhất một vé hoặc combo để đặt hàng!');
+                return; // Exit the function
             }
+
+            console.log($('#paymentForm').serialize()); // Log the serialized data
+
+            $.ajax({
+                url: '/Service/Order',
+                type: 'POST',
+                data: $('#paymentForm').serialize(),
+                success: function (response) {
+                    $('.cart-item').remove();
+                    $('#totalPrice').text('0');
+                    $('#totalPriceFinal').text('0');
+                    alert('Đặt đơn thành công!');
+
+                    // Redirect to OrderHistory page
+                    window.location.href = '/Service/OrderHistory';
+
+                    if ($('.cart-item').length === 0) {
+                        sessionStorage.removeItem('usageDateForAll');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr); // Log the full error response
+                    alert('Đặt ngay thất bại. Vui lòng đăng nhập để đặt ngay');
+                }
+            });
+        }
 
         </script>
 </body>
