@@ -25,16 +25,47 @@ namespace GetAllCategoryTest.Controllers
             _controller = new AccountController(_fakeRepo, _mapper);
         }
 
+        // test for method Login
+        [Fact]
+        public void Login_WithEmptyEmailOrPassword_ShouldReturnBadRequest()
+        {
+            // Arrange
+            var accountWithEmptyEmail = new AccountDTO { Email = "", Password = "password123" };
+            var accountWithEmptyPassword = new AccountDTO { Email = "haunguyen@gmail.com", Password = "" };
+            var accountWithBothEmpty = new AccountDTO { Email = "", Password = "" };
+
+            // Act
+            var resultEmptyEmail = _controller.Login(accountWithEmptyEmail);
+            var resultEmptyPassword = _controller.Login(accountWithEmptyPassword);
+            var resultBothEmpty = _controller.Login(accountWithBothEmpty);
+
+            // Assert
+            var badRequestResultEmptyEmail = resultEmptyEmail as BadRequestObjectResult;
+            badRequestResultEmptyEmail.Should().NotBeNull();
+            badRequestResultEmptyEmail.StatusCode.Should().Be(400);
+            badRequestResultEmptyEmail.Value.Should().Be("Email or password cannot be empty.");
+
+            var badRequestResultEmptyPassword = resultEmptyPassword as BadRequestObjectResult;
+            badRequestResultEmptyPassword.Should().NotBeNull();
+            badRequestResultEmptyPassword.StatusCode.Should().Be(400);
+            badRequestResultEmptyPassword.Value.Should().Be("Email or password cannot be empty.");
+
+            var badRequestResultBothEmpty = resultBothEmpty as BadRequestObjectResult;
+            badRequestResultBothEmpty.Should().NotBeNull();
+            badRequestResultBothEmpty.StatusCode.Should().Be(400);
+            badRequestResultBothEmpty.Value.Should().Be("Email or password cannot be empty.");
+        }
+
         [Fact]
         public void Login_WithValidCredentials_ShouldReturnOkResult()
         {
             // Arrange
-            var validAccount = new AccountDTO { Email = "validuser@example.com", Password = "correctpassword" };
+            var validAccount = new AccountDTO { Email = "haunguyen@gmail.com", Password = "correctpassword" };
             var loginResponse = new LoginResponseDTO
             {
 
                 Token = "mockedToken",
-                FullName = "John Doe",
+                FullName = "Hau Nguyen",
                 UserId = 1,
                 ProfilePictureUrl = "https://example.com/profile.jpg",
                 Email = validAccount.Email,
@@ -51,15 +82,15 @@ namespace GetAllCategoryTest.Controllers
             // Assert
             var okResult = result as OkObjectResult;
             okResult.Should().NotBeNull();
-            okResult.StatusCode.Should().Be(200);
-            okResult.Value.Should().BeEquivalentTo(JsonSerializer.Serialize(loginResponse));
+            okResult?.StatusCode.Should().Be(200);
+            okResult?.Value.Should().BeEquivalentTo(JsonSerializer.Serialize(loginResponse));
         }
 
         [Fact]
         public void Login_WithInvalidCredentials_ShouldReturnUnauthorized()
         {
             // Arrange
-            var invalidAccount = new AccountDTO { Email = "invaliduser@example.com", Password = "wrongpassword" };
+            var invalidAccount = new AccountDTO { Email = "haunguyen@gmail.com", Password = "wrongpassword" };
 
             A.CallTo(() => _fakeRepo.Login(invalidAccount)).Returns(null);
 
@@ -77,7 +108,7 @@ namespace GetAllCategoryTest.Controllers
         public void Login_WithException_ShouldReturnStatusCode500()
         {
             // Arrange
-            var accountWithError = new AccountDTO { Email = "erroruser@example.com", Password = "errorpassword" };
+            var accountWithError = new AccountDTO { Email = "haunguyen@gmail.com", Password = "errorpassword" };
 
             A.CallTo(() => _fakeRepo.Login(accountWithError)).Throws(new Exception("An unexpected error occurred."));
 
@@ -90,5 +121,7 @@ namespace GetAllCategoryTest.Controllers
             statusCodeResult.StatusCode.Should().Be(500);
             statusCodeResult.Value.Should().Be("An unexpected error occurred.");
         }
+
+
     }
 }

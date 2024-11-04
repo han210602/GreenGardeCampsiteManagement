@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "wosldA04Grs=",
+  "dgSpecHash": "JGGzx05KpJU=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\New folder\\GreenGardenAPI\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenCampsiteManagementAPI\\GreenGardenCampsiteManagementAPI.csproj",
+  "projectFilePath": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGardenTest\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenCampsiteManagementAPI\\GreenGardenCampsiteManagementAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Nguyen Thanh Hau\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\Nguyen Thanh Hau\\.nuget\\packages\\csvhelper\\32.0.3\\csvhelper.32.0.3.nupkg.sha512",
