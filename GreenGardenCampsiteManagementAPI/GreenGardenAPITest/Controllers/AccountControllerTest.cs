@@ -9,6 +9,7 @@ using System;
 using Repositories.Accounts;
 using AutoMapper;
 using System.Text.Json;
+using System.ComponentModel.DataAnnotations;
 namespace GetAllCategoryTest.Controllers
 {
     public class AccountControllerTest
@@ -16,9 +17,23 @@ namespace GetAllCategoryTest.Controllers
         private readonly AccountController _controller;
         private readonly IAccountRepository _fakeRepo;
         private readonly IMapper _mapper;
+        //private readonly Register _validRegister;
 
         public AccountControllerTest()
         {
+            // create fake data for register test
+            //    _validRegister = new Register
+            //    {
+            //        FirstName = "John",
+            //        LastName = "Doe",
+            //        PhoneNumber = "0123456789",
+            //        Email = "test@example.com",
+            //        Password = "password123",
+            //        IsActive = true,
+            //        CreatedAt = DateTime.Now,
+            //        RoleId = 2
+            //    };
+
             // Create a fake repository using FakeItEasy
             _fakeRepo = A.Fake<IAccountRepository>();
             _mapper = A.Fake<IMapper>();
@@ -122,6 +137,229 @@ namespace GetAllCategoryTest.Controllers
             statusCodeResult.Value.Should().Be("An unexpected error occurred.");
         }
 
+        //test for method GetAllAccounts
+        [Fact]
+        public void AccountController_GetAllAccounts_ReturnsOkResult()
+        {
+            // Arrange
+            var accounts = A.Fake<ICollection<AccountDTO>>();
+            var accountList = A.Fake<List<AccountDTO>>();
+            A.CallTo(() => _mapper.Map<List<AccountDTO>>(accounts)).Returns(accountList);
+
+            // Act
+            var result = _controller.GetAllAccounts();
+
+            // Assert
+            //result.Should().NotBeNull();
+            result.Should().BeOfType<OkObjectResult>();
+            (result as OkObjectResult)?.Value.Should().BeEquivalentTo(accountList);
+        }
+
+        [Fact]
+        public void AccountController_GetAllAccounts_WhenExceptionThrown_ReturnsInternalServerError()
+        {
+            // Arrange
+            A.CallTo(() => _fakeRepo.GetAllAccount()).Throws(new Exception("Database error"));
+
+
+            // Act
+            var result = _controller.GetAllAccounts();
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeOfType<ObjectResult>();
+            var objectResult = result as ObjectResult;
+            objectResult?.StatusCode.Should().Be(500);
+            objectResult?.Value.Should().Be("Internal server error: Database error");
+        }
+
+        //test for method GetAccountById
+        [Fact]
+        public void AccountController_GetAccountById_ReturnsOkResult()
+        {
+            // Arrange
+            int accountId = 1;
+            var account = A.Fake<ViewUserDTO>();
+            A.CallTo(() => _fakeRepo.GetAccountById(accountId)).Returns(account);
+
+            // Act
+            var result = _controller.GetAccountById(accountId);
+
+            // Assert
+            result.Should().BeOfType<OkObjectResult>();
+            (result as OkObjectResult)?.Value.Should().BeEquivalentTo(account);
+        }
+
+        [Fact]
+        public void AccountController_GetAccountById_ReturnsInternalServerErrorOnException()
+        {
+            // Arrange
+            int accountId = 1;
+            A.CallTo(() => _fakeRepo.GetAccountById(accountId)).Throws(new Exception("Test exception"));
+
+            // Act
+            var result = _controller.GetAccountById(accountId);
+
+            // Assert
+            result.Should().BeOfType<ObjectResult>();
+            var objectResult = result as ObjectResult;
+            objectResult?.StatusCode.Should().Be(500);
+            objectResult?.Value.Should().Be("Internal server error: Test exception");
+        }
+
+        [Fact]
+        public void AccountController_GetAccountById_ReturnsBadRequest()
+        {
+            // Arrange
+            int invalidAccountId = -1;
+
+            // Act
+            var result = _controller.GetAccountById(invalidAccountId);
+
+            // Assert
+            result.Should().BeOfType<BadRequestObjectResult>();
+            (result as BadRequestObjectResult)?.Value.Should().Be("Invalid account ID.");
+        }
+
+        [Fact]
+        public void AccountController_GetAccountById_ReturnsNotFound()
+        {
+            // Arrange
+            int accountId = 1;
+            A.CallTo(() => _fakeRepo.GetAccountById(accountId)).Returns(null);
+
+            // Act
+            var result = _controller.GetAccountById(accountId);
+
+            // Assert
+            result.Should().BeOfType<NotFoundObjectResult>();
+            (result as NotFoundObjectResult)?.Value.Should().Be("Account not found.");
+        }
+
+        // test for method SendVerificationCode
+        [Fact]
+        public async Task AccountController_SendVerificationCode_ReturnsOkResult()
+        {
+            // Arrange
+            string email = "hau@gmail.com";
+            string verificationCodeMessage = "Verification code";
+            A.CallTo(() => _fakeRepo.SendVerificationCode(email)).Returns(Task.FromResult(verificationCodeMessage));
+
+            // Act
+            var result = await _controller.SendVerificationCode(email);
+
+            // Assert
+            result.Should().BeOfType<OkObjectResult>();
+            var okResult = result as OkObjectResult;
+            okResult.Should().NotBeNull();
+            okResult?.Value.Should().Be(verificationCodeMessage);
+        }
+
+        [Fact]
+        public async Task AccountController_SendVerificationCode_ReturnsInternalServerErrorOnException()
+        {
+            // Arrange
+            string email = "hau@gmail.com";
+            A.CallTo(() => _fakeRepo.SendVerificationCode(email)).Throws(new Exception("Test error"));
+
+            // Act
+            var result = await _controller.SendVerificationCode(email);
+
+            // Assert
+            result.Should().BeOfType<ObjectResult>();
+            var objectResult = result as ObjectResult;
+            objectResult?.StatusCode.Should().Be(500);
+            objectResult?.Value.Should().Be("Test error");
+        }
+
+        // test for method Register
+        [Fact]
+        public async Task AccountController_Register_ReturnsOkResult()
+        {
+            // Arrange
+            var registerRequest = new Register()
+            {
+                FirstName = "Test",
+                LastName = "1",
+                PhoneNumber = "1234567890",
+                Email = "test@gmail.com",
+                Password = "password"
+            };
+            string enteredCode = "123456";
+
+            //A.CallTo(() => _fakeRepo.Register(registerRequest, enteredCode)).As<OkObjectResult>();
+
+            // Act
+            var result = await _controller.Register(registerRequest, enteredCode);
+
+            // Assert
+            result.Should().BeOfType<OkObjectResult>();
+            var okResult = result as OkObjectResult;
+            okResult.Should().NotBeNull();
+            okResult?.StatusCode.Should().Be(200);
+            //okResult?.Value.Should().Be();
+        }
+
+        [Fact]
+        public async Task AccountController_NullRegister_ReturnsBadRequest()
+        {
+            // Arrange
+            var registerRequest = A.Fake<Register>();
+            string enteredCode = "123456";
+            var registerRequestNull = new Register()
+            {
+                FirstName = "",
+                LastName = "",
+                PhoneNumber = "",
+                Email = "",
+                Password = ""
+            };
+            string enteredCodeNull = null!;
+
+            // Act
+            var result = await _controller.Register(registerRequest, enteredCodeNull);
+            var result2 = await _controller.Register(registerRequestNull, enteredCode);
+            var result3 = await _controller.Register(registerRequestNull, enteredCodeNull);
+
+            // Assert
+            result.Should().BeOfType<BadRequestObjectResult>();
+            (result as BadRequestObjectResult)?.Value.Should().Be("Registration failed.");
+
+            result2.Should().BeOfType<BadRequestObjectResult>();
+            (result2 as BadRequestObjectResult)?.Value.Should().Be("Registration failed.");
+
+            result3.Should().BeOfType<BadRequestObjectResult>();
+            (result3 as BadRequestObjectResult)?.Value.Should().Be("Registration failed.");
+        }
+
+        [Fact]
+        public async Task AccountController_Register_ReturnsInternalServerErrorOnException()
+        {
+            // Arrange
+            var registerRequest = new Register()
+            {
+                FirstName = "Test",
+                LastName = "1",
+                PhoneNumber = "1234567890",
+                Email = "test@gmail.com",
+                Password = "password"
+            };
+            string enteredCode = "123456";
+
+            A.CallTo(() => _fakeRepo.Register(registerRequest, enteredCode)).Throws(new Exception("Test error"));
+
+            // Act
+            var result = await _controller.Register(registerRequest, enteredCode);
+
+            // Assert
+            result.Should().BeOfType<ObjectResult>();
+            var objectResult = result as ObjectResult;
+            objectResult?.StatusCode.Should().Be(500);
+            objectResult?.Value.Should().Be("Test error");
+        }
+
+
+        // test for method 
 
     }
 }
