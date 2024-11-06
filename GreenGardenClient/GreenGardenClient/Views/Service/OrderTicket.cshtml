@@ -119,10 +119,29 @@
                                 @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 3)
                                 {
                                     <li>
-                                        <a href="~/Service/Cart"  class="nav-link">
-                                            <i class="fas fa-shopping-cart"></i>
+                                        <a href="~/Service/Cart" class="nav-link cart-icon">
+                                            @if(@HttpContextAccessor.HttpContext.Session.GetInt32("CartItemCount") == null)
+                                            {
+                                                <i class="fas fa-shopping-cart">
+                                                    <span id="cart-count">
+                                                        0
+                                                    </span>
+                                                </i>
+                                            }
+                                            else
+                                            {
+                                                <i class="fas fa-shopping-cart">
+                                                    <span id="cart-count">
+                                                        @HttpContextAccessor.HttpContext.Session.GetInt32("CartItemCount")
+                                                    </span>
+                                                </i>
+                                            }
+                                           
+                                            
                                         </a>
                                     </li>
+
+
 
                                 }
 
@@ -132,6 +151,32 @@
                 </div>
             </div>
             <style>
+                /* Cart icon styling */
+                .cart-icon {
+                    position: relative; /* Allows absolute positioning for the badge */
+                    font-size: 24px; /* Adjust as needed for icon size */
+                    color: white; /* Icon color */
+                    text-decoration: none;
+                }
+
+                /* Styling for the cart count badge */
+                #cart-count {
+                    position: absolute;
+                    top: -10px; /* Adjusts the vertical position of the badge */
+                    right: -10px; /* Adjusts the horizontal position of the badge */
+                    background-color: white; /* White background for the badge */
+                    color: #ff6a00; /* Orange text color for the count */
+                    font-weight: bold; /* Bold text */
+                    font-size: 14px; /* Font size */
+                    padding: 2px 8px; /* Adds padding to create the rounded shape */
+                    border-radius: 12px; /* Rounds the corners to create an oval */
+                    border: 1px solid #ff6a00; /* Optional: adds an orange border around the badge */
+                    line-height: 1; /* Ensures the number is vertically centered */
+                    min-width: 24px; /* Sets a minimum width for consistent look */
+                    text-align: center; /* Centers the number inside the badge */
+                }
+
+
                 .site-menu .dropdown {
                     display: none; /* Ẩn menu thả xuống */
                     position: absolute; /* Để menu thả xuống xuất hiện bên dưới mục Services */
@@ -422,6 +467,9 @@
                         background-color: #e9ecef;
                         border-color: #e9ecef;
                     }
+
+   
+
             </style>
             <script>
                 $(document).ready(function () {
@@ -624,6 +672,11 @@
                     }
                     return false;
                 }
+                function updateCartCount() {
+                    $.get('/Service/GetCartItemCount', function (count) {
+                        $('#cart-count').text(count);
+                    });
+                }
 
                 function addToCart(ticketId) {
                     const form = $(`#product-${ticketId}`).find('form');
@@ -643,6 +696,7 @@
                                     showConfirmButton: false,
                                     timer: 1500
                                 });
+                                updateCartCount();
                             } else {
                                 // Nếu có lỗi (chưa đăng nhập hoặc sai vai trò)
                                 Swal.fire({

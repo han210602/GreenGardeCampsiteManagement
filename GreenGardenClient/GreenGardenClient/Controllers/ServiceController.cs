@@ -599,12 +599,19 @@ namespace GreenGardenClient.Controllers
 
             // Lưu giỏ hàng cập nhật vào session
             SaveCartItems(cartItems);
-
+            int cartItemCount = cartItems.Sum(item => item.Quantity);
+            HttpContext.Session.SetInt32("CartItemCount", cartItemCount);
             // Trả về JSON cho AJAX với thông báo thành công
             return Json(new { success = true, message = "Thêm vào giỏ hàng thành công!", cartItemCount = cartItems.Count });
         }
 
 
+        [HttpGet]
+        public IActionResult GetCartItemCount()
+        {
+            int cartItemCount = HttpContext.Session.GetInt32("CartItemCount") ?? 0;
+            return Json(cartItemCount);
+        }
 
 
 
@@ -644,6 +651,8 @@ namespace GreenGardenClient.Controllers
             }
 
             SaveCartItems(cartItems);
+            int cartItemCount = cartItems.Sum(c => c.Quantity);
+            HttpContext.Session.SetInt32("CartItemCount", cartItemCount);
             return RedirectToAction("Cart");
         }
         [HttpPost]

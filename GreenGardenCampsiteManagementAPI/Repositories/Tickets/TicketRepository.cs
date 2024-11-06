@@ -18,10 +18,6 @@ namespace Repositories.Tickets
         {
             return TicketDAO.GetTicketDetail(id);
         }
-        public List<TicketDTO> GetTicketsByCategoryId(int categoryId)
-        {
-            return TicketDAO.GetTicketsByCategoryId(categoryId);
-        }
         public List<TicketDTO> GetTicketsByCategoryIdAndSort(int? categoryId, int? sort)
         {
             return TicketDAO.GetTicketsByCategoryIdAndSort(categoryId, sort); // Gọi phương thức từ TicketDAO

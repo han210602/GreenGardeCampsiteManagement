@@ -58,14 +58,18 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
         {
             try
             {
-                var loginResponse = _repo.Login(loginRequest);
+                // Kiểm tra nếu email hoặc password là null hoặc rỗng
+                if (string.IsNullOrWhiteSpace(loginRequest.Email) || string.IsNullOrWhiteSpace(loginRequest.Password))
+                {
+                    return BadRequest("Email và mật khẩu không được để trống.");
+                }
 
+                var loginResponse = _repo.Login(loginRequest);
 
                 if (loginResponse == null)
                 {
-                    return Unauthorized("Invalid email or password.");
+                    return Unauthorized("sai email hoặc mật khẩu.");
                 }
-
 
                 return Ok(loginResponse);
             }
@@ -74,6 +78,7 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+
         [HttpPost("SendVerificationCode")]
         public async Task<IActionResult> SendVerificationCode([FromBody] string email)
         {

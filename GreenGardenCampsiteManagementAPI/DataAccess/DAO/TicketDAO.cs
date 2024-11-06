@@ -67,20 +67,7 @@ namespace DataAccess.DAO
             ticket.Price = ticketDto.Price;
             context.SaveChanges();
         }
-        public static List<TicketDTO> GetTicketsByCategoryId(int categoryId)
-        {
-            var tickets = context.Tickets
-                .Include(ticket => ticket.TicketCategory)
-                .Where(ticket => ticket.TicketCategoryId == categoryId)
-                .Select(ticket => new TicketDTO
-                {
-                    TicketId = ticket.TicketId,
-                    TicketName = ticket.TicketName,
-                    Price = ticket.Price,
-                    TicketCategoryName = ticket.TicketCategory.TicketCategoryName
-                }).ToList();
-            return tickets;
-        }
+
 
         public static List<TicketCategoryDTO> GetAllTicketCategories()
         {
