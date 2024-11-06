@@ -38,6 +38,9 @@ namespace Repositories.CampingGear
         {
             return CampingGearDAO.GetCampingGears(categoryId, sortBy, priceRange, popularity);
         }
-
+        public bool DeleteCampingGear(int gearId)
+        {
+            return CampingGearDAO.DeleteCampingGear(gearId);
+        }
     }
 }

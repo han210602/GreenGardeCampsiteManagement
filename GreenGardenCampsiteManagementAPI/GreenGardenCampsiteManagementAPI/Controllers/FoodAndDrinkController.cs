@@ -107,5 +107,36 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+        [HttpDelete("DeleteFoodAndDrink")]
+        public IActionResult DeleteFoodAndDrink(int? itemId)
+        {
+            if (!itemId.HasValue)
+            {
+                return BadRequest("ID sản phẩm không hợp lệ.");
+            }
+
+            try
+            {
+                var item = _repo.GetFoodAndDrinkDetail(itemId.Value);
+                if (item == null)
+                {
+                    return NotFound("Sản phẩm không tồn tại.");
+                }
+
+                var result = _repo.DeleteFoodAndDrink(itemId.Value);
+                if (!result)
+                {
+                    return BadRequest("Không thể xóa sản phẩm này vì nó đang được sử dụng trong các combo hoặc đơn hàng.");
+                }
+
+                return Ok("Xóa sản phẩm thành công.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+
     }
 }

@@ -124,5 +124,30 @@ namespace DataAccess.DAO
 
             return tickets;
         }
+        public static bool DeleteTicket(int ticketId)
+        {
+            // Kiểm tra nếu sản phẩm có tồn tại trong FoodItemCombo, ComboFoodDetail, OrderFoodDetail
+            var isReferenced = context.ComboTicketDetails.Any(f => f.TicketId == ticketId) ||
+                               context.OrderTicketDetails.Any(o => o.TicketId == ticketId);
+
+            if (isReferenced)
+            {
+                // Nếu sản phẩm đang được tham chiếu, trả về thông báo lỗi
+                return false;
+            }
+
+            // Lấy đối tượng FoodAndDrink từ database
+            var ticket = context.Tickets.FirstOrDefault(f => f.TicketId == ticketId);
+            if (ticket == null)
+            {
+                return false;
+            }
+
+            // Tiến hành xóa
+            context.Tickets.Remove(ticket);
+            context.SaveChanges();
+
+            return true;
+        }
     }
 }

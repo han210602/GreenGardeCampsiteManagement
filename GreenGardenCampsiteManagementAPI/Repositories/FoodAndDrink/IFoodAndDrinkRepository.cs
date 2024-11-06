@@ -17,5 +17,6 @@ namespace Repositories.FoodAndDrink
 
         void AddFoodOrDrink(AddFoodOrDrinkDTO item);
         void UpdateFoodOrDrink(UpdateFoodOrDrinkDTO item);
+        bool DeleteFoodAndDrink(int itemId);
     }
 }

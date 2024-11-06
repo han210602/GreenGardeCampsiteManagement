@@ -37,5 +37,9 @@ namespace Repositories.FoodAndDrink
         {
             return FoodAndDrinkDAO.GetFoodAndDrinks(categoryId, sortBy, priceRange);
         }
+        public bool DeleteFoodAndDrink(int itemId)
+        {
+            return FoodAndDrinkDAO.DeleteFoodAndDrink(itemId);
+        }
     }
 }

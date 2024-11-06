@@ -35,5 +35,9 @@ namespace Repositories.Tickets
         {
             return TicketDAO.GetAllTicketCategories();
         }
+        public bool DeleteTicket(int ticketId)
+        {
+            return TicketDAO.DeleteTicket(ticketId);
+        }
     }
 }

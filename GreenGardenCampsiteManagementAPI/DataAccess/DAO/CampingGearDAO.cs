@@ -193,7 +193,32 @@ namespace DataAccess.DAO
             return campingGears;
         }
 
+        public static bool DeleteCampingGear(int gearId)
+        {
+            // Kiểm tra nếu sản phẩm có tồn tại trong FoodItemCombo, ComboFoodDetail, OrderFoodDetail
+            var isReferenced = context.OrderCampingGearDetails.Any(f => f.GearId == gearId) ||
+                               context.ComboCampingGearDetails.Any(c => c.GearId == gearId) ||
+                               context.OrderCampingGearDetails.Any(o => o.GearId == gearId);
 
+            if (isReferenced)
+            {
+                // Nếu sản phẩm đang được tham chiếu, trả về thông báo lỗi
+                return false;
+            }
+
+            // Lấy đối tượng FoodAndDrink từ database
+            var campingGear = context.CampingGears.FirstOrDefault(f => f.GearId == gearId);
+            if (campingGear == null)
+            {
+                return false;
+            }
+
+            // Tiến hành xóa
+            context.CampingGears.Remove(campingGear);
+            context.SaveChanges();
+
+            return true;
+        }
     }
 
 }

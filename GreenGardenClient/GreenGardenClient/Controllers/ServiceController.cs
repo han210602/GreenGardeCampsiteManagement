@@ -534,35 +534,41 @@ namespace GreenGardenClient.Controllers
 
             // Lấy danh sách sản phẩm trong giỏ hàng từ session
             var cartItems = GetCartItems();
-
-            // Kiểm tra nếu giỏ hàng chứa vé hoặc combo
+            bool hasDifferentCombo = cartItems.Any(c => c.Type == "Combo" && c.TypeCategory == "ComboCategory" && c.Id != Id);
             bool hasTicket = cartItems.Any(c => c.Type == "Ticket" && c.TypeCategory == "TicketCategory");
-            bool hasCombo = cartItems.Any(c => c.Type == "Combo" && c.TypeCategory == "ComboCategory");
-
-            // Nếu đang thêm một combo
             if (Type == "Combo")
             {
-                // Kiểm tra nếu đã có một combo khác hoặc có vé trong giỏ hàng
-                if (hasCombo)
+                if (hasDifferentCombo)
                 {
                     return Json(new { success = false, message = "Giỏ hàng chỉ cho phép một loại combo duy nhất." });
                 }
-
-                if (hasTicket)
+                else if (hasTicket)
                 {
                     return Json(new { success = false, message = "Không thể thêm combo vào giỏ hàng vì đã có vé trong giỏ hàng." });
                 }
+
+                // Nếu đã có Combo với cùng Id, chỉ cập nhật số lượng
+                var existingCombo = cartItems.FirstOrDefault(c => c.Id == Id && c.Type == "Combo" && c.TypeCategory == "ComboCategory");
+                if (existingCombo != null)
+                {
+                    existingCombo.Quantity += quantity;
+                    SaveCartItems(cartItems);
+                    await _hubContext.Clients.All.SendAsync("ReceiveCartUpdate", cartItems);
+                    return Json(new { success = true, message = "Thêm vào giỏ hàng thành công!", cartItemCount = cartItems.Count });
+                }
             }
 
-            // Nếu đang thêm một vé
+            // Nếu đang thêm một vé, không giới hạn loại vé khác nhau
             if (Type == "Ticket")
             {
-                // Kiểm tra nếu đã có combo trong giỏ hàng
+                bool hasCombo = cartItems.Any(c => c.Type == "Combo" && c.TypeCategory == "ComboCategory");
                 if (hasCombo)
                 {
                     return Json(new { success = false, message = "Không thể thêm vé vào giỏ hàng vì đã có combo trong giỏ hàng." });
                 }
             }
+            // Kiểm tra nếu giỏ hàng chứa vé hoặc combo
+
 
             // Chuyển đổi usageDate từ chuỗi sang DateTime
             DateTime parsedDateTime;
@@ -599,7 +605,7 @@ namespace GreenGardenClient.Controllers
 
             // Lưu giỏ hàng cập nhật vào session
             SaveCartItems(cartItems);
-            int cartItemCount = cartItems.Sum(item => item.Quantity);
+            int cartItemCount = cartItems.Sum(c => c.Quantity);
             HttpContext.Session.SetInt32("CartItemCount", cartItemCount);
             // Trả về JSON cho AJAX với thông báo thành công
             return Json(new { success = true, message = "Thêm vào giỏ hàng thành công!", cartItemCount = cartItems.Count });
