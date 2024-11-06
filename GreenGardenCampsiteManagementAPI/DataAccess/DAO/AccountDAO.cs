@@ -303,6 +303,7 @@ namespace DataAccess.DAO
                 return users;
             }
         }
+
         public static ViewUserDTO GetAccountById(int userId)
         {
             using (var context = new GreenGardenContext())
@@ -331,6 +332,7 @@ namespace DataAccess.DAO
                 return user;
             }
         }
+
         public static async Task<string> UpdateProfile(UpdateProfile updateProfileDto)
         {
             using (var context = new GreenGardenContext())

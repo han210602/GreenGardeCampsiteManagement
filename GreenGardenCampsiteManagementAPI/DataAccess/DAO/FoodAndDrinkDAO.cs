@@ -50,8 +50,6 @@ namespace DataAccess.DAO
             return item;
         }
 
-
-
         public static void AddFoodAndDrink(AddFoodOrDrinkDTO item)
         {
             var foodAndDrink = new FoodAndDrink
@@ -69,7 +67,6 @@ namespace DataAccess.DAO
             context.FoodAndDrinks.Add(foodAndDrink);
             context.SaveChanges();
         }
-
 
         public static void UpdateFoodOrDrink(UpdateFoodOrDrinkDTO itemDto)
         {

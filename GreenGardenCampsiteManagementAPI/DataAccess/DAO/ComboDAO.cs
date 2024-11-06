@@ -35,6 +35,7 @@ namespace DataAccess.DAO
             }
             return listProducts;
         }
+
         public static ComboDetail GetComboDetail(int id)
         {
             var listProducts = new ComboDetail();

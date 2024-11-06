@@ -19,23 +19,9 @@ namespace GetAllCategoryTest.Controllers
         private readonly AccountController _controller;
         private readonly IAccountRepository _fakeRepo;
         private readonly IMapper _mapper;
-        //private readonly Register _validRegister;
-
+        
         public AccountControllerTest()
         {
-            // create fake data for register test
-            //    _validRegister = new Register
-            //    {
-            //        FirstName = "John",
-            //        LastName = "Doe",
-            //        PhoneNumber = "0123456789",
-            //        Email = "test@example.com",
-            //        Password = "password123",
-            //        IsActive = true,
-            //        CreatedAt = DateTime.Now,
-            //        RoleId = 2
-            //    };
-
             // Create a fake repository using FakeItEasy
             _fakeRepo = A.Fake<IAccountRepository>();
             _mapper = A.Fake<IMapper>();
@@ -152,7 +138,7 @@ namespace GetAllCategoryTest.Controllers
             var result = _controller.GetAllAccounts();
 
             // Assert
-            //result.Should().NotBeNull();
+            result.Should().NotBeNull();
             result.Should().BeOfType<OkObjectResult>();
             (result as OkObjectResult)?.Value.Should().BeEquivalentTo(accountList);
         }
