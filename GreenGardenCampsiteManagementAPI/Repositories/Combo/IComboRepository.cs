@@ -11,6 +11,8 @@ namespace Repositories.Combo
     {
         List<ComboDTO> Combos();
         ComboDetail ComboDetail(int id);
+        void AddCombo(AddCombo newCombo);
 
+        void UpdateCombo(AddCombo updatedCombo);
     }
 }

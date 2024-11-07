@@ -20,5 +20,14 @@ namespace Repositories.Combo
         {
             return ComboDAO.GetListCombo();
         }
+        public void AddCombo(AddCombo newCombo)
+        {
+            ComboDAO.AddNewCombo(newCombo);
+        }
+
+        public void UpdateCombo(AddCombo updatedCombo)
+        {
+            ComboDAO.UpdateCombo(updatedCombo);
+        }
     }
 }
