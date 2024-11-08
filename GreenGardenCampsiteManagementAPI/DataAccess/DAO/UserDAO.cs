@@ -2,10 +2,8 @@
 using BusinessObject.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Net.Mail;
 using System.Net;
-using System.Threading.Tasks;
+using System.Net.Mail;
 
 namespace DataAccess.DAO
 {
@@ -265,7 +263,7 @@ namespace DataAccess.DAO
                 existingUser.Gender = updatedUserDto.Gender;
                 existingUser.Address = updatedUserDto.Address;
                 existingUser.DateOfBirth = updatedUserDto.DateOfBirth;
-                existingUser.IsActive = updatedUserDto.IsActive; 
+                existingUser.IsActive = updatedUserDto.IsActive;
 
                 // Save changes to the database
                 context.SaveChanges();
@@ -374,7 +372,39 @@ namespace DataAccess.DAO
                 await smtp.SendMailAsync(message);
             }
         }
+        public static bool UnBlockUser(int userId, IConfiguration configuration)
+        {
+            try
+            {
+                // Retrieve the user by userId
+                var user = context.Users.SingleOrDefault(u => u.UserId == userId);
 
+                if (user == null)
+                {
+                    Console.WriteLine("User not found.");
+                    return false; // User does not exist
+                }
+
+                // Set IsActive to false to block the user
+                user.IsActive = true;
+
+                // Send notification email to the user
+                string unblockSubject = "Thông báo mở chặn tài khoản";
+                string unblockBody = "Kính gửi Quý khách,\n\nTài khoản của bạn đã được mở chặn và có thể sử dụng bình thường. Chúng tôi khuyến nghị Quý khách tuân thủ các chính sách và quy định của chúng tôi để tránh những gián đoạn không mong muốn trong tương lai.\n\nNếu bạn có bất kỳ câu hỏi nào hoặc cần hỗ trợ thêm, vui lòng liên hệ với bộ phận hỗ trợ khách hàng.\n\nTrân trọng,\nBộ phận Hỗ trợ Khách hàng";
+                SendEmailAsync(user.Email, unblockSubject, unblockBody).Wait();
+
+                // Save changes to the database
+                context.SaveChanges();
+
+                return true; // Blocking successful
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions (logging, etc.)
+                Console.WriteLine($"Error blocking user: {ex.Message}");
+                return false; // Blocking failed
+            }
+        }
 
     }
 }

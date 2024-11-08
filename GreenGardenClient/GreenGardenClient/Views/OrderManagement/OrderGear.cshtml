@@ -469,43 +469,35 @@
                 </li>
             }
             <li class="has-submenu" style="display:block" id="manageOrdersMenu">
-                <a class="app-menu__item active" href="javascript:void(0)" id="manageOrders">
+                <a class="app-menu__item" href="javascript:void(0)" id="manageOrders">
                     <i class='app-menu__icon bx bx-id-card'></i>
                     <span class="app-menu__label">Quản lý Đơn hàng</span>
                 </a>
-                <!-- Mục con -->
-                <ul class="submenu">
+                <!-- Submenu items -->
+                <ul class="submenu" style="display: none;" id="submenuList">
                     <li>
                         <a href="~/OrderManagement/OrderOnline" class="app-menu__item" id="orderOnline">
-                            <i class='bx bx-notepad'></i>
-                            Đơn đặt trước
+                            <i class='bx bx-notepad'></i> Đơn đặt trước
                         </a>
                     </li>
                     <li>
                         <a href="~/OrderManagement/OrderUsing" class="app-menu__item" id="orderUsing">
-                            <i class='bx bx-time-five'></i>
-                            Đơn đang sử dụng
+                            <i class='bx bx-time-five'></i> Đơn đang sử dụng
                         </a>
                     </li>
                     <li>
                         <a href="~/OrderManagement/OrderCheckOut" class="app-menu__item" id="orderCheckOut">
-                            <i class='bx bx-check-circle'></i>
-                            Đơn đã thanh toán
+                            <i class='bx bx-check-circle'></i> Đơn đã thanh toán
                         </a>
                     </li>
-
-
                     <li>
                         <a href="~/OrderManagement/OrderCancel" class="app-menu__item" id="orderCancel">
-                            <i class='bx bx-x-circle'></i> <!-- Thay đổi biểu tượng -->
-                            Đơn đã hủy
+                            <i class='bx bx-x-circle'></i> Đơn đã hủy
                         </a>
                     </li>
-
                     <li>
                         <a href="~/OrderManagement/CreateOrder" class="app-menu__item" id="createOrder">
-                            <i class='bx bx-plus'></i>
-                            Tạo đơn mới
+                            <i class='bx bx-plus'></i> Tạo đơn mới
                         </a>
                     </li>
                 </ul>

@@ -1,0 +1,129 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Net.Http.Headers;
+
+namespace GreenGardenClient.Controllers.AdminController
+{
+
+    public class UserManagementController : Controller
+    {
+        private readonly IHttpClientFactory _clientFactory;
+
+        public UserManagementController(IHttpClientFactory clientFactory)
+        {
+            _clientFactory = clientFactory;
+        }
+
+        private T GetDataFromApi<T>(string url)
+        {
+            var client = _clientFactory.CreateClient(); // Create an HttpClient instance
+            using var response = client.GetAsync(url).Result; // Call GetAsync on the client
+            response.EnsureSuccessStatusCode();
+            return response.Content.ReadFromJsonAsync<T>().Result;
+        }
+
+
+        public IActionResult Index()
+        {
+            var client = _clientFactory.CreateClient();
+            var jwtToken = Request.Cookies["JWTToken"];
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
+            List<Account> userdata = GetDataFromApi<List<Account>>("https://localhost:7298/api/User/GetAllCustomers");
+            return View(userdata);
+        }
+        [HttpPost("BlockUser/{id}")]
+        public async Task<IActionResult> BlockUser(int id)
+        {
+            Console.WriteLine($"Received id: {id}");
+            string apiUrl = $"https://localhost:7298/api/User/BlockUser/{id}";
+
+            try
+            {
+                var client = _clientFactory.CreateClient();
+
+
+                var response = await client.PostAsync(apiUrl, null);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    TempData["SuccessMessage"] = "User blocked successfully.";
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    var errorMessage = await response.Content.ReadAsStringAsync();
+                    TempData["ErrorMessage"] = $"Failed to block user: {errorMessage}";
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Internal server error: {ex.Message}";
+                return RedirectToAction("Index");
+            }
+        }
+        [HttpPost("UnBlockUser/{id}")]
+        public async Task<IActionResult> UnBlockUser(int id)
+        {
+            Console.WriteLine($"Received id: {id}"); // Log nhận ID từ request
+
+            string apiUrl = $"https://localhost:7298/api/User/UnBlockUser/{id}";
+
+            try
+            {
+                // Tạo HttpClient từ _clientFactory
+                var client = _clientFactory.CreateClient();
+                Console.WriteLine($"Sending POST request to API: {apiUrl}");
+
+                // Gửi POST request đến API
+                var response = await client.PostAsync(apiUrl, null);
+
+                // Kiểm tra trạng thái phản hồi
+                if (response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine("API call succeeded.");
+                    TempData["SuccessMessage"] = "User Unblocked successfully.";
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    // Đọc thông báo lỗi từ API
+                    var errorMessage = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine($"API call failed with error: {errorMessage}");
+                    TempData["ErrorMessage"] = $"Failed to Unblock user: {errorMessage}";
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (HttpRequestException httpEx)
+            {
+                // Lỗi liên quan đến HTTP
+                Console.WriteLine($"HTTP Request error: {httpEx.Message}");
+                TempData["ErrorMessage"] = "Network error occurred. Please try again.";
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                // Lỗi chung
+                Console.WriteLine($"Internal server error: {ex.Message}");
+                TempData["ErrorMessage"] = $"Internal server error: {ex.Message}";
+                return RedirectToAction("Index");
+            }
+        }
+
+        [HttpGet]
+        public IActionResult UpdateUser(int id)
+        {
+            // Fetch user data from the API asynchronously
+            var user = GetDataFromApi<Account>($"https://localhost:7298/api/User/GetUserById/{id}");
+
+            // Check if user data is null and redirect to an error page if not found
+            if (user == null)
+            {
+                return RedirectToAction("Error", "Home"); // Redirect if the user is not found
+            }
+
+            // Pass the user to the view
+            return View(user);
+        }
+
+    }
+}

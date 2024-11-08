@@ -10,11 +10,11 @@ using Repositories.Activities;
 using Repositories.CampingGear;
 using Repositories.Combo;
 using Repositories.ComboFood;
+using Repositories.Event;
 using Repositories.FoodAndDrink;
 using Repositories.Orders;
 using Repositories.Tickets;
 using Repositories.Users;
-using System.Security.Claims;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -61,6 +61,7 @@ builder.Services.AddScoped<ITicketRepository, TicketRepository>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IComboFoodRepository, ComboFoodRepository>();
+builder.Services.AddScoped<IEventRepository, EventRepository>();
 
 
 // Đăng ký AutoMapper

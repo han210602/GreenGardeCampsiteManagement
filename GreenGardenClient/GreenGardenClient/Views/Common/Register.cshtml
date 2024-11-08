@@ -57,7 +57,7 @@
                     <div class="col-3 ">
                         <div class="site-logo">
                             <a href="index.html" class="font-weight-bold">
-                                <img src="~/images/logo.png" alt="Image" class="img-fluid">
+                                <img src="~/images/logo.jpg" alt="Image" class="img-fluid">
                             </a>
                         </div>
                     </div>
@@ -71,7 +71,6 @@
                                 <li class="has-dropdown">
                                     <a href="/Service" class="nav-link">Dịch vụ</a>
                                     <ul class="dropdown">
-                                        <li><a href="/Service/ComboList" class="nav-link">Danh sách combo vé</a></li>
                                         <li><a href="/Service/OrderTicket" class="nav-link">Danh sách vé</a></li>
                                         <li><a href="/Service/OrderFoodAndDrink" class="nav-link">Danh sách đồ ăn</a></li>
                                         <li><a href="/Service/OrderGear" class="nav-link">Danh sách dụng cụ</a></li>
@@ -81,7 +80,7 @@
                                 <li><a href="~/Common/Contact" class="nav-link">Liên hệ</a></li>
                                 <li>
                                     <a href="/Common/Login" class="nav-link">Đăng nhập</a>
-                                   
+
                                 </li>
                                 <li class="active">
                                     <a href="/Common/Register" class="nav-link">Đăng Ký</a>
@@ -135,25 +134,29 @@
                         }
                     );
                 });
-             
+
 
             </script>
- 
 
 
-   
+
+
 
         </header>
         <div class="site-section">
             <div class="container-fluid">
-                <div class="row" >
+                <div class="row">
                     <!-- Thiết lập chiều cao cho hàng -->
                     <!-- Phía bên trái: Logo hoặc hình ảnh -->
                     <div class="col-md-6 d-flex align-items-center justify-content-center">
-                        <div class="text-center text-white">
-                            <h1 class="display-4">Chào mừng đến với chúng tôi</h1>
+                        <div class="text-center text-white" style="font-family: 'Poppins', sans-serif;">
+                            <img src="~/images/logo.jpg" alt="Image" class="img-fluid" style="max-width: 30%; height: auto;">
+
+                            <h1 class="display-4" style="font-size: 2rem;">Chào mừng đến với chúng tôi</h1>
+
                         </div>
                     </div>
+
 
                     <!-- Phía bên phải: Form đăng nhập -->
                     <div class="col-md-6 d-flex align-items-center justify-content-center">
@@ -193,14 +196,24 @@
 
                             <div class="form-group">
                                 <label for="verificationCode" class="form-label">Nhập mã xác thực</label>
-                                <input type="text" class="form-control" id="verificationCode" name="VerificationCode" placeholder="Mã xác thực" required>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="verificationCode" name="VerificationCode" placeholder="Mã xác thực" required>
+                                    <button type="button" class="btn btn-secondary btn-sm" id="getCodeButton">Lấy mã</button>
+                                    <button type="button" class="btn btn-success" style="display: none;" id="countdownButton">120s</button>
+                                </div>
                                 <span id="waitingMessage" style="color: red; display: none;">Vui lòng chờ trong giây lát...</span>
+
+
                             </div>
+                            @if (ViewBag.VerificationError != null)
+                            {
+                                <div id="verificationError" style="color: red; margin-top: 5px;">
+                                    @ViewBag.VerificationError
+                                </div>
+                            }
+                            <div id="passwordError" style="color: red; display: none; margin-top: 10px;">Xác nhận mật khẩu sai, vui lòng nhập lại</div>
 
-                            <button type="button" class="btn btn-secondary btn-sm" id="getCodeButton">Lấy mã</button>
-                            <button type="button" class="btn btn-success ms-2" style="height: 38px; margin-top: 26px; display: none;" id="countdownButton">120s</button>
-
-                            <button type="submit" class="btn btn-primary btn-block mt-3">Đăng Ký</button>
+                            <button type="button" class="btn btn-primary btn-block mt-3" onclick="validatePassword()">Đăng Ký</button>
                         </form>
 
                     </div>
@@ -210,7 +223,90 @@
         </div>
 
 
-        
+        <script>
+            function validatePassword() {
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+
+                // Kiểm tra xem hàm validatePassword có đang được chạy không
+                console.log("validatePassword() function is running");
+
+                if (password !== confirmPassword) {
+                    const errorElement = document.getElementById('passwordError');
+                    errorElement.style.display = 'block';
+                    console.log("Passwords do not match. Showing error message.");
+
+                    // Ẩn thông báo sau 2-3 giây
+                    setTimeout(() => {
+                        errorElement.style.display = 'none';
+                        console.log("Hiding error message after 3 seconds.");
+                    }, 3000); // 3000 milliseconds = 3 giây
+                } else {
+                    // Nếu mật khẩu khớp, submit form
+                    document.getElementById('registerForm').submit();
+                }
+            }
+            document.addEventListener("DOMContentLoaded", function () {
+                const verificationError = document.getElementById("verificationError");
+                if (verificationError) {
+                    setTimeout(() => {
+                        verificationError.style.display = "none";
+                    }, 3000); // 3 seconds
+                }
+            });
+        </script>
+
+        <footer class="site-footer bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <h2 class="footer-heading mb-3">Facebook</h2>
+                        <div class="row">
+                            <div class="col-4 gal_col">
+                                <a href="#"><img src="~/images/Picture1.jpg" alt="Image" class="img-fluid"></a>
+                            </div>
+                            <div class="col-4 gal_col">
+                                <a href="#"><img src="~/images/Picture8.jpg" alt="Image" class="img-fluid"></a>
+                            </div>
+                            <div class="col-4 gal_col">
+                                <a href="#"><img src="~/images/Picture7.jpg" alt="Image" class="img-fluid"></a>
+                            </div>
+                            <div class="col-4 gal_col">
+                                <a href="#"><img src="~/images/Picture4.jpg" alt="Image" class="img-fluid"></a>
+                            </div>
+                            <div class="col-4 gal_col">
+                                <a href="#"><img src="~/images/Picture13.jpg" alt="Image" class="img-fluid"></a>
+                            </div>
+                            <div class="col-4 gal_col">
+                                <a href="#"><img src="~/images/Picture6.jpg" alt="Image" class="img-fluid"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8 ml-auto">
+                        <div class="row">
+                            <div class="col-lg-6 ml-auto">
+                                <h2 class="footer-heading mb-4">Truy cập nhanh</h2>
+                                <ul class="list-unstyled">
+                                    <li><a href="#">Facebook</a></li>
+                                    <li><a href="#">Instagram</a></li>
+                                    <li><a href="#">Tiktok</a></li>
+
+                                </ul>
+                            </div>
+                            <div class="col-lg-6">
+                                <h2 class="footer-heading mb-4">Phản hồi</h2>
+                                <p>Nơi bạn đưa ra những phản hồi về dịch vụ,nhân viên tại sông quê</p>
+                                <form action="#" class="d-flex" class="subscribe">
+                                    <input type="text" class="form-control mr-3" placeholder="Phản hồi">
+                                    <input type="submit" value="Send" class="btn btn-primary">
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+        </footer>
     </div>
 
 
@@ -287,55 +383,5 @@
     <script src="~/js/aos.js"></script>
     <script src="~/js/main.js"></script>
 </body>
-<footer class="site-footer bg-light">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3">
-                <h2 class="footer-heading mb-3">Facebook</h2>
-                <div class="row">
-                    <div class="col-4 gal_col">
-                        <a href="#"><img src="~/images/Picture1.jpg" alt="Image" class="img-fluid"></a>
-                    </div>
-                    <div class="col-4 gal_col">
-                        <a href="#"><img src="~/images/Picture8.jpg" alt="Image" class="img-fluid"></a>
-                    </div>
-                    <div class="col-4 gal_col">
-                        <a href="#"><img src="~/images/Picture7.jpg" alt="Image" class="img-fluid"></a>
-                    </div>
-                    <div class="col-4 gal_col">
-                        <a href="#"><img src="~/images/Picture4.jpg" alt="Image" class="img-fluid"></a>
-                    </div>
-                    <div class="col-4 gal_col">
-                        <a href="#"><img src="~/images/Picture13.jpg" alt="Image" class="img-fluid"></a>
-                    </div>
-                    <div class="col-4 gal_col">
-                        <a href="#"><img src="~/images/Picture6.jpg" alt="Image" class="img-fluid"></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-8 ml-auto">
-                <div class="row">
-                    <div class="col-lg-6 ml-auto">
-                        <h2 class="footer-heading mb-4">Truy cập nhanh</h2>
-                        <ul class="list-unstyled">
-                            <li><a href="#">Facebook</a></li>
-                            <li><a href="#">Instagram</a></li>
-                            <li><a href="#">Tiktok</a></li>
 
-                        </ul>
-                    </div>
-                    <div class="col-lg-6">
-                        <h2 class="footer-heading mb-4">Phản hồi</h2>
-                        <p>Nơi bạn đưa ra những phản hồi về dịch vụ,nhân viên tại sông quê</p>
-                        <form action="#" class="d-flex" class="subscribe">
-                            <input type="text" class="form-control mr-3" placeholder="Phản hồi">
-                            <input type="submit" value="Send" class="btn btn-primary">
-                        </form>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-</footer>
 </html>

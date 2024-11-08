@@ -1,10 +1,5 @@
 ﻿using BusinessObject.DTOs;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Repositories.Users
 {
@@ -19,5 +14,7 @@ namespace Repositories.Users
         bool UpdateUser(UpdateUserDTO updatedUserDto);
         bool DeleteUser(int userId, IConfiguration configuration);
         bool BlockUser(int userId, IConfiguration configuration);
+        bool UnBlockUser(int userId, IConfiguration configuration);
+
     }
 }
