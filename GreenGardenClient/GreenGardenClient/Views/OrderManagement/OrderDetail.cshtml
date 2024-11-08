@@ -598,6 +598,10 @@
                                         <th class="text-start">Tên</th>
                                         <th>Giá</th>
                                         <th>Số Lượng</th>
+                                        @if (Model.ActivityId == 2 || Model.ActivityId == 3)
+                                        {
+                                            <th>Số ngày</th>
+                                        }
                                         <th>Tổng tiền</th>
                                     </tr>
                                 </thead>
@@ -610,7 +614,21 @@
                                                 <td class="text-start">@item.Name</td>
                                                 <td>@String.Format("{0:0,0}", @item.Price)<span class="currency-symbol"> ₫</span></td>
                                                 <td>@item.Quantity</td>
-                                                <td>@String.Format("{0:0,0} ₫", item.Price * item.Quantity)</td>
+                                                @if (Model.ActivityId == 2 || Model.ActivityId == 3)
+                                                {
+                                                    <td>@ViewBag.date</td>
+                                                }
+                                                @if (ViewBag.date >= 1)
+                                                {
+                                                    <td>
+                                                        @String.Format("{0:0,0} ₫", item.Price * item.Quantity * ViewBag.date)
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td>@String.Format("{0:0,0} ₫", item.Price * item.Quantity)</td>
+
+                                                }
                                             </tr>
                                         }
                                     }
@@ -622,6 +640,10 @@
                                                 <td class="text-start">@item.Name</td>
                                                 <td>@String.Format("{0:0,0}", @item.Price)<span class="currency-symbol"> ₫</span></td>
                                                 <td>@item.Quantity</td>
+                                                @if (Model.ActivityId == 2 || Model.ActivityId == 3)
+                                                {
+                                                    <td>@ViewBag.date</td>
+                                                }
                                                 <td>@String.Format("{0:0,0} ₫", item.Price * item.Quantity)</td>
 
                                             </tr>
@@ -635,6 +657,10 @@
                                                 <td class="text-start">@item.Name còn @item.QuantityAvaiable</td>
                                                 <td>@String.Format("{0:0,0}", @item.Price)<span class="currency-symbol"> ₫</span></td>
                                                 <td>@item.Quantity</td>
+                                                @if (Model.ActivityId == 2 || Model.ActivityId == 3)
+                                                {
+                                                    <td>@ViewBag.date</td>
+                                                }
                                                 <td>@String.Format("{0:0,0} ₫", item.Price * item.Quantity)</td>
 
                                             </tr>
@@ -648,6 +674,10 @@
                                                 <td class="text-start">@item.Name</td>
                                                 <td>@String.Format("{0:0,0}", @item.Price)<span class="currency-symbol"> ₫</span></td>
                                                 <td>@item.Quantity</td>
+                                                @if (Model.ActivityId == 2 || Model.ActivityId == 3)
+                                                {
+                                                    <td>@ViewBag.date</td>
+                                                }
                                                 <td>@String.Format("{0:0,0} ₫", item.Price * item.Quantity)</td>
 
                                             </tr>
@@ -661,6 +691,10 @@
                                                 <td class="text-start">@item.Name</td>
                                                 <td>@String.Format("{0:0,0}", @item.Price)<span class="currency-symbol"> ₫</span></td>
                                                 <td>@item.Quantity</td>
+                                                @if (Model.ActivityId == 2 || Model.ActivityId == 3)
+                                                {
+                                                    <td>@ViewBag.date</td>
+                                                }
                                                 <td>@String.Format("{0:0,0} ₫", item.Price * item.Quantity)</td>
 
                                             </tr>

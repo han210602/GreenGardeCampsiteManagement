@@ -79,7 +79,8 @@ namespace GreenGardenClient.Controllers.AdminController
         public IActionResult OrderOnline()
         {
 
-            try { 
+            try
+            {
                 String Notification = "";
                 var jwtToken = Request.Cookies["JWTToken"];
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
@@ -93,39 +94,39 @@ namespace GreenGardenClient.Controllers.AdminController
                 }
                 else
                 {
-                orderdata = GetDataFromApi<List<OrderVM>>("https://localhost:7298/api/OrderManagement/GetAllOrderOnline")
-                .Where(s => s.ActivityId == 1)
-                .ToList();
-                activities = GetDataFromApi<List<ActivityVM>>("https://localhost:7298/api/Activity/GetAllActivities")
-                    .Where(s => s.ActivityId == 1 || s.ActivityId == 2 || s.ActivityId == 1002)
+                    orderdata = GetDataFromApi<List<OrderVM>>("https://localhost:7298/api/OrderManagement/GetAllOrderOnline")
+                    .Where(s => s.ActivityId == 1)
                     .ToList();
+                    activities = GetDataFromApi<List<ActivityVM>>("https://localhost:7298/api/Activity/GetAllActivities")
+                        .Where(s => s.ActivityId == 1 || s.ActivityId == 2 || s.ActivityId == 1002)
+                        .ToList();
 
-                // Duyệt qua bản sao của orderdata
-                foreach (var item in orderdata.ToList())
-                {
-                    if (DateTime.Parse(item.OrderUsageDate.Value.ToString("dd/MM/yyyy")) < DateTime.Parse(DateTime.Now.ToString("dd/MM/yyyy")) && item.StatusOrder == false)
+                    // Duyệt qua bản sao của orderdata
+                    foreach (var item in orderdata.ToList())
                     {
-                        string apiUrl = $"https://localhost:7298/api/OrderManagement/UpdateActivityOrder/{item.OrderId}/{1002}";
-                        HttpResponseMessage response = _httpClient.PutAsync(apiUrl, null).Result;
-                        item.ActivityId = 1002;
-                        Notification += $"Đơn {item.OrderId} đã bị hủy do tới ngày đặt trước nhưng chưa cọc.\n";
-                        orderdata.Remove(item);
-                        return RedirectToAction("OrderCancel");
+                        if (DateTime.Parse(item.OrderUsageDate.Value.ToString("dd/MM/yyyy")) < DateTime.Parse(DateTime.Now.ToString("dd/MM/yyyy")) && item.StatusOrder == false)
+                        {
+                            string apiUrl = $"https://localhost:7298/api/OrderManagement/UpdateActivityOrder/{item.OrderId}/{1002}";
+                            HttpResponseMessage response = _httpClient.PutAsync(apiUrl, null).Result;
+                            item.ActivityId = 1002;
+                            Notification += $"Đơn {item.OrderId} đã bị hủy do tới ngày đặt trước nhưng chưa cọc.\n";
+                            orderdata.Remove(item);
+                            return RedirectToAction("OrderCancel");
 
-                        // Xóa item khỏi danh sách gốc
+                            // Xóa item khỏi danh sách gốc
+                        }
+                        else if (DateTime.Parse(item.OrderUsageDate.Value.ToString("dd/MM/yyyy")) < DateTime.Parse(DateTime.Now.ToString("dd/MM/yyyy")) && item.StatusOrder == true)
+                        {
+                            string apiUrl = $"https://localhost:7298/api/OrderManagement/UpdateActivityOrder/{item.OrderId}/{1002}";
+                            HttpResponseMessage response = _httpClient.PutAsync(apiUrl, null).Result;
+                            item.ActivityId = 1002;
+                            Notification += $"Đơn {item.OrderId} đã bị hủy do quá ngày sử dụng.\n";
+                            orderdata.Remove(item);
+                            return RedirectToAction("OrderCancel");
+                            // Xóa item khỏi danh sách gốc
+                        }
                     }
-                    else if (DateTime.Parse(item.OrderUsageDate.Value.ToString("dd/MM/yyyy")) < DateTime.Parse(DateTime.Now.ToString("dd/MM/yyyy")) && item.StatusOrder == true)
-                    {
-                        string apiUrl = $"https://localhost:7298/api/OrderManagement/UpdateActivityOrder/{item.OrderId}/{1002}";
-                        HttpResponseMessage response = _httpClient.PutAsync(apiUrl, null).Result;
-                        item.ActivityId = 1002;
-                        Notification += $"Đơn {item.OrderId} đã bị hủy do quá ngày sử dụng.\n";
-                        orderdata.Remove(item);
-                        return RedirectToAction("OrderCancel");
-                        // Xóa item khỏi danh sách gốc
-                    }
-                }
-            
+
 
 
 
@@ -151,6 +152,7 @@ namespace GreenGardenClient.Controllers.AdminController
         }
         public IActionResult OrderToday()
         {
+
             try
             {
 
@@ -167,28 +169,39 @@ namespace GreenGardenClient.Controllers.AdminController
                 }
                 else
                 {
-                    orderdata = GetDataFromApi<List<OrderVM>>("https://localhost:7298/api/OrderManagement/GetAllOrderOnline").Where(s => s.ActivityId == 1 && s.OrderUsageDate.Value.ToString("yyyy/MM/dd").Equals(DateTime.Now.ToString("yyyy/MM/dd"))).ToList();
-                    activities = GetDataFromApi<List<ActivityVM>>("https://localhost:7298/api/Activity/GetAllActivities").Where(s => s.ActivityId == 1 || s.ActivityId == 2 || s.ActivityId == 1002).ToList();
-                    foreach (var item in orderdata)
-                    {
-                        if (item.OrderUsageDate <= DateTime.Now && item.StatusOrder == false)
-                        {
+                    orderdata = GetDataFromApi<List<OrderVM>>("https://localhost:7298/api/OrderManagement/GetAllOrderOnline")
+                    .Where(s => s.ActivityId == 1 && s.OrderUsageDate.Value.ToString("yyyy/MM/dd").Equals(DateTime.Now.ToString("yyyy/MM/dd")))
+                    .ToList();
+                    activities = GetDataFromApi<List<ActivityVM>>("https://localhost:7298/api/Activity/GetAllActivities")
+                        .Where(s => s.ActivityId == 1 || s.ActivityId == 2 || s.ActivityId == 1002)
+                        .ToList();
 
+                    // Duyệt qua bản sao của orderdata
+                    foreach (var item in orderdata.ToList())
+                    {
+                        if (DateTime.Parse(item.OrderUsageDate.Value.ToString("dd/MM/yyyy")) < DateTime.Parse(DateTime.Now.ToString("dd/MM/yyyy")) && item.StatusOrder == false)
+                        {
                             string apiUrl = $"https://localhost:7298/api/OrderManagement/UpdateActivityOrder/{item.OrderId}/{1002}";
                             HttpResponseMessage response = _httpClient.PutAsync(apiUrl, null).Result;
                             item.ActivityId = 1002;
                             Notification += $"Đơn {item.OrderId} đã bị hủy do tới ngày đặt trước nhưng chưa cọc.\n";
                             orderdata.Remove(item);
+                            return RedirectToAction("OrderCancel");
+
+                            // Xóa item khỏi danh sách gốc
                         }
-                        if (item.OrderUsageDate < DateTime.Now && item.StatusOrder == true)
+                        else if (DateTime.Parse(item.OrderUsageDate.Value.ToString("dd/MM/yyyy")) < DateTime.Parse(DateTime.Now.ToString("dd/MM/yyyy")) && item.StatusOrder == true)
                         {
                             string apiUrl = $"https://localhost:7298/api/OrderManagement/UpdateActivityOrder/{item.OrderId}/{1002}";
                             HttpResponseMessage response = _httpClient.PutAsync(apiUrl, null).Result;
                             item.ActivityId = 1002;
                             Notification += $"Đơn {item.OrderId} đã bị hủy do quá ngày sử dụng.\n";
                             orderdata.Remove(item);
+                            return RedirectToAction("OrderCancel");
+                            // Xóa item khỏi danh sách gốc
                         }
                     }
+
 
 
 
@@ -258,7 +271,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 orderdata = orderdata
                     .Where(s => s.ActivityId == 3)
                     .ToList();
-                
+
 
                 ViewBag.dataorder = orderdata;
                 ViewBag.Notification = Notification;
@@ -308,7 +321,7 @@ namespace GreenGardenClient.Controllers.AdminController
         //        orderdata = orderdata
         //            .Where(s => s.ActivityId == 1003)
         //            .ToList();
-               
+
         //        ViewBag.dataorder = orderdata;
         //        ViewBag.Notification = Notification;
         //        if (TempData["Notification"] != null)
@@ -440,7 +453,8 @@ namespace GreenGardenClient.Controllers.AdminController
                     return RedirectToAction("OrderCancel");
 
                 }
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 return RedirectToAction("Error");
 
@@ -514,7 +528,7 @@ namespace GreenGardenClient.Controllers.AdminController
         }
         public IActionResult CreateOrder()
         {
-            if (HttpContext.Session.GetInt32("RoleId").Value==1|| HttpContext.Session.GetInt32("RoleId").Value==2)
+            if (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)
             {
                 var orders = HttpContext.Session.GetObjectFromJson<OrderVM>("OrderCart") ?? new OrderVM();
                 if (orders.OrderUsageDate != null)
@@ -1164,12 +1178,12 @@ namespace GreenGardenClient.Controllers.AdminController
             ViewBag.Total = total;
             var viewModel = new DepositVM
             {
-               
+
                 Total = 3_500_000
             };
             viewModel.CalculateRoundedValues();
 
-            return View("Cart",viewModel);
+            return View("Cart", viewModel);
         }
         [HttpPost]
         public async Task<IActionResult> Order(decimal deposit, decimal total)
@@ -1406,9 +1420,9 @@ namespace GreenGardenClient.Controllers.AdminController
                 var jwtToken = Request.Cookies["JWTToken"];
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
                 OrderDetailVM orderdata = GetDataFromApi<OrderDetailVM>($"https://localhost:7298/api/OrderManagement/GetOrderDetail/{id}");
-               
-                
-                int daysDifference = (DateTime.Now.Date-orderdata.OrderUsageDate.Value.Date).Days;
+
+
+                int daysDifference = (DateTime.Now.Date - orderdata.OrderUsageDate.Value.Date).Days;
                 if (daysDifference >= 1)
                 {
                     if (orderdata.ActivityId == 2)
@@ -1431,22 +1445,22 @@ namespace GreenGardenClient.Controllers.AdminController
                     OrderId = orderdata.OrderId,
                     OrderUsageDate = orderdata.OrderUsageDate,
                     TotalAmount = orderdata.TotalAmount,
-                    OrderCheckoutDate=orderdata.OrderCheckoutDate!=null? orderdata.OrderCheckoutDate:DateTime.Parse(DateTime.Now.ToString("yyyy-MM-ddTHH:mm"))
-                 };
+                    OrderCheckoutDate = orderdata.OrderCheckoutDate != null ? orderdata.OrderCheckoutDate : DateTime.Parse(DateTime.Now.ToString("yyyy-MM-ddTHH:mm"))
+                };
 
-                if (orderdata.ActivityId == 2||orderdata.ActivityId==1)
-                    {
+                if (orderdata.ActivityId == 2 || orderdata.ActivityId == 1)
+                {
                     HttpContext.Session.SetObjectAsJson("order", updateorder);
                     HttpContext.Session.SetObjectAsJson("TicketUpdateCart", orderdata.OrderTicketDetails);
                     HttpContext.Session.SetObjectAsJson("ComboUpdateCart", orderdata.OrderComboDetails);
                     HttpContext.Session.SetObjectAsJson("ComboFoodUpdateCart", orderdata.OrderFoodComboDetails);
                     HttpContext.Session.SetObjectAsJson("FoodUpdateCart", orderdata.OrderFoodDetails);
                     HttpContext.Session.SetObjectAsJson("GearUpdateCart", orderdata.OrderCampingGearDetails);
-                    }
-                    if (TempData["Notification"] != null)
-                    {
+                }
+                if (TempData["Notification"] != null)
+                {
                     ViewBag.Notification = TempData["Notification"];
-                    }
+                }
                 ViewBag.date = daysDifference + 1;
                 return View("OrderDetail", orderdata);
 
@@ -1461,46 +1475,46 @@ namespace GreenGardenClient.Controllers.AdminController
 
         }
         [HttpGet]
-        public IActionResult ChangeUsagedate(int idorder,DateTime? changedate)
+        public IActionResult ChangeUsagedate(int idorder, DateTime? changedate)
         {
-                var jwtToken = Request.Cookies["JWTToken"];
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
-                OrderDetailVM orderdata = GetDataFromApi<OrderDetailVM>($"https://localhost:7298/api/OrderManagement/GetOrderDetail/{idorder}");
-                string formattedDate = changedate.Value.ToString("yyyy-MM-dd");
+            var jwtToken = Request.Cookies["JWTToken"];
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
+            OrderDetailVM orderdata = GetDataFromApi<OrderDetailVM>($"https://localhost:7298/api/OrderManagement/GetOrderDetail/{idorder}");
+            string formattedDate = changedate.Value.ToString("yyyy-MM-dd");
 
-                List<GearVM> tickets = GetDataFromApi<List<GearVM>>("https://localhost:7298/api/CampingGear/GetAllCampingGears");
-                List<OrderCampingGearByUsageDateDTO> ordergear = GetDataFromApi<List<OrderCampingGearByUsageDateDTO>>($"https://localhost:7298/api/OrderManagement/GetListOrderGearByUsageDate/{formattedDate}");
-                foreach (var item in tickets)
+            List<GearVM> tickets = GetDataFromApi<List<GearVM>>("https://localhost:7298/api/CampingGear/GetAllCampingGears");
+            List<OrderCampingGearByUsageDateDTO> ordergear = GetDataFromApi<List<OrderCampingGearByUsageDateDTO>>($"https://localhost:7298/api/OrderManagement/GetListOrderGearByUsageDate/{formattedDate}");
+            foreach (var item in tickets)
+            {
+                var ticket = ordergear.ToList().Where(s => s.GearId == item.GearId);
+                if (ticket != null)
                 {
-                    var ticket = ordergear.ToList().Where(s => s.GearId == item.GearId);
-                    if (ticket != null)
-                    {
                     foreach (var item1 in ticket)
                     {
                         item.QuantityAvailable = item.QuantityAvailable - item1.Quantity.Value;
                     }
-                    }
                 }
-                foreach (var item in orderdata.OrderCampingGearDetails)
-                {
+            }
+            foreach (var item in orderdata.OrderCampingGearDetails)
+            {
                 var ticket = tickets.FirstOrDefault(s => item.GearId == s.GearId);
                 item.QuantityAvaiable = ticket.QuantityAvailable;
-                }
-                UpdateOrderDTO updateorder = new UpdateOrderDTO()
-                {
-                    OrderId = orderdata.OrderId,
-                    OrderUsageDate = changedate,
-                    TotalAmount = orderdata.TotalAmount,
-                };
-               
-                    HttpContext.Session.SetObjectAsJson("order", updateorder);
-                    HttpContext.Session.SetObjectAsJson("GearUpdateDateCart", orderdata.OrderCampingGearDetails);
-                
-                if (TempData["Notification"] != null)
-                {
-                    ViewBag.Notification = TempData["Notification"];
-                }
-                return View("ChangeUsagedate", orderdata);
+            }
+            UpdateOrderDTO updateorder = new UpdateOrderDTO()
+            {
+                OrderId = orderdata.OrderId,
+                OrderUsageDate = changedate,
+                TotalAmount = orderdata.TotalAmount,
+            };
+
+            HttpContext.Session.SetObjectAsJson("order", updateorder);
+            HttpContext.Session.SetObjectAsJson("GearUpdateDateCart", orderdata.OrderCampingGearDetails);
+
+            if (TempData["Notification"] != null)
+            {
+                ViewBag.Notification = TempData["Notification"];
+            }
+            return View("ChangeUsagedate", orderdata);
         }
         public IActionResult UpdateGearChangeDate()
         {
@@ -1601,7 +1615,7 @@ namespace GreenGardenClient.Controllers.AdminController
                     {
                         // Both updates were successful
                         TempData["Notification"] = "Đơn đã cập nhập lại và chuyển ngày thành công.";
-                        return RedirectToAction("ChangeUsagedate", new { idorder = order.OrderId , changedate =order.OrderUsageDate});
+                        return RedirectToAction("ChangeUsagedate", new { idorder = order.OrderId, changedate = order.OrderUsageDate });
                     }
                     else
                     {
