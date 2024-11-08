@@ -523,43 +523,35 @@
                 </li>
             }
             <li class="has-submenu" style="display:block" id="manageOrdersMenu">
-                <a class="app-menu__item active" href="javascript:void(0)" id="manageOrders">
+                <a class="app-menu__item" href="javascript:void(0)" id="manageOrders">
                     <i class='app-menu__icon bx bx-id-card'></i>
                     <span class="app-menu__label">Quản lý Đơn hàng</span>
                 </a>
-                <!-- Mục con -->
-                <ul class="submenu">
+                <!-- Submenu items -->
+                <ul class="submenu" style="display: none;" id="submenuList">
                     <li>
                         <a href="~/OrderManagement/OrderOnline" class="app-menu__item" id="orderOnline">
-                            <i class='bx bx-notepad'></i>
-                            Đơn đặt trước
+                            <i class='bx bx-notepad'></i> Đơn đặt trước
                         </a>
                     </li>
                     <li>
                         <a href="~/OrderManagement/OrderUsing" class="app-menu__item" id="orderUsing">
-                            <i class='bx bx-time-five'></i>
-                            Đơn đang sử dụng
+                            <i class='bx bx-time-five'></i> Đơn đang sử dụng
                         </a>
                     </li>
                     <li>
                         <a href="~/OrderManagement/OrderCheckOut" class="app-menu__item" id="orderCheckOut">
-                            <i class='bx bx-check-circle'></i>
-                            Đơn đã thanh toán
+                            <i class='bx bx-check-circle'></i> Đơn đã thanh toán
                         </a>
                     </li>
-
-
                     <li>
                         <a href="~/OrderManagement/OrderCancel" class="app-menu__item" id="orderCancel">
-                            <i class='bx bx-x-circle'></i> <!-- Thay đổi biểu tượng -->
-                            Đơn đã hủy
+                            <i class='bx bx-x-circle'></i> Đơn đã hủy
                         </a>
                     </li>
-
                     <li>
                         <a href="~/OrderManagement/CreateOrder" class="app-menu__item" id="createOrder">
-                            <i class='bx bx-plus'></i>
-                            Tạo đơn mới
+                            <i class='bx bx-plus'></i> Tạo đơn mới
                         </a>
                     </li>
                 </ul>
@@ -588,6 +580,42 @@
                         manageOrdersMenu.classList.add("selected");
                     }
                 });
+                document.addEventListener("DOMContentLoaded", function () {
+                    const submenu = document.getElementById("submenuList");
+                    const manageOrdersButton = document.getElementById("manageOrders");
+                    const submenuItems = document.querySelectorAll("#manageOrdersMenu .submenu .app-menu__item");
+
+                    // Kiểm tra URL để tự động mở submenu khi truy cập các mục cụ thể
+                    if (window.location.href.includes("OrderOnline") ||
+                        window.location.href.includes("OrderUsing") ||
+                        window.location.href.includes("OrderCheckOut") ||
+                        window.location.href.includes("OrderCancel") ||
+                        window.location.href.includes("CreateOrder")) {
+                        submenu.style.display = "block";
+                    }
+
+                    // Toggle submenu khi click vào "Quản lý Đơn hàng"
+                    manageOrdersButton.addEventListener("click", function (event) {
+                        event.stopPropagation(); // Ngăn sự kiện lan truyền
+                        submenu.style.display = submenu.style.display === "block" ? "none" : "block";
+                    });
+
+                    // Đảm bảo rằng khi click vào bất kỳ mục con nào, menu vẫn mở
+                    submenuItems.forEach(item => {
+                        item.addEventListener("click", function (event) {
+                            event.stopPropagation(); // Ngăn sự kiện lan truyền
+                            submenu.style.display = "block";
+                        });
+                    });
+
+                    // Đóng menu khi click ra ngoài
+                    document.addEventListener("click", function (event) {
+                        if (!manageOrdersButton.contains(event.target) && !submenu.contains(event.target)) {
+                            submenu.style.display = "none";
+                        }
+                    });
+                });
+
             </script>
             <li>
                 <a class="app-menu__item" href="table-data-oder.html">
@@ -596,7 +624,7 @@
                 </a>
             </li>
             <li>
-                <a class="app-menu__item" href="table-data-oder.html">
+                <a class="app-menu__item" href="~/EventManagement/Index">
                     <i class='app-menu__icon bx bx-calendar-event'></i>
                     <span class="app-menu__label">Quản lý sự kiện</span>
                 </a>
@@ -604,13 +632,13 @@
             @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 1)
             {
                 <li>
-                    <a class="app-menu__item" href="#">
+                    <a class="app-menu__item" href="~/UserManagement/Index">
                         <i class='app-menu__icon bx bx-user-voice'></i>
                         <span class="app-menu__label">Quản lý khách hàng</span>
                     </a>
                 </li>
-                <li>
-                    <a class="app-menu__item" href="table-data-product.html">
+                <li class="app-menu__item active">
+                    <a class="app-menu__link" href="~/EmployeeManagement/Index">
                         <i class='app-menu__icon bx bx-purchase-tag-alt'></i>
                         <span class="app-menu__label">Quản lý nhân viên</span>
                     </a>

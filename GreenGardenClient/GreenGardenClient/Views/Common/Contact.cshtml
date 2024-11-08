@@ -46,7 +46,7 @@
                 <div class="row align-items-center position-relative">
                     <div class="col-3 ">
                         <div class="site-logo">
-                            <a href="index.html" class="font-weight-bold">
+                            <a href="~/Home" class="font-weight-bold">
                                 <img src="~/images/logo.jpg" alt="Image" class="img-fluid">
                             </a>
                         </div>
@@ -107,18 +107,17 @@
 
                                     </li>
                                     }
-
-                                </li>
-                                @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 3)
-                                {
+                                    @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 3)
+                                    {
                                     <li>
                                         <a href="~/Service/Cart" class="nav-link">
                                             <i class="fas fa-shopping-cart"></i>
                                         </a>
                                     </li>
 
-                                }
+                                    }
 
+                        
                             </ul>
                         </nav>
                     </div>

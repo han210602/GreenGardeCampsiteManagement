@@ -550,7 +550,7 @@
                 </a>
             </li>
             <li>
-                <a class="app-menu__item" href="table-data-oder.html">
+                <a class="app-menu__item" href="~/EventManagement/Index">
                     <i class='app-menu__icon bx bx-calendar-event'></i>
                     <span class="app-menu__label">Quản lý sự kiện</span>
                 </a>
@@ -558,13 +558,13 @@
             @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 1)
             {
                 <li>
-                    <a class="app-menu__item" href="#">
+                    <a class="app-menu__item" href="~/UserManagement/Index">
                         <i class='app-menu__icon bx bx-user-voice'></i>
                         <span class="app-menu__label">Quản lý khách hàng</span>
                     </a>
                 </li>
                 <li>
-                    <a class="app-menu__item" href="table-data-product.html">
+                    <a class="app-menu__item" href="~/EmployeeManagement/Index">
                         <i class='app-menu__icon bx bx-purchase-tag-alt'></i>
                         <span class="app-menu__label">Quản lý nhân viên</span>
                     </a>
