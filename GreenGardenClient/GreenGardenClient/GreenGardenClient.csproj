@@ -54,9 +54,6 @@
     <None Include="wwwroot\fonts\icomoon\Read Me.txt" />
     <None Include="wwwroot\fonts\icomoon\style.css" />
     <None Include="wwwroot\images\.DS_Store" />
-    <None Include="wwwroot\images\img_1.jpg" />
-    <None Include="wwwroot\images\img_2.jpg" />
-    <None Include="wwwroot\images\img_3.jpg" />
     <None Include="wwwroot\js\aos.js" />
     <None Include="wwwroot\js\bootstrap-datepicker.min.js" />
     <None Include="wwwroot\js\bootstrap.min.js" />
@@ -204,6 +201,10 @@
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.36.0" />
 
 		  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\home\" />
   </ItemGroup>
 
 </Project>

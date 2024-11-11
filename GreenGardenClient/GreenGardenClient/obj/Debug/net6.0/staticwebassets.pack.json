@@ -213,32 +213,8 @@
       "PackagePath": "staticwebassets\\images\\canh-ga-nuong - Copy.jpg"
     },
     {
-      "Id": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\doan1.jpg",
-      "PackagePath": "staticwebassets\\images\\doan1.jpg"
-    },
-    {
-      "Id": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\img_1.jpg",
-      "PackagePath": "staticwebassets\\images\\img_1.jpg"
-    },
-    {
-      "Id": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\img_2 - Copy.jpg",
-      "PackagePath": "staticwebassets\\images\\img_2 - Copy.jpg"
-    },
-    {
-      "Id": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\img_2.jpg",
-      "PackagePath": "staticwebassets\\images\\img_2.jpg"
-    },
-    {
-      "Id": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\img_3.jpg",
-      "PackagePath": "staticwebassets\\images\\img_3.jpg"
-    },
-    {
-      "Id": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\lienhe.jpg",
-      "PackagePath": "staticwebassets\\images\\lienhe.jpg"
-    },
-    {
-      "Id": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\loakeo.jpg",
-      "PackagePath": "staticwebassets\\images\\loakeo.jpg"
+      "Id": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\contact.jpg",
+      "PackagePath": "staticwebassets\\images\\contact.jpg"
     },
     {
       "Id": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\logo.jpg",
@@ -247,26 +223,6 @@
     {
       "Id": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\owner.png",
       "PackagePath": "staticwebassets\\images\\owner.png"
-    },
-    {
-      "Id": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\p20.jpg",
-      "PackagePath": "staticwebassets\\images\\p20.jpg"
-    },
-    {
-      "Id": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\p21.jpg",
-      "PackagePath": "staticwebassets\\images\\p21.jpg"
-    },
-    {
-      "Id": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\p22.jpg",
-      "PackagePath": "staticwebassets\\images\\p22.jpg"
-    },
-    {
-      "Id": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\p23.jpg",
-      "PackagePath": "staticwebassets\\images\\p23.jpg"
-    },
-    {
-      "Id": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\p25.jpg",
-      "PackagePath": "staticwebassets\\images\\p25.jpg"
     },
     {
       "Id": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture10.jpg",
@@ -345,16 +301,20 @@
       "PackagePath": "staticwebassets\\images\\picture9.jpg"
     },
     {
-      "Id": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\pictureticket.webp",
-      "PackagePath": "staticwebassets\\images\\pictureticket.webp"
+      "Id": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\services\\d1.jpg",
+      "PackagePath": "staticwebassets\\images\\services\\d1.jpg"
     },
     {
-      "Id": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\service.jpg",
-      "PackagePath": "staticwebassets\\images\\service.jpg"
+      "Id": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\services\\dichvu1.jpg",
+      "PackagePath": "staticwebassets\\images\\services\\dichvu1.jpg"
     },
     {
-      "Id": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\sukien.jpg",
-      "PackagePath": "staticwebassets\\images\\sukien.jpg"
+      "Id": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\services\\dichvu2.jpg",
+      "PackagePath": "staticwebassets\\images\\services\\dichvu2.jpg"
+    },
+    {
+      "Id": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\services\\dichvu3.jpg",
+      "PackagePath": "staticwebassets\\images\\services\\dichvu3.jpg"
     },
     {
       "Id": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\đậu tẩm hành - Copy (2).jpg",

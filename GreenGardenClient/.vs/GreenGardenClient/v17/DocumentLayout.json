@@ -3,7 +3,127 @@
   "WorkspaceRootPath": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|c:\\users\\admin\\desktop\\git\\greengardencampsitemanagement\\greengardenclient\\greengardenclient\\views\\ordermanagement\\createorder.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\views\\service\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\views\\service\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\views\\common\\contact.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\views\\common\\contact.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\views\\common\\event.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\views\\common\\event.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|c:\\users\\admin\\desktop\\git\\greengardencampsitemanagement\\greengardenclient\\greengardenclient\\wwwroot\\images\\services\\dichvu3.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\services\\dichvu3.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|c:\\users\\admin\\desktop\\git\\greengardencampsitemanagement\\greengardenclient\\greengardenclient\\wwwroot\\images\\services\\dichvu2.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\services\\dichvu2.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|c:\\users\\admin\\desktop\\git\\greengardencampsitemanagement\\greengardenclient\\greengardenclient\\wwwroot\\images\\services\\dichvu1.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\services\\dichvu1.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|c:\\users\\admin\\desktop\\git\\greengardencampsitemanagement\\greengardenclient\\greengardenclient\\wwwroot\\images\\ba-chi-heo - copy.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\ba-chi-heo - copy.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\wwwroot\\images\\canh-ga-nuong - copy.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\canh-ga-nuong - copy.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|c:\\users\\admin\\desktop\\git\\greengardencampsitemanagement\\greengardenclient\\greengardenclient\\wwwroot\\images\\\u0111\u1EADu t\u1EA9m h\u00E0nh - copy (2).jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\\u0111\u1EADu t\u1EA9m h\u00E0nh - copy (2).jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\wwwroot\\images\\logo.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\logo.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|c:\\users\\admin\\desktop\\git\\greengardencampsitemanagement\\greengardenclient\\greengardenclient\\wwwroot\\images\\owner.png||{177559E0-D141-11D0-92DF-00A0C9138C45}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\owner.png||{177559E0-D141-11D0-92DF-00A0C9138C45}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\wwwroot\\images\\picture20.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\picture20.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\wwwroot\\images\\picture2.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\picture2.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\wwwroot\\images\\picture19.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\picture19.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|c:\\users\\admin\\desktop\\git\\greengardencampsitemanagement\\greengardenclient\\greengardenclient\\wwwroot\\images\\picture18.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\picture18.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|c:\\users\\admin\\desktop\\git\\greengardencampsitemanagement\\greengardenclient\\greengardenclient\\wwwroot\\images\\picture17.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\picture17.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|c:\\users\\admin\\desktop\\git\\greengardencampsitemanagement\\greengardenclient\\greengardenclient\\wwwroot\\images\\picture15.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\picture15.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|c:\\users\\admin\\desktop\\git\\greengardencampsitemanagement\\greengardenclient\\greengardenclient\\wwwroot\\images\\picture14.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\picture14.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|c:\\users\\admin\\desktop\\git\\greengardencampsitemanagement\\greengardenclient\\greengardenclient\\wwwroot\\images\\picture12.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\picture12.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|c:\\users\\admin\\desktop\\git\\greengardencampsitemanagement\\greengardenclient\\greengardenclient\\wwwroot\\images\\picture11.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\picture11.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|c:\\users\\admin\\desktop\\git\\greengardencampsitemanagement\\greengardenclient\\greengardenclient\\wwwroot\\images\\picture10.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\picture10.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|c:\\users\\admin\\desktop\\git\\greengardencampsitemanagement\\greengardenclient\\greengardenclient\\wwwroot\\images\\picture1.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\picture1.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\wwwroot\\images\\picture3.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\picture3.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\wwwroot\\images\\picture4.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\picture4.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\wwwroot\\images\\picture5.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\picture5.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|c:\\users\\admin\\desktop\\git\\greengardencampsitemanagement\\greengardenclient\\greengardenclient\\wwwroot\\images\\picture7.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\picture7.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\wwwroot\\images\\picture8.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\picture8.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\wwwroot\\images\\picture9.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\picture9.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|c:\\users\\admin\\desktop\\git\\greengardencampsitemanagement\\greengardenclient\\greengardenclient\\views\\ordermanagement\\updatecombofood.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\views\\ordermanagement\\updatecombofood.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\views\\ordermanagement\\createorder.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\views\\ordermanagement\\createorder.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
@@ -11,31 +131,23 @@
       "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\views\\ordermanagement\\orderonline.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|c:\\users\\admin\\desktop\\git\\greengardencampsitemanagement\\greengardenclient\\greengardenclient\\views\\ordermanagement\\ordergear.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\views\\ordermanagement\\ordergear.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\views\\ordermanagement\\ordergear.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|c:\\users\\admin\\desktop\\git\\greengardencampsitemanagement\\greengardenclient\\greengardenclient\\views\\ordermanagement\\orderfood.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\views\\ordermanagement\\orderfood.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\views\\ordermanagement\\orderfood.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|c:\\users\\admin\\desktop\\git\\greengardencampsitemanagement\\greengardenclient\\greengardenclient\\views\\ordermanagement\\ordercombofood.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\views\\ordermanagement\\ordercombofood.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\views\\ordermanagement\\ordercombofood.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|c:\\users\\admin\\desktop\\git\\greengardencampsitemanagement\\greengardenclient\\greengardenclient\\views\\ordermanagement\\ordercombo.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\views\\ordermanagement\\ordercombo.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\views\\ordermanagement\\ordercombo.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|c:\\users\\admin\\desktop\\git\\greengardencampsitemanagement\\greengardenclient\\greengardenclient\\views\\ordermanagement\\updatecombofood.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\views\\ordermanagement\\updatecombofood.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|c:\\users\\admin\\desktop\\git\\greengardencampsitemanagement\\greengardenclient\\greengardenclient\\views\\ordermanagement\\updatefood.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\views\\ordermanagement\\updatefood.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|c:\\users\\admin\\desktop\\git\\greengardencampsitemanagement\\greengardenclient\\greengardenclient\\views\\ordermanagement\\updategear.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\views\\ordermanagement\\updategear.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\views\\ordermanagement\\updategear.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
@@ -43,19 +155,19 @@
       "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\views\\ordermanagement\\updategearchangedate.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|c:\\users\\admin\\desktop\\git\\greengardencampsitemanagement\\greengardenclient\\greengardenclient\\views\\ordermanagement\\updateticket.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\views\\ordermanagement\\updateticket.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\views\\ordermanagement\\updateticket.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|c:\\users\\admin\\desktop\\git\\greengardencampsitemanagement\\greengardenclient\\greengardenclient\\views\\ordermanagement\\updatecombo.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\views\\ordermanagement\\updatecombo.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\views\\ordermanagement\\updatecombo.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|c:\\users\\admin\\desktop\\git\\greengardencampsitemanagement\\greengardenclient\\greengardenclient\\views\\ordermanagement\\orderticket.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\views\\ordermanagement\\orderticket.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\views\\ordermanagement\\orderticket.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|c:\\users\\admin\\desktop\\git\\greengardencampsitemanagement\\greengardenclient\\greengardenclient\\controllers\\admincontroller\\ordermanagementcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\controllers\\admincontroller\\ordermanagementcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\controllers\\admincontroller\\ordermanagementcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -67,7 +179,7 @@
       "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\views\\ordermanagement\\cart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|c:\\users\\admin\\desktop\\git\\greengardencampsitemanagement\\greengardenclient\\greengardenclient\\views\\ordermanagement\\ordercheckout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\views\\ordermanagement\\ordercheckout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\views\\ordermanagement\\ordercheckout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
@@ -127,10 +239,6 @@
       "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\views\\service\\orderfoodanddrink.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\views\\dashboard\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\views\\dashboard\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
@@ -151,14 +259,6 @@
       "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\views\\common\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\views\\common\\event.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\views\\common\\event.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\views\\common\\contact.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\views\\common\\contact.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\views\\common\\changepassword.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\views\\common\\changepassword.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
@@ -177,10 +277,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\views\\service\\fooddetail.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\views\\service\\fooddetail.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\views\\service\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\views\\service\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\views\\service\\orderdetailhistory.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -235,92 +331,8 @@
       "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\ba-chi-bo-my.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\wwwroot\\images\\canh-ga-nuong - copy.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
-      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\canh-ga-nuong - copy.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\wwwroot\\images\\doan1.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
-      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\doan1.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\wwwroot\\images\\img_1.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
-      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\img_1.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\wwwroot\\images\\img_2 - copy.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
-      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\img_2 - copy.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\wwwroot\\images\\img_2.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
-      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\img_2.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\wwwroot\\images\\logo.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
-      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\logo.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\wwwroot\\images\\loakeo.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
-      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\loakeo.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\wwwroot\\images\\p20.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
-      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\p20.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\wwwroot\\images\\p21.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
-      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\p21.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\wwwroot\\images\\p22.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
-      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\p22.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\wwwroot\\images\\p23.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
-      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\p23.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\wwwroot\\images\\p25.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
-      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\p25.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\wwwroot\\images\\picture2.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
-      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\picture2.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\wwwroot\\images\\picture4.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
-      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\picture4.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\wwwroot\\images\\picture6.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
       "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\picture6.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\wwwroot\\images\\picture9.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
-      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\picture9.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\wwwroot\\images\\service.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
-      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\service.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\wwwroot\\images\\picture8.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
-      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\picture8.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\wwwroot\\images\\picture5.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
-      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\picture5.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\wwwroot\\images\\picture3.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
-      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\picture3.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\wwwroot\\images\\picture20.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
-      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\picture20.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\wwwroot\\images\\picture19.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}",
-      "RelativeMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|solutionrelative:greengardenclient\\wwwroot\\images\\picture19.jpg||{177559E0-D141-11D0-92DF-00A0C9138C45}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{CA16C2B3-3CA1-4811-938B-A5C34E64B750}|GreenGardenClient\\GreenGardenClient.csproj|C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\greengardenclient\\models\\combodetailvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -422,76 +434,364 @@
       "DocumentGroups": [
         {
           "DockedHeight": 318,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "OrderCombo.cshtml",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\OrderManagement\\OrderCombo.cshtml",
-              "RelativeDocumentMoniker": "GreenGardenClient\\Views\\OrderManagement\\OrderCombo.cshtml",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\OrderManagement\\OrderCombo.cshtml",
-              "RelativeToolTip": "GreenGardenClient\\Views\\OrderManagement\\OrderCombo.cshtml",
-              "ViewState": "AQIAAHoDAAAAAAAAAAAAADADAAAAAAAA",
+              "DocumentIndex": 1,
+              "Title": "index.cshtml",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\Service\\index.cshtml",
+              "RelativeDocumentMoniker": "GreenGardenClient\\Views\\Service\\index.cshtml",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\Service\\index.cshtml",
+              "RelativeToolTip": "GreenGardenClient\\Views\\Service\\index.cshtml",
+              "ViewState": "AQIAAMEAAAAAAAAAAAAAAM4AAAA9AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-11T07:53:51.085Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "OrderComboFood.cshtml",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\OrderManagement\\OrderComboFood.cshtml",
-              "RelativeDocumentMoniker": "GreenGardenClient\\Views\\OrderManagement\\OrderComboFood.cshtml",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\OrderManagement\\OrderComboFood.cshtml",
-              "RelativeToolTip": "GreenGardenClient\\Views\\OrderManagement\\OrderComboFood.cshtml",
-              "ViewState": "AQIAAEsDAAAAAAAAAAAAAE8DAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-11T07:52:43.446Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "OrderFood.cshtml",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\OrderManagement\\OrderFood.cshtml",
-              "RelativeDocumentMoniker": "GreenGardenClient\\Views\\OrderManagement\\OrderFood.cshtml",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\OrderManagement\\OrderFood.cshtml",
-              "RelativeToolTip": "GreenGardenClient\\Views\\OrderManagement\\OrderFood.cshtml",
-              "ViewState": "AQIAAB8DAAAAAAAAAAAAACsDAAAgAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-11T07:52:01.375Z",
+              "WhenOpened": "2024-10-15T15:26:00.645Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "OrderGear.cshtml",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\OrderManagement\\OrderGear.cshtml",
-              "RelativeDocumentMoniker": "GreenGardenClient\\Views\\OrderManagement\\OrderGear.cshtml",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\OrderManagement\\OrderGear.cshtml",
-              "RelativeToolTip": "GreenGardenClient\\Views\\OrderManagement\\OrderGear.cshtml",
-              "ViewState": "AQIAACUDAAAAAAAAAAAAAC4DAABTAAAA",
+              "Title": "Contact.cshtml",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\Common\\Contact.cshtml",
+              "RelativeDocumentMoniker": "GreenGardenClient\\Views\\Common\\Contact.cshtml",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\Common\\Contact.cshtml",
+              "RelativeToolTip": "GreenGardenClient\\Views\\Common\\Contact.cshtml",
+              "ViewState": "AQIAAMMAAAAAAAAAAAAAAMkAAAAyAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-11T07:50:32.22Z",
+              "WhenOpened": "2024-10-29T10:01:20.932Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "OrderOnline.cshtml",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\OrderManagement\\OrderOnline.cshtml",
-              "RelativeDocumentMoniker": "GreenGardenClient\\Views\\OrderManagement\\OrderOnline.cshtml",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\OrderManagement\\OrderOnline.cshtml",
-              "RelativeToolTip": "GreenGardenClient\\Views\\OrderManagement\\OrderOnline.cshtml",
-              "ViewState": "AQIAACoCAAAAAAAAAAAAAEACAAAhAAAA",
+              "DocumentIndex": 4,
+              "Title": "dichvu3.jpg - Bitmap [600x800, 24 bit, JPG]",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\services\\dichvu3.jpg",
+              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\services\\dichvu3.jpg",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\services\\dichvu3.jpg - Bitmap [600x800, 24 bit, JPG]",
+              "RelativeToolTip": "GreenGardenClient\\wwwroot\\images\\services\\dichvu3.jpg - Bitmap [600x800, 24 bit, JPG]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2024-11-11T12:52:27.21Z",
+              "EditorCaption": " - Bitmap [600x800, 24 bit, JPG]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "dichvu2.jpg - Bitmap [600x800, 24 bit, JPG]",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\services\\dichvu2.jpg",
+              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\services\\dichvu2.jpg",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\services\\dichvu2.jpg - Bitmap [600x800, 24 bit, JPG]",
+              "RelativeToolTip": "GreenGardenClient\\wwwroot\\images\\services\\dichvu2.jpg - Bitmap [600x800, 24 bit, JPG]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2024-11-11T12:52:26.411Z",
+              "EditorCaption": " - Bitmap [600x800, 24 bit, JPG]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "dichvu1.jpg - Bitmap [600x720, 24 bit, JPG]",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\services\\dichvu1.jpg",
+              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\services\\dichvu1.jpg",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\services\\dichvu1.jpg - Bitmap [600x720, 24 bit, JPG]",
+              "RelativeToolTip": "GreenGardenClient\\wwwroot\\images\\services\\dichvu1.jpg - Bitmap [600x720, 24 bit, JPG]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2024-11-11T12:52:25.668Z",
+              "EditorCaption": " - Bitmap [600x720, 24 bit, JPG]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Event.cshtml",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\Common\\Event.cshtml",
+              "RelativeDocumentMoniker": "GreenGardenClient\\Views\\Common\\Event.cshtml",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\Common\\Event.cshtml",
+              "RelativeToolTip": "GreenGardenClient\\Views\\Common\\Event.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABYAAAAyAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-01T15:28:29.755Z",
+              "WhenOpened": "2024-10-26T02:01:29.919Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "GreenGardenClient\\Views\\Home\\Index.cshtml",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "GreenGardenClient\\Views\\Home\\Index.cshtml",
+              "ViewState": "AQIAAGsBAAAAAAAAAAAowHQBAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-15T15:26:00.651Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "ba-chi-heo - Copy.jpg - Bitmap [600x315, 24 bit, JPG]",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\ba-chi-heo - Copy.jpg",
+              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\ba-chi-heo - Copy.jpg",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\ba-chi-heo - Copy.jpg - Bitmap [600x315, 24 bit, JPG]",
+              "RelativeToolTip": "GreenGardenClient\\wwwroot\\images\\ba-chi-heo - Copy.jpg - Bitmap [600x315, 24 bit, JPG]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2024-11-11T12:50:55.745Z",
+              "EditorCaption": " - Bitmap [600x315, 24 bit, JPG]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "\u0111\u1EADu t\u1EA9m h\u00E0nh - Copy (2).jpg - Bitmap [550x800, 24 bit, JPG]",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\\u0111\u1EADu t\u1EA9m h\u00E0nh - Copy (2).jpg",
+              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\\u0111\u1EADu t\u1EA9m h\u00E0nh - Copy (2).jpg",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\\u0111\u1EADu t\u1EA9m h\u00E0nh - Copy (2).jpg - Bitmap [550x800, 24 bit, JPG]",
+              "RelativeToolTip": "GreenGardenClient\\wwwroot\\images\\\u0111\u1EADu t\u1EA9m h\u00E0nh - Copy (2).jpg - Bitmap [550x800, 24 bit, JPG]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2024-11-11T12:50:54.309Z",
+              "EditorCaption": " - Bitmap [550x800, 24 bit, JPG]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "logo.jpg - Bitmap [500x500, 24 bit, JPG]",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\logo.jpg",
+              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\logo.jpg",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\logo.jpg - Bitmap [500x500, 24 bit, JPG]",
+              "RelativeToolTip": "GreenGardenClient\\wwwroot\\images\\logo.jpg - Bitmap [500x500, 24 bit, JPG]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2024-10-29T12:59:14.904Z",
+              "EditorCaption": " - Bitmap [500x500, 24 bit, JPG]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "owner.png - PNG [912x910, 32 bit, PNG]",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\owner.png",
+              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\owner.png",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\owner.png - PNG [912x910, 32 bit, PNG]",
+              "RelativeToolTip": "GreenGardenClient\\wwwroot\\images\\owner.png - PNG [912x910, 32 bit, PNG]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2024-11-11T12:50:12.838Z",
+              "EditorCaption": " - PNG [912x910, 32 bit, PNG]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "canh-ga-nuong - Copy.jpg - Bitmap [600x850, 24 bit, JPG]",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\canh-ga-nuong - Copy.jpg",
+              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\canh-ga-nuong - Copy.jpg",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\canh-ga-nuong - Copy.jpg - Bitmap [600x850, 24 bit, JPG]",
+              "RelativeToolTip": "GreenGardenClient\\wwwroot\\images\\canh-ga-nuong - Copy.jpg - Bitmap [600x850, 24 bit, JPG]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2024-10-29T12:59:18.331Z",
+              "EditorCaption": " - Bitmap [600x850, 24 bit, JPG]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "picture20.jpg - Bitmap [960x720, 24 bit, JPG]",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture20.jpg",
+              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\picture20.jpg",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture20.jpg - Bitmap [960x720, 24 bit, JPG]",
+              "RelativeToolTip": "GreenGardenClient\\wwwroot\\images\\picture20.jpg - Bitmap [960x720, 24 bit, JPG]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2024-10-29T12:59:00.367Z",
+              "EditorCaption": " - Bitmap [960x720, 24 bit, JPG]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "picture2.jpg - Bitmap [960x640, 24 bit, JPG]",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture2.jpg",
+              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\picture2.jpg",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture2.jpg - Bitmap [960x640, 24 bit, JPG]",
+              "RelativeToolTip": "GreenGardenClient\\wwwroot\\images\\picture2.jpg - Bitmap [960x640, 24 bit, JPG]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2024-10-29T12:58:59.661Z",
+              "EditorCaption": " - Bitmap [960x640, 24 bit, JPG]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "picture19.jpg - Bitmap [960x640, 24 bit, JPG]",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture19.jpg",
+              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\picture19.jpg",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture19.jpg - Bitmap [960x640, 24 bit, JPG]",
+              "RelativeToolTip": "GreenGardenClient\\wwwroot\\images\\picture19.jpg - Bitmap [960x640, 24 bit, JPG]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2024-10-29T12:58:57.772Z",
+              "EditorCaption": " - Bitmap [960x640, 24 bit, JPG]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "picture18.jpg - Bitmap [1276x956, 24 bit, JPG]",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture18.jpg",
+              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\picture18.jpg",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture18.jpg - Bitmap [1276x956, 24 bit, JPG]",
+              "RelativeToolTip": "GreenGardenClient\\wwwroot\\images\\picture18.jpg - Bitmap [1276x956, 24 bit, JPG]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2024-11-11T12:49:58.136Z",
+              "EditorCaption": " - Bitmap [1276x956, 24 bit, JPG]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "picture17.jpg - Bitmap [1440x1080, 24 bit, JPG]",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture17.jpg",
+              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\picture17.jpg",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture17.jpg - Bitmap [1440x1080, 24 bit, JPG]",
+              "RelativeToolTip": "GreenGardenClient\\wwwroot\\images\\picture17.jpg - Bitmap [1440x1080, 24 bit, JPG]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2024-11-11T12:49:57.34Z",
+              "EditorCaption": " - Bitmap [1440x1080, 24 bit, JPG]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "picture15.jpg - Bitmap [1440x1080, 24 bit, JPG]",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture15.jpg",
+              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\picture15.jpg",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture15.jpg - Bitmap [1440x1080, 24 bit, JPG]",
+              "RelativeToolTip": "GreenGardenClient\\wwwroot\\images\\picture15.jpg - Bitmap [1440x1080, 24 bit, JPG]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2024-11-11T12:49:56.68Z",
+              "EditorCaption": " - Bitmap [1440x1080, 24 bit, JPG]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "picture14.jpg - Bitmap [540x960, 24 bit, JPG]",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture14.jpg",
+              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\picture14.jpg",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture14.jpg - Bitmap [540x960, 24 bit, JPG]",
+              "RelativeToolTip": "GreenGardenClient\\wwwroot\\images\\picture14.jpg - Bitmap [540x960, 24 bit, JPG]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2024-11-11T12:49:56.016Z",
+              "EditorCaption": " - Bitmap [540x960, 24 bit, JPG]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "picture12.jpg - Bitmap [810x1440, 24 bit, JPG]",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture12.jpg",
+              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\picture12.jpg",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture12.jpg - Bitmap [810x1440, 24 bit, JPG]",
+              "RelativeToolTip": "GreenGardenClient\\wwwroot\\images\\picture12.jpg - Bitmap [810x1440, 24 bit, JPG]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2024-11-11T12:49:55.384Z",
+              "EditorCaption": " - Bitmap [810x1440, 24 bit, JPG]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "picture11.jpg - Bitmap [1440x1080, 24 bit, JPG]",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture11.jpg",
+              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\picture11.jpg",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture11.jpg - Bitmap [1440x1080, 24 bit, JPG]",
+              "RelativeToolTip": "GreenGardenClient\\wwwroot\\images\\picture11.jpg - Bitmap [1440x1080, 24 bit, JPG]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2024-11-11T12:49:54.816Z",
+              "EditorCaption": " - Bitmap [1440x1080, 24 bit, JPG]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "picture10.jpg - Bitmap [960x720, 24 bit, JPG]",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture10.jpg",
+              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\picture10.jpg",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture10.jpg - Bitmap [960x720, 24 bit, JPG]",
+              "RelativeToolTip": "GreenGardenClient\\wwwroot\\images\\picture10.jpg - Bitmap [960x720, 24 bit, JPG]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2024-11-11T12:49:54.032Z",
+              "EditorCaption": " - Bitmap [960x720, 24 bit, JPG]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "Picture1.jpg - Bitmap [1440x1080, 24 bit, JPG]",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\Picture1.jpg",
+              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\Picture1.jpg",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\Picture1.jpg - Bitmap [1440x1080, 24 bit, JPG]",
+              "RelativeToolTip": "GreenGardenClient\\wwwroot\\images\\Picture1.jpg - Bitmap [1440x1080, 24 bit, JPG]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2024-11-11T12:49:53.213Z",
+              "EditorCaption": " - Bitmap [1440x1080, 24 bit, JPG]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "picture5.jpg - Bitmap [720x960, 24 bit, JPG]",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture5.jpg",
+              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\picture5.jpg",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture5.jpg - Bitmap [720x960, 24 bit, JPG]",
+              "RelativeToolTip": "GreenGardenClient\\wwwroot\\images\\picture5.jpg - Bitmap [720x960, 24 bit, JPG]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2024-10-29T12:59:02.585Z",
+              "EditorCaption": " - Bitmap [720x960, 24 bit, JPG]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "picture4.jpg - Bitmap [1440x1080, 24 bit, JPG]",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture4.jpg",
+              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\picture4.jpg",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture4.jpg - Bitmap [1440x1080, 24 bit, JPG]",
+              "RelativeToolTip": "GreenGardenClient\\wwwroot\\images\\picture4.jpg - Bitmap [1440x1080, 24 bit, JPG]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2024-10-29T12:59:01.832Z",
+              "EditorCaption": " - Bitmap [1440x1080, 24 bit, JPG]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "picture3.jpg - Bitmap [2048x2048, 24 bit, JPG]",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture3.jpg",
+              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\picture3.jpg",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture3.jpg - Bitmap [2048x2048, 24 bit, JPG]",
+              "RelativeToolTip": "GreenGardenClient\\wwwroot\\images\\picture3.jpg - Bitmap [2048x2048, 24 bit, JPG]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2024-10-29T12:59:01.133Z",
+              "EditorCaption": " - Bitmap [2048x2048, 24 bit, JPG]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "picture7.jpg - Bitmap [1440x1080, 24 bit, JPG]",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture7.jpg",
+              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\picture7.jpg",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture7.jpg - Bitmap [1440x1080, 24 bit, JPG]",
+              "RelativeToolTip": "GreenGardenClient\\wwwroot\\images\\picture7.jpg - Bitmap [1440x1080, 24 bit, JPG]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2024-11-11T12:49:45.392Z",
+              "EditorCaption": " - Bitmap [1440x1080, 24 bit, JPG]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "picture9.jpg - Bitmap [960x720, 24 bit, JPG]",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture9.jpg",
+              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\picture9.jpg",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture9.jpg - Bitmap [960x720, 24 bit, JPG]",
+              "RelativeToolTip": "GreenGardenClient\\wwwroot\\images\\picture9.jpg - Bitmap [960x720, 24 bit, JPG]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2024-10-29T12:59:04.592Z",
+              "EditorCaption": " - Bitmap [960x720, 24 bit, JPG]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "UpdateComboFood.cshtml",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\OrderManagement\\UpdateComboFood.cshtml",
+              "RelativeDocumentMoniker": "GreenGardenClient\\Views\\OrderManagement\\UpdateComboFood.cshtml",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\OrderManagement\\UpdateComboFood.cshtml",
+              "RelativeToolTip": "GreenGardenClient\\Views\\OrderManagement\\UpdateComboFood.cshtml",
+              "ViewState": "AQIAACUCAAAAAAAAAAAcwDYCAAAtAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-11T10:11:07.083Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
               "Title": "CreateOrder.cshtml",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\OrderManagement\\CreateOrder.cshtml",
               "RelativeDocumentMoniker": "GreenGardenClient\\Views\\OrderManagement\\CreateOrder.cshtml",
@@ -499,25 +799,83 @@
               "RelativeToolTip": "GreenGardenClient\\Views\\OrderManagement\\CreateOrder.cshtml",
               "ViewState": "AQIAACcCAAAAAAAAAAAAAEkCAAAqAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-11T03:15:09.159Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-11T03:15:09.159Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "UpdateComboFood.cshtml",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\OrderManagement\\UpdateComboFood.cshtml",
-              "RelativeDocumentMoniker": "GreenGardenClient\\Views\\OrderManagement\\UpdateComboFood.cshtml",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\OrderManagement\\UpdateComboFood.cshtml",
-              "RelativeToolTip": "GreenGardenClient\\Views\\OrderManagement\\UpdateComboFood.cshtml",
-              "ViewState": "AQIAACUCAAAAAAAAAAAcwDkCAAAhAAAA",
+              "DocumentIndex": 34,
+              "Title": "OrderComboFood.cshtml",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\OrderManagement\\OrderComboFood.cshtml",
+              "RelativeDocumentMoniker": "GreenGardenClient\\Views\\OrderManagement\\OrderComboFood.cshtml",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\OrderManagement\\OrderComboFood.cshtml",
+              "RelativeToolTip": "GreenGardenClient\\Views\\OrderManagement\\OrderComboFood.cshtml",
+              "ViewState": "AQIAAEsDAAAAAAAAAAAAAE8DAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-11T10:11:07.083Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-11T07:52:43.446Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 27,
+              "Title": "picture8.jpg - Bitmap [1440x1080, 24 bit, JPG]",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture8.jpg",
+              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\picture8.jpg",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture8.jpg - Bitmap [1440x1080, 24 bit, JPG]",
+              "RelativeToolTip": "GreenGardenClient\\wwwroot\\images\\picture8.jpg - Bitmap [1440x1080, 24 bit, JPG]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2024-10-29T12:59:03.952Z",
+              "EditorCaption": " - Bitmap [1440x1080, 24 bit, JPG]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "OrderOnline.cshtml",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\OrderManagement\\OrderOnline.cshtml",
+              "RelativeDocumentMoniker": "GreenGardenClient\\Views\\OrderManagement\\OrderOnline.cshtml",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\OrderManagement\\OrderOnline.cshtml",
+              "RelativeToolTip": "GreenGardenClient\\Views\\OrderManagement\\OrderOnline.cshtml",
+              "ViewState": "AQIAACoCAAAAAAAAAAAAAEACAAAhAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-01T15:28:29.755Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "OrderGear.cshtml",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\OrderManagement\\OrderGear.cshtml",
+              "RelativeDocumentMoniker": "GreenGardenClient\\Views\\OrderManagement\\OrderGear.cshtml",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\OrderManagement\\OrderGear.cshtml",
+              "RelativeToolTip": "GreenGardenClient\\Views\\OrderManagement\\OrderGear.cshtml",
+              "ViewState": "AQIAACUDAAAAAAAAAAAAAC4DAABTAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-11T07:50:32.22Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "OrderFood.cshtml",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\OrderManagement\\OrderFood.cshtml",
+              "RelativeDocumentMoniker": "GreenGardenClient\\Views\\OrderManagement\\OrderFood.cshtml",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\OrderManagement\\OrderFood.cshtml",
+              "RelativeToolTip": "GreenGardenClient\\Views\\OrderManagement\\OrderFood.cshtml",
+              "ViewState": "AQIAAB8DAAAAAAAAAAAAACsDAAAgAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-11T07:52:01.375Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "OrderCombo.cshtml",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\OrderManagement\\OrderCombo.cshtml",
+              "RelativeDocumentMoniker": "GreenGardenClient\\Views\\OrderManagement\\OrderCombo.cshtml",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\OrderManagement\\OrderCombo.cshtml",
+              "RelativeToolTip": "GreenGardenClient\\Views\\OrderManagement\\OrderCombo.cshtml",
+              "ViewState": "AQIAAHoDAAAAAAAAAAAAADADAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-11T07:53:51.085Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
               "Title": "UpdateGear.cshtml",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\OrderManagement\\UpdateGear.cshtml",
               "RelativeDocumentMoniker": "GreenGardenClient\\Views\\OrderManagement\\UpdateGear.cshtml",
@@ -525,12 +883,11 @@
               "RelativeToolTip": "GreenGardenClient\\Views\\OrderManagement\\UpdateGear.cshtml",
               "ViewState": "AQIAAGACAAAAAAAAAAAAAGQCAAAgAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-11T10:18:32.168Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-11T10:18:32.168Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 37,
               "Title": "UpdateGearChangeDate.cshtml",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\OrderManagement\\UpdateGearChangeDate.cshtml",
               "RelativeDocumentMoniker": "GreenGardenClient\\Views\\OrderManagement\\UpdateGearChangeDate.cshtml",
@@ -538,12 +895,11 @@
               "RelativeToolTip": "GreenGardenClient\\Views\\OrderManagement\\UpdateGearChangeDate.cshtml",
               "ViewState": "AQIAAFsCAAAAAAAAAAAAAGoCAAAgAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-02T08:20:39.437Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-02T08:20:39.437Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 38,
               "Title": "UpdateTicket.cshtml",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\OrderManagement\\UpdateTicket.cshtml",
               "RelativeDocumentMoniker": "GreenGardenClient\\Views\\OrderManagement\\UpdateTicket.cshtml",
@@ -551,12 +907,11 @@
               "RelativeToolTip": "GreenGardenClient\\Views\\OrderManagement\\UpdateTicket.cshtml",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-11T10:19:04.023Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-11T10:19:04.023Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 39,
               "Title": "UpdateCombo.cshtml",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\OrderManagement\\UpdateCombo.cshtml",
               "RelativeDocumentMoniker": "GreenGardenClient\\Views\\OrderManagement\\UpdateCombo.cshtml",
@@ -564,12 +919,11 @@
               "RelativeToolTip": "GreenGardenClient\\Views\\OrderManagement\\UpdateCombo.cshtml",
               "ViewState": "AQIAANsAAAAAAAAAAAAAABAAAABaAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-11T10:16:15.88Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-11T10:16:15.88Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 40,
               "Title": "OrderTicket.cshtml",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\OrderManagement\\OrderTicket.cshtml",
               "RelativeDocumentMoniker": "GreenGardenClient\\Views\\OrderManagement\\OrderTicket.cshtml",
@@ -577,12 +931,11 @@
               "RelativeToolTip": "GreenGardenClient\\Views\\OrderManagement\\OrderTicket.cshtml",
               "ViewState": "AQIAACUCAAAAAAAAAAAcwHgCAAAoAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-11T06:21:12.641Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-11T06:21:12.641Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 41,
               "Title": "OrderManagementController.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Controllers\\AdminController\\OrderManagementController.cs",
               "RelativeDocumentMoniker": "GreenGardenClient\\Controllers\\AdminController\\OrderManagementController.cs",
@@ -590,12 +943,11 @@
               "RelativeToolTip": "GreenGardenClient\\Controllers\\AdminController\\OrderManagementController.cs",
               "ViewState": "AQIAADQCAAAAAAAAAAAswCUCAAARAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-04T08:18:42.727Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-04T08:18:42.727Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 44,
               "Title": "OrderCheckOut.cshtml",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\OrderManagement\\OrderCheckOut.cshtml",
               "RelativeDocumentMoniker": "GreenGardenClient\\Views\\OrderManagement\\OrderCheckOut.cshtml",
@@ -603,12 +955,11 @@
               "RelativeToolTip": "GreenGardenClient\\Views\\OrderManagement\\OrderCheckOut.cshtml",
               "ViewState": "AQIAACUCAAAAAAAAAAAAADcCAABDAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-11T07:10:12.815Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-11T07:10:12.815Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 43,
               "Title": "Cart.cshtml",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\OrderManagement\\Cart.cshtml",
               "RelativeDocumentMoniker": "GreenGardenClient\\Views\\OrderManagement\\Cart.cshtml",
@@ -616,12 +967,11 @@
               "RelativeToolTip": "GreenGardenClient\\Views\\OrderManagement\\Cart.cshtml",
               "ViewState": "AQIAAFoCAAAAAAAAAAAAAGcCAAA8AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-03T05:30:20.521Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-03T05:30:20.521Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 42,
               "Title": "Cart.cshtml",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\Service\\Cart.cshtml",
               "RelativeDocumentMoniker": "GreenGardenClient\\Views\\Service\\Cart.cshtml",
@@ -629,12 +979,11 @@
               "RelativeToolTip": "GreenGardenClient\\Views\\Service\\Cart.cshtml",
               "ViewState": "AQIAAMAAAAAAAAAAAAAAANEAAAA1AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-10-22T09:24:51.204Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-22T09:24:51.204Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 47,
               "Title": "ChangeUsagedate.cshtml",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\OrderManagement\\ChangeUsagedate.cshtml",
               "RelativeDocumentMoniker": "GreenGardenClient\\Views\\OrderManagement\\ChangeUsagedate.cshtml",
@@ -646,7 +995,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 45,
               "Title": "OrderVM.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Models\\OrderVM.cs",
               "RelativeDocumentMoniker": "GreenGardenClient\\Models\\OrderVM.cs",
@@ -654,12 +1003,11 @@
               "RelativeToolTip": "GreenGardenClient\\Models\\OrderVM.cs",
               "ViewState": "AQIAACIAAAAAAAAAAAA2wBMAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-16T03:33:40.404Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-16T03:33:40.404Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 50,
               "Title": "EmployeeManagementController.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Controllers\\AdminController\\EmployeeManagementController.cs",
               "RelativeDocumentMoniker": "GreenGardenClient\\Controllers\\AdminController\\EmployeeManagementController.cs",
@@ -671,7 +1019,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 46,
               "Title": "OrderDetail.cshtml",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\OrderManagement\\OrderDetail.cshtml",
               "RelativeDocumentMoniker": "GreenGardenClient\\Views\\OrderManagement\\OrderDetail.cshtml",
@@ -683,7 +1031,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 48,
               "Title": "ServiceController.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Controllers\\ServiceController.cs",
               "RelativeDocumentMoniker": "GreenGardenClient\\Controllers\\ServiceController.cs",
@@ -695,7 +1043,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 49,
               "Title": "CartHub.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Hubs\\CartHub.cs",
               "RelativeDocumentMoniker": "GreenGardenClient\\Hubs\\CartHub.cs",
@@ -707,7 +1055,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 51,
               "Title": "DepositVM.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Models\\DepositVM.cs",
               "RelativeDocumentMoniker": "GreenGardenClient\\Models\\DepositVM.cs",
@@ -719,7 +1067,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 52,
               "Title": "OrderCancel.cshtml",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\OrderManagement\\OrderCancel.cshtml",
               "RelativeDocumentMoniker": "GreenGardenClient\\Views\\OrderManagement\\OrderCancel.cshtml",
@@ -731,7 +1079,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 53,
               "Title": "OrderUsing.cshtml",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\OrderManagement\\OrderUsing.cshtml",
               "RelativeDocumentMoniker": "GreenGardenClient\\Views\\OrderManagement\\OrderUsing.cshtml",
@@ -743,7 +1091,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 54,
               "Title": "OrdertToPost.cshtml",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\OrderManagement\\OrdertToPost.cshtml",
               "RelativeDocumentMoniker": "GreenGardenClient\\Views\\OrderManagement\\OrdertToPost.cshtml",
@@ -755,7 +1103,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 55,
               "Title": "OrderDetailVM.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Models\\OrderDetailVM.cs",
               "RelativeDocumentMoniker": "GreenGardenClient\\Models\\OrderDetailVM.cs",
@@ -767,7 +1115,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 56,
               "Title": "CampingGearDetail.cshtml",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\Service\\CampingGearDetail.cshtml",
               "RelativeDocumentMoniker": "GreenGardenClient\\Views\\Service\\CampingGearDetail.cshtml",
@@ -779,7 +1127,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 59,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\DashBoard\\Index.cshtml",
               "RelativeDocumentMoniker": "GreenGardenClient\\Views\\DashBoard\\Index.cshtml",
@@ -791,7 +1139,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 62,
               "Title": "Register.cshtml",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\Common\\Register.cshtml",
               "RelativeDocumentMoniker": "GreenGardenClient\\Views\\Common\\Register.cshtml",
@@ -803,7 +1151,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 58,
               "Title": "OrderFoodAndDrink.cshtml",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\Service\\OrderFoodAndDrink.cshtml",
               "RelativeDocumentMoniker": "GreenGardenClient\\Views\\Service\\OrderFoodAndDrink.cshtml",
@@ -815,7 +1163,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 57,
               "Title": "OrderGear.cshtml",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\Service\\OrderGear.cshtml",
               "RelativeDocumentMoniker": "GreenGardenClient\\Views\\Service\\OrderGear.cshtml",
@@ -827,7 +1175,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 60,
               "Title": "UpdateProfile.cshtml",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\Common\\UpdateProfile.cshtml",
               "RelativeDocumentMoniker": "GreenGardenClient\\Views\\Common\\UpdateProfile.cshtml",
@@ -839,7 +1187,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 61,
               "Title": "ResetPassword.cshtml",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\Common\\ResetPassword.cshtml",
               "RelativeDocumentMoniker": "GreenGardenClient\\Views\\Common\\ResetPassword.cshtml",
@@ -851,19 +1199,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\Home\\Index.cshtml",
-              "RelativeDocumentMoniker": "GreenGardenClient\\Views\\Home\\Index.cshtml",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\Home\\Index.cshtml",
-              "RelativeToolTip": "GreenGardenClient\\Views\\Home\\Index.cshtml",
-              "ViewState": "AQIAAEMAAAAAAAAAAAAAAEgAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-10-15T15:26:00.651Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 63,
               "Title": "Login.cshtml",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\Common\\Login.cshtml",
               "RelativeDocumentMoniker": "GreenGardenClient\\Views\\Common\\Login.cshtml",
@@ -875,31 +1211,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
-              "Title": "Event.cshtml",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\Common\\Event.cshtml",
-              "RelativeDocumentMoniker": "GreenGardenClient\\Views\\Common\\Event.cshtml",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\Common\\Event.cshtml",
-              "RelativeToolTip": "GreenGardenClient\\Views\\Common\\Event.cshtml",
-              "ViewState": "AQIAAC0AAAAAAAAAAAAAADkAAAA5AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-10-26T02:01:29.919Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 38,
-              "Title": "Contact.cshtml",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\Common\\Contact.cshtml",
-              "RelativeDocumentMoniker": "GreenGardenClient\\Views\\Common\\Contact.cshtml",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\Common\\Contact.cshtml",
-              "RelativeToolTip": "GreenGardenClient\\Views\\Common\\Contact.cshtml",
-              "ViewState": "AQIAAC0AAAAAAAAAAAAAADkAAAAkAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-10-29T10:01:20.932Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 64,
               "Title": "ChangePassword.cshtml",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\Common\\ChangePassword.cshtml",
               "RelativeDocumentMoniker": "GreenGardenClient\\Views\\Common\\ChangePassword.cshtml",
@@ -911,7 +1223,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 65,
               "Title": "Checkout.cshtml",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\Service\\Checkout.cshtml",
               "RelativeDocumentMoniker": "GreenGardenClient\\Views\\Service\\Checkout.cshtml",
@@ -923,7 +1235,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 66,
               "Title": "ComboDetail.cshtml",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\Service\\ComboDetail.cshtml",
               "RelativeDocumentMoniker": "GreenGardenClient\\Views\\Service\\ComboDetail.cshtml",
@@ -935,7 +1247,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 67,
               "Title": "ComboList.cshtml",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\Service\\ComboList.cshtml",
               "RelativeDocumentMoniker": "GreenGardenClient\\Views\\Service\\ComboList.cshtml",
@@ -947,7 +1259,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 68,
               "Title": "FoodDetail.cshtml",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\Service\\FoodDetail.cshtml",
               "RelativeDocumentMoniker": "GreenGardenClient\\Views\\Service\\FoodDetail.cshtml",
@@ -959,19 +1271,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 44,
-              "Title": "index.cshtml",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\Service\\index.cshtml",
-              "RelativeDocumentMoniker": "GreenGardenClient\\Views\\Service\\index.cshtml",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\Service\\index.cshtml",
-              "RelativeToolTip": "GreenGardenClient\\Views\\Service\\index.cshtml",
-              "ViewState": "AQIAAB8AAAAAAAAAAAAAAD0AAAA5AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-10-15T15:26:00.645Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 45,
+              "DocumentIndex": 69,
               "Title": "OrderDetailHistory.cshtml",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\Service\\OrderDetailHistory.cshtml",
               "RelativeDocumentMoniker": "GreenGardenClient\\Views\\Service\\OrderDetailHistory.cshtml",
@@ -983,7 +1283,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 70,
               "Title": "OrderTicket.cshtml",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\Service\\OrderTicket.cshtml",
               "RelativeDocumentMoniker": "GreenGardenClient\\Views\\Service\\OrderTicket.cshtml",
@@ -995,7 +1295,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 47,
+              "DocumentIndex": 71,
               "Title": "OrderHistory.cshtml",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\Service\\OrderHistory.cshtml",
               "RelativeDocumentMoniker": "GreenGardenClient\\Views\\Service\\OrderHistory.cshtml",
@@ -1007,7 +1307,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 48,
+              "DocumentIndex": 72,
               "Title": "CommonController.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Controllers\\CommonController.cs",
               "RelativeDocumentMoniker": "GreenGardenClient\\Controllers\\CommonController.cs",
@@ -1019,7 +1319,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 49,
+              "DocumentIndex": 73,
               "Title": "FoodAndDrinkVM.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Models\\FoodAndDrinkVM.cs",
               "RelativeDocumentMoniker": "GreenGardenClient\\Models\\FoodAndDrinkVM.cs",
@@ -1031,7 +1331,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 50,
+              "DocumentIndex": 74,
               "Title": "TicketDetail.cshtml",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\Service\\TicketDetail.cshtml",
               "RelativeDocumentMoniker": "GreenGardenClient\\Views\\Service\\TicketDetail.cshtml",
@@ -1043,7 +1343,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 51,
+              "DocumentIndex": 75,
               "Title": "HomeController.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "GreenGardenClient\\Controllers\\HomeController.cs",
@@ -1055,7 +1355,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 52,
+              "DocumentIndex": 76,
               "Title": "LoginVM.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Models\\LoginVM.cs",
               "RelativeDocumentMoniker": "GreenGardenClient\\Models\\LoginVM.cs",
@@ -1067,7 +1367,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 53,
+              "DocumentIndex": 77,
               "Title": "Account.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Models\\Account.cs",
               "RelativeDocumentMoniker": "GreenGardenClient\\Models\\Account.cs",
@@ -1079,7 +1379,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 55,
+              "DocumentIndex": 79,
               "Title": "CartItem.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Models\\CartItem.cs",
               "RelativeDocumentMoniker": "GreenGardenClient\\Models\\CartItem.cs",
@@ -1091,7 +1391,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 56,
+              "DocumentIndex": 80,
               "Title": "CheckOut.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Models\\CheckOut.cs",
               "RelativeDocumentMoniker": "GreenGardenClient\\Models\\CheckOut.cs",
@@ -1103,7 +1403,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 54,
+              "DocumentIndex": 78,
               "Title": "ErrorController.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Controllers\\Error\\ErrorController.cs",
               "RelativeDocumentMoniker": "GreenGardenClient\\Controllers\\Error\\ErrorController.cs",
@@ -1115,7 +1415,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 57,
+              "DocumentIndex": 81,
               "Title": "ba-chi-bo-my.jpg - Bitmap [600x800, 24 bit, JPG]",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\ba-chi-bo-my.jpg",
               "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\ba-chi-bo-my.jpg",
@@ -1126,161 +1426,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 58,
-              "Title": "canh-ga-nuong - Copy.jpg - Bitmap [600x850, 24 bit, JPG]",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\canh-ga-nuong - Copy.jpg",
-              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\canh-ga-nuong - Copy.jpg",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\canh-ga-nuong - Copy.jpg - Bitmap [600x850, 24 bit, JPG]",
-              "RelativeToolTip": "..\\..\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\canh-ga-nuong - Copy.jpg - Bitmap [600x850, 24 bit, JPG]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
-              "WhenOpened": "2024-10-29T12:59:18.331Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 59,
-              "Title": "doan1.jpg - Bitmap [600x400, 24 bit, JPG]",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\doan1.jpg",
-              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\doan1.jpg",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\doan1.jpg - Bitmap [600x400, 24 bit, JPG]",
-              "RelativeToolTip": "..\\..\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\doan1.jpg - Bitmap [600x400, 24 bit, JPG]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
-              "WhenOpened": "2024-10-29T12:59:17.677Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 60,
-              "Title": "img_1.jpg - Bitmap [600x800, 24 bit, JPG]",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\img_1.jpg",
-              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\img_1.jpg",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\img_1.jpg - Bitmap [600x800, 24 bit, JPG]",
-              "RelativeToolTip": "..\\..\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\img_1.jpg - Bitmap [600x800, 24 bit, JPG]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
-              "WhenOpened": "2024-10-29T12:59:17.109Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 61,
-              "Title": "img_2 - Copy.jpg - Bitmap [600x800, 24 bit, JPG]",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\img_2 - Copy.jpg",
-              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\img_2 - Copy.jpg",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\img_2 - Copy.jpg - Bitmap [600x800, 24 bit, JPG]",
-              "RelativeToolTip": "..\\..\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\img_2 - Copy.jpg - Bitmap [600x800, 24 bit, JPG]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
-              "WhenOpened": "2024-10-29T12:59:16.513Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 62,
-              "Title": "img_2.jpg - Bitmap [600x800, 24 bit, JPG]",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\img_2.jpg",
-              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\img_2.jpg",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\img_2.jpg - Bitmap [600x800, 24 bit, JPG]",
-              "RelativeToolTip": "..\\..\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\img_2.jpg - Bitmap [600x800, 24 bit, JPG]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
-              "WhenOpened": "2024-10-29T12:59:15.983Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 63,
-              "Title": "logo.jpg - Bitmap [500x500, 24 bit, JPG]",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\logo.jpg",
-              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\logo.jpg",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\logo.jpg - Bitmap [500x500, 24 bit, JPG]",
-              "RelativeToolTip": "..\\..\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\logo.jpg - Bitmap [500x500, 24 bit, JPG]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
-              "WhenOpened": "2024-10-29T12:59:14.904Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 64,
-              "Title": "loakeo.jpg - Bitmap [1000x1000, 24 bit, JPG]",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\loakeo.jpg",
-              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\loakeo.jpg",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\loakeo.jpg - Bitmap [1000x1000, 24 bit, JPG]",
-              "RelativeToolTip": "..\\..\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\loakeo.jpg - Bitmap [1000x1000, 24 bit, JPG]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
-              "WhenOpened": "2024-10-29T12:59:14.205Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 65,
-              "Title": "p20.jpg - Bitmap [640x960, 24 bit, JPG]",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\p20.jpg",
-              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\p20.jpg",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\p20.jpg - Bitmap [640x960, 24 bit, JPG]",
-              "RelativeToolTip": "..\\..\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\p20.jpg - Bitmap [640x960, 24 bit, JPG]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
-              "WhenOpened": "2024-10-29T12:59:12.732Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 66,
-              "Title": "p21.jpg - Bitmap [1080x1440, 24 bit, JPG]",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\p21.jpg",
-              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\p21.jpg",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\p21.jpg - Bitmap [1080x1440, 24 bit, JPG]",
-              "RelativeToolTip": "..\\..\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\p21.jpg - Bitmap [1080x1440, 24 bit, JPG]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
-              "WhenOpened": "2024-10-29T12:59:12.205Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 67,
-              "Title": "p22.jpg - Bitmap [1500x1000, 24 bit, JPG]",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\p22.jpg",
-              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\p22.jpg",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\p22.jpg - Bitmap [1500x1000, 24 bit, JPG]",
-              "RelativeToolTip": "..\\..\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\p22.jpg - Bitmap [1500x1000, 24 bit, JPG]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
-              "WhenOpened": "2024-10-29T12:59:11.614Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 68,
-              "Title": "p23.jpg - Bitmap [1440x960, 24 bit, JPG]",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\p23.jpg",
-              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\p23.jpg",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\p23.jpg - Bitmap [1440x960, 24 bit, JPG]",
-              "RelativeToolTip": "..\\..\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\p23.jpg - Bitmap [1440x960, 24 bit, JPG]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
-              "WhenOpened": "2024-10-29T12:59:10.765Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 69,
-              "Title": "p25.jpg - Bitmap [960x640, 24 bit, JPG]",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\p25.jpg",
-              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\p25.jpg",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\p25.jpg - Bitmap [960x640, 24 bit, JPG]",
-              "RelativeToolTip": "..\\..\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\p25.jpg - Bitmap [960x640, 24 bit, JPG]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
-              "WhenOpened": "2024-10-29T12:59:10.093Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 74,
-              "Title": "service.jpg - Bitmap [1290x914, 24 bit, JPG]",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\service.jpg",
-              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\service.jpg",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\service.jpg - Bitmap [1290x914, 24 bit, JPG]",
-              "RelativeToolTip": "..\\..\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\service.jpg - Bitmap [1290x914, 24 bit, JPG]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
-              "WhenOpened": "2024-10-29T12:59:06.028Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 73,
-              "Title": "picture9.jpg - Bitmap [960x720, 24 bit, JPG]",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture9.jpg",
-              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\picture9.jpg",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture9.jpg - Bitmap [960x720, 24 bit, JPG]",
-              "RelativeToolTip": "..\\..\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture9.jpg - Bitmap [960x720, 24 bit, JPG]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
-              "WhenOpened": "2024-10-29T12:59:04.592Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 72,
+              "DocumentIndex": 82,
               "Title": "picture6.jpg - Bitmap [1440x1080, 24 bit, JPG]",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture6.jpg",
               "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\picture6.jpg",
@@ -1291,84 +1437,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 71,
-              "Title": "picture4.jpg - Bitmap [1440x1080, 24 bit, JPG]",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture4.jpg",
-              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\picture4.jpg",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture4.jpg - Bitmap [1440x1080, 24 bit, JPG]",
-              "RelativeToolTip": "..\\..\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture4.jpg - Bitmap [1440x1080, 24 bit, JPG]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
-              "WhenOpened": "2024-10-29T12:59:01.832Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 70,
-              "Title": "picture2.jpg - Bitmap [960x640, 24 bit, JPG]",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture2.jpg",
-              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\picture2.jpg",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture2.jpg - Bitmap [960x640, 24 bit, JPG]",
-              "RelativeToolTip": "..\\..\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture2.jpg - Bitmap [960x640, 24 bit, JPG]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
-              "WhenOpened": "2024-10-29T12:58:59.661Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 75,
-              "Title": "picture8.jpg - Bitmap [1440x1080, 24 bit, JPG]",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture8.jpg",
-              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\picture8.jpg",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture8.jpg - Bitmap [1440x1080, 24 bit, JPG]",
-              "RelativeToolTip": "..\\..\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture8.jpg - Bitmap [1440x1080, 24 bit, JPG]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
-              "WhenOpened": "2024-10-29T12:59:03.952Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 76,
-              "Title": "picture5.jpg - Bitmap [720x960, 24 bit, JPG]",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture5.jpg",
-              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\picture5.jpg",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture5.jpg - Bitmap [720x960, 24 bit, JPG]",
-              "RelativeToolTip": "..\\..\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture5.jpg - Bitmap [720x960, 24 bit, JPG]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
-              "WhenOpened": "2024-10-29T12:59:02.585Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 77,
-              "Title": "picture3.jpg - Bitmap [2048x2048, 24 bit, JPG]",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture3.jpg",
-              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\picture3.jpg",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture3.jpg - Bitmap [2048x2048, 24 bit, JPG]",
-              "RelativeToolTip": "..\\..\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture3.jpg - Bitmap [2048x2048, 24 bit, JPG]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
-              "WhenOpened": "2024-10-29T12:59:01.133Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 78,
-              "Title": "picture20.jpg - Bitmap [960x720, 24 bit, JPG]",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture20.jpg",
-              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\picture20.jpg",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture20.jpg - Bitmap [960x720, 24 bit, JPG]",
-              "RelativeToolTip": "..\\..\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture20.jpg - Bitmap [960x720, 24 bit, JPG]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
-              "WhenOpened": "2024-10-29T12:59:00.367Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 79,
-              "Title": "picture19.jpg - Bitmap [960x640, 24 bit, JPG]",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture19.jpg",
-              "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\images\\picture19.jpg",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture19.jpg - Bitmap [960x640, 24 bit, JPG]",
-              "RelativeToolTip": "..\\..\\client\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\picture19.jpg - Bitmap [960x640, 24 bit, JPG]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
-              "WhenOpened": "2024-10-29T12:58:57.772Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 80,
+              "DocumentIndex": 83,
               "Title": "ComboDetailVM.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Models\\ComboDetailVM.cs",
               "RelativeDocumentMoniker": "GreenGardenClient\\Models\\ComboDetailVM.cs",
@@ -1380,7 +1449,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 81,
+              "DocumentIndex": 84,
               "Title": "ComboFoodDetailVM.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Models\\ComboFoodDetailVM.cs",
               "RelativeDocumentMoniker": "GreenGardenClient\\Models\\ComboFoodDetailVM.cs",
@@ -1392,7 +1461,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 82,
+              "DocumentIndex": 85,
               "Title": "ComboFoodVM.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Models\\ComboFoodVM.cs",
               "RelativeDocumentMoniker": "GreenGardenClient\\Models\\ComboFoodVM.cs",
@@ -1404,7 +1473,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 83,
+              "DocumentIndex": 86,
               "Title": "main.css",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\css\\main.css",
               "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\css\\main.css",
@@ -1416,7 +1485,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 84,
+              "DocumentIndex": 87,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Program.cs",
               "RelativeDocumentMoniker": "GreenGardenClient\\Program.cs",
@@ -1428,7 +1497,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 85,
+              "DocumentIndex": 88,
               "Title": "DashBoardController.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Controllers\\AdminController\\DashBoardController.cs",
               "RelativeDocumentMoniker": "GreenGardenClient\\Controllers\\AdminController\\DashBoardController.cs",
@@ -1440,7 +1509,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 86,
+              "DocumentIndex": 89,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\Error\\Index.cshtml",
               "RelativeDocumentMoniker": "GreenGardenClient\\Views\\Error\\Index.cshtml",
@@ -1452,7 +1521,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 87,
+              "DocumentIndex": 90,
               "Title": "TicketVM.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Models\\TicketVM.cs",
               "RelativeDocumentMoniker": "GreenGardenClient\\Models\\TicketVM.cs",
@@ -1464,7 +1533,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 88,
+              "DocumentIndex": 91,
               "Title": "TicketCategoryVM.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Models\\TicketCategoryVM.cs",
               "RelativeDocumentMoniker": "GreenGardenClient\\Models\\TicketCategoryVM.cs",
@@ -1476,7 +1545,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 89,
+              "DocumentIndex": 92,
               "Title": "UserRegisterVM.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Models\\UserRegisterVM.cs",
               "RelativeDocumentMoniker": "GreenGardenClient\\Models\\UserRegisterVM.cs",
@@ -1488,7 +1557,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 90,
+              "DocumentIndex": 93,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\EmployeeManagement\\Index.cshtml",
               "RelativeDocumentMoniker": "GreenGardenClient\\Views\\EmployeeManagement\\Index.cshtml",
@@ -1500,7 +1569,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 91,
+              "DocumentIndex": 94,
               "Title": "CreateComboOrderRequest.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Models\\CreateComboOrderRequest.cs",
               "RelativeDocumentMoniker": "GreenGardenClient\\Models\\CreateComboOrderRequest.cs",
@@ -1512,7 +1581,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 92,
+              "DocumentIndex": 95,
               "Title": "GearVM.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Models\\GearVM.cs",
               "RelativeDocumentMoniker": "GreenGardenClient\\Models\\GearVM.cs",
@@ -1524,7 +1593,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 94,
+              "DocumentIndex": 97,
               "Title": "ErrorViewModel.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Models\\ErrorViewModel.cs",
               "RelativeDocumentMoniker": "GreenGardenClient\\Models\\ErrorViewModel.cs",
@@ -1536,7 +1605,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 93,
+              "DocumentIndex": 96,
               "Title": "CreateUniqueOrderRequest.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Models\\CreateUniqueOrderRequest.cs",
               "RelativeDocumentMoniker": "GreenGardenClient\\Models\\CreateUniqueOrderRequest.cs",
@@ -1548,7 +1617,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 95,
+              "DocumentIndex": 98,
               "Title": "ActivityVM.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Models\\ActivityVM.cs",
               "RelativeDocumentMoniker": "GreenGardenClient\\Models\\ActivityVM.cs",
@@ -1560,7 +1629,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 96,
+              "DocumentIndex": 99,
               "Title": "ComboVM.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Models\\ComboVM.cs",
               "RelativeDocumentMoniker": "GreenGardenClient\\Models\\ComboVM.cs",
@@ -1572,7 +1641,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 97,
+              "DocumentIndex": 100,
               "Title": "GearCategoryVM.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Models\\GearCategoryVM.cs",
               "RelativeDocumentMoniker": "GreenGardenClient\\Models\\GearCategoryVM.cs",
@@ -1584,7 +1653,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 98,
+              "DocumentIndex": 101,
               "Title": "SessionExtensions.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Models\\SessionExtensions.cs",
               "RelativeDocumentMoniker": "GreenGardenClient\\Models\\SessionExtensions.cs",
@@ -1596,7 +1665,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 99,
+              "DocumentIndex": 102,
               "Title": "GreenGardenClient",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient.csproj",
               "RelativeDocumentMoniker": "GreenGardenClient\\GreenGardenClient.csproj",
@@ -1608,7 +1677,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 100,
+              "DocumentIndex": 103,
               "Title": "FoodAndDrinkCategoryVM.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Models\\FoodAndDrinkCategoryVM.cs",
               "RelativeDocumentMoniker": "GreenGardenClient\\Models\\FoodAndDrinkCategoryVM.cs",
@@ -1620,7 +1689,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 101,
+              "DocumentIndex": 104,
               "Title": "bootstrap.min.css",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\css\\bootstrap.min.css",
               "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\css\\bootstrap.min.css",
@@ -1632,7 +1701,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 102,
+              "DocumentIndex": 105,
               "Title": "bootstrap.min.js",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\js\\bootstrap.min.js",
               "RelativeDocumentMoniker": "GreenGardenClient\\wwwroot\\js\\bootstrap.min.js",
@@ -1641,40 +1710,6 @@
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
               "WhenOpened": "2024-10-15T18:05:11.976Z"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "Orientation": 0,
-      "VerticalTabListWidth": 256,
-      "FloatingWindowState": {
-        "Id": "dc63c374-b3f7-497a-aae2-f8a1fc606543",
-        "Display": 0,
-        "X": 86,
-        "Y": 178,
-        "Width": 1172,
-        "Height": 578,
-        "WindowState": 0
-      },
-      "DocumentGroups": [
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 0,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "UpdateFood.cshtml",
-              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\OrderManagement\\UpdateFood.cshtml",
-              "RelativeDocumentMoniker": "GreenGardenClient\\Views\\OrderManagement\\UpdateFood.cshtml",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\Views\\OrderManagement\\UpdateFood.cshtml",
-              "RelativeToolTip": "GreenGardenClient\\Views\\OrderManagement\\UpdateFood.cshtml",
-              "ViewState": "AQIAABUCAAAAAAAAAAAcwC0CAAAiAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-11T09:39:01.299Z",
-              "EditorCaption": ""
             }
           ]
         }
