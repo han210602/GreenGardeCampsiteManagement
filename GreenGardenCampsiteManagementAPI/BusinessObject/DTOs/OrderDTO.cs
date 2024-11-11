@@ -23,6 +23,8 @@ namespace BusinessObject.DTOs
         public int? ActivityId { get; set; }
         public string? ActivityName { get; set; }
         public string? PhoneCustomer { get; set; }
+        public DateTime? OrderCheckoutDate { get; set; }
+
 
     }
     public class CustomerOrderDTO

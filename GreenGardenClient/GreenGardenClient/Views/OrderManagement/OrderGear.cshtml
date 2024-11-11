@@ -386,7 +386,6 @@
         z-index: 10; /* Đảm bảo các nút lọc nổi lên trên */
         margin-top: -10px;
     }
-
     /* Thiết lập mặc định ẩn */
     .d-none {
         display: none;
@@ -424,6 +423,7 @@
     .btn-combo-food:hover {
         opacity: 0.8; /* Hiệu ứng mờ khi hover */
     }
+
 </style>
 <body onload="time()" class="app sidebar-mini rtl">
     <header class="app-header">
@@ -578,39 +578,72 @@
                             </div>
 
 
-                            <div class="filter-container d-flex align-items-center position-relative ml-auto">
-                                <!-- Các nút lọc ẩn hiện ở bên trái nút lọc -->
-                                <div id="filterButtons" class="filter-buttons d-none">
+                            <div class="menu">
+                                <!-- Các nút -->
+                                <div class="menu-items">
                                     @if (@HttpContextAccessor.HttpContext.Session.GetString("TicketCart") != null)
                                     {
-                                        <a href="~/OrderManagement/OrderTicket" class="btn btn-booking mr-2">
+                                        <a href="~/OrderManagement/OrderTicket" class="menu-link">
 
                                             <i class="fas fa-ticket-alt"></i> <span>Đặt vé</span>
                                         </a>
                                     }
-                                    else
+                                    else if (@HttpContextAccessor.HttpContext.Session.GetString("ComboCart") != null)
                                     {
-                                        <a href="~/OrderManagement/OrderCombo" class="btn btn-booking mr-2">
+                                        <a href="~/OrderManagement/OrderCombo" class="menu-link">
 
                                             <i class="fas fa-ticket-alt"></i> <span>Đặt Combo</span>
                                         </a>
                                     }
 
-                                    <a href="~/OrderManagement/OrderGear" class="btn btn-tools mr-2">
+                                    <a href="~/OrderManagement/OrderGear" class="menu-link active">
                                         <i class="fas fa-tools"></i> <span>Đặt dụng cụ</span>
                                     </a>
-                                    <a href="~/OrderManagement/OrderFood" class="btn btn-order-food active-link mr-2">
+                                    <a href="~/OrderManagement/OrderFood" class="menu-link">
                                         <i class="fas fa-utensils"></i> Đặt đồ ăn
                                     </a>
-                                    <a href="~/OrderManagement/OrderComboFood" class="btn btn-combo-food">
+                                    <a href="~/OrderManagement/OrderComboFood" class="menu-link">
                                         <i class="fas fa-box"></i> Đồ ăn theo combo
                                     </a>
                                 </div>
 
-                                <button onclick="toggleFilterButtons()" class="btn btn-filter">
-                                    <i id="filterIcon" class="fas fa-ellipsis-v"></i>
-                                </button>
+
                             </div>
+                            <style>
+                                .menu {
+                                    padding: 10px;
+                                    background-color: #f8f9fa; /* Màu nền nhẹ */
+                                    border-radius: 8px; /* Bo góc */
+                                    display: flex;
+                                    justify-content: center; /* Căn giữa các nút */
+                                }
+
+                                .menu-items {
+                                    display: flex; /* Hiển thị ngang */
+                                    gap: 20px; /* Khoảng cách giữa các nút */
+                                }
+
+                                .menu-link {
+                                    display: flex;
+                                    align-items: center;
+                                    padding: 10px 15px;
+                                    text-decoration: none; /* Bỏ gạch chân */
+                                    color: #495057; /* Màu chữ cơ bản */
+                                    border-radius: 4px; /* Bo góc */
+                                    transition: all 0.3s ease; /* Hiệu ứng chuyển đổi màu */
+                                }
+
+                                    .menu-link:hover {
+                                        background-color: #e9ecef; /* Thay đổi màu nền khi hover */
+                                        color: #212529; /* Đổi màu chữ khi hover */
+                                    }
+
+                                    .menu-link.active {
+                                        color: #d99b53; /* Chữ trắng */
+                                        font-weight: bold; /* Chữ in đậm */
+                                    }
+
+                            </style>
 
                         </div>
                         <script>
@@ -763,7 +796,7 @@
 
         </div>
 
-            <div class="d-flex ">
+            <div class="d-flex d-flex gap-3 justify-content-end">
                 <a href="~/OrderManagement/Cart" class="btn btn-primary">Tạo đơn ngay</a>
             </div>
 
@@ -777,7 +810,7 @@
     </script>
     <script>
         $(document).ready(function () {
-            var itemsPerPage = 3; // Số sản phẩm hiển thị trên mỗi trang
+            var itemsPerPage = 4; // Số sản phẩm hiển thị trên mỗi trang
             var currentPage = 1;  // Trang hiện tại
             var totalItems = $('.product-card').length; // Tổng số sản phẩm ban đầu
             var totalPages = Math.ceil(totalItems / itemsPerPage); // Tổng số trang ban đầu

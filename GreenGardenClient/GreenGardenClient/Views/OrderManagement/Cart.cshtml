@@ -605,10 +605,16 @@
         </div>
 
 
-        <div class="d-flex ">
-            <a href="~/OrderManagement/OrderFood" class="btn btn-secondary">Quay lại</a>
-            <a href="~/OrderManagement/DeleteCart" class="btn btn-primary">Xóa</a>
-            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#depositModal">Lên đơn ngay</a>
+        <div class ="d-flex d-flex gap-3 justify-content-end">
+            <a href="~/OrderManagement/OrderFood" class="btn btn-warning">
+                <i class="fas fa-edit"></i> Cập nhật
+            </a>
+            <a href="~/OrderManagement/DeleteCart" class="btn btn-danger">
+                <i class="fas fa-trash-alt"></i> Xóa
+            </a>
+            <a href="#" class="btn btn-success" data-toggle="modal" data-target="#depositModal">
+                <i class="fas fa-check-circle"></i> Xác nhận
+            </a>
 
             <!-- Modal structure -->
             <div class="modal fade" id="depositModal" tabindex="-1" role="dialog" aria-labelledby="depositModalLabel" aria-hidden="true">

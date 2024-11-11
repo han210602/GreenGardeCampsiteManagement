@@ -1,6 +1,7 @@
 ﻿using GreenGardenClient.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Text;
@@ -269,7 +270,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
                 List<OrderVM> orderdata = GetDataFromApi<List<OrderVM>>("https://localhost:7298/api/OrderManagement/GetAllOrders");
                 orderdata = orderdata
-                    .Where(s => s.ActivityId == 3)
+                    .Where(s => s.ActivityId == 3).OrderByDescending(s=>s.OrderCheckoutDate)
                     .ToList();
 
 
@@ -528,22 +529,29 @@ namespace GreenGardenClient.Controllers.AdminController
         }
         public IActionResult CreateOrder()
         {
-            if (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)
+            try
             {
-                var orders = HttpContext.Session.GetObjectFromJson<OrderVM>("OrderCart") ?? new OrderVM();
-                if (orders.OrderUsageDate != null)
+                if (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)
                 {
-                    string date = orders.OrderUsageDate.Value.ToString("yyyy-MM-ddTHH:mm");
-                    ViewBag.date = date;
+                    var orders = HttpContext.Session.GetObjectFromJson<OrderVM>("OrderCart") ?? new OrderVM();
+                    if (orders.OrderUsageDate != null)
+                    {
+                        string date = orders.OrderUsageDate.Value.ToString("yyyy-MM-ddTHH:mm");
+                        ViewBag.date = date;
 
+                    }
+                    if (TempData["Notification"] != null)
+                    {
+                        ViewBag.Notification = TempData["Notification"];
+                    }
+                    return View(orders);
                 }
-                if (TempData["Notification"] != null)
+                else
                 {
-                    ViewBag.Notification = TempData["Notification"];
+                    return RedirectToAction("Error");
                 }
-                return View(orders);
             }
-            else
+            catch (Exception e)
             {
                 return RedirectToAction("Error");
             }
@@ -568,25 +576,36 @@ namespace GreenGardenClient.Controllers.AdminController
         }
         public IActionResult OrderTicket()
         {
-            var ticketscart = HttpContext.Session.GetObjectFromJson<List<TicketVM>>("TicketCart") ?? new List<TicketVM>();
-            List<TicketVM> tickets = GetDataFromApi<List<TicketVM>>("https://localhost:7298/api/Ticket/GetAllTickets");
-
-            foreach (var item in ticketscart)
+            var orders = HttpContext.Session.GetObjectFromJson<OrderVM>("OrderCart") ?? new OrderVM();
+            if (orders.CustomerName.IsNullOrEmpty()||orders.OrderUsageDate==null||orders.PhoneCustomer.IsNullOrEmpty())
             {
-                var ticket = tickets.ToList().FirstOrDefault(s => s.TicketId == item.TicketId);
-                if (ticket != null)
+                TempData["Notification"] = "Bạn phải điền đầy đủ thông tin bao gồm tên,số điện thoại và ngày sử dụng!";
+                return RedirectToAction("CreateOrder");
+
+            }
+            else
+            {
+                var ticketscart = HttpContext.Session.GetObjectFromJson<List<TicketVM>>("TicketCart") ?? new List<TicketVM>();
+                List<TicketVM> tickets = GetDataFromApi<List<TicketVM>>("https://localhost:7298/api/Ticket/GetAllTickets");
+
+                foreach (var item in ticketscart)
                 {
-                    ticket.Quantity = item.Quantity;
+                    var ticket = tickets.ToList().FirstOrDefault(s => s.TicketId == item.TicketId);
+                    if (ticket != null)
+                    {
+                        ticket.Quantity = item.Quantity;
+                    }
                 }
-            }
-            if (TempData["Notification"] != null)
-            {
-                ViewBag.Notification = TempData["Notification"];
-            }
-            ViewBag.tickets = tickets;
+                if (TempData["Notification"] != null)
+                {
+                    ViewBag.Notification = TempData["Notification"];
+                }
+                ViewBag.tickets = tickets;
 
 
-            return View("OrderTicket");
+                return View("OrderTicket");
+            }
+            
 
 
         }
@@ -1145,45 +1164,53 @@ namespace GreenGardenClient.Controllers.AdminController
             var foods = HttpContext.Session.GetObjectFromJson<List<FoodAndDrinkVM>>("FoodCart") ?? new List<FoodAndDrinkVM>();
             var combos = HttpContext.Session.GetObjectFromJson<List<ComboVM>>("ComboCart") ?? new List<ComboVM>();
             var combofoods = HttpContext.Session.GetObjectFromJson<List<ComboFoodVM>>("ComboFoodCart") ?? new List<ComboFoodVM>();
+            if(tickets.IsNullOrEmpty()&&combos.IsNullOrEmpty())
+            {
+                TempData["Notification"] = "Phải đặt vé hoặc combo bao gồm vé mới có thể lên đơn.";
 
-            var orders = HttpContext.Session.GetObjectFromJson<OrderVM>("OrderCart") ?? new OrderVM();
-            decimal total = 0;
-            foreach (var item in tickets)
+                return RedirectToAction("CreateOrder");
+            }else
             {
-                total += item.Quantity * item.Price;
-            }
-            foreach (var item in gears)
-            {
-                total += item.Quantity * item.RentalPrice;
-            }
-            foreach (var item in foods)
-            {
-                total += item.Quantity * item.Price;
-            }
-            foreach (var item in combos)
-            {
-                total += item.Quantity * item.Price;
-            }
-            foreach (var item in combofoods)
-            {
-                total += item.Quantity * item.Price;
-            }
+                var orders = HttpContext.Session.GetObjectFromJson<OrderVM>("OrderCart") ?? new OrderVM();
+                decimal total = 0;
+                foreach (var item in tickets)
+                {
+                    total += item.Quantity * item.Price;
+                }
+                foreach (var item in gears)
+                {
+                    total += item.Quantity * item.RentalPrice;
+                }
+                foreach (var item in foods)
+                {
+                    total += item.Quantity * item.Price;
+                }
+                foreach (var item in combos)
+                {
+                    total += item.Quantity * item.Price;
+                }
+                foreach (var item in combofoods)
+                {
+                    total += item.Quantity * item.Price;
+                }
 
-            ViewBag.tickets = tickets;
-            ViewBag.gears = gears;
-            ViewBag.foods = foods;
-            ViewBag.order = orders;
-            ViewBag.combos = combos;
-            ViewBag.combofoods = combofoods;
-            ViewBag.Total = total;
-            var viewModel = new DepositVM
-            {
+                ViewBag.tickets = tickets;
+                ViewBag.gears = gears;
+                ViewBag.foods = foods;
+                ViewBag.order = orders;
+                ViewBag.combos = combos;
+                ViewBag.combofoods = combofoods;
+                ViewBag.Total = total;
+                var viewModel = new DepositVM
+                {
 
-                Total = 3_500_000
-            };
-            viewModel.CalculateRoundedValues();
+                    Total = 3_500_000
+                };
+                viewModel.CalculateRoundedValues();
 
-            return View("Cart", viewModel);
+                return View("Cart", viewModel);
+            }
+            
         }
         [HttpPost]
         public async Task<IActionResult> Order(decimal deposit, decimal total)

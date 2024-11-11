@@ -37,9 +37,10 @@ namespace DataAccess.DAO
                             AmountPayable = o.AmountPayable,
                             StatusOrder = o.StatusOrder,
                             ActivityId = o.ActivityId,
-                            ActivityName = o.Activity.ActivityName
+                            ActivityName = o.Activity.ActivityName,
+                            OrderCheckoutDate=o.OrderCheckoutDate
                         })
-                        .OrderByDescending(s=>s.OrderUsageDate).ToList();
+                        .ToList();
                 }
 
             }
@@ -75,7 +76,8 @@ namespace DataAccess.DAO
                             AmountPayable = o.AmountPayable,
                             StatusOrder = o.StatusOrder,
                             ActivityId = o.ActivityId,
-                            ActivityName = o.Activity.ActivityName
+                            ActivityName = o.Activity.ActivityName,
+                            
                         })
                         .OrderBy(o => o.ActivityId) // Sắp xếp theo ActivityId
                         .ThenByDescending(o => o.OrderDate) // Sau đó sắp xếp theo OrderDate giảm dần

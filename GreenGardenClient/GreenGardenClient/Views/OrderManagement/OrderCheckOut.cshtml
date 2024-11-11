@@ -553,8 +553,9 @@
                                 <th width="8%">Mã đơn</th>           <!-- Order ID -->
                                 <th width="13%">Khách hàng</th>      <!-- Customer Name -->
                                 <th width="12%">Số điện thoại</th>   <!-- Phone Number -->
-                                <th width="12%">Ngày đặt</th>         <!-- Order Date -->
                                 <th width="12%">Ngày sử dụng</th>     <!-- Usage Date -->
+                                <th width="12%">Ngày thanh toán</th>         <!-- Order Date -->
+
                                 <th class="text-right" width="12%">Tiền cọc</th>        <!-- Deposit -->
                                 <th class="text-right" width="12%">Thu</th>             <!-- Income -->
                                 <th class="text-right" width="12%">Tổng tiền</th>       <!-- Total Amount -->
@@ -564,13 +565,14 @@
                             @foreach (OrderVM item in ViewBag.dataorder)
                             {
                                 <tr onclick="window.location.href='@Url.Action("OrderDetail", "OrderManagement", new { id = item.OrderId })'"
-                                    class="@(item.OrderUsageDate.Value.ToString("dd/MM/yyyy").Equals(DateTime.Now.ToString("dd/MM/yyyy")) ? "highlight-row" : "")">
+                                    class="@(item.OrderCheckoutDate.Value.ToString("dd/MM/yyyy").Equals(DateTime.Now.ToString("dd/MM/yyyy")) ? "highlight-row" : "")">
                                     <td><i class="fas fa-check-circle" style="color: green;"></i></td>
                                     <td>#@item.OrderId</td>
                                     <td>@item.CustomerName</td>
                                     <td>@item.PhoneCustomer</td>
-                                    <td>@item.OrderDate?.ToString("hh:mm:ss tt dd/MM/yyyy")</td>
                                     <td>@item.OrderUsageDate?.ToString("hh:mm:ss tt dd/MM/yyyy")</td>
+                                    <td>@item.OrderCheckoutDate?.ToString("hh:mm:ss tt dd/MM/yyyy")</td>
+
                                     <td class="text-right">@String.Format("{0:0,0} ₫", item.Deposit)</td>
                                     <td class="text-right">@String.Format("{0:0,0} ₫", item.AmountPayable)</td>
                                     <td class="text-right">@String.Format("{0:0,0} ₫", @item.TotalAmount)</td>
