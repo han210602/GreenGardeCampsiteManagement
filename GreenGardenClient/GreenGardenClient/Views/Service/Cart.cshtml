@@ -471,6 +471,19 @@
             if (!confirm('Bạn có muốn đặt ngay?')) {
                 return; // Nếu người dùng chọn Cancel, thoát hàm
             }
+
+            // Check if there are any items in the cart
+            let hasItems = false;
+            document.querySelectorAll('.cart-item').forEach(function (item) {
+                hasItems = true; // Nếu có ít nhất một item trong giỏ, gán true
+            });
+
+            // Nếu giỏ hàng trống, thông báo và dừng thực hiện
+            if (!hasItems) {
+                alert('Giỏ hàng của bạn không có sản phẩm nào!');
+                return; // Exit the function
+            }
+
             // Check if there are any tickets or combos in the cart
             let hasTicketOrCombo = false;
             document.querySelectorAll('.cart-item').forEach(function (item) {
@@ -511,6 +524,7 @@
                 }
             });
         }
+
 
         </script>
 </body>

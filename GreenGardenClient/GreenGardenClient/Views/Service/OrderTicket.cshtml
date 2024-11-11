@@ -290,8 +290,8 @@
                 }
 
                     .product-image img {
-                        width: 100%; /* Đảm bảo hình ảnh chiếm hết chiều rộng của container */
-                        height: auto; /* Đảm bảo chiều cao tự điều chỉnh theo tỉ lệ của ảnh */
+                        width: 200px; /* Đảm bảo hình ảnh chiếm hết chiều rộng của container */
+                        height: 267px; /* Đảm bảo chiều cao tự điều chỉnh theo tỉ lệ của ảnh */
                         border-radius: 8px; /* Bo tròn các góc của hình ảnh */
                         object-fit: cover; /* Đảm bảo hình ảnh vừa khít mà không bị méo */
                     }
@@ -579,7 +579,7 @@
                                 {
                                     <div class="product-item" id="product-@item.TicketId">
                                         <div class="product-image">
-                                            <img src="~/images/img_1.jpg" alt="Image" class="img-fluid">
+                                            <img src="~/images/logo.jpg" alt="Image" class="img-fluid">
                                         </div>
                                         <div class="product-content">
                                             <h2><a href="@Url.Action("TripSingle", new { id = item.TicketId })">Vé @item.TicketName</a></h2>

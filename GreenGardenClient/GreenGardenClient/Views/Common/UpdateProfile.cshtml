@@ -221,6 +221,12 @@
                     justify-content: start;
                     margin-top: 10px; /* Adjust the spacing as needed */
                 }
+
+                .text-danger {
+                    color: #dc3545; /* Màu đỏ */
+                    font-size: 1rem; /* Kích thước chữ sao */
+                    margin-left: 2px; /* Khoảng cách giữa dấu sao và chữ */
+                }
             </style>
             <script>
                 $(document).ready(function () {
@@ -238,49 +244,58 @@
         </header>
 
         <div class="container mt-5" data-aos="fade-up">
+            <form id="updateProfileForm" method="post" action="@Url.Action("ChangeProfile", "Common")" onsubmit="return validateForm()" novalidate>
             <div class="row">
-                <!-- Left Column: Profile Picture -->
-                <div class="col-md-6">
-                    <div class="profile-picture">
-                        <img src="~/images/images.png" class="custom-img">
-                        <div class="button-container">
-                            <button class="btn btn-primary mt-3 btn-sm">Chọn Ảnh</button>
-                        </div>                        <p class="text-muted mt-2" style="font-size: 0.8rem;">Dụng lượng file tối đa 1 MB. Định dạng: JPEG, PNG</p>
+
+                    <div class="col-md-6">
+                        <!-- Hiển thị ảnh hiện tại nếu có -->
+                        @if (!string.IsNullOrEmpty(user.ProfilePictureUrl))
+                        {
+                            <img src="~/images/@user.ProfilePictureUrl" alt="Event Image" class="event-thumbnail" id="currentImage_@user.UserId" />
+                        }
+
+                        <!-- Input ẩn để lưu URL của ảnh hiện tại -->
+                        <input type="hidden" name="CurrentPictureUrl" value="@user.ProfilePictureUrl" />
+
+                        <!-- File input để upload ảnh mới -->
+                        <div class="mt-2">
+                            <input type="file" name="PictureUrl" id="PictureUrl_@user.UserId" accept=".jpg, .png" class="file-input" onchange="previewImage(event, '@user.UserId')" />
+                        </div>
                     </div>
-
-
-                </div>
-
                 <!-- Right Column: Account Information -->
                 <div class="col-md-6">
                     <h2 style="font-size: 1.5rem;">Hồ Sơ Của Tôi</h2>
                     <p class="text-muted" style="font-size: 0.9rem;">Quản lý thông tin hồ sơ để bảo mật tài khoản</p>
 
-                    <form id="updateProfileForm" method="post" action="@Url.Action("ChangeProfile", "Common")">
+                   
                         <input type="hidden" name="UserId" value="@user.UserId"> <!-- Hidden input for UserId -->
 
-                        <div class="form-group form-row align-items-center">
-                            <label for="FirstName" class="col-sm-1 col-form-label">Họ:</label>
-                            <div class="col-sm-4">
-                                <input type="text" id="FirstName" name="FirstName" class="form-control form-control-sm" value="@user.FirstName" required>
+                        <div class="form-group form-row align-items-center mt-3">
+                            <label for="FirstName" class="col-sm-3 col-form-label">Họ:<span class="text-danger">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="text" id="FirstName" name="FirstName" class="form-control form-control-sm" value="@user.FirstName" required pattern="^[A-Za-zÀ-ÿ\s]+$">
+                                <small class="text-danger" id="firstNameError" style="display: none;">Vui lòng nhập họ đúng form</small>
                             </div>
-                            <label for="LastName" class="col-sm-2 col-form-label">Tên:</label>
-                            <div class="col-sm-4">
-                                <input type="text" id="LastName" name="LastName" class="form-control form-control-sm" value="@user.LastName" required>
+                        </div>
+                        <div class="form-group form-row align-items-center mt-3">
+                            <label for="LastName" class="col-sm-3 col-form-label">Tên:<span class="text-danger">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="text" id="LastName" name="LastName" class="form-control form-control-sm" value="@user.LastName" required pattern="^[A-Za-zÀ-ÿ\s]+$">
+                                <small class="text-danger" id="lastNameError" style="display: none;">Vui lòng nhập tên đúng form</small>
+                            </div>
+                        </div>
+                        <div class="form-group form-row align-items-center mt-3">
+                            <label for="Email" class="col-sm-3 col-form-label">Email:<span class="text-danger">*</span></label>
+                            <div class="col-sm-9">
+                                <input readonly type="email" id="Email" name="Email" class="form-control form-control-sm" value="@user.Email" required>
                             </div>
                         </div>
 
                         <div class="form-group form-row align-items-center mt-3">
-                            <label for="Email" class="col-sm-3 col-form-label">Email:</label>
+                            <label for="PhoneNumber" class="col-sm-3 col-form-label">Số điện thoại:<span class="text-danger">*</span></label>
                             <div class="col-sm-9">
-                                <input type="email" id="Email" name="Email" class="form-control form-control-sm" value="@user.Email" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group form-row align-items-center mt-3">
-                            <label for="PhoneNumber" class="col-sm-3 col-form-label">Số điện thoại:</label>
-                            <div class="col-sm-9">
-                                <input type="text" id="PhoneNumber" name="PhoneNumber" class="form-control form-control-sm" value="@user.PhoneNumber">
+                                <input type="text" id="PhoneNumber" name="PhoneNumber" class="form-control form-control-sm" value="@user.PhoneNumber" required pattern="^\d{10}$">
+                                <small class="text-danger" id="phoneNumberError" style="display: none;">Số điện thoại không hợp lệ. Phải có 10 số</small>
                             </div>
                         </div>
 
@@ -295,7 +310,7 @@
                             <label class="col-sm-3 col-form-label">Giới tính:</label>
                             <div class="col-sm-9">
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" id="male" name="Gender" value="male" @(user.Gender?.ToLower() == "male  " ? "checked" : "")>
+                                    <input class="form-check-input" type="radio" id="male" name="Gender" value="male" @(user.Gender?.ToLower() == "male " ? "checked" : "")>
                                     <label class="form-check-label" for="male">Nam</label>
                                 </div>
                                 <div class="form-check form-check-inline">
@@ -321,10 +336,42 @@
                             <a href="~/Common/ChangePassword" class="btn btn-secondary btn-sm" style="margin-bottom: 20px;">Đổi Mật Khẩu</a>
                         </div>
                     </form>
-
-
-
                 </div>
+
+                <script>
+                    function validateForm() {
+                        var valid = true;
+
+                        // Kiểm tra họ và tên chỉ chứa chữ cái
+                        var firstName = document.getElementById("FirstName").value;
+                        var lastName = document.getElementById("LastName").value;
+                        if (!/^[A-Za-zÀ-ÿ\s]+$/.test(firstName)) {
+                            document.getElementById("firstNameError").style.display = "inline";
+                            valid = false;
+                        } else {
+                            document.getElementById("firstNameError").style.display = "none";
+                        }
+                        if (!/^[A-Za-zÀ-ÿ\s]+$/.test(lastName)) {
+                            document.getElementById("lastNameError").style.display = "inline";
+                            valid = false;
+                        } else {
+                            document.getElementById("lastNameError").style.display = "none";
+                        }
+
+                        // Kiểm tra số điện thoại có đúng 10 chữ số
+                        var phoneNumber = document.getElementById("PhoneNumber").value;
+                        if (!/^\d{10}$/.test(phoneNumber)) {
+                            document.getElementById("phoneNumberError").style.display = "inline";
+                            valid = false;
+                        } else {
+                            document.getElementById("phoneNumberError").style.display = "none";
+                        }
+
+                        return valid;
+                    }
+                </script>
+
+
             </div>
         </div>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -332,7 +379,7 @@
 
 
 
-        
+
     </div>
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
     <script>

@@ -343,6 +343,7 @@ namespace DataAccess.DAO
                 user.Address = updateProfileDto.Address;
                 user.DateOfBirth = updateProfileDto.DateOfBirth;
                 user.Gender = updateProfileDto.Gender;
+                user.ProfilePictureUrl = updateProfileDto.ProfilePictureUrl;
 
                 try
                 {

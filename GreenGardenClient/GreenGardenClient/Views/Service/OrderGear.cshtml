@@ -261,6 +261,49 @@
                         border-color: #e9ecef;
                     }
 
+                .listing-image img {
+                    width: 368px; /* Đặt chiều rộng cố định */
+                    height: 490px; /* Đặt chiều cao cố định */
+                    object-fit: cover; /* Cắt ảnh để phù hợp khung mà không biến dạng */
+                    border-radius: 8px; /* Bo góc tùy chọn */
+                    transition: transform 0.3s ease; /* Hiệu ứng zoom khi hover */
+                    display: block; /* Đảm bảo hình ảnh không bị lỗi hiển thị */
+                    margin: 0 auto; /* Căn giữa hình ảnh */
+                }
+
+                    /* Hiệu ứng hover */
+                    .listing-image img:hover {
+                        transform: scale(1.05); /* Zoom nhẹ khi hover */
+                    }
+
+                /* Định dạng khung chứa hình ảnh */
+                .listing-item {
+                    border: 1px solid #ddd; /* Đường viền */
+                    border-radius: 8px; /* Bo góc khung */
+                    overflow: hidden; /* Đảm bảo nội dung không vượt khung */
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Hiệu ứng bóng */
+                    transition: box-shadow 0.3s ease; /* Hiệu ứng hover */
+                    text-align: center; /* Căn giữa nội dung */
+                }
+
+                    .listing-item:hover {
+                        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Tăng bóng khi hover */
+                    }
+
+                /* Đảm bảo nội dung sản phẩm được trình bày đẹp */
+                .listing-item-content {
+                    padding: 15px;
+                }
+
+                /* Tùy chỉnh các nút */
+                .button-container button,
+                .button-container a {
+                    margin: 5px;
+                    padding: 10px 15px;
+                    font-size: 14px;
+                    border-radius: 5px;
+                    text-decoration: none;
+                }
 
             </style>
             <script>
@@ -374,7 +417,7 @@
                                     <div class="product-card col-lg-4 col-md-6 mb-4" data-aos="fade-up">
                                         <div class="listing-item" id="product-@item.GearId">
                                             <div class="listing-image">
-                                                <img src="~/images/img_1.jpg" alt="Image" class="img-fluid">
+                                                <img src="~/images/p22.jpg" alt="Image" class="img-fluid">
                                             </div>
                                             <div class="listing-item-content">
                                                 <h2 class="px-3 mb-1 category bg-primary">@item.RentalPrice.ToString("N0") ₫</h2>
