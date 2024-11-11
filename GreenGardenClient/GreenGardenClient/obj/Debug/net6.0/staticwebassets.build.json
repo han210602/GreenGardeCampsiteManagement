@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "mZfawgeclyjaQPk0vOu/JOZNwmVubcZeODcS9k9SMsY=",
+  "Hash": "aqHO5v6z3kgRjx11SeRGmAl9kJKzz1YFenFB1i0cIac=",
   "Source": "GreenGardenClient",
   "BasePath": "_content/GreenGardenClient",
   "Mode": "Default",
@@ -1079,6 +1079,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\owner.png"
+    },
+    {
+      "Identity": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\p22.jpg",
+      "SourceId": "GreenGardenClient",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\",
+      "BasePath": "_content/GreenGardenClient",
+      "RelativePath": "images/p22.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\p22.jpg"
     },
     {
       "Identity": "C:\\Users\\admin\\Desktop\\git\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\Picture1.jpg",

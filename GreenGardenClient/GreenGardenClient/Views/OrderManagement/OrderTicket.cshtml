@@ -352,6 +352,45 @@
             background-color: #ddd;
         }
 
+    .top-bar {
+        background-color: #f8f9fa; /* Light gray background */
+        padding: 10px 20px;
+        border-radius: 8px;
+    }
+
+        /* Link button styling */
+        .top-bar .btn {
+            margin-left: 10px;
+            color: #343a40; /* Default dark color for text */
+        }
+
+    /* Active link styling */
+    .active-link {
+        color: #ffc107 !important; /* Yellow color for active state */
+        font-weight: bold; /* Optional: make text bold when active */
+    }
+
+    /* Optional styling for the search input */
+    #searchInput {
+        max-width: 250px;
+    }
+
+    .product-details a {
+        display: inline-block;
+        padding: 5px 5px; /* Reduce padding to make the button smaller */
+        font-size: 10px; /* Smaller font size */
+        font-weight: bold;
+        color: #fff;
+        background-color: #efba6c;
+        text-decoration: none; /* Remove underline */
+        border-radius: 5px; /* Rounded corners */
+        transition: background-color 0.3s ease; /* Smooth hover transition */
+    }
+
+        .product-details a:hover {
+            background-color: #efba6c; /* Darker blue on hover */
+        }
+
     .filter-container {
         position: relative;
         display: flex;
@@ -371,7 +410,6 @@
         margin-top: -10px;
     }
 
-   
 </style>
 <body onload="time()" class="app sidebar-mini rtl">
     <header class="app-header">
@@ -552,8 +590,8 @@
             <div class="col-md-12">
                 <div class="tile">
 
-                        <div class="tile-body">
-                            <div class="top-bar d-flex justify-content-between align-items-center">
+                    <div class="tile-body">
+                        <div class="top-bar d-flex justify-content-between align-items-center">
                                 <!-- Search bar on the left -->
                                 <div class="search-container">
                                     <label for="searchInput" class="mr-2 font-weight-bold">Tìm kiếm:</label>
@@ -561,9 +599,9 @@
                                 </div>
 
 
-<div class="menu">
+                                <div class="menu">
     <!-- Các nút -->
-    <div class="menu-items">
+                                <div class="menu-items">
                                         @if (@HttpContextAccessor.HttpContext.Session.GetString("TicketCart") != null)
                                         {
                                         <a href="~/OrderManagement/OrderTicket" class="menu-link active">
@@ -611,7 +649,7 @@
                                     align-items: center;
                                     padding: 10px 15px;
                                     text-decoration: none; /* Bỏ gạch chân */
-                                    color: #495057; /* Màu chữ cơ bản */
+                                    color: black; /* Màu chữ cơ bản */
                                     border-radius: 4px; /* Bo góc */
                                     transition: all 0.3s ease; /* Hiệu ứng chuyển đổi màu */
                                 }

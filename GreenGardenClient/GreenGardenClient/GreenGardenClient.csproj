@@ -205,6 +205,10 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\images\home\" />
+    <Folder Include="wwwroot\images\avatar\" />
+    <Folder Include="wwwroot\images\food\" />
+    <Folder Include="wwwroot\images\gear\" />
+    <Folder Include="wwwroot\images\ticket\" />
   </ItemGroup>
 
 </Project>

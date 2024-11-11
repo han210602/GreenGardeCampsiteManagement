@@ -247,6 +247,7 @@
         border-right: 1px solid #ccc; /* Viền phải của sidebar */
     }
 
+
     .app-sidebar__user {
         display: flex;
         flex-direction: column;
@@ -260,7 +261,6 @@
         margin-right: 10px;
         object-fit: cover; /* Đảm bảo hình ảnh không bị méo */
     }
-
 
     .app-sidebar__user-name {
         margin: 0;
@@ -352,6 +352,29 @@
             background-color: #ddd;
         }
 
+    .top-bar {
+        background-color: #f8f9fa; /* Light gray background */
+        padding: 10px 20px;
+        border-radius: 8px;
+    }
+
+        /* Link button styling */
+        .top-bar .btn {
+            margin-left: 10px;
+            color: #343a40; /* Default dark color for text */
+        }
+
+    /* Active link styling */
+    .active-link {
+        color: #ffc107 !important; /* Yellow color for active state */
+        font-weight: bold; /* Optional: make text bold when active */
+    }
+
+    /* Optional styling for the search input */
+    #searchInput {
+        max-width: 250px;
+    }
+
     .product-details a {
         display: inline-block;
         padding: 5px 5px; /* Reduce padding to make the button smaller */
@@ -385,43 +408,6 @@
         padding: 5px;
         z-index: 10; /* Đảm bảo các nút lọc nổi lên trên */
         margin-top: -10px;
-    }
-    /* Thiết lập mặc định ẩn */
-    .d-none {
-        display: none;
-    }
-
-    .btn-booking i,
-    .btn-booking {
-        color: #4CAF50; /* Màu xanh lá cho Đặt vé */
-    }
-
-    .btn-tools i,
-    .btn-tools {
-        color: #FF0000; /* Màu cam cho Đặt dụng cụ */
-    }
-
-    .btn-booking i,
-    .btn-booking span {
-        color: #4CAF50; /* Màu xanh lá cây cho Đặt vé */
-    }
-
-    /* Đổi màu cho icon và chữ "Đặt dụng cụ" */
-    .btn-tools i,
-    .btn-tools span {
-        color: #FF0000; /* Màu cam cho Đặt dụng cụ */
-    }
-
-
-    .btn-booking:hover i,
-    .btn-tools:hover i,
-    .btn-order-food:hover i,
-    .btn-combo-food:hover i,
-    .btn-booking:hover,
-    .btn-tools:hover,
-    .btn-order-food:hover,
-    .btn-combo-food:hover {
-        opacity: 0.8; /* Hiệu ứng mờ khi hover */
     }
 
 </style>
