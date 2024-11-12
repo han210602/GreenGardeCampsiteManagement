@@ -1436,7 +1436,7 @@ namespace GreenGardenClient.Controllers.AdminController
 
             // Xóa ComboFoodCart
             HttpContext.Session.Remove("ComboFoodCart");
-            return RedirectToAction("OrderOnline");
+            return RedirectToAction("CreateOrder");
 
         }
         [HttpGet]
@@ -2225,7 +2225,7 @@ namespace GreenGardenClient.Controllers.AdminController
                     {
                         // Both updates were successful
                         TempData["Notification"] = "Cập nhập lại combo thành công.";
-                        return RedirectToAction("Index"); // Replace "SuccessView" with your actual view
+                        return RedirectToAction("OrderDetail", new { id = order.OrderId });
                     }
                     else
                     {

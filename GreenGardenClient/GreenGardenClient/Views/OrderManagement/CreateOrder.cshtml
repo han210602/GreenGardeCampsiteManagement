@@ -553,20 +553,37 @@
                                             <label for="phone-number" class="form-label">Số điện thoại:</label>
                                             <input type="tel" value="@Model.PhoneCustomer" class="form-control" id="phone-number" name="phone" placeholder="Nhập số điện thoại" pattern="[0-9]{10}" required>
                                         </div>
-
                                     </form>
 
                                     <script>
                                         document.addEventListener('DOMContentLoaded', function () {
                                             const form = document.getElementById('autoSubmitForm');
                                             const inputs = form.querySelectorAll('input[required]');
+                                            const usageDateInput = document.getElementById('usage-date');
 
-                                            // Check form validity
+                                            // Set min value for datetime-local input
+                                            function setMinDate() {
+                                                const now = new Date();
+                                                const year = now.getFullYear();
+                                                const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+                                                const day = String(now.getDate()).padStart(2, '0');
+                                                const hours = String(now.getHours()).padStart(2, '0');
+                                                const minutes = String(now.getMinutes()).padStart(2, '0');
+
+                                                // Format to yyyy-MM-ddTHH:mm
+                                                const minDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
+                                                usageDateInput.setAttribute('min', minDateTime);
+                                                return minDateTime;
+                                            }
+
+                                            const minDateTime = setMinDate();
+
+                                            // Check if all required fields are valid
                                             function checkFormValidity() {
                                                 return Array.from(inputs).every(input => input.checkValidity());
                                             }
 
-                                            // Listen for input changes and submit if valid
+                                            // Submit the form automatically if all fields are valid
                                             inputs.forEach(input => {
                                                 input.addEventListener('input', () => {
                                                     if (checkFormValidity()) {
@@ -574,15 +591,38 @@
                                                     }
                                                 });
                                             });
+
+                                            // Additional check for datetime-local input to validate min constraint
+                                            usageDateInput.addEventListener('change', function () {
+                                                const selectedDate = new Date(usageDateInput.value);
+                                                const minDate = new Date(minDateTime);
+
+                                                if (selectedDate < minDate) {
+                                                    alert('Ngày và giờ sử dụng phải lớn hơn hoặc bằng thời điểm hiện tại.');
+                                                    usageDateInput.value = ''; // Reset the input
+                                                } else if (checkFormValidity()) {
+                                                    form.submit();
+                                                }
+                                            });
                                         });
                                     </script>
-                                    <div class="d-flex gap-3 justify-content-end">
-                                        <a href="~/OrderManagement/OrderCombo" class="btn btn-success">
-                                            <i class="fas fa-box"></i> Đặt combo
-                                        </a>
-                                        <a href="~/OrderManagement/OrderTicket" class="btn btn-primary">
-                                            <i class="fas fa-ticket-alt"></i> Đặt vé
-                                        </a>
+                                    <div class="d-flex justify-content-between align-items-center mt-3">
+                                        <!-- Left-aligned button -->
+                                        <div>
+                                            <a href="~/OrderManagement/DeleteCart" class="btn btn-danger">
+                                                <i class="fas fa-trash-alt"></i> Xóa
+                                            </a>
+                                        </div>
+
+                                        <!-- Right-aligned buttons -->
+                                        <div class="d-flex gap-3">
+                                            <a href="~/OrderManagement/OrderCombo" class="btn btn-success">
+                                                <i class="fas fa-box"></i> Đặt combo
+                                            </a>
+                                            <a href="~/OrderManagement/OrderTicket" class="btn btn-primary">
+                                                <i class="fas fa-ticket-alt"></i> Đặt vé
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -595,19 +635,13 @@
                                                 <i class="bi bi-check-circle-fill text-success me-2"></i>
                                                 Vui lòng điền đầy đủ thông tin khách hàng.
                                             </li>
-                                            <li class="mb-2">
-                                                <i class="bi bi-check-circle-fill text-success me-2"></i>
-                                                Sau khi nhập đầy đủ thông tin khách hàng hãy click vào nút giỏ hàng bên dưới để lưu vào giỏ hàng.
-                                            </li>
+                                           
                                             <li class="mb-2">
                                                 <i class="bi bi-check-circle-fill text-success me-2"></i>
                                                 Sau đó bạn có thể chọn đặt theo combo hoặc vé theo nhu cầu của khách hàng.
                                             </li>
                                             <li class="mb-2 text-warning fw-bold">Lưu ý :</li>
-                                            <li class="mb-2 text-muted">
-                                                <i class="bi bi-exclamation-triangle-fill text-danger me-2"></i>
-                                                *Hãy nhớ thêm vào giỏ hàng trước rồi mới tiếp tục nhé.
-                                            </li>
+                                            
                                             <li class="mb-2 text-muted">
                                                 <i class="bi bi-exclamation-triangle-fill text-danger me-2"></i>
                                                 *Đảm bảo số điện thoại chính xác để nhận thông tin xác nhận.
