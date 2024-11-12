@@ -131,6 +131,21 @@
                 </div>
             </div>
             <style>
+                .site-navbar {
+                    position: fixed; /* Cố định header */
+                    top: 0; /* Đặt header ở đầu trang */
+                    left: 0; /* Canh trái */
+                    width: 100%; /* Chiếm toàn bộ chiều rộng */
+                    z-index: 1000; /* Đảm bảo header nằm trên các phần tử khác */
+                    background-color: #fff; /* Màu nền trắng */
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ cho header */
+                    padding: 10px 0; /* Khoảng cách trên và dưới */
+                }
+
+                    /* Khoảng trống bên dưới để bù cho chiều cao header */
+                    .site-navbar + .content {
+                        padding-top: 70px; /* Điều chỉnh theo chiều cao thực tế của header */
+                    }
                 .site-menu .dropdown {
                     display: none; /* Ẩn menu thả xuống */
                     position: absolute; /* Để menu thả xuống xuất hiện bên dưới mục Services */
@@ -660,35 +675,8 @@
                 document.getElementById('hidden-date-' + itemId).value = `${savedDate} ${savedTime}`;
                 addToCart(itemId); // Call addToCart function directly
             } else {
+                addToCart(itemId);
                 // Show the popup to select both date and time if not previously saved
-                Swal.fire({
-                    title: 'Chọn ngày và giờ sử dụng',
-                    html:
-                        '<input type="date" id="usage-date" class="swal2-input" min="' + new Date().toISOString().split('T')[0] + '">' +
-                        '<input type="time" id="usage-time" class="swal2-input">',
-                    showCancelButton: true,
-                    confirmButtonText: 'Xác nhận',
-                    cancelButtonText: 'Hủy',
-                    preConfirm: () => {
-                        const date = document.getElementById('usage-date').value;
-                        const time = document.getElementById('usage-time').value;
-                        if (!date || !time) {
-                            Swal.showValidationMessage('Bạn cần nhập cả ngày và giờ sử dụng!');
-                            return false;
-                        }
-                        return { date, time };
-                    }
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        const { date, time } = result.value;
-                        sessionStorage.setItem('usageDateForAll', date);
-                        sessionStorage.setItem('usageTimeForAll', time);
-
-                        // Set both date and time in the hidden input for the form
-                        document.getElementById('hidden-date-' + itemId).value = `${date} ${time}`;
-                        addToCart(itemId); // Call addToCart after date and time selection
-                    }
-                });
             }
             return false;
         }

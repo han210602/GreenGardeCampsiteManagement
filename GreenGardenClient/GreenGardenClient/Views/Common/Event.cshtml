@@ -1,5 +1,8 @@
 ﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
-
+﻿@using GreenGardenClient.Models;
+@{
+    var events = ViewBag.Event as List<EventVM>;
+}
 <!doctype html>
 <html lang="en">
 
@@ -124,6 +127,22 @@
                 </div>
             </div>
             <style>
+                .site-navbar {
+                    position: fixed; /* Cố định header */
+                    top: 0; /* Đặt header ở đầu trang */
+                    left: 0; /* Canh trái */
+                    width: 100%; /* Chiếm toàn bộ chiều rộng */
+                    z-index: 1000; /* Đảm bảo header nằm trên các phần tử khác */
+                    background-color: #fff; /* Màu nền trắng */
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ cho header */
+                    padding: 10px 0; /* Khoảng cách trên và dưới */
+                }
+
+                    /* Khoảng trống bên dưới để bù cho chiều cao header */
+                    .site-navbar + .content {
+                        padding-top: 70px; /* Điều chỉnh theo chiều cao thực tế của header */
+                    }
+
                 .site-menu .dropdown {
                     display: none; /* Ẩn menu thả xuống */
                     position: absolute; /* Để menu thả xuống xuất hiện bên dưới mục Services */
@@ -154,6 +173,68 @@
                     display: block; /* Hiện menu thả xuống khi hover vào mục Services */
                 }
 
+                .post-entry-1 {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    height: 100%;
+                    position: relative; /* Để đặt nút "Chi tiết" ở góc phải */
+                    border: 1px solid #ddd; /* Đường viền mỏng */
+                    border-radius: 10px;
+                    overflow: hidden;
+                    background: #fff;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+                    padding: 15px;
+                }
+
+                    /* Hiệu ứng khi hover vào khung */
+                    .post-entry-1:hover {
+                        transform: translateY(-5px); /* Dịch khung lên một chút */
+                        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Tăng hiệu ứng đổ bóng */
+                    }
+
+                    /* Định dạng ảnh bên trong khung */
+                    .post-entry-1 img {
+                        width: 100%; /* Đảm bảo ảnh luôn đầy chiều rộng khung */
+                        height: 200px; /* Chiều cao cố định */
+                        object-fit: cover; /* Đảm bảo ảnh không bị méo */
+                        border-bottom: 1px solid #ddd; /* Đường viền dưới ảnh */
+                    }
+
+                /* Định dạng nội dung trong khung */
+                .post-entry-1-contents {
+                    padding: 15px; /* Khoảng cách bên trong nội dung */
+                    text-align: left; /* Căn lề trái */
+                }
+
+                    /* Tiêu đề sự kiện */
+                    .post-entry-1-contents h2 {
+                        font-size: 18px; /* Kích thước chữ tiêu đề */
+                        font-weight: bold; /* Chữ đậm */
+                        margin-bottom: 10px; /* Khoảng cách phía dưới */
+                        color: #333; /* Màu chữ đậm */
+                    }
+
+                    /* Định dạng thông tin ngày tháng và người tạo */
+                    .post-entry-1-contents .meta {
+                        font-size: 14px; /* Kích thước chữ nhỏ */
+                        color: #888; /* Màu chữ xám nhạt */
+                        margin-bottom: 15px; /* Khoảng cách phía dưới */
+                        display: block;
+                    }
+
+                    /* Định dạng đoạn mô tả */
+                    .post-entry-1-contents p {
+                        font-size: 14px; /* Kích thước chữ mô tả */
+                        color: #555; /* Màu chữ trung tính */
+                        line-height: 1.5; /* Độ cao dòng để dễ đọc */
+                        margin: 0;
+                    }
+
+                /* Đồng bộ khoảng cách giữa các khung */
+                .col-lg-4, .col-md-6 {
+                    margin-bottom: 30px; /* Khoảng cách giữa các khung sự kiện */
+                }
             </style>
             <script>
                 $(document).ready(function () {
@@ -169,129 +250,57 @@
             </script>
         </header>
 
-        <div class="ftco-blocks-cover-1">
-            <div class="site-section-cover overlay" style="background-image: url('@Url.Content("~/images/p22.jpg")')">
-                <div class="container">
-                    <div class="row align-items-center">
-                        <div class="col-md-5" data-aos="fade-right">
-                            <h1 class="mb-3 text-white">Những sự kiện tiêu biểu</h1>
-                            <p>Tại đây chúng tôi sẽ lưu giữ những khoảnh khắc,kỷ niệm khó quên khi có mặt tại sông quê
-                                     
-                            </p>
+        <div class="Tile">
+            <div class="ftco-blocks-cover-1">
+                <div class="site-section-cover overlay" style="background-image: url('@Url.Content("~/images/p22.jpg")')">
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-md-5" data-aos="fade-right">
+                                <h1 class="mb-3 text-white">Những sự kiện tiêu biểu</h1>
+                                <p>
+                                    Tại đây chúng tôi sẽ lưu giữ những khoảnh khắc,kỷ niệm khó quên khi có mặt tại sông quê
 
+                                </p>
+
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
+
+
+
+            <div class="site-section">
+                <div class="container">
+
+
+                    <div class="row">
+                        @if (events != null && events.Any())
+                        {
+                            foreach (var item in events)
+                            {
+                                <div class="col-lg-4 col-md-6 mb-4">
+                                    <div class="post-entry-1 h-100">
+                                        <img src="~/images/@item.PictureUrl" alt="Image" class="img-fluid">
+                                        <div class="post-entry-1-contents">
+                                            <h2>@item.EventName</h2>
+                                            <span class="meta d-inline-block mb-3">@item.EventDate <span class="mx-2">by</span>@item.CreatedByUserName</span>
+                                            <p>@item.Description</p>
+                                            <a href="@Url.Action("EventDetail", "Common", new { eventId = item.EventId })" class="btn btn-primary mt-2">Chi tiết</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                            }
+                        }
+
+                    </div>
+                </div> <!-- END .site-section -->
+
             </div>
         </div>
-
-
-
-        <div class="site-section">
-            <div class="container">
-          
-
-                <div class="row">
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="post-entry-1 h-100">
-                            <a href="single.html">
-                                <img src="~/images/picture10.jpg" alt="Image"
-                                     class="img-fluid">
-                            </a>
-                            <div class="post-entry-1-contents">
-
-                                <h2><a href="single.html">Cuối tuần đáng nhớ</a></h2>
-                                <span class="meta d-inline-block mb-3">13/10/2024 <span class="mx-2">by</span> <a href="#">Nguyễn Đăng Hoàng</a></span>
-                                <p>Vào buổi cuối tuần nếu bạn không biết đi đâu thì sông quê là địa điểm lý tưởng để khám phá</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="post-entry-1 h-100">
-                            <a href="single.html">
-                                <img src="~/images/picture13.jpg" alt="Image"
-                                     class="img-fluid">
-                            </a>
-                            <div class="post-entry-1-contents">
-
-                                <h2><a href="single.html">Cách làm việc nhóm</a></h2>
-                                <span class="meta d-inline-block mb-3">14/10/2024 <span class="mx-2">by</span> <a href="#">Nguyễn Đăng Hoàng</a></span>
-                                <p>Bạn muốn con em mình có thể học hỏi thêm kỹ năng mềm,kết bạn nhiều người thì sông quê là lựa chọn của bạn.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="post-entry-1 h-100">
-                            <a href="single.html">
-                                <img src="~/images/picture11.jpg" alt="Image"
-                                     class="img-fluid">
-                            </a>
-                            <div class="post-entry-1-contents">
-
-                                <h2><a href="single.html">Tổ chức sự kiện</a></h2>
-                                <span class="meta d-inline-block mb-3">15/10/2024 <span class="mx-2">by</span> <a href="#">Phùng Tự Cường</a></span>
-                                <p>Sông Quê rất vinh dự được tổ chức những sự kiện để lan toản những kinh nghiệm trong nhiều lĩnh vực.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="post-entry-1 h-100">
-                            <a href="single.html">
-                                <img src="~/images/picture7.jpg" alt="Image" class="img-fluid">
-                            </a>
-                            <div class="post-entry-1-contents">
-
-                                <h2><a href="single.html">Họp lớp cuối năm</a></h2>
-                                <span class="meta d-inline-block mb-3">16/10/2024<span class="mx-2">by</span> <a href="#">Nguyễn Thanh Hậu</a></span>
-                                <p>Bạn muốn tìm nơi có thể gặp bạn bè sau thời gian xa cách thì sông quê là điểm đến lý tưởng</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="post-entry-1 h-100">
-                            <a href="single.html">
-                                <img src="~/images/picture4.jpg" alt="Image" class="img-fluid">
-                            </a>
-                            <div class="post-entry-1-contents">
-
-                                <h2><a href="single.html">Hoại động ngoài trời</a></h2>
-                                <span class="meta d-inline-block mb-3">14/10/2024<span class="mx-2">by</span> <a href="#">Nguyễn Đăng Hoàng</a></span>
-                                <p>Ở Đây mọi người tham gia các hoạt động mà họ không bao giờ có thể trải nghiệm được khi ở trên thành phố.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="post-entry-1 h-100">
-                            <a href="single.html">
-                                <img src="~/images/picture15.jpg" alt="Image" class="img-fluid">
-
-                            </a>
-                            <div class="post-entry-1-contents">
-
-                                <h2><a href="single.html">Sông quê về đêm</a></h2>
-                                <span class="meta d-inline-block mb-3">13/10/2024<span class="mx-2">by</span> <a href="#">Nguyễn Đăng Hoàng</a></span>
-                                <p>Ở Đây mọi người ngắm và trải nghiệm sông quê khi màn đêm buông xuống và cùng nhau lưu giữ kỷ niệm khó quên</p>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-
-                <div class="col-12 mt-5 text-center">
-                    <span class="p-3">1</span>
-                    <a href="#" class="p-3">2</a>
-                    <a href="#" class="p-3">3</a>
-                    <a href="#" class="p-3">4</a>
-                </div>
-
-            </div>
-        </div> <!-- END .site-section -->
-
-    </div>
 
     <script src="~/js/jquery-3.3.1.min.js"></script>
     <script src="~/js/jquery-migrate-3.0.0.js"></script>

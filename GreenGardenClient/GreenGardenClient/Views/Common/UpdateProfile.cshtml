@@ -175,6 +175,25 @@
             </div>
 
             <style>
+                .site-navbar {
+                    position: fixed; /* Cố định header */
+                    top: 0; /* Đặt header ở đầu trang */
+                    left: 0; /* Canh trái */
+                    width: 100%; /* Chiếm toàn bộ chiều rộng */
+                    z-index: 1000; /* Đảm bảo header nằm trên các phần tử khác */
+                    background-color: #fff; /* Màu nền trắng */
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ cho header */
+                    padding: 10px 0; /* Khoảng cách trên và dưới */
+                }
+
+                    /* Khoảng trống bên dưới để bù cho chiều cao header */
+                    .site-navbar + .content {
+                        padding-top: 70px; /* Điều chỉnh theo chiều cao thực tế của header */
+                    }
+
+                .tile {
+                    margin-top: 150px; /* Khoảng cách dưới */
+                }
                 .site-menu .dropdown {
                     display: none; /* Ẩn menu thả xuống */
                     position: absolute; /* Để menu thả xuống xuất hiện bên dưới mục Services */
@@ -227,6 +246,27 @@
                     font-size: 1rem; /* Kích thước chữ sao */
                     margin-left: 2px; /* Khoảng cách giữa dấu sao và chữ */
                 }
+
+                .event-image-container {
+                    flex-shrink: 0;
+                    width: 200px; /* Fixed width for the image */
+                    text-align: center;
+                }
+
+                .event-thumbnail {
+                    width: 100%;
+                    height: 250px; /* Set a fixed height */
+                    object-fit: cover; /* Crop the image to fit within the specified height */
+                    border-radius: 8px;
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                    transition: transform 0.3s ease;
+                }
+
+
+
+                    .event-thumbnail:hover {
+                        transform: scale(1.05);
+                    }
             </style>
             <script>
                 $(document).ready(function () {
@@ -243,100 +283,138 @@
             </script>
         </header>
 
+        <script>
+            function previewImage(user, userId) {
+                const fileInput = user.target;
+                const file = fileInput.files[0]; // Lấy file ảnh từ input
+
+                if (file) {
+                    // Tạo URL đối tượng tạm thời cho ảnh mới
+                    const newImageUrl = URL.createObjectURL(file);
+
+                    // Tìm phần tử ảnh hiện tại
+                    let currentImage = document.getElementById(`currentImage_${userId}`);
+
+                    if (currentImage) {
+                        // Nếu đã có ảnh cũ, cập nhật src với ảnh mới
+                        currentImage.src = newImageUrl;
+                    } else {
+                        // Nếu chưa có ảnh, tạo phần tử ảnh mới để hiển thị
+                        currentImage = document.createElement("img");
+                        currentImage.src = newImageUrl;
+                        currentImage.alt = "Event Image";
+                        currentImage.className = "event-thumbnail";
+                        currentImage.id = `currentImage_${userId}`;
+
+                        // Thêm ảnh mới vào DOM trước input file
+                        fileInput.parentElement.insertBefore(currentImage, fileInput);
+                    }
+
+                    // Giải phóng URL đối tượng khi ảnh đã được tải
+                    currentImage.onload = function () {
+                        URL.revokeObjectURL(newImageUrl);
+                    };
+                }
+            }
+        </script>
         <div class="container mt-5" data-aos="fade-up">
-            <form id="updateProfileForm" method="post" action="@Url.Action("ChangeProfile", "Common")" onsubmit="return validateForm()" novalidate>
-            <div class="row">
+            <div class="Tile">
+                <form id="updateProfileForm" method="post" action="@Url.Action("ChangeProfile", "Common")" onsubmit="return validateForm()" novalidate>
+                    <div class="row">
 
-                    <div class="col-md-6">
-                        <!-- Hiển thị ảnh hiện tại nếu có -->
-                        @if (!string.IsNullOrEmpty(user.ProfilePictureUrl))
-                        {
-                            <img src="~/images/@user.ProfilePictureUrl" alt="Event Image" class="event-thumbnail" id="currentImage_@user.UserId" />
-                        }
+                        <div class="col-md-6">
+                            <div class="event-image-container">
+                                <!-- Hiển thị ảnh hiện tại nếu có -->
+                                @if (!string.IsNullOrEmpty(user.ProfilePictureUrl))
+                                {
+                                    <img src="~/images/@user.ProfilePictureUrl" alt="Event Image" class="event-thumbnail" id="currentImage_@user.UserId" />
+                                }
 
-                        <!-- Input ẩn để lưu URL của ảnh hiện tại -->
-                        <input type="hidden" name="CurrentPictureUrl" value="@user.ProfilePictureUrl" />
+                                <!-- Input ẩn để lưu URL của ảnh hiện tại -->
+                                <input type="hidden" name="CurrentPictureUrl" value="@user.ProfilePictureUrl" />
 
-                        <!-- File input để upload ảnh mới -->
-                        <div class="mt-2">
-                            <input type="file" name="PictureUrl" id="PictureUrl_@user.UserId" accept=".jpg, .png" class="file-input" onchange="previewImage(event, '@user.UserId')" />
-                        </div>
-                    </div>
-                <!-- Right Column: Account Information -->
-                <div class="col-md-6">
-                    <h2 style="font-size: 1.5rem;">Hồ Sơ Của Tôi</h2>
-                    <p class="text-muted" style="font-size: 0.9rem;">Quản lý thông tin hồ sơ để bảo mật tài khoản</p>
-
-                   
-                        <input type="hidden" name="UserId" value="@user.UserId"> <!-- Hidden input for UserId -->
-
-                        <div class="form-group form-row align-items-center mt-3">
-                            <label for="FirstName" class="col-sm-3 col-form-label">Họ:<span class="text-danger">*</span></label>
-                            <div class="col-sm-9">
-                                <input type="text" id="FirstName" name="FirstName" class="form-control form-control-sm" value="@user.FirstName" required pattern="^[A-Za-zÀ-ÿ\s]+$">
-                                <small class="text-danger" id="firstNameError" style="display: none;">Vui lòng nhập họ đúng form</small>
-                            </div>
-                        </div>
-                        <div class="form-group form-row align-items-center mt-3">
-                            <label for="LastName" class="col-sm-3 col-form-label">Tên:<span class="text-danger">*</span></label>
-                            <div class="col-sm-9">
-                                <input type="text" id="LastName" name="LastName" class="form-control form-control-sm" value="@user.LastName" required pattern="^[A-Za-zÀ-ÿ\s]+$">
-                                <small class="text-danger" id="lastNameError" style="display: none;">Vui lòng nhập tên đúng form</small>
-                            </div>
-                        </div>
-                        <div class="form-group form-row align-items-center mt-3">
-                            <label for="Email" class="col-sm-3 col-form-label">Email:<span class="text-danger">*</span></label>
-                            <div class="col-sm-9">
-                                <input readonly type="email" id="Email" name="Email" class="form-control form-control-sm" value="@user.Email" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group form-row align-items-center mt-3">
-                            <label for="PhoneNumber" class="col-sm-3 col-form-label">Số điện thoại:<span class="text-danger">*</span></label>
-                            <div class="col-sm-9">
-                                <input type="text" id="PhoneNumber" name="PhoneNumber" class="form-control form-control-sm" value="@user.PhoneNumber" required pattern="^\d{10}$">
-                                <small class="text-danger" id="phoneNumberError" style="display: none;">Số điện thoại không hợp lệ. Phải có 10 số</small>
-                            </div>
-                        </div>
-
-                        <div class="form-group form-row align-items-center mt-3">
-                            <label for="Address" class="col-sm-3 col-form-label">Địa chỉ:</label>
-                            <div class="col-sm-9">
-                                <input type="text" id="Address" name="Address" class="form-control form-control-sm" value="@user.Address">
-                            </div>
-                        </div>
-
-                        <div class="form-group form-row align-items-center mt-3">
-                            <label class="col-sm-3 col-form-label">Giới tính:</label>
-                            <div class="col-sm-9">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" id="male" name="Gender" value="male" @(user.Gender?.ToLower() == "male " ? "checked" : "")>
-                                    <label class="form-check-label" for="male">Nam</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" id="female" name="Gender" value="female" @(user.Gender?.ToLower() == "female" ? "checked" : "")>
-                                    <label class="form-check-label" for="female">Nữ</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" id="other" name="Gender" value="other" @(user.Gender?.ToLower() == "other " ? "checked" : "")>
-                                    <label class="form-check-label" for="other">Khác</label>
+                                <!-- File input để upload ảnh mới -->
+                                <div class="mt-2">
+                                    <input type="file" name="PictureUrl" id="PictureUrl_@user.UserId" accept=".jpg, .png" class="file-input" onchange="previewImage(event, '@user.UserId')" />
                                 </div>
                             </div>
                         </div>
+                        <!-- Right Column: Account Information -->
+                        <div class="col-md-6">
+                            <h2 style="font-size: 1.5rem;">Hồ Sơ Của Tôi</h2>
+                            <p class="text-muted" style="font-size: 0.9rem;">Quản lý thông tin hồ sơ để bảo mật tài khoản</p>
 
-                        <div class="form-group form-row align-items-center mt-3">
-                            <label for="DateOfBirth" class="col-sm-3 col-form-label">Ngày sinh:</label>
-                            <div class="col-sm-9">
-                                <input type="date" id="DateOfBirth" name="DateOfBirth" class="form-control form-control-sm" value="@user.DateOfBirth?.ToString("yyyy-MM-dd")">
+
+                            <input type="hidden" name="UserId" value="@user.UserId"> <!-- Hidden input for UserId -->
+
+                            <div class="form-group form-row align-items-center mt-3">
+                                <label for="FirstName" class="col-sm-3 col-form-label">Họ:<span class="text-danger">*</span></label>
+                                <div class="col-sm-9">
+                                    <input type="text" id="FirstName" name="FirstName" class="form-control form-control-sm" value="@user.FirstName" required pattern="^[A-Za-zÀ-ÿ\s]+$">
+                                    <small class="text-danger" id="firstNameError" style="display: none;">Vui lòng nhập họ đúng form</small>
+                                </div>
                             </div>
-                        </div>
+                            <div class="form-group form-row align-items-center mt-3">
+                                <label for="LastName" class="col-sm-3 col-form-label">Tên:<span class="text-danger">*</span></label>
+                                <div class="col-sm-9">
+                                    <input type="text" id="LastName" name="LastName" class="form-control form-control-sm" value="@user.LastName" required pattern="^[A-Za-zÀ-ÿ\s]+$">
+                                    <small class="text-danger" id="lastNameError" style="display: none;">Vui lòng nhập tên đúng form</small>
+                                </div>
+                            </div>
+                            <div class="form-group form-row align-items-center mt-3">
+                                <label for="Email" class="col-sm-3 col-form-label">Email:<span class="text-danger">*</span></label>
+                                <div class="col-sm-9">
+                                    <input readonly type="email" id="Email" name="Email" class="form-control form-control-sm" value="@user.Email" required>
+                                </div>
+                            </div>
 
-                        <div class="text-center mt-4">
-                            <button type="submit" class="btn btn-danger btn-sm" style="margin-bottom: 20px; margin-right: 10px;">Cập nhật thông tin</button>
-                            <a href="~/Common/ChangePassword" class="btn btn-secondary btn-sm" style="margin-bottom: 20px;">Đổi Mật Khẩu</a>
-                        </div>
-                    </form>
-                </div>
+                            <div class="form-group form-row align-items-center mt-3">
+                                <label for="PhoneNumber" class="col-sm-3 col-form-label">Số điện thoại:<span class="text-danger">*</span></label>
+                                <div class="col-sm-9">
+                                    <input type="text" id="PhoneNumber" name="PhoneNumber" class="form-control form-control-sm" value="@user.PhoneNumber" required pattern="^\d{10}$">
+                                    <small class="text-danger" id="phoneNumberError" style="display: none;">Số điện thoại không hợp lệ. Phải có 10 số</small>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-row align-items-center mt-3">
+                                <label for="Address" class="col-sm-3 col-form-label">Địa chỉ:</label>
+                                <div class="col-sm-9">
+                                    <input type="text" id="Address" name="Address" class="form-control form-control-sm" value="@user.Address">
+                                </div>
+                            </div>
+
+                            <div class="form-group form-row align-items-center mt-3">
+                                <label class="col-sm-3 col-form-label">Giới tính:</label>
+                                <div class="col-sm-9">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" id="male" name="Gender" value="male" @(user.Gender?.ToLower() == "male  " ? "checked" : "")>
+                                        <label class="form-check-label" for="male">Nam</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" id="female" name="Gender" value="female" @(user.Gender?.ToLower() == "female" ? "checked" : "")>
+                                        <label class="form-check-label" for="female">Nữ</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" id="other" name="Gender" value="other" @(user.Gender?.ToLower() == "other " ? "checked" : "")>
+                                        <label class="form-check-label" for="other">Khác</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-row align-items-center mt-3">
+                                <label for="DateOfBirth" class="col-sm-3 col-form-label">Ngày sinh:</label>
+                                <div class="col-sm-9">
+                                    <input type="date" id="DateOfBirth" name="DateOfBirth" class="form-control form-control-sm" value="@user.DateOfBirth?.ToString("yyyy-MM-dd")">
+                                </div>
+                            </div>
+
+                            <div class="text-center mt-4">
+                                <button type="submit" class="btn btn-danger btn-sm" style="margin-bottom: 20px; margin-right: 10px;">Cập nhật thông tin</button>
+                                <a href="~/Common/ChangePassword" class="btn btn-secondary btn-sm" style="margin-bottom: 20px;">Đổi Mật Khẩu</a>
+                            </div>
+                </form>
+            </div>
+         </div>
 
                 <script>
                     function validateForm() {

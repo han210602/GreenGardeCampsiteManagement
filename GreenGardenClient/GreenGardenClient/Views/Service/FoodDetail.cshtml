@@ -131,6 +131,21 @@
                 </div>
             </div>
             <style>
+                .site-navbar {
+                    position: fixed; /* Cố định header */
+                    top: 0; /* Đặt header ở đầu trang */
+                    left: 0; /* Canh trái */
+                    width: 100%; /* Chiếm toàn bộ chiều rộng */
+                    z-index: 1000; /* Đảm bảo header nằm trên các phần tử khác */
+                    background-color: #fff; /* Màu nền trắng */
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ cho header */
+                    padding: 10px 0; /* Khoảng cách trên và dưới */
+                }
+
+                    /* Khoảng trống bên dưới để bù cho chiều cao header */
+                    .site-navbar + .content {
+                        padding-top: 70px; /* Điều chỉnh theo chiều cao thực tế của header */
+                    }
                 .site-menu .dropdown {
                     display: none; /* Ẩn menu thả xuống */
                     position: absolute; /* Để menu thả xuống xuất hiện bên dưới mục Services */
@@ -272,6 +287,11 @@
                         font-size: 16px;
                         margin: 0 5px;
                     }
+
+                .tile {
+                    
+                    margin-top: 150px; /* Khoảng cách dưới */
+                }
             </style>
             <script>
                 $(document).ready(function () {
@@ -305,7 +325,7 @@
                                     <i class="zoom-icon fa fa-search-plus" onclick="openModal()" style="position: absolute; top: 10px; right: 10px; font-size: 24px; cursor: pointer;"></i>
 
                                     <!-- Image -->
-                                    <img src="~/images/doan1.jpg" alt="Product Image" class="img-fluid img-thumbnail" id="productImage">
+                                    <img src="~/images/p22.jpg" alt="Product Image" class="img-fluid img-thumbnail" id="productImage">
                                 </div>
 
                                 <!-- Modal for Zoomed Image -->
@@ -337,9 +357,6 @@
                                         </h3>
 
                                     </div>
-                                    <hr class="dotted-line">
-                                    <p>Số lượng còn: @foodAndDrink.QuantityAvailable</p>
-                                    <hr class="dotted-line">
 
                                     <div class="quantity-container">
                                         <i class="fas fa-coins"></i> Số lượng:
@@ -441,6 +458,7 @@
             }
         });
 
+
         function setUsageDate(itemId) {
             const savedDate = sessionStorage.getItem('usageDateForAll');
             const savedTime = sessionStorage.getItem('usageTimeForAll');
@@ -450,35 +468,8 @@
                 document.getElementById('hidden-date-' + itemId).value = `${savedDate} ${savedTime}`;
                 addToCart(itemId); // Call addToCart function directly
             } else {
+                addToCart(itemId);
                 // Show the popup to select both date and time if not previously saved
-                Swal.fire({
-                    title: 'Chọn ngày và giờ sử dụng',
-                    html:
-                        '<input type="date" id="usage-date" class="swal2-input" min="' + new Date().toISOString().split('T')[0] + '">' +
-                        '<input type="time" id="usage-time" class="swal2-input">',
-                    showCancelButton: true,
-                    confirmButtonText: 'Xác nhận',
-                    cancelButtonText: 'Hủy',
-                    preConfirm: () => {
-                        const date = document.getElementById('usage-date').value;
-                        const time = document.getElementById('usage-time').value;
-                        if (!date || !time) {
-                            Swal.showValidationMessage('Bạn cần nhập cả ngày và giờ sử dụng!');
-                            return false;
-                        }
-                        return { date, time };
-                    }
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        const { date, time } = result.value;
-                        sessionStorage.setItem('usageDateForAll', date);
-                        sessionStorage.setItem('usageTimeForAll', time);
-
-                        // Set both date and time in the hidden input for the form
-                        document.getElementById('hidden-date-' + itemId).value = `${date} ${time}`;
-                        addToCart(itemId); // Call addToCart after date and time selection
-                    }
-                });
             }
             return false;
         }
@@ -505,7 +496,7 @@
                         // Nếu có lỗi (chưa đăng nhập hoặc sai vai trò)
                         Swal.fire({
                             icon: "error",
-                            title: "Thất bại",
+                            title: "Lỗi",
                             text: response.message,
                             showConfirmButton: false,
                             timer: 1500
@@ -516,7 +507,7 @@
                     // Xử lý lỗi khi gọi AJAX thất bại
                     Swal.fire({
                         icon: "error",
-                        title: "Thất bại",
+                        title: "Lỗi",
                         text: "Đã có lỗi xảy ra, vui lòng thử lại.",
                         showConfirmButton: false,
                         timer: 1500
@@ -524,6 +515,7 @@
                 }
             });
         }
+
     </script>
     <script src="~/js/jquery-3.3.1.min.js"></script>
     <script src="~/js/jquery-migrate-3.0.0.js"></script>

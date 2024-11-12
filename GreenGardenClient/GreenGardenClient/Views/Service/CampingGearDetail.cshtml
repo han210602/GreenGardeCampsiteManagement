@@ -130,6 +130,25 @@
                 </div>
             </div>
             <style>
+                .site-navbar {
+                    position: fixed; /* Cố định header */
+                    top: 0; /* Đặt header ở đầu trang */
+                    left: 0; /* Canh trái */
+                    width: 100%; /* Chiếm toàn bộ chiều rộng */
+                    z-index: 1000; /* Đảm bảo header nằm trên các phần tử khác */
+                    background-color: #fff; /* Màu nền trắng */
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ cho header */
+                    padding: 10px 0; /* Khoảng cách trên và dưới */
+                }
+
+                    /* Khoảng trống bên dưới để bù cho chiều cao header */
+                    .site-navbar + .content {
+                        padding-top: 70px; /* Điều chỉnh theo chiều cao thực tế của header */
+                    }
+
+                .tile {
+                    margin-top: 150px; /* Khoảng cách dưới */
+                }
                 .site-menu .dropdown {
                     display: none; /* Ẩn menu thả xuống */
                     position: absolute; /* Để menu thả xuống xuất hiện bên dưới mục Services */
@@ -334,13 +353,13 @@
                                     </div>
 
                                     <hr class="dotted-line">
-                                    <p>Số lượng còn: @campingGear.QuantityAvailable</p>
+                                    <p>Số lượng còn: <strong>@campingGear.QuantityAvailable</strong></p>
                                     <hr class="dotted-line">
                                     <div class="quantity-container">
                                         <i class="fas fa-coins"></i> Số lượng:
                                         <div class="quantity-controls">
                                             <button onclick="decreaseQuantity()">−</button>
-                                            <input type="number" id="quantity" value="1" min="1" onchange="updateHiddenQuantity()" />
+                                            <input type="number" id="quantity" value="1" min="1" max="@campingGear.QuantityAvailable" onchange="updateHiddenQuantity()" />
                                             <button onclick="increaseQuantity()">+</button>
                                         </div>
 
@@ -357,7 +376,7 @@
                                             <input type="hidden" id="hidden-quantity" name="quantity" value="1" /> <!-- Hidden input for quantity -->
                                             <input type="hidden" id="hidden-date-@campingGear.GearId" name="usageDate" />
                                             <input type="hidden" name="redirectAction" value="CampingGearDetail" />
-                                            <button type="button" class="btn btn-primary mt-4" onclick="setUsageDate('@campingGear.GearId')">Thêm vào giỏ hàng</button>
+                                            <button type="button" class="btn btn-primary mt-4" onclick="addToCart('@campingGear.GearId')">Thêm vào giỏ hàng</button>
                                         </form>
                                         <a href="~/Service/OrderGear" class="btn btn-secondary  mt-4" style="margin-left:20px">Quay lại</a>
                                     </div>
@@ -380,15 +399,15 @@
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({
-            duration: 1200, // Đặt thời gian cho hiệu ứng (tùy chọn)
+            duration: 1200, // Set duration for animation (optional)
         });
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
+
         function increaseQuantity() {
             var quantityInput = document.getElementById('quantity');
             var currentQuantity = parseInt(quantityInput.value, 10);
-            if (currentQuantity < 20) {  // Giới hạn số lượng tối đa là 20
+            var maxQuantity = parseInt(quantityInput.max, 10);
+
+            if (currentQuantity < maxQuantity) { // Ensure quantity does not exceed available stock
                 quantityInput.value = currentQuantity + 1;
                 updateHiddenQuantity();
             }
@@ -397,7 +416,8 @@
         function decreaseQuantity() {
             var quantityInput = document.getElementById('quantity');
             var currentQuantity = parseInt(quantityInput.value, 10);
-            if (currentQuantity > 1) {  // Giới hạn số lượng tối thiểu là 1
+
+            if (currentQuantity > 1) { // Ensure quantity does not drop below 1
                 quantityInput.value = currentQuantity - 1;
                 updateHiddenQuantity();
             }
@@ -409,74 +429,88 @@
             sessionStorage.setItem('selectedQuantity', quantity);
         }
 
-        function setUsageDate(gearId) {
-            const savedDate = sessionStorage.getItem('usageDateForAll');
-            const savedTime = sessionStorage.getItem('usageTimeForAll');
-
-            if (savedDate && savedTime) {
-                document.getElementById('hidden-date-' + gearId).value = `${savedDate} ${savedTime}`;
-                addToCart(gearId);
-            } else {
-                Swal.fire({
-                    title: 'Chọn ngày và giờ sử dụng',
-                    html:
-                        '<input type="date" id="usage-date" class="swal2-input" min="' + new Date().toISOString().split('T')[0] + '">' +
-                        '<input type="time" id="usage-time" class="swal2-input">',
-                    showCancelButton: true,
-                    confirmButtonText: 'Xác nhận',
-                    cancelButtonText: 'Hủy',
-                    preConfirm: () => {
-                        const date = document.getElementById('usage-date').value;
-                        const time = document.getElementById('usage-time').value;
-                        if (!date || !time) {
-                            Swal.showValidationMessage('Bạn cần nhập cả ngày và giờ sử dụng!');
-                            return false;
-                        }
-                        return { date, time };
-                    }
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        const { date, time } = result.value;
-                        sessionStorage.setItem('usageDateForAll', date);
-                        sessionStorage.setItem('usageTimeForAll', time);
-                        document.getElementById('hidden-date-' + gearId).value = `${date} ${time}`;
-                        addToCart(gearId);
-                    }
-                });
-            }
-            return false;
-        }
 
         function addToCart(gearId) {
             const form = $(`#product-${gearId}`).find('form');
+            const quantityInput = document.getElementById('quantity'); // User-input quantity
+            const quantity = parseInt(quantityInput.value, 10); // Quantity to add to the cart
+            const availableQuantityElement = document.querySelector("#product-" + gearId + " strong");
+            const availableQuantity = parseInt(availableQuantityElement.textContent, 10); // Current available quantity in stock
+            const savedDate = sessionStorage.getItem('usageDateForAll');
+            const savedTime = sessionStorage.getItem('usageTimeForAll');
+
+            // Đặt ngày và giờ vào hidden input
+            document.getElementById('hidden-date-' + gearId).value = `${savedDate} ${savedTime}`;
+
+            // Kiểm tra nếu số lượng <= 0 thì không cho thêm vào giỏ hàng
+            if (isNaN(availableQuantity) || availableQuantity <= 0) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Hết hàng",
+                    text: "Sản phẩm này đã hết số lượng trong ngày!",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                return;
+            }
+
+            // Validate if the user-input quantity exceeds available stock
+            if (quantity > availableQuantity) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Lỗi số lượng",
+                    text: "Số lượng đặt không được vượt quá số lượng còn lại!",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                return; // Prevent adding to cart
+            }
+
             const formData = form.serialize();
 
+            // Perform AJAX request to add item to the cart
             $.ajax({
                 type: "POST",
                 url: form.attr("action"),
                 data: formData,
                 success: function (response) {
-                    Swal.fire({
-                        icon: response.success ? "success" : "error",
-                        title: response.success ? "Thành công" : "Thất bại",
-                        text: response.message,
-                        showConfirmButton: !response.success,
-                        timer: response.success ? 1500 : null
-                    });
+                    if (response.success) {
+                        // Show success notification
+                        Swal.fire({
+                            icon: "success",
+                            title: "Thành công",
+                            text: "Đã thêm vào giỏ hàng thành công!",
+                            showConfirmButton: false,
+                            timer: 1000
+                        }).then(() => {
+                            // Reload the page after success
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Thất bại",
+                            text: response.message || "Có lỗi xảy ra, vui lòng thử lại.",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
                 },
                 error: function () {
                     Swal.fire({
                         icon: "error",
-                        title: "Lỗi",
+                        title: "Thất bại",
                         text: "Đã có lỗi xảy ra, vui lòng thử lại.",
-                        confirmButtonText: "OK"
+                        showConfirmButton: false,
+                        timer: 1500
                     });
                 }
             });
         }
 
-
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="~/js/jquery-3.3.1.min.js"></script>
     <script src="~/js/jquery-migrate-3.0.0.js"></script>
     <script src="~/js/popper.min.js"></script>

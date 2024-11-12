@@ -136,6 +136,21 @@
                 </div>
             </div>
             <style>
+                .site-navbar {
+                    position: fixed; /* Cố định header */
+                    top: 0; /* Đặt header ở đầu trang */
+                    left: 0; /* Canh trái */
+                    width: 100%; /* Chiếm toàn bộ chiều rộng */
+                    z-index: 1000; /* Đảm bảo header nằm trên các phần tử khác */
+                    background-color: #fff; /* Màu nền trắng */
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ cho header */
+                    padding: 10px 0; /* Khoảng cách trên và dưới */
+                }
+
+                    /* Khoảng trống bên dưới để bù cho chiều cao header */
+                    .site-navbar + .content {
+                        padding-top: 70px; /* Điều chỉnh theo chiều cao thực tế của header */
+                    }
                 .site-menu .dropdown {
                     display: none; /* Ẩn menu thả xuống */
                     position: absolute; /* Để menu thả xuống xuất hiện bên dưới mục Services */
@@ -437,7 +452,7 @@
                                                         <input type="hidden" name="quantity" value="1" />
                                                         <input type="hidden" id="hidden-date-@item.GearId" name="usageDate" />
                                                         <input type="hidden" name="redirectAction" value="OrderGear" />
-                                                        <button type="button"  onclick="return setUsageDate('@item.GearId')" class="btn btn-primary">Thêm <i class="fas fa-shopping-cart"></i></button>
+                                                        <button type="button"  onclick="return addToCart('@item.GearId')" class="btn btn-primary">Thêm <i class="fas fa-shopping-cart"></i></button>
                                                     </form> 
                                                     <a href="@Url.Action("CampingGearDetail", "Service", new { gearId = item.GearId })" class="btn btn-secondary ms-2">Xem chi tiết</a> <!-- Thêm lớp 'ms-2' để tạo khoảng cách bên trái -->
                                                 </div>
@@ -665,79 +680,70 @@
                 updateGearList();
             });
         });
-        function setUsageDate(gearId) {
+        function addToCart(gearId) {
+            const form = $(`#product-${gearId}`).find('form');
+            const availableQuantityElement = $(`#product-${gearId}`).find('h2:contains("Số lượng còn lại") strong');
+            let availableQuantity = parseInt(availableQuantityElement.text(), 10);
             const savedDate = sessionStorage.getItem('usageDateForAll');
             const savedTime = sessionStorage.getItem('usageTimeForAll');
 
-            if (savedDate && savedTime) {
-                // Use the saved date and time if they exist
-                document.getElementById('hidden-date-' + gearId).value = `${savedDate} ${savedTime}`;
-                addToCart(gearId); // Call addToCart function directly
-            } else {
-                // Show the popup to select both date and time if not previously saved
+            // Đặt ngày và giờ vào hidden input
+            document.getElementById('hidden-date-' + gearId).value = `${savedDate} ${savedTime}`;
+
+            // Kiểm tra nếu số lượng <= 0 thì không cho thêm vào giỏ hàng
+            if (isNaN(availableQuantity) || availableQuantity <= 0) {
                 Swal.fire({
-                    title: 'Chọn ngày và giờ sử dụng',
-                    html:
-                        '<input type="date" id="usage-date" class="swal2-input" min="' + new Date().toISOString().split('T')[0] + '">' +
-                        '<input type="time" id="usage-time" class="swal2-input">',
-                    showCancelButton: true,
-                    confirmButtonText: 'Xác nhận',
-                    cancelButtonText: 'Hủy',
-                    preConfirm: () => {
-                        const date = document.getElementById('usage-date').value;
-                        const time = document.getElementById('usage-time').value;
-                        if (!date || !time) {
-                            Swal.showValidationMessage('Bạn cần nhập cả ngày và giờ sử dụng!');
-                            return false;
-                        }
-                        return { date, time };
-                    }
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        const { date, time } = result.value;
-                        sessionStorage.setItem('usageDateForAll', date);
-                        sessionStorage.setItem('usageTimeForAll', time);
-
-                        // Set both date and time in the hidden input for the form
-                        document.getElementById('hidden-date-' + gearId).value = `${date} ${time}`;
-                        addToCart(gearId); // Call addToCart after date and time selection
-                    }
+                    icon: "error",
+                    title: "Hết hàng",
+                    text: "Sản phẩm này đã hết số lượng trong ngày!",
+                    showConfirmButton: false,
+                    timer: 1500
                 });
+                return;
             }
-            return false;
-        }
 
-        function addToCart(gearId) {
-            const form = $(`#product-${gearId}`).find('form');
             const formData = form.serialize();
 
+            // Thực hiện AJAX để thêm vào giỏ hàng
             $.ajax({
                 type: "POST",
                 url: form.attr("action"),
                 data: formData,
                 success: function (response) {
                     if (response.success) {
-                        // Nếu thêm vào giỏ hàng thành công
+                        // Show success notification
                         Swal.fire({
                             icon: "success",
                             title: "Thành công",
-                            text: response.message,
+                            text: "Đã thêm vào giỏ hàng thành công!",
                             showConfirmButton: false,
-                            timer: 1500
+                            timer: 1000
+                        }).then(() => {
+                            // Reload the page after success
+                            updateGearList();
+
                         });
+
+                        // Giảm số lượng còn lại trên giao diện
+                        availableQuantity -= 1;
+                        availableQuantityElement.text(availableQuantity);
+
+                        // Nếu số lượng còn lại là 0, thêm hiệu ứng để thông báo hết hàng
+                        if (availableQuantity <= 0) {
+                            availableQuantityElement.closest('.product-card').addClass('out-of-stock');
+                        }
+
                     } else {
-                        // Nếu có lỗi (chưa đăng nhập hoặc sai vai trò)
                         Swal.fire({
                             icon: "error",
                             title: "Thất bại",
-                            text: response.message,
+                            text: response.message || "Có lỗi xảy ra, vui lòng thử lại.",
                             showConfirmButton: false,
                             timer: 1500
                         });
                     }
                 },
                 error: function () {
-                    // Xử lý lỗi khi gọi AJAX thất bại
                     Swal.fire({
                         icon: "error",
                         title: "Thất bại",
@@ -748,8 +754,6 @@
                 }
             });
         }
-
-
     </script>
 </body>
 <footer class="site-footer bg-light">

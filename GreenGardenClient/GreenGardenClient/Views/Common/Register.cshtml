@@ -72,6 +72,7 @@
                                 <li class="has-dropdown">
                                     <a href="/Service" class="nav-link">Dịch vụ</a>
                                     <ul class="dropdown">
+                                        <li><a href="/Service/ComboList" class="nav-link">Danh sách combo vé</a></li>
                                         <li><a href="/Service/OrderTicket" class="nav-link">Danh sách vé</a></li>
                                         <li><a href="/Service/OrderFoodAndDrink" class="nav-link">Danh sách đồ ăn</a></li>
                                         <li><a href="/Service/OrderGear" class="nav-link">Danh sách dụng cụ</a></li>
@@ -93,6 +94,25 @@
                 </div>
             </div>
             <style>
+                .site-navbar {
+                    position: fixed; /* Cố định header */
+                    top: 0; /* Đặt header ở đầu trang */
+                    left: 0; /* Canh trái */
+                    width: 100%; /* Chiếm toàn bộ chiều rộng */
+                    z-index: 1000; /* Đảm bảo header nằm trên các phần tử khác */
+                    background-color: #fff; /* Màu nền trắng */
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ cho header */
+                    padding: 10px 0; /* Khoảng cách trên và dưới */
+                }
+
+                    /* Khoảng trống bên dưới để bù cho chiều cao header */
+                    .site-navbar + .content {
+                        padding-top: 70px; /* Điều chỉnh theo chiều cao thực tế của header */
+                    }
+
+                .tile {
+                    margin-top: 150px; /* Khoảng cách dưới */
+                }
                 .site-menu .dropdown {
                     display: none; /* Ẩn menu thả xuống */
                     position: absolute; /* Để menu thả xuống xuất hiện bên dưới mục Services */
@@ -146,80 +166,82 @@
         </header>
         <div class="site-section">
             <div class="container-fluid">
-                <div class="row">
-                    <!-- Thiết lập chiều cao cho hàng -->
-                    <!-- Phía bên trái: Logo hoặc hình ảnh -->
-                    <div class="col-md-6 d-flex align-items-center justify-content-center">
-                        <div class="text-center text-white" style="font-family: 'Poppins', sans-serif;">
-                            <img src="~/images/logo.jpg" alt="Image" class="img-fluid" style="max-width: 30%; height: auto;">
+               <div class="Tile">
+                    <div class="row">
+                        <!-- Thiết lập chiều cao cho hàng -->
+                        <!-- Phía bên trái: Logo hoặc hình ảnh -->
+                        <div class="col-md-6 d-flex align-items-center justify-content-center">
+                            <div class="text-center text-white" style="font-family: 'Poppins', sans-serif;">
+                                <img src="~/images/logo.jpg" alt="Image" class="img-fluid" style="max-width: 30%; height: auto;">
 
-                            <h1 class="display-4" style="font-size: 2rem;">Chào mừng đến với chúng tôi</h1>
+                                <h1 class="display-4" style="font-size: 2rem;">Chào mừng đến với chúng tôi</h1>
+
+                            </div>
+                        </div>
+
+
+                        <!-- Phía bên phải: Form đăng nhập -->
+                        <div class="col-md-6 d-flex align-items-center justify-content-center">
+                            <form id="registerForm" asp-action="Register" method="post" class="p-5 bg-light" style="border-radius: 10px; width: 80%;">
+                                <h2 class="text-center">Đăng Ký</h2>
+
+                                <div class="form-group d-flex justify-content-between align-items-center">
+                                    <div class="form-group">
+                                        <label for="firstName">Họ:</label>
+                                        <input type="text" class="form-control" id="firstname" name="FirstName" placeholder="First Name" required>
+                                    </div>
+                                    <div class="form-group" style="padding-left:10px">
+                                        <label for="lastName">Tên:</label>
+                                        <input type="text" class="form-control" id="lastname" name="LastName" placeholder="Last Name" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="email">Email:</label>
+                                    <input type="email" class="form-control" id="email" name="Email" placeholder="Email" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="phone">Số điện thoại:</label>
+                                    <input type="tel" class="form-control" id="PhoneNumber" name="PhoneNumber" placeholder="Nhập số điện thoại" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="password">Mật khẩu:</label>
+                                    <input type="password" class="form-control" id="password" name="Password" placeholder="Nhập mật khẩu" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="confirmPassword">Nhắc lại Mật khẩu:</label>
+                                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Xác nhận mật khẩu" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="verificationCode" class="form-label">Nhập mã xác thực</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="verificationCode" name="VerificationCode" placeholder="Mã xác thực" required>
+                                        <button type="button" class="btn btn-secondary btn-sm" id="getCodeButton">Lấy mã</button>
+                                        <button type="button" class="btn btn-success" style="display: none;" id="countdownButton">120s</button>
+                                    </div>
+                                    <span id="waitingMessage" style="color: red; display: none;">Vui lòng chờ trong giây lát...</span>
+
+
+                                </div>
+                                @if (ViewBag.VerificationError != null)
+                                {
+                                    <div id="verificationError" style="color: red; margin-top: 5px;">
+                                        @ViewBag.VerificationError
+                                    </div>
+                                }
+                                <div id="passwordError" style="color: red; display: none; margin-top: 10px;">Xác nhận mật khẩu sai, vui lòng nhập lại</div>
+
+                                <button type="button" class="btn btn-primary btn-block mt-3" onclick="validatePassword()">Đăng Ký</button>
+                            </form>
 
                         </div>
-                    </div>
-
-
-                    <!-- Phía bên phải: Form đăng nhập -->
-                    <div class="col-md-6 d-flex align-items-center justify-content-center">
-                        <form id="registerForm" asp-action="Register" method="post" class="p-5 bg-light" style="border-radius: 10px; width: 80%;">
-                            <h2 class="text-center">Đăng Ký</h2>
-
-                            <div class="form-group d-flex justify-content-between align-items-center">
-                                <div class="form-group">
-                                    <label for="firstName">Họ:</label>
-                                    <input type="text" class="form-control" id="firstname" name="FirstName" placeholder="First Name" required>
-                                </div>
-                                <div class="form-group" style="padding-left:10px">
-                                    <label for="lastName">Tên:</label>
-                                    <input type="text" class="form-control" id="lastname" name="LastName" placeholder="Last Name" required>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="email">Email:</label>
-                                <input type="email" class="form-control" id="email" name="Email" placeholder="Email" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="phone">Số điện thoại:</label>
-                                <input type="tel" class="form-control" id="PhoneNumber" name="PhoneNumber" placeholder="Nhập số điện thoại" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="password">Mật khẩu:</label>
-                                <input type="password" class="form-control" id="password" name="Password" placeholder="Nhập mật khẩu" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="confirmPassword">Nhắc lại Mật khẩu:</label>
-                                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Xác nhận mật khẩu" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="verificationCode" class="form-label">Nhập mã xác thực</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="verificationCode" name="VerificationCode" placeholder="Mã xác thực" required>
-                                    <button type="button" class="btn btn-secondary btn-sm" id="getCodeButton">Lấy mã</button>
-                                    <button type="button" class="btn btn-success" style="display: none;" id="countdownButton">120s</button>
-                                </div>
-                                <span id="waitingMessage" style="color: red; display: none;">Vui lòng chờ trong giây lát...</span>
-
-
-                            </div>
-                            @if (ViewBag.VerificationError != null)
-                            {
-                                <div id="verificationError" style="color: red; margin-top: 5px;">
-                                    @ViewBag.VerificationError
-                                </div>
-                            }
-                            <div id="passwordError" style="color: red; display: none; margin-top: 10px;">Xác nhận mật khẩu sai, vui lòng nhập lại</div>
-
-                            <button type="button" class="btn btn-primary btn-block mt-3" onclick="validatePassword()">Đăng Ký</button>
-                        </form>
 
                     </div>
-
-                </div>
+               </div>
             </div>
         </div>
 

@@ -122,6 +122,25 @@
                 </div>
             </div>
             <style>
+                .site-navbar {
+                    position: fixed; /* Cố định header */
+                    top: 0; /* Đặt header ở đầu trang */
+                    left: 0; /* Canh trái */
+                    width: 100%; /* Chiếm toàn bộ chiều rộng */
+                    z-index: 1000; /* Đảm bảo header nằm trên các phần tử khác */
+                    background-color: #fff; /* Màu nền trắng */
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ cho header */
+                    padding: 10px 0; /* Khoảng cách trên và dưới */
+                }
+
+                    /* Khoảng trống bên dưới để bù cho chiều cao header */
+                    .site-navbar + .content {
+                        padding-top: 70px; /* Điều chỉnh theo chiều cao thực tế của header */
+                    }
+
+                .tile {
+                    margin-top: 150px; /* Khoảng cách dưới */
+                }
                 .site-menu .dropdown {
                     display: none; /* Ẩn menu thả xuống */
                     position: absolute; /* Để menu thả xuống xuất hiện bên dưới mục Services */
@@ -196,49 +215,51 @@
         </header>
 
         <div class="container mt-5">
-            <div class="row">
-                <!-- Left Section -->
-                <div class="col-md-8 d-flex flex-column justify-content-center">
-                    <img src="~/images/contact.jpg" alt="Authentic Shoes Store" class="store-image mb-4">
-                    <div class="store-info">
-                        <h3>Sông quê Green Garden</h3>
-                        <p>
-                            Sông Quê Green Garden Camping là khu cắm trại ven sông yên bình, nơi bạn có thể hòa mình vào thiên nhiên tươi đẹp với không gian xanh mát và không khí trong lành. Được bao quanh bởi những cánh đồng bát ngát và dòng sông êm đềm, đây là địa điểm lý tưởng để thư giãn, tận hưởng những giây phút yên tĩnh bên gia đình và bạn bè.
-                        </p>
+           <div class="tile">
+                <div class="row">
+                    <!-- Left Section -->
+                    <div class="col-md-8 d-flex flex-column justify-content-center">
+                        <img src="~/images/contact.jpg" alt="Authentic Shoes Store" class="store-image mb-4">
+                        <div class="store-info">
+                            <h3>Sông quê Green Garden</h3>
+                            <p>
+                                Sông Quê Green Garden Camping là khu cắm trại ven sông yên bình, nơi bạn có thể hòa mình vào thiên nhiên tươi đẹp với không gian xanh mát và không khí trong lành. Được bao quanh bởi những cánh đồng bát ngát và dòng sông êm đềm, đây là địa điểm lý tưởng để thư giãn, tận hưởng những giây phút yên tĩnh bên gia đình và bạn bè.
+                            </p>
 
-                        <h5>Vùng đất mới sông quê</h5>
-                        <ul class="list-unstyled">
-                            <li>
-                                • Sông Quê Green Garden Camping mang đến cho du khách trải nghiệm cắm trại độc đáo giữa không gian thiên nhiên hoang sơ và yên bình. Với bãi cỏ xanh mướt ven sông, khu cắm trại được thiết kế tinh tế, kết hợp giữa sự tiện nghi hiện đại và vẻ đẹp tự nhiên.
-                            </li>
-                            <li>
-                                •Chúng tôi cung cấp đa dạng các dịch vụ như: lều cắm trại đầy đủ tiện nghi, khu BBQ ngoài trời, bếp chung, nhà vệ sinh sạch sẽ và khu tắm rửa tiện nghi. Du khách có thể tham gia các hoạt động như chèo thuyền , câu cá, đạp xe dạo quanh đồng quê, hay đơn giản là thư giãn dưới tán cây xanh mát...
-                            </li>
-                        </ul>
+                            <h5>Vùng đất mới sông quê</h5>
+                            <ul class="list-unstyled">
+                                <li>
+                                    • Sông Quê Green Garden Camping mang đến cho du khách trải nghiệm cắm trại độc đáo giữa không gian thiên nhiên hoang sơ và yên bình. Với bãi cỏ xanh mướt ven sông, khu cắm trại được thiết kế tinh tế, kết hợp giữa sự tiện nghi hiện đại và vẻ đẹp tự nhiên.
+                                </li>
+                                <li>
+                                    •Chúng tôi cung cấp đa dạng các dịch vụ như: lều cắm trại đầy đủ tiện nghi, khu BBQ ngoài trời, bếp chung, nhà vệ sinh sạch sẽ và khu tắm rửa tiện nghi. Du khách có thể tham gia các hoạt động như chèo thuyền , câu cá, đạp xe dạo quanh đồng quê, hay đơn giản là thư giãn dưới tán cây xanh mát...
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Right Section -->
+                    <div class="col-md-4">
+                        <div class="contact-info">
+                            <h5>ĐỊA CHỈ:</h5>
+                            <p>Gần đình chùa Quán Tính,Giang Biên,Long Biên,HN</p>
+                            <h5>SỐ ĐIỆN THOẠI:</h5>
+                            <p><a href="tel:0785499555">098 732 76 69</a></p>
+                            <h5>EMAIL:</h5>
+                            <p>
+                                hocausongque@gmail.com
+                            </p>
+                        </div>
+                        <div class="map">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3408.2711745514057!2d105.91792687476992!3d21.05656318682401!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135a9ad89ed0681%3A0xdfe74944a2df349b!2sS%C3%B4ng%20Qu%C3%AA%20Green%20Garden!5e1!3m2!1svi!2s!4v1730041487949!5m2!1svi!2s" width="100%" height="300" frameborder="0" style="border:0;" allowfullscreen=""
+                                    aria-hidden="false" tabindex="0"></iframe>
+
+
+
+                        </div>
                     </div>
                 </div>
-
-                <!-- Right Section -->
-                <div class="col-md-4">
-                    <div class="contact-info">
-                        <h5>ĐỊA CHỈ:</h5>
-                        <p>Gần đình chùa Quán Tính,Giang Biên,Long Biên,HN</p>
-                        <h5>SỐ ĐIỆN THOẠI:</h5>
-                        <p><a href="tel:0785499555">098 732 76 69</a></p>
-                        <h5>EMAIL:</h5>
-                        <p>
-                            hocausongque@gmail.com
-                        </p>
-                    </div>
-                    <div class="map">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3408.2711745514057!2d105.91792687476992!3d21.05656318682401!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135a9ad89ed0681%3A0xdfe74944a2df349b!2sS%C3%B4ng%20Qu%C3%AA%20Green%20Garden!5e1!3m2!1svi!2s!4v1730041487949!5m2!1svi!2s" width="100%" height="300" frameborder="0" style="border:0;" allowfullscreen=""
-                                aria-hidden="false" tabindex="0"></iframe>
-
-
-
-                    </div>
-                </div>
-            </div>
+           </div>
         </div>
 
 

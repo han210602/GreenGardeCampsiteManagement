@@ -132,6 +132,25 @@
                 </div>
             </div>
             <style>
+                .site-navbar {
+                    position: fixed; /* Cố định header */
+                    top: 0; /* Đặt header ở đầu trang */
+                    left: 0; /* Canh trái */
+                    width: 100%; /* Chiếm toàn bộ chiều rộng */
+                    z-index: 1000; /* Đảm bảo header nằm trên các phần tử khác */
+                    background-color: #fff; /* Màu nền trắng */
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ cho header */
+                    padding: 10px 0; /* Khoảng cách trên và dưới */
+                }
+
+                    /* Khoảng trống bên dưới để bù cho chiều cao header */
+                    .site-navbar + .content {
+                        padding-top: 70px; /* Điều chỉnh theo chiều cao thực tế của header */
+                    }
+
+                .tile {
+                    margin-top: 150px; /* Khoảng cách dưới */
+                }
                 .site-menu .dropdown {
                     display: none; /* Ẩn menu thả xuống */
                     position: absolute; /* Để menu thả xuống xuất hiện bên dưới mục Services */
@@ -245,69 +264,71 @@
 
 
         <div class="container mt-5" data-aos="fade-up">
-            <div class="row">
-                <div class="col-md-8">
-                    <h3>Giỏ hàng</h3>
-                    <div>
-                        Ngày sử dụng(tháng-ngày-năm):
-                        <!-- Thêm input date để thay đổi ngày sử dụng trong giỏ hàng -->
-                        <!-- Thêm input datetime-local để thay đổi ngày và giờ sử dụng trong giỏ hàng -->
-                        <input type="datetime-local" id="cart-usage-date"
-                               value="@Model.FirstOrDefault()?.UsageDate.ToString("yyyy-MM-ddTHH:mm")"
-                               onchange="updateCartDate(this.value)">
-
-                    </div>
-                    <div id="cartContainer">
-                    @foreach (var item in Model)
-                    {
-                        <div class="cart-item d-flex mb-3" id="cart-item-@item.Id">
-                            <img src="~/images//img_1.jpg" alt="@item.Name" class="img-thumbnail" style="width: 120px;">
-                            <div class="cart-item-details ml-3">
-                                <h5>@item.Name</h5>
-                                <p>@item.TypeCategory</p>
-                                <p>Giá: <span id="price_@item.Id-@item.Type-@item.TypeCategory">@item.Price.ToString("N0")</span> đ</p>
-
-                            </div>
-                            <div class="ml-auto d-flex align-items-center">
-                                <button class="btn btn-light"
-                                        onclick="decrementQuantity(@item.Id, @item.Price, '@item.Type', '@item.TypeCategory')">
-                                    -
-                                </button>
-
-                                <input type="text" id="quantity_@item.Id-@item.Type-@item.TypeCategory"
-                                       value="@item.Quantity" class="form-control text-center mx-2" style="width: 50px;" readonly>
-
-                                <button class="btn btn-light"
-                                        onclick="incrementQuantity(@item.Id, @item.Price, '@item.Type', '@item.TypeCategory')">
-                                    +
-                                </button>
-
-                                <button class="btn btn-danger ml-2" onclick="removeCartItem(@item.Id, '@item.Type', '@item.TypeCategory')">Xóa</button>
-                            </div>
+           <div class="tile">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h3>Giỏ hàng</h3>
+                        <div>
+                            Ngày sử dụng(tháng-ngày-năm):
+                            <!-- Thêm input date để thay đổi ngày sử dụng trong giỏ hàng -->
+                            <!-- Thêm input datetime-local để thay đổi ngày và giờ sử dụng trong giỏ hàng -->
+                            <input type="datetime-local" id="cart-usage-date"
+                                   value="@Model.FirstOrDefault()?.UsageDate.ToString("yyyy-MM-ddTHH:mm")"
+                                   onchange="updateCartDate(this.value)">
 
                         </div>
-                    }
-                </div>
-                </div>
-                <!-- Tổng hóa đơn -->
-                <div class="col-md-4">
-                    <div class="summary">
-                        <h3>Tổng hóa đơn</h3>
-                        <p>Số tiền: <span id="totalPrice">@Model.Sum(item => item.TotalPrice).ToString("N0")</span> đ</p>
-                        <p>Đã cọc: 0đ</p>
-                        <p>Tổng: <span id="totalPriceFinal">@Model.Sum(item => item.TotalPrice).ToString("N0")</span> đ</p>
-                        <form action="~/Service" method="get">
-                            <button type="submit" class="btn btn-dark">Quay lại dịch vụ</button>
-                        </form>
-                        <!-- Remove the existing form's submit button -->
-                        <form id="paymentForm" asp-controller="Service" asp-action="Order" method="post">
-                            <button type="button" class="btn btn-dark" onclick="submitPayment()">Đặt ngay </button>
-                        </form>
+                        <div id="cartContainer">
+                            @foreach (var item in Model)
+                            {
+                                <div class="cart-item d-flex mb-3" id="cart-item-@item.Id">
+                                    <img src="~/images//img_1.jpg" alt="@item.Name" class="img-thumbnail" style="width: 120px;">
+                                    <div class="cart-item-details ml-3">
+                                        <h5>@item.Name</h5>
+                                        <p>@item.TypeCategory</p>
+                                        <p>Giá: <span id="price_@item.Id-@item.Type-@item.TypeCategory">@item.Price.ToString("N0")</span> đ</p>
+
+                                    </div>
+                                    <div class="ml-auto d-flex align-items-center">
+                                        <button class="btn btn-light"
+                                                onclick="decrementQuantity(@item.Id, @item.Price, '@item.Type', '@item.TypeCategory')">
+                                            -
+                                        </button>
+
+                                        <input type="text" id="quantity_@item.Id-@item.Type-@item.TypeCategory"
+                                               value="@item.Quantity" class="form-control text-center mx-2" style="width: 50px;" readonly>
+
+                                        <button class="btn btn-light"
+                                                onclick="incrementQuantity(@item.Id, @item.Price, '@item.Type', '@item.TypeCategory')">
+                                            +
+                                        </button>
+
+                                        <button class="btn btn-danger ml-2" onclick="removeCartItem(@item.Id, '@item.Type', '@item.TypeCategory')">Xóa</button>
+                                    </div>
+
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <!-- Tổng hóa đơn -->
+                    <div class="col-md-4">
+                        <div class="summary">
+                            <h3>Tổng hóa đơn</h3>
+                            <p>Số tiền: <span id="totalPrice">@Model.Sum(item => item.TotalPrice).ToString("N0")</span> đ</p>
+                            <p>Đã cọc: 0đ</p>
+                            <p>Tổng: <span id="totalPriceFinal">@Model.Sum(item => item.TotalPrice).ToString("N0")</span> đ</p>
+                            <form action="~/Service" method="get">
+                                <button type="submit" class="btn btn-dark">Quay lại dịch vụ</button>
+                            </form>
+                            <!-- Remove the existing form's submit button -->
+                            <form id="paymentForm" asp-controller="Service" asp-action="Order" method="post">
+                                <button type="button" class="btn btn-dark" onclick="submitPayment()">Đặt ngay </button>
+                            </form>
 
 
+                        </div>
                     </div>
                 </div>
-            </div>
+           </div>
         </div>
     </div>
         <script src="~/js/jquery-3.3.1.min.js"></script>
