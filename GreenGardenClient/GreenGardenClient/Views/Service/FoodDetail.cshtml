@@ -292,6 +292,33 @@
                     
                     margin-top: 150px; /* Khoảng cách dưới */
                 }
+
+                .swal-confirm-button {
+                    background-color: #ffca28 !important; /* Yellow background */
+                    color: #000 !important; /* Black text */
+                    border: none; /* Remove border */
+                    font-weight: bold; /* Make text bold */
+                    padding: 10px 20px; /* Adjust padding */
+                    border-radius: 5px; /* Rounded corners */
+                }
+
+                    .swal-confirm-button:hover {
+                        background-color: #FFD700 !important; /* Slightly darker yellow on hover */
+                    }
+
+
+                .swal-cancel-button {
+                    background-color: #6c757d !important; /* Default cancel button color (gray) */
+                    color: #fff !important;
+                    border: none;
+                    font-weight: bold;
+                    padding: 10px 20px;
+                    border-radius: 5px;
+                }
+
+                    .swal-cancel-button:hover {
+                        background-color: #5a6268 !important; /* Darker gray on hover */
+                    }
             </style>
             <script>
                 $(document).ready(function () {
@@ -496,7 +523,7 @@
                         // Nếu có lỗi (chưa đăng nhập hoặc sai vai trò)
                         Swal.fire({
                             icon: "error",
-                            title: "Lỗi",
+                            title: "Thất bại",
                             text: response.message,
                             showConfirmButton: false,
                             timer: 1500

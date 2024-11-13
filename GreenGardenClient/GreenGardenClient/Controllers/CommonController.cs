@@ -23,7 +23,7 @@ namespace GreenGardenClient.Controllers
         {
             return View();
         }
-       
+
         [HttpPost]
         public async Task<IActionResult> Login(string email, string password)
         {
@@ -301,9 +301,14 @@ namespace GreenGardenClient.Controllers
                 return RedirectToAction("ChangePassword");
             }
         }
-        public IActionResult Event()
+        public async Task<IActionResult> Event()
         {
-            return View();
+            var events = await GetDataFromApiAsync<List<EventVM>>("https://localhost:7298/api/Event/GetAllEvents");
+
+            ViewBag.Event = events;
+
+
+            return View("Event");
         }
         private async Task<T> GetDataFromApiAsync<T>(string apiUrl)
         {
@@ -429,6 +434,37 @@ namespace GreenGardenClient.Controllers
         public IActionResult Contact()
         {
             return View("Contact");
+        }
+        [HttpGet("EventDetail")]
+        public async Task<IActionResult> EventDetail(int eventId)
+        {
+
+
+            string apiUrl = $"https://localhost:7298/api/Event/GetEventById?eventId={eventId}";
+
+            try
+            {
+                // Use GetDataFromApiAsync to fetch user profile data
+                var events = await GetDataFromApiAsync<EventVM>(apiUrl);
+
+                if (events != null)
+                {
+                    // Use ViewData instead of ViewBag if you prefer type safety
+                    ViewBag.Event = events;
+                    return View("EventDetail", events); // Load UpdateProfile view with user profile data
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "Không thể lấy dữ liệu từ API.";
+                    return RedirectToAction("Error");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log exception details for debugging
+                TempData["ErrorMessage"] = $"Lỗi hệ thống: {ex.Message}";
+                return RedirectToAction("Error");
+            }
         }
     }
 }

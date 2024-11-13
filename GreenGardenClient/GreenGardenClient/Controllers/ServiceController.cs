@@ -63,43 +63,85 @@ namespace GreenGardenClient.Controllers
         [HttpGet]
         public async Task<IActionResult> OrderGear(int? categoryId, int? sortBy, int? priceRange, string popularity)
         {
-            ViewBag.CurrentCategoryId = categoryId; // Lưu lại categoryId hiện tại để hiển thị active
+            // Lấy giỏ hàng từ phương thức GetCartItems()
+            var cartItems = GetCartItems();
+            ViewBag.CurrentCategoryId = categoryId;
 
             // Xây dựng URL cho API
             string apiUrl = "https://localhost:7298/api/CampingGear/GetCampingGearsBySort?";
 
             // Thêm các tham số vào URL
             if (categoryId.HasValue)
-            {
                 apiUrl += $"categoryId={categoryId.Value}&";
-            }
 
             if (sortBy.HasValue)
-            {
                 apiUrl += $"sortBy={sortBy.Value}&";
-            }
 
             if (priceRange.HasValue)
-            {
                 apiUrl += $"priceRange={priceRange.Value}&";
-            }
 
             if (!string.IsNullOrEmpty(popularity))
-            {
                 apiUrl += $"popularity={popularity}";
-            }
 
+            // Lấy dữ liệu từ API
             var campingGears = await GetDataFromApiAsync<List<GearVM>>(apiUrl);
             var campingCategories = await GetDataFromApiAsync<List<GearCategoryVM>>("https://localhost:7298/api/CampingGear/GetAllCampingGearCategories");
 
+            // Kiểm tra ngày sử dụng từ giỏ hàng nếu có
+            DateTime? cartUsageDate = cartItems.FirstOrDefault()?.UsageDate;
+
+            if (cartUsageDate.HasValue)
+            {
+                // Định dạng ngày sử dụng để gọi API
+                string formattedDate = cartUsageDate.Value.ToString("MM-dd-yyyy");
+
+                // Lấy danh sách số lượng đã sử dụng theo ngày
+                var gearUsage = await GetDataFromApiAsync<List<OrderCampingGearByUsageDateDTO>>(
+                    $"https://localhost:7298/api/OrderManagement/GetListOrderGearByUsageDate/{formattedDate}");
+                if (gearUsage != null) // Check if gearUsage is not null
+                {
+                    // Cập nhật số lượng còn lại cho từng thiết bị
+                    foreach (var item in campingGears)
+                    {
+                        var ticket = gearUsage.ToList().Where(s => s.GearId == item.GearId);
+                        if (ticket != null)
+                        {
+                            foreach (var item1 in ticket)
+                            {
+                                item.QuantityAvailable = item.QuantityAvailable - item1.Quantity.Value;
+                                if (item.QuantityAvailable < 0)
+                                {
+                                    item.QuantityAvailable = 0;
+                                }
+                            }
+                        }
+                    }
+                    foreach (var item in cartItems)
+                    {
+                        var ticket = campingGears.ToList().FirstOrDefault(s => s.GearId == item.Id && item.TypeCategory == "GearCategory");
+                        if (ticket != null)
+                        {
+
+                            if (ticket.QuantityAvailable >= item.Quantity)
+                            {
+                                ticket.Quantity = item.Quantity;
+                                ticket.QuantityAvailable -= item.Quantity;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Truyền dữ liệu về View
             ViewBag.SortBy = sortBy.HasValue ? sortBy.Value.ToString() : "0";
-            ViewBag.PriceRange = priceRange.HasValue ? priceRange.Value.ToString() : null; // Cập nhật ViewBag cho PriceRange
-            ViewBag.Popularity = popularity; // Cập nhật ViewBag cho Popularity
+            ViewBag.PriceRange = priceRange.HasValue ? priceRange.Value.ToString() : null;
+            ViewBag.Popularity = popularity;
             ViewBag.CampingGears = campingGears;
             ViewBag.CampingCategories = campingCategories;
 
             return View("OrderGear");
         }
+
         public async Task<IActionResult> OrderFoodAndDrink()
         {
             var foodAndDrink = await GetDataFromApiAsync<List<FoodAndDrinkVM>>("https://localhost:7298/api/FoodAndDrink/GetAllFoodAndDrink");
@@ -226,41 +268,92 @@ namespace GreenGardenClient.Controllers
         [HttpGet("CampingGearDetail")]
         public async Task<IActionResult> CampingGearDetail(int gearId)
         {
+            // Retrieve cart items from session
+            var cartItems = GetCartItems();
             var apiUrl = $"https://localhost:7298/api/CampingGear/GetCampingGearDetail?id={gearId}";
 
             try
             {
+                // Check if there's a usage date in the cart
+                DateTime? cartUsageDate = cartItems.FirstOrDefault()?.UsageDate;
+
+                GearVM campingGear = null;
+
+                // Fetch gear details from API
                 var client = _clientFactory.CreateClient();
                 var response = await client.GetAsync(apiUrl);
 
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
-                    var campingGear = JsonConvert.DeserializeObject<GearVM>(content);
-
-                    if (campingGear != null)
-                    {
-                        ViewBag.CampingGear = campingGear;
-                        return View("CampingGearDetail", campingGear); // Updated view name
-                    }
-                    else
-                    {
-                        TempData["ErrorMessage"] = "Invalid data!";
-                        return RedirectToAction("Error"); // Redirect to a dedicated error view
-                    }
+                    campingGear = JsonConvert.DeserializeObject<GearVM>(content);
                 }
                 else
                 {
                     TempData["ErrorMessage"] = $"Failed to retrieve data from API: {response.StatusCode}";
                     return RedirectToAction("Error");
                 }
+
+                if (campingGear == null)
+                {
+                    TempData["ErrorMessage"] = "Invalid data!";
+                    return RedirectToAction("Error");
+                }
+
+                // Update quantity available based on the usage date
+                if (cartUsageDate.HasValue)
+                {
+                    // Format date for API request
+                    string formattedDate = cartUsageDate.Value.ToString("MM-dd-yyyy");
+
+                    // Fetch gear usage data from API
+                    var usageResponse = await GetDataFromApiAsync<List<OrderCampingGearByUsageDateDTO>>(
+                        $"https://localhost:7298/api/OrderManagement/GetListOrderGearByUsageDate/{formattedDate}");
+
+                    if (usageResponse != null)
+                    {
+                        var gearUsage = usageResponse.Where(u => u.GearId == gearId).ToList();
+
+                        foreach (var usage in gearUsage)
+                        {
+                            campingGear.QuantityAvailable -= usage.Quantity ?? 0;
+                        }
+
+                        // Ensure QuantityAvailable does not go below zero
+                        if (campingGear.QuantityAvailable < 0)
+                        {
+                            campingGear.QuantityAvailable = 0;
+                        }
+                    }
+
+                    // Adjust QuantityAvailable based on items in the cart
+                    var cartItem = cartItems.FirstOrDefault(c => c.Id == gearId && c.TypeCategory == "GearCategory");
+                    if (cartItem != null)
+                    {
+                        if (campingGear.QuantityAvailable >= cartItem.Quantity)
+                        {
+                            campingGear.QuantityAvailable -= cartItem.Quantity;
+                        }
+                        else
+                        {
+                            TempData["ErrorMessage"] = "Not enough stock available!";
+                            return RedirectToAction("Error");
+                        }
+                    }
+                }
+
+                // Pass the gear details to the view
+                ViewBag.CampingGear = campingGear;
+                return View("CampingGearDetail", campingGear);
             }
             catch (Exception ex)
             {
+                // Handle any errors and redirect to an error view
                 TempData["ErrorMessage"] = $"System error: {ex.Message}";
                 return RedirectToAction("Error");
             }
         }
+
 
         [HttpGet("TicketDetail")]
         public async Task<IActionResult> TicketDetail(int ticketId)
@@ -316,8 +409,8 @@ namespace GreenGardenClient.Controllers
             ViewBag.CurrentCategoryId = activityId; // Set current category for highlighting
             ViewBag.OrderStatus = statusOrder; // Set current order status for sorting
 
-           
-           
+
+
 
             // Build API URL dynamically based on filters
             string apiUrl = $"https://localhost:7298/api/OrderManagement/GetCustomerOrders?customerId={customerId.Value}";
@@ -534,6 +627,16 @@ namespace GreenGardenClient.Controllers
 
             // Lấy danh sách sản phẩm trong giỏ hàng từ session
             var cartItems = GetCartItems();
+            if (Type == "FoodAndDrink" || Type == "Gear")
+            {
+                // Kiểm tra giỏ hàng có vé hoặc combo chưa
+                bool hasTicketOrCombo = cartItems.Any(c => c.Type == "Ticket" || c.Type == "Combo");
+
+                if (!hasTicketOrCombo)
+                {
+                    return Json(new { success = false, message = "Bạn cần thêm vé hoặc combo vào giỏ hàng trước khi thêm đồ ăn hoặc dụng cụ!" });
+                }
+            }
             bool hasDifferentCombo = cartItems.Any(c => c.Type == "Combo" && c.TypeCategory == "ComboCategory" && c.Id != Id);
             bool hasTicket = cartItems.Any(c => c.Type == "Ticket" && c.TypeCategory == "TicketCategory");
             if (Type == "Combo")
@@ -611,7 +714,6 @@ namespace GreenGardenClient.Controllers
             return Json(new { success = true, message = "Thêm vào giỏ hàng thành công!", cartItemCount = cartItems.Count });
         }
 
-
         [HttpGet]
         public IActionResult GetCartItemCount()
         {
@@ -619,6 +721,17 @@ namespace GreenGardenClient.Controllers
             return Json(cartItemCount);
         }
 
+        [HttpPost]
+        public IActionResult Reset()
+        {
+            // Xóa toàn bộ sản phẩm trong giỏ hàng
+            HttpContext.Session.Remove("Cart"); // Nếu giỏ hàng lưu trong Session
+                                                // Hoặc xóa từ database nếu giỏ hàng lưu trong DB
+                                                // Example: _cartService.ClearCart(User.Identity.Name);
+
+            // Chuyển hướng tới trang đặt vé
+            return RedirectToAction("OrderTicket"); // "Booking" là tên controller, "Index" là action.
+        }
 
 
         [HttpPost]

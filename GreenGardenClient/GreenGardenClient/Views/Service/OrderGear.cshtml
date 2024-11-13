@@ -437,11 +437,11 @@
                                             <div class="listing-item-content">
                                                 <h2 class="px-3 mb-1 category bg-primary">@item.RentalPrice.ToString("N0") ₫</h2>
                                                 <h2 class="mb-2">
-                                                    @item.GearName
+                                                    <p>Số lượng còn lại: <strong>@item.QuantityAvailable</strong></p>
                                                 </h2>
 
-                                                <div class="button-container d-flex align-items-center">
-                                                    <form method="post" action="/Service/AddToCart" class="d-flex align-items-center me-2">
+                                                <div class="button-container d-flex justify-content-between align-items-center">
+                                                    <form method="post" action="/Service/AddToCart" class="d-flex align-items-center">
                                                         <!-- Thêm lớp 'me-2' để tạo khoảng cách bên phải -->
                                                         <input type="hidden" name="Id" value="@item.GearId" />
                                                         <input type="hidden" name="Name" value="@item.GearName" />

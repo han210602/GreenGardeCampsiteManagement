@@ -290,6 +290,33 @@
                         font-size: 16px;
                         margin: 0 5px;
                     }
+
+                .swal-confirm-button {
+                    background-color: #efba6c !important; /* Yellow background */
+                    color: #000 !important; /* Black text */
+                    border: none; /* Remove border */
+                    font-weight: bold; /* Make text bold */
+                    padding: 10px 20px; /* Adjust padding */
+                    border-radius: 5px; /* Rounded corners */
+                }
+
+                    .swal-confirm-button:hover {
+                        background-color: #efba6c !important; /* Slightly darker yellow on hover */
+                    }
+
+
+                .swal-cancel-button {
+                    background-color: #6c757d !important; /* Default cancel button color (gray) */
+                    color: #fff !important;
+                    border: none;
+                    font-weight: bold;
+                    padding: 10px 20px;
+                    border-radius: 5px;
+                }
+
+                    .swal-cancel-button:hover {
+                        background-color: #5a6268 !important; /* Darker gray on hover */
+                    }
             </style>
             <script>
                 $(document).ready(function () {
@@ -434,19 +461,45 @@
                 addToCart(ticketId); // Call addToCart function directly
             } else {
                 // Show the popup to select both date and time if not previously saved
+                // Show the popup to select both date and time if not previously saved
                 Swal.fire({
                     title: 'Chọn ngày và giờ sử dụng',
-                    html:
-                        '<input type="date" id="usage-date" class="swal2-input" min="' + new Date().toISOString().split('T')[0] + '">' +
-                        '<input type="time" id="usage-time" class="swal2-input">',
+                    html: (() => {
+                        // Get the current date and time
+                        const now = new Date();
+
+                        // Format the date as 'yyyy-MM-dd'
+                        const currentDate = now.toISOString().split('T')[0];
+
+                        // Format the time as 'HH:mm'
+                        const tenMinutesLater = new Date(now.getTime() + 10 * 60000); // Add 10 minutes in milliseconds
+                        const hours = tenMinutesLater.getHours().toString().padStart(2, '0'); // Format hours as HH
+                        const minutes = tenMinutesLater.getMinutes().toString().padStart(2, '0'); // Format minutes as mm
+                        //const currentTime = now.toTimeString().split(':').slice(0, 2).join(':');
+                        const futureTime = `${hours}:${minutes}`;
+
+                        return `
+                                    <input type="date" id="usage-date" class="swal2-input" value="${currentDate}" min="${currentDate}">
+                                                    <input type="time" id="usage-time" class="swal2-input" value="${futureTime}">
+                                `;
+                    })(),
                     showCancelButton: true,
                     confirmButtonText: 'Xác nhận',
                     cancelButtonText: 'Hủy',
+                    customClass: {
+                        confirmButton: 'swal-confirm-button', // Assign custom class
+                        cancelButton: 'swal-cancel-button'
+                    },
                     preConfirm: () => {
                         const date = document.getElementById('usage-date').value;
                         const time = document.getElementById('usage-time').value;
+                        const currentDate = new Date().toISOString().split('T')[0]; // Get current date in 'yyyy-mm-dd' format
                         if (!date || !time) {
                             Swal.showValidationMessage('Bạn cần nhập cả ngày và giờ sử dụng!');
+                            return false;
+                        }
+                        if (date < currentDate) {
+                            Swal.showValidationMessage('Ngày sử dụng phải lớn hơn hoặc bằng ngày hiện tại!');
                             return false;
                         }
                         return { date, time };

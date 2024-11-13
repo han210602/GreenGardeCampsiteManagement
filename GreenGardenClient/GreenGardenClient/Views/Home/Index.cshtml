@@ -90,24 +90,24 @@
 
 
                                         <ul class="dropdown">
-                                        @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId")==1)
-                                            {
-                                            <li><a href="~/DashBoard" class="nav-link">Quản lí</a></li>
+                                                @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 1)
+                                                {
+                                                <li><a href="~/DashBoard" class="nav-link">Quản lí</a></li>
                                                 <li><a href="~/Home/Logout" class="nav-link">Đăng xuất</a></li>
                                                 }
-                                            else if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 2)
-                                            {
+                                                else if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 2)
+                                                {
                                                 <li><a href="~/OrderManagement/OrderOnline" class="nav-link">Quản lí</a></li>
                                                 <li><a href="~/Home/Logout" class="nav-link">Đăng xuất</a></li>
                                                 }
-                                            else
-                                            {
-                                           
+                                                else
+                                                {
+
                                                 <li><a href="~/Service/OrderHistory" class="nav-link">Lịch sử đặt hàng</a></li>
                                                 <li><a href="~/Service/Cart" class="nav-link">Giỏ hàng</a></li>
                                                 <li><a href="~/Home/Logout" class="nav-link">Đăng xuất</a></li>
-                                            
-                                            }
+
+                                                }
                                         </ul>
 
                                     </li>
@@ -130,6 +130,26 @@
                 </div>
             </div>
             <style>
+                .site-navbar {
+                    position: fixed; /* Cố định header */
+                    top: 0; /* Đặt header ở đầu trang */
+                    left: 0; /* Canh trái */
+                    width: 100%; /* Chiếm toàn bộ chiều rộng */
+                    z-index: 1000; /* Đảm bảo header nằm trên các phần tử khác */
+                    background-color: #fff; /* Màu nền trắng */
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ cho header */
+                    padding: 10px 0; /* Khoảng cách trên và dưới */
+                }
+
+                    /* Khoảng trống bên dưới để bù cho chiều cao header */
+                    .site-navbar + .content {
+                        padding-top: 70px; /* Điều chỉnh theo chiều cao thực tế của header */
+                    }
+
+                .tile {
+                    margin-top: 100px; /* Khoảng cách dưới */
+                }
+
                 .site-menu .dropdown {
                     display: none; /* Ẩn menu thả xuống */
                     position: absolute; /* Để menu thả xuống xuất hiện bên dưới mục Services */
@@ -174,134 +194,135 @@
                 });
             </script>
         </header>
-     
 
 
-        <div class="ftco-blocks-cover-1">
-            <div class="site-section-cover overlay" style="background-image: url('images/p22.jpg')">
+
+        <div class="tile">
+            <div class="ftco-blocks-cover-1">
+                <div class="site-section-cover overlay" style="background-image: url('images/p22.jpg')">
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-md-5" data-aos="fade-right">
+                                <h1 class="mb-3 text-white">Lợi ích khi đến với Sông quê</h1>
+                                <p>
+                                    Khi đến với Sông Quê Green Garden, bạn sẽ được tận hưởng nhiều tiện ích tuyệt vời
+                                    như khuôn viên cắm trại rộng rãi, không gian lý tưởng cho tiệc ngoài trời và
+                                    Thỏa sức check-in tại vườn và tận hưởng không khí trong lành.
+                                </p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="site-section py-5">
                 <div class="container">
                     <div class="row align-items-center">
-                        <div class="col-md-5" data-aos="fade-right">
-                            <h1 class="mb-3 text-white">Lợi ích khi đến với Sông quê</h1>
-                            <p>
-                                Khi đến với Sông Quê Green Garden, bạn sẽ được tận hưởng nhiều tiện ích tuyệt vời
-                                như khuôn viên cắm trại rộng rãi, không gian lý tưởng cho tiệc ngoài trời và
-                                Thỏa sức check-in tại vườn và tận hưởng không khí trong lành.
-                            </p>
-
+                        <div class="col-md-6">
+                            <div class="heading-39101 mb-5">
+                                <span class="backdrop">Câu chuyện</span>
+                                <span class="subtitle-39191">Về chúng tôi</span>
+                                <h3>Về chúng tôi</h3>
+                            </div>
+                            <p>Sông Quê Green Garden là điểm đến tiên phong tại Việt Nam, mang lại không gian thiên nhiên tĩnh lặng và đầy đủ tiện nghi</p>
+                            <p>Lấy cảm hứng từ tinh thần công bằng và hòa bình như Hogwarts, khu trại giúp du khách tạm quên những lo toan và tìm lại sự bình yên, kết nối với giá trị chân thật trong cuộc sống.</p>
+                        </div>
+                        <div class="col-md-6" data-aos="fade-right">
+                            <img src="images/picture3.jpg" alt="Image" class="img-fluid">
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
+            <div class="site-section">
 
-        <div class="site-section py-5">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-md-6">
-                        <div class="heading-39101 mb-5">
-                            <span class="backdrop">Câu chuyện</span>
-                            <span class="subtitle-39191">Về chúng tôi</span>
-                            <h3>Về chúng tôi</h3>
-                        </div>
-                        <p>Sông Quê Green Garden là điểm đến tiên phong tại Việt Nam, mang lại không gian thiên nhiên tĩnh lặng và đầy đủ tiện nghi</p>
-                        <p>Lấy cảm hứng từ tinh thần công bằng và hòa bình như Hogwarts, khu trại giúp du khách tạm quên những lo toan và tìm lại sự bình yên, kết nối với giá trị chân thật trong cuộc sống.</p>
-                    </div>
-                    <div class="col-md-6" data-aos="fade-right">
-                        <img src="images/picture3.jpg" alt="Image" class="img-fluid">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="site-section">
-
-            <div class="container">
-                <div class="row justify-content-center text-center">
-                    <div class="col-md-7">
-                        <div class="heading-39101 mb-5">
-                            <span class="backdrop text-center">Dịch Vụ</span>
-                            <span class="subtitle-39191">Dịch Vụ</span>
-                            <h3>Những dịch vụ nổi bật</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
-                        <div class="listing-item">
-                            <div class="listing-image">
-                                <img src="~/images/picture4.jpg" alt="Image" class="img-fluid">
-                            </div>
-                            <div class="listing-item-content">
-
-                                <h2 class="mb-1"><a href="trip-single.html">Câu Cá</a></h2>
+                <div class="container">
+                    <div class="row justify-content-center text-center">
+                        <div class="col-md-7">
+                            <div class="heading-39101 mb-5">
+                                <span class="backdrop text-center">Dịch Vụ</span>
+                                <span class="subtitle-39191">Dịch Vụ</span>
+                                <h3>Những dịch vụ nổi bật</h3>
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
+                            <div class="listing-item">
+                                <div class="listing-image">
+                                    <img src="~/images/picture4.jpg" alt="Image" class="img-fluid">
+                                </div>
+                                <div class="listing-item-content">
 
-                    <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
-                        <div class="listing-item">
-                            <div class="listing-image">
-                                <img src="~/images/picture10.jpg" alt="Image" class="img-fluid">
-                            </div>
-                            <div class="listing-item-content">
-          <h2 class="mb-1"><a href="trip-single.html">Khu Vui chơi</a></h2>
+                                    <h2 class="mb-1"><a href="trip-single.html">Câu Cá</a></h2>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
-                        <div class="listing-item">
-                            <div class="listing-image">
-                                <img src="~/images/picture11.jpg" alt="Image" class="img-fluid">
-                            </div>
-                            <div class="listing-item-content">
-                                <h2 class="mb-1"><a href="trip-single.html">Tổ chức sự kiện</a></h2>
+                        <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
+                            <div class="listing-item">
+                                <div class="listing-image">
+                                    <img src="~/images/picture10.jpg" alt="Image" class="img-fluid">
+                                </div>
+                                <div class="listing-item-content">
+                                    <h2 class="mb-1"><a href="trip-single.html">Khu Vui chơi</a></h2>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
-                        <div class="listing-item">
-                            <div class="listing-image">
-                                <img src="~/images/picture7.jpg" alt="Image" class="img-fluid">
-                            </div>
-                            <div class="listing-item-content">
-
-                                <h2 class="mb-1"><a href="trip-single.html">Họp nhóm</a></h2>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
-                        <div class="listing-item">
-                            <div class="listing-image">
-                                <img src="~/images/picture16.jpg" alt="Image" class="img-fluid">
-                            </div>
-                            <div class="listing-item-content">
-
-                                <h2 class="mb-1"><a href="trip-single.html">Đặt đồ ăn</a></h2>
+                        <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
+                            <div class="listing-item">
+                                <div class="listing-image">
+                                    <img src="~/images/picture11.jpg" alt="Image" class="img-fluid">
+                                </div>
+                                <div class="listing-item-content">
+                                    <h2 class="mb-1"><a href="trip-single.html">Tổ chức sự kiện</a></h2>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
-                        <div class="listing-item">
-                            <div class="listing-image">
-                                <img src="~/images/picture17.jpg" alt="Image" class="img-fluid">
-                            </div>
-                            <div class="listing-item-content">
+                        <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
+                            <div class="listing-item">
+                                <div class="listing-image">
+                                    <img src="~/images/picture7.jpg" alt="Image" class="img-fluid">
+                                </div>
+                                <div class="listing-item-content">
 
-                                <h2 class="mb-1"><a href="trip-single.html">Thuê lều</a></h2>
+                                    <h2 class="mb-1"><a href="trip-single.html">Họp nhóm</a></h2>
+                                </div>
                             </div>
                         </div>
+
+                        <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
+                            <div class="listing-item">
+                                <div class="listing-image">
+                                    <img src="~/images/picture16.jpg" alt="Image" class="img-fluid">
+                                </div>
+                                <div class="listing-item-content">
+
+                                    <h2 class="mb-1"><a href="trip-single.html">Đặt đồ ăn</a></h2>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
+                            <div class="listing-item">
+                                <div class="listing-image">
+                                    <img src="~/images/picture17.jpg" alt="Image" class="img-fluid">
+                                </div>
+                                <div class="listing-item-content">
+
+                                    <h2 class="mb-1"><a href="trip-single.html">Thuê lều</a></h2>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
                 </div>
-
             </div>
-        </div>
 
 
 
@@ -310,60 +331,61 @@
 
 
 
-        <div class="site-section">
+            <div class="site-section">
 
-            <div class="container">
-                <div class="row justify-content-center text-center">
-                    <div class="col-md-10">
-                        <div class="heading-39101 mb-5">
-                            <span class="backdrop text-center">Bài Viết</span>
-                            <span class="subtitle-39191">Mới nhất</span>
-                            <h3>Về bài viết</h3>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="post-entry-1 h-100">
-                            <a href="single.html">
-                                <img src="images/picture10.jpg" alt="Image"
-                                     class="img-fluid">
-                            </a>
-                            <div class="post-entry-1-contents">
-
-                                <h2><a href="single.html">Làm Việc nhóm</a></h2>
-                                <span class="meta d-inline-block mb-3">13/10/2024 <span class="mx-2">by</span> <a href="#">Nhân viên</a></span>
-                                <p>Nơi giúp trẻ em tìm được niềm vui mới sau những tuần học căng thẳng</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="post-entry-1 h-100">
-                            <a href="single.html">
-                                <img src="images/picture13.jpg" alt="Image"
-                                     class="img-fluid">
-                            </a>
-                            <div class="post-entry-1-contents">
-
-                                <h2><a href="single.html">Họp lớp</a></h2>
-                                <span class="meta d-inline-block mb-3">13/10/2024<span class="mx-2">by</span> <a href="#">Admin</a></span>
-                                <p>Đây là dịp để mọi người gặp nhau sau bao lâu xa cách</p>
+                <div class="container">
+                    <div class="row justify-content-center text-center">
+                        <div class="col-md-10">
+                            <div class="heading-39101 mb-5">
+                                <span class="backdrop text-center">Bài Viết</span>
+                                <span class="subtitle-39191">Mới nhất</span>
+                                <h3>Về bài viết</h3>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="post-entry-1 h-100">
-                            <a href="single.html">
-                                <img src="images/picture11.jpg" alt="Image"
-                                     class="img-fluid">
-                            </a>
-                            <div class="post-entry-1-contents">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="post-entry-1 h-100">
+                                <a href="single.html">
+                                    <img src="images/picture10.jpg" alt="Image"
+                                         class="img-fluid">
+                                </a>
+                                <div class="post-entry-1-contents">
 
-                                <h2><a href="single.html">Hội thảo mới nhất</a></h2>
-                                <span class="meta d-inline-block mb-3">13/10/2024 <span class="mx-2">by</span> <a href="#">Admin</a></span>
-                                <p>Nơi chia sẻ những kinh nghiệm bài học về du lịch nông nghiệp.</p>
+                                    <h2><a href="single.html">Làm Việc nhóm</a></h2>
+                                    <span class="meta d-inline-block mb-3">13/10/2024 <span class="mx-2">by</span> <a href="#">Nhân viên</a></span>
+                                    <p>Nơi giúp trẻ em tìm được niềm vui mới sau những tuần học căng thẳng</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="post-entry-1 h-100">
+                                <a href="single.html">
+                                    <img src="images/picture13.jpg" alt="Image"
+                                         class="img-fluid">
+                                </a>
+                                <div class="post-entry-1-contents">
+
+                                    <h2><a href="single.html">Họp lớp</a></h2>
+                                    <span class="meta d-inline-block mb-3">13/10/2024<span class="mx-2">by</span> <a href="#">Admin</a></span>
+                                    <p>Đây là dịp để mọi người gặp nhau sau bao lâu xa cách</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="post-entry-1 h-100">
+                                <a href="single.html">
+                                    <img src="images/picture11.jpg" alt="Image"
+                                         class="img-fluid">
+                                </a>
+                                <div class="post-entry-1-contents">
+
+                                    <h2><a href="single.html">Hội thảo mới nhất</a></h2>
+                                    <span class="meta d-inline-block mb-3">13/10/2024 <span class="mx-2">by</span> <a href="#">Admin</a></span>
+                                    <p>Nơi chia sẻ những kinh nghiệm bài học về du lịch nông nghiệp.</p>
+                                </div>
                             </div>
                         </div>
                     </div>

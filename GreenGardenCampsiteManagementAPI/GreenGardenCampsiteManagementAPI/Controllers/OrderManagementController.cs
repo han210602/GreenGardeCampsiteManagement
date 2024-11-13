@@ -109,7 +109,7 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
-        [Authorize("AdminAndEmployeePolicy")]
+        [Authorize]
 
         [HttpGet("GetListOrderGearByUsageDate/{usagedate}")]
         public IActionResult GetListOrderGearByUsageDate(DateTime usagedate)
