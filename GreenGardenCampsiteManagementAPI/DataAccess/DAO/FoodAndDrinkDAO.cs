@@ -22,7 +22,6 @@ namespace DataAccess.DAO
                     ItemId = item.ItemId,
                     ItemName = item.ItemName,
                     Price = item.Price,
-                    QuantityAvailable = item.QuantityAvailable,
                     Description = item.Description,
                     CategoryName = item.Category.CategoryName, // Lấy tên từ danh mục
                     ImgUrl = item.ImgUrl
@@ -40,7 +39,6 @@ namespace DataAccess.DAO
                     ItemId = i.ItemId,
                     ItemName = i.ItemName,
                     Price = i.Price,
-                    QuantityAvailable = i.QuantityAvailable,
                     Description = i.Description,
                     CategoryName = i.Category.CategoryName,
                     ImgUrl = i.ImgUrl
@@ -59,7 +57,6 @@ namespace DataAccess.DAO
                 ItemId = item.ItemId,
                 ItemName = item.ItemName,
                 Price = item.Price,
-                QuantityAvailable = item.QuantityAvailable,
                 CreatedAt = item.CreatedAt,
                 Description = item.Description,
                 ImgUrl = item.ImgUrl,
@@ -82,7 +79,6 @@ namespace DataAccess.DAO
 
             foodAndDrink.ItemName = itemDto.ItemName;
             foodAndDrink.Price = itemDto.Price;
-            foodAndDrink.QuantityAvailable = itemDto.QuantityAvailable;
             foodAndDrink.Description = itemDto.Description;
             foodAndDrink.CategoryId = itemDto.CategoryId; // Cập nhật danh mục
             foodAndDrink.ImgUrl = itemDto.ImgUrl;
@@ -136,15 +132,9 @@ namespace DataAccess.DAO
                         query = query.OrderByDescending(food => food.Price);
                         break;
                     case 3: // Sắp xếp theo ngày tạo mới nhất
-                        query = query.OrderByDescending(food => food.CreatedAt);
+                        query = query.OrderBy(food => food.CreatedAt);
                         break;
                     case 4: // Sắp xếp theo số lượng có sẵn
-                        query = query.OrderByDescending(food => food.QuantityAvailable);
-                        break;
-                    case 5: // Sắp xếp theo số lượng có sẵn
-                        query = query.OrderByDescending(food => food.QuantityAvailable);
-                        break;
-                    case 6: // Sắp xếp theo số lượng có sẵn
                         query = query.OrderByDescending(food => food.CreatedAt);
                         break;
                 }
@@ -163,7 +153,6 @@ namespace DataAccess.DAO
                 ItemId = food.ItemId,
                 ItemName = food.ItemName,
                 Price = food.Price,
-                QuantityAvailable = food.QuantityAvailable,
                 Description = food.Description,
                 CategoryName = food.Category.CategoryName, // Lấy tên danh mục
                 ImgUrl = food.ImgUrl

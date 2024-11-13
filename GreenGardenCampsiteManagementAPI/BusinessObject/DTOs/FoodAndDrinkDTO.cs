@@ -11,7 +11,6 @@ namespace BusinessObject.DTOs
         public int ItemId { get; set; }
         public string ItemName { get; set; } = null!;
         public decimal Price { get; set; }
-        public int QuantityAvailable { get; set; }
         public string? Description { get; set; }
         public string CategoryName { get; set; }
         public string? ImgUrl { get; set; }
@@ -21,7 +20,6 @@ namespace BusinessObject.DTOs
         public int ItemId { get; set; }
         public string ItemName { get; set; } = null!;
         public decimal Price { get; set; }
-        public int QuantityAvailable { get; set; }
         public DateTime? CreatedAt { get; set; }
         public string? Description { get; set; }
         public int? CategoryId { get; set; }
@@ -32,7 +30,6 @@ namespace BusinessObject.DTOs
         public int ItemId { get; set; }
         public string ItemName { get; set; } = null!;
         public decimal Price { get; set; }
-        public int QuantityAvailable { get; set; }
         public string? Description { get; set; }
         public int? CategoryId { get; set; }
         public string? ImgUrl { get; set; }
