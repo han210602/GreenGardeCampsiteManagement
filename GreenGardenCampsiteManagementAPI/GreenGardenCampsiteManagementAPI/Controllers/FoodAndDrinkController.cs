@@ -107,35 +107,38 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
-        [HttpDelete("DeleteFoodAndDrink")]
-        public IActionResult DeleteFoodAndDrink(int? itemId)
+        [HttpPut("ChangeFoodStatus")]
+        public IActionResult ChangeFoodStatus([FromQuery] int itemId, [FromBody] ChangeFoodStatus newStatus)
         {
-            if (!itemId.HasValue)
+            if (itemId <= 0)
             {
-                return BadRequest("ID sản phẩm không hợp lệ.");
+                return BadRequest("Invalid item ID.");
+            }
+
+            if (newStatus == null || newStatus.Status == null)
+            {
+                return BadRequest("Invalid status data.");
             }
 
             try
             {
-                var item = _repo.GetFoodAndDrinkDetail(itemId.Value);
+                // Check if the item exists
+                var item = _repo.GetFoodAndDrinkDetail(itemId);
                 if (item == null)
                 {
-                    return NotFound("Sản phẩm không tồn tại.");
+                    return NotFound($"Food and drink item with ID {itemId} does not exist.");
                 }
 
-                var result = _repo.DeleteFoodAndDrink(itemId.Value);
-                if (!result)
-                {
-                    return BadRequest("Không thể xóa sản phẩm này vì nó đang được sử dụng trong các combo hoặc đơn hàng.");
-                }
-
-                return Ok("Xóa sản phẩm thành công.");
+                // Update the status
+                _repo.ChangeFoodStatus(itemId, newStatus);
+                return Ok($"Food and drink item {itemId} status changed to {newStatus.Status.Value}.");
             }
             catch (Exception ex)
             {
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+
 
 
     }

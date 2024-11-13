@@ -52,6 +52,23 @@ namespace DataAccess.DAO
 
             return campingGear;
         }
+        public static void ChangeGearStatus(int gearId, ChangeGearStatus newStatus)
+        {
+            // Find the food or drink item by ItemId
+            var foodAndDrink = context.CampingGears.FirstOrDefault(f => f.GearId == gearId);
+
+            // If the item does not exist, throw an exception
+            if (foodAndDrink == null)
+            {
+                throw new Exception($"Food and Drink with ID {gearId} does not exist.");
+            }
+
+            // Update the status
+            foodAndDrink.Status = newStatus.Status;
+
+            // Save changes to the database
+            context.SaveChanges();
+        }
 
         public static void AddCampingGear(AddCampingGearDTO gearDto)
         {
@@ -196,32 +213,6 @@ namespace DataAccess.DAO
             return campingGears;
         }
 
-        public static bool DeleteCampingGear(int gearId)
-        {
-            // Kiểm tra nếu sản phẩm có tồn tại trong FoodItemCombo, ComboFoodDetail, OrderFoodDetail
-            var isReferenced = context.OrderCampingGearDetails.Any(f => f.GearId == gearId) ||
-                               context.ComboCampingGearDetails.Any(c => c.GearId == gearId) ||
-                               context.OrderCampingGearDetails.Any(o => o.GearId == gearId);
-
-            if (isReferenced)
-            {
-                // Nếu sản phẩm đang được tham chiếu, trả về thông báo lỗi
-                return false;
-            }
-
-            // Lấy đối tượng FoodAndDrink từ database
-            var campingGear = context.CampingGears.FirstOrDefault(f => f.GearId == gearId);
-            if (campingGear == null)
-            {
-                return false;
-            }
-
-            // Tiến hành xóa
-            context.CampingGears.Remove(campingGear);
-            context.SaveChanges();
-
-            return true;
-        }
     }
 
 }

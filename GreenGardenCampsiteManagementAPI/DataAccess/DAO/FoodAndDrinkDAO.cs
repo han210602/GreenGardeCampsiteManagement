@@ -162,33 +162,6 @@ namespace DataAccess.DAO
 
             return foodAndDrinks;
         }
-        public static bool DeleteFoodAndDrink(int itemId)
-        {
-            // Kiểm tra nếu sản phẩm có tồn tại trong FoodItemCombo, ComboFoodDetail, OrderFoodDetail
-            var isReferenced = context.FootComboItems.Any(f => f.ItemId == itemId) ||
-                               context.ComboFootDetails.Any(c => c.ItemId == itemId) ||
-                               context.OrderFoodDetails.Any(o => o.ItemId == itemId);
-
-            if (isReferenced)
-            {
-                // Nếu sản phẩm đang được tham chiếu, trả về thông báo lỗi
-                return false;
-            }
-
-            // Lấy đối tượng FoodAndDrink từ database
-            var foodAndDrink = context.FoodAndDrinks.FirstOrDefault(f => f.ItemId == itemId);
-            if (foodAndDrink == null)
-            {
-                return false;
-            }
-
-            // Tiến hành xóa
-            context.FoodAndDrinks.Remove(foodAndDrink);
-            context.SaveChanges();
-
-            return true;
-        }
-
         public static List<FoodAndDrinkCategoryDTO> GetAllFoodAndDrinkCategories()
         {
             var items = context.FoodAndDrinkCategories
@@ -204,5 +177,23 @@ namespace DataAccess.DAO
 
             return items;
         }
+        public static void ChangeFoodStatus(int itemId, ChangeFoodStatus newStatus)
+        {
+            // Find the food or drink item by ItemId
+            var foodAndDrink = context.FoodAndDrinks.FirstOrDefault(f => f.ItemId == itemId);
+
+            // If the item does not exist, throw an exception
+            if (foodAndDrink == null)
+            {
+                throw new Exception($"Food and Drink with ID {itemId} does not exist.");
+            }
+
+            // Update the status
+            foodAndDrink.Status = newStatus.Status;
+
+            // Save changes to the database
+            context.SaveChanges();
+        }
+
     }
 }

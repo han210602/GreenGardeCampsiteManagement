@@ -29,5 +29,9 @@ namespace Repositories.Combo
         {
             ComboDAO.UpdateCombo(updatedCombo);
         }
+        public void ChangeComboStatus(int comboId, ChangeComboStatus newStatus)
+        {
+            ComboDAO.ChangeComboStatus(comboId, newStatus); // Call DAO method
+        }
     }
 }

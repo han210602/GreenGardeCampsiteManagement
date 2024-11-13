@@ -69,7 +69,23 @@ namespace DataAccess.DAO
             ticket.Price = ticketDto.Price;
             context.SaveChanges();
         }
+        public static void ChangeTicketStatus(int ticketId, ChangeTicketStatus newStatus)
+        {
+            // Find the food or drink item by ItemId
+            var foodAndDrink = context.Tickets.FirstOrDefault(f => f.TicketId == ticketId);
 
+            // If the item does not exist, throw an exception
+            if (foodAndDrink == null)
+            {
+                throw new Exception($"Food and Drink with ID {ticketId} does not exist.");
+            }
+
+            // Update the status
+            foodAndDrink.Status = newStatus.Status;
+
+            // Save changes to the database
+            context.SaveChanges();
+        }
 
         public static List<TicketCategoryDTO> GetAllTicketCategories()
         {
@@ -125,31 +141,6 @@ namespace DataAccess.DAO
             }).ToList();
 
             return tickets;
-        }
-        public static bool DeleteTicket(int ticketId)
-        {
-            // Kiểm tra nếu sản phẩm có tồn tại trong FoodItemCombo, ComboFoodDetail, OrderFoodDetail
-            var isReferenced = context.ComboTicketDetails.Any(f => f.TicketId == ticketId) ||
-                               context.OrderTicketDetails.Any(o => o.TicketId == ticketId);
-
-            if (isReferenced)
-            {
-                // Nếu sản phẩm đang được tham chiếu, trả về thông báo lỗi
-                return false;
-            }
-
-            // Lấy đối tượng FoodAndDrink từ database
-            var ticket = context.Tickets.FirstOrDefault(f => f.TicketId == ticketId);
-            if (ticket == null)
-            {
-                return false;
-            }
-
-            // Tiến hành xóa
-            context.Tickets.Remove(ticket);
-            context.SaveChanges();
-
-            return true;
         }
     }
 }

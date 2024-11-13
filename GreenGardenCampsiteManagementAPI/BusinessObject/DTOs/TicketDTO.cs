@@ -31,5 +31,8 @@ namespace BusinessObject.DTOs
         public string TicketName { get; set; } = null!;
         public decimal Price { get; set; }
     }
-
+    public class ChangeTicketStatus
+    {
+        public bool? Status { get; set; }
+    }
 }

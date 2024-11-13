@@ -1,3 +1,4 @@
+
 USE [GreenGarden]
 GO
 /****** Object:  Table [dbo].[Activities]    Script Date: 11/13/2024 9:16:05 PM ******/

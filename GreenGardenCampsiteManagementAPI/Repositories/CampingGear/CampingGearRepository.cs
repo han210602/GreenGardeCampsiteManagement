@@ -38,9 +38,9 @@ namespace Repositories.CampingGear
         {
             return CampingGearDAO.GetCampingGears(categoryId, sortBy, priceRange, popularity);
         }
-        public bool DeleteCampingGear(int gearId)
+        public void ChangeGearStatus(int gearId, ChangeGearStatus newStatus)
         {
-            return CampingGearDAO.DeleteCampingGear(gearId);
+            CampingGearDAO.ChangeGearStatus(gearId, newStatus); // Call DAO method
         }
     }
 }

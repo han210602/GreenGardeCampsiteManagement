@@ -40,5 +40,8 @@ namespace BusinessObject.DTOs
         public int? GearCategoryId { get; set; }
         public string? ImgUrl { get; set; }
     }
-
+    public class ChangeGearStatus
+    {
+        public bool? Status { get; set; }
+    }
 }

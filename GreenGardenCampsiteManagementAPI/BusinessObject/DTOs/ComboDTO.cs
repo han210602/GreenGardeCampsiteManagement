@@ -40,4 +40,8 @@ namespace BusinessObject.DTOs
         public virtual List<ComboFootDetailDTO> ComboFootDetails { get; set; }
         public virtual List<ComboTicketDetailDTO> ComboTicketDetails { get; set; }
     }
+    public class ChangeComboStatus
+    {
+        public bool? Status { get; set; }
+    }
 }

@@ -111,29 +111,31 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
-        [HttpDelete("DeleteTicket")]
-        public IActionResult DeleteTicket(int? ticketId)
+        [HttpPut("ChangeTicketStatus")]
+        public IActionResult ChangeGearStatus([FromQuery] int ticketId, [FromBody] ChangeTicketStatus newStatus)
         {
-            if (!ticketId.HasValue)
+            if (ticketId <= 0)
             {
-                return BadRequest("ID sản phẩm không hợp lệ.");
+                return BadRequest("Invalid item ID.");
+            }
+
+            if (newStatus == null || newStatus.Status == null)
+            {
+                return BadRequest("Invalid status data.");
             }
 
             try
             {
-                var item = _repo.GetTicketDetail(ticketId.Value);
+                // Check if the item exists
+                var item = _repo.GetTicketDetail(ticketId);
                 if (item == null)
                 {
-                    return NotFound("Sản phẩm không tồn tại.");
+                    return NotFound($"Food and drink item with ID {ticketId} does not exist.");
                 }
 
-                var result = _repo.DeleteTicket(ticketId.Value);
-                if (!result)
-                {
-                    return BadRequest("Không thể xóa sản phẩm này vì nó đang được sử dụng trong các combo hoặc đơn hàng.");
-                }
-
-                return Ok("Xóa sản phẩm thành công.");
+                // Update the status
+                _repo.ChangeTicketStatus(ticketId, newStatus);
+                return Ok($"Food and drink item {ticketId} status changed to {newStatus.Status.Value}.");
             }
             catch (Exception ex)
             {

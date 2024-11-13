@@ -36,5 +36,9 @@ namespace BusinessObject.DTOs
         public int? CategoryId { get; set; }
         public string? ImgUrl { get; set; }
     }
+    public class ChangeFoodStatus
+    {
+        public bool? Status { get; set; }
+    }
 
 }

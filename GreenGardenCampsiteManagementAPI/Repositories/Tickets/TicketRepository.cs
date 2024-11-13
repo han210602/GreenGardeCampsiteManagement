@@ -35,9 +35,9 @@ namespace Repositories.Tickets
         {
             return TicketDAO.GetAllTicketCategories();
         }
-        public bool DeleteTicket(int ticketId)
+        public void ChangeTicketStatus(int ticketId, ChangeTicketStatus newStatus)
         {
-            return TicketDAO.DeleteTicket(ticketId);
+            TicketDAO.ChangeTicketStatus(ticketId, newStatus); // Call DAO method
         }
     }
 }
