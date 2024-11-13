@@ -27,6 +27,8 @@ namespace BusinessObject.DTOs
         public DateTime? CreatedAt { get; set; }
         public int? GearCategoryId { get; set; }
         public string? ImgUrl { get; set; }
+        public bool? Status { get; set; }
+
     }
     public class UpdateCampingGearDTO
     {

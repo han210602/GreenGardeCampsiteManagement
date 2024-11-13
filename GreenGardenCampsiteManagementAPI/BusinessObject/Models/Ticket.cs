@@ -17,6 +17,7 @@ namespace BusinessObject.Models
         public DateTime? CreatedAt { get; set; }
         public int? TicketCategoryId { get; set; }
         public string? ImgUrl { get; set; }
+        public bool? Status { get; set; }
 
         public virtual TicketCategory? TicketCategory { get; set; }
         public virtual ICollection<ComboTicketDetail> ComboTicketDetails { get; set; }

@@ -19,6 +19,7 @@ namespace BusinessObject.Models
         public DateTime? CreatedAt { get; set; }
         public int? GearCategoryId { get; set; }
         public string? ImgUrl { get; set; }
+        public bool? Status { get; set; }
 
         public virtual CampingCategory? GearCategory { get; set; }
         public virtual ICollection<ComboCampingGearDetail> ComboCampingGearDetails { get; set; }

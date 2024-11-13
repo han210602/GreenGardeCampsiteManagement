@@ -18,7 +18,7 @@ namespace DataAccess.DAO
             {
                 using (var context = new GreenGardenContext())
                 {
-                    listProducts = context.Combos.Select(f => new ComboDTO
+                    listProducts = context.Combos.Where(s => s.Status == true).Select(f => new ComboDTO
                     {
                         ComboId = f.ComboId,
                         ComboName = f.ComboName,

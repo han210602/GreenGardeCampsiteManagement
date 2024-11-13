@@ -56,11 +56,16 @@ namespace GreenGardenClient.Controllers
                         HttpContext.Session.SetInt32("UserId", loginResponse.UserId);
                         HttpContext.Session.SetString("Email", loginResponse.Email);
                         HttpContext.Session.SetString("NumberPhone", loginResponse.Phone);
-                        HttpContext.Session.SetString("Pasword", loginResponse.Password);
+                        HttpContext.Session.SetString("Password", loginResponse.Password);
                         HttpContext.Session.SetString("Fullname", loginResponse.FullName);
                         if (loginResponse.ProfilePictureUrl != null)
                         {
                             HttpContext.Session.SetString("Img", loginResponse.ProfilePictureUrl);
+                        }
+                        else
+                        {
+                            HttpContext.Session.SetString("Img", "~/images/User/avatar.jpg");
+
                         }
                         TempData["SuccessMessage"] = "Đăng nhập thành công!";
                         return RedirectToAction("Index", "Home");
@@ -237,9 +242,17 @@ namespace GreenGardenClient.Controllers
         {
             return View();
         }
+      
         [HttpPost]
-        public async Task<IActionResult> NewPassword(ChangePassword dto)
+        public async Task<IActionResult> NewPassword(int UserId,string OldPassword,string NewPassword,string ConfirmPassword)
         {
+            ChangePassword dto = new ChangePassword()
+            {
+                UserId = UserId,
+                OldPassword = OldPassword,
+                NewPassword = NewPassword,
+                ConfirmPassword = ConfirmPassword
+            };
             // Check if the new password and confirmation match
             if (dto.NewPassword != dto.ConfirmPassword)
             {
@@ -267,7 +280,7 @@ namespace GreenGardenClient.Controllers
             var request = new ChangePassword
             {
                 UserId = userId.Value,
-                OldPassword = dto.OldPassword,
+                OldPassword = oldPassword,
                 NewPassword = dto.NewPassword,
                 ConfirmPassword = dto.ConfirmPassword
             };

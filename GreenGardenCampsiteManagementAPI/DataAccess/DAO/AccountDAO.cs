@@ -375,7 +375,7 @@ namespace DataAccess.DAO
                     return "Mật khẩu cũ không đúng."; 
                 }
 
-                if (changePasswordDto.NewPassword != changePasswordDto.ConformPassword)
+                if (changePasswordDto.NewPassword != changePasswordDto.ConfirmPassword)
                 {
                     return "Mật khẩu mới và xác nhận mật khẩu không khớp."; 
                 }

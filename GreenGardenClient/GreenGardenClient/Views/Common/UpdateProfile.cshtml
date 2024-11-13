@@ -194,6 +194,7 @@
                 .tile {
                     margin-top: 150px; /* Khoảng cách dưới */
                 }
+
                 .site-menu .dropdown {
                     display: none; /* Ẩn menu thả xuống */
                     position: absolute; /* Để menu thả xuống xuất hiện bên dưới mục Services */
@@ -350,14 +351,14 @@
                             <div class="form-group form-row align-items-center mt-3">
                                 <label for="FirstName" class="col-sm-3 col-form-label">Họ:<span class="text-danger">*</span></label>
                                 <div class="col-sm-9">
-                                    <input type="text" id="FirstName" name="FirstName" class="form-control form-control-sm" value="@user.FirstName" required pattern="^[A-Za-zÀ-ÿ\s]+$">
+                                    <input type="text" id="FirstName" name="FirstName" class="form-control form-control-sm" value="@user.FirstName" required>
                                     <small class="text-danger" id="firstNameError" style="display: none;">Vui lòng nhập họ đúng form</small>
                                 </div>
                             </div>
                             <div class="form-group form-row align-items-center mt-3">
                                 <label for="LastName" class="col-sm-3 col-form-label">Tên:<span class="text-danger">*</span></label>
                                 <div class="col-sm-9">
-                                    <input type="text" id="LastName" name="LastName" class="form-control form-control-sm" value="@user.LastName" required pattern="^[A-Za-zÀ-ÿ\s]+$">
+                                    <input type="text" id="LastName" name="LastName" class="form-control form-control-sm" value="@user.LastName" required>
                                     <small class="text-danger" id="lastNameError" style="display: none;">Vui lòng nhập tên đúng form</small>
                                 </div>
                             </div>
@@ -414,45 +415,48 @@
                             </div>
                 </form>
             </div>
-         </div>
-
-                <script>
-                    function validateForm() {
-                        var valid = true;
-
-                        // Kiểm tra họ và tên chỉ chứa chữ cái
-                        var firstName = document.getElementById("FirstName").value;
-                        var lastName = document.getElementById("LastName").value;
-                        if (!/^[A-Za-zÀ-ÿ\s]+$/.test(firstName)) {
-                            document.getElementById("firstNameError").style.display = "inline";
-                            valid = false;
-                        } else {
-                            document.getElementById("firstNameError").style.display = "none";
-                        }
-                        if (!/^[A-Za-zÀ-ÿ\s]+$/.test(lastName)) {
-                            document.getElementById("lastNameError").style.display = "inline";
-                            valid = false;
-                        } else {
-                            document.getElementById("lastNameError").style.display = "none";
-                        }
-
-                        // Kiểm tra số điện thoại có đúng 10 chữ số
-                        var phoneNumber = document.getElementById("PhoneNumber").value;
-                        if (!/^\d{10}$/.test(phoneNumber)) {
-                            document.getElementById("phoneNumberError").style.display = "inline";
-                            valid = false;
-                        } else {
-                            document.getElementById("phoneNumberError").style.display = "none";
-                        }
-
-                        return valid;
-                    }
-                </script>
-
-
-            </div>
         </div>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <script>
+            function validateForm() {
+                const firstNameInput = document.getElementById('FirstName');
+                const lastNameInput = document.getElementById('LastName');
+                const firstNameError = document.getElementById('firstNameError');
+                const lastNameError = document.getElementById('lastNameError');
+
+                const namePattern = /^[\p{L}\s]+$/u; // Hỗ trợ Unicode (u flag)
+
+                // Kiểm tra Họ
+                if (!namePattern.test(firstNameInput.value.trim())) {
+                    firstNameError.style.display = 'block';
+                } else {
+                    firstNameError.style.display = 'none';
+                }
+
+                // Kiểm tra Tên
+                if (!namePattern.test(lastNameInput.value.trim())) {
+                    lastNameError.style.display = 'block';
+                } else {
+                    lastNameError.style.display = 'none';
+                }
+
+                // Kiểm tra số điện thoại có đúng 10 chữ số
+                var phoneNumber = document.getElementById("PhoneNumber").value;
+                if (!/^\d{10}$/.test(phoneNumber)) {
+                    document.getElementById("phoneNumberError").style.display = "inline";
+                    valid = false;
+                } else {
+                    document.getElementById("phoneNumberError").style.display = "none";
+                }
+
+                return valid;
+            }
+        </script>
+
+
+    </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
 

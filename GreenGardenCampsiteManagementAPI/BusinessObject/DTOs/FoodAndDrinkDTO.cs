@@ -24,6 +24,8 @@ namespace BusinessObject.DTOs
         public string? Description { get; set; }
         public int? CategoryId { get; set; }
         public string? ImgUrl { get; set; }
+        public bool? Status { get; set; }
+
     }
     public class UpdateFoodOrDrinkDTO
     {

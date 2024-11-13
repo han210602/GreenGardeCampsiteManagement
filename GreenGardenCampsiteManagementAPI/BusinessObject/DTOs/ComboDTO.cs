@@ -34,6 +34,7 @@ namespace BusinessObject.DTOs
         public string? Description { get; set; }
         public decimal Price { get; set; }
         public string? ImgUrl { get; set; }
+        public bool? Status { get; set; }
 
         public virtual List<ComboCampingGearDetailDTO> ComboCampingGearDetails { get; set; }
         public virtual List<ComboFootDetailDTO> ComboFootDetails { get; set; }

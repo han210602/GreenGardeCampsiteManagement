@@ -208,6 +208,7 @@
     <Folder Include="wwwroot\images\avatar\" />
     <Folder Include="wwwroot\images\food\" />
     <Folder Include="wwwroot\images\gear\" />
+    <Folder Include="wwwroot\images\User\" />
     <Folder Include="wwwroot\images\ticket\" />
   </ItemGroup>
 

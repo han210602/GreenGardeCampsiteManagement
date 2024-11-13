@@ -14,7 +14,7 @@ namespace DataAccess.DAO
         public static List<TicketDTO> GetAllTickets()
         {
             var tickets = context.Tickets
-                .Include(ticket => ticket.TicketCategory)
+                .Include(ticket => ticket.TicketCategory).Where(s => s.Status == true)
                 .Select(ticket => new TicketDTO
                 {
                     TicketId = ticket.TicketId,
@@ -50,6 +50,8 @@ namespace DataAccess.DAO
                 CreatedAt = DateTime.Now,
                 TicketCategoryId = ticketDto.TicketCategoryId,
                 ImgUrl = ticketDto.ImgUrl,
+                Status = true
+
             };
             context.Tickets.Add(ticket);
             context.SaveChanges();

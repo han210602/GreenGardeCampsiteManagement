@@ -16,7 +16,7 @@ namespace DataAccess.DAO
         public static List<FoodAndDrinkDTO> GetAllFoodAndDrink()
         {
             var items = context.FoodAndDrinks
-                .Include(x => x.Category)
+                .Include(x => x.Category).Where(s=>s.Status==true)
                 .Select(item => new FoodAndDrinkDTO
                 {
                     ItemId = item.ItemId,
@@ -60,7 +60,9 @@ namespace DataAccess.DAO
                 CreatedAt = item.CreatedAt,
                 Description = item.Description,
                 ImgUrl = item.ImgUrl,
-                CategoryId = item.CategoryId // Id của danh mục
+                CategoryId = item.CategoryId,
+                Status = true
+                
             };
 
             context.FoodAndDrinks.Add(foodAndDrink);

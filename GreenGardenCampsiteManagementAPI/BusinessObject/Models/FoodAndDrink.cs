@@ -20,6 +20,7 @@ namespace BusinessObject.Models
         public DateTime? CreatedAt { get; set; }
         public int? CategoryId { get; set; }
         public string? ImgUrl { get; set; }
+        public bool? Status { get; set; }
 
         public virtual FoodAndDrinkCategory? Category { get; set; }
         public virtual ICollection<ComboFootDetail> ComboFootDetails { get; set; }

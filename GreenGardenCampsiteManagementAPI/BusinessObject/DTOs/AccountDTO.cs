@@ -61,7 +61,7 @@ namespace BusinessObject.DTOs
 
         [Required(ErrorMessage = "Xác nhận mật khẩu là bắt buộc.")]
         [Compare("NewPassword", ErrorMessage = "Mật khẩu và mật khẩu xác nhận không khớp.")]
-        public string ConformPassword { get; set; } = null!;
+        public string ConfirmPassword { get; set; } = null!;
     }
 
     public class UpdateProfile

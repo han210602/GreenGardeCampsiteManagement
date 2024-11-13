@@ -18,6 +18,7 @@ namespace DataAccess.DAO
         {
             var campingGears = context.CampingGears
                 .Include(gear => gear.GearCategory)
+                .Where(s => s.Status == true)
                 .Select(gear => new CampingGearDTO
                 {
                     GearId = gear.GearId,
@@ -64,6 +65,8 @@ namespace DataAccess.DAO
                 CreatedAt = DateTime.Now,
                 GearCategoryId = gearDto.GearCategoryId,
                 ImgUrl = gearDto.ImgUrl,
+                Status = true
+
             };
             context.CampingGears.Add(campingGear);
             context.SaveChanges();

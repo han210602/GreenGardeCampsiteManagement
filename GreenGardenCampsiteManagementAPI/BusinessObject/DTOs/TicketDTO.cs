@@ -22,6 +22,8 @@ namespace BusinessObject.DTOs
         public DateTime? CreatedAt { get; set; }
         public int? TicketCategoryId { get; set; }
         public string? ImgUrl { get; set; }
+        public bool? Status { get; set; }
+
     }
     public class UpdateTicket
     {
