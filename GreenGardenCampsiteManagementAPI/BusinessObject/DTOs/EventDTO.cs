@@ -13,7 +13,7 @@
         public bool? IsActive { get; set; }
         public DateTime? CreatedAt { get; set; }
         public int? CreateBy { get; set; }
-        public string? NameCreateByUser { get; set; }
+        public string? CreatedByUserName { get; set; }
     }
     public class CreateEventDTO
     {
