@@ -10,4 +10,17 @@
         public string? ImgUrl { get; set; }
         public int Quantity { get; set; }
     }
+    public class FoodAndDrinkVMNew
+    {
+        public int ItemId { get; set; }
+
+        public decimal Price { get; set; }
+        public int QuantityAvailable { get; set; }
+        public string? Description { get; set; }
+        public string ItemName { get; set; }
+        public string? ImgUrl { get; set; }
+        public int Quantity { get; set; }
+
+        public int CategoryId { get; set; }
+    }
 }
