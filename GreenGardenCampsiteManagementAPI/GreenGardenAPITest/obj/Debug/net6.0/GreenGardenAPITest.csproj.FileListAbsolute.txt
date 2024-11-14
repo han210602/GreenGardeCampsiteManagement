@@ -578,3 +578,5 @@ C:\Users\Nguyen Thanh Hau\Desktop\GreenGarden\GreenGardenCampsiteManagement\Gree
 C:\Users\Nguyen Thanh Hau\Desktop\GreenGarden\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenAPITest\bin\Debug\net6.0\Microsoft.Extensions.Logging.dll
 C:\Users\Nguyen Thanh Hau\Desktop\GreenGarden\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenAPITest\bin\Debug\net6.0\Microsoft.Extensions.Logging.Abstractions.dll
 C:\Users\Nguyen Thanh Hau\Desktop\GreenGarden\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenAPITest\bin\Debug\net6.0\Microsoft.Extensions.Options.dll
+C:\Users\Nguyen Thanh Hau\Desktop\GreenGarden\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenAPITest\bin\Debug\net6.0\Humanizer.dll
+C:\Users\Nguyen Thanh Hau\Desktop\GreenGarden\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenAPITest\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
