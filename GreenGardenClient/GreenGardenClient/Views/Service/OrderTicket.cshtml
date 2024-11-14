@@ -625,11 +625,11 @@
                                 {
                                     <div class="product-item" id="product-@item.TicketId">
                                         <div class="product-image">
-                                            <img src="~/images/@item.Price" alt="Image" class="img-fluid">
+                                            <img src="~/images/Ticket/@item.ImgUrl" alt="Image" class="img-fluid">
                                         </div>
                                         <div class="product-content">
                                             <h2><a href="@Url.Action("TripSingle", new { id = item.TicketId })">Vé @item.TicketName</a></h2>
-                                            <p><i class="fa fa-info-circle"></i> Mô tả: Vé đơn giúp bạn trải nghiệm không gian cắm trại và tổ chức tiệc ngoài trời rộng rãi.</p>
+                                            <p><i class="fa fa-info-circle"></i> Mô tả: Vé giúp bạn trải nghiệm không gian cắm trại và tổ chức tiệc ngoài trời rộng rãi.</p>
 
                                             <div class="price-quantity">
                                                 <p style="margin-bottom:1px" class="price"><i class="fa fa-money-bill-wave"></i> @item.Price.ToString("N0")đ</p>

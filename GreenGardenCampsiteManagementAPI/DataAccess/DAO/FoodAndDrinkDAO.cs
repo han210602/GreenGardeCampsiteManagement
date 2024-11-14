@@ -24,7 +24,9 @@ namespace DataAccess.DAO
                     Price = item.Price,
                     Description = item.Description,
                     CategoryName = item.Category.CategoryName, // Lấy tên từ danh mục
-                    ImgUrl = item.ImgUrl
+                    ImgUrl = item.ImgUrl,
+                    Status = item.Status,
+                    CategoryId = item.Category.CategoryId
                 }).ToList();
 
             return items;
@@ -57,7 +59,9 @@ namespace DataAccess.DAO
                     Price = i.Price,
                     Description = i.Description,
                     CategoryName = i.Category.CategoryName,
-                    ImgUrl = i.ImgUrl
+                    ImgUrl = i.ImgUrl,
+                     Status = i.Status,
+                    CategoryId = i.Category.CategoryId
                 })
                 .FirstOrDefault(); // Return the first match or null if not found
 
@@ -193,23 +197,22 @@ namespace DataAccess.DAO
 
             return items;
         }
-        public static void ChangeFoodStatus(int itemId, ChangeFoodStatus newStatus)
+        public static void ChangeFoodStatus(int itemId)
         {
-            // Find the food or drink item by ItemId
-            var foodAndDrink = context.FoodAndDrinks.FirstOrDefault(f => f.ItemId == itemId);
+            // Tìm thiết bị dựa trên GearId
+            var campingGear = context.FoodAndDrinks.FirstOrDefault(g => g.ItemId == itemId);
 
-            // If the item does not exist, throw an exception
-            if (foodAndDrink == null)
+            // Kiểm tra xem thiết bị có tồn tại không
+            if (campingGear == null)
             {
                 throw new Exception($"Food and Drink with ID {itemId} does not exist.");
             }
 
-            // Update the status
-            foodAndDrink.Status = newStatus.Status;
+            // Đổi trạng thái (nếu đang là true thì chuyển sang false, ngược lại)
+            campingGear.Status = !campingGear.Status;
 
-            // Save changes to the database
+            // Lưu thay đổi vào cơ sở dữ liệu
             context.SaveChanges();
         }
-
     }
 }

@@ -5,12 +5,15 @@
         public int ItemId { get; set; }
         public string ItemName { get; set; } = null!;
         public decimal Price { get; set; }
+        public int CategoryId { get; set; }
         public string? Description { get; set; }
         public string CategoryName { get; set; }
         public string? ImgUrl { get; set; }
         public int Quantity { get; set; }
+        public bool? Status { get; set; }
     }
-    public class FoodAndDrinkVMNew
+ 
+    public class FoodAndDrinkDetailVM
     {
         public int ItemId { get; set; }
 
@@ -20,7 +23,31 @@
         public string ItemName { get; set; }
         public string? ImgUrl { get; set; }
         public int Quantity { get; set; }
+        public bool Status { get; set; }
+        public int CategoryId { get; set; }
+    }
+    public class AddFoodAndDrinkVM
+    {
+        public int ItemId { get; set; }
 
+        public decimal Price { get; set; }
+        public int QuantityAvailable { get; set; }
+        public string? Description { get; set; }
+        public string ItemName { get; set; }
+        public string? ImgUrl { get; set; }
+        public int Quantity { get; set; }
+        public int CategoryId { get; set; }
+    }
+    public class UpdateFoodAndDrinkVM
+    {
+        public int ItemId { get; set; }
+
+        public decimal Price { get; set; }
+        public int QuantityAvailable { get; set; }
+        public string? Description { get; set; }
+        public string ItemName { get; set; }
+        public string? ImgUrl { get; set; }
+        public int Quantity { get; set; }
         public int CategoryId { get; set; }
     }
 }

@@ -89,17 +89,13 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
         }
 
         [HttpPut("ChangeComboStatus")]
-        public IActionResult ChangeGearStatus([FromQuery] int comboId, [FromBody] ChangeComboStatus newStatus)
+        public IActionResult ChangeGearStatus([FromQuery] int comboId)
         {
             if (comboId <= 0)
             {
                 return BadRequest("Invalid item ID.");
             }
 
-            if (newStatus == null || newStatus.Status == null)
-            {
-                return BadRequest("Invalid status data.");
-            }
 
             try
             {
@@ -107,12 +103,12 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 var item = _repo.ComboDetail(comboId);
                 if (item == null)
                 {
-                    return NotFound($"Food and drink item with ID {comboId} does not exist.");
+                    return NotFound($"Combo item with ID {comboId} does not exist.");
                 }
 
                 // Update the status
-                _repo.ChangeComboStatus(comboId, newStatus);
-                return Ok($"Food and drink item {comboId} status changed to {newStatus.Status.Value}.");
+                _repo.ChangeComboStatus(comboId);
+                return Ok($"Combo item {comboId} status changed.");
             }
             catch (Exception ex)
             {

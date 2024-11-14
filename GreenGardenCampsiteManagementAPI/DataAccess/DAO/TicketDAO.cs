@@ -20,7 +20,10 @@ namespace DataAccess.DAO
                     TicketId = ticket.TicketId,
                     TicketName = ticket.TicketName,
                     Price = ticket.Price,
-                    TicketCategoryName = ticket.TicketCategory.TicketCategoryName
+                    TicketCategoryId= ticket.TicketCategory.TicketCategoryId,
+                    TicketCategoryName = ticket.TicketCategory.TicketCategoryName,
+                    ImgUrl = ticket.ImgUrl,
+                    Status = ticket.Status,
                 }).ToList();
             return tickets;
         }
@@ -33,7 +36,10 @@ namespace DataAccess.DAO
                     TicketId = ticket.TicketId,
                     TicketName = ticket.TicketName,
                     Price = ticket.Price,
-                    TicketCategoryName = ticket.TicketCategory.TicketCategoryName
+                    TicketCategoryId = ticket.TicketCategory.TicketCategoryId,
+                    TicketCategoryName = ticket.TicketCategory.TicketCategoryName,
+                    ImgUrl = ticket.ImgUrl,
+                    Status = ticket.Status,
                 }).ToList();
             return tickets;
         }
@@ -47,7 +53,10 @@ namespace DataAccess.DAO
                     TicketId = t.TicketId,
                     TicketName = t.TicketName,
                     Price = t.Price,
-                    TicketCategoryName = t.TicketCategory.TicketCategoryName
+                    TicketCategoryName = t.TicketCategory.TicketCategoryName,
+                    TicketCategoryId = t.TicketCategory.TicketCategoryId,
+                    ImgUrl = t.ImgUrl,
+                    Status = t.Status
                 })
                 .FirstOrDefault(); // Return the first match or null if not found
 
@@ -80,9 +89,11 @@ namespace DataAccess.DAO
 
             ticket.TicketName = ticketDto.TicketName;
             ticket.Price = ticketDto.Price;
+            ticket.ImgUrl = ticketDto.ImgUrl;
+            ticket.TicketCategoryId = ticketDto.TicketCategoryId;   
             context.SaveChanges();
         }
-        public static void ChangeTicketStatus(int ticketId, ChangeTicketStatus newStatus)
+        public static void ChangeTicketStatus(int ticketId)
         {
             // Find the food or drink item by ItemId
             var foodAndDrink = context.Tickets.FirstOrDefault(f => f.TicketId == ticketId);
@@ -94,7 +105,7 @@ namespace DataAccess.DAO
             }
 
             // Update the status
-            foodAndDrink.Status = newStatus.Status;
+            foodAndDrink.Status = !foodAndDrink.Status;
 
             // Save changes to the database
             context.SaveChanges();
@@ -149,8 +160,10 @@ namespace DataAccess.DAO
                 TicketId = ticket.TicketId, // Sửa tên thuộc tính từ GearId thành TicketId
                 TicketName = ticket.TicketName,
                 Price = ticket.Price,
+                TicketCategoryId = ticket.TicketCategory.TicketCategoryId,
                 TicketCategoryName = ticket.TicketCategory.TicketCategoryName,
-                ImgUrl = ticket.ImgUrl
+                ImgUrl = ticket.ImgUrl,
+                Status = ticket.Status
             }).ToList();
 
             return tickets;

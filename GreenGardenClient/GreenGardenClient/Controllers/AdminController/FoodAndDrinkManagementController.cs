@@ -64,10 +64,10 @@ namespace GreenGardenClient.Controllers.AdminController
             }
         }
         [HttpGet]
-        public async Task<IActionResult> UpdateFoodAndDrink(int id)
+        public async Task<IActionResult> UpdateFoodAndDrink(int itemId)
         {
             // Fetch event data from the API
-            var eventItem = GetDataFromApi<FoodAndDrinkVMNew>($"https://localhost:7298/api/FoodAndDrink/GetFoodAndDrinkDetail?itemId={id}");
+            var eventItem = GetDataFromApi<FoodAndDrinkDetailVM>($"https://localhost:7298/api/FoodAndDrink/GetFoodAndDrinkDetail?itemId={itemId}");
 
             if (eventItem == null)
             {
@@ -82,18 +82,18 @@ namespace GreenGardenClient.Controllers.AdminController
             ViewBag.Categories = categories;
 
 
-            return View(eventItem);
+            return View("UpdateFoodAndDrink", eventItem);
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> UpdateFoodAndDrink(FoodAndDrinkVMNew model, IFormFile PictureUrl, string CurrentPictureUrl)
+        public async Task<IActionResult> UpdateFoodAndDrink(UpdateFoodAndDrinkVM model, IFormFile PictureUrl, string CurrentPictureUrl)
         {
 
             if (PictureUrl != null)
             {
                 // Lưu file mới
-                string filePath = Path.Combine("wwwroot/images", PictureUrl.FileName);
+                string filePath = Path.Combine("wwwroot/images/Food", PictureUrl.FileName);
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await PictureUrl.CopyToAsync(stream);
@@ -118,7 +118,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 if (response.IsSuccessStatusCode)
                 {
                     // Nếu thành công, chuyển hướng về trang Index
-                    return RedirectToAction("UpdateFoodAndDrink");
+                    return RedirectToAction("UpdateFoodAndDrink", new { itemId = model.ItemId });
                 }
                 else
                 {
@@ -153,44 +153,39 @@ namespace GreenGardenClient.Controllers.AdminController
 
 
 
-        [HttpPost("ChangeFoodStatus/{id}")]
-        public async Task<IActionResult> ChangeFoodStatus(int id)
+        [HttpPost] // Dùng POST cho form submit
+        public async Task<IActionResult> ChangeStatus(int itemId)
         {
-            if (id <= 0)
+            string apiUrl = $"https://localhost:7298/api/FoodAndDrink/ChangeFoodStatus?itemId={itemId}";
+
+            try
             {
-                return BadRequest("Invalid ID."); // 400 Bad Request
+                // Gọi API để thay đổi trạng thái thiết bị
+                var response = await _clientFactory.CreateClient().PutAsync(apiUrl, null);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Nếu thành công, chuyển hướng về trang chi tiết thiết bị
+                    TempData["SuccessMessage"] = "Trạng thái thiết bị đã được thay đổi thành công!";
+                    return RedirectToAction("UpdateFoodAndDrink", new { itemId });
+                }
+                else
+                {
+                    // Thêm lỗi nếu API không trả về thành công
+                    TempData["ErrorMessage"] = "Không thể thay đổi trạng thái thiết bị.";
+                    return RedirectToAction("UpdateFoodAndDrink", new { itemId });
+                }
             }
-
-            string apiUrl = $"https://localhost:7298/api/FoodAndDrink/ChangeFoodStatus?itemId={id}";
-
-            using (var httpClient = new HttpClient())
+            catch (Exception ex)
             {
-                try
-                {
-                    HttpContent content = new StringContent("", System.Text.Encoding.UTF8, "application/json");
-                    HttpResponseMessage response = await httpClient.PutAsync(apiUrl, content);
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        return Ok("Thay đổi trạng thái thành công");
-                    }
-                    else
-                    {
-                        var responseContent = await response.Content.ReadAsStringAsync();
-                        return StatusCode((int)response.StatusCode, $"Không thể thay đổi trạng thái. API Error: {responseContent}");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    return StatusCode(500, "Đã xảy ra lỗi khi kết nối với API.");
-                }
+                // Ghi log và hiển thị thông báo lỗi chung
+                TempData["ErrorMessage"] = $"Đã xảy ra lỗi: {ex.Message}";
+                return RedirectToAction("UpdateFoodAndDrink", new { itemId });
             }
         }
 
-
-
         [HttpPost]
-        public async Task<IActionResult> CreateFoodAndDrink(FoodAndDrinkVMNew model, IFormFile PictureUrl)
+        public async Task<IActionResult> CreateFoodAndDrink(AddFoodAndDrinkVM model, IFormFile PictureUrl)
         {
 
             if (PictureUrl != null && PictureUrl.Length > 0)
@@ -199,7 +194,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 StreamContent fileContent = new StreamContent(PictureUrl.OpenReadStream());
                 formData.Add(fileContent, "file", PictureUrl.FileName);
 
-                string filePath = Path.Combine("wwwroot/images", PictureUrl.FileName);
+                string filePath = Path.Combine("wwwroot/images/Food", PictureUrl.FileName);
                 using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     await PictureUrl.CopyToAsync(fileStream);

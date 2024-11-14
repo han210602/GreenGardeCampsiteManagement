@@ -50,5 +50,32 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+        [HttpPut("ChangeComboFoodStatus")]
+        public IActionResult ChangeGearStatus([FromQuery] int comboId)
+        {
+            if (comboId <= 0)
+            {
+                return BadRequest("Invalid item ID.");
+            }
+
+
+            try
+            {
+                // Check if the item exists
+                var item = _repo.ComboFoodDetail(comboId);
+                if (item == null)
+                {
+                    return NotFound($"Food and drink item with ID {comboId} does not exist.");
+                }
+
+                // Update the status
+                _repo.ChangeComboFoodStatus(comboId);
+                return Ok($"Food and drink item {comboId} status changed.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
     }
 }

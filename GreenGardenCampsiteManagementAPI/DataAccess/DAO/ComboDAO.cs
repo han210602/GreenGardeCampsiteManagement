@@ -60,23 +60,24 @@ namespace DataAccess.DAO
             return listProducts;
         }
         private static GreenGardenContext context = new GreenGardenContext();
-        public static void ChangeComboStatus(int comboId, ChangeComboStatus newStatus)
+        public static void ChangeComboStatus(int comboId)
         {
-            // Find the food or drink item by ItemId
-            var foodAndDrink = context.Combos.FirstOrDefault(f => f.ComboId == comboId);
+            // Tìm thiết bị dựa trên GearId
+            var campingGear = context.Combos.FirstOrDefault(g => g.ComboId == comboId);
 
-            // If the item does not exist, throw an exception
-            if (foodAndDrink == null)
+            // Kiểm tra xem thiết bị có tồn tại không
+            if (campingGear == null)
             {
-                throw new Exception($"Food and Drink with ID {comboId} does not exist.");
+                throw new Exception($"Combo with ID {comboId} does not exist.");
             }
 
-            // Update the status
-            foodAndDrink.Status = newStatus.Status;
+            // Đổi trạng thái (nếu đang là true thì chuyển sang false, ngược lại)
+            campingGear.Status = !campingGear.Status;
 
-            // Save changes to the database
+            // Lưu thay đổi vào cơ sở dữ liệu
             context.SaveChanges();
         }
+
         public static ComboDetail GetComboDetail(int id)
         {
             var listProducts = new ComboDetail();

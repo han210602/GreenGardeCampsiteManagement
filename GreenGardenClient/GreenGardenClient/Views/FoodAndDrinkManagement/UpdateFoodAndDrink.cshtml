@@ -1,6 +1,6 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
-@model FoodAndDrinkVMNew
+@model FoodAndDrinkDetailVM
 @using GreenGardenClient.Models
 }
 @{
@@ -745,7 +745,7 @@
                                 <!-- Hiển thị ảnh hiện tại nếu có -->
                                 @if (!string.IsNullOrEmpty(@Model.ImgUrl))
                                 {
-                                    <img src="~/images/@Model.ImgUrl" alt="Event Image" class="event-thumbnail-large" id="currentImage_@Model.ItemId" />
+                                    <img src="~/images/Food/@Model.ImgUrl" alt="Event Image" class="event-thumbnail-large" id="currentImage_@Model.ItemId" />
                                 }
 
                                 <!-- Hidden input cho URL ảnh hiện tại -->
@@ -786,7 +786,12 @@
                                                name="Price" value="@Model.Price" required />
                                     </div>
                                 </div>
-
+                                <div class="d-flex align-items-center mb-3">
+                                    <i class="fas fa-check-circle me-2" style="color: #28a745;"></i>
+                                    <label for="Status_@Model.ItemId" class="me-2">Trạng Thái:</label>
+                                    <input type="checkbox" disabled id="Status_@Model.ItemId" name="Status" value="true" @(Model.Status == true ? "checked" : "") />
+                                    <span class="ms-2">Kích hoạt</span>
+                                </div>
 
 
 
@@ -815,18 +820,14 @@
                                     </select>
                                 </div>
 
-
+                              
                                     <!-- Buttons -->
 
                                     <div class="button-container mt-4 d-flex justify-content-end">
                                         <!-- Update Button -->
-                                        <button type="submit" class="btn btn-primary me-2">
+                                    <button type="submit" class="btn btn-primary me-2" onclick="return confirm('Bạn có chắc chắn muốn thay đổi?')">
                                             <i class="fas fa-sync-alt"></i> Cập nhật
                                         </button>
-
-                                    <a class="btn-block" href="javascript:void(0);" onclick="confirmBlockProduct('@Model.ItemId')" style="display: inline;">
-                                        <i class="fas fa-ban"></i> Chặn
-                                    </a>
 
                                         <!-- Back Button -->
                                         <a href="/FoodAndDrinkManagement/Index" class="btn btn-secondary">
@@ -834,6 +835,25 @@
                                         </a>
                                     </div>
                     </form>
+                    <form asp-action="ChangeStatus" method="post">
+                        <input type="hidden" name="ItemId" value="@Model.ItemId" />
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-check-circle me-2" style="color: #28a745;"></i>
+                            <label for="Status_@Model.ItemId" class="me-2">Tính năng thay đổi trạng thái:</label>
+
+                            <button type="submit" class="btn btn-outline-success" onclick="return confirm('Bạn có chắc chắn muốn thay đổi trạng thái?')">
+                                @if (Model.Status == true)
+                                {
+                                    <span>Hủy kích hoạt</span>
+                                }
+                                else
+                                {
+                                    <span>Kích hoạt</span>
+                                }
+                            </button>
+                        </div>
+                    </form>
+
                                 </div>
                            
                             </div>

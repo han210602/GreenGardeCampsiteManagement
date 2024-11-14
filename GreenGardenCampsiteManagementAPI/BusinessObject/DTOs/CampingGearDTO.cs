@@ -14,8 +14,10 @@ namespace BusinessObject.DTOs
         public decimal RentalPrice { get; set; }
         public string? Description { get; set; }
         public DateTime? CreatedAt { get; set; }
+        public int GearCategoryId { get; set; }
         public string GearCategoryName { get; set; }
         public string? ImgUrl { get; set; }
+        public bool? Status { get; set; }
     }
     public class AddCampingGearDTO
     {
@@ -23,11 +25,11 @@ namespace BusinessObject.DTOs
         public string GearName { get; set; } = null!;
         public int QuantityAvailable { get; set; }
         public decimal RentalPrice { get; set; }
-        public string? Description { get; set; }
+        public string Description { get; set; }
         public DateTime? CreatedAt { get; set; }
         public int? GearCategoryId { get; set; }
-        public string? ImgUrl { get; set; }
-        public bool? Status { get; set; }
+        public string ImgUrl { get; set; }
+        public bool Status { get; set; }
 
     }
     public class UpdateCampingGearDTO

@@ -24,5 +24,9 @@ namespace Repositories.ComboFood
         {
             return FoodComboDAO.getAllCustomerComboFoods();
         }
+        public void ChangeComboFoodStatus(int comboId)
+        {
+            FoodComboDAO.ChangeFoodComboStatus(comboId); // Call DAO method
+        }
     }
 }

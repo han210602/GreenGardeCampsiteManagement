@@ -12,5 +12,6 @@ namespace Repositories.ComboFood
         List<ComboFoodDTO> ComboFoods();
         List<ComboFoodDTO> CustomerComboFoods();
         ComboFoodDetailDTO ComboFoodDetail(int id);
+        void ChangeComboFoodStatus(int comboId);
     }
 }

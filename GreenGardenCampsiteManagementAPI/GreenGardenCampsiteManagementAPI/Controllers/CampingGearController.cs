@@ -119,16 +119,11 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
             }
         }
         [HttpPut("ChangeGearStatus")]
-        public IActionResult ChangeGearStatus([FromQuery] int gearId, [FromBody] ChangeGearStatus newStatus)
+        public IActionResult ChangeGearStatus([FromQuery] int gearId)
         {
             if (gearId <= 0)
             {
                 return BadRequest("Invalid item ID.");
-            }
-
-            if (newStatus == null || newStatus.Status == null)
-            {
-                return BadRequest("Invalid status data.");
             }
 
             try
@@ -137,12 +132,12 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 var item = _repo.GetCampingGearDetail(gearId);
                 if (item == null)
                 {
-                    return NotFound($"Food and drink item with ID {gearId} does not exist.");
+                    return NotFound($"Gear item with ID {gearId} does not exist.");
                 }
 
                 // Update the status
-                _repo.ChangeGearStatus(gearId, newStatus);
-                return Ok($"Food and drink item {gearId} status changed to {newStatus.Status.Value}.");
+                _repo.ChangeGearStatus(gearId);
+                return Ok($"Gear item {gearId} status changed.");
             }
             catch (Exception ex)
             {

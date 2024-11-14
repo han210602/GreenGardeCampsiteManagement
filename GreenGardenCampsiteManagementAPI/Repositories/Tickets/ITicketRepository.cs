@@ -17,6 +17,6 @@ namespace Repositories.Tickets
         List<TicketDTO> GetTicketsByCategoryIdAndSort(int? categoryId, int? sort);
         void AddTicket(AddTicket ticketDto);
         void UpdateTicket(UpdateTicket ticketDto);
-        void ChangeTicketStatus(int ticketId, ChangeTicketStatus newStatus);
+        void ChangeTicketStatus(int ticketId);
     }
 }

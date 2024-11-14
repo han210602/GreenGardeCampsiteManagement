@@ -26,8 +26,10 @@ namespace DataAccess.DAO
                     RentalPrice = gear.RentalPrice,
                     Description = gear.Description,
                     CreatedAt = gear.CreatedAt,
+                    GearCategoryId = gear.GearCategory.GearCategoryId,
                     GearCategoryName = gear.GearCategory.GearCategoryName,
-                    ImgUrl = gear.ImgUrl
+                    ImgUrl = gear.ImgUrl,
+                    Status = gear.Status,
                 }).ToList();
             return campingGears;
         }
@@ -62,30 +64,33 @@ namespace DataAccess.DAO
                     RentalPrice = gear.RentalPrice,
                     Description = gear.Description,
                     CreatedAt = gear.CreatedAt,
+                    GearCategoryId = gear.GearCategory.GearCategoryId,
                     GearCategoryName = gear.GearCategory.GearCategoryName,
-                    ImgUrl = gear.ImgUrl
+                    ImgUrl = gear.ImgUrl,
+                    Status = gear.Status,
                 })
                 .FirstOrDefault(); // Return the first match or null if not found
 
             return campingGear;
         }
-        public static void ChangeGearStatus(int gearId, ChangeGearStatus newStatus)
+        public static void ChangeGearStatus(int gearId)
         {
-            // Find the food or drink item by ItemId
-            var foodAndDrink = context.CampingGears.FirstOrDefault(f => f.GearId == gearId);
+            // Tìm thiết bị dựa trên GearId
+            var campingGear = context.CampingGears.FirstOrDefault(g => g.GearId == gearId);
 
-            // If the item does not exist, throw an exception
-            if (foodAndDrink == null)
+            // Kiểm tra xem thiết bị có tồn tại không
+            if (campingGear == null)
             {
-                throw new Exception($"Food and Drink with ID {gearId} does not exist.");
+                throw new Exception($"Camping gear with ID {gearId} does not exist.");
             }
 
-            // Update the status
-            foodAndDrink.Status = newStatus.Status;
+            // Đổi trạng thái (nếu đang là true thì chuyển sang false, ngược lại)
+            campingGear.Status = !campingGear.Status;
 
-            // Save changes to the database
+            // Lưu thay đổi vào cơ sở dữ liệu
             context.SaveChanges();
         }
+
 
         public static void AddCampingGear(AddCampingGearDTO gearDto)
         {

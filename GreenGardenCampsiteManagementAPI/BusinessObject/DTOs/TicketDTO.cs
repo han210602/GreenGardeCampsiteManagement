@@ -11,8 +11,10 @@ namespace BusinessObject.DTOs
         public int TicketId { get; set; }
         public string TicketName { get; set; } = null!;
         public decimal Price { get; set; }
+        public int TicketCategoryId { get; set; }
         public string TicketCategoryName { get; set; }
         public string? ImgUrl { get; set; }
+        public bool? Status { get; set; }
     }
     public class AddTicket
     {
@@ -30,6 +32,8 @@ namespace BusinessObject.DTOs
         public int TicketId { get; set; }
         public string TicketName { get; set; } = null!;
         public decimal Price { get; set; }
+        public string? ImgUrl { get; set; }
+        public int TicketCategoryId { get; set; }
     }
     public class ChangeTicketStatus
     {

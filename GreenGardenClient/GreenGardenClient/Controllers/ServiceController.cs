@@ -49,7 +49,7 @@ namespace GreenGardenClient.Controllers
         }
         public async Task<IActionResult> OrderGear()
         {
-            var campingGears = await GetDataFromApiAsync<List<GearVM>>("https://localhost:7298/api/CampingGear/GetAllCampingGears");
+            var campingGears = await GetDataFromApiAsync<List<GearVM>>("https://localhost:7298/api/CampingGear/GetAllCustomerCampingGears");
 
             // Lấy danh sách danh mục thiết bị cắm trại
             var campingCategories = await GetDataFromApiAsync<List<GearCategoryVM>>("https://localhost:7298/api/CampingGear/GetAllCampingGearCategories");
@@ -144,7 +144,7 @@ namespace GreenGardenClient.Controllers
 
         public async Task<IActionResult> OrderFoodAndDrink()
         {
-            var foodAndDrink = await GetDataFromApiAsync<List<FoodAndDrinkVM>>("https://localhost:7298/api/FoodAndDrink/GetAllFoodAndDrink");
+            var foodAndDrink = await GetDataFromApiAsync<List<FoodAndDrinkVM>>("https://localhost:7298/api/FoodAndDrink/GetAllCustomerFoodAndDrink");
             var comboFood = await GetDataFromApiAsync<List<ComboFoodVM>>("https://localhost:7298/api/ComboFood/GetAllOrders");
             Console.WriteLine("-----------" + comboFood.Count);
             // Lấy danh sách danh mục thiết bị cắm trại
@@ -543,7 +543,7 @@ namespace GreenGardenClient.Controllers
 
         public async Task<IActionResult> OrderTicket()
         {
-            var ticket = await GetDataFromApiAsync<List<TicketVM>>("https://localhost:7298/api/Ticket/GetAllTickets");
+            var ticket = await GetDataFromApiAsync<List<TicketVM>>("https://localhost:7298/api/Ticket/GetAllCustomerTickets");
             var ticketCategory = await GetDataFromApiAsync<List<TicketCategoryVM>>("https://localhost:7298/api/Ticket/GetAllTicketCategories");
 
             ViewBag.Ticket = ticket;
@@ -802,7 +802,7 @@ namespace GreenGardenClient.Controllers
 
         public async Task<IActionResult> ComboList()
         {
-            var combo = await GetDataFromApiAsync<List<ComboVM>>("https://localhost:7298/api/Combo/GetAllCombos");
+            var combo = await GetDataFromApiAsync<List<ComboVM>>("https://localhost:7298/api/Combo/GetAllCustomerCombos");
 
             ViewBag.Combo = combo;
 

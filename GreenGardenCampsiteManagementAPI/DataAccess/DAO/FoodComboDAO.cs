@@ -11,6 +11,7 @@ namespace DataAccess.DAO
 {
     public class FoodComboDAO
     {
+        private static GreenGardenContext context = new GreenGardenContext();
         public static List<ComboFoodDTO> getAllComboFoods()
         {
             var listProducts = new List<ComboFoodDTO>();
@@ -33,6 +34,23 @@ namespace DataAccess.DAO
                 throw new Exception(ex.Message);
             }
             return listProducts;
+        }
+        public static void ChangeFoodComboStatus(int comboId)
+        {
+            // Tìm thiết bị dựa trên GearId
+            var campingGear = context.FoodCombos.FirstOrDefault(g => g.ComboId == comboId);
+
+            // Kiểm tra xem thiết bị có tồn tại không
+            if (campingGear == null)
+            {
+                throw new Exception($"Food and Drink with ID {comboId} does not exist.");
+            }
+
+            // Đổi trạng thái (nếu đang là true thì chuyển sang false, ngược lại)
+            campingGear.Status = !campingGear.Status;
+
+            // Lưu thay đổi vào cơ sở dữ liệu
+            context.SaveChanges();
         }
         public static List<ComboFoodDTO> getAllCustomerComboFoods()
         {

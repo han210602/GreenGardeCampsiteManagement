@@ -614,7 +614,7 @@
                                 <div class="d-flex">
                                     <!-- Event Image on the Left -->
                                     <div class="event-image mr-3">
-                                        <img src="/images/@eventItem.ImgUrl" alt="Event Image" class="event-thumbnail">
+                                        <img src="/images/Food/@eventItem.ImgUrl" alt="Event Image" class="event-thumbnail">
                                     </div>
 
                                     <!-- Event Details on the Right -->
@@ -640,7 +640,7 @@
                                         <span class="stats-link">
                                             <!-- Details icon -->
                                             <i class="fas fa-info-circle mr-1" style="color: #6c757d;"></i>
-                                            <a href="@Url.Action("UpdateFoodAndDrink", "FoodAndDrinkManagement", new { id = @eventItem.ItemId })" style="text-decoration: none; color: inherit;">
+                                            <a href="@Url.Action("UpdateFoodAndDrink", "FoodAndDrinkManagement", new { itemId = @eventItem.ItemId })" style="text-decoration: none; color: inherit;">
                                                 (Chi tiết)
                                             </a>
                                         </span>
