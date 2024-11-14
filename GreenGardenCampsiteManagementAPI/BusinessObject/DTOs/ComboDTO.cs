@@ -27,4 +27,21 @@ namespace BusinessObject.DTOs
         public virtual List<ComboFootDetailDTO> ComboFootDetails { get; set; }
         public virtual List<ComboTicketDetailDTO> ComboTicketDetails { get; set; }
     }
+    public class AddCombo
+    {
+        public int ComboId { get; set; }
+        public string ComboName { get; set; } = null!;
+        public string? Description { get; set; }
+        public decimal Price { get; set; }
+        public string? ImgUrl { get; set; }
+        public bool? Status { get; set; }
+
+        public virtual List<ComboCampingGearDetailDTO> ComboCampingGearDetails { get; set; }
+        public virtual List<ComboFootDetailDTO> ComboFootDetails { get; set; }
+        public virtual List<ComboTicketDetailDTO> ComboTicketDetails { get; set; }
+    }
+    public class ChangeComboStatus
+    {
+        public bool? Status { get; set; }
+    }
 }

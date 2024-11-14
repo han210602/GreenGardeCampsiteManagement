@@ -13,9 +13,4 @@ namespace BusinessObject.Models
         public virtual CampingGear Gear { get; set; } = null!;
         public virtual Order Order { get; set; } = null!;
     }
-    public  class OrderCampingGearByUsageDateDTO
-    {
-        public int GearId { get; set; }
-        public int? Quantity { get; set; }
-    }
 }

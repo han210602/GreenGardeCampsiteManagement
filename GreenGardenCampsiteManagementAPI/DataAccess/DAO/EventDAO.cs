@@ -2,13 +2,8 @@
 using BusinessObject.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mail;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net.Mail;
 
 namespace DataAccess.DAO
 {
@@ -33,7 +28,7 @@ namespace DataAccess.DAO
                         PictureUrl = eventEntity.PictureUrl,
                         IsActive = eventEntity.IsActive,
                         CreatedAt = eventEntity.CreatedAt,
-                        NameCreateByUser = eventEntity.CreateByNavigation.FirstName + " " + eventEntity.CreateByNavigation.LastName
+                        CreatedByUserName = eventEntity.CreateByNavigation.FirstName + " " + eventEntity.CreateByNavigation.LastName
                     }).ToList();
 
                 return events;
@@ -43,6 +38,81 @@ namespace DataAccess.DAO
                 throw new Exception("Error retrieving events: " + ex.Message);
             }
         }
+        public static List<EventDTO> GetEventByCreatedBy(int id)
+        {
+            try
+            {
+                var events = context.Events.Include(user => user.CreateByNavigation)
+                    .Where(e => e.CreateBy == id)
+                    .Select(eventEntity => new EventDTO
+                    {
+                        EventId = eventEntity.EventId,
+                        EventName = eventEntity.EventName,
+                        Description = eventEntity.Description,
+                        EventDate = eventEntity.EventDate,
+                        StartTime = eventEntity.StartTime,
+                        EndTime = eventEntity.EndTime,
+                        Location = eventEntity.Location,
+                        PictureUrl = eventEntity.PictureUrl,
+                        IsActive = eventEntity.IsActive,
+                        CreatedAt = eventEntity.CreatedAt,
+                        CreatedByUserName = eventEntity.CreateByNavigation.FirstName + " " + eventEntity.CreateByNavigation.LastName
+                    }).ToList();
+
+                return events;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error retrieving events: " + ex.Message);
+            }
+        }
+        public static EventDTO GetEventById(int id)
+        {
+            try
+            {
+                // Truy vấn sự kiện theo EventId và bao gồm thông tin người tạo
+                var eventEntity = context.Events
+                    .Include(e => e.CreateByNavigation) // Bao gồm dữ liệu từ bảng liên kết với người tạo
+                    .Where(e => e.EventId == id) // Điều kiện để tìm sự kiện theo EventId
+                    .Select(e => new EventDTO
+                    {
+                        EventId = e.EventId,                   // ID của sự kiện
+                        EventName = e.EventName,               // Tên của sự kiện
+                        Description = e.Description,           // Mô tả của sự kiện
+                        EventDate = e.EventDate,               // Ngày diễn ra sự kiện
+                        StartTime = e.StartTime,               // Thời gian bắt đầu sự kiện
+                        EndTime = e.EndTime,                   // Thời gian kết thúc sự kiện
+                        Location = e.Location,                 // Địa điểm tổ chức sự kiện
+                        PictureUrl = e.PictureUrl,             // URL hình ảnh của sự kiện
+                        IsActive = e.IsActive,                 // Trạng thái kích hoạt của sự kiện
+                        CreatedAt = e.CreatedAt,               // Thời điểm tạo sự kiện
+                        CreatedByUserName = e.CreateByNavigation != null
+                            ? e.CreateByNavigation.FirstName + " " + e.CreateByNavigation.LastName
+                            : "Unknown" // Trường hợp người tạo không tồn tại
+                    })
+                    .FirstOrDefault(); // Trả về kết quả đầu tiên hoặc null nếu không tìm thấy
+
+                // Kiểm tra nếu không tìm thấy sự kiện
+                if (eventEntity == null)
+                {
+                    throw new KeyNotFoundException($"Event with ID {id} not found.");
+                }
+
+                return eventEntity;
+            }
+            catch (KeyNotFoundException ex)
+            {
+                // Bắt lỗi cho trường hợp không tìm thấy
+                throw new Exception($"Error: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                // Bắt lỗi tổng quát và ném ngoại lệ với thông báo chi tiết
+                throw new Exception($"An unexpected error occurred while retrieving the event: {ex.Message}", ex);
+            }
+        }
+
+
         private static async Task SendEventNotificationEmail(string email, CreateEventDTO eventDTO, IConfiguration configuration)
         {
             // Khai báo địa chỉ email người gửi
@@ -134,7 +204,7 @@ namespace DataAccess.DAO
             }
         }
 
-        public static bool UpdateEvent( UpdateEventDTO eventDTO)
+        public static bool UpdateEvent(UpdateEventDTO eventDTO)
         {
             try
             {

@@ -11,11 +11,12 @@ namespace Repositories.Tickets
     public interface ITicketRepository
     {
         List<TicketDTO> GetAllTickets();
+        List<TicketDTO> GetAllCustomerTickets();
         TicketDTO GetTicketDetail(int id);
         List<TicketCategoryDTO> GetAllTicketCategories();
         List<TicketDTO> GetTicketsByCategoryIdAndSort(int? categoryId, int? sort);
-        List<TicketDTO> GetTicketsByCategoryId(int categoryId);
         void AddTicket(AddTicket ticketDto);
         void UpdateTicket(UpdateTicket ticketDto);
+        void ChangeTicketStatus(int ticketId, ChangeTicketStatus newStatus);
     }
 }

@@ -1,15 +1,10 @@
 ﻿using BusinessObject.DTOs;
 using DataAccess.DAO;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Repositories.Users
 {
-    public class UserRepository: IUserRepository
+    public class UserRepository : IUserRepository
     {
         public List<UserDTO> GetAllUsers()
         {
@@ -40,9 +35,9 @@ namespace Repositories.Users
             return UserDAO.AddCustomer(newCustomerDto, configuration);
         }
 
-        public bool UpdateUser( UpdateUserDTO updatedUserDto)
+        public bool UpdateUser(UpdateUserDTO updatedUserDto)
         {
-            return UserDAO.UpdateUser( updatedUserDto);
+            return UserDAO.UpdateUser(updatedUserDto);
         }
 
         public bool DeleteUser(int userId, IConfiguration configuration)
@@ -53,6 +48,10 @@ namespace Repositories.Users
         public bool BlockUser(int userId, IConfiguration configuration)
         {
             return UserDAO.BlockUser(userId, configuration);
+        }
+        public bool UnBlockUser(int userId, IConfiguration configuration)
+        {
+            return UserDAO.UnBlockUser(userId, configuration);
         }
     }
 }

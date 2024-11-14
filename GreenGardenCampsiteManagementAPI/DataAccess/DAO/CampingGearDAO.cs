@@ -31,6 +31,24 @@ namespace DataAccess.DAO
                 }).ToList();
             return campingGears;
         }
+        public static List<CampingGearDTO> GetAllCustomerCampingGears()
+        {
+            var campingGears = context.CampingGears
+                .Include(gear => gear.GearCategory)
+                .Where(s => s.Status == true)
+                .Select(gear => new CampingGearDTO
+                {
+                    GearId = gear.GearId,
+                    GearName = gear.GearName,
+                    QuantityAvailable = gear.QuantityAvailable,
+                    RentalPrice = gear.RentalPrice,
+                    Description = gear.Description,
+                    CreatedAt = gear.CreatedAt,
+                    GearCategoryName = gear.GearCategory.GearCategoryName,
+                    ImgUrl = gear.ImgUrl
+                }).ToList();
+            return campingGears;
+        }
         public static CampingGearDTO GetCampingGearDetail(int gearId)
         {
             var campingGear = context.CampingGears
@@ -51,6 +69,23 @@ namespace DataAccess.DAO
 
             return campingGear;
         }
+        public static void ChangeGearStatus(int gearId, ChangeGearStatus newStatus)
+        {
+            // Find the food or drink item by ItemId
+            var foodAndDrink = context.CampingGears.FirstOrDefault(f => f.GearId == gearId);
+
+            // If the item does not exist, throw an exception
+            if (foodAndDrink == null)
+            {
+                throw new Exception($"Food and Drink with ID {gearId} does not exist.");
+            }
+
+            // Update the status
+            foodAndDrink.Status = newStatus.Status;
+
+            // Save changes to the database
+            context.SaveChanges();
+        }
 
         public static void AddCampingGear(AddCampingGearDTO gearDto)
         {
@@ -64,6 +99,8 @@ namespace DataAccess.DAO
                 CreatedAt = DateTime.Now,
                 GearCategoryId = gearDto.GearCategoryId,
                 ImgUrl = gearDto.ImgUrl,
+                Status = true
+
             };
             context.CampingGears.Add(campingGear);
             context.SaveChanges();
@@ -104,7 +141,7 @@ namespace DataAccess.DAO
         public static List<CampingGearDTO> GetCampingGears(int? categoryId, int? sortBy, int? priceRange, int? popularity)
         {
             var query = context.CampingGears
-                .Include(gear => gear.GearCategory)
+                .Include(gear => gear.GearCategory).Where(s => s.Status == true)
                 .AsNoTracking() // Không theo dõi thực thể để cải thiện hiệu suất
                 .AsQueryable();
 
@@ -192,7 +229,6 @@ namespace DataAccess.DAO
 
             return campingGears;
         }
-
 
     }
 

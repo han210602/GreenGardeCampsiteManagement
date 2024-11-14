@@ -10,6 +10,7 @@ namespace Repositories.ComboFood
     public interface IComboFoodRepository
     {
         List<ComboFoodDTO> ComboFoods();
+        List<ComboFoodDTO> CustomerComboFoods();
         ComboFoodDetailDTO ComboFoodDetail(int id);
     }
 }

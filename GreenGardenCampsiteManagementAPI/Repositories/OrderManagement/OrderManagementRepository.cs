@@ -44,10 +44,7 @@ namespace Repositories.Orders
             return OrderDAO.DeleteOrder(id);
 
         }
-        public void UpdateActivity(int orderId)
-        {
-            OrderDAO.UpdateActivity(orderId);
-        }
+
         public bool EnterDeposit(int id, decimal money)
         {
             return OrderDAO.EnterDeposit(id, money);
@@ -70,6 +67,10 @@ namespace Repositories.Orders
         {
             return OrderDAO.GetListOrderGearByUsageDate(usagedate);
 
+        }
+        public bool UpdateActivity(int orderId)
+        {
+            return OrderDAO.UpdateActivity(orderId);
         }
 
         public OrderDetailDTO GetOrderDetail(int id)

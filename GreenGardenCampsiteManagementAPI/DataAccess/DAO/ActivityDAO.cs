@@ -10,20 +10,25 @@ namespace DataAccess.DAO
 {
     public class ActivityDAO
     {
+        private static GreenGardenContext _context;
+        public static void InitializeContext(GreenGardenContext context)
+        {
+            _context = context;
+        }
         public static List<ActivityDTO> getAllActivity()
         {
+
             var listActivities = new List<ActivityDTO>();
             try
             {
-                using (var context = new GreenGardenContext())
-                {
-                    listActivities = context.Activities.Select(a => new ActivityDTO()
+               
+                    listActivities = _context.Activities.Select(a => new ActivityDTO()
                     { 
                         ActivityId =a.ActivityId,
                         ActivityName =a.ActivityName,
                     })
                     .ToList();
-                }
+                
 
             }
             catch (Exception ex)

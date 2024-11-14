@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Repositories.Events;
-using BusinessObject.DTOs;
-using System;
-using System.Threading.Tasks;
+﻿using BusinessObject.DTOs;
+using Microsoft.AspNetCore.Mvc;
+using Repositories.Event;
+
 
 namespace GreenGardenCampsiteManagementAPI.Controllers
 {
@@ -31,7 +30,32 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Lỗi server: {ex.Message}");
             }
         }
-
+        [HttpGet("GetEventByCreatedBy")]
+        public IActionResult GetEventByCreatedBy(int eventId)
+        {
+            try
+            {
+                var events = _repo.GetEventByCreatedBy(eventId);
+                return Ok(events);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi server: {ex.Message}");
+            }
+        }
+        [HttpGet("GetEventById")]
+        public IActionResult GetEventById(int eventId)
+        {
+            try
+            {
+                var events = _repo.GetEventById(eventId);
+                return Ok(events);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi server: {ex.Message}");
+            }
+        }
         // Thêm một sự kiện mới
         [HttpPost("AddEvent")]
         public async Task<IActionResult> AddEvent([FromBody] CreateEventDTO eventDTO)
@@ -43,7 +67,7 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
 
             try
             {
-                var result = await _repo.AddEvent(eventDTO,null);
+                var result = await _repo.AddEvent(eventDTO, null);
                 if (result)
                 {
                     return Ok("Thêm sự kiện thành công.");

@@ -1,10 +1,6 @@
 ﻿using BusinessObject.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Repositories.Users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace GreenGardenCampsiteManagementAPI.Controllers
 {
@@ -177,6 +173,23 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                     return BadRequest("Failed to block user.");
                 }
                 return Ok("User blocked successfully.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+        [HttpPost("UnBlockUser/{userId}")]
+        public IActionResult UnBlockUser(int userId)
+        {
+            try
+            {
+                bool result = _repo.UnBlockUser(userId, null); // Pass IConfiguration if needed
+                if (!result)
+                {
+                    return BadRequest("Failed to unblock user.");
+                }
+                return Ok("User unblock successfully.");
             }
             catch (Exception ex)
             {

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BusinessObject.DTOs
+﻿namespace BusinessObject.DTOs
 {
     public class EventDTO
     {
@@ -18,7 +12,8 @@ namespace BusinessObject.DTOs
         public string? PictureUrl { get; set; }
         public bool? IsActive { get; set; }
         public DateTime? CreatedAt { get; set; }
-        public string? NameCreateByUser { get; set; }
+        public int? CreateBy { get; set; }
+        public string? CreatedByUserName { get; set; }
     }
     public class CreateEventDTO
     {

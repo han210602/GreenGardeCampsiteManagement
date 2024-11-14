@@ -20,5 +20,9 @@ namespace Repositories.ComboFood
         {
             return FoodComboDAO.getAllComboFoods();
         }
+        public List<ComboFoodDTO> CustomerComboFoods()
+        {
+            return FoodComboDAO.getAllCustomerComboFoods();
+        }
     }
 }

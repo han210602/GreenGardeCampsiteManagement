@@ -22,7 +22,22 @@ namespace DataAccess.DAO
                     ItemId = item.ItemId,
                     ItemName = item.ItemName,
                     Price = item.Price,
-                    QuantityAvailable = item.QuantityAvailable,
+                    Description = item.Description,
+                    CategoryName = item.Category.CategoryName, // Lấy tên từ danh mục
+                    ImgUrl = item.ImgUrl
+                }).ToList();
+
+            return items;
+        }
+        public static List<FoodAndDrinkDTO> GetAllCustomerFoodAndDrink()
+        {
+            var items = context.FoodAndDrinks
+                .Include(x => x.Category).Where(s => s.Status == true)
+                .Select(item => new FoodAndDrinkDTO
+                {
+                    ItemId = item.ItemId,
+                    ItemName = item.ItemName,
+                    Price = item.Price,
                     Description = item.Description,
                     CategoryName = item.Category.CategoryName, // Lấy tên từ danh mục
                     ImgUrl = item.ImgUrl
@@ -40,7 +55,6 @@ namespace DataAccess.DAO
                     ItemId = i.ItemId,
                     ItemName = i.ItemName,
                     Price = i.Price,
-                    QuantityAvailable = i.QuantityAvailable,
                     Description = i.Description,
                     CategoryName = i.Category.CategoryName,
                     ImgUrl = i.ImgUrl
@@ -50,6 +64,8 @@ namespace DataAccess.DAO
             return item;
         }
 
+
+
         public static void AddFoodAndDrink(AddFoodOrDrinkDTO item)
         {
             var foodAndDrink = new FoodAndDrink
@@ -57,16 +73,18 @@ namespace DataAccess.DAO
                 ItemId = item.ItemId,
                 ItemName = item.ItemName,
                 Price = item.Price,
-                QuantityAvailable = item.QuantityAvailable,
                 CreatedAt = item.CreatedAt,
                 Description = item.Description,
                 ImgUrl = item.ImgUrl,
-                CategoryId = item.CategoryId // Id của danh mục
+                CategoryId = item.CategoryId,
+                Status = true
+                
             };
 
             context.FoodAndDrinks.Add(foodAndDrink);
             context.SaveChanges();
         }
+
 
         public static void UpdateFoodOrDrink(UpdateFoodOrDrinkDTO itemDto)
         {
@@ -79,7 +97,6 @@ namespace DataAccess.DAO
 
             foodAndDrink.ItemName = itemDto.ItemName;
             foodAndDrink.Price = itemDto.Price;
-            foodAndDrink.QuantityAvailable = itemDto.QuantityAvailable;
             foodAndDrink.Description = itemDto.Description;
             foodAndDrink.CategoryId = itemDto.CategoryId; // Cập nhật danh mục
             foodAndDrink.ImgUrl = itemDto.ImgUrl;
@@ -89,7 +106,7 @@ namespace DataAccess.DAO
         public static List<FoodAndDrinkDTO> GetFoodAndDrinks(int? categoryId, int? sortBy, int? priceRange)
         {
             var query = context.FoodAndDrinks
-                .Include(food => food.Category) // Bao gồm thông tin danh mục
+                .Include(food => food.Category).Where(s => s.Status == true) // Bao gồm thông tin danh mục
                 .AsNoTracking() // Không theo dõi thực thể để cải thiện hiệu suất
                 .AsQueryable();
 
@@ -133,16 +150,10 @@ namespace DataAccess.DAO
                         query = query.OrderByDescending(food => food.Price);
                         break;
                     case 3: // Sắp xếp theo ngày tạo mới nhất
-                        query = query.OrderByDescending(food => food.CreatedAt);
+                        query = query.OrderBy(food => food.ItemName);
                         break;
                     case 4: // Sắp xếp theo số lượng có sẵn
-                        query = query.OrderByDescending(food => food.QuantityAvailable);
-                        break;
-                    case 5: // Sắp xếp theo số lượng có sẵn
-                        query = query.OrderByDescending(food => food.QuantityAvailable);
-                        break;
-                    case 6: // Sắp xếp theo số lượng có sẵn
-                        query = query.OrderByDescending(food => food.CreatedAt);
+                        query = query.OrderByDescending(food => food.ItemName);
                         break;
                 }
                 isSorted = true;
@@ -160,7 +171,6 @@ namespace DataAccess.DAO
                 ItemId = food.ItemId,
                 ItemName = food.ItemName,
                 Price = food.Price,
-                QuantityAvailable = food.QuantityAvailable,
                 Description = food.Description,
                 CategoryName = food.Category.CategoryName, // Lấy tên danh mục
                 ImgUrl = food.ImgUrl
@@ -168,7 +178,6 @@ namespace DataAccess.DAO
 
             return foodAndDrinks;
         }
-
         public static List<FoodAndDrinkCategoryDTO> GetAllFoodAndDrinkCategories()
         {
             var items = context.FoodAndDrinkCategories
@@ -184,5 +193,23 @@ namespace DataAccess.DAO
 
             return items;
         }
+        public static void ChangeFoodStatus(int itemId, ChangeFoodStatus newStatus)
+        {
+            // Find the food or drink item by ItemId
+            var foodAndDrink = context.FoodAndDrinks.FirstOrDefault(f => f.ItemId == itemId);
+
+            // If the item does not exist, throw an exception
+            if (foodAndDrink == null)
+            {
+                throw new Exception($"Food and Drink with ID {itemId} does not exist.");
+            }
+
+            // Update the status
+            foodAndDrink.Status = newStatus.Status;
+
+            // Save changes to the database
+            context.SaveChanges();
+        }
+
     }
 }

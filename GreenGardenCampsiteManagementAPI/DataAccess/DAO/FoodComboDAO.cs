@@ -34,6 +34,29 @@ namespace DataAccess.DAO
             }
             return listProducts;
         }
+        public static List<ComboFoodDTO> getAllCustomerComboFoods()
+        {
+            var listProducts = new List<ComboFoodDTO>();
+            try
+            {
+                using (var context = new GreenGardenContext())
+                {
+                    listProducts = context.FoodCombos.Where(s => s.Status == true).Select(f => new ComboFoodDTO
+                    {
+                        ComboId = f.ComboId,
+                        ComboName = f.ComboName,
+                        Price = f.Price,
+                        ImgUrl = f.ImgUrl,
+                    }).ToList();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return listProducts;
+        }
 
         public static ComboFoodDetailDTO getComboFoodDetail(int id)
         {

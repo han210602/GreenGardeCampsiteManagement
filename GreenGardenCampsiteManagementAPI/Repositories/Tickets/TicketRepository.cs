@@ -14,13 +14,13 @@ namespace Repositories.Tickets
         {
             return TicketDAO.GetAllTickets();
         }
+        public List<TicketDTO> GetAllCustomerTickets()
+        {
+            return TicketDAO.GetAllCustomerTickets();
+        }
         public TicketDTO GetTicketDetail(int id)
         {
             return TicketDAO.GetTicketDetail(id);
-        }
-        public List<TicketDTO> GetTicketsByCategoryId(int categoryId)
-        {
-            return TicketDAO.GetTicketsByCategoryId(categoryId);
         }
         public List<TicketDTO> GetTicketsByCategoryIdAndSort(int? categoryId, int? sort)
         {
@@ -38,6 +38,10 @@ namespace Repositories.Tickets
         public List<TicketCategoryDTO> GetAllTicketCategories()
         {
             return TicketDAO.GetAllTicketCategories();
+        }
+        public void ChangeTicketStatus(int ticketId, ChangeTicketStatus newStatus)
+        {
+            TicketDAO.ChangeTicketStatus(ticketId, newStatus); // Call DAO method
         }
     }
 }

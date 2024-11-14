@@ -14,6 +14,10 @@ namespace Repositories.FoodAndDrink
         {
             return FoodAndDrinkDAO.GetAllFoodAndDrink();
         }
+        public List<FoodAndDrinkDTO> GetAllCustomerFoodAndDrink()
+        {
+            return FoodAndDrinkDAO.GetAllCustomerFoodAndDrink();
+        }
         public FoodAndDrinkDTO GetFoodAndDrinkDetail(int itemId)
         {
             return FoodAndDrinkDAO.GetFoodAndDrinkDetail(itemId);
@@ -37,5 +41,10 @@ namespace Repositories.FoodAndDrink
         {
             return FoodAndDrinkDAO.GetFoodAndDrinks(categoryId, sortBy, priceRange);
         }
+        public void ChangeFoodStatus(int itemId, ChangeFoodStatus newStatus)
+        {
+            FoodAndDrinkDAO.ChangeFoodStatus(itemId, newStatus); // Call DAO method
+        }
+
     }
 }

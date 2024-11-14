@@ -44,7 +44,8 @@ namespace BusinessObject.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("server=MSI\\SQL2019;database=GreenGarden;uid=sa;pwd=123;TrustServerCertificate=True");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("server=localhost;database=GreenGarden;uid=sa;pwd=123;TrustServerCertificate=True");
             }
         }
 
@@ -56,12 +57,9 @@ namespace BusinessObject.Models
 
                 entity.Property(e => e.ActivityName)
                     .HasMaxLength(100)
-                    .IsUnicode(false)
                     .HasColumnName("activity_name");
 
-                entity.Property(e => e.Description)
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
+                entity.Property(e => e.Description).HasMaxLength(255);
             });
 
             modelBuilder.Entity<Amenity>(entity =>
@@ -140,6 +138,8 @@ namespace BusinessObject.Models
                     .HasColumnType("decimal(10, 2)")
                     .HasColumnName("rentalPrice");
 
+                entity.Property(e => e.Status).HasColumnName("status");
+
                 entity.HasOne(d => d.GearCategory)
                     .WithMany(p => p.CampingGears)
                     .HasForeignKey(d => d.GearCategoryId)
@@ -169,6 +169,8 @@ namespace BusinessObject.Models
                 entity.Property(e => e.Price)
                     .HasColumnType("decimal(10, 2)")
                     .HasColumnName("price");
+
+                entity.Property(e => e.Status).HasColumnName("status");
             });
 
             modelBuilder.Entity<ComboCampingGearDetail>(entity =>
@@ -272,9 +274,7 @@ namespace BusinessObject.Models
                     .HasColumnName("created_at")
                     .HasDefaultValueSql("(getdate())");
 
-                entity.Property(e => e.Description)
-                    .HasColumnType("text")
-                    .HasColumnName("description");
+                entity.Property(e => e.Description).HasColumnName("description");
 
                 entity.Property(e => e.EndTime).HasColumnName("end_time");
 
@@ -284,7 +284,6 @@ namespace BusinessObject.Models
 
                 entity.Property(e => e.EventName)
                     .HasMaxLength(100)
-                    .IsUnicode(false)
                     .HasColumnName("event_name");
 
                 entity.Property(e => e.IsActive)
@@ -293,7 +292,6 @@ namespace BusinessObject.Models
 
                 entity.Property(e => e.Location)
                     .HasMaxLength(255)
-                    .IsUnicode(false)
                     .HasColumnName("location");
 
                 entity.Property(e => e.PictureUrl)
@@ -339,6 +337,8 @@ namespace BusinessObject.Models
                     .HasColumnName("price");
 
                 entity.Property(e => e.QuantityAvailable).HasColumnName("quantityAvailable");
+
+                entity.Property(e => e.Status).HasColumnName("status");
 
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.FoodAndDrinks)
@@ -391,6 +391,8 @@ namespace BusinessObject.Models
                 entity.Property(e => e.Price)
                     .HasColumnType("decimal(10, 2)")
                     .HasColumnName("price");
+
+                entity.Property(e => e.Status).HasColumnName("status");
             });
 
             modelBuilder.Entity<FootComboItem>(entity =>
@@ -433,7 +435,6 @@ namespace BusinessObject.Models
 
                 entity.Property(e => e.CustomerName)
                     .HasMaxLength(100)
-                    .IsUnicode(false)
                     .HasColumnName("customer_name");
 
                 entity.Property(e => e.Deposit)
@@ -441,6 +442,10 @@ namespace BusinessObject.Models
                     .HasColumnName("deposit");
 
                 entity.Property(e => e.EmployeeId).HasColumnName("employee_id");
+
+                entity.Property(e => e.OrderCheckoutDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("order_checkout_date");
 
                 entity.Property(e => e.OrderDate)
                     .HasColumnType("datetime")
@@ -665,6 +670,8 @@ namespace BusinessObject.Models
                     .HasColumnType("decimal(10, 2)")
                     .HasColumnName("price");
 
+                entity.Property(e => e.Status).HasColumnName("status");
+
                 entity.Property(e => e.TicketCategoryId).HasColumnName("ticket_category_id");
 
                 entity.Property(e => e.TicketName)
@@ -704,7 +711,7 @@ namespace BusinessObject.Models
                 entity.Property(e => e.UserId).HasColumnName("user_id");
 
                 entity.Property(e => e.Address)
-                    .HasColumnType("text")
+                    .HasMaxLength(300)
                     .HasColumnName("address");
 
                 entity.Property(e => e.CreatedAt)
@@ -723,7 +730,6 @@ namespace BusinessObject.Models
 
                 entity.Property(e => e.FirstName)
                     .HasMaxLength(50)
-                    .IsUnicode(false)
                     .HasColumnName("first_name");
 
                 entity.Property(e => e.Gender)
@@ -738,7 +744,6 @@ namespace BusinessObject.Models
 
                 entity.Property(e => e.LastName)
                     .HasMaxLength(50)
-                    .IsUnicode(false)
                     .HasColumnName("last_name");
 
                 entity.Property(e => e.Password)

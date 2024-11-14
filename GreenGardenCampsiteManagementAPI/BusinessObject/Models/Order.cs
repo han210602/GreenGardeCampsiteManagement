@@ -26,6 +26,7 @@ namespace BusinessObject.Models
         public bool? StatusOrder { get; set; }
         public int? ActivityId { get; set; }
         public string? PhoneCustomer { get; set; }
+        public DateTime? OrderCheckoutDate { get; set; }
 
         public virtual Activity? Activity { get; set; }
         public virtual User? Customer { get; set; }

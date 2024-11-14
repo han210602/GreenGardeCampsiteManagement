@@ -91,14 +91,7 @@ namespace DataAccess.DAO
                         loginAttempts[a.Email]++;
                     }
 
-                    // Deactivate if attempts reach 5
-                    if (loginAttempts[a.Email] >= 5)
-                    {
-                        user.IsActive = false;
-                        context.SaveChanges();
-                        throw new Exception("Account has been locked due to too many failed login attempts.");
-                    }
-
+                    // Throw an error message if the login attempt fails
                     throw new Exception("Invalid email or password.");
                 }
             }
@@ -303,7 +296,6 @@ namespace DataAccess.DAO
                 return users;
             }
         }
-
         public static ViewUserDTO GetAccountById(int userId)
         {
             using (var context = new GreenGardenContext())
@@ -332,7 +324,6 @@ namespace DataAccess.DAO
                 return user;
             }
         }
-
         public static async Task<string> UpdateProfile(UpdateProfile updateProfileDto)
         {
             using (var context = new GreenGardenContext())
@@ -352,6 +343,7 @@ namespace DataAccess.DAO
                 user.Address = updateProfileDto.Address;
                 user.DateOfBirth = updateProfileDto.DateOfBirth;
                 user.Gender = updateProfileDto.Gender;
+                user.ProfilePictureUrl = updateProfileDto.ProfilePictureUrl;
 
                 try
                 {
@@ -383,7 +375,7 @@ namespace DataAccess.DAO
                     return "Mật khẩu cũ không đúng."; 
                 }
 
-                if (changePasswordDto.NewPassword != changePasswordDto.ConformPassword)
+                if (changePasswordDto.NewPassword != changePasswordDto.ConfirmPassword)
                 {
                     return "Mật khẩu mới và xác nhận mật khẩu không khớp."; 
                 }

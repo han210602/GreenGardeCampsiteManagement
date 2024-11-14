@@ -20,5 +20,22 @@ namespace Repositories.Combo
         {
             return ComboDAO.GetListCombo();
         }
+        public List<ComboDTO> CustomerCombos()
+        {
+            return ComboDAO.GetListCustomerCombo();
+        }
+        public void AddCombo(AddCombo newCombo)
+        {
+            ComboDAO.AddNewCombo(newCombo);
+        }
+
+        public void UpdateCombo(AddCombo updatedCombo)
+        {
+            ComboDAO.UpdateCombo(updatedCombo);
+        }
+        public void ChangeComboStatus(int comboId, ChangeComboStatus newStatus)
+        {
+            ComboDAO.ChangeComboStatus(comboId, newStatus); // Call DAO method
+        }
     }
 }

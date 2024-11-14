@@ -23,6 +23,8 @@ namespace BusinessObject.DTOs
         public int? ActivityId { get; set; }
         public string? ActivityName { get; set; }
         public string? PhoneCustomer { get; set; }
+        public DateTime? OrderCheckoutDate { get; set; }
+
 
     }
     public class CustomerOrderDTO
@@ -74,6 +76,8 @@ namespace BusinessObject.DTOs
         public int OrderId { get; set; }
         public DateTime? OrderUsageDate { get; set; }
         public decimal TotalAmount { get; set; }
+        public DateTime? OrderCheckoutDate { get; set; }
+
     }
     public class OrderDetailDTO
     {
@@ -89,6 +93,7 @@ namespace BusinessObject.DTOs
         public int? ActivityId { get; set; }
         public string? ActivityName { get; set; }
         public string? PhoneCustomer { get; set; }
+        public DateTime? OrderCheckoutDate { get; set; }
 
         public virtual ICollection<OrderCampingGearDetailDTO> OrderCampingGearDetails { get; set; }
         public virtual ICollection<OrderComboDetailDTO> OrderComboDetails { get; set; }

@@ -44,12 +44,53 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+        [Authorize("CustomerPolicy")]
         [HttpGet("GetCustomerOrders")]
         public IActionResult GetCustomerOrders(int customerId, bool? statusOrder, int? activityId)
         {
             try
             {
                 return Ok(_repo.GetCustomerOrders(customerId, statusOrder, activityId).ToList());
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+        [Authorize("CustomerPolicy")]
+        [HttpPost("ChangeCustomerActivity")]
+        public IActionResult ChangeCustomerActivity(int orderId)
+        {
+            try
+            {
+                _repo.UpdateActivity(orderId);
+                return Ok("Activity updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+        [Authorize("CustomerPolicy")]
+        [HttpPost("CheckOut")]
+        public IActionResult CheckOut([FromBody] CheckOut order)
+        {
+            try
+            {
+                return Ok(_repo.CheckOut(order));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+        [Authorize("CustomerPolicy")]
+        [HttpPost("CheckOutComboOrder")]
+        public IActionResult CheckOutComboOrder([FromBody] CheckoutCombo order)
+        {
+            try
+            {
+                return Ok(_repo.CheckOutComboOrder(order));
             }
             catch (Exception ex)
             {
@@ -68,7 +109,7 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
-        [Authorize("AdminAndEmployeePolicy")]
+        [Authorize]
 
         [HttpGet("GetListOrderGearByUsageDate/{usagedate}")]
         public IActionResult GetListOrderGearByUsageDate(DateTime usagedate)
@@ -97,46 +138,7 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
             }
         }
 
-        [Authorize("CustomerPolicy")]
-        [HttpPost("CheckOut")]
-        public IActionResult CheckOut([FromBody] CheckOut order)
-        {
-            try
-            {
-                return Ok(_repo.CheckOut(order));
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
-        }
-        [Authorize("CustomerPolicy")]
-        [HttpPost("ChangeCustomerActivity")]
-        public IActionResult ChangeCustomerActivity(int orderId)
-        {
-            try
-            {
-                _repo.UpdateActivity(orderId);
-                return Ok("Activity updated successfully.");
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
-        }
-        [Authorize("CustomerPolicy")]
-        [HttpPost("CheckOutComboOrder")]
-        public IActionResult CheckOutComboOrder([FromBody] CheckoutCombo order)
-        {
-            try
-            {
-                return Ok(_repo.CheckOutComboOrder(order));
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
-        }
+
         [Authorize("AdminAndEmployeePolicy")]
 
         [HttpPost("CreateComboOrder")]

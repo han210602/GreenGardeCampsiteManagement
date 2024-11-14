@@ -28,6 +28,19 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+        [HttpGet("GetAllCustomerCampingGears")]
+        public IActionResult GetAllCustomerCampingGears()
+        {
+            try
+            {
+                var campingGears = _repo.GetAllCustomerCampingGears();
+                return Ok(campingGears);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
         [HttpGet("GetCampingGearDetail")]
         public IActionResult GetCampingGearDetail(int id)
         {
@@ -105,7 +118,36 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+        [HttpPut("ChangeGearStatus")]
+        public IActionResult ChangeGearStatus([FromQuery] int gearId, [FromBody] ChangeGearStatus newStatus)
+        {
+            if (gearId <= 0)
+            {
+                return BadRequest("Invalid item ID.");
+            }
 
+            if (newStatus == null || newStatus.Status == null)
+            {
+                return BadRequest("Invalid status data.");
+            }
 
+            try
+            {
+                // Check if the item exists
+                var item = _repo.GetCampingGearDetail(gearId);
+                if (item == null)
+                {
+                    return NotFound($"Food and drink item with ID {gearId} does not exist.");
+                }
+
+                // Update the status
+                _repo.ChangeGearStatus(gearId, newStatus);
+                return Ok($"Food and drink item {gearId} status changed to {newStatus.Status.Value}.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
     }
 }

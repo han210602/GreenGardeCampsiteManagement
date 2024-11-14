@@ -19,6 +19,7 @@ namespace BusinessObject.Models
         public decimal Price { get; set; }
         public DateTime? CreatedAt { get; set; }
         public string? ImgUrl { get; set; }
+        public bool? Status { get; set; }
 
         public virtual ICollection<ComboCampingGearDetail> ComboCampingGearDetails { get; set; }
         public virtual ICollection<ComboFootDetail> ComboFootDetails { get; set; }

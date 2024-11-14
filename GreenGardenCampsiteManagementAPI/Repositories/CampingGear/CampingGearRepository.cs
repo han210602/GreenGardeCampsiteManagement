@@ -14,6 +14,10 @@ namespace Repositories.CampingGear
         {
             return CampingGearDAO.GetAllCampingGears();
         }
+        public List<CampingGearDTO> GetAllCustomerCampingGears()
+        {
+            return CampingGearDAO.GetAllCustomerCampingGears();
+        }
         public CampingGearDTO GetCampingGearDetail(int id)
         {
             return CampingGearDAO.GetCampingGearDetail(id);
@@ -38,6 +42,9 @@ namespace Repositories.CampingGear
         {
             return CampingGearDAO.GetCampingGears(categoryId, sortBy, priceRange, popularity);
         }
-
+        public void ChangeGearStatus(int gearId, ChangeGearStatus newStatus)
+        {
+            CampingGearDAO.ChangeGearStatus(gearId, newStatus); // Call DAO method
+        }
     }
 }
