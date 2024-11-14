@@ -370,9 +370,7 @@
                                                 <option value="1" @(ViewBag.SortBy == "1" ? "selected" : "")>Giá: Thấp đến Cao</option>
                                                 <option value="2" @(ViewBag.SortBy == "2" ? "selected" : "")>Giá: Cao đến Thấp</option>
                                                 <option value="3" @(ViewBag.SortBy == "3" ? "selected" : "")>Tên: A-Z</option>
-                                                <option value="4" @(ViewBag.SortBy == "4" ? "selected" : "")>Tên: Z-A</option>
-                                                <option value="5" @(ViewBag.SortBy == "5" ? "selected" : "")>Phổ biến</option>
-                                                <option value="6" @(ViewBag.SortBy == "6" ? "selected" : "")>Mới nhất</option>
+                                                <option value="4" @(ViewBag.SortBy == "4" ? "selected" : "")>Tên: Z-A</option>                                              
                                             </select>
                                         </div>
 
@@ -418,7 +416,7 @@
                                     <div class="product-card col-lg-4 col-md-6 mb-4" data-aos="fade-up">
                                         <div class="listing-item" id="product-@item.ItemId">
                                             <div class="listing-image">
-                                                <img src="~/images/owner.png" alt="Image" class="img-fluid">
+                                                <img src="~/images/@item.ImgUrl" alt="Image" class="img-fluid">
                                             </div>
                                             <div class="listing-item-content">
                                                 <h2 class="px-3 mb-1 category bg-primary">@item.Price.ToString("N0") ₫</h2>

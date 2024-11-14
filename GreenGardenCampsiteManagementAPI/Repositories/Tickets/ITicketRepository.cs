@@ -11,6 +11,7 @@ namespace Repositories.Tickets
     public interface ITicketRepository
     {
         List<TicketDTO> GetAllTickets();
+        List<TicketDTO> GetAllCustomerTickets();
         TicketDTO GetTicketDetail(int id);
         List<TicketCategoryDTO> GetAllTicketCategories();
         List<TicketDTO> GetTicketsByCategoryIdAndSort(int? categoryId, int? sort);

@@ -20,6 +20,10 @@ namespace Repositories.Combo
         {
             return ComboDAO.GetListCombo();
         }
+        public List<ComboDTO> CustomerCombos()
+        {
+            return ComboDAO.GetListCustomerCombo();
+        }
         public void AddCombo(AddCombo newCombo)
         {
             ComboDAO.AddNewCombo(newCombo);

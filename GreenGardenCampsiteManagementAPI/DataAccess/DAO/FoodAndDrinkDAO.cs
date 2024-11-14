@@ -16,7 +16,23 @@ namespace DataAccess.DAO
         public static List<FoodAndDrinkDTO> GetAllFoodAndDrink()
         {
             var items = context.FoodAndDrinks
-                .Include(x => x.Category).Where(s=>s.Status==true)
+                .Include(x => x.Category)
+                .Select(item => new FoodAndDrinkDTO
+                {
+                    ItemId = item.ItemId,
+                    ItemName = item.ItemName,
+                    Price = item.Price,
+                    Description = item.Description,
+                    CategoryName = item.Category.CategoryName, // Lấy tên từ danh mục
+                    ImgUrl = item.ImgUrl
+                }).ToList();
+
+            return items;
+        }
+        public static List<FoodAndDrinkDTO> GetAllCustomerFoodAndDrink()
+        {
+            var items = context.FoodAndDrinks
+                .Include(x => x.Category).Where(s => s.Status == true)
                 .Select(item => new FoodAndDrinkDTO
                 {
                     ItemId = item.ItemId,
@@ -90,7 +106,7 @@ namespace DataAccess.DAO
         public static List<FoodAndDrinkDTO> GetFoodAndDrinks(int? categoryId, int? sortBy, int? priceRange)
         {
             var query = context.FoodAndDrinks
-                .Include(food => food.Category) // Bao gồm thông tin danh mục
+                .Include(food => food.Category).Where(s => s.Status == true) // Bao gồm thông tin danh mục
                 .AsNoTracking() // Không theo dõi thực thể để cải thiện hiệu suất
                 .AsQueryable();
 
@@ -134,10 +150,10 @@ namespace DataAccess.DAO
                         query = query.OrderByDescending(food => food.Price);
                         break;
                     case 3: // Sắp xếp theo ngày tạo mới nhất
-                        query = query.OrderBy(food => food.CreatedAt);
+                        query = query.OrderBy(food => food.ItemName);
                         break;
                     case 4: // Sắp xếp theo số lượng có sẵn
-                        query = query.OrderByDescending(food => food.CreatedAt);
+                        query = query.OrderByDescending(food => food.ItemName);
                         break;
                 }
                 isSorted = true;

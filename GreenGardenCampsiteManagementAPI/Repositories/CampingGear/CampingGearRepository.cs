@@ -14,6 +14,10 @@ namespace Repositories.CampingGear
         {
             return CampingGearDAO.GetAllCampingGears();
         }
+        public List<CampingGearDTO> GetAllCustomerCampingGears()
+        {
+            return CampingGearDAO.GetAllCustomerCampingGears();
+        }
         public CampingGearDTO GetCampingGearDetail(int id)
         {
             return CampingGearDAO.GetCampingGearDetail(id);

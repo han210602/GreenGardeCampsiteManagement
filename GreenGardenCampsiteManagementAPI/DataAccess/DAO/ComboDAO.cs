@@ -18,6 +18,30 @@ namespace DataAccess.DAO
             {
                 using (var context = new GreenGardenContext())
                 {
+                    listProducts = context.Combos.Select(f => new ComboDTO
+                    {
+                        ComboId = f.ComboId,
+                        ComboName = f.ComboName,
+                        Description = f.Description,
+                        Price = f.Price,
+                        ImgUrl = f.ImgUrl,
+                    }).ToList();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return listProducts;
+        }
+        public static List<ComboDTO> GetListCustomerCombo()
+        {
+            var listProducts = new List<ComboDTO>();
+            try
+            {
+                using (var context = new GreenGardenContext())
+                {
                     listProducts = context.Combos.Where(s => s.Status == true).Select(f => new ComboDTO
                     {
                         ComboId = f.ComboId,

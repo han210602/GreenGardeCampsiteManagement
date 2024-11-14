@@ -27,6 +27,18 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+        [HttpGet("GetAllCustomerCombos")]
+        public IActionResult GetAllCustomerCombos()
+        {
+            try
+            {
+                return Ok(_repo.CustomerCombos());
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
         [HttpGet("GetComboDetail/{id}")]
         public IActionResult GetComboDetail(int id)
         {

@@ -29,6 +29,20 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+        [HttpGet("GetAllCustomerTickets")]
+        public IActionResult GetAllCustomerTickets()
+        {
+            try
+            {
+
+                var user = _repo.GetAllTickets().ToList();
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
         [HttpGet("GetTicketDetail")]
         public IActionResult GetTicketDetail(int id)
         {

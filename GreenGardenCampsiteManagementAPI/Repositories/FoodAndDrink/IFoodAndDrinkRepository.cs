@@ -10,6 +10,7 @@ namespace Repositories.FoodAndDrink
     public interface IFoodAndDrinkRepository
     {
         List<FoodAndDrinkDTO> GetAllFoodAndDrink();
+        List<FoodAndDrinkDTO> GetAllCustomerFoodAndDrink();
         FoodAndDrinkDTO GetFoodAndDrinkDetail(int itemId);
         List<FoodAndDrinkCategoryDTO> GetAllFoodAndDrinkCategories();
 

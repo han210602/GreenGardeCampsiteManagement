@@ -18,6 +18,23 @@ namespace DataAccess.DAO
         {
             var campingGears = context.CampingGears
                 .Include(gear => gear.GearCategory)
+                .Select(gear => new CampingGearDTO
+                {
+                    GearId = gear.GearId,
+                    GearName = gear.GearName,
+                    QuantityAvailable = gear.QuantityAvailable,
+                    RentalPrice = gear.RentalPrice,
+                    Description = gear.Description,
+                    CreatedAt = gear.CreatedAt,
+                    GearCategoryName = gear.GearCategory.GearCategoryName,
+                    ImgUrl = gear.ImgUrl
+                }).ToList();
+            return campingGears;
+        }
+        public static List<CampingGearDTO> GetAllCustomerCampingGears()
+        {
+            var campingGears = context.CampingGears
+                .Include(gear => gear.GearCategory)
                 .Where(s => s.Status == true)
                 .Select(gear => new CampingGearDTO
                 {
@@ -124,7 +141,7 @@ namespace DataAccess.DAO
         public static List<CampingGearDTO> GetCampingGears(int? categoryId, int? sortBy, int? priceRange, int? popularity)
         {
             var query = context.CampingGears
-                .Include(gear => gear.GearCategory)
+                .Include(gear => gear.GearCategory).Where(s => s.Status == true)
                 .AsNoTracking() // Không theo dõi thực thể để cải thiện hiệu suất
                 .AsQueryable();
 
