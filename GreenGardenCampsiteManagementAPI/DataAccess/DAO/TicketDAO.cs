@@ -14,6 +14,19 @@ namespace DataAccess.DAO
         public static List<TicketDTO> GetAllTickets()
         {
             var tickets = context.Tickets
+                .Include(ticket => ticket.TicketCategory)
+                .Select(ticket => new TicketDTO
+                {
+                    TicketId = ticket.TicketId,
+                    TicketName = ticket.TicketName,
+                    Price = ticket.Price,
+                    TicketCategoryName = ticket.TicketCategory.TicketCategoryName
+                }).ToList();
+            return tickets;
+        }
+        public static List<TicketDTO> GetAllCustomerTickets()
+        {
+            var tickets = context.Tickets
                 .Include(ticket => ticket.TicketCategory).Where(s => s.Status == true)
                 .Select(ticket => new TicketDTO
                 {
@@ -105,7 +118,7 @@ namespace DataAccess.DAO
         public static List<TicketDTO> GetTicketsByCategoryIdAndSort(int? categoryId, int? sortBy)
         {
             var query = context.Tickets
-                .Include(ticket => ticket.TicketCategory) // Sửa tên biến từ gear thành ticket
+                .Include(ticket => ticket.TicketCategory).Where(s => s.Status == true) // Sửa tên biến từ gear thành ticket
                 .AsNoTracking() // Không theo dõi thực thể để cải thiện hiệu suất
                 .AsQueryable();
 
