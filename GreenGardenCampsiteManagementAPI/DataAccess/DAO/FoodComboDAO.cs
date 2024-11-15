@@ -11,22 +11,23 @@ namespace DataAccess.DAO
 {
     public class FoodComboDAO
     {
+        private static GreenGardenContext _context;
+        public static void InitializeContext(GreenGardenContext context)
+        {
+            _context = context;
+        }
         public static List<ComboFoodDTO> getAllComboFoods()
         {
             var listProducts = new List<ComboFoodDTO>();
             try
             {
-                using (var context = new GreenGardenContext())
-                {
-                    listProducts = context.FoodCombos.Select(f =>new ComboFoodDTO
+                listProducts = _context.FoodCombos.Select(f =>new ComboFoodDTO
                     {
                         ComboId = f.ComboId,
                         ComboName = f.ComboName,
                         Price = f.Price,
                         ImgUrl = f.ImgUrl,
                     }).ToList();    
-                }
-
             }
             catch (Exception ex)
             {
@@ -34,21 +35,20 @@ namespace DataAccess.DAO
             }
             return listProducts;
         }
-        public static List<ComboFoodDTO> getAllCustomerComboFoods()
+        public static List<ComboFoodDTO> getComboFoodDetail()
         {
             var listProducts = new List<ComboFoodDTO>();
             try
             {
-                using (var context = new GreenGardenContext())
-                {
-                    listProducts = context.FoodCombos.Where(s => s.Status == true).Select(f => new ComboFoodDTO
+               
+                    listProducts = _context.FoodCombos.Where(s => s.Status == true).Select(f => new ComboFoodDTO
                     {
                         ComboId = f.ComboId,
                         ComboName = f.ComboName,
                         Price = f.Price,
                         ImgUrl = f.ImgUrl,
                     }).ToList();
-                }
+                
 
             }
             catch (Exception ex)
@@ -63,9 +63,8 @@ namespace DataAccess.DAO
             var listProducts = new ComboFoodDetailDTO();
             try
             {
-                using (var context = new GreenGardenContext())
-                {
-                    listProducts = context.FoodCombos.Include(s=>s.FootComboItems)
+                
+                    listProducts = _context.FoodCombos.Include(s=>s.FootComboItems)
                         .ThenInclude(f=>f.Item)
                      .Select(f => new ComboFoodDetailDTO
                     {
@@ -81,7 +80,7 @@ namespace DataAccess.DAO
                             Quantity = f.Quantity,
                         }).ToList()
                     }).FirstOrDefault(s=>s.ComboId==id);
-                }
+                
 
             }
             catch (Exception ex)

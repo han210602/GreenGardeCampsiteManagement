@@ -22,7 +22,7 @@ namespace Repositories.ComboFood
         }
         public List<ComboFoodDTO> CustomerComboFoods()
         {
-            return FoodComboDAO.getAllCustomerComboFoods();
+            return FoodComboDAO.getComboFoodDetail();
         }
     }
 }
