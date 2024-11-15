@@ -632,5 +632,79 @@ namespace GreenGardenAPITest.DAO
             exception.Message.Should().Be("Error adding new combo: Database failure occurred.");
         }
 
+        // Test case for UpdateCombo method ----------------------------------------------------------------
+        [Fact]
+        public async Task UpdateCombo_ShouldUpdateComboWithNewDetails()
+        {
+            // Arrange
+            var dbContext = await GetDbContext();
+            ComboDAO.InitializeContext(dbContext);
+
+            // Existing ComboId
+            var comboId = 1;
+
+            var updatedCombo = new AddCombo
+            {
+                ComboId = comboId,
+                ComboName = "Updated Combo Name",
+                Description = "Updated Description",
+                Price = 1500,
+                ImgUrl = "http://example.com/updatedcombo.jpg",
+                ComboCampingGearDetails = new List<ComboCampingGearDetailDTO>
+        {
+            new ComboCampingGearDetailDTO { GearId = 1, Quantity = 5 }, // Update quantity
+            new ComboCampingGearDetailDTO { GearId = 2, Quantity = 3 }  // Add new detail
+        },
+                ComboFootDetails = new List<ComboFootDetailDTO>
+        {
+            new ComboFootDetailDTO { ItemId = 1, Quantity = 10 } // Update quantity
+        },
+                ComboTicketDetails = new List<ComboTicketDetailDTO>
+        {
+            new ComboTicketDetailDTO { TicketId = 1, Quantity = 8, Description = "Updated Ticket Description" },
+            new ComboTicketDetailDTO { TicketId = 2, Quantity = 4, Description = "New Ticket Detail" }
+        }
+            };
+
+            // Act
+            ComboDAO.UpdateCombo(updatedCombo);
+
+            // Assert
+            var updatedComboFromDb = dbContext.Combos
+                .Include(c => c.ComboCampingGearDetails)
+                .Include(c => c.ComboFootDetails)
+                .Include(c => c.ComboTicketDetails)
+                .FirstOrDefault(c => c.ComboId == comboId);
+
+            updatedComboFromDb.Should().NotBeNull();
+            updatedComboFromDb!.ComboName.Should().Be("Updated Combo Name");
+            updatedComboFromDb.Description.Should().Be("Updated Description");
+            updatedComboFromDb.Price.Should().Be(1500);
+            updatedComboFromDb.ImgUrl.Should().Be("http://example.com/updatedcombo.jpg");
+
+            // Assert ComboCampingGearDetails
+            updatedComboFromDb.ComboCampingGearDetails.Should().HaveCount(2);
+            var updatedCampingGear = updatedComboFromDb.ComboCampingGearDetails.First(c => c.GearId == 1);
+            updatedCampingGear.Quantity.Should().Be(5);
+            var newCampingGear = updatedComboFromDb.ComboCampingGearDetails.First(c => c.GearId == 2);
+            newCampingGear.Quantity.Should().Be(3);
+
+            // Assert ComboFootDetails
+            updatedComboFromDb.ComboFootDetails.Should().HaveCount(1);
+            var updatedFootDetail = updatedComboFromDb.ComboFootDetails.First();
+            updatedFootDetail.ItemId.Should().Be(1);
+            updatedFootDetail.Quantity.Should().Be(10);
+
+            // Assert ComboTicketDetails
+            updatedComboFromDb.ComboTicketDetails.Should().HaveCount(2);
+            var updatedTicket = updatedComboFromDb.ComboTicketDetails.First(t => t.TicketId == 1);
+            updatedTicket.Quantity.Should().Be(8);
+            updatedTicket.Description.Should().Be("Updated Ticket Description");
+
+            var newTicket = updatedComboFromDb.ComboTicketDetails.First(t => t.TicketId == 2);
+            newTicket.Quantity.Should().Be(4);
+            newTicket.Description.Should().Be("New Ticket Detail");
+        }
+
     }
 }
