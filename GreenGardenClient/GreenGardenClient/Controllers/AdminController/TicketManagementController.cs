@@ -132,6 +132,7 @@ namespace GreenGardenClient.Controllers.AdminController
 
                 if (response.IsSuccessStatusCode)
                 {
+                    TempData["Notification"] = "Vé đã được thay đổi thành công.";
                     // Nếu thành công, chuyển hướng về trang Index
                     return RedirectToAction("UpdateTicketDetail", new { ticketId = model.TicketId });
                 }
@@ -162,20 +163,20 @@ namespace GreenGardenClient.Controllers.AdminController
                 if (response.IsSuccessStatusCode)
                 {
                     // Nếu thành công, chuyển hướng về trang chi tiết thiết bị
-                    TempData["SuccessMessage"] = "Trạng thái thiết bị đã được thay đổi thành công!";
+                    TempData["Notification"] = "Trạng thái vé đã được thay đổi thành công!";
                     return RedirectToAction("UpdateTicketDetail", new { ticketId });
                 }
                 else
                 {
                     // Thêm lỗi nếu API không trả về thành công
-                    TempData["ErrorMessage"] = "Không thể thay đổi trạng thái thiết bị.";
+                    TempData["Notification"] = "Không thể thay đổi trạng thái thiết bị.";
                     return RedirectToAction("UpdateTicketDetail", new { ticketId });
                 }
             }
             catch (Exception ex)
             {
                 // Ghi log và hiển thị thông báo lỗi chung
-                TempData["ErrorMessage"] = $"Đã xảy ra lỗi: {ex.Message}";
+                TempData["Notification"] = $"Đã xảy ra lỗi: {ex.Message}";
                 return RedirectToAction("UpdateTicketDetail", new { ticketId });
             }
         }
@@ -188,12 +189,16 @@ namespace GreenGardenClient.Controllers.AdminController
             ViewBag.TicketCategories = ticketCategories;
 
 
-            return View();
+            return View(new AddTicketVM());
 
         }
         [HttpPost]
         public async Task<IActionResult> CreateTicket(AddTicketVM model, IFormFile PictureUrl)
         {
+            var ticketCategories = await GetDataFromApiAsync<List<TicketCategoryVM>>("https://localhost:7298/api/Ticket/GetAllTicketCategories");
+
+            // Gán dữ liệu vào ViewBag để truyền sang View
+            ViewBag.TicketCategories = ticketCategories;
             model.CreatedAt = DateTime.Now;
             model.Status = true;
             if (PictureUrl != null && PictureUrl.Length > 0)
@@ -208,8 +213,8 @@ namespace GreenGardenClient.Controllers.AdminController
             }
             else
             {
-                ModelState.AddModelError("PictureUrl", "File ảnh không hợp lệ hoặc không được chọn.");
-                return View(model);
+                model.ImgUrl = "Colorful Modern Camping Club Logo.png";
+                ModelState.AddModelError("PictureUrl", "File ảnh không hợp lệ hoặc không được chọn.");               
             }
 
             // Prepare request data for API
@@ -220,10 +225,10 @@ namespace GreenGardenClient.Controllers.AdminController
                 {
                     var requestData = new
                     {
-                        TicketName = model.TicketName ?? throw new ArgumentNullException("TicketName"),
+                        TicketName = model.TicketName,
                         ImgUrl = model.ImgUrl,
-                        Price = model.Price > 0 ? model.Price : throw new ArgumentException("Price must be greater than 0"),
-                        TicketCategoryId = model.TicketCategoryId > 0 ? model.TicketCategoryId : throw new ArgumentException("Invalid CategoryId"),
+                        Price = model.Price,
+                        TicketCategoryId = model.TicketCategoryId,
                         Status = model.Status,
                         CreatedAt = model.CreatedAt
                     };
@@ -233,14 +238,14 @@ namespace GreenGardenClient.Controllers.AdminController
 
                     if (response.IsSuccessStatusCode)
                     {
-                        TempData["SuccessMessage"] = "Thiết bị đã được thêm thành công.";
+                        TempData["Notification"] = "Vé đã được thêm thành công.";
                         return RedirectToAction("Index");
                     }
                     else
                     {
                         var responseContent = await response.Content.ReadAsStringAsync();
                         ModelState.AddModelError("", "Không thể thêm thiết bị. Vui lòng thử lại.");
-                        return View("Error");
+                        return View(model);
                     }
                 }
                 catch (Exception ex)

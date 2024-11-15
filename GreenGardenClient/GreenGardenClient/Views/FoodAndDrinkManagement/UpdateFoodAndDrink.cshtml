@@ -1,13 +1,13 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
-@model FoodAndDrinkDetailVM
+@model FoodAndDrinkVMNew
 @using GreenGardenClient.Models
 }
 @{
-    if (ViewBag.Notification != null)
+    if (TempData["Notification"] != null)
     {
         <div id="notification" class="alert alert-warning" role="alert">
-            @ViewBag.Notification
+            @TempData["Notification"]
         </div>
     }
 }
@@ -736,7 +736,7 @@
             <div class="col-md-12">
                 <div class="tile">
 
-                    <form asp-action="UpdateFoodAndDrink" asp-controller="FoodAndDrinkManagement" enctype="multipart/form-data" method="post" accept-charset="UTF-8">
+                    <form asp-action="UpdateFoodAndDrink" asp-controller="FoodAndDrinkManagement" enctype="multipart/form-data" method="post" onsubmit="return validateForm()" accept-charset="UTF-8">
                             <!-- Hidden field for EventId to identify the event -->
                         <input type="hidden" name="ItemId" value="@Model.ItemId" />
                     <div class="event-card d-flex align-items-start">
@@ -765,9 +765,10 @@
                             <div class="d-flex align-items-center mb-3">
                                 <i class="fas fa-calendar-day me-2" style="color: #007bff;"></i>
                                 <label for="ItemName_@Model.ItemId" class="me-2">Tên Món Ăn:</label>
-                                <input type="text" class="form-control" id="ItemName_@Model.ItemId" name="ItemName" placeholder="Nhập tên món ăn" value="@Model.ItemName" required>
+                                   
                             </div>
-
+                                <input type="text" class="form-control" id="ItemName_@Model.ItemId" name="ItemName" placeholder="Nhập tên món ăn" value="@Model.ItemName">
+                                <small id="ItemNameError" style="font-size: 1.1em;" class="text-danger"></small>
                             <!-- Description -->
                             <div class="mb-3">
                                 <label for="Description_@Model.ItemId" class="d-flex align-items-center">
@@ -781,11 +782,10 @@
                                 <div class="d-flex align-items-center mb-3">
                                     <i class="fas fa-money-bill-wave me-2" style="color: #28a745;"></i>
                                     <label for="Price_@Model.ItemId" class="me-2">Giá cả:</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control text-end" id="Price_@Model.ItemId"
-                                               name="Price" value="@Model.Price" required />
-                                    </div>
                                 </div>
+                                <input type="text" class="form-control text-center" id="Price_@Model.ItemId"
+                                       name="Price" value="@Model.Price" />
+                                <small id="PriceError" style="font-size: 1.1em;" class="text-danger"></small>
                                 <div class="d-flex align-items-center mb-3">
                                     <i class="fas fa-check-circle me-2" style="color: #28a745;"></i>
                                     <label for="Status_@Model.ItemId" class="me-2">Trạng Thái:</label>
@@ -798,28 +798,28 @@
                                 <div class="d-flex align-items-center mb-3">
                                     <i class="fas fa-th-large me-2" style="color: #1E90FF;"></i>
                                     <label for="CategoryName_@Model.ItemId" class="me-2">Thể loại:</label>
-                                    <select class="form-control" id="CategoryId_@Model.ItemId" name="CategoryId">
-                                        @if (ViewBag.Categories != null && ((List<CategoryVM>)ViewBag.Categories).Any())
+                                    
+                                </div>
+                                <select class="form-control" id="CategoryId_@Model.ItemId" name="CategoryId">
+                                    @if (ViewBag.Categories != null && ((List<CategoryVM>)ViewBag.Categories).Any())
+                                    {
+                                        foreach (var category in (List<CategoryVM>)ViewBag.Categories)
                                         {
-                                            foreach (var category in (List<CategoryVM>)ViewBag.Categories)
+                                            if (category.CategoryId == Model.CategoryId)
                                             {
-                                                if (category.CategoryId == Model.CategoryId)
-                                                {
-                                                    <option value="@category.CategoryId" selected>@category.CategoryName</option>
-                                                }
-                                                else
-                                                {
-                                                    <option value="@category.CategoryId">@category.CategoryName</option>
-                                                }
+                                                <option value="@category.CategoryId" selected>@category.CategoryName</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@category.CategoryId">@category.CategoryName</option>
                                             }
                                         }
-                                        else
-                                        {
-                                            <option value="">Không có dữ liệu thể loại</option>
-                                        }
-                                    </select>
-                                </div>
-
+                                    }
+                                    else
+                                    {
+                                        <option value="">Không có dữ liệu thể loại</option>
+                                    }
+                                </select>
                               
                                     <!-- Buttons -->
 
@@ -835,6 +835,34 @@
                                         </a>
                                     </div>
                     </form>
+                    <script>
+                        function validateForm() {
+                            let valid = true;
+
+                            // Kiểm tra tên thiết bị
+                            const gearNameInput = document.getElementById("ItemName_@Model.ItemId");
+                            const gearNameError = document.getElementById("ItemNameError");
+                            if (gearNameInput.value.trim() === "") {
+                                gearNameError.innerText = "Tên đồ ăn không được để trống.";
+                                valid = false;
+                            } else {
+                                gearNameError.innerText = ""; // Xóa lỗi khi hợp lệ
+                            }
+
+
+                            // Kiểm tra giá thuê
+                            const rentalPriceInput = document.getElementById("Price_@Model.ItemId");
+                            const rentalPriceError = document.getElementById("PriceError");
+                            if (rentalPriceInput.value.trim() === "" || parseFloat(rentalPriceInput.value) <= 0) {
+                                rentalPriceError.innerText = "Giá đồ ăn không được để trống hoặc không được bé hơn 0.";
+                                valid = false;
+                            } else {
+                                rentalPriceError.innerText = ""; // Xóa lỗi khi hợp lệ
+                            }
+
+                            return valid; // Nếu có lỗi, không cho phép gửi form
+                        }
+                    </script>
                     <form asp-action="ChangeStatus" method="post">
                         <input type="hidden" name="ItemId" value="@Model.ItemId" />
                         <div class="d-flex align-items-center mb-3">

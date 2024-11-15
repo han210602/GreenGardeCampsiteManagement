@@ -77,7 +77,7 @@ namespace DataAccess.DAO
                 ItemId = item.ItemId,
                 ItemName = item.ItemName,
                 Price = item.Price,
-                CreatedAt = item.CreatedAt,
+                CreatedAt = DateTime.Now,
                 Description = item.Description,
                 ImgUrl = item.ImgUrl,
                 CategoryId = item.CategoryId,

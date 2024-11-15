@@ -6,10 +6,10 @@
     var gears = ViewBag.CampingGear as List<GearVM>;
 }
 @{
-    if (ViewBag.Notification != null)
+    if (TempData["Notification"] != null)
     {
         <div id="notification" class="alert alert-warning" role="alert">
-            @ViewBag.Notification
+            @TempData["Notification"]
         </div>
     }
 }

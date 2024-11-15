@@ -4,10 +4,10 @@
 @using GreenGardenClient.Models
 }
 @{
-    if (ViewBag.Notification != null)
+    if (TempData["Notification"] != null)
     {
         <div id="notification" class="alert alert-warning" role="alert">
-            @ViewBag.Notification
+            @TempData["Notification"]
         </div>
     }
 }
@@ -732,13 +732,13 @@
             <div class="col-md-12">
                 <div class="tile">
 
-                    <form asp-action="UpdateGear" asp-controller="GearManagement" enctype="multipart/form-data" method="post" accept-charset="UTF-8">
+                    <form asp-action="UpdateGear" asp-controller="GearManagement" enctype="multipart/form-data" method="post" accept-charset="UTF-8" onsubmit="return validateForm()">
                         <!-- Hidden field for EventId to identify the event -->
                         <input type="hidden" name="GearId" value="@Model?.GearId" />
 
-                <div class="event-card d-flex align-items-start">
-                    <!-- Image Section -->
-                    <div class="event-image-container flex-grow-1">
+                        <div class="event-card d-flex align-items-start">
+                            <!-- Image Section -->
+                            <div class="event-image-container flex-grow-1">
                                 @if (!string.IsNullOrEmpty(Model?.ImgUrl))
                                 {
                                     <img id="currentImage_@Model.GearId" src="~/images/Gear/@Model.ImgUrl" alt="Gear Image" class="event-thumbnail-large" />
@@ -749,16 +749,19 @@
                                     <!-- Add onchange event to preview image -->
                                     <input type="file" name="PictureUrl" accept=".jpg, .png" class="file-input" onchange="previewImage(event, @Model.GearId)" />
                                 </div>
-                    </div>
+                            </div>
 
-                    <!-- Details Section -->
+                            <!-- Details Section -->
                             <div class="event-details flex-grow-2 ms-4">
                                 <!-- Event Name -->
                                 <div class="d-flex align-items-center mb-3">
                                     <i class="fas fa-calendar-day me-2" style="color: #007bff;"></i>
                                     <label for="GearName_@Model.GearId" class="me-2">Tên thiết bị:</label>
-                                    <input type="text" class="form-control" id="GearName_@Model.GearId" name="GearName" placeholder="Nhập tên món ăn" value="@Model.GearName" required>
+                                  
                                 </div>
+                                  <input type="text" class="form-control" id="GearName_@Model.GearId" name="GearName" placeholder="Nhập tên thiết bị" value="@Model.GearName" />
+                                <small id="GearNameError" style="font-size: 1.1em;" class="text-danger"></small>
+
 
                                 <!-- Description -->
                                 <div class="mb-3">
@@ -766,33 +769,25 @@
                                         <i class="fas fa-align-left me-2" style="color: #007bff;"></i>
                                         <span class="me-2">Mô tả:</span>
                                     </label>
-                                    <textarea class="form-control" id="Description_@Model.GearId" name="Description" rows="3" placeholder="Nhập mô tả">@Model.Description</textarea>
+                                    
                                 </div>
-
+                                <textarea class="form-control" id="Description_@Model.GearId" name="Description" rows="3" placeholder="Nhập mô tả">@Model.Description</textarea>
                                 <!-- Price -->
                                 <div class="d-flex align-items-center mb-3">
                                     <i class="fas fa-money-bill-wave me-2" style="color: #28a745;"></i>
-                                    <label for="RentalPrice_@Model.GearId" class="me-2">Giá cả:</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control text-end" id="RentalPrice_@Model.GearId"
-                                               name="RentalPrice" value="@Model.RentalPrice" required />
-                                    </div>
+                                    <label for="RentalPrice_@Model.GearId" class="me-2">Giá cả:</label>                                   
                                 </div>
+                                <input type="text" class="form-control text-center" id="RentalPrice_@Model.GearId" name="RentalPrice" value="@Model.RentalPrice" />
+
+                                <small id="RentalPriceError" style="font-size: 1.1em;" class="text-danger"></small>
                                 <!-- Số lượng -->
                                 <div class="d-flex align-items-center mb-3">
                                     <i class="fas fa-cogs me-2" style="color: #007bff;"></i>
-                                    <label for="QuantityAvailable_@Model.GearId" class="me-2">Số Lượng:</label>
-
-                                    <!-- Container cho nút tăng giảm -->
-                                    <div class="input-group">
+                                    <label for="QuantityAvailable_@Model.GearId" class="me-2">Số Lượng:</label>                                  
                                     
-
-                                        <input type="number" class="form-control text-center" id="QuantityAvailable_@Model.GearId" name="QuantityAvailable" value="@Model.QuantityAvailable" min="0" required />
-
-                                      
-                                    </div>
                                 </div>
-
+                                <input type="number" class="form-control text-center" id="QuantityAvailable_@Model.GearId" name="QuantityAvailable" value="@Model.QuantityAvailable" />
+                                <small id="QuantityAvailableError" style="font-size: 1.1em;" class="text-danger"></small>
                                 <div class="d-flex align-items-center mb-3">
                                     <i class="fas fa-check-circle me-2" style="color: #28a745;"></i>
                                     <label for="Status_@Model.GearId" class="me-2">Trạng Thái:</label>
@@ -800,47 +795,84 @@
                                     <span class="ms-2">Kích hoạt</span>
                                 </div>
 
-
                                 <div class="d-flex align-items-center mb-3">
                                     <i class="fas fa-th-large me-2" style="color: #1E90FF;"></i>
-                                    <label for="GearCategoryName_@Model.GearId" class="me-2">Thể loại:</label>
-                                    <select class="form-control" id="GearCategoryId_@Model.GearId" name="GearCategoryId">
-                                        @if (ViewBag.CampingCategories != null && ((List<GearCategoryVM>)ViewBag.CampingCategories).Any())
+                                    <label for="GearCategoryName_@Model.GearId" class="me-2">Thể loại:</label>                                  
+                                </div>
+                                <select class="form-control" id="GearCategoryId_@Model.GearId" name="GearCategoryId">
+                                    @if (ViewBag.CampingCategories != null && ((List<GearCategoryVM>)ViewBag.CampingCategories).Any())
+                                    {
+                                        foreach (var category in (List<GearCategoryVM>)ViewBag.CampingCategories)
                                         {
-                                            foreach (var category in (List<GearCategoryVM>)ViewBag.CampingCategories)
+                                            if (category.GearCategoryId == Model.GearCategoryId)
                                             {
-                                                if (category.GearCategoryId == Model.GearCategoryId)
-                                                {
-                                                    <option value="@category.GearCategoryId" selected>@category.GearCategoryName</option>
-                                                }
-                                                else
-                                                {
-                                                    <option value="@category.GearCategoryId">@category.GearCategoryName</option>
-                                                }
+                                                <option value="@category.GearCategoryId" selected>@category.GearCategoryName</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@category.GearCategoryId">@category.GearCategoryName</option>
                                             }
                                         }
-                                        else
-                                        {
-                                            <option value="">Không có dữ liệu thể loại</option>
-                                        }
-                                    </select>
-                                </div>
-
-
-                                <!-- Buttons -->
-
+                                    }
+                                    else
+                                    {
+                                        <option value="">Không có dữ liệu thể loại</option>
+                                    }
+                                </select>
                                 <div class="button-container mt-4 d-flex justify-content-end">
-                                    <!-- Update Button -->
-                                    <button type="submit" class="btn btn-primary me-2" onclick="return confirm('Bạn có chắc chắn muốn thay đổi0?')">
+                                    <button type="submit" class="btn btn-primary me-2">
                                         <i class="fas fa-sync-alt"></i> Cập nhật
                                     </button>
 
-                                    <!-- Back Button -->
                                     <a href="/GearManagement/Index" class="btn btn-secondary">
                                         <i class="fas fa-arrow-left"></i> Quay lại
                                     </a>
                                 </div>
+                            </div>
+                        </div>
                     </form>
+
+                    <!-- Add JavaScript validation -->
+                    <script>
+                        function validateForm() {
+                            let valid = true;
+
+                            // Kiểm tra tên thiết bị
+                            const gearNameInput = document.getElementById("GearName_@Model.GearId");
+                            const gearNameError = document.getElementById("GearNameError");
+                            if (gearNameInput.value.trim() === "") {
+                                gearNameError.innerText = "Tên thiết bị không được để trống.";
+                                valid = false;
+                            } else {
+                                gearNameError.innerText = ""; // Xóa lỗi khi hợp lệ
+                            }
+
+                            // Kiểm tra số lượng
+                            const quantityInput = document.getElementById("QuantityAvailable_@Model.GearId");
+                            const quantityError = document.getElementById("QuantityAvailableError");
+                            if (quantityInput.value.trim() === "" || parseInt(quantityInput.value) <= 0) {
+                                quantityError.innerText = "Số lượng thiết bị không được để trống hoặc không được bé hơn 0.";
+                                valid = false;
+                            } else {
+                                quantityError.innerText = ""; // Xóa lỗi khi hợp lệ
+                            }
+
+                            // Kiểm tra giá thuê
+                            const rentalPriceInput = document.getElementById("RentalPrice_@Model.GearId");
+                            const rentalPriceError = document.getElementById("RentalPriceError");
+                            if (rentalPriceInput.value.trim() === "" || parseFloat(rentalPriceInput.value) <= 0) {
+                                rentalPriceError.innerText = "Giá thuê không được để trống hoặc không được bé hơn 0.";
+                                valid = false;
+                            } else {
+                                rentalPriceError.innerText = ""; // Xóa lỗi khi hợp lệ
+                            }
+
+                            return valid; // Nếu có lỗi, không cho phép gửi form
+                        }
+                    </script>
+
+
+
                     <form asp-action="ChangeStatus" method="post">
                         <input type="hidden" name="GearId" value="@Model.GearId" />
                         <div class="d-flex align-items-center mb-3">

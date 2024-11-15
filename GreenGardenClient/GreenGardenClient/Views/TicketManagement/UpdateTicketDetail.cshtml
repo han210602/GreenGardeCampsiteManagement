@@ -4,10 +4,10 @@
 @using GreenGardenClient.Models
 }
 @{
-    if (ViewBag.Notification != null)
+    if (TempData["Notification"] != null)
     {
         <div id="notification" class="alert alert-warning" role="alert">
-            @ViewBag.Notification
+            @TempData["Notification"]
         </div>
     }
 }
@@ -732,7 +732,7 @@
             <div class="col-md-12">
                 <div class="tile">
 
-                    <form asp-action="UpdateTicket" asp-controller="TicketManagement" enctype="multipart/form-data" method="post" accept-charset="UTF-8">
+                    <form asp-action="UpdateTicket" asp-controller="TicketManagement" enctype="multipart/form-data" method="post" onsubmit="return validateForm()" accept-charset="UTF-8">
                         <!-- Hidden field for EventId to identify the event -->
                         <input type="hidden" name="TicketId" value="@Model?.TicketId" />
 
@@ -757,30 +757,28 @@
                                 <!-- Event Name -->
                                 <div class="d-flex align-items-center mb-3">
                                     <i class="fas fa-calendar-day me-2" style="color: #007bff;"></i>
-                                    <label for="TicketName_@Model.TicketId" class="me-2">Tên vé:</label>
-                                    <input type="text" class="form-control" id="TicketName_@Model.TicketId" name="TicketName" placeholder="Nhập tên món ăn" value="@Model.TicketName" required>
+                                    <label for="TicketName_@Model.TicketId" class="me-2">Tên vé:</label>                                   
                                 </div>
-
+                                <input type="text" class="form-control" id="TicketName_@Model.TicketId" name="TicketName" placeholder="Nhập tên món ăn" value="@Model.TicketName">
+                                <small id="TicketNameError" style="font-size: 1.1em;" class="text-danger"></small>
                                 <!-- Description -->
                                 <div class="mb-3">
                                     <label for="Description" class="d-flex align-items-center">
                                         <i class="fas fa-align-left me-2" style="color: #007bff;"></i>
                                         <span class="me-2">Mô tả:</span>
                                     </label>
-                                    <textarea class="form-control" id="" name="Description" rows="3" placeholder="Nhập mô tả">Vé giúp bạn trải nghiệm không gian cắm trại và tổ chức tiệc ngoài trời rộng rãi.</textarea>
+                                   
                                 </div>
-
+                                <textarea class="form-control" id="" name="Description" rows="3" placeholder="Nhập mô tả">Vé giúp bạn trải nghiệm không gian cắm trại và tổ chức tiệc ngoài trời rộng rãi.</textarea>
                                 <!-- Price -->
                                 <div class="d-flex align-items-center mb-3">
                                     <i class="fas fa-money-bill-wave me-2" style="color: #28a745;"></i>
                                     <label for="Price_@Model.TicketId" class="me-2">Giá cả:</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control text-end" id="Price_@Model.TicketId"
-                                               name="Price" value="@Model.Price" required />
-                                    </div>
+                                    
                                 </div>
-                                
-
+                                <input type="text" class="form-control text-center" id="Price_@Model.TicketId"
+                                       name="Price" value="@Model.Price" />
+                                <small id="PriceError" style="font-size: 1.1em;" class="text-danger"></small>
                                 <div class="d-flex align-items-center mb-3">
                                     <i class="fas fa-check-circle me-2" style="color: #28a745;"></i>
                                     <label for="Status_@Model.TicketId" class="me-2">Trạng Thái:</label>
@@ -792,28 +790,28 @@
                                 <div class="d-flex align-items-center mb-3">
                                     <i class="fas fa-th-large me-2" style="color: #1E90FF;"></i>
                                     <label for="TicketCategoryId_@Model.TicketId" class="me-2">Thể loại:</label>
-                                    <select class="form-control" id="TicketCategoryId_@Model.TicketId" name="TicketCategoryId">
-                                        @if (ViewBag.TicketCategories != null && ((List<TicketCategoryVM>)ViewBag.TicketCategories).Any())
+                                    
+                                </div>
+                                <select class="form-control" id="TicketCategoryId_@Model.TicketId" name="TicketCategoryId">
+                                    @if (ViewBag.TicketCategories != null && ((List<TicketCategoryVM>)ViewBag.TicketCategories).Any())
+                                    {
+                                        foreach (var category in (List<TicketCategoryVM>)ViewBag.TicketCategories)
                                         {
-                                            foreach (var category in (List<TicketCategoryVM>)ViewBag.TicketCategories)
+                                            if (category.TicketCategoryId == Model.TicketCategoryId)
                                             {
-                                                if (category.TicketCategoryId == Model.TicketCategoryId)
-                                                {
-                                                    <option value="@category.TicketCategoryId" selected >@category.TicketCategoryName</option>
-                                                }
-                                                else
-                                                {
-                                                    <option value="@category.TicketCategoryId">@category.TicketCategoryName</option>
-                                                }
+                                                <option value="@category.TicketCategoryId" selected>@category.TicketCategoryName</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@category.TicketCategoryId">@category.TicketCategoryName</option>
                                             }
                                         }
-                                        else
-                                        {
-                                            <option value="">Không có dữ liệu thể loại</option>
-                                        }
-                                    </select>
-                                </div>
-
+                                    }
+                                    else
+                                    {
+                                        <option value="">Không có dữ liệu thể loại</option>
+                                    }
+                                </select>
 
                                 <!-- Buttons -->
                                 
@@ -829,6 +827,34 @@
                                     </a>
                                 </div>
                     </form>
+                    <script>
+                        function validateForm() {
+                            let valid = true;
+
+                            // Kiểm tra tên thiết bị
+                            const gearNameInput = document.getElementById("TicketName_@Model.TicketId");
+                            const gearNameError = document.getElementById("TicketNameError");
+                            if (gearNameInput.value.trim() === "") {
+                                gearNameError.innerText = "Tên vé không được để trống.";
+                                valid = false;
+                            } else {
+                                gearNameError.innerText = ""; // Xóa lỗi khi hợp lệ
+                            }
+
+
+                            // Kiểm tra giá thuê
+                            const rentalPriceInput = document.getElementById("Price_@Model.TicketId");
+                            const rentalPriceError = document.getElementById("PriceError");
+                            if (rentalPriceInput.value.trim() === "" || parseFloat(rentalPriceInput.value) <= 0) {
+                                rentalPriceError.innerText = "Giá vé không được để trống hoặc không được bé hơn 0.";
+                                valid = false;
+                            } else {
+                                rentalPriceError.innerText = ""; // Xóa lỗi khi hợp lệ
+                            }
+
+                            return valid; // Nếu có lỗi, không cho phép gửi form
+                        }
+                    </script>
                     <form asp-action="ChangeStatus" method="post">
                         <input type="hidden" name="TicketId" value="@Model.TicketId" />
                         <div class="d-flex align-items-center mb-3">

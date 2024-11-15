@@ -1,5 +1,6 @@
 ﻿using GreenGardenClient.Models;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Net.Http.Headers;
 
 namespace GreenGardenClient.Controllers.AdminController
@@ -17,74 +18,93 @@ namespace GreenGardenClient.Controllers.AdminController
             _clientFactory = clientFactory ?? throw new ArgumentNullException(nameof(clientFactory));
         }
 
-        public IActionResult Index()
+        private async Task<T> GetDataFromApiAsync<T>(string apiUrl)
         {
-            var foodAndDrinks = GetDataFromApi<List<FoodAndDrinkVM>>("https://localhost:7298/api/FoodAndDrink/GetAllFoodAndDrink");
-            var categories = GetDataFromApi<List<CategoryVM>>("https://localhost:7298/api/FoodAndDrink/GetAllFoodAndDrinkCategories");
-
-            // Truyền dữ liệu đến view
-            ViewBag.Categories = categories;
-            return View(foodAndDrinks);
-        }
-
-        private T GetDataFromApi<T>(string url)
-        {
-            var client = _clientFactory.CreateClient();
-
-            // Retrieve JWT token from cookies
-            var jwtToken = Request.Cookies["JWTToken"];
-
-            // Check if JWT token is present; if not, return default (null)
-            if (string.IsNullOrEmpty(jwtToken))
+            using (var client = _clientFactory.CreateClient())
             {
-                return default;
-            }
-
-            // Set Authorization header
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
-
-            try
-            {
-                using var response = client.GetAsync(url).Result;
-
-                // Check if access is forbidden, return default if unauthorized
-                if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)
+                var jwtToken = Request.Cookies["JWTToken"];
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
+                var response = await client.GetAsync(apiUrl);
+                if (response.IsSuccessStatusCode)
                 {
-                    return default;
+                    var data = await response.Content.ReadFromJsonAsync<T>();
+                    return data!;
                 }
-
-                response.EnsureSuccessStatusCode(); // Throws if not successful
-
-                return response.Content.ReadFromJsonAsync<T>().Result;
+                else
+                {
+                    TempData["ErrorMessage"] = $"Không thể lấy dữ liệu từ API: {response.StatusCode}";
+                    return default!;
+                }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
-                return default; // Return default value in case of an error
-            }
+        }
+        public async Task<IActionResult> Index()
+        {
+            var gear = await GetDataFromApiAsync<List<FoodAndDrinkVMNew>>("https://localhost:7298/api/FoodAndDrink/GetAllFoodAndDrink");
+
+            ViewBag.FoodAndDrink = gear;
+
+
+            return View("Index");
         }
         [HttpGet]
         public async Task<IActionResult> UpdateFoodAndDrink(int itemId)
         {
-            // Fetch event data from the API
-            var eventItem = GetDataFromApi<FoodAndDrinkDetailVM>($"https://localhost:7298/api/FoodAndDrink/GetFoodAndDrinkDetail?itemId={itemId}");
 
-            if (eventItem == null)
+            var apiUrl = $"https://localhost:7298/api/FoodAndDrink/GetFoodAndDrinkDetail?itemId={itemId}";
+
+            try
             {
-                return RedirectToAction("Error", "Home");
+                // Tạo HttpClient
+                var client = _clientFactory.CreateClient();
+
+                // Gọi API để lấy chi tiết thiết bị
+                var response = await client.GetAsync(apiUrl);
+
+                // Kiểm tra trạng thái API response
+                if (!response.IsSuccessStatusCode)
+                {
+                    TempData["ErrorMessage"] = $"Failed to retrieve data from API: {response.StatusCode} - {response.ReasonPhrase}";
+                    return RedirectToAction("Error");
+                }
+
+                // Parse nội dung trả về từ API
+                var content = await response.Content.ReadAsStringAsync();
+                var gear = JsonConvert.DeserializeObject<FoodAndDrinkVMNew>(content);
+
+                // Xác nhận dữ liệu từ API
+                if (gear == null)
+                {
+                    TempData["ErrorMessage"] = "Invalid data received from API!";
+                    return RedirectToAction("Error");
+                }
+
+                // Gọi API lấy danh sách thể loại thiết bị
+                var campingCategories = await GetDataFromApiAsync<List<CategoryVM>>("https://localhost:7298/api/FoodAndDrink/GetAllFoodAndDrinkCategories");
+
+                // Gán dữ liệu vào ViewBag để truyền sang View
+                ViewBag.CampingGear = gear;
+                ViewBag.Categories = campingCategories;
+
+                // Trả về View với dữ liệu
+                return View("UpdateFoodAndDrink", gear);
             }
-
-            // Fetch the list of categories
-            var categories = GetDataFromApi<List<CategoryVM>>("https://localhost:7298/api/FoodAndDrink/GetAllFoodAndDrinkCategories");
-
-
-            // Pass data to View using a ViewModel
-            ViewBag.Categories = categories;
-
-
-            return View("UpdateFoodAndDrink", eventItem);
+            catch (HttpRequestException ex)
+            {
+                TempData["ErrorMessage"] = $"Error connecting to API: {ex.Message}";
+                return RedirectToAction("Error");
+            }
+            catch (JsonException ex)
+            {
+                TempData["ErrorMessage"] = $"Error parsing JSON response: {ex.Message}";
+                return RedirectToAction("Error");
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Unexpected error: {ex.Message}";
+                return RedirectToAction("Error");
+            }
         }
-
+ 
 
         [HttpPost]
         public async Task<IActionResult> UpdateFoodAndDrink(UpdateFoodAndDrinkVM model, IFormFile PictureUrl, string CurrentPictureUrl)
@@ -117,6 +137,7 @@ namespace GreenGardenClient.Controllers.AdminController
 
                 if (response.IsSuccessStatusCode)
                 {
+                    TempData["Notification"] = "Đồ ăn- đồ uống đã được thay đổi thành công!";
                     // Nếu thành công, chuyển hướng về trang Index
                     return RedirectToAction("UpdateFoodAndDrink", new { itemId = model.ItemId });
                 }
@@ -136,21 +157,6 @@ namespace GreenGardenClient.Controllers.AdminController
         }
 
 
-        [HttpGet]
-        public IActionResult CreateFoodAndDrink()
-        {
-            var categories = GetDataFromApi<List<CategoryVM>>("https://localhost:7298/api/FoodAndDrink/GetAllFoodAndDrinkCategories");
-
-
-
-            ViewBag.Categories = categories;
-
-
-            return View();
-
-        }
-
-
 
 
         [HttpPost] // Dùng POST cho form submit
@@ -166,44 +172,57 @@ namespace GreenGardenClient.Controllers.AdminController
                 if (response.IsSuccessStatusCode)
                 {
                     // Nếu thành công, chuyển hướng về trang chi tiết thiết bị
-                    TempData["SuccessMessage"] = "Trạng thái thiết bị đã được thay đổi thành công!";
+                    TempData["Notification"] = "Trạng thái đồ ăn, đồ uống đã được thay đổi thành công!";
                     return RedirectToAction("UpdateFoodAndDrink", new { itemId });
                 }
                 else
                 {
                     // Thêm lỗi nếu API không trả về thành công
-                    TempData["ErrorMessage"] = "Không thể thay đổi trạng thái thiết bị.";
+                    TempData["Notification"] = "Không thể thay đổi trạng thái thiết bị.";
                     return RedirectToAction("UpdateFoodAndDrink", new { itemId });
                 }
             }
             catch (Exception ex)
             {
                 // Ghi log và hiển thị thông báo lỗi chung
-                TempData["ErrorMessage"] = $"Đã xảy ra lỗi: {ex.Message}";
+                TempData["Notification"] = $"Đã xảy ra lỗi: {ex.Message}";
                 return RedirectToAction("UpdateFoodAndDrink", new { itemId });
             }
         }
+        [HttpGet]
+        public async Task<IActionResult> CreateFoodAndDrink()
+        {
+            var categories = await GetDataFromApiAsync<List<CategoryVM>>("https://localhost:7298/api/FoodAndDrink/GetAllFoodAndDrinkCategories");
 
+
+
+            ViewBag.Categories = categories;
+
+
+            return View(new AddFoodAndDrinkVM());
+
+        }
         [HttpPost]
         public async Task<IActionResult> CreateFoodAndDrink(AddFoodAndDrinkVM model, IFormFile PictureUrl)
         {
+            var categories = await GetDataFromApiAsync<List<CategoryVM>>("https://localhost:7298/api/FoodAndDrink/GetAllFoodAndDrinkCategories");
+            ViewBag.Categories = categories;
+            model.CreatedAt = DateTime.Now;
+            model.Status = model.Status ?? true;
 
             if (PictureUrl != null && PictureUrl.Length > 0)
             {
-                MultipartFormDataContent formData = new MultipartFormDataContent();
-                StreamContent fileContent = new StreamContent(PictureUrl.OpenReadStream());
-                formData.Add(fileContent, "file", PictureUrl.FileName);
-
-                string filePath = Path.Combine("wwwroot/images/Food", PictureUrl.FileName);
-                using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
+                string filePath = Path.Combine("wwwroot/images/Gear", PictureUrl.FileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     await PictureUrl.CopyToAsync(fileStream);
                 }
-
-                model.ImgUrl = PictureUrl.FileName;
+                model.ImgUrl = PictureUrl.FileName; // Save image name
             }
             else
             {
+                // Nếu không có ảnh, sử dụng ảnh mặc định hoặc bỏ qua xử lý ảnh
+                model.ImgUrl = "Colorful Modern Camping Club Logo.png"; // Hoặc bỏ qua giá trị ImgUrl nếu cần
                 ModelState.AddModelError("PictureUrl", "File ảnh không hợp lệ hoặc không được chọn.");
             }
 
@@ -217,12 +236,13 @@ namespace GreenGardenClient.Controllers.AdminController
                     // Dữ liệu gửi
                     var requestData = new
                     {
-                        ItemName = model.ItemName ?? throw new ArgumentNullException("ItemName"),
+                        ItemName = model.ItemName,
                         Description = model.Description,
                         ImgUrl = model.ImgUrl,
-                        Price = model.Price > 0 ? model.Price : throw new ArgumentException("Price must be greater than 0"),
-                        CategoryId = model.CategoryId > 0 ? model.CategoryId : throw new ArgumentException("Invalid CategoryId"),
-                        QuantityAvailable = model.QuantityAvailable >= 0 ? model.QuantityAvailable : throw new ArgumentException("Invalid QuantityAvailable")
+                        Price = model.Price,
+                        CategoryId = model.CategoryId,
+                        Status = model.Status,
+                        CreatedAt = model.CreatedAt
                     };
 
 
@@ -232,7 +252,7 @@ namespace GreenGardenClient.Controllers.AdminController
                     // Kiểm tra phản hồi
                     if (response.IsSuccessStatusCode)
                     {
-                        TempData["SuccessMessage"] = "Món ăn đã được thêm thành công.";
+                        TempData["Notification"] = "Món ăn đã được thêm thành công.";
                         return RedirectToAction("Index");
                     }
                     else

@@ -176,68 +176,100 @@
                     display: block; /* Hiện menu thả xuống khi hover vào mục Services */
                 }
 
+                /* Card sự kiện */
                 .post-entry-1 {
                     display: flex;
-                    flex-direction: column;
-                    justify-content: space-between;
-                    height: 100%;
-                    position: relative; /* Để đặt nút "Chi tiết" ở góc phải */
-                    border: 1px solid #ddd; /* Đường viền mỏng */
+                    flex-direction: column; /* Căn thành cột: ảnh, nội dung */
+                    height: 100%; /* Đảm bảo chiều cao cố định */
+                    border: 1px solid #ddd; /* Viền nhẹ */
                     border-radius: 10px;
-                    overflow: hidden;
+                    overflow: hidden; /* Để ảnh và nội dung không tràn */
                     background: #fff;
-                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
-                    padding: 15px;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng */
                 }
 
-                    /* Hiệu ứng khi hover vào khung */
-                    .post-entry-1:hover {
-                        transform: translateY(-5px); /* Dịch khung lên một chút */
-                        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Tăng hiệu ứng đổ bóng */
-                    }
-
-                    /* Định dạng ảnh bên trong khung */
+                    /* Ảnh */
                     .post-entry-1 img {
-                        width: 100%; /* Đảm bảo ảnh luôn đầy chiều rộng khung */
+                        width: 100%; /* Đầy chiều rộng */
                         height: 200px; /* Chiều cao cố định */
-                        object-fit: cover; /* Đảm bảo ảnh không bị méo */
-                        border-bottom: 1px solid #ddd; /* Đường viền dưới ảnh */
+                        object-fit: cover; /* Giữ tỉ lệ ảnh */
+                        border-bottom: 1px solid #ddd; /* Viền dưới ảnh */
                     }
 
-                /* Định dạng nội dung trong khung */
+                /* Nội dung sự kiện */
                 .post-entry-1-contents {
-                    padding: 15px; /* Khoảng cách bên trong nội dung */
-                    text-align: left; /* Căn lề trái */
+                    display: flex;
+                    flex-direction: column; /* Nội dung theo cột */
+                    padding: 15px;
+                    text-align: left;
+                    flex: 1; /* Để nội dung chiếm toàn bộ khoảng trống */
                 }
 
-                    /* Tiêu đề sự kiện */
-                    .post-entry-1-contents h2 {
-                        font-size: 18px; /* Kích thước chữ tiêu đề */
-                        font-weight: bold; /* Chữ đậm */
-                        margin-bottom: 10px; /* Khoảng cách phía dưới */
-                        color: #333; /* Màu chữ đậm */
-                    }
-
-                    /* Định dạng thông tin ngày tháng và người tạo */
-                    .post-entry-1-contents .meta {
-                        font-size: 14px; /* Kích thước chữ nhỏ */
-                        color: #888; /* Màu chữ xám nhạt */
-                        margin-bottom: 15px; /* Khoảng cách phía dưới */
-                        display: block;
-                    }
-
-                    /* Định dạng đoạn mô tả */
-                    .post-entry-1-contents p {
-                        font-size: 14px; /* Kích thước chữ mô tả */
-                        color: #555; /* Màu chữ trung tính */
-                        line-height: 1.5; /* Độ cao dòng để dễ đọc */
-                        margin: 0;
-                    }
-
-                /* Đồng bộ khoảng cách giữa các khung */
-                .col-lg-4, .col-md-6 {
-                    margin-bottom: 30px; /* Khoảng cách giữa các khung sự kiện */
+                /* Tên sự kiện */
+                .event-title {
+                    font-size: 18px;
+                    font-weight: bold;
+                    color: #333;
+                    margin-bottom: 10px;
+                    white-space: nowrap; /* Không cho chữ xuống dòng */
+                    overflow: hidden; /* Ẩn nội dung thừa */
+                    text-overflow: ellipsis; /* Hiển thị dấu "..." nếu chữ quá dài */
                 }
+
+                /* Meta: Ngày & Người tạo */
+                .meta {
+                    font-size: 14px;
+                    color: #888;
+                    margin-bottom: 15px;
+                    display: flex; /* Dùng flex để căn đều */
+                    justify-content: space-between; /* Khoảng cách giữa ngày và người tạo */
+                    align-items: center;
+                }
+
+                .event-date, .event-creator {
+                    white-space: nowrap; /* Không xuống dòng */
+                    overflow: hidden; /* Ẩn chữ thừa */
+                    text-overflow: ellipsis; /* Thêm dấu "..." nếu chữ dài */
+                    max-width: 45%; /* Giới hạn tối đa 45% chiều rộng mỗi bên */
+                }
+
+                /* Mô tả sự kiện */
+                .event-description {
+                    font-size: 14px;
+                    color: #555;
+                    line-height: 1.6;
+                    margin-bottom: 15px;
+                    display: -webkit-box; /* Hỗ trợ hiển thị mô tả ngắn gọn */
+                    -webkit-line-clamp: 3; /* Hiển thị tối đa 3 dòng */
+                    -webkit-box-orient: vertical; /* Chiều dọc */
+                    overflow: hidden; /* Ẩn chữ thừa */
+                }
+
+                /* Nút hành động */
+                .event-action {
+                    margin-top: auto; /* Đẩy nút xuống cuối */
+                    text-align: center; /* Căn giữa nút */
+                }
+
+                    .event-action .btn {
+                        display: inline-block;
+                        font-size: 14px;
+                        font-weight: bold;
+                        color: #fff;
+                        background-color: #efba6c;
+                        border: none;
+                        border-radius: 5px;
+                        padding: 10px 20px;
+                        transition: all 0.3s ease;
+                    }
+
+                        /* Hiệu ứng hover nút */
+                        .event-action .btn:hover {
+                            background-color: #efba6c;
+                            transform: scale(1.05);
+                        }
+
+
             </style>
             <script>
                 $(document).ready(function () {
@@ -283,15 +315,32 @@
                             foreach (var item in events)
                             {
                                 <div class="col-lg-4 col-md-6 mb-4">
-                                    <div class="post-entry-1 h-100">
+                                    <div class="post-entry-1">
+                                        <!-- Ảnh -->
                                         <img src="~/images/@item.PictureUrl" alt="Image" class="img-fluid">
+
+                                        <!-- Nội dung sự kiện -->
                                         <div class="post-entry-1-contents">
-                                            <h2>@item.EventName</h2>
-                                            <span class="meta d-inline-block mb-3">@item.EventDate <span class="mx-2">by</span>@item.CreatedByUserName</span>
-                                            <p>@item.Description</p>
-                                            <a href="@Url.Action("EventDetail", "Common", new { eventId = item.EventId })" class="btn btn-primary mt-2">Chi tiết</a>
+                                            <!-- Tên sự kiện -->
+                                            <h2 class="event-title">@item.EventName</h2>
+
+                                            <!-- Ngày & Người tạo -->
+                                            <div class="meta">
+                                                <span class="event-date">@item.EventDate</span>
+                                                <span class="separator"> | </span>
+                                                <span class="event-creator">@item.CreatedByUserName</span>
+                                            </div>
+
+                                            <!-- Mô tả sự kiện -->
+                                            <p class="event-description">@item.Description</p>
+
+                                            <!-- Nút chi tiết -->
+                                            <div class="event-action">
+                                                <a href="@Url.Action("EventDetail", "Common", new { eventId = item.EventId })" class="btn btn-primary">Chi tiết</a>
+                                            </div>
                                         </div>
                                     </div>
+
                                 </div>
 
 

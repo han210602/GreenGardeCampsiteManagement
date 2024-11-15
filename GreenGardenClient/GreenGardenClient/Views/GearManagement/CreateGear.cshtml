@@ -1,6 +1,6 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
-
+@model GreenGardenClient.Models.AddGearVM
 @using GreenGardenClient.Models
 
 }
@@ -534,8 +534,11 @@
                                         <span class="input-group-text bg-light">
                                             <i class="fas fa-utensils text-primary"></i>
                                         </span>
-                                        <input type="text" class="form-control" id="GearName" name="GearName" placeholder="Nhập tên thiết bị" required>
+                                        <input type="text" class="form-control" id="GearName" name="GearName" value="@Model.GearName" placeholder="Nhập tên thiết bị" >
+
+                                        
                                     </div>
+                                    <span asp-validation-for="GearName" class="text-danger"></span>
                                 </div>
                                 <!-- Mô tả -->
                                 <div class="mb-4">
@@ -544,8 +547,10 @@
                                         <span class="input-group-text bg-light">
                                             <i class="fas fa-align-left text-primary"></i>
                                         </span>
-                                        <textarea class="form-control" id="Description" name="Description" rows="3" placeholder="Nhập mô tả"></textarea>
+                                        <input class="form-control" id="Description" name="Description" value="@Model.Description" rows="3" placeholder="Nhập mô tả"></input>
+                                       
                                     </div>
+                                    <span asp-validation-for="Description" class="text-danger"></span>
                                 </div>
                                 <!-- Giá cả -->
                                 <div class="mb-4">
@@ -554,8 +559,10 @@
                                         <span class="input-group-text bg-light">
                                             <i class="fas fa-dollar-sign text-primary"></i>
                                         </span>
-                                        <input type="text" class="form-control" id="RentalPrice" name="RentalPrice" placeholder="Nhập giá" required>
+                                        <input type="text" class="form-control" id="RentalPrice" value="@Model.RentalPrice" name="RentalPrice" placeholder="Nhập giá">
+                                       
                                     </div>
+                                    <span asp-validation-for="RentalPrice" class="text-danger"></span>
                                 </div>
 
                                 <!-- Số lượng có sẵn -->
@@ -565,8 +572,10 @@
                                         <span class="input-group-text bg-light">
                                             <i class="fas fa-cogs text-primary"></i>
                                         </span>
-                                        <input type="number" class="form-control" id="QuantityAvailable" name="QuantityAvailable" placeholder="Nhập số lượng có sẵn" required min="0">
+                                        <input type="number" class="form-control" id="QuantityAvailable" value="@Model.QuantityAvailable" name="QuantityAvailable" placeholder="Nhập số lượng có sẵn" min="0">
+                                        
                                     </div>
+                                    <span asp-validation-for="QuantityAvailable" class="text-danger"></span>
                                 </div>
 
                                 <!-- Chọn danh mục -->
@@ -576,7 +585,7 @@
                                         <span class="input-group-text bg-light">
                                             <i class="fas fa-list text-primary"></i>
                                         </span>
-                                        <select class="form-select" id="GearCategoryId" name="GearCategoryId" required>
+                                        <select class="form-select" id="GearCategoryId" name="GearCategoryId">
                                             <option value="" disabled selected>-- Chọn danh mục --</option>
                                             @if (ViewBag.CampingCategories != null)
                                             {
@@ -585,7 +594,10 @@
                                                     <option value="@category.GearCategoryId">@category.GearCategoryName</option>
                                                 }
                                             }
+
+                                           
                                         </select>
+                                        <span asp-validation-for="GearCategoryId" class="text-danger"></span>
                                     </div>
                                 </div>
                             </div>
@@ -602,6 +614,7 @@
                                             <i class="fas fa-image text-primary"></i>
                                         </span>
                                         <input type="file" name="PictureUrl" id="PictureUrl" accept=".jpg, .png" class="form-control" onchange="previewImage(event)">
+                                        <span asp-validation-for="ImgUrl" class="text-danger"></span>
                                     </div>
                                 </div>
                             </div>
@@ -620,6 +633,10 @@
 
 
     </main>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+
     <script>
         function previewImage(event) {
             const input = event.target;

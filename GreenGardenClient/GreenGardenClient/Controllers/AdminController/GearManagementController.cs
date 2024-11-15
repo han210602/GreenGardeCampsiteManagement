@@ -133,6 +133,7 @@ namespace GreenGardenClient.Controllers.AdminController
 
                 if (response.IsSuccessStatusCode)
                 {
+                    TempData["Notification"] = "Thiết bị đã được thay đổi thành công!";
                     // Nếu thành công, chuyển hướng về trang Index
                     return RedirectToAction("GearDetail", new { gearId = model.GearId });
                 }
@@ -140,7 +141,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 {
                     // Thêm lỗi nếu API không trả về thành công
                     ModelState.AddModelError("", "Failed to update event.");
-                    return RedirectToAction("Index");
+                    return View(model); // Hiển thị lại form để người dùng biết lỗi
                 }
             }
             catch (Exception ex)
@@ -163,20 +164,20 @@ namespace GreenGardenClient.Controllers.AdminController
                 if (response.IsSuccessStatusCode)
                 {
                     // Nếu thành công, chuyển hướng về trang chi tiết thiết bị
-                    TempData["SuccessMessage"] = "Trạng thái thiết bị đã được thay đổi thành công!";
+                    TempData["Notification"] = "Trạng thái thiết bị đã được thay đổi thành công!";
                     return RedirectToAction("GearDetail", new { gearId });
                 }
                 else
                 {
                     // Thêm lỗi nếu API không trả về thành công
-                    TempData["ErrorMessage"] = "Không thể thay đổi trạng thái thiết bị.";
+                    TempData["Notification"] = "Không thể thay đổi trạng thái thiết bị.";
                     return RedirectToAction("GearDetail", new { gearId });
                 }
             }
             catch (Exception ex)
             {
                 // Ghi log và hiển thị thông báo lỗi chung
-                TempData["ErrorMessage"] = $"Đã xảy ra lỗi: {ex.Message}";
+                TempData["Notification"] = $"Đã xảy ra lỗi: {ex.Message}";
                 return RedirectToAction("GearDetail", new { gearId });
             }
         }
@@ -185,36 +186,42 @@ namespace GreenGardenClient.Controllers.AdminController
         {
             var campingCategories = await GetDataFromApiAsync<List<GearCategoryVM>>("https://localhost:7298/api/CampingGear/GetAllCampingGearCategories");
 
-            // Gán dữ liệu vào ViewBag để truyền sang View
+            // Gán lại danh sách danh mục cho ViewBag
             ViewBag.CampingCategories = campingCategories;
 
-
-            return View();
-
+            return View(new AddGearVM());
         }
+          
+        
 
         [HttpPost]
         public async Task<IActionResult> CreateGear(AddGearVM model, IFormFile PictureUrl)
         {
+            var campingCategories = await GetDataFromApiAsync<List<GearCategoryVM>>("https://localhost:7298/api/CampingGear/GetAllCampingGearCategories");
+
+            // Gán lại danh sách danh mục cho ViewBag
+            ViewBag.CampingCategories = campingCategories;
             // Set default values for CreatedAt and Status
             model.CreatedAt = DateTime.Now;
             model.Status = model.Status ?? true;  // Set to true if not provided
-
-            if (PictureUrl != null && PictureUrl.Length > 0)
+            ViewBag.GearCategoryId = model.GearCategoryId;
+           
+           if (PictureUrl != null && PictureUrl.Length > 0)
             {
                 string filePath = Path.Combine("wwwroot/images/Gear", PictureUrl.FileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     await PictureUrl.CopyToAsync(fileStream);
                 }
-
                 model.ImgUrl = PictureUrl.FileName; // Save image name
             }
             else
             {
+                // Nếu không có ảnh, sử dụng ảnh mặc định hoặc bỏ qua xử lý ảnh
+                model.ImgUrl = "Colorful Modern Camping Club Logo.png"; // Hoặc bỏ qua giá trị ImgUrl nếu cần
                 ModelState.AddModelError("PictureUrl", "File ảnh không hợp lệ hoặc không được chọn.");
-                return View(model);
             }
+
 
             // Prepare request data for API
             string apiUrl = "https://localhost:7298/api/CampingGear/AddCampingGear";
@@ -224,22 +231,23 @@ namespace GreenGardenClient.Controllers.AdminController
                 {
                     var requestData = new
                     {
-                        GearName = model.GearName ?? throw new ArgumentNullException("GearName"),
+                        GearName = model.GearName ,
                         Description = model.Description,
                         ImgUrl = model.ImgUrl,
-                        RentalPrice = model.RentalPrice > 0 ? model.RentalPrice : throw new ArgumentException("Price must be greater than 0"),
-                        GearCategoryId = model.GearCategoryId > 0 ? model.GearCategoryId : throw new ArgumentException("Invalid CategoryId"),
-                        QuantityAvailable = model.QuantityAvailable >= 0 ? model.QuantityAvailable : throw new ArgumentException("Invalid QuantityAvailable"),
+                        RentalPrice = model.RentalPrice ,
+                        GearCategoryId = model.GearCategoryId,
+                        QuantityAvailable = model.QuantityAvailable,
                         Status = model.Status,
                         CreatedAt = model.CreatedAt
                     };
 
                     // Send POST request
                     var response = await client.PostAsJsonAsync(apiUrl, requestData);
-
+                    
+                    ViewBag.Gear = model;
                     if (response.IsSuccessStatusCode)
                     {
-                        TempData["SuccessMessage"] = "Thiết bị đã được thêm thành công.";
+                        TempData["Notification"] = "Thiết bị đã được thêm thành công.";
                         return RedirectToAction("Index");
                     }
                     else
