@@ -11,11 +11,16 @@ namespace DataAccess.DAO
 {
     public class FoodAndDrinkDAO
     {
-        private static GreenGardenContext context = new GreenGardenContext();
+        //private static GreenGardenContext context = new GreenGardenContext();
+        private static GreenGardenContext _context;
+        public static void InitializeContext(GreenGardenContext context)
+        {
+            _context = context;
+        }
 
         public static List<FoodAndDrinkDTO> GetAllFoodAndDrink()
         {
-            var items = context.FoodAndDrinks
+            var items = _context.FoodAndDrinks
                 .Include(x => x.Category)
                 .Select(item => new FoodAndDrinkDTO
                 {
@@ -31,7 +36,7 @@ namespace DataAccess.DAO
         }
         public static List<FoodAndDrinkDTO> GetAllCustomerFoodAndDrink()
         {
-            var items = context.FoodAndDrinks
+            var items = _context.FoodAndDrinks
                 .Include(x => x.Category).Where(s => s.Status == true)
                 .Select(item => new FoodAndDrinkDTO
                 {
@@ -47,7 +52,7 @@ namespace DataAccess.DAO
         }
         public static FoodAndDrinkDTO GetFoodAndDrinkDetail(int itemId)
         {
-            var item = context.FoodAndDrinks
+            var item = _context.FoodAndDrinks
                 .Include(x => x.Category)
                 .Where(i => i.ItemId == itemId) // Filter by ItemId
                 .Select(i => new FoodAndDrinkDTO
@@ -63,9 +68,6 @@ namespace DataAccess.DAO
 
             return item;
         }
-
-
-
         public static void AddFoodAndDrink(AddFoodOrDrinkDTO item)
         {
             var foodAndDrink = new FoodAndDrink
@@ -81,14 +83,12 @@ namespace DataAccess.DAO
                 
             };
 
-            context.FoodAndDrinks.Add(foodAndDrink);
-            context.SaveChanges();
+            _context.FoodAndDrinks.Add(foodAndDrink);
+            _context.SaveChanges();
         }
-
-
         public static void UpdateFoodOrDrink(UpdateFoodOrDrinkDTO itemDto)
         {
-            var foodAndDrink = context.FoodAndDrinks.FirstOrDefault(f => f.ItemId == itemDto.ItemId);
+            var foodAndDrink = _context.FoodAndDrinks.FirstOrDefault(f => f.ItemId == itemDto.ItemId);
 
             if (foodAndDrink == null)
             {
@@ -101,11 +101,11 @@ namespace DataAccess.DAO
             foodAndDrink.CategoryId = itemDto.CategoryId; // Cập nhật danh mục
             foodAndDrink.ImgUrl = itemDto.ImgUrl;
 
-            context.SaveChanges();
+            _context.SaveChanges();
         }
         public static List<FoodAndDrinkDTO> GetFoodAndDrinks(int? categoryId, int? sortBy, int? priceRange)
         {
-            var query = context.FoodAndDrinks
+            var query = _context.FoodAndDrinks
                 .Include(food => food.Category).Where(s => s.Status == true) // Bao gồm thông tin danh mục
                 .AsNoTracking() // Không theo dõi thực thể để cải thiện hiệu suất
                 .AsQueryable();
@@ -180,7 +180,7 @@ namespace DataAccess.DAO
         }
         public static List<FoodAndDrinkCategoryDTO> GetAllFoodAndDrinkCategories()
         {
-            var items = context.FoodAndDrinkCategories
+            var items = _context.FoodAndDrinkCategories
 
                 .Select(item => new FoodAndDrinkCategoryDTO
                 {
@@ -196,7 +196,7 @@ namespace DataAccess.DAO
         public static void ChangeFoodStatus(int itemId, ChangeFoodStatus newStatus)
         {
             // Find the food or drink item by ItemId
-            var foodAndDrink = context.FoodAndDrinks.FirstOrDefault(f => f.ItemId == itemId);
+            var foodAndDrink = _context.FoodAndDrinks.FirstOrDefault(f => f.ItemId == itemId);
 
             // If the item does not exist, throw an exception
             if (foodAndDrink == null)
@@ -208,7 +208,7 @@ namespace DataAccess.DAO
             foodAndDrink.Status = newStatus.Status;
 
             // Save changes to the database
-            context.SaveChanges();
+            _context.SaveChanges();
         }
 
     }
