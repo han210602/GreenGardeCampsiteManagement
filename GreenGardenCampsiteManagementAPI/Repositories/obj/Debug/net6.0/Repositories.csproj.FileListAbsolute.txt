@@ -144,8 +144,6 @@ C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteMa
 C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\Repositories\obj\Debug\net6.0\Repositories.AssemblyInfoInputs.cache
 C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\Repositories\obj\Debug\net6.0\Repositories.AssemblyInfo.cs
 C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\Repositories\obj\Debug\net6.0\Repositories.csproj.CoreCompileInputs.cache
-C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\Repositories\obj\Debug\net6.0\Repositories.sourcelink.json
-C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\Repositories\obj\Debug\net6.0\Reposito.787EC4B2.Up2Date
 C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\Repositories\obj\Debug\net6.0\Repositories.dll
 C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\Repositories\obj\Debug\net6.0\refint\Repositories.dll
 C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\Repositories\obj\Debug\net6.0\Repositories.pdb
@@ -674,3 +672,4 @@ C:\Users\ADMIN\Desktop\New folder (7)\GreenGardenCampsiteManagement\GreenGardenC
 C:\Users\ADMIN\Desktop\New folder (7)\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\Repositories\obj\Debug\net6.0\Repositories.pdb
 C:\Users\ADMIN\Desktop\New folder (7)\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\Repositories\obj\Debug\net6.0\Repositories.genruntimeconfig.cache
 C:\Users\ADMIN\Desktop\New folder (7)\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\Repositories\obj\Debug\net6.0\ref\Repositories.dll
+C:\Users\ADMIN\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\Repositories\obj\Debug\net6.0\Repositories.csproj.CopyComplete

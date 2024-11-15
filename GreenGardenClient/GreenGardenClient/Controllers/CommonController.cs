@@ -1,5 +1,6 @@
 ﻿using GreenGardenClient.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Text.Json;
 namespace GreenGardenClient.Controllers
@@ -78,7 +79,7 @@ namespace GreenGardenClient.Controllers
                 else
                 {
                     var errorResponse = await response.Content.ReadAsStringAsync();
-                    ModelState.AddModelError("", $"Lỗi khi đăng nhập: {response.StatusCode} - {errorResponse}");
+                    ModelState.AddModelError("", $"{errorResponse}");
                 }
 
             }
@@ -86,14 +87,15 @@ namespace GreenGardenClient.Controllers
             {
                 ModelState.AddModelError("", $"Lỗi ngoại lệ: {ex.Message}");
             }
-
+            ViewBag.email = email;
+            ViewBag.pass = password;
             return View();
         }
         [HttpGet]
 
         public IActionResult Register()
         {
-            return View();
+            return View(new UserRegisterVM());
         }
         [HttpPost]
         public async Task<IActionResult> SendVerificationCode([FromBody] string email)
@@ -132,30 +134,17 @@ namespace GreenGardenClient.Controllers
         [HttpPost]
         public async Task<IActionResult> Register([FromForm] string VerificationCode, [FromForm] UserRegisterVM model)
         {
+            ViewBag.code = VerificationCode;
             // Ensure that the model is valid
-            if (!ModelState.IsValid)
+            if (VerificationCode.IsNullOrEmpty())
             {
                 // Log validation errors for debugging
-                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
-                {
-                    Console.WriteLine(error.ErrorMessage);
-                }
+                ViewBag.error = $"Mã xác thực không được để trống";
+
                 return View(model);
             }
 
-            // Ensure that the email is not null or empty
-            if (string.IsNullOrEmpty(model.Email))
-            {
-                ModelState.AddModelError(string.Empty, "Email is required.");
-                return View(model);
-            }
 
-            // Ensure that the passwords match (password confirmation logic)
-            if (model.Password != model.ConfirmPassword)
-            {
-                ModelState.AddModelError("ConfirmPassword", "Mật khẩu và xác nhận mật khẩu không khớp.");
-                return View(model);
-            }
 
             // API endpoint with verification code included as a query parameter
             string apiUrl = $"https://localhost:7298/api/Account/Register?enteredCode={VerificationCode}";
@@ -188,15 +177,15 @@ namespace GreenGardenClient.Controllers
                     else
                     {
                         Console.WriteLine($"API Error Response: {response.StatusCode} - {responseContent}");
-
-                        ModelState.AddModelError(string.Empty, $"Registration failed: {responseContent}");
+                        ViewBag.error = $"Đăng kí thất bại: {responseContent}";
                         return View(model);
                     }
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine($"Exception occurred: {ex.Message}");
-                    ModelState.AddModelError(string.Empty, "An unexpected error occurred. Please try again.");
+                    ViewBag.error = $"ModelState.AddModelError(string.Empty, \"Xảy ra lỗi trong quá trình đăng kí, Bạn có thể đăng kí lại\");\r\n";
+
                     return View(model);
                 }
             }
@@ -242,9 +231,9 @@ namespace GreenGardenClient.Controllers
         {
             return View();
         }
-      
+
         [HttpPost]
-        public async Task<IActionResult> NewPassword(int UserId,string OldPassword,string NewPassword,string ConfirmPassword)
+        public async Task<IActionResult> NewPassword(int UserId, string OldPassword, string NewPassword, string ConfirmPassword)
         {
             ChangePassword dto = new ChangePassword()
             {
@@ -481,3 +470,5 @@ namespace GreenGardenClient.Controllers
         }
     }
 }
+
+

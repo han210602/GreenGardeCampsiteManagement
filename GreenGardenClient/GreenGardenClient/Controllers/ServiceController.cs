@@ -2,10 +2,8 @@
 using GreenGardenClient.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Globalization;
-using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 
@@ -157,7 +155,8 @@ namespace GreenGardenClient.Controllers
                     ItemName = item.ComboName,
                     Price = item.Price,
                     ImgUrl = item.ImgUrl,
-                    CategoryName = "combo"
+                    CategoryName = "combo",
+
                 });
             }
 
@@ -461,7 +460,8 @@ namespace GreenGardenClient.Controllers
             try
             {
                 var client = _clientFactory.CreateClient();
-
+                var jwtToken = Request.Cookies["JWTToken"];
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
                 // Retrieve JWT token from cookies              
 
                 var response = await client.GetAsync(apiUrl);

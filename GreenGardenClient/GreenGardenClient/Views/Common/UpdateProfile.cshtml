@@ -284,103 +284,68 @@
             </script>
         </header>
 
-        <script>
-            function previewImage(user, userId) {
-                const fileInput = user.target;
-                const file = fileInput.files[0]; // Lấy file ảnh từ input
-
-                if (file) {
-                    // Tạo URL đối tượng tạm thời cho ảnh mới
-                    const newImageUrl = URL.createObjectURL(file);
-
-                    // Tìm phần tử ảnh hiện tại
-                    let currentImage = document.getElementById(`currentImage_${userId}`);
-
-                    if (currentImage) {
-                        // Nếu đã có ảnh cũ, cập nhật src với ảnh mới
-                        currentImage.src = newImageUrl;
-                    } else {
-                        // Nếu chưa có ảnh, tạo phần tử ảnh mới để hiển thị
-                        currentImage = document.createElement("img");
-                        currentImage.src = newImageUrl;
-                        currentImage.alt = "Event Image";
-                        currentImage.className = "event-thumbnail";
-                        currentImage.id = `currentImage_${userId}`;
-
-                        // Thêm ảnh mới vào DOM trước input file
-                        fileInput.parentElement.insertBefore(currentImage, fileInput);
-                    }
-
-                    // Giải phóng URL đối tượng khi ảnh đã được tải
-                    currentImage.onload = function () {
-                        URL.revokeObjectURL(newImageUrl);
-                    };
-                }
-            }
-        </script>
         <div class="container mt-5" data-aos="fade-up">
             <div class="tile">
-                <form id="updateProfileForm" method="post" action="@Url.Action("ChangeProfile", "Common")" onsubmit="return validateForm()" novalidate>
+                <form id="updateProfileForm" enctype="multipart/form-data" method="post" accept-charset="UTF-8" action="@Url.Action("ChangeProfile", "Common")" onsubmit="return validateForm()" novalidate>
                     <div class="row">
 
                         <div class="col-md-6">
-                            <div class="event-image-container">
-                                <!-- Hiển thị ảnh hiện tại nếu có -->
-                                @if (!string.IsNullOrEmpty(user.ProfilePictureUrl))
+                            <div class="event-image-container flex-grow-1">
+                                @if (!string.IsNullOrEmpty(user?.ProfilePictureUrl))
                                 {
-                                    <img src="~/images/@user.ProfilePictureUrl" alt="Event Image" class="event-thumbnail" id="currentImage_@user.UserId" />
+                                    <img id="currentImage_@user.UserId" src="~/images/Avatar/@user.ProfilePictureUrl" alt="Avt Image" class="event-thumbnail-large" />
                                 }
 
-                                <!-- Input ẩn để lưu URL của ảnh hiện tại -->
-                                <input type="hidden" name="CurrentPictureUrl" value="@user.ProfilePictureUrl" />
-
-                                <!-- File input để upload ảnh mới -->
-                                <div class="mt-2">
-                                    <input type="file" name="PictureUrl" id="PictureUrl_@user.UserId" accept=".jpg, .png" class="file-input" onchange="previewImage(event, '@user.UserId')" />
+                                <input type="hidden" name="CurrentPictureUrl" value="@user?.ProfilePictureUrl" />
+                                <div class="mt-3">
+                                    <!-- Add onchange event to preview image -->
+                                    <input type="file" name="ProfilePictureUrl" accept=".jpg, .png" class="file-input" onchange="previewImage(event, @user.UserId)" />
                                 </div>
                             </div>
                         </div>
-                        <!-- Right Column: Account Information -->
+
+                        <!-- Right Column: User Information -->
                         <div class="col-md-6">
                             <h2 style="font-size: 1.5rem;">Hồ Sơ Của Tôi</h2>
                             <p class="text-muted" style="font-size: 0.9rem;">Quản lý thông tin hồ sơ để bảo mật tài khoản</p>
 
-
-                            <input type="hidden" name="UserId" value="@user.UserId"> <!-- Hidden input for UserId -->
+                            <input type="hidden" name="UserId" value="@Model.UserId" /> <!-- Hidden input for UserId -->
 
                             <div class="form-group form-row align-items-center mt-3">
                                 <label for="FirstName" class="col-sm-3 col-form-label">Họ:<span class="text-danger">*</span></label>
                                 <div class="col-sm-9">
-                                    <input type="text" id="FirstName" name="FirstName" class="form-control form-control-sm" value="@user.FirstName" required>
-                                    <small class="text-danger" id="firstNameError" style="display: none;">Vui lòng nhập họ đúng form</small>
+                                    <input type="text" id="FirstName" name="FirstName" class="form-control form-control-sm" value="@Model.FirstName" required>
+                                    <small class="text-danger" id="firstNameError" style="display: none;">Vui lòng nhập họ hợp lệ.</small>
                                 </div>
                             </div>
+
                             <div class="form-group form-row align-items-center mt-3">
                                 <label for="LastName" class="col-sm-3 col-form-label">Tên:<span class="text-danger">*</span></label>
                                 <div class="col-sm-9">
-                                    <input type="text" id="LastName" name="LastName" class="form-control form-control-sm" value="@user.LastName" required>
-                                    <small class="text-danger" id="lastNameError" style="display: none;">Vui lòng nhập tên đúng form</small>
+                                    <input type="text" id="LastName" name="LastName" class="form-control form-control-sm" value="@Model.LastName" required>
+                                    <small class="text-danger" id="lastNameError" style="display: none;">Vui lòng nhập tên hợp lệ.</small>
                                 </div>
                             </div>
+
                             <div class="form-group form-row align-items-center mt-3">
                                 <label for="Email" class="col-sm-3 col-form-label">Email:<span class="text-danger">*</span></label>
                                 <div class="col-sm-9">
-                                    <input readonly type="email" id="Email" name="Email" class="form-control form-control-sm" value="@user.Email" required>
+                                    <input readonly type="email" id="Email" name="Email" class="form-control form-control-sm" value="@Model.Email" required>
                                 </div>
                             </div>
 
                             <div class="form-group form-row align-items-center mt-3">
                                 <label for="PhoneNumber" class="col-sm-3 col-form-label">Số điện thoại:<span class="text-danger">*</span></label>
                                 <div class="col-sm-9">
-                                    <input type="text" id="PhoneNumber" name="PhoneNumber" class="form-control form-control-sm" value="@user.PhoneNumber" required pattern="^\d{10}$">
-                                    <small class="text-danger" id="phoneNumberError" style="display: none;">Số điện thoại không hợp lệ. Phải có 10 số</small>
+                                    <input type="text" id="PhoneNumber" name="PhoneNumber" class="form-control form-control-sm" value="@Model.PhoneNumber" required pattern="^\d{10}$">
+                                    <small class="text-danger" id="phoneNumberError" style="display: none;">Vui lòng nhập hợp lệ. Số điện thoại phải gồm 10 chữ số.</small>
                                 </div>
                             </div>
 
                             <div class="form-group form-row align-items-center mt-3">
                                 <label for="Address" class="col-sm-3 col-form-label">Địa chỉ:</label>
                                 <div class="col-sm-9">
-                                    <input type="text" id="Address" name="Address" class="form-control form-control-sm" value="@user.Address">
+                                    <input type="text" id="Address" name="Address" class="form-control form-control-sm" value="@Model.Address">
                                 </div>
                             </div>
 
@@ -388,15 +353,15 @@
                                 <label class="col-sm-3 col-form-label">Giới tính:</label>
                                 <div class="col-sm-9">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" id="male" name="Gender" value="male" @(user.Gender?.ToLower() == "male  " ? "checked" : "")>
+                                        <input class="form-check-input" type="radio" id="male" name="Gender" value="male" @(Model.Gender?.ToLower() == "male  " ? "checked" : "")>
                                         <label class="form-check-label" for="male">Nam</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" id="female" name="Gender" value="female" @(user.Gender?.ToLower() == "female" ? "checked" : "")>
+                                        <input class="form-check-input" type="radio" id="female" name="Gender" value="female" @(Model.Gender?.ToLower() == "female" ? "checked" : "")>
                                         <label class="form-check-label" for="female">Nữ</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" id="other" name="Gender" value="other" @(user.Gender?.ToLower() == "other " ? "checked" : "")>
+                                        <input class="form-check-input" type="radio" id="other" name="Gender" value="other" @(Model.Gender?.ToLower() == "other " ? "checked" : "")>
                                         <label class="form-check-label" for="other">Khác</label>
                                     </div>
                                 </div>
@@ -405,7 +370,7 @@
                             <div class="form-group form-row align-items-center mt-3">
                                 <label for="DateOfBirth" class="col-sm-3 col-form-label">Ngày sinh:</label>
                                 <div class="col-sm-9">
-                                    <input type="date" id="DateOfBirth" name="DateOfBirth" class="form-control form-control-sm" value="@user.DateOfBirth?.ToString("yyyy-MM-dd")">
+                                    <input type="date" id="DateOfBirth" name="DateOfBirth" class="form-control form-control-sm" value="@Model.DateOfBirth?.ToString("yyyy-MM-dd")">
                                 </div>
                             </div>
 
@@ -413,37 +378,38 @@
                                 <button type="submit" class="btn btn-danger btn-sm" style="margin-bottom: 20px; margin-right: 10px;">Cập nhật thông tin</button>
                                 <a href="~/Common/ChangePassword" class="btn btn-secondary btn-sm" style="margin-bottom: 20px;">Đổi Mật Khẩu</a>
                             </div>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
 
         <script>
+
             function validateForm() {
-                const firstNameInput = document.getElementById('FirstName');
-                const lastNameInput = document.getElementById('LastName');
-                const firstNameError = document.getElementById('firstNameError');
-                const lastNameError = document.getElementById('lastNameError');
+                let valid = true;
 
-                const namePattern = /^[\p{L}\s]+$/u; // Hỗ trợ Unicode (u flag)
+                const namePattern = /^[\p{L}\s]+$/u; // Hỗ trợ Unicode
+                const firstNameInput = document.getElementById("FirstName");
+                const lastNameInput = document.getElementById("LastName");
+                const phoneNumberInput = document.getElementById("PhoneNumber");
 
-                // Kiểm tra Họ
                 if (!namePattern.test(firstNameInput.value.trim())) {
-                    firstNameError.style.display = 'block';
+                    document.getElementById("firstNameError").style.display = "block";
+                    valid = false;
                 } else {
-                    firstNameError.style.display = 'none';
+                    document.getElementById("firstNameError").style.display = "none";
                 }
 
-                // Kiểm tra Tên
                 if (!namePattern.test(lastNameInput.value.trim())) {
-                    lastNameError.style.display = 'block';
+                    document.getElementById("lastNameError").style.display = "block";
+                    valid = false;
                 } else {
-                    lastNameError.style.display = 'none';
+                    document.getElementById("lastNameError").style.display = "none";
                 }
 
-                // Kiểm tra số điện thoại có đúng 10 chữ số
-                var phoneNumber = document.getElementById("PhoneNumber").value;
-                if (!/^\d{10}$/.test(phoneNumber)) {
-                    document.getElementById("phoneNumberError").style.display = "inline";
+                if (!/^\d{10}$/.test(phoneNumberInput.value.trim())) {
+                    document.getElementById("phoneNumberError").style.display = "block";
                     valid = false;
                 } else {
                     document.getElementById("phoneNumberError").style.display = "none";

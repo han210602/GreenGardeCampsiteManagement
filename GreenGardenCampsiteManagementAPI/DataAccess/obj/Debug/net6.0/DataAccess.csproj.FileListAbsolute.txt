@@ -134,8 +134,6 @@ C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteMa
 C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\DataAccess\obj\Debug\net6.0\DataAccess.AssemblyInfoInputs.cache
 C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\DataAccess\obj\Debug\net6.0\DataAccess.AssemblyInfo.cs
 C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\DataAccess\obj\Debug\net6.0\DataAccess.csproj.CoreCompileInputs.cache
-C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\DataAccess\obj\Debug\net6.0\DataAccess.sourcelink.json
-C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\DataAccess\obj\Debug\net6.0\DataAccess.csproj.Up2Date
 C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\DataAccess\obj\Debug\net6.0\DataAccess.dll
 C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\DataAccess\obj\Debug\net6.0\refint\DataAccess.dll
 C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\DataAccess\obj\Debug\net6.0\DataAccess.pdb
@@ -634,3 +632,4 @@ C:\Users\ADMIN\Desktop\New folder (7)\GreenGardenCampsiteManagement\GreenGardenC
 C:\Users\ADMIN\Desktop\New folder (7)\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\DataAccess\obj\Debug\net6.0\DataAccess.pdb
 C:\Users\ADMIN\Desktop\New folder (7)\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\DataAccess\obj\Debug\net6.0\DataAccess.genruntimeconfig.cache
 C:\Users\ADMIN\Desktop\New folder (7)\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\DataAccess\obj\Debug\net6.0\ref\DataAccess.dll
+C:\Users\ADMIN\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\DataAccess\obj\Debug\net6.0\DataAccess.csproj.CopyComplete

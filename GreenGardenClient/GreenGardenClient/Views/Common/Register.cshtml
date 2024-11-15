@@ -1,5 +1,5 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-
+@model GreenGardenClient.Models.UserRegisterVM
 <!doctype html>
 
 <html lang="en">
@@ -113,6 +113,7 @@
                 .tile {
                     margin-top: 150px; /* Khoảng cách dưới */
                 }
+
                 .site-menu .dropdown {
                     display: none; /* Ẩn menu thả xuống */
                     position: absolute; /* Để menu thả xuống xuất hiện bên dưới mục Services */
@@ -143,6 +144,67 @@
                     display: block; /* Hiện menu thả xuống khi hover vào mục Services */
                 }
 
+                .bg-welcome {
+                    background-color: #fff7e6; /* Màu vàng nhạt */
+                    height: calc(100vh - 0px); /* Chiều cao đầy đủ, không chừa khoảng trống */
+                    margin: 0;
+                    padding: 0;
+                    display: flex;
+                    align-items: center;
+                }
+
+                /* Căn chỉnh toàn bộ nội dung */
+                .h-100 {
+                    height: 100%;
+                }
+
+                /* Nội dung chào mừng */
+                .welcome-content {
+                    max-width: 600px;
+                    text-align: center;
+                    color: #333;
+                }
+
+                .welcome-heading {
+                    font-size: 3rem;
+                    font-weight: bold;
+                    margin-bottom: 15px;
+                }
+
+                .welcome-subtext {
+                    font-size: 1.2rem;
+                    margin-bottom: 30px;
+                    color: #555;
+                }
+
+                /* Nút CTA */
+                .btn-primary {
+                    background-color: #ffc107; /* Màu vàng đậm */
+                    border: none;
+                    padding: 10px 20px;
+                    font-size: 1rem;
+                    border-radius: 5px;
+                    transition: background-color 0.3s ease, transform 0.2s ease;
+                }
+
+                    .btn-primary:hover {
+                        background-color: #e6ac00; /* Màu vàng tối hơn */
+                        transform: scale(1.05); /* Hiệu ứng phóng to nhẹ */
+                    }
+
+                /* Form đăng nhập */
+                .login-form {
+                    border-radius: 10px;
+                    width: 100%;
+                    max-width: 400px;
+                }
+
+                /* Xóa padding hoặc margin không cần thiết */
+                body, html {
+                    margin: 0;
+                    padding: 0;
+                    overflow-x: hidden;
+                }
             </style>
             <script>
                 $(document).ready(function () {
@@ -164,84 +226,116 @@
 
 
         </header>
-        <div class="site-section">
-            <div class="container-fluid">
-               <div class="tile">
-                    <div class="row">
-                        <!-- Thiết lập chiều cao cho hàng -->
-                        <!-- Phía bên trái: Logo hoặc hình ảnh -->
-                        <div class="col-md-6 d-flex align-items-center justify-content-center">
-                            <div class="text-center text-white" style="font-family: 'Poppins', sans-serif;">
-                                <img src="~/images/logo.jpg" alt="Image" class="img-fluid" style="max-width: 30%; height: auto;">
+        <div class="site-section bg-welcome full-height">
+            <div class="container-fluid h-100">
+                <div class="row h-100">
+                    <!-- Phía bên trái: Chào mừng -->
+                    <div class="col-md-6 d-flex align-items-center justify-content-center">
+                        <div class="text-center welcome-content">
+                            <h1 class="display-4 welcome-heading">Chào mừng quý khách</h1>
+                            <p class="lead welcome-subtext">Khám phá những trải nghiệm tuyệt vời của chúng tôi!</p>
+                            <a href="~/Service" class="btn btn-primary btn-lg mt-3">Tìm hiểu thêm</a>
+                        </div>
+                    </div>
 
-                                <h1 class="display-4" style="font-size: 2rem;">Chào mừng đến với chúng tôi</h1>
+                    <!-- Phía bên phải: Form đăng nhập -->
+                    <!-- Phía bên phải: Form đăng nhập -->
+                    <div class="col-md-6 d-flex align-items-center justify-content-center">
+                        <form id="registerForm" asp-action="Register" method="post" class="p-5 bg-light shadow-lg login-form" style="border-radius: 10px; width: 100%; max-width: 800px;">
+                            <h2 class="text-center mb-4">Đăng Ký</h2>
+
+                            <div class="row">
+                                <!-- Họ -->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="firstname">Họ:</label>
+                                        <input type="text" class="form-control" id="firstname" name="FirstName" placeholder="Họ" required value="@Model.FirstName">
+                                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <!-- Tên -->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="lastname">Tên:</label>
+                                        <input type="text" class="form-control" id="lastname" name="LastName" placeholder="Tên" required value="@Model.LastName">
+                                        <span asp-validation-for="LastName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <!-- Email -->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="email">Email:</label>
+                                        <input type="email" class="form-control" id="email" name="Email" placeholder="Email" required value="@Model.Email">
+                                        <span asp-validation-for="Email" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <!-- Số điện thoại -->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="PhoneNumber">Số điện thoại:</label>
+                                        <input type="tel" class="form-control" id="PhoneNumber" name="PhoneNumber" placeholder="Số điện thoại" required value="@Model.PhoneNumber">
+                                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <!-- Mật khẩu -->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="password">Mật khẩu:</label>
+                                        <input type="password" class="form-control" id="password" name="Password" placeholder="Mật khẩu" required value="@Model.Password">
+                                        <span asp-validation-for="Password" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <!-- Nhắc lại mật khẩu -->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="confirmPassword">Xác nhận mật khẩu:</label>
+                                        <input type="password" class="form-control" id="confirmPassword" name="ConfirmPassword" placeholder="Xác nhận mật khẩu" required value="@Model.ConfirmPassword">
+                                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                        <div id="passwordError" class="text-danger" style="display: none;">Mật khẩu không khớp, vui lòng nhập lại.</div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <!-- Mã xác thực -->
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="verificationCode">Nhập mã xác thực:</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="verificationCode" name="VerificationCode" placeholder="Mã xác thực" required style="max-width: 180px;" value="@ViewBag.code">
+                                            <button type="button" class="btn btn-secondary btn-sm ml-2" id="getCodeButton">Lấy mã</button>
+                                            <button type="button" class="btn btn-success btn-sm ml-2" style="display: none;" id="countdownButton">120s</button>
+                                        </div>
+                                        <span id="waitingMessage" style="color: red; display: none;">Vui lòng chờ trong giây lát...</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Lỗi xác nhận mật khẩu -->
+                            <div class="text-danger mb-3">
+
+                                <p>@ViewBag.error</p>
 
                             </div>
-                        </div>
 
-
-                        <!-- Phía bên phải: Form đăng nhập -->
-                        <div class="col-md-6 d-flex align-items-center justify-content-center">
-                            <form id="registerForm" asp-action="Register" method="post" class="p-5 bg-light" style="border-radius: 10px; width: 80%;">
-                                <h2 class="text-center">Đăng Ký</h2>
-
-                                <div class="form-group d-flex justify-content-between align-items-center">
-                                    <div class="form-group">
-                                        <label for="firstName">Họ:</label>
-                                        <input type="text" class="form-control" id="firstname" name="FirstName" placeholder="First Name" required>
-                                    </div>
-                                    <div class="form-group" style="padding-left:10px">
-                                        <label for="lastName">Tên:</label>
-                                        <input type="text" class="form-control" id="lastname" name="LastName" placeholder="Last Name" required>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="email">Email:</label>
-                                    <input type="email" class="form-control" id="email" name="Email" placeholder="Email" required>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="phone">Số điện thoại:</label>
-                                    <input type="tel" class="form-control" id="PhoneNumber" name="PhoneNumber" placeholder="Nhập số điện thoại" required>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="password">Mật khẩu:</label>
-                                    <input type="password" class="form-control" id="password" name="Password" placeholder="Nhập mật khẩu" required>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="confirmPassword">Nhắc lại Mật khẩu:</label>
-                                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Xác nhận mật khẩu" required>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="verificationCode" class="form-label">Nhập mã xác thực</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" id="verificationCode" name="VerificationCode" placeholder="Mã xác thực" required>
-                                        <button type="button" class="btn btn-secondary btn-sm" id="getCodeButton">Lấy mã</button>
-                                        <button type="button" class="btn btn-success" style="display: none;" id="countdownButton">120s</button>
-                                    </div>
-                                    <span id="waitingMessage" style="color: red; display: none;">Vui lòng chờ trong giây lát...</span>
-
-
-                                </div>
-                                @if (ViewBag.VerificationError != null)
-                                {
-                                    <div id="verificationError" style="color: red; margin-top: 5px;">
-                                        @ViewBag.VerificationError
-                                    </div>
-                                }
-                                <div id="passwordError" style="color: red; display: none; margin-top: 10px;">Xác nhận mật khẩu sai, vui lòng nhập lại</div>
-
-                                <button type="button" class="btn btn-primary btn-block mt-3" onclick="validatePassword()">Đăng Ký</button>
-                            </form>
-
-                        </div>
-
+                            <!-- Nút đăng ký -->
+                            <button type="button" class="btn btn-primary btn-block mt-3" onclick="validatePassword()">Đăng Ký</button>
+                        </form>
                     </div>
-               </div>
+
+
+
+                </div>
             </div>
         </div>
 

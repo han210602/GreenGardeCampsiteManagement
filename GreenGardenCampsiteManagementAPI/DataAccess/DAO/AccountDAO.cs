@@ -1,19 +1,15 @@
-﻿using BusinessObject.Models;
-using BusinessObject.DTOs;
+﻿using BusinessObject.DTOs;
+using BusinessObject.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 using System.Text.Json;
-using Microsoft.EntityFrameworkCore;
-using System.Net.Mail;
-using System.Net;
-using System.Collections.Concurrent;
 
 namespace DataAccess.DAO
 {
@@ -29,11 +25,15 @@ namespace DataAccess.DAO
                 // Retrieve the user by email
                 var user = context.Users.SingleOrDefault(u => u.Email == a.Email);
                 // Check if the user exists and is active
-                if (user == null || user.IsActive == false)
+                if (user == null)
                 {
-                    throw new Exception("Invalid email or account inactive.");
+                    throw new Exception("Địa chỉ email không tồn tại.");
                 }
+                if (user.IsActive == false)
+                {
+                    throw new Exception("Tài khoản của bạn đã bị khóa.");
 
+                }
                 // Check if the password is correct
                 if (user.Password == a.Password)
                 {
@@ -46,12 +46,12 @@ namespace DataAccess.DAO
                     // Define JWT claims, including RoleId
                     var claims = new[]
                     {
-                new Claim(JwtRegisteredClaimNames.Sub, configuration["Jwt:Subject"]),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim("UserId", user.UserId.ToString()),
-                new Claim("Email", user.Email),
-                new Claim("RoleId", user.RoleId.ToString())
-            };
+    new Claim(JwtRegisteredClaimNames.Sub, configuration["Jwt:Subject"]),
+    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+    new Claim("UserId", user.UserId.ToString()),
+    new Claim("Email", user.Email),
+    new Claim("RoleId", user.RoleId.ToString())
+};
 
                     // Create JWT token
                     var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
@@ -92,9 +92,11 @@ namespace DataAccess.DAO
                     }
 
                     // Throw an error message if the login attempt fails
-                    throw new Exception("Invalid email or password.");
+                    throw new Exception("Mật khẩu không đúng");
                 }
             }
+
+
         }
 
         private static readonly ConcurrentDictionary<string, (string Code, DateTime Expiration)> VerificationCodes = new ConcurrentDictionary<string, (string, DateTime)>();
@@ -162,7 +164,7 @@ namespace DataAccess.DAO
             }
         }
 
-       public static async Task<string> SendVerificationCode(string email, IConfiguration configuration)
+        public static async Task<string> SendVerificationCode(string email, IConfiguration configuration)
         {
             var verificationCode = GenerateVerificationCode();
 
@@ -363,21 +365,21 @@ namespace DataAccess.DAO
         {
             using (var context = new GreenGardenContext())
             {
-                
+
                 var user = await context.Users.SingleOrDefaultAsync(u => u.UserId == changePasswordDto.UserId);
                 if (user == null)
                 {
-                    return "Người dùng không tồn tại."; 
+                    return "Người dùng không tồn tại.";
                 }
 
                 if (user.Password != changePasswordDto.OldPassword)
                 {
-                    return "Mật khẩu cũ không đúng."; 
+                    return "Mật khẩu cũ không đúng.";
                 }
 
                 if (changePasswordDto.NewPassword != changePasswordDto.ConfirmPassword)
                 {
-                    return "Mật khẩu mới và xác nhận mật khẩu không khớp."; 
+                    return "Mật khẩu mới và xác nhận mật khẩu không khớp.";
                 }
 
                 user.Password = changePasswordDto.NewPassword;
@@ -385,7 +387,7 @@ namespace DataAccess.DAO
                 try
                 {
                     await context.SaveChangesAsync();
-                    return "Cập nhật mật khẩu thành công."; 
+                    return "Cập nhật mật khẩu thành công.";
                 }
                 catch (DbUpdateException ex)
                 {

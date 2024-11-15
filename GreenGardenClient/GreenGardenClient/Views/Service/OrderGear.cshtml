@@ -488,7 +488,7 @@
             <li class="page-item last-page"><a href="#" class="page-link">»</a></li>
         </ul>
     </nav>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
 
         $(document).ready(function () {
@@ -507,10 +507,11 @@
                 var startItem = (page - 1) * itemsPerPage;
                 var endItem = Math.min(startItem + itemsPerPage, items.length);
 
+                console.log(`Displaying items ${startItem + 1} to ${endItem} on page ${page}`);
+                console.log("Total items: ", items.length);  // Log total items
+
                 // Show items for the current page with fade-in effect
                 items.slice(startItem, endItem).fadeIn();
-
-                console.log(`Displaying items ${startItem + 1} to ${endItem} on page ${page}`);
 
                 // Update pagination buttons
                 $('#pagination .page-item').removeClass('active');
@@ -553,6 +554,9 @@
                         showPage(currentPage);
                     }
                 });
+
+                // Log to confirm updatePagination is called
+                console.log("Pagination updated. Displaying first page.");
 
                 // Display the first page of items after initializing pagination
                 setTimeout(() => showPage(1), 100); // Added timeout for execution delay
@@ -620,6 +624,7 @@
 
                     // Reinitialize pagination after filtering
                     initializePagination(); // Reset pagination based on the new filtered items
+                    showPage(currentPage); // Ensure we are showing the correct page after the filter update
                     AOS.refresh(); // Refresh AOS for animations
                 });
             }
@@ -633,6 +638,7 @@
             initializePagination();
             AOS.init();
         });
+
     </script>
 
 

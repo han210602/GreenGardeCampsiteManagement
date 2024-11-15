@@ -186,7 +186,6 @@ C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteMa
 C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenCampsiteManagementAPI\obj\Debug\net6.0\GreenGardenCampsiteManagementAPI.csproj.CoreCompileInputs.cache
 C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenCampsiteManagementAPI\obj\Debug\net6.0\GreenGardenCampsiteManagementAPI.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenCampsiteManagementAPI\obj\Debug\net6.0\GreenGardenCampsiteManagementAPI.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenCampsiteManagementAPI\obj\Debug\net6.0\GreenGardenCampsiteManagementAPI.sourcelink.json
 C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenCampsiteManagementAPI\obj\Debug\net6.0\staticwebassets.build.json
 C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenCampsiteManagementAPI\obj\Debug\net6.0\staticwebassets.development.json
 C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenCampsiteManagementAPI\obj\Debug\net6.0\staticwebassets\msbuild.GreenGardenCampsiteManagementAPI.Microsoft.AspNetCore.StaticWebAssets.props
@@ -195,7 +194,6 @@ C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteMa
 C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenCampsiteManagementAPI\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.GreenGardenCampsiteManagementAPI.props
 C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenCampsiteManagementAPI\obj\Debug\net6.0\staticwebassets.pack.json
 C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenCampsiteManagementAPI\obj\Debug\net6.0\scopedcss\bundle\GreenGardenCampsiteManagementAPI.styles.css
-C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenCampsiteManagementAPI\obj\Debug\net6.0\GreenGar.23CCF649.Up2Date
 C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenCampsiteManagementAPI\obj\Debug\net6.0\GreenGardenCampsiteManagementAPI.dll
 C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenCampsiteManagementAPI\obj\Debug\net6.0\refint\GreenGardenCampsiteManagementAPI.dll
 C:\Users\admin\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenCampsiteManagementAPI\obj\Debug\net6.0\GreenGardenCampsiteManagementAPI.pdb
@@ -874,3 +872,4 @@ C:\Users\ADMIN\Desktop\New folder (7)\GreenGardenCampsiteManagement\GreenGardenC
 C:\Users\ADMIN\Desktop\New folder (7)\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenCampsiteManagementAPI\obj\Debug\net6.0\GreenGardenCampsiteManagementAPI.pdb
 C:\Users\ADMIN\Desktop\New folder (7)\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenCampsiteManagementAPI\obj\Debug\net6.0\GreenGardenCampsiteManagementAPI.genruntimeconfig.cache
 C:\Users\ADMIN\Desktop\New folder (7)\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenCampsiteManagementAPI\obj\Debug\net6.0\ref\GreenGardenCampsiteManagementAPI.dll
+C:\Users\ADMIN\Desktop\Do an\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenCampsiteManagementAPI\obj\Debug\net6.0\GreenGardenCampsiteManagementAPI.csproj.CopyComplete
