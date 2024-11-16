@@ -359,6 +359,317 @@ namespace GreenGardenAPITest.DAO
             var exception = await Assert.ThrowsAsync<Exception>(() => Task.FromResult(FoodAndDrinkDAO.GetAllFoodAndDrinkCategories()));
         }
 
+        // Test for method GetFoodAndDrinks
+        private async Task<GreenGardenContext> GetDbContext2() // Create a database in memory with mock data.
+        {
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()) // unique name for each test
+                .Options;
+
+            var databaseContext = new GreenGardenContext(options);
+            databaseContext.Database.EnsureCreated();
+
+            // Clear the change tracker to ensure no duplicates
+            databaseContext.ChangeTracker.Clear();
+
+            // Seed mock data
+            if (!await databaseContext.FoodAndDrinks.AnyAsync())
+            {
+                var category1 = new FoodAndDrinkCategory { CategoryId = 1, CategoryName = "Beverages" };
+                var category2 = new FoodAndDrinkCategory { CategoryId = 2, CategoryName = "Snacks" };
+                var category3 = new FoodAndDrinkCategory { CategoryId = 3, CategoryName = "Desserts" };
+
+                databaseContext.FoodAndDrinkCategories.AddRange(category1, category2, category3);
+
+                databaseContext.FoodAndDrinks.AddRange(
+                    new FoodAndDrink
+                    {
+                        Status = true,
+                        ItemId = 1,
+                        ItemName = "Coca-Cola",
+                        Price = 1.5m, // Price below 300,000
+                        Description = "Refreshing beverage",
+                        Category = category1,
+                        ImgUrl = "http://example.com/coke.jpg"
+                    },
+                    new FoodAndDrink
+                    {
+                        Status = true,
+                        ItemId = 2,
+                        ItemName = "Potato Chips",
+                        Price = 2.0m, // Price below 300,000
+                        Description = "Crispy and salty",
+                        Category = category2,
+                        ImgUrl = "http://example.com/chips.jpg"
+                    },
+                    new FoodAndDrink
+                    {
+                        Status = true,
+                        ItemId = 3,
+                        ItemName = "Premium Coffee",
+                        Price = 350000m, // Price between 300,000 and 500,000
+                        Description = "Smooth and strong coffee",
+                        Category = category3,
+                        ImgUrl = "http://example.com/coffee.jpg"
+                    }
+                );
+
+                await databaseContext.SaveChangesAsync();
+            }
+
+            return databaseContext;
+        }
+
+        [Fact]
+        public async Task GetFoodAndDrinks_ShouldReturnAllItems_WhenNoFilterOrSort()
+        {
+            // Arrange
+            var dbContext = await GetDbContext2();
+            FoodAndDrinkDAO.InitializeContext(dbContext);
+
+            // Act
+            var result =  FoodAndDrinkDAO.GetFoodAndDrinks(null, null, null);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(3, result.Count);  // All active items should be returned
+        }
+
+        [Fact]
+        public async Task GetFoodAndDrinks_ShouldReturnCategory1Items_WhenCategoryIdIs1()
+        {
+            // Arrange
+            var dbContext = await GetDbContext2();
+            FoodAndDrinkDAO.InitializeContext(dbContext);
+
+            // Act
+            var result = FoodAndDrinkDAO.GetFoodAndDrinks(1, null, null);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Single(result);  // Only 1 item in category 1
+            Assert.Equal("Coca-Cola", result.First().ItemName);
+        }
+
+        [Fact]
+        public async Task GetFoodAndDrinks_ShouldReturnItemsUnder300K_WhenPriceRangeIsUnder300K()
+        {
+            // Arrange
+            var dbContext = await GetDbContext2();
+            FoodAndDrinkDAO.InitializeContext(dbContext);
+
+            // Act
+            var result = FoodAndDrinkDAO.GetFoodAndDrinks(null, null, 1);  // Price range 1 (< 300K)
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(2, result.Count);  // 2 items priced under 300,000
+        }
+
+        [Fact]
+        public async Task GetFoodAndDrinks_ShouldReturnItems300Kto500K_WhenPriceRangeIs300Kto500K()
+        {
+            // Arrange
+            var dbContext = await GetDbContext2();
+            FoodAndDrinkDAO.InitializeContext(dbContext);
+
+            // Act
+            var result = FoodAndDrinkDAO.GetFoodAndDrinks(null, null, 2);  // Price range 2 (300K to 500K)
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(1, result.Count);  // No items in this price range
+        }
+
+        [Fact]
+        public async Task GetFoodAndDrinks_ShouldReturnItemsOver500K_WhenPriceRangeIsOver500K()
+        {
+            // Arrange
+            var dbContext = await GetDbContext2();
+            FoodAndDrinkDAO.InitializeContext(dbContext);
+
+            // Act
+            var result = FoodAndDrinkDAO.GetFoodAndDrinks(null, null, 3);  // Price range 3 (> 500K)
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(0, result.Count);  // No items over 500,000
+        }
+
+        [Fact]
+        public async Task GetFoodAndDrinks_ShouldReturnItemsSortedByPriceAsc_WhenSortedByPriceAsc()
+        {
+            // Arrange
+            var dbContext = await GetDbContext2();
+            FoodAndDrinkDAO.InitializeContext(dbContext);
+
+            // Act
+            var result = FoodAndDrinkDAO.GetFoodAndDrinks(null, 1, null);  // Sort by price ascending
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(3, result.Count);
+            Assert.Equal("Coca-Cola", result.First().ItemName);  // Food1 should come first (lowest price)
+        }
+
+        [Fact]
+        public async Task GetFoodAndDrinks_ShouldReturnItemsSortedByPriceDesc_WhenSortedByPriceDesc()
+        {
+            // Arrange
+            var dbContext = await GetDbContext2();
+            FoodAndDrinkDAO.InitializeContext(dbContext);
+
+            // Act
+            var result = FoodAndDrinkDAO.GetFoodAndDrinks(null, 2, null);  // Sort by price descending
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(3, result.Count);
+            Assert.Equal("Premium Coffee", result.First().ItemName);  // Premium Coffee should be the highest priced
+        }
+
+        [Fact]
+        public async Task GetFoodAndDrinks_ShouldReturnItemsSortedByNameAsc_WhenSortedByNameAsc()
+        {
+            // Arrange
+            var dbContext = await GetDbContext2();
+            FoodAndDrinkDAO.InitializeContext(dbContext);
+
+            // Act
+            var result = FoodAndDrinkDAO.GetFoodAndDrinks(null, 3, null);  // Sort by name ascending
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(3, result.Count);
+            Assert.Equal("Coca-Cola", result.First().ItemName);  // Coca-Cola should come first alphabetically
+        }
+
+        [Fact]
+        public async Task GetFoodAndDrinks_ShouldReturnItemsSortedByNameDesc_WhenSortedByNameDesc()
+        {
+            // Arrange
+            var dbContext = await GetDbContext2();
+            FoodAndDrinkDAO.InitializeContext(dbContext);
+
+            // Act
+            var result = FoodAndDrinkDAO.GetFoodAndDrinks(null, 4, null);  // Sort by name descending
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(3, result.Count);
+            Assert.Equal("Premium Coffee", result.First().ItemName);  // Premium Coffee should come first alphabetically (Z-A)
+        }
+
+        [Fact]
+        public async Task GetFoodAndDrinks_ShouldReturnItemsSortedByCreationDate_WhenSortedByCreationDate()
+        {
+            // Arrange
+            var dbContext = await GetDbContext2();
+            FoodAndDrinkDAO.InitializeContext(dbContext);
+
+            // Act
+            var result = FoodAndDrinkDAO.GetFoodAndDrinks(null, 5, null);  // Sort by creation date
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(3, result.Count);
+        }
+
+        [Fact]
+        public async Task GetFoodAndDrinks_ShouldReturnItemsSortedByQuantityDesc_WhenSortedByQuantityDesc()
+        {
+            // Arrange
+            var dbContext = await GetDbContext2();
+            FoodAndDrinkDAO.InitializeContext(dbContext);
+
+            // Act
+            var result = FoodAndDrinkDAO.GetFoodAndDrinks(null, 6, null);  // Sort by quantity descending
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(3, result.Count);
+        }
+
+        [Fact]
+        public async Task GetFoodAndDrinks_ShouldReturnCategory1ItemsUnder300K_WhenCategoryIs1AndPriceRangeIsUnder300K()
+        {
+            // Arrange
+            var dbContext = await GetDbContext2();
+            FoodAndDrinkDAO.InitializeContext(dbContext);
+
+            // Act
+            var result = FoodAndDrinkDAO.GetFoodAndDrinks(1, null, 1);  // Category 1 and price range under 300K
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(1, result.Count);  // Only 1 item in category 1 and price under 300K
+        }
+
+        [Fact]
+        public async Task GetFoodAndDrinks_ShouldReturnCategory1SortedByPriceAsc_WhenCategoryIs1AndSortedByPriceAsc()
+        {
+            // Arrange
+            var dbContext = await GetDbContext2();
+            FoodAndDrinkDAO.InitializeContext(dbContext);
+
+            // Act
+            var result = FoodAndDrinkDAO.GetFoodAndDrinks(1, 1, null);  // Category 1 and sorted by price ascending
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(2, result.Count);
+            Assert.Equal("Coca-Cola", result.First().ItemName);  // The lowest price item in category 1
+        }
+
+        [Fact]
+        public async Task GetFoodAndDrinks_ShouldReturnAllItems_WhenInvalidPriceRangeAndSortBy()
+        {
+            // Arrange
+            var dbContext = await GetDbContext2();
+            FoodAndDrinkDAO.InitializeContext(dbContext);
+
+            // Act
+            var result = FoodAndDrinkDAO.GetFoodAndDrinks(null, 999, 999);  // Invalid price range and sort value
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(3, result.Count);  // All items should be returned as filters are invalid
+        }
+
+        [Fact]
+        public async Task GetFoodAndDrinksShouldThrowException_WhenRepositoryThrowsException()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            var databaseContext = new GreenGardenContext(options);
+            databaseContext.Database.EnsureCreated();
+
+            // Simulate an exception scenario by setting the context to null or failing in some way
+            ComboDAO.InitializeContext(null); // Provide null context to force an exception
+
+            // Act & Assert
+            var exception = await Assert.ThrowsAsync<Exception>(() => Task.FromResult(FoodAndDrinkDAO.GetFoodAndDrinks));
+        }
+
+
+        [Fact]
+        public async Task GetFoodAndDrinks_ShouldReturnEmpty_WhenCategoryHasNoItems()
+        {
+            // Arrange
+            var dbContext = await GetDbContext2();
+            FoodAndDrinkDAO.InitializeContext(dbContext);
+
+            // Act
+            var result = FoodAndDrinkDAO.GetFoodAndDrinks(999, null, null);  // Non-existent category
+
+            // Assert
+            Assert.Empty(result);  // No items for non-existent category
+        }
+
+
 
     }
 }
