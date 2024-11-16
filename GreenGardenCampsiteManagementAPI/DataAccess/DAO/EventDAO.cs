@@ -9,13 +9,18 @@ namespace DataAccess.DAO
 {
     public class EventDAO
     {
-        private static GreenGardenContext context = new GreenGardenContext();
+        //private static GreenGardenContext context = new GreenGardenContext();
+        private static GreenGardenContext _context;
+        public static void InitializeContext(GreenGardenContext context)
+        {
+            _context = context;
+        }
 
         public static List<EventDTO> GetAllEvents()
         {
             try
             {
-                var events = context.Events.Include(user => user.CreateByNavigation)
+                var events = _context.Events.Include(user => user.CreateByNavigation)
                     .Select(eventEntity => new EventDTO
                     {
                         EventId = eventEntity.EventId,
@@ -42,7 +47,7 @@ namespace DataAccess.DAO
         {
             try
             {
-                var events = context.Events.Include(user => user.CreateByNavigation)
+                var events = _context.Events.Include(user => user.CreateByNavigation)
                     .Where(e => e.CreateBy == id)
                     .Select(eventEntity => new EventDTO
                     {
@@ -71,7 +76,7 @@ namespace DataAccess.DAO
             try
             {
                 // Truy vấn sự kiện theo EventId và bao gồm thông tin người tạo
-                var eventEntity = context.Events
+                var eventEntity = _context.Events
                     .Include(e => e.CreateByNavigation) // Bao gồm dữ liệu từ bảng liên kết với người tạo
                     .Where(e => e.EventId == id) // Điều kiện để tìm sự kiện theo EventId
                     .Select(e => new EventDTO

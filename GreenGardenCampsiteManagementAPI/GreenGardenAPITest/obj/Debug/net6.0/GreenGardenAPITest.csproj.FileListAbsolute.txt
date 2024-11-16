@@ -573,11 +573,7 @@ C:\Users\Nguyen Thanh Hau\Desktop\GreenGarden\GreenGardenCampsiteManagement\Gree
 C:\Users\Nguyen Thanh Hau\Desktop\GreenGarden\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenAPITest\obj\Debug\net6.0\GreenGardenAPITest.genruntimeconfig.cache
 C:\Users\Nguyen Thanh Hau\Desktop\GreenGarden\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenAPITest\obj\Debug\net6.0\ref\GreenGardenAPITest.dll
 C:\Users\Nguyen Thanh Hau\Desktop\GreenGarden\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenAPITest\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.InMemory.dll
-C:\Users\Nguyen Thanh Hau\Desktop\GreenGarden\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenAPITest\bin\Debug\net6.0\Microsoft.Extensions.Caching.Abstractions.dll
-C:\Users\Nguyen Thanh Hau\Desktop\GreenGarden\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenAPITest\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
-C:\Users\Nguyen Thanh Hau\Desktop\GreenGarden\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenAPITest\bin\Debug\net6.0\Microsoft.Extensions.Logging.dll
-C:\Users\Nguyen Thanh Hau\Desktop\GreenGarden\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenAPITest\bin\Debug\net6.0\Microsoft.Extensions.Logging.Abstractions.dll
-C:\Users\Nguyen Thanh Hau\Desktop\GreenGarden\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenAPITest\bin\Debug\net6.0\Microsoft.Extensions.Options.dll
 C:\Users\Nguyen Thanh Hau\Desktop\GreenGarden\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenAPITest\bin\Debug\net6.0\Humanizer.dll
 C:\Users\Nguyen Thanh Hau\Desktop\GreenGarden\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenAPITest\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
 C:\Users\Nguyen Thanh Hau\Desktop\GreenGarden\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenAPITest\bin\Debug\net6.0\NSubstitute.dll
+C:\Users\Nguyen Thanh Hau\Desktop\GreenGarden\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\GreenGardenAPITest\bin\Debug\net6.0\System.Diagnostics.DiagnosticSource.dll
