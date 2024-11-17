@@ -2,6 +2,7 @@
 using BusinessObject.Models;
 using DataAccess.DAO;
 using Microsoft.EntityFrameworkCore;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -124,6 +125,242 @@ namespace GreenGardenAPITest.DAO
         }
 
         // Test for method GetAccountById
+        [Fact]
+        public async Task GetAccountById_ShouldReturnUser_WhenUserIdIsValid()
+        {
+            // Arrange
+            var dbContext = await GetDbContext();
+            AccountDAO.InitializeContext(dbContext);
+
+            // Act
+            var result = AccountDAO.GetAccountById(1); // Assuming 1 is a valid user ID from the seed data
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(1, result.UserId);
+            Assert.Equal("John", result.FirstName); // Match the seeded data
+            Assert.Equal("Doe", result.LastName);
+            Assert.Equal("john.doe@example.com", result.Email);
+        }
+
+        [Fact]
+        public async Task GetAccountById_ShouldReturnNull_WhenUserIdIsInvalid()
+        {
+            // Arrange
+            var dbContext = await GetDbContext();
+            AccountDAO.InitializeContext(dbContext);
+
+            // Act
+            var result = AccountDAO.GetAccountById(999); // Assuming 999 is not a valid user ID
+
+            // Assert
+            Assert.Null(result);
+        }
+
+        // Test for method UpdateProfile
+        [Fact]
+        public async Task UpdateProfile_ShouldReturnSuccessMessage_WhenUserExists()
+        {
+            // Arrange
+            var dbContext = await GetDbContext();
+            AccountDAO.InitializeContext(dbContext);
+
+            var updateProfileDto = new UpdateProfile
+            {
+                UserId = 1,
+                FirstName = "UpdatedFirstName",
+                LastName = "UpdatedLastName",
+                Email = "updated.email@example.com",
+                PhoneNumber = "1112223333",
+                Address = "Updated Address",
+                DateOfBirth = new DateTime(1992, 2, 20),
+                Gender = "Male",
+                ProfilePictureUrl = "http://example.com/updated-profile.jpg"
+            };
+
+            // Act
+            var result = await AccountDAO.UpdateProfile(updateProfileDto);
+
+            // Assert
+            Assert.Equal("Cập nhật thông tin thành công.", result);
+
+            var updatedUser = await dbContext.Users.SingleOrDefaultAsync(u => u.UserId == 1);
+            Assert.NotNull(updatedUser);
+            Assert.Equal("UpdatedFirstName", updatedUser.FirstName);
+            Assert.Equal("UpdatedLastName", updatedUser.LastName);
+            Assert.Equal("updated.email@example.com", updatedUser.Email);
+        }
+
+        [Fact]
+        public async Task UpdateProfile_ShouldReturnErrorMessage_WhenUserDoesNotExist()
+        {
+            // Arrange
+            var dbContext = await GetDbContext();
+            AccountDAO.InitializeContext(dbContext);
+
+            var updateProfileDto = new UpdateProfile
+            {
+                UserId = 999, // Non-existent UserId
+                FirstName = "NonExistent",
+                LastName = "User",
+                Email = "nonexistent.user@example.com",
+                PhoneNumber = "0000000000",
+                Address = "No Address",
+                DateOfBirth = new DateTime(2000, 1, 1),
+                Gender = "Unknown",
+                ProfilePictureUrl = "http://example.com/nonexistent.jpg"
+            };
+
+            // Act
+            var result = await AccountDAO.UpdateProfile(updateProfileDto);
+
+            // Assert
+            Assert.Equal("Người dùng không tồn tại.", result);
+        }
+
+        [Fact]
+        public async Task UpdateProfile_ShouldThrowException_WhenDatabaseUpdateFails()
+        {
+            // Arrange
+            var dbContext = await GetDbContext();
+            AccountDAO.InitializeContext(dbContext);
+
+            var updateProfileDto = new UpdateProfile
+            {
+                UserId = 1,
+                FirstName = "FaultyUpdate",
+                LastName = "Test",
+                Email = "faulty.update@example.com",
+                PhoneNumber = "9999999999",
+                Address = "Faulty Address",
+                DateOfBirth = new DateTime(1995, 5, 5),
+                Gender = "Other",
+                ProfilePictureUrl = "http://example.com/faulty.jpg"
+            };
+
+            var mockContext = new Mock<GreenGardenContext>();
+            mockContext.Setup(c => c.SaveChangesAsync(It.IsAny<CancellationToken>()))
+                       .ThrowsAsync(new DbUpdateException("Simulated database update failure."));
+
+            AccountDAO.InitializeContext(mockContext.Object);
+
+            // Act & Assert
+            var exception = await Assert.ThrowsAsync<Exception>(() => AccountDAO.UpdateProfile(updateProfileDto));
+            Assert.Contains("Đã xảy ra lỗi khi cập nhật thông tin:", exception.Message);
+        }
+
+        [Fact]
+        public async Task UpdateProfile_ShouldReturnError_WhenMandatoryFieldsAreNull()
+        {
+            // Arrange
+            var dbContext = await GetDbContext();
+            AccountDAO.InitializeContext(dbContext);
+
+            var updateProfileDto = new UpdateProfile
+            {
+                UserId = 1, // Valid user
+                FirstName = null, // Mandatory field
+                LastName = null,  // Mandatory field
+                Email = null,     // Mandatory field
+                PhoneNumber = "1112223333",
+                Address = "Updated Address",
+                DateOfBirth = new DateTime(1992, 2, 20),
+                Gender = "Male",
+                ProfilePictureUrl = "http://example.com/updated-profile.jpg"
+            };
+
+            // Act
+            var exception = await Assert.ThrowsAsync<Exception>(() => AccountDAO.UpdateProfile(updateProfileDto));
+
+            // Assert
+            Assert.Contains("FirstName, LastName, and Email cannot be null or empty.", exception.Message);
+        }
+
+        [Fact]
+        public async Task UpdateProfile_ShouldReturnError_WhenFirstNameIsNull()
+        {
+            // Arrange
+            var dbContext = await GetDbContext();
+            AccountDAO.InitializeContext(dbContext);
+
+            var updateProfileDto = new UpdateProfile
+            {
+                UserId = 1, // Valid user
+                FirstName = null, // Mandatory field is null
+                LastName = "UpdatedLastName",
+                Email = "updated.email@example.com",
+                PhoneNumber = "1112223333",
+                Address = "Updated Address",
+                DateOfBirth = new DateTime(1992, 2, 20),
+                Gender = "Male",
+                ProfilePictureUrl = "http://example.com/updated-profile.jpg"
+            };
+
+            // Act
+            var exception = await Assert.ThrowsAsync<Exception>(() => AccountDAO.UpdateProfile(updateProfileDto));
+
+            // Assert
+            Assert.Contains("FirstName cannot be null or empty.", exception.Message);
+        }
+
+        [Fact]
+        public async Task UpdateProfile_ShouldReturnError_WhenLastNameIsNull()
+        {
+            // Arrange
+            var dbContext = await GetDbContext();
+            AccountDAO.InitializeContext(dbContext);
+
+            var updateProfileDto = new UpdateProfile
+            {
+                UserId = 1, // Valid user
+                FirstName = "UpdatedFirstName",
+                LastName = null, // Mandatory field is null
+                Email = "updated.email@example.com",
+                PhoneNumber = "1112223333",
+                Address = "Updated Address",
+                DateOfBirth = new DateTime(1992, 2, 20),
+                Gender = "Male",
+                ProfilePictureUrl = "http://example.com/updated-profile.jpg"
+            };
+
+            // Act
+            var exception = await Assert.ThrowsAsync<Exception>(() => AccountDAO.UpdateProfile(updateProfileDto));
+
+            // Assert
+            Assert.Contains("LastName cannot be null or empty.", exception.Message);
+        }
+
+        [Fact]
+        public async Task UpdateProfile_ShouldReturnError_WhenEmailIsNull()
+        {
+            // Arrange
+            var dbContext = await GetDbContext();
+            AccountDAO.InitializeContext(dbContext);
+
+            var updateProfileDto = new UpdateProfile
+            {
+                UserId = 1, // Valid user
+                FirstName = "UpdatedFirstName",
+                LastName = "UpdatedLastName",
+                Email = null, // Mandatory field is null
+                PhoneNumber = "1112223333",
+                Address = "Updated Address",
+                DateOfBirth = new DateTime(1992, 2, 20),
+                Gender = "Male",
+                ProfilePictureUrl = "http://example.com/updated-profile.jpg"
+            };
+
+            // Act
+            var exception = await Assert.ThrowsAsync<Exception>(() => AccountDAO.UpdateProfile(updateProfileDto));
+
+            // Assert
+            Assert.Contains("Email cannot be null or empty.", exception.Message);
+        }
+
+
+
+
+
 
     }
 }

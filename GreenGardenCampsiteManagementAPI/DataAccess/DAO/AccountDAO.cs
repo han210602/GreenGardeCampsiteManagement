@@ -303,65 +303,62 @@ namespace DataAccess.DAO
         }
         public static ViewUserDTO GetAccountById(int userId)
         {
-            using (var context = new GreenGardenContext())
-            {
-                // Retrieve the user with the given UserId from the database and map it to ViewUserDTO
-                var user = context.Users
-                    .Where(u => u.UserId == userId)
-                    .Select(user => new ViewUserDTO
-                    {
-                        UserId = user.UserId,
-                        FirstName = user.FirstName,
-                        LastName = user.LastName,
-                        Email = user.Email,
-                        Password = user.Password,
-                        PhoneNumber = user.PhoneNumber,
-                        Address = user.Address,
-                        DateOfBirth = user.DateOfBirth,
-                        Gender = user.Gender,
-                        ProfilePictureUrl = user.ProfilePictureUrl,
-                        IsActive = user.IsActive,
-                        CreatedAt = user.CreatedAt,
-                        RoleId = user.RoleId
-                    })
-                    .FirstOrDefault(); // Returns null if no user is found
 
-                return user;
-            }
+            // Retrieve the user with the given UserId from the database and map it to ViewUserDTO
+            var user = _context.Users
+                .Where(u => u.UserId == userId)
+                .Select(user => new ViewUserDTO
+                {
+                    UserId = user.UserId,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    Password = user.Password,
+                    PhoneNumber = user.PhoneNumber,
+                    Address = user.Address,
+                    DateOfBirth = user.DateOfBirth,
+                    Gender = user.Gender,
+                    ProfilePictureUrl = user.ProfilePictureUrl,
+                    IsActive = user.IsActive,
+                    CreatedAt = user.CreatedAt,
+                    RoleId = user.RoleId
+                })
+                .FirstOrDefault(); // Returns null if no user is found
+
+            return user;
+
         }
         public static async Task<string> UpdateProfile(UpdateProfile updateProfileDto)
         {
-            using (var context = new GreenGardenContext())
+
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.UserId == updateProfileDto.UserId);
+            if (user == null)
+            {
+                return "Người dùng không tồn tại.";
+            }
+
+
+            user.FirstName = updateProfileDto.FirstName;
+            user.LastName = updateProfileDto.LastName;
+            user.Email = updateProfileDto.Email;
+            user.PhoneNumber = updateProfileDto.PhoneNumber;
+            user.Address = updateProfileDto.Address;
+            user.DateOfBirth = updateProfileDto.DateOfBirth;
+            user.Gender = updateProfileDto.Gender;
+            user.ProfilePictureUrl = updateProfileDto.ProfilePictureUrl;
+
+            try
             {
 
-                var user = await context.Users.SingleOrDefaultAsync(u => u.UserId == updateProfileDto.UserId);
-                if (user == null)
-                {
-                    return "Người dùng không tồn tại.";
-                }
-
-
-                user.FirstName = updateProfileDto.FirstName;
-                user.LastName = updateProfileDto.LastName;
-                user.Email = updateProfileDto.Email;
-                user.PhoneNumber = updateProfileDto.PhoneNumber;
-                user.Address = updateProfileDto.Address;
-                user.DateOfBirth = updateProfileDto.DateOfBirth;
-                user.Gender = updateProfileDto.Gender;
-                user.ProfilePictureUrl = updateProfileDto.ProfilePictureUrl;
-
-                try
-                {
-
-                    await context.SaveChangesAsync();
-                    return "Cập nhật thông tin thành công.";
-                }
-                catch (DbUpdateException ex)
-                {
-
-                    throw new Exception("Đã xảy ra lỗi khi cập nhật thông tin: " + ex.InnerException?.Message);
-                }
+                await _context.SaveChangesAsync();
+                return "Cập nhật thông tin thành công.";
             }
+            catch (DbUpdateException ex)
+            {
+
+                throw new Exception("Đã xảy ra lỗi khi cập nhật thông tin: " + ex.InnerException?.Message);
+            }
+
         }
 
         public static async Task<string> ChangePassword(ChangePassword changePasswordDto)
