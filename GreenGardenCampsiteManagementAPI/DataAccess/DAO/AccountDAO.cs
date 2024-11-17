@@ -19,6 +19,12 @@ namespace DataAccess.DAO
 {
     public class AccountDAO
     {
+        private static GreenGardenContext _context;
+        public static void InitializeContext(GreenGardenContext context)
+        {
+            _context = context;
+        }
+
         // Assuming you have a list of User objects
         private static Dictionary<string, int> loginAttempts = new Dictionary<string, int>();
 
@@ -162,7 +168,7 @@ namespace DataAccess.DAO
             }
         }
 
-       public static async Task<string> SendVerificationCode(string email, IConfiguration configuration)
+        public static async Task<string> SendVerificationCode(string email, IConfiguration configuration)
         {
             var verificationCode = GenerateVerificationCode();
 
@@ -273,28 +279,27 @@ namespace DataAccess.DAO
 
         public static List<ViewUserDTO> GetAllAccounts()
         {
-            using (var context = new GreenGardenContext())
-            {
-                // Retrieve all users from the database and map them to UserDTO
-                var users = context.Users.Select(user => new ViewUserDTO
-                {
-                    UserId = user.UserId,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Email = user.Email,
-                    Password = user.Password,
-                    PhoneNumber = user.PhoneNumber,
-                    Address = user.Address,
-                    DateOfBirth = user.DateOfBirth,
-                    Gender = user.Gender,
-                    ProfilePictureUrl = user.ProfilePictureUrl,
-                    IsActive = user.IsActive,
-                    CreatedAt = user.CreatedAt,
-                    RoleId = user.RoleId
-                }).ToList();
 
-                return users;
-            }
+            // Retrieve all users from the database and map them to UserDTO
+            var users = _context.Users.Select(user => new ViewUserDTO
+            {
+                UserId = user.UserId,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Password = user.Password,
+                PhoneNumber = user.PhoneNumber,
+                Address = user.Address,
+                DateOfBirth = user.DateOfBirth,
+                Gender = user.Gender,
+                ProfilePictureUrl = user.ProfilePictureUrl,
+                IsActive = user.IsActive,
+                CreatedAt = user.CreatedAt,
+                RoleId = user.RoleId
+            }).ToList();
+
+            return users;
+
         }
         public static ViewUserDTO GetAccountById(int userId)
         {
@@ -363,21 +368,21 @@ namespace DataAccess.DAO
         {
             using (var context = new GreenGardenContext())
             {
-                
+
                 var user = await context.Users.SingleOrDefaultAsync(u => u.UserId == changePasswordDto.UserId);
                 if (user == null)
                 {
-                    return "Người dùng không tồn tại."; 
+                    return "Người dùng không tồn tại.";
                 }
 
                 if (user.Password != changePasswordDto.OldPassword)
                 {
-                    return "Mật khẩu cũ không đúng."; 
+                    return "Mật khẩu cũ không đúng.";
                 }
 
                 if (changePasswordDto.NewPassword != changePasswordDto.ConfirmPassword)
                 {
-                    return "Mật khẩu mới và xác nhận mật khẩu không khớp."; 
+                    return "Mật khẩu mới và xác nhận mật khẩu không khớp.";
                 }
 
                 user.Password = changePasswordDto.NewPassword;
@@ -385,7 +390,7 @@ namespace DataAccess.DAO
                 try
                 {
                     await context.SaveChangesAsync();
-                    return "Cập nhật mật khẩu thành công."; 
+                    return "Cập nhật mật khẩu thành công.";
                 }
                 catch (DbUpdateException ex)
                 {
