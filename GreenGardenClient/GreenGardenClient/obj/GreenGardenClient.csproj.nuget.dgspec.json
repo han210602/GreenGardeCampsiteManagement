@@ -1,26 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient.csproj": {}
+    "C:\\Users\\ADMIN\\Desktop\\New folder (5)\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient.csproj": {}
   },
   "projects": {
-    "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient.csproj": {
+    "C:\\Users\\ADMIN\\Desktop\\New folder (5)\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient.csproj",
+        "projectUniqueName": "C:\\Users\\ADMIN\\Desktop\\New folder (5)\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient.csproj",
         "projectName": "GreenGardenClient",
-        "projectPath": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient.csproj",
-        "packagesPath": "C:\\Users\\PCT\\.nuget\\packages\\",
-        "outputPath": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\obj\\",
+        "projectPath": "C:\\Users\\ADMIN\\Desktop\\New folder (5)\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient.csproj",
+        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ADMIN\\Desktop\\New folder (5)\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\PCT\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "C:\\Program Files\\dotnet\\library-packs": {},
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {

@@ -212,66 +212,78 @@ namespace DataAccess.DAO
         }
 
 
-        public static async Task<string> SendResetPassword(string email, IConfiguration configuration)
+        public static bool SendResetPassword(string email, IConfiguration configuration)
         {
-            using (var context = new GreenGardenContext())
+            try
             {
-
-                var user = context.Users.SingleOrDefault(u => u.Email == email);
-                if (user == null)
+                using (var context = new GreenGardenContext())
                 {
-                    throw new Exception("Email không tồn tại.");
+                    // Kiểm tra sự tồn tại của email trong cơ sở dữ liệu
+                    var user = context.Users.SingleOrDefault(u => u.Email == email);
+                    if (user == null)
+                    {
+                        return false;
+                    }
+
+                    // Tạo mật khẩu mới ngẫu nhiên
+                    Random random = new Random();
+                    int newPassword = random.Next(100000, 1000000);
+
+                    // Cập nhật mật khẩu mới vào cơ sở dữ liệu
+                    user.Password = newPassword.ToString();
+                    context.Users.Update(user);
+                    context.SaveChanges();
+
+                    // Cấu hình gửi email
+                    var fromAddress = new MailAddress("CustomerService94321@gmail.com", "Dịch vụ Khách hàng");
+                    var toAddress = new MailAddress(email);
+                    const string fromPassword = "lwrtmwkgshlqaycp";  // Mật khẩu ứng dụng của bạn
+                    const string subject = "Reset Password";
+                    string body = $"Mật khẩu mới của bạn là: {newPassword}";
+
+                    var smtp = new SmtpClient
+                    {
+                        Host = "smtp.gmail.com",
+                        Port = 587,
+                        EnableSsl = true,
+                        DeliveryMethod = SmtpDeliveryMethod.Network,
+                        UseDefaultCredentials = false,
+                        Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
+                    };
+
+                    using (var message = new MailMessage(fromAddress, toAddress)
+                    {
+                        Subject = subject,
+                        Body = body,
+                        IsBodyHtml = true
+                    })
+                    {
+                        // Gửi email và xử lý ngoại lệ
+                        try
+                        {
+                            smtp.Send(message);
+                            Console.WriteLine("Email đã được gửi thành công!");
+                        }
+                        catch (Exception ex)
+                        {
+                            // Xử lý lỗi khi gửi email
+                            Console.WriteLine($"Gửi email thất bại: {ex.Message}");
+                            throw new Exception("Gửi email thất bại.");
+                        }
+                    }
                 }
 
-                Random random = new Random();
-                int newPassword = random.Next(100000, 1000000);
-
-
-                user.Password = newPassword.ToString();
-                context.Users.Update(user);
-                context.SaveChanges();
-
-
-                var fromAddress = new MailAddress("CustomerService94321@gmail.com", "Dịch vụ Khách hàng");
-                var toAddress = new MailAddress(email);
-                const string fromPassword = "lwrtmwkgshlqaycp";
-                const string subject = "Reset Password";
-                string body = $"Mật khẩu mới của bạn là: {newPassword}";
-
-                // Cấu hình SmtpClient
-                var smtp = new SmtpClient
-                {
-                    Host = "smtp.gmail.com",
-                    Port = 587,
-                    EnableSsl = true,
-                    DeliveryMethod = SmtpDeliveryMethod.Network,
-                    UseDefaultCredentials = false,
-                    Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
-                };
-
-
-                using (var message = new MailMessage(fromAddress, toAddress)
-                {
-                    Subject = subject,
-                    Body = body,
-                    IsBodyHtml = true
-                })
-                {
-                    try
-                    {
-                        await smtp.SendMailAsync(message);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"Failed to send email: {ex.Message}");
-                        throw new Exception("Gửi email thất bại.");
-                    }
-                }
-
-                Console.WriteLine("Email sent successfully!");
-                return JsonSerializer.Serialize(new { Message = "Email đặt lại mật khẩu đã được gửi đến bạn." });
+                return true;  // Trả về true nếu gửi email thành công và cập nhật mật khẩu thành công
+            }
+            catch (Exception ex)
+            {
+                // Xử lý lỗi chung và gửi thông báo lỗi
+                Console.WriteLine($"Lỗi: {ex.Message}");
+                return false;  // Trả về false nếu có lỗi
             }
         }
+
+
 
         public static List<ViewUserDTO> GetAllAccounts()
         {
@@ -361,40 +373,45 @@ namespace DataAccess.DAO
             }
         }
 
-        public static async Task<string> ChangePassword(ChangePassword changePasswordDto)
+        public static bool ChangePassword(ChangePassword changePasswordDto)
         {
             using (var context = new GreenGardenContext())
             {
-
-                var user = await context.Users.SingleOrDefaultAsync(u => u.UserId == changePasswordDto.UserId);
+                var user = context.Users.SingleOrDefault(u => u.UserId == changePasswordDto.UserId);
                 if (user == null)
                 {
-                    return "Người dùng không tồn tại.";
+                    // Nếu người dùng không tồn tại, trả về false.
+                    return false;
                 }
 
                 if (user.Password != changePasswordDto.OldPassword)
                 {
-                    return "Mật khẩu cũ không đúng.";
+                    // Nếu mật khẩu cũ không đúng, trả về false.
+                    return false;
                 }
 
                 if (changePasswordDto.NewPassword != changePasswordDto.ConfirmPassword)
                 {
-                    return "Mật khẩu mới và xác nhận mật khẩu không khớp.";
+                    // Nếu mật khẩu mới và xác nhận không khớp, trả về false.
+                    return false;
                 }
 
                 user.Password = changePasswordDto.NewPassword;
 
                 try
                 {
-                    await context.SaveChangesAsync();
-                    return "Cập nhật mật khẩu thành công.";
+                    context.SaveChanges(); // Gọi SaveChanges đồng bộ
+                                           // Nếu thay đổi mật khẩu thành công, trả về true.
+                    return true;
                 }
                 catch (DbUpdateException ex)
                 {
+                    // Nếu có lỗi khi lưu vào cơ sở dữ liệu, ném ngoại lệ.
                     throw new Exception("Đã xảy ra lỗi khi cập nhật mật khẩu: " + ex.InnerException?.Message);
                 }
             }
         }
+
 
     }
 }

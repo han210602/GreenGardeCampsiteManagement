@@ -63,11 +63,6 @@ namespace GreenGardenClient.Controllers
                         {
                             HttpContext.Session.SetString("Img", loginResponse.ProfilePictureUrl);
                         }
-                        else
-                        {
-                            HttpContext.Session.SetString("Img", "~/images/User/avatar.jpg");
-
-                        }
                         TempData["SuccessMessage"] = "Đăng nhập thành công!";
                         return RedirectToAction("Index", "Home");
                     }
@@ -195,15 +190,10 @@ namespace GreenGardenClient.Controllers
         {
             return View();
         }
-        [HttpPost]
-        public async Task<IActionResult> ForgotPassword(string email)
-        {
-            if (string.IsNullOrWhiteSpace(email))
-            {
-                ViewBag.Message = "Vui lòng nhập email.";
-                return View("ResetPassword");
-            }
 
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(string email)
+        {
             try
             {
                 var client = _clientFactory.CreateClient();
@@ -211,70 +201,70 @@ namespace GreenGardenClient.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
-                    ViewBag.Message = "Đã gửi email đặt lại mật khẩu. Vui lòng kiểm tra email của bạn.";
+                    TempData["Success"] = "Đã gửi email đặt lại mật khẩu. Vui lòng kiểm tra email của bạn.";
                     return RedirectToAction("Login"); // Redirect to the Login page after success
                 }
                 else
                 {
-                    var errorContent = await response.Content.ReadAsStringAsync();
-                    ViewBag.Message = $"Không thể gửi email đặt lại mật khẩu: {errorContent}";
+                    ModelState.AddModelError("EmailError", "Email của bạn chưa được đăng kí tài khoản");
+                    return View(new { Email = email });
                 }
             }
             catch (Exception ex)
             {
-                ViewBag.Message = $"Đã xảy ra lỗi: {ex.Message}";
+                TempData["Success"] = $"Đã xảy ra lỗi: {ex.Message}";
             }
 
-            return View("ResetPassword");
+            return View(new { Email = email }); // Giữ lại giá trị email trong trường hợp có lỗi
         }
+
+
         public IActionResult ChangePassword()
         {
-            return View();
+            return View(new ChangePassword());
         }
 
         [HttpPost]
-        public async Task<IActionResult> NewPassword(int UserId, string OldPassword, string NewPassword, string ConfirmPassword)
+        public async Task<IActionResult> ChangePassword(ChangePassword model)
         {
-            ChangePassword dto = new ChangePassword()
-            {
-                UserId = UserId,
-                OldPassword = OldPassword,
-                NewPassword = NewPassword,
-                ConfirmPassword = ConfirmPassword
-            };
-            // Check if the new password and confirmation match
-            if (dto.NewPassword != dto.ConfirmPassword)
-            {
-                TempData["Error"] = "Mật khẩu không khớp!";
-                return RedirectToAction("ChangePassword");
-            }
-
-            // Retrieve user ID from the session
             var userId = HttpContext.Session.GetInt32("UserId");
             if (!userId.HasValue)
             {
                 TempData["Error"] = "Không tìm thấy người dùng.";
                 return RedirectToAction("ChangePassword");
             }
-
-            // Validate old password from session
             var oldPassword = HttpContext.Session.GetString("Password");
-            if (oldPassword == null || oldPassword != dto.OldPassword)
+            if (oldPassword == null || oldPassword != model.OldPassword)
             {
-                TempData["Error"] = "Mật khẩu cũ không khớp!";
-                return RedirectToAction("ChangePassword");
+                ModelState.AddModelError("OldPassword", "Mật khẩu hiện tại không đúng.");
+                return View(model);
             }
+            // Kiểm tra mật khẩu mới và xác nhận mật khẩu có khớp không
+            if (model.NewPassword != model.ConfirmPassword)
+            {
+                ModelState.AddModelError("ConfirmPassword", "Mật khẩu xác nhận không khớp.");
+                return View(model);
+            }
+            if (model.NewPassword == model.OldPassword)
+            {
+                ModelState.AddModelError("NewPassword", "Mật khẩu mới vui lòng không trùng với mật khẩu cũ");
+                return View(model);
+            }
+            // Lấy userId từ session
 
-            // Prepare the request object with the user's ID and passwords
+
+            // Lấy mật khẩu cũ từ session và kiểm tra
+
+
+            // Chuẩn bị request để gọi API
             var request = new ChangePassword
             {
                 UserId = userId.Value,
                 OldPassword = oldPassword,
-                NewPassword = dto.NewPassword,
-                ConfirmPassword = dto.ConfirmPassword
+                NewPassword = model.NewPassword,
+                ConfirmPassword = model.ConfirmPassword
             };
 
-            // Prepare the API URL
             string apiUrl = "https://localhost:7298/api/Account/ChangePassword";
 
             try
@@ -282,27 +272,27 @@ namespace GreenGardenClient.Controllers
                 var client = _clientFactory.CreateClient();
                 var jsonContent = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
 
-                // Send the POST request
                 var response = await client.PostAsync(apiUrl, jsonContent);
 
                 if (response.IsSuccessStatusCode)
                 {
                     TempData["Success"] = "Thay đổi mật khẩu thành công!";
-                    return RedirectToAction("ChangePassword");
+                    HttpContext.Session.SetString("Password", model.NewPassword);
+                    return RedirectToAction("UpdateProfile");
                 }
                 else
                 {
-                    var errorMessage = await response.Content.ReadAsStringAsync();
-                    TempData["Error"] = $"Lỗi khi cập nhật thông tin: {errorMessage}";
-                    return RedirectToAction("ChangePassword");
+                    TempData["Success"] = "Thay đổi mật khẩu thất bại!";
+                    return View(model);
                 }
             }
             catch (Exception ex)
             {
                 TempData["Error"] = $"Lỗi hệ thống: {ex.Message}";
-                return RedirectToAction("ChangePassword");
+                return View(model);
             }
         }
+
         public async Task<IActionResult> Event()
         {
             var events = await GetDataFromApiAsync<List<EventVM>>("https://localhost:7298/api/Event/GetAllEvents");

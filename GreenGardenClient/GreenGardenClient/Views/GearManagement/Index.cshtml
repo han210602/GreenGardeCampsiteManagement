@@ -236,10 +236,12 @@
     }
 
     .app-menu__item.active {
-        background-color: #ccc;
-        font-weight: bold;
+        font-weight: bold; /* In đậm chữ */
+        color: #000; /* Màu chữ, có thể thay đổi nếu muốn */
+        background: none; /* Bỏ nền */
+        border: none; /* Bỏ viền */
+        box-shadow: none; /* Bỏ bóng nếu có */
     }
-
     hr {
         border: 1px solid #ccc;
         margin: 10px 0;
@@ -550,19 +552,77 @@
                     });
                 });
 
+
+                document.addEventListener("DOMContentLoaded", function () {
+                    const manageProducts = document.getElementById("manageProducts");
+                    const productSubmenu = document.getElementById("productSubmenu");
+                    const submenuItems = document.querySelectorAll("#productSubmenu .app-menu__item");
+
+                    if (!manageProducts || !productSubmenu) {
+                        console.error("Không tìm thấy phần tử manageProducts hoặc productSubmenu.");
+                        return;
+                    }
+
+                    // Toggle submenu khi nhấn vào "Quản lý sản phẩm"
+                    manageProducts.addEventListener("click", function (event) {
+                        event.preventDefault(); // Ngăn chặn sự kiện mặc định
+                        if (productSubmenu.style.display === "none" || productSubmenu.style.display === "") {
+                            productSubmenu.style.display = "block";
+                        } else {
+                            productSubmenu.style.display = "none";
+                        }
+                    });
+
+                    // Giữ submenu mở khi nhấn vào mục con
+                    submenuItems.forEach(item => {
+                        item.addEventListener("click", function (event) {
+                            event.stopPropagation(); // Ngăn sự kiện lan truyền lên cha
+                            productSubmenu.style.display = "block"; // Giữ submenu mở
+                        });
+                    });
+
+                    // Đảm bảo rằng nếu URL phù hợp với mục con, submenu vẫn mở
+                    const currentUrl = window.location.href;
+                    submenuItems.forEach(item => {
+                        if (currentUrl.includes(item.getAttribute("href"))) {
+                            productSubmenu.style.display = "block"; // Hiển thị submenu
+                            item.classList.add("active"); // Đánh dấu mục hiện tại
+                        }
+                    });
+                });
+
             </script>
-            <li>
-                <a class="app-menu__item" href="table-data-oder.html">
+            <li class="has-submenu">
+                <a class="app-menu__item" href="javascript:void(0)" id="manageProducts">
                     <i class='app-menu__icon bx bx-task'></i>
                     <span class="app-menu__label">Quản lý sản phẩm</span>
                 </a>
+                <!-- Submenu -->
+                <ul class="submenu" style="display: none;" id="productSubmenu">
+                    <li>
+                        <a href="~/TicketManagement/Index" class="app-menu__item">
+                            <i class='bx bx-notepad'></i> Quản lý vé
+                        </a>
+                    </li>
+                    <li>
+                        <a href="~/GearManagement/Index" class="app-menu__item">
+                            <i class='bx bx-wrench'></i> Quản lý dụng cụ
+                        </a>
+                    </li>
+                    <li>
+                        <a href="~/FoodAndDrinkManagement/Index" class="app-menu__item">
+                            <i class='bx bx-dish'></i> Quản lý đồ ăn
+                        </a>
+                    </li>
+                </ul>
             </li>
-            <li class="app-menu__item active">
-                <a class="app-menu__link" href="~/EventManagement/Index">
+            <li>
+                <a class="app-menu__item" href="~/EventManagement/Index">
                     <i class='app-menu__icon bx bx-calendar-event'></i>
                     <span class="app-menu__label">Quản lý sự kiện</span>
                 </a>
             </li>
+
 
             @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 1)
             {

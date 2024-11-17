@@ -234,8 +234,11 @@
     }
 
     .app-menu__item.active {
-        background-color: #ccc;
-        font-weight: bold;
+        font-weight: bold; /* In đậm chữ */
+        color: #000; /* Màu chữ, có thể thay đổi nếu muốn */
+        background: none; /* Bỏ nền */
+        border: none; /* Bỏ viền */
+        box-shadow: none; /* Bỏ bóng nếu có */
     }
 
     hr {
@@ -685,16 +688,156 @@
                         }
                     });
                 });
+                document.addEventListener("DOMContentLoaded", function () {
+                    const submenu = document.getElementById("submenuList");
+                    const manageOrdersButton = document.getElementById("manageOrders");
+                    const submenuItems = document.querySelectorAll("#manageOrdersMenu .submenu .app-menu__item");
+
+                    // Kiểm tra URL để tự động mở submenu khi truy cập các mục cụ thể
+                    if (window.location.href.includes("OrderOnline") ||
+                        window.location.href.includes("OrderUsing") ||
+                        window.location.href.includes("OrderCheckOut") ||
+                        window.location.href.includes("OrderCancel") ||
+                        window.location.href.includes("CreateOrder")) {
+                        submenu.style.display = "block";
+                    }
+
+                    // Toggle submenu khi click vào "Quản lý Đơn hàng"
+                    manageOrdersButton.addEventListener("click", function (event) {
+                        event.stopPropagation(); // Ngăn sự kiện lan truyền
+                        submenu.style.display = submenu.style.display === "block" ? "none" : "block";
+                    });
+
+                    // Đảm bảo rằng khi click vào bất kỳ mục con nào, menu vẫn mở
+                    submenuItems.forEach(item => {
+                        item.addEventListener("click", function (event) {
+                            event.stopPropagation(); // Ngăn sự kiện lan truyền
+                            submenu.style.display = "block";
+                        });
+                    });
+
+                    // Đóng menu khi click ra ngoài
+                    document.addEventListener("click", function (event) {
+                        if (!manageOrdersButton.contains(event.target) && !submenu.contains(event.target)) {
+                            submenu.style.display = "none";
+                        }
+                    });
+                });
+                document.addEventListener("DOMContentLoaded", function () {
+                    // Đối tượng cho "Quản lý sản phẩm"
+                    const manageProducts = document.getElementById("manageProducts");
+                    const productSubmenu = document.getElementById("productSubmenu");
+                    const submenuItemsProducts = document.querySelectorAll("#productSubmenu .app-menu__item");
+
+                    if (!manageProducts || !productSubmenu) {
+                        console.error("Không tìm thấy phần tử manageProducts hoặc productSubmenu.");
+                        return;
+                    }
+
+                    // Hàm để đặt trạng thái active cho mục con ngay khi click
+                    function setActiveMenu(item) {
+                        // Xóa trạng thái active khỏi tất cả các mục con
+                        submenuItemsProducts.forEach(subItem => subItem.classList.remove("active"));
+
+                        // Đặt trạng thái active cho mục được click
+                        item.classList.add("active");
+
+                        // Lưu href của mục con được click vào localStorage
+                        localStorage.setItem("activeSubmenu", item.getAttribute("href"));
+
+                        // Hiển thị submenu
+                        productSubmenu.style.display = "block";
+                        manageProducts.classList.add("parent-active");
+                    }
+
+                    // Hàm để khôi phục trạng thái active từ localStorage hoặc URL
+                    function restoreActiveSubmenu() {
+                        const savedHref = localStorage.getItem("activeSubmenu");
+                        const currentUrl = window.location.href;
+
+                        let matchedItem = null;
+
+                        // Ưu tiên `localStorage` trước để đảm bảo trạng thái khớp với mục con được click trước đó
+                        if (savedHref) {
+                            submenuItemsProducts.forEach(item => {
+                                if (item.getAttribute("href") === savedHref) {
+                                    matchedItem = item;
+                                }
+                            });
+                        }
+
+                        // Nếu không tìm thấy từ `localStorage`, kiểm tra URL hiện tại
+                        if (!matchedItem) {
+                            submenuItemsProducts.forEach(item => {
+                                const href = item.getAttribute("href");
+                                if (href && currentUrl.includes(href)) {
+                                    matchedItem = item;
+                                }
+                            });
+                        }
+
+                        // Nếu tìm thấy mục con phù hợp, đặt trạng thái active
+                        if (matchedItem) {
+                            submenuItemsProducts.forEach(subItem => subItem.classList.remove("active")); // Xóa trạng thái active cũ
+                            matchedItem.classList.add("active"); // Đặt trạng thái active mới
+                            productSubmenu.style.display = "block"; // Hiển thị submenu
+                            manageProducts.classList.add("parent-active"); // Đánh dấu mục cha
+                            localStorage.setItem("activeSubmenu", matchedItem.getAttribute("href")); // Lưu vào localStorage
+                        } else {
+                            // Nếu không có mục nào phù hợp, đảm bảo submenu được hiển thị nhưng không đặt active
+                            productSubmenu.style.display = "block";
+                            manageProducts.classList.add("parent-active");
+                        }
+                    }
+
+                    // Gọi hàm khôi phục trạng thái khi tải trang
+                    restoreActiveSubmenu();
+
+                    // Thêm sự kiện click cho từng mục con
+                    submenuItemsProducts.forEach(item => {
+                        item.addEventListener("click", function () {
+                            setActiveMenu(item); // Đặt trạng thái active ngay khi click
+                        });
+                    });
+
+                    // Toggle submenu khi click vào "Quản lý sản phẩm"
+                    manageProducts.addEventListener("click", function (event) {
+                        event.preventDefault(); // Ngăn chặn sự kiện mặc định
+                        if (productSubmenu.style.display === "none" || productSubmenu.style.display === "") {
+                            productSubmenu.style.display = "block"; // Mở submenu
+                        } else {
+                            productSubmenu.style.display = "none"; // Đóng submenu
+                        }
+                    });
+                });
 
             </script>
-            <li>
-                <a class="app-menu__item" href="table-data-oder.html">
+            <li class="has-submenu">
+                <a class="app-menu__item" href="javascript:void(0)" id="manageProducts">
                     <i class='app-menu__icon bx bx-task'></i>
                     <span class="app-menu__label">Quản lý sản phẩm</span>
                 </a>
+                <!-- Submenu -->
+                <ul class="submenu" style="display: none;" id="productSubmenu">
+                    <li>
+                        <a href="~/TicketManagement/Index" class="app-menu__item">
+                            <i class='bx bx-notepad'></i> Quản lý vé
+                        </a>
+                    </li>
+                    <li>
+                        <a href="~/GearManagement/Index" class="app-menu__item">
+                            <i class='bx bx-wrench'></i> Quản lý dụng cụ
+                        </a>
+                    </li>
+                    <li>
+                        <a href="~/FoodAndDrinkManagement/Index" class="app-menu__item">
+                            <i class='bx bx-dish'></i> Quản lý đồ ăn
+                        </a>
+                    </li>
+                </ul>
             </li>
-            <li class="app-menu__item active">
-                <a class="app-menu__link" href="~/EventManagement/Index">
+            <li>
+                <a class="app-menu__item" href="~/EventManagement/Index">
                     <i class='app-menu__icon bx bx-calendar-event'></i>
                     <span class="app-menu__label">Quản lý sự kiện</span>
                 </a>

@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Login &mdash; Website Template by Colorlib</title>
+    <title>Sự kiện &mdash; GreenGarden</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -24,7 +24,7 @@
             left: 0; /* Canh trái */
             width: 100%; /* Chiếm toàn bộ chiều rộng */
             z-index: 1000; /* Đảm bảo header nằm trên các phần tử khác */
-            background-color: #fff; /* Màu nền trắng */
+            background-color: #f6f5f5 !important;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ cho header */
             padding: 10px 0; /* Khoảng cách trên và dưới */
         }
@@ -65,7 +65,39 @@
             }
     </style>
 </head>
-
+@{
+    if (TempData["Success"] != null)
+    {
+        <div id="notification" class="alert alert-warning" role="alert">
+            @TempData["Success"]
+        </div>
+    }
+}
+<style>
+    #notification {
+        position: fixed;
+        top: 20px; /* Khoảng cách từ đầu trang */
+        right: 20px; /* Khoảng cách từ bên phải */
+        z-index: 1050; /* Đảm bảo thông báo nằm trên các phần tử khác */
+        opacity: 1; /* Bắt đầu với độ mờ là 1 */
+        transition: opacity 1s ease-out, transform 1s ease-out; /* Hiệu ứng chuyển đổi cho độ mờ và biến đổi */
+        transform: translateY(-10px); /* Đưa thông báo lên một chút */
+        width: auto; /* Hoặc thay đổi thành một giá trị cụ thể, ví dụ: 300px */
+        max-width: 300px; /* Giới hạn chiều rộng tối đa */
+        padding: 15px; /* Khoảng cách bên trong cho thông báo */
+    }
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        if ($("#notification").length) {
+            setTimeout(function () {
+                $("#notification").css("opacity", "0"); // Đặt độ mờ thành 0
+                $("#notification").css("transform", "translateY(10px)"); // Đưa thông báo xuống một chút khi ẩn
+            }, 3000); // Sau 3 giây
+        }
+    });
+</script>
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
     <div class="site-wrap" id="home-section">
         <header class="site-navbar site-navbar-target" role="banner">
@@ -206,6 +238,29 @@
                     overflow-x: hidden;
                 }
 
+                .password-container {
+                    position: relative;
+                    width: 100%;
+                }
+
+                #password {
+                    width: 100%;
+                    padding-right: 40px; /* Chừa khoảng trống cho icon */
+                }
+
+                #togglePassword {
+                    position: absolute;
+                    top: 50%;
+                    right: 10px; /* Đặt icon ở bên phải */
+                    transform: translateY(-50%);
+                    cursor: pointer;
+                    color: #888;
+                }
+
+                    #togglePassword:hover {
+                        color: #000; /* Đổi màu khi hover */
+                    }
+
             </style>
             <script>
                 $(document).ready(function () {
@@ -239,10 +294,14 @@
                             <div class="form-group">
                                 <label for="email">Email:</label>
                                 <input type="email" class="form-control" id="email" name="email" placeholder="Nhập email của bạn" required value="@ViewBag.email">
+
                             </div>
                             <div class="form-group">
                                 <label for="password">Mật khẩu:</label>
-                                <input type="password" class="form-control" id="password" name="password" placeholder="Nhập mật khẩu" required value="@ViewBag.pass">
+                                <div class="password-container">
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Nhập mật khẩu" required value="@ViewBag.pass">
+                                    <i id="togglePassword" class="fas fa-eye-slash"></i>
+                                </div>
                             </div>
                             @if (ViewData.ModelState != null && ViewData.ModelState.ErrorCount > 0)
                             {
@@ -261,7 +320,20 @@
                 </div>
             </div>
         </div>
+        <script>
+            document.getElementById("togglePassword").addEventListener("click", function () {
+                const passwordInput = document.getElementById("password");
+                const isPassword = passwordInput.type === "password";
 
+                // Đổi loại của input giữa 'password' và 'text'
+                passwordInput.type = isPassword ? "text" : "password";
+
+                // Đổi icon (mắt mở -> mắt gạch)
+                this.classList.toggle("fa-eye-slash");
+                this.classList.toggle("fa-eye");
+            });
+
+        </script>
 
 
         <footer class="site-footer bg-light">
@@ -316,6 +388,7 @@
 
         </footer>
     </div>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
     <script src="~/js/jquery-3.3.1.min.js"></script>
     <script src="~/js/jquery-migrate-3.0.0.js"></script>

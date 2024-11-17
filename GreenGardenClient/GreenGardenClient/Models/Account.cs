@@ -42,9 +42,17 @@ public class UpdateProfile
 public class ChangePassword
 {
     public int UserId { get; set; }
+
+    [Required(ErrorMessage = "Vui lòng nhập mật khẩu hiện tại.")]
     public string OldPassword { get; set; } = null!;
+
+    [Required(ErrorMessage = "Vui lòng nhập mật khẩu mới.")]
+    [StringLength(20, ErrorMessage = "Mật khẩu mới phải từ {2} đến {1} ký tự.", MinimumLength = 6)] // Đảm bảo mật khẩu có ít nhất 6 ký tự.
     public string NewPassword { get; set; } = null!;
-    public string ConfirmPassword { get; set; } = null!; // Ensure this matches
+
+    [Required(ErrorMessage = "Vui lòng xác nhận mật khẩu mới.")]
+    [Compare("NewPassword", ErrorMessage = "Xác nhận mật khẩu mới không khớp.")]
+    public string ConfirmPassword { get; set; } = null!;
 }
 public class Employee
 {

@@ -486,13 +486,62 @@
                     });
                 });
 
+                document.addEventListener("DOMContentLoaded", function () {
+                    const manageProducts = document.getElementById("manageProducts");
+                    const productSubmenu = document.getElementById("productSubmenu");
+                    const submenuItems = document.querySelectorAll("#productSubmenu .app-menu__item");
+
+                    if (!manageProducts || !productSubmenu) {
+                        console.error("Không tìm thấy phần tử manageProducts hoặc productSubmenu.");
+                        return;
+                    }
+
+                    // Toggle submenu khi nhấn vào "Quản lý sản phẩm"
+                    manageProducts.addEventListener("click", function (event) {
+                        event.preventDefault(); // Ngăn chặn sự kiện mặc định
+                        if (productSubmenu.style.display === "none" || productSubmenu.style.display === "") {
+                            productSubmenu.style.display = "block";
+                        } else {
+                            productSubmenu.style.display = "none";
+                        }
+                    });
+
+                    // Giữ submenu mở khi nhấn vào mục con
+                    submenuItems.forEach(item => {
+                        item.addEventListener("click", function (event) {
+                            event.stopPropagation(); // Ngăn sự kiện lan truyền lên cha
+                            productSubmenu.style.display = "block"; // Giữ submenu mở
+                        });
+                    });
+
+                    // Đảm bảo rằng nếu URL phù hợp với mục con, submenu vẫn mở
+                    const currentUrl = window.location.href;
+                    submenuItems.forEach(item => {
+                        if (currentUrl.includes(item.getAttribute("href"))) {
+                            productSubmenu.style.display = "block"; // Hiển thị submenu
+                            item.classList.add("active"); // Đánh dấu mục hiện tại
+                        }
+                    });
+                });
+
             </script>
-            <li>
-                <a class="app-menu__item" href="table-data-oder.html">
-                    <i class='app-menu__icon bx bx-task'></i>
-                    <span class="app-menu__label">Quản lý sản phẩm</span>
-                </a>
-            </li>
+     
+                    <li>
+                        <a href="~/TicketManagement/Index" class="app-menu__item">
+                            <i class='bx bx-notepad'></i> Quản lý vé
+                        </a>
+                    </li>
+                    <li>
+                        <a href="~/GearManagement/Index" class="app-menu__item">
+                            <i class='bx bx-wrench'></i> Quản lý dụng cụ
+                        </a>
+                    </li>
+                    <li>
+                        <a href="~/FoodAndDrinkManagement/Index" class="app-menu__item">
+                            <i class='bx bx-dish'></i> Quản lý đồ ăn
+                        </a>
+                    </li>
+          
             <li>
                 <a class="app-menu__item" href="~/EventManagement/Index">
                     <i class='app-menu__icon bx bx-calendar-event'></i>
