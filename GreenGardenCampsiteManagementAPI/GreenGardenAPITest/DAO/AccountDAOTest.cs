@@ -522,49 +522,49 @@ namespace GreenGardenAPITest.DAO
         // 
 
         // Test for method 
-        private Mock<IConfiguration> _mockConfiguration;
-        private GreenGardenContext _dbContext;
+        //private Mock<IConfiguration> _mockConfiguration;
+        //private GreenGardenContext _dbContext;
 
-        public AccountDAOTest()
-        {
-            // Mock IConfiguration to provide JWT settings
-            _mockConfiguration = new Mock<IConfiguration>();
+        //public AccountDAOTest()
+        //{
+        //    // Mock IConfiguration to provide JWT settings
+        //    _mockConfiguration = new Mock<IConfiguration>();
 
-            _mockConfiguration.Setup(config => config["Jwt:Key"]).Returns("MySuperSecretKey12345");
-            _mockConfiguration.Setup(config => config.GetSection("Jwt:Issuer").Value).Returns("TestIssuer");
-            _mockConfiguration.Setup(config => config.GetSection("Jwt:Audience").Value).Returns("TestAudience");
-            _mockConfiguration.Setup(config => config.GetSection("Jwt:Subject").Value).Returns("TestSubject");
+        //    _mockConfiguration.Setup(config => config["Jwt:Key"]).Returns("MySuperSecretKey12345");
+        //    _mockConfiguration.Setup(config => config.GetSection("Jwt:Issuer").Value).Returns("TestIssuer");
+        //    _mockConfiguration.Setup(config => config.GetSection("Jwt:Audience").Value).Returns("TestAudience");
+        //    _mockConfiguration.Setup(config => config.GetSection("Jwt:Subject").Value).Returns("TestSubject");
 
-            // Create in-memory database
-            var options = new DbContextOptionsBuilder<GreenGardenContext>()
-                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
-                .Options;
+        //    // Create in-memory database
+        //    var options = new DbContextOptionsBuilder<GreenGardenContext>()
+        //        .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+        //        .Options;
 
-            _dbContext = new GreenGardenContext(options);
-            _dbContext.Users.AddRange(
-                new User
-                {
-                    UserId = 1,
-                    FirstName = "John",
-                    LastName = "Doe",
-                    Email = "john.doe@example.com",
-                    Password = "Password123",
-                    IsActive = true,
-                    RoleId = 1
-                },
-                new User
-                {
-                    UserId = 2,
-                    FirstName = "Jane",
-                    LastName = "Smith",
-                    Email = "jane.smith@example.com",
-                    Password = "Password456",
-                    IsActive = false,
-                    RoleId = 2
-                }
-            );
-            _dbContext.SaveChanges();
-        }
+        //    _dbContext = new GreenGardenContext(options);
+        //    _dbContext.Users.AddRange(
+        //        new User
+        //        {
+        //            UserId = 1,
+        //            FirstName = "John",
+        //            LastName = "Doe",
+        //            Email = "john.doe@example.com",
+        //            Password = "Password123",
+        //            IsActive = true,
+        //            RoleId = 1
+        //        },
+        //        new User
+        //        {
+        //            UserId = 2,
+        //            FirstName = "Jane",
+        //            LastName = "Smith",
+        //            Email = "jane.smith@example.com",
+        //            Password = "Password456",
+        //            IsActive = false,
+        //            RoleId = 2
+        //        }
+        //    );
+        //    _dbContext.SaveChanges();
+        //}
 
     }
 }

@@ -9,11 +9,16 @@ namespace DataAccess.DAO
 {
     public class UserDAO
     {
-        private static GreenGardenContext context = new GreenGardenContext();
+        //private static GreenGardenContext context = new GreenGardenContext();
+        private static GreenGardenContext _context;
+        public static void InitializeContext(GreenGardenContext context)
+        {
+            _context = context;
+        }
 
         public static List<UserDTO> GetAllUsers()
         {
-            var users = context.Users
+            var users = _context.Users
                 .Include(user => user.Role)
                 .Select(user => new UserDTO
                 {
@@ -36,7 +41,7 @@ namespace DataAccess.DAO
         }
         public static List<UserDTO> GetAllEmployees()
         {
-            var employees = context.Users
+            var employees = _context.Users
                 .Include(user => user.Role)
                 .Where(user => user.RoleId == 2) // Filter where RoleId is 2
                 .Select(user => new UserDTO
@@ -61,9 +66,9 @@ namespace DataAccess.DAO
         }
         public static List<UserDTO> GetAllCustomers()
         {
-            var customer = context.Users
+            var customer = _context.Users
                 .Include(user => user.Role)
-                .Where(user => user.RoleId == 3) // Filter where RoleId is 2
+                .Where(user => user.RoleId == 3) // Filter where RoleId is 3
                 .Select(user => new UserDTO
                 {
                     UserId = user.UserId,
@@ -88,7 +93,7 @@ namespace DataAccess.DAO
 
         public static UserDTO GetUserById(int userId)
         {
-            var user = context.Users
+            var user = _context.Users
                 .Include(u => u.Role)
                 .Where(u => u.UserId == userId)
                 .Select(u => new UserDTO
@@ -116,7 +121,7 @@ namespace DataAccess.DAO
             try
             {
                 // Check if the email already exists
-                var existingUser = context.Users.SingleOrDefault(u => u.Email == newEmployeeDto.Email);
+                var existingUser = _context.Users.SingleOrDefault(u => u.Email == newEmployeeDto.Email);
                 if (existingUser != null)
                 {
                     Console.WriteLine("Email already registered.");
@@ -140,10 +145,10 @@ namespace DataAccess.DAO
                 };
 
                 // Add the new employee to the context
-                context.Users.Add(newEmployee);
+                _context.Users.Add(newEmployee);
 
                 // Save changes to the database
-                context.SaveChanges();
+                _context.SaveChanges();
 
                 // Send email with login credentials
                 SendEmailWithCredentials(newEmployee.Email, newEmployee.Password, configuration).Wait();
@@ -164,7 +169,7 @@ namespace DataAccess.DAO
             try
             {
                 // Check if the email already exists
-                var existingUser = context.Users.SingleOrDefault(u => u.Email == newCustomerDto.Email);
+                var existingUser = _context.Users.SingleOrDefault(u => u.Email == newCustomerDto.Email);
                 if (existingUser != null)
                 {
                     Console.WriteLine("Email already registered.");
@@ -188,10 +193,10 @@ namespace DataAccess.DAO
                 };
 
                 // Add the new customer to the context
-                context.Users.Add(newCustomer);
+                _context.Users.Add(newCustomer);
 
                 // Save changes to the database
-                context.SaveChanges();
+                _context.SaveChanges();
 
                 // Send email with login credentials
                 SendEmailWithCredentials(newCustomerDto.Email, newCustomerDto.Password, configuration).Wait();
@@ -245,7 +250,7 @@ namespace DataAccess.DAO
             try
             {
                 // Find the user by UserId
-                var existingUser = context.Users.FirstOrDefault(u => u.UserId == updatedUserDto.UserId);
+                var existingUser = _context.Users.FirstOrDefault(u => u.UserId == updatedUserDto.UserId);
 
                 if (existingUser == null)
                 {
@@ -266,7 +271,7 @@ namespace DataAccess.DAO
                 existingUser.IsActive = updatedUserDto.IsActive;
 
                 // Save changes to the database
-                context.SaveChanges();
+                _context.SaveChanges();
 
                 return true; // Indicate success
             }
@@ -282,7 +287,7 @@ namespace DataAccess.DAO
             try
             {
                 // Retrieve the employee by userId
-                var user = context.Users.SingleOrDefault(u => u.UserId == userId);
+                var user = _context.Users.SingleOrDefault(u => u.UserId == userId);
 
                 if (user == null)
                 {
@@ -296,10 +301,10 @@ namespace DataAccess.DAO
                 SendEmailAsync(user.Email, deleteSubject, deleteBody).Wait();
 
                 // Remove the employee from the context
-                context.Users.Remove(user);
+                _context.Users.Remove(user);
 
                 // Save changes to the database
-                context.SaveChanges();
+                _context.SaveChanges();
 
                 return true; // Deletion successful
             }
@@ -316,7 +321,7 @@ namespace DataAccess.DAO
             try
             {
                 // Retrieve the user by userId
-                var user = context.Users.SingleOrDefault(u => u.UserId == userId);
+                var user = _context.Users.SingleOrDefault(u => u.UserId == userId);
 
                 if (user == null)
                 {
@@ -333,7 +338,7 @@ namespace DataAccess.DAO
                 SendEmailAsync(user.Email, blockSubject, blockBody).Wait();
 
                 // Save changes to the database
-                context.SaveChanges();
+                _context.SaveChanges();
 
                 return true; // Blocking successful
             }
@@ -377,7 +382,7 @@ namespace DataAccess.DAO
             try
             {
                 // Retrieve the user by userId
-                var user = context.Users.SingleOrDefault(u => u.UserId == userId);
+                var user = _context.Users.SingleOrDefault(u => u.UserId == userId);
 
                 if (user == null)
                 {
@@ -394,7 +399,7 @@ namespace DataAccess.DAO
                 SendEmailAsync(user.Email, unblockSubject, unblockBody).Wait();
 
                 // Save changes to the database
-                context.SaveChanges();
+                _context.SaveChanges();
 
                 return true; // Blocking successful
             }

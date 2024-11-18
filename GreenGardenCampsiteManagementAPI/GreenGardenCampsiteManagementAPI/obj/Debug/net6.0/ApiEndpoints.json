@@ -1,0 +1,1246 @@
+[
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.AccountController",
+    "Method": "ChangePassword",
+    "RelativePath": "api/Account/ChangePassword",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "changePasswordDto",
+        "Type": "BusinessObject.DTOs.ChangePassword",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.AccountController",
+    "Method": "GetAccountById",
+    "RelativePath": "api/Account/GetAccountById",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.AccountController",
+    "Method": "GetAllAccounts",
+    "RelativePath": "api/Account/GetAllAccounts",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.AccountController",
+    "Method": "Login",
+    "RelativePath": "api/Account/Login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "loginRequest",
+        "Type": "BusinessObject.DTOs.AccountDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.AccountController",
+    "Method": "Register",
+    "RelativePath": "api/Account/Register",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "registerRequest",
+        "Type": "BusinessObject.DTOs.Register",
+        "IsRequired": true
+      },
+      {
+        "Name": "enteredCode",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.AccountController",
+    "Method": "SendResetPasswordEmail",
+    "RelativePath": "api/Account/SendResetPasswordEmail/{email}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.AccountController",
+    "Method": "SendVerificationCode",
+    "RelativePath": "api/Account/SendVerificationCode",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.AccountController",
+    "Method": "UpdateProfile",
+    "RelativePath": "api/Account/UpdateProfile",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "updateProfile",
+        "Type": "BusinessObject.DTOs.UpdateProfile",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.ActivityController",
+    "Method": "GetAllActivities",
+    "RelativePath": "api/Activity/GetAllActivities",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.CampingGearController",
+    "Method": "AddCampingGear",
+    "RelativePath": "api/CampingGear/AddCampingGear",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "gearDto",
+        "Type": "BusinessObject.DTOs.AddCampingGearDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.CampingGearController",
+    "Method": "ChangeGearStatus",
+    "RelativePath": "api/CampingGear/ChangeGearStatus",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "gearId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "newStatus",
+        "Type": "BusinessObject.DTOs.ChangeGearStatus",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.CampingGearController",
+    "Method": "GetAllCampingGearCategories",
+    "RelativePath": "api/CampingGear/GetAllCampingGearCategories",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.CampingGearController",
+    "Method": "GetAllCampingGears",
+    "RelativePath": "api/CampingGear/GetAllCampingGears",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.CampingGearController",
+    "Method": "GetAllCustomerCampingGears",
+    "RelativePath": "api/CampingGear/GetAllCustomerCampingGears",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.CampingGearController",
+    "Method": "GetCampingGearDetail",
+    "RelativePath": "api/CampingGear/GetCampingGearDetail",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.CampingGearController",
+    "Method": "GetCampingGearsBySort",
+    "RelativePath": "api/CampingGear/GetCampingGearsBySort",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "categoryId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "sortBy",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "priceRange",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "popularity",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.CampingGearController",
+    "Method": "UpdateCampingGear",
+    "RelativePath": "api/CampingGear/UpdateCampingGear",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "gearDto",
+        "Type": "BusinessObject.DTOs.UpdateCampingGearDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.ComboController",
+    "Method": "AddCombo",
+    "RelativePath": "api/Combo/AddCombo",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "newCombo",
+        "Type": "BusinessObject.DTOs.AddCombo",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.ComboController",
+    "Method": "ChangeGearStatus",
+    "RelativePath": "api/Combo/ChangeComboStatus",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "comboId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "newStatus",
+        "Type": "BusinessObject.DTOs.ChangeComboStatus",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.ComboController",
+    "Method": "GetAllCombos",
+    "RelativePath": "api/Combo/GetAllCombos",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.ComboController",
+    "Method": "GetAllCustomerCombos",
+    "RelativePath": "api/Combo/GetAllCustomerCombos",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.ComboController",
+    "Method": "GetComboDetail",
+    "RelativePath": "api/Combo/GetComboDetail/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.ComboController",
+    "Method": "UpdateCombo",
+    "RelativePath": "api/Combo/UpdateCombo",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "updatedCombo",
+        "Type": "BusinessObject.DTOs.AddCombo",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.ComboFoodController",
+    "Method": "GetAllCustomerOrders",
+    "RelativePath": "api/ComboFood/GetAllCustomerOrders",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.ComboFoodController",
+    "Method": "GetAllOrders",
+    "RelativePath": "api/ComboFood/GetAllOrders",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.ComboFoodController",
+    "Method": "GetComboFoodDetail",
+    "RelativePath": "api/ComboFood/GetComboFoodDetail/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.EventController",
+    "Method": "AddEvent",
+    "RelativePath": "api/Event/AddEvent",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "eventDTO",
+        "Type": "BusinessObject.DTOs.CreateEventDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.EventController",
+    "Method": "DeleteEvent",
+    "RelativePath": "api/Event/DeleteEvent/{eventId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "eventId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.EventController",
+    "Method": "GetAllEvents",
+    "RelativePath": "api/Event/GetAllEvents",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.EventController",
+    "Method": "GetEventByCreatedBy",
+    "RelativePath": "api/Event/GetEventByCreatedBy",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "eventId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.EventController",
+    "Method": "GetEventById",
+    "RelativePath": "api/Event/GetEventById",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "eventId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.EventController",
+    "Method": "UpdateEvent",
+    "RelativePath": "api/Event/UpdateEvent",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "eventDTO",
+        "Type": "BusinessObject.DTOs.UpdateEventDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.FoodAndDrinkController",
+    "Method": "AddFoodOrDrink",
+    "RelativePath": "api/FoodAndDrink/AddFoodOrDrink",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "itemDto",
+        "Type": "BusinessObject.DTOs.AddFoodOrDrinkDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.FoodAndDrinkController",
+    "Method": "ChangeFoodStatus",
+    "RelativePath": "api/FoodAndDrink/ChangeFoodStatus",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "itemId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "newStatus",
+        "Type": "BusinessObject.DTOs.ChangeFoodStatus",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.FoodAndDrinkController",
+    "Method": "GetAllCustomerFoodAndDrink",
+    "RelativePath": "api/FoodAndDrink/GetAllCustomerFoodAndDrink",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.FoodAndDrinkController",
+    "Method": "GetAllFoodAndDrink",
+    "RelativePath": "api/FoodAndDrink/GetAllFoodAndDrink",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.FoodAndDrinkController",
+    "Method": "GetAllFoodAndDrinkCategories",
+    "RelativePath": "api/FoodAndDrink/GetAllFoodAndDrinkCategories",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.FoodAndDrinkController",
+    "Method": "GetFoodAndDrinkDetail",
+    "RelativePath": "api/FoodAndDrink/GetFoodAndDrinkDetail",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "itemId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.FoodAndDrinkController",
+    "Method": "GetFoodAndDrinksBySort",
+    "RelativePath": "api/FoodAndDrink/GetFoodAndDrinksBySort",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "categoryId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "sortBy",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "priceRange",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.FoodAndDrinkController",
+    "Method": "UpdateFoodOrDrink",
+    "RelativePath": "api/FoodAndDrink/UpdateFoodOrDrink",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "itemDto",
+        "Type": "BusinessObject.DTOs.UpdateFoodOrDrinkDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.OrderManagementController",
+    "Method": "CancelDeposit",
+    "RelativePath": "api/OrderManagement/CancelDeposit/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.OrderManagementController",
+    "Method": "ChangeCustomerActivity",
+    "RelativePath": "api/OrderManagement/ChangeCustomerActivity",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "orderId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.OrderManagementController",
+    "Method": "CheckOut",
+    "RelativePath": "api/OrderManagement/CheckOut",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "order",
+        "Type": "BusinessObject.DTOs.CheckOut",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.OrderManagementController",
+    "Method": "CheckOutComboOrder",
+    "RelativePath": "api/OrderManagement/CheckOutComboOrder",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "order",
+        "Type": "BusinessObject.DTOs.CheckoutCombo",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.OrderManagementController",
+    "Method": "CreateComboOrder",
+    "RelativePath": "api/OrderManagement/CreateComboOrder",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "order",
+        "Type": "BusinessObject.DTOs.CreateComboOrderRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.OrderManagementController",
+    "Method": "CreateUniqueOrder",
+    "RelativePath": "api/OrderManagement/CreateUniqueOrder",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "order",
+        "Type": "BusinessObject.DTOs.CreateUniqueOrderRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.OrderManagementController",
+    "Method": "DeleteOrder",
+    "RelativePath": "api/OrderManagement/DeleteOrder/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.OrderManagementController",
+    "Method": "EnterDeposit",
+    "RelativePath": "api/OrderManagement/EnterDeposit/{id}/{money}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "money",
+        "Type": "System.Decimal",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.OrderManagementController",
+    "Method": "GetAllOrderDepositAndUsing",
+    "RelativePath": "api/OrderManagement/GetAllOrderDepositAndUsing",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.OrderManagementController",
+    "Method": "GetAllOrderOnline",
+    "RelativePath": "api/OrderManagement/GetAllOrderOnline",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.OrderManagementController",
+    "Method": "GetAllOrders",
+    "RelativePath": "api/OrderManagement/GetAllOrders",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.OrderManagementController",
+    "Method": "GetCustomerOrderDetail",
+    "RelativePath": "api/OrderManagement/GetCustomerOrderDetail/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.OrderManagementController",
+    "Method": "GetCustomerOrders",
+    "RelativePath": "api/OrderManagement/GetCustomerOrders",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "customerId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "statusOrder",
+        "Type": "System.Nullable\u00601[[System.Boolean, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "activityId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.OrderManagementController",
+    "Method": "GetListOrderGearByUsageDate",
+    "RelativePath": "api/OrderManagement/GetListOrderGearByUsageDate/{usagedate}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "usagedate",
+        "Type": "System.DateTime",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.OrderManagementController",
+    "Method": "GetOrderDetail",
+    "RelativePath": "api/OrderManagement/GetOrderDetail/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.OrderManagementController",
+    "Method": "UpdateActivityOrder",
+    "RelativePath": "api/OrderManagement/UpdateActivityOrder/{idorder}/{idactivity}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idorder",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "idactivity",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.OrderManagementController",
+    "Method": "UpdateCampingGear",
+    "RelativePath": "api/OrderManagement/UpdateCampingGear",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ticket",
+        "Type": "System.Collections.Generic.List\u00601[[BusinessObject.DTOs.OrderCampingGearAddDTO, BusinessObject, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.OrderManagementController",
+    "Method": "UpdateCombo",
+    "RelativePath": "api/OrderManagement/UpdateCombo",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ticket",
+        "Type": "System.Collections.Generic.List\u00601[[BusinessObject.DTOs.OrderComboAddDTO, BusinessObject, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.OrderManagementController",
+    "Method": "UpdateFoodAndDrink",
+    "RelativePath": "api/OrderManagement/UpdateFoodAndDrink",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ticket",
+        "Type": "System.Collections.Generic.List\u00601[[BusinessObject.DTOs.OrderFoodAddDTO, BusinessObject, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.OrderManagementController",
+    "Method": "UpdateFoodCombo",
+    "RelativePath": "api/OrderManagement/UpdateFoodCombo",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ticket",
+        "Type": "System.Collections.Generic.List\u00601[[BusinessObject.DTOs.OrderFoodComboAddDTO, BusinessObject, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.OrderManagementController",
+    "Method": "UpdateOrder",
+    "RelativePath": "api/OrderManagement/UpdateOrder",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "order",
+        "Type": "BusinessObject.DTOs.UpdateOrderDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.OrderManagementController",
+    "Method": "UpdateTicket",
+    "RelativePath": "api/OrderManagement/UpdateTicket",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ticket",
+        "Type": "System.Collections.Generic.List\u00601[[BusinessObject.DTOs.OrderTicketAddlDTO, BusinessObject, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.TicketController",
+    "Method": "AddTicket",
+    "RelativePath": "api/Ticket/AddTicket",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ticketDto",
+        "Type": "BusinessObject.DTOs.AddTicket",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.TicketController",
+    "Method": "ChangeGearStatus",
+    "RelativePath": "api/Ticket/ChangeTicketStatus",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ticketId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "newStatus",
+        "Type": "BusinessObject.DTOs.ChangeTicketStatus",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.TicketController",
+    "Method": "GetAllCustomerTickets",
+    "RelativePath": "api/Ticket/GetAllCustomerTickets",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.TicketController",
+    "Method": "GetAllTicketCategories",
+    "RelativePath": "api/Ticket/GetAllTicketCategories",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.TicketController",
+    "Method": "GetAllTickets",
+    "RelativePath": "api/Ticket/GetAllTickets",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.TicketController",
+    "Method": "GetTicketDetail",
+    "RelativePath": "api/Ticket/GetTicketDetail",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.TicketController",
+    "Method": "GetTicketsByCategoryAndSort",
+    "RelativePath": "api/Ticket/GetTicketsByCategoryAndSort",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "categoryId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "sort",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.TicketController",
+    "Method": "UpdateTicket",
+    "RelativePath": "api/Ticket/UpdateTicket",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ticketDto",
+        "Type": "BusinessObject.DTOs.UpdateTicket",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.UserController",
+    "Method": "AddCustomer",
+    "RelativePath": "api/User/AddCustomer",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "newCustomerDto",
+        "Type": "BusinessObject.DTOs.AddUserDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.UserController",
+    "Method": "AddEmployee",
+    "RelativePath": "api/User/AddEmployee",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "newEmployeeDto",
+        "Type": "BusinessObject.DTOs.AddUserDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.UserController",
+    "Method": "BlockUser",
+    "RelativePath": "api/User/BlockUser/{userId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.UserController",
+    "Method": "DeleteUser",
+    "RelativePath": "api/User/DeleteUser/{userId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.UserController",
+    "Method": "GetAllCustomers",
+    "RelativePath": "api/User/GetAllCustomers",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.UserController",
+    "Method": "GetAllEmployees",
+    "RelativePath": "api/User/GetAllEmployees",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.UserController",
+    "Method": "GetAllUsers",
+    "RelativePath": "api/User/GetAllUsers",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.UserController",
+    "Method": "GetUserById",
+    "RelativePath": "api/User/GetUserById/{userId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.UserController",
+    "Method": "UnBlockUser",
+    "RelativePath": "api/User/UnBlockUser/{userId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.UserController",
+    "Method": "UpdateUser",
+    "RelativePath": "api/User/UpdateUser",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "updatedUserDto",
+        "Type": "BusinessObject.DTOs.UpdateUserDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GreenGardenCampsiteManagementAPI.Controllers.WeatherForecastController",
+    "Method": "Get",
+    "RelativePath": "WeatherForecast",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[GreenGardenCampsiteManagementAPI.WeatherForecast, GreenGardenCampsiteManagementAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "EndpointName": "GetWeatherForecast"
+  }
+]

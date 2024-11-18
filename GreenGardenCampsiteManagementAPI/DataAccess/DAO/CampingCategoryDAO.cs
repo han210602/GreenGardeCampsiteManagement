@@ -10,12 +10,17 @@ namespace DataAccess.DAO
 {
     public  class CampingCategoryDAO
     {
-        private static GreenGardenContext context = new GreenGardenContext();
+        //private static GreenGardenContext context = new GreenGardenContext();
+        private static GreenGardenContext _context;
+        public static void InitializeContext(GreenGardenContext context)
+        {
+            _context = context;
+        }
 
         // Lấy tất cả trang thiết bị
         public List<CampingGearDTO> GetAllCampingGears()
         {
-            return context.CampingGears.Select(gear => new CampingGearDTO
+            return _context.CampingGears.Select(gear => new CampingGearDTO
             {
                 GearId = gear.GearId,
                 GearName = gear.GearName,
