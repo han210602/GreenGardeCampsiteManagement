@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "O9UDZsNSKufE0459zxwMXRvJnEyhVzx/kvbbpmfTYW4=",
+  "Hash": "1XaVZ23hpntSLJxvhZ5/I0Km7RzJGILDGgjes7pqeTI=",
   "Source": "GreenGardenClient",
   "BasePath": "_content/GreenGardenClient",
   "Mode": "Default",
@@ -1190,6 +1190,23 @@
       "OriginalItemSpec": "wwwroot\\images\\Gear\\Colorful Modern Camping Club Logo.png"
     },
     {
+      "Identity": "C:\\Users\\ADMIN\\Desktop\\New folder (5)\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\image_with_updated_borders.png",
+      "SourceId": "GreenGardenClient",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\ADMIN\\Desktop\\New folder (5)\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\",
+      "BasePath": "_content/GreenGardenClient",
+      "RelativePath": "images/image_with_updated_borders.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\image_with_updated_borders.png"
+    },
+    {
       "Identity": "C:\\Users\\ADMIN\\Desktop\\New folder (5)\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\Login.png",
       "SourceId": "GreenGardenClient",
       "SourceType": "Discovered",
@@ -1222,6 +1239,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\logo.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\ADMIN\\Desktop\\New folder (5)\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\newlogo.jpg",
+      "SourceId": "GreenGardenClient",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\ADMIN\\Desktop\\New folder (5)\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\",
+      "BasePath": "_content/GreenGardenClient",
+      "RelativePath": "images/newlogo.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\newlogo.jpg"
     },
     {
       "Identity": "C:\\Users\\ADMIN\\Desktop\\New folder (5)\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\owner.png",

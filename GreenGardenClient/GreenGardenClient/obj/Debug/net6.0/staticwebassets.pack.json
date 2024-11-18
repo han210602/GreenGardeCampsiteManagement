@@ -301,8 +301,16 @@
       "PackagePath": "staticwebassets\\images\\contact.jpg"
     },
     {
+      "Id": "C:\\Users\\ADMIN\\Desktop\\New folder (5)\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\image_with_updated_borders.png",
+      "PackagePath": "staticwebassets\\images\\image_with_updated_borders.png"
+    },
+    {
       "Id": "C:\\Users\\ADMIN\\Desktop\\New folder (5)\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\logo.jpg",
       "PackagePath": "staticwebassets\\images\\logo.jpg"
+    },
+    {
+      "Id": "C:\\Users\\ADMIN\\Desktop\\New folder (5)\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\newlogo.jpg",
+      "PackagePath": "staticwebassets\\images\\newlogo.jpg"
     },
     {
       "Id": "C:\\Users\\ADMIN\\Desktop\\New folder (5)\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\owner.png",

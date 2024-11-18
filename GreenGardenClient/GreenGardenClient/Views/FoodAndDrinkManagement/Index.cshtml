@@ -13,6 +13,7 @@
         </div>
     }
 }
+
 <style>
     #notification {
         position: fixed;
@@ -155,33 +156,12 @@
         right: 0;
         top: 0;
         width: 100%;
-        height: 80px; /* Set a consistent height */
         display: flex;
         align-items: center;
-        justify-content: center;
-        padding: 0 20px;
+        padding: 15px;
         z-index: 1;
-         background-color: #f4f4f4; /* Optional: Background color */
     }
 
-    .app-nav {
-        display: flex;
-        justify-content: space-between; /* Distribute space between items */
-        align-items: center;
-        width: 100%;
-    }
-
-    .logo-container {
-        display: flex;
-        justify-content: center; /* Center the logo horizontally */
-        flex: 1; /* Ensure it takes up space evenly */
-    }
-
-    .centered-logo {
-        max-width: 60px; /* Adjust size as necessary */
-        height: auto;
-        object-fit: contain;
-    }
         .app-header .app-nav {
             margin-left: auto;
         }
@@ -256,11 +236,8 @@
     }
 
     .app-menu__item.active {
-        font-weight: bold; /* In đậm chữ */
-        color: #000; /* Màu chữ, có thể thay đổi nếu muốn */
-        background: none; /* Bỏ nền */
-        border: none; /* Bỏ viền */
-        box-shadow: none; /* Bỏ bóng nếu có */
+        background-color: #ccc;
+        font-weight: bold;
     }
 
     hr {
@@ -434,48 +411,49 @@
         display: inline-block;
     }
 
-    .sub-menu {
-        display: none;
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        padding-left: 20px;
-    }
-
-        .sub-menu li a {
-            text-decoration: none;
-            color: #000;
-            display: block;
-            padding: 5px 0;
-        }
-
-    .parent-menu:hover .sub-menu {
-        display: block;
-    }
 </style>
 
 <body onload="time()" class="app sidebar-mini rtl">
-    <header class="app-header">
-        <a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
-        <ul class="app-nav">
-            <li class="logo-container">
-                <img src="~/images/logo.jpg" alt="Image" class="img-fluid centered-logo">
-            </li>
+    <header class="app-header" style="display: flex; align-items: center; padding: 0 15px; background-color: #f6f5f5 !important;">
+        <!-- Sidebar Toggle -->
+        <a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar" style="margin-right: auto;">
+            <!-- Add an icon or text for the sidebar toggle -->
+        </a>
+
+        <!-- Centered Logo -->
+        <div style="flex: 500; display: flex; justify-content: center; align-items: center; padding-left: 50px;">
+            <img src="~/images/newlogo.jpg" alt="Logo" style="height: auto; width: 55%; max-width: 120px;margin-top: 10px;">
+        </div>
+
+
+        <!-- User Menu -->
+        <ul class="app-nav" style="display: flex; align-items: center; margin-left: auto; list-style: none; padding: 0;">
             <li>
-                <a class="app-nav__item" href="~/Home">
-                    <i class='bx bx-log-out bx-rotate-180'></i>
+                <a class="app-nav__item" href="~/Home" style="display: flex; align-items: center; text-decoration: none; color: black; background: rgb(195 195 195); padding: 10px 15px; border-radius: 5px; transition: background-color 0.3s;">
+                    <!-- Replace with an icon -->
+                    <i class="bx bx-home" style="font-size: 1.5rem; margin-right: 8px;"></i>
+                    <!-- Add text next to the icon -->
+                    <span style="font-size: 1rem;">Quay lại trang chủ</span>
                 </a>
             </li>
         </ul>
-    </header>
 
+    </header>
 
     <!-- Sidebar menu-->
     <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
     <aside class="app-sidebar">
         <div class="app-sidebar__user">
-            <img class="app-sidebar__user-avatar" src="~/images/img_1.jpg" width="50px" alt="User Image">
-            <div>
+            @if (@HttpContextAccessor.HttpContext.Session.GetString("Img") == null)
+            {
+
+                <img src="~/images/p22.jpg" alt="Trang cá nhân" class="app-sidebar__user-avatar" width="50px">
+
+            }
+            else
+            {
+                <img src="~/images/Avatar/@HttpContextAccessor.HttpContext.Session.GetString("Img")" alt="Trang cá nhân" class="app-sidebar__user-avatar" src="~/images/img_1.jpg" width="50px">
+            }               <div>
                 <p class="app-sidebar__user-designation">Xin chào</p>
 
                 <p class="app-sidebar__user-name"><b>@HttpContextAccessor.HttpContext.Session.GetString("Fullname")</b></p>
@@ -595,69 +573,28 @@
                 });
 
 
-                document.addEventListener("DOMContentLoaded", function () {
-                    const manageProducts = document.getElementById("manageProducts");
-                    const productSubmenu = document.getElementById("productSubmenu");
-                    const submenuItems = document.querySelectorAll("#productSubmenu .app-menu__item");
-
-                    if (!manageProducts || !productSubmenu) {
-                        console.error("Không tìm thấy phần tử manageProducts hoặc productSubmenu.");
-                        return;
-                    }
-
-                    // Toggle submenu khi nhấn vào "Quản lý sản phẩm"
-                    manageProducts.addEventListener("click", function (event) {
-                        event.preventDefault(); // Ngăn chặn sự kiện mặc định
-                        if (productSubmenu.style.display === "none" || productSubmenu.style.display === "") {
-                            productSubmenu.style.display = "block";
-                        } else {
-                            productSubmenu.style.display = "none";
-                        }
-                    });
-
-                    // Giữ submenu mở khi nhấn vào mục con
-                    submenuItems.forEach(item => {
-                        item.addEventListener("click", function (event) {
-                            event.stopPropagation(); // Ngăn sự kiện lan truyền lên cha
-                            productSubmenu.style.display = "block"; // Giữ submenu mở
-                        });
-                    });
-
-                    // Đảm bảo rằng nếu URL phù hợp với mục con, submenu vẫn mở
-                    const currentUrl = window.location.href;
-                    submenuItems.forEach(item => {
-                        if (currentUrl.includes(item.getAttribute("href"))) {
-                            productSubmenu.style.display = "block"; // Hiển thị submenu
-                            item.classList.add("active"); // Đánh dấu mục hiện tại
-                        }
-                    });
-                });
-
 
             </script>
-            <li  class="has-submenu">
-                <a class="app-menu__item" href="javascript:void(0)" id="manageProducts">
-                    <i class='app-menu__icon bx bx-task'></i>
-                    <span class="app-menu__label">Quản lý sản phẩm</span>
+            <li>
+                <a class="app-menu__item" href="~/TicketManagement/Index">
+                    <i class='app-menu__icon bx bx-receipt'></i> <!-- Receipt icon as alternative -->
+                    <span class="app-menu__label">Quản lý vé</span>
                 </a>
-                <!-- Submenu -->
-                <ul class="submenu" style="display: none;" id="productSubmenu">
-                    <li>
-                        <a href="~/TicketManagement/Index" class="app-menu__item">
-                            <i class='bx bx-notepad'></i> Quản lý vé
-                        </a>
-                    </li>
-                    <li>
-                        <a href="~/GearManagement/Index" class="app-menu__item">
-                            <i class='bx bx-wrench'></i> Quản lý dụng cụ
-                        </a>
-                    </li>
-                    <li>
-                        <a href="~/FoodAndDrinkManagement/Index" class="app-menu__item">
-                            <i class='bx bx-dish'></i> Quản lý đồ ăn
-                        </a>
-                    </li>
-                </ul>
+            </li>
+
+
+            <li>
+                <a class="app-menu__item" href="~/GearManagement/Index">
+                    <i class='app-menu__icon bx bx-wrench'></i> <!-- Gear/Tools icon -->
+                    <span class="app-menu__label">Quản lý dụng cụ</span>
+                </a>
+            </li>
+
+            <li class="app-menu__item active">
+                <a class="app-menu__link" href="~/FoodAndDrinkManagement/Index">
+                    <i class='app-menu__icon bx bx-restaurant'></i>
+                    <span class="app-menu__label">Quản lý đồ ăn</span>
+                </a>
             </li>
 
 
@@ -667,6 +604,8 @@
                     <span class="app-menu__label">Quản lý sự kiện</span>
                 </a>
             </li>
+
+
 
             @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 1)
             {
@@ -678,7 +617,7 @@
                 </li>
 
                 <li>
-                    <a class="app-menu__item" href="table-data-product.html">
+                    <a class="app-menu__item" href="~/EmployeeManagement/Index">
                         <i class='app-menu__icon bx bx-purchase-tag-alt'></i>
                         <span class="app-menu__label">Quản lý nhân viên</span>
                     </a>
@@ -734,7 +673,7 @@
                                             @String.Format("{0:#,##0}₫", eventItem.Price)
                                         </span><br>
 
-                              
+
                                         <span>
                                             <!-- Category icon -->
                                             <i class="fas fa-bars mr-1" style="color: #1E90FF;"></i> Loại: @eventItem.CategoryName
@@ -756,6 +695,7 @@
                     </div>
 
                 </div>
+
             </div>
         </div>
 
@@ -778,6 +718,8 @@
         </div>
 
     </main>
+
+
 
     <script>
 

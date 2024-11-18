@@ -157,7 +157,7 @@
         align-items: center;
         padding: 15px;
         z-index: 1;
-        border-bottom: 1px solid #ccc; /* Viền phía dưới header */
+
     }
 
         .app-header .app-nav {
@@ -234,11 +234,8 @@
     }
 
     .app-menu__item.active {
-        font-weight: bold; /* In đậm chữ */
-        color: #000; /* Màu chữ, có thể thay đổi nếu muốn */
-        background: none; /* Bỏ nền */
-        border: none; /* Bỏ viền */
-        box-shadow: none; /* Bỏ bóng nếu có */
+        background-color: #ccc;
+        font-weight: bold;
     }
     hr {
         border: 1px solid #ccc;
@@ -553,24 +550,46 @@
 </style>
 
 <body onload="time()" class="app sidebar-mini rtl">
-    <header class="app-header">
-        <a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
-        <ul class="app-nav">
-            <!-- User Menu-->
+    <header class="app-header" style="display: flex; align-items: center; padding: 0 15px; background-color: #f6f5f5 !important;">
+        <!-- Sidebar Toggle -->
+        <a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar" style="margin-right: auto;">
+            <!-- Add an icon or text for the sidebar toggle -->
+        </a>
+
+        <!-- Centered Logo -->
+        <div style="flex: 500; display: flex; justify-content: center; align-items: center; padding-left: 50px;">
+            <img src="~/images/newlogo.jpg" alt="Logo" style="height: auto; width: 55%; max-width: 120px;margin-top: 10px;">
+        </div>
+
+
+        <!-- User Menu -->
+        <ul class="app-nav" style="display: flex; align-items: center; margin-left: auto; list-style: none; padding: 0;">
             <li>
-                <a class="app-nav__item" href="~/Home">
-                    <i class='bx bx-log-out bx-rotate-180'></i>
+                <a class="app-nav__item" href="~/Home" style="display: flex; align-items: center; text-decoration: none; color: black; background: rgb(195 195 195); padding: 10px 15px; border-radius: 5px; transition: background-color 0.3s;">
+                    <!-- Replace with an icon -->
+                    <i class="bx bx-home" style="font-size: 1.5rem; margin-right: 8px;"></i>
+                    <!-- Add text next to the icon -->
+                    <span style="font-size: 1rem;">Quay lại trang chủ</span>
                 </a>
             </li>
         </ul>
+
     </header>
 
     <!-- Sidebar menu-->
     <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
     <aside class="app-sidebar">
         <div class="app-sidebar__user">
-            <img class="app-sidebar__user-avatar" src="~/images/img_1.jpg" width="50px" alt="User Image">
-            <div>
+            @if (@HttpContextAccessor.HttpContext.Session.GetString("Img") == null)
+            {
+
+                <img src="~/images/p22.jpg" alt="Trang cá nhân" class="app-sidebar__user-avatar" width="50px">
+
+            }
+            else
+            {
+                <img src="~/images/Avatar/@HttpContextAccessor.HttpContext.Session.GetString("Img")" alt="Trang cá nhân" class="app-sidebar__user-avatar" src="~/images/img_1.jpg" width="50px">
+            }               <div>
                 <p class="app-sidebar__user-designation">Xin chào</p>
 
                 <p class="app-sidebar__user-name"><b>@HttpContextAccessor.HttpContext.Session.GetString("Fullname")</b></p>
@@ -691,120 +710,32 @@
                         }
                     });
                 });
-                document.addEventListener("DOMContentLoaded", function () {
-                    // Đối tượng cho "Quản lý sản phẩm"
-                    const manageProducts = document.getElementById("manageProducts");
-                    const productSubmenu = document.getElementById("productSubmenu");
-                    const submenuItemsProducts = document.querySelectorAll("#productSubmenu .app-menu__item");
-
-                    if (!manageProducts || !productSubmenu) {
-                        console.error("Không tìm thấy phần tử manageProducts hoặc productSubmenu.");
-                        return;
-                    }
-
-                    // Hàm để đặt trạng thái active cho mục con ngay khi click
-                    function setActiveMenu(item) {
-                        // Xóa trạng thái active khỏi tất cả các mục con
-                        submenuItemsProducts.forEach(subItem => subItem.classList.remove("active"));
-
-                        // Đặt trạng thái active cho mục được click
-                        item.classList.add("active");
-
-                        // Lưu href của mục con được click vào localStorage
-                        localStorage.setItem("activeSubmenu", item.getAttribute("href"));
-
-                        // Hiển thị submenu
-                        productSubmenu.style.display = "block";
-                        manageProducts.classList.add("parent-active");
-                    }
-
-                    // Hàm để khôi phục trạng thái active từ localStorage hoặc URL
-                    function restoreActiveSubmenu() {
-                        const savedHref = localStorage.getItem("activeSubmenu");
-                        const currentUrl = window.location.href;
-
-                        let matchedItem = null;
-
-                        // Ưu tiên `localStorage` trước để đảm bảo trạng thái khớp với mục con được click trước đó
-                        if (savedHref) {
-                            submenuItemsProducts.forEach(item => {
-                                if (item.getAttribute("href") === savedHref) {
-                                    matchedItem = item;
-                                }
-                            });
-                        }
-
-                        // Nếu không tìm thấy từ `localStorage`, kiểm tra URL hiện tại
-                        if (!matchedItem) {
-                            submenuItemsProducts.forEach(item => {
-                                const href = item.getAttribute("href");
-                                if (href && currentUrl.includes(href)) {
-                                    matchedItem = item;
-                                }
-                            });
-                        }
-
-                        // Nếu tìm thấy mục con phù hợp, đặt trạng thái active
-                        if (matchedItem) {
-                            submenuItemsProducts.forEach(subItem => subItem.classList.remove("active")); // Xóa trạng thái active cũ
-                            matchedItem.classList.add("active"); // Đặt trạng thái active mới
-                            productSubmenu.style.display = "block"; // Hiển thị submenu
-                            manageProducts.classList.add("parent-active"); // Đánh dấu mục cha
-                            localStorage.setItem("activeSubmenu", matchedItem.getAttribute("href")); // Lưu vào localStorage
-                        } else {
-                            // Nếu không có mục nào phù hợp, đảm bảo submenu được hiển thị nhưng không đặt active
-                            productSubmenu.style.display = "block";
-                            manageProducts.classList.add("parent-active");
-                        }
-                    }
-
-                    // Gọi hàm khôi phục trạng thái khi tải trang
-                    restoreActiveSubmenu();
-
-                    // Thêm sự kiện click cho từng mục con
-                    submenuItemsProducts.forEach(item => {
-                        item.addEventListener("click", function () {
-                            setActiveMenu(item); // Đặt trạng thái active ngay khi click
-                        });
-                    });
-
-                    // Toggle submenu khi click vào "Quản lý sản phẩm"
-                    manageProducts.addEventListener("click", function (event) {
-                        event.preventDefault(); // Ngăn chặn sự kiện mặc định
-                        if (productSubmenu.style.display === "none" || productSubmenu.style.display === "") {
-                            productSubmenu.style.display = "block"; // Mở submenu
-                        } else {
-                            productSubmenu.style.display = "none"; // Đóng submenu
-                        }
-                    });
-                });
+          
 
 
             </script>
-            <li class="has-submenu">
-                <a class="app-menu__item" href="javascript:void(0)" id="manageProducts">
-                    <i class='app-menu__icon bx bx-task'></i>
-                    <span class="app-menu__label">Quản lý sản phẩm</span>
+            <li>
+                <a class="app-menu__item" href="~/TicketManagement/Index">
+                    <i class='app-menu__icon bx bx-receipt'></i> <!-- Receipt icon as alternative -->
+                    <span class="app-menu__label">Quản lý vé</span>
                 </a>
-                <!-- Submenu -->
-                <ul class="submenu" style="display: none;" id="productSubmenu">
-                    <li>
-                        <a href="~/TicketManagement/Index" class="app-menu__item">
-                            <i class='bx bx-notepad'></i> Quản lý vé
-                        </a>
-                    </li>
-                    <li>
-                        <a href="~/GearManagement/Index" class="app-menu__item">
-                            <i class='bx bx-wrench'></i> Quản lý dụng cụ
-                        </a>
-                    </li>
-                    <li>
-                        <a href="~/FoodAndDrinkManagement/Index" class="app-menu__item">
-                            <i class='bx bx-dish'></i> Quản lý đồ ăn
-                        </a>
-                    </li>
-                </ul>
             </li>
+
+            <li>
+                <a class="app-menu__item" href="~/GearManagement/Index">
+                    <i class='app-menu__icon bx bx-wrench'></i> <!-- Gear/Tools icon -->
+                    <span class="app-menu__label">Quản lý dụng cụ</span>
+                </a>
+            </li>
+
+            <li class="app-menu__item active">
+                <a class="app-menu__link" href="~/FoodAndDrink/Index">
+                    <i class='app-menu__icon bx bx-restaurant'></i>
+                    <span class="app-menu__label">Quản lý đồ ăn</span>
+                </a>
+            </li>
+
+
 
             <li>
                 <a class="app-menu__item" href="~/EventManagement/Index">
@@ -823,7 +754,7 @@
                 </li>
 
                 <li>
-                    <a class="app-menu__item" href="table-data-product.html">
+                    <a class="app-menu__item" href="~/EmployeeManagement/Index">
                         <i class='app-menu__icon bx bx-purchase-tag-alt'></i>
                         <span class="app-menu__label">Quản lý nhân viên</span>
                     </a>

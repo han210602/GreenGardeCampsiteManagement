@@ -282,7 +282,7 @@ namespace GreenGardenClient.Controllers
                 }
                 else
                 {
-                    TempData["Success"] = "Thay đổi mật khẩu thất bại!";
+                    TempData["Error"] = "Thay đổi mật khẩu thất bại!";
                     return View(model);
                 }
             }

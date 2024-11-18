@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BusinessObject.DTOs
+﻿namespace BusinessObject.DTOs
 {
     public class CampingGearDTO
     {
@@ -25,7 +19,7 @@ namespace BusinessObject.DTOs
         public string GearName { get; set; } = null!;
         public int QuantityAvailable { get; set; }
         public decimal RentalPrice { get; set; }
-        public string Description { get; set; }
+        public string? Description { get; set; }
         public DateTime? CreatedAt { get; set; }
         public int? GearCategoryId { get; set; }
         public string ImgUrl { get; set; }
