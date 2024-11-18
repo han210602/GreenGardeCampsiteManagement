@@ -893,7 +893,7 @@
                             // Kiểm tra giá thuê
                             const rentalPriceInput = document.getElementById("Price_@Model.ItemId");
                             const rentalPriceError = document.getElementById("PriceError");
-                            if (rentalPriceInput.value.trim() === "" || parseFloat(rentalPriceInput.value) <= 0) {
+                            if (rentalPriceInput.value.trim() === "" || parseFloat(rentalPriceInput.value) < 0) {
                                 rentalPriceError.innerText = "Giá đồ ăn không được để trống hoặc không được bé hơn 0.";
                                 valid = false;
                             } else {

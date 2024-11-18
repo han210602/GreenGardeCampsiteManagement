@@ -920,7 +920,7 @@
                             // Kiểm tra số lượng
                             const quantityInput = document.getElementById("QuantityAvailable_@Model.GearId");
                             const quantityError = document.getElementById("QuantityAvailableError");
-                            if (quantityInput.value.trim() === "" || parseInt(quantityInput.value) <= 0) {
+                            if (quantityInput.value.trim() === "" || parseInt(quantityInput.value) < 0) {
                                 quantityError.innerText = "Số lượng thiết bị không được để trống hoặc không được bé hơn 0.";
                                 valid = false;
                             } else {
@@ -930,7 +930,7 @@
                             // Kiểm tra giá thuê
                             const rentalPriceInput = document.getElementById("RentalPrice_@Model.GearId");
                             const rentalPriceError = document.getElementById("RentalPriceError");
-                            if (rentalPriceInput.value.trim() === "" || parseFloat(rentalPriceInput.value) <= 0) {
+                            if (rentalPriceInput.value.trim() === "" || parseFloat(rentalPriceInput.value) < 0) {
                                 rentalPriceError.innerText = "Giá thuê không được để trống hoặc không được bé hơn 0.";
                                 valid = false;
                             } else {

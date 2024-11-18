@@ -585,12 +585,113 @@ namespace GreenGardenClient.Controllers
 
             return View("OrderTicket");
         }
+        public async Task<IActionResult> ComboList()
+        {
+            var combo = await GetDataFromApiAsync<List<ComboVM>>("https://localhost:7298/api/Combo/GetAllCustomerCombos");
 
-        public IActionResult Cart()
+            ViewBag.Combo = combo;
+
+
+            return View("ComboList");
+        }
+        [HttpGet("ComboDetail")]
+        public async Task<IActionResult> ComboDetail(int comboId)
+        {
+            var apiUrl = $"https://localhost:7298/api/Combo/GetComboDetail/{comboId}";
+
+            try
+            {
+                var client = _clientFactory.CreateClient();
+                var response = await client.GetAsync(apiUrl);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    var combo = JsonConvert.DeserializeObject<ComboDetailVM>(content);
+
+                    if (combo != null)
+                    {
+                        ViewBag.Combo = combo;
+                        return View("ComboDetail", combo); // Updated view name
+                    }
+                    else
+                    {
+                        TempData["ErrorMessage"] = "Invalid data!";
+                        return RedirectToAction("Error"); // Redirect to a dedicated error view
+                    }
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = $"Failed to retrieve data from API: {response.StatusCode}";
+                    return RedirectToAction("Error");
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"System error: {ex.Message}";
+                return RedirectToAction("Error");
+            }
+        }
+        public async Task<IActionResult> Cart()
         {
             var cartItems = GetCartItems();
+
+            // Lấy ngày sử dụng đầu tiên
+            DateTime? cartUsageDate = cartItems.FirstOrDefault()?.UsageDate;
+
+            // Lấy danh sách dụng cụ cắm trại
+            var campingGears = await GetDataFromApiAsync<List<GearVM>>(
+                "https://localhost:7298/api/CampingGear/GetCampingGearsBySort?");
+
+            // Kiểm tra xem có sản phẩm nào là "Gear" và "GearCategory" không
+            if (cartItems.Any(item => item.Type == "Gear" && item.TypeCategory == "GearCategory"))
+            {
+                if (cartUsageDate.HasValue)
+                {
+                    string formattedDate = cartUsageDate.Value.ToString("MM-dd-yyyy");
+                    var gearUsage = await GetDataFromApiAsync<List<OrderCampingGearByUsageDateDTO>>(
+                        $"https://localhost:7298/api/OrderManagement/GetListOrderGearByUsageDate/{formattedDate}");
+
+                    if (gearUsage != null)
+                    {
+                        // Cập nhật số lượng khả dụng dựa trên ngày sử dụng
+                        foreach (var gear in campingGears)
+                        {
+                            var usage = gearUsage.Where(u => u.GearId == gear.GearId);
+                            if (usage != null)
+                            {
+                                foreach (var used in usage)
+                                {
+                                    gear.QuantityAvailable -= used.Quantity.Value;
+                                    if (gear.QuantityAvailable < 0)
+                                    {
+                                        gear.QuantityAvailable = 0;
+                                    }
+                                }
+                            }
+                        }
+
+                        // Cập nhật số lượng khả dụng trong giỏ hàng
+                        foreach (var item in cartItems.Where(i => i.Type == "Gear" && i.TypeCategory == "GearCategory"))
+                        {
+                            var gear = campingGears.FirstOrDefault(g => g.GearId == item.Id);
+                            if (gear != null)
+                            {
+                                item.QuantityAvailable = gear.QuantityAvailable; // Set số lượng còn lại
+                                if (item.Quantity > gear.QuantityAvailable)
+                                {
+                                    item.Quantity = gear.QuantityAvailable; // Giới hạn số lượng
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            SaveCartItems(cartItems);
             return View(cartItems);
         }
+
 
         private List<CartItem> GetCartItems()
         {
@@ -650,15 +751,7 @@ namespace GreenGardenClient.Controllers
                     return Json(new { success = false, message = "Không thể thêm combo vào giỏ hàng vì đã có vé trong giỏ hàng." });
                 }
 
-                // Nếu đã có Combo với cùng Id, chỉ cập nhật số lượng
-                var existingCombo = cartItems.FirstOrDefault(c => c.Id == Id && c.Type == "Combo" && c.TypeCategory == "ComboCategory");
-                if (existingCombo != null)
-                {
-                    existingCombo.Quantity += quantity;
-                    SaveCartItems(cartItems);
-                    await _hubContext.Clients.All.SendAsync("ReceiveCartUpdate", cartItems);
-                    return Json(new { success = true, message = "Thêm vào giỏ hàng thành công!", cartItemCount = cartItems.Count });
-                }
+              
             }
 
             // Nếu đang thêm một vé, không giới hạn loại vé khác nhau
@@ -717,8 +810,9 @@ namespace GreenGardenClient.Controllers
         [HttpGet]
         public IActionResult GetCartItemCount()
         {
-            int cartItemCount = HttpContext.Session.GetInt32("CartItemCount") ?? 0;
-            return Json(cartItemCount);
+            var cart = GetCartItems();
+            int itemCount = cart.Sum(c => c.Quantity);
+            return Json(itemCount);
         }
 
         [HttpPost]
@@ -726,10 +820,7 @@ namespace GreenGardenClient.Controllers
         {
             // Xóa toàn bộ sản phẩm trong giỏ hàng
             HttpContext.Session.Remove("Cart"); // Nếu giỏ hàng lưu trong Session
-                                                // Hoặc xóa từ database nếu giỏ hàng lưu trong DB
-                                                // Example: _cartService.ClearCart(User.Identity.Name);
-
-            // Chuyển hướng tới trang đặt vé
+              HttpContext.Session.SetInt32("CartItemCount", 0);
             return RedirectToAction("OrderTicket"); // "Booking" là tên controller, "Index" là action.
         }
 
@@ -792,7 +883,8 @@ namespace GreenGardenClient.Controllers
             {
                 // If no item matches, consider adding it as a new entry if desired
             }
-
+            int cartItemCount = cartItems.Sum(c => c.Quantity);
+            HttpContext.Session.SetInt32("CartItemCount", cartItemCount);
             // Save the updated cart items
             SaveCartItems(cartItems);
 
@@ -800,53 +892,7 @@ namespace GreenGardenClient.Controllers
         }
 
 
-        public async Task<IActionResult> ComboList()
-        {
-            var combo = await GetDataFromApiAsync<List<ComboVM>>("https://localhost:7298/api/Combo/GetAllCustomerCombos");
-
-            ViewBag.Combo = combo;
-
-
-            return View("ComboList");
-        }
-        [HttpGet("ComboDetail")]
-        public async Task<IActionResult> ComboDetail(int comboId)
-        {
-            var apiUrl = $"https://localhost:7298/api/Combo/GetComboDetail/{comboId}";
-
-            try
-            {
-                var client = _clientFactory.CreateClient();
-                var response = await client.GetAsync(apiUrl);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    var content = await response.Content.ReadAsStringAsync();
-                    var combo = JsonConvert.DeserializeObject<ComboDetailVM>(content);
-
-                    if (combo != null)
-                    {
-                        ViewBag.Combo = combo;
-                        return View("ComboDetail", combo); // Updated view name
-                    }
-                    else
-                    {
-                        TempData["ErrorMessage"] = "Invalid data!";
-                        return RedirectToAction("Error"); // Redirect to a dedicated error view
-                    }
-                }
-                else
-                {
-                    TempData["ErrorMessage"] = $"Failed to retrieve data from API: {response.StatusCode}";
-                    return RedirectToAction("Error");
-                }
-            }
-            catch (Exception ex)
-            {
-                TempData["ErrorMessage"] = $"System error: {ex.Message}";
-                return RedirectToAction("Error");
-            }
-        }
+        
         public IActionResult Checkout()
         {
             return View();

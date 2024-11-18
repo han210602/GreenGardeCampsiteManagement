@@ -599,7 +599,16 @@
                                             {
                                                 foreach (var category in (List<TicketCategoryVM>)ViewBag.TicketCategories)
                                                 {
-                                                    <option value="@category.TicketCategoryId">@category.TicketCategoryName</option>
+                                                    if (category.TicketCategoryId == Model.TicketCategoryId)
+                                                    {
+                                                        <option value="@category.TicketCategoryId" selected>@category.TicketCategoryName</option>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@category.TicketCategoryId">@category.TicketCategoryName</option>
+
+                                                    }
                                                 }
                                             }
                                         </select>

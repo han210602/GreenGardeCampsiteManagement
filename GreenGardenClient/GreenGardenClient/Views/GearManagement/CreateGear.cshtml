@@ -592,7 +592,17 @@
                                             {
                                                 foreach (var category in (List<GearCategoryVM>)ViewBag.CampingCategories)
                                                 {
-                                                    <option value="@category.GearCategoryId">@category.GearCategoryName</option>
+                                                    
+                                                    if (category.GearCategoryId == Model.GearCategoryId)
+                                                    {
+                                                        <option value="@category.GearCategoryId" selected>@category.GearCategoryName</option>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@category.GearCategoryId">@category.GearCategoryName</option>
+
+                                                    }
                                                 }
                                             }
 

@@ -803,7 +803,7 @@
                                     </label>
                                    
                                 </div>
-                                <textarea class="form-control" id="" name="Description" rows="3" placeholder="Nhập mô tả">Vé giúp bạn trải nghiệm không gian cắm trại và tổ chức tiệc ngoài trời rộng rãi.</textarea>
+                                <textarea class="form-control" readonly id="" name="Description" rows="3" placeholder="Nhập mô tả">Vé giúp bạn trải nghiệm không gian cắm trại và tổ chức tiệc ngoài trời rộng rãi.</textarea>
                                 <!-- Price -->
                                 <div class="d-flex align-items-center mb-3">
                                     <i class="fas fa-money-bill-wave me-2" style="color: #28a745;"></i>
@@ -879,7 +879,7 @@
                             // Kiểm tra giá thuê
                             const rentalPriceInput = document.getElementById("Price_@Model.TicketId");
                             const rentalPriceError = document.getElementById("PriceError");
-                            if (rentalPriceInput.value.trim() === "" || parseFloat(rentalPriceInput.value) <= 0) {
+                            if (rentalPriceInput.value.trim() === "" || parseFloat(rentalPriceInput.value) < 0) {
                                 rentalPriceError.innerText = "Giá vé không được để trống hoặc không được bé hơn 0.";
                                 valid = false;
                             } else {

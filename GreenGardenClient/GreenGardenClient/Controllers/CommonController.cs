@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
+
 namespace GreenGardenClient.Controllers
 {
     public class CommonController : Controller
@@ -196,6 +198,19 @@ namespace GreenGardenClient.Controllers
         {
             try
             {
+                
+                if (string.IsNullOrEmpty(email))
+                {
+                    ModelState.AddModelError("EmailError", "Vui lòng nhập email của bạn");
+                    return View(new { Email = email });
+                }
+
+                var emailRegex = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+                if (!Regex.IsMatch(email, emailRegex))
+                {
+                    ModelState.AddModelError("EmailError", "Email không đúng định dạng");
+                    return View(new { Email = email });
+                }
                 var client = _clientFactory.CreateClient();
                 var response = await client.PostAsync($"https://localhost:7298/api/Account/SendResetPasswordEmail/{email}", null);
 

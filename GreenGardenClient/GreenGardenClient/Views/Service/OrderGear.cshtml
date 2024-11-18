@@ -9,7 +9,7 @@
 <html lang="en">
 
 <head>
-    <title>Sự kiện &mdash; GreenGarden</title>
+    <title>Danh sách dụng cụ &mdash; GreenGarden</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -127,15 +127,22 @@
                                 @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 3)
                                 {
                                     <li>
-                                        <a href="~/Service/Cart" class="nav-link" style="position: relative;">
-                                            <i class="fas fa-shopping-cart"></i>
-                                            <span id="cart-count" class="badge badge-pill badge-primary" style="position: absolute; top: -10px; right: -10px; background-color: #efba6c; color: white; padding: 5px 8px; border-radius: 50%;">
-                                                @HttpContextAccessor.HttpContext.Session.GetInt32("CartItemCount") ?? 0
+                                        <a href="~/Service/Cart" class="nav-link cart-icon">
+                                            <span class="cart-wrapper">
+                                                <i id="cart-count" class="fas fa-shopping-cart"></i>
+                                                @if (HttpContextAccessor.HttpContext.Session.GetInt32("CartItemCount") > 0)
+                                                {
+                                                    <span class="cart-badge">
+                                                        @HttpContextAccessor.HttpContext.Session.GetInt32("CartItemCount")
+                                                    </span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="cart-badge">0</span>
+                                                }
                                             </span>
                                         </a>
                                     </li>
-
-
                                 }
 
                             </ul>
@@ -144,6 +151,31 @@
                 </div>
             </div>
             <style>
+                .cart-wrapper {
+                    position: relative;
+                    display: inline-block;
+                }
+
+                    .cart-wrapper .fas.fa-shopping-cart {
+                        font-size: 24px; /* Adjust icon size */
+                        color: #000; /* Adjust icon color */
+                    }
+
+                .cart-badge {
+                    position: absolute;
+                    top: -5px; /* Adjust vertical position */
+                    right: -10px; /* Adjust horizontal position */
+                    background-color: yellow; /* Badge background color */
+                    color: black; /* Text color */
+                    font-size: 14px; /* Badge font size */
+                    font-weight: bold;
+                    line-height: 1; /* Adjust text alignment */
+                    border-radius: 50%;
+                    padding: 4px 8px; /* Padding for badge shape */
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Add subtle shadow */
+                    z-index: 10;
+                    white-space: nowrap; /* Prevent text wrapping */
+                }
                 .site-navbar {
                     position: fixed; /* Cố định header */
                     top: 0; /* Đặt header ở đầu trang */
@@ -697,6 +729,26 @@
                 updateGearList();
             });
         });
+        function updateCartCount() {
+            $.get('/Service/GetCartItemCount', function (count) {
+                if (count !== null && count > 0) {
+                    // Kiểm tra nếu badge chưa tồn tại, thêm badge mới
+                    if (!$('.cart-badge').length) {
+                        $('.cart-wrapper').append(`<span class="cart-badge">${count}</span>`);
+                    } else {
+                        // Nếu badge đã tồn tại, cập nhật số lượng
+                        $('.cart-badge').text(count);
+                    }
+                } else {
+                    // Nếu giỏ hàng trống, hiển thị 0
+                    if (!$('.cart-badge').length) {
+                        $('.cart-wrapper').append(`<span class="cart-badge">0</span>`);
+                    } else {
+                        $('.cart-badge').text('0');
+                    }
+                }
+            });
+        }
         function addToCart(gearId) {
             const form = $(`#product-${gearId}`).find('form');
             const availableQuantityElement = $(`#product-${gearId}`).find('h2:contains("Số lượng còn lại") strong');
@@ -749,7 +801,7 @@
                         if (availableQuantity <= 0) {
                             availableQuantityElement.closest('.product-card').addClass('out-of-stock');
                         }
-
+                        updateCartCount();
                     } else {
                         Swal.fire({
                             icon: "error",

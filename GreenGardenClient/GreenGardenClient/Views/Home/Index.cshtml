@@ -35,18 +35,20 @@
 
     <div class="site-wrap" id="home-section">
 
-        <div class="site-mobile-menu site-navbar-target">
-            <div class="site-mobile-menu-header">
-                <div class="site-mobile-menu-close mt-3">
-                    <span class="icon-close2 js-menu-toggle"></span>
-                </div>
-            </div>
-            <div class="site-mobile-menu-body"></div>
-        </div>
+       
 
 
 
         <header class="site-navbar site-navbar-target" role="banner">
+            <div class="site-mobile-menu site-navbar-target">
+                <div class="site-mobile-menu-header">
+                    <div class="site-mobile-menu-close mt-3">
+                        <span class="icon-close2 js-menu-toggle"></span>
+                    </div>
+                </div>
+                <div class="site-mobile-menu-body">
+                </div>
+            </div>
             <div class="container">
                 <div class="row align-items-center position-relative">
                     <div class="col-3  align-left">
@@ -57,6 +59,7 @@
                         </div>
                     </div>
                     <div class="col-9 text-right">
+                        <span class="d-inline-block d-lg-none"><a href="#" class="text-black site-menu-toggle js-menu-toggle py-5 text-white"><span class="icon-menu h3 text-black"></span></a></span>
                         <nav class="site-navigation text-right ml-auto d-none d-lg-block" role="navigation">
                             <ul class="site-menu main-menu js-clone-nav ml-auto ">
                                 <li class="active"><a href="/Home" class="nav-link">Trang chủ</a></li>
@@ -127,11 +130,22 @@
                                 @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 3)
                                 {
                                     <li>
-                                        <a href="~/Service/Cart" class="nav-link">
-                                            <i class="fas fa-shopping-cart"></i>
+                                        <a href="~/Service/Cart" class="nav-link cart-icon">
+                                            <span class="cart-wrapper">
+                                                <i id="cart-count" class="fas fa-shopping-cart"></i>
+                                                @if (HttpContextAccessor.HttpContext.Session.GetInt32("CartItemCount") > 0)
+                                                {
+                                                    <span class="cart-badge">
+                                                        @HttpContextAccessor.HttpContext.Session.GetInt32("CartItemCount")
+                                                    </span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="cart-badge">0</span>
+                                                }
+                                            </span>
                                         </a>
                                     </li>
-
                                 }
 
                             </ul>

@@ -32,18 +32,19 @@
 
     <div class="site-wrap" id="home-section">
 
-        <div class="site-mobile-menu site-navbar-target">
-            <div class="site-mobile-menu-header">
-                <div class="site-mobile-menu-close mt-3">
-                    <span class="icon-close2 js-menu-toggle"></span>
-                </div>
-            </div>
-            <div class="site-mobile-menu-body"></div>
-        </div>
+      
 
 
 
         <header class="site-navbar site-navbar-target" role="banner">
+            <div class="site-mobile-menu site-navbar-target">
+                <div class="site-mobile-menu-header">
+                    <div class="site-mobile-menu-close mt-3">
+                        <span class="icon-close2 js-menu-toggle"></span>
+                    </div>
+                </div>
+                <div class="site-mobile-menu-body"></div>
+            </div>
             <div class="container">
                 <div class="row align-items-center position-relative">
                     <div class="col-3 ">
@@ -54,6 +55,7 @@
                         </div>
                     </div>
                     <div class="col-9 text-right">
+                        <span class="d-inline-block d-lg-none"><a href="#" class="text-black site-menu-toggle js-menu-toggle py-5 text-white"><span class="icon-menu h3 text-black"></span></a></span>
                         <nav class="site-navigation text-right ml-auto d-none d-lg-block" role="navigation">
                             <ul class="site-menu main-menu js-clone-nav ml-auto ">
                                 <li><a href="/Home" class="nav-link">Trang chủ</a></li>
@@ -123,11 +125,22 @@
                                 @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 3)
                                 {
                                     <li>
-                                        <a href="~/Service/Cart" class="nav-link">
-                                            <i class="fas fa-shopping-cart"></i>
+                                        <a href="~/Service/Cart" class="nav-link cart-icon">
+                                            <span class="cart-wrapper">
+                                                <i id="cart-count" class="fas fa-shopping-cart"></i>
+                                                @if (HttpContextAccessor.HttpContext.Session.GetInt32("CartItemCount") > 0)
+                                                {
+                                                    <span class="cart-badge">
+                                                        @HttpContextAccessor.HttpContext.Session.GetInt32("CartItemCount")
+                                                    </span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="cart-badge">0</span>
+                                                }
+                                            </span>
                                         </a>
                                     </li>
-
                                 }
 
                             </ul>
@@ -136,6 +149,31 @@
                 </div>
             </div>
             <style>
+                .cart-wrapper {
+                    position: relative;
+                    display: inline-block;
+                }
+
+                    .cart-wrapper .fas.fa-shopping-cart {
+                        font-size: 24px; /* Adjust icon size */
+                        color: #000; /* Adjust icon color */
+                    }
+
+                .cart-badge {
+                    position: absolute;
+                    top: -5px; /* Adjust vertical position */
+                    right: -10px; /* Adjust horizontal position */
+                    background-color: yellow; /* Badge background color */
+                    color: black; /* Text color */
+                    font-size: 14px; /* Badge font size */
+                    font-weight: bold;
+                    line-height: 1; /* Adjust text alignment */
+                    border-radius: 50%;
+                    padding: 4px 8px; /* Padding for badge shape */
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Add subtle shadow */
+                    z-index: 10;
+                    white-space: nowrap; /* Prevent text wrapping */
+                }
                 .site-navbar {
                     position: fixed; /* Cố định header */
                     top: 0; /* Đặt header ở đầu trang */
@@ -144,7 +182,7 @@
                     z-index: 1000; /* Đảm bảo header nằm trên các phần tử khác */
                     background-color: #f6f5f5 !important;
                     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ cho header */
-                    padding: 10px 0; /* Khoảng cách trên và dưới */
+                    padding: 0px 0; /* Khoảng cách trên và dưới */
                 }
 
                     /* Khoảng trống bên dưới để bù cho chiều cao header */

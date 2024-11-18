@@ -38,7 +38,7 @@ namespace GreenGardenClient.Models
         [StringLength(100, ErrorMessage = "Tên vé không được vượt quá 100 ký tự.")]
         public string TicketName { get; set; } = null!;
 
-        [Range(0.01, double.MaxValue, ErrorMessage = "Giá vé phải lớn hơn 0.")]
+        [Range(1, double.MaxValue, ErrorMessage = "Giá vé phải lớn hơn 0.")]
         public decimal Price { get; set; }
 
         public DateTime CreatedAt { get; set; }

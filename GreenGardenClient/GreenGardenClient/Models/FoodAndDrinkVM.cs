@@ -31,7 +31,7 @@ namespace GreenGardenClient.Models
         public int ItemId { get; set; }
 
         [Required(ErrorMessage = "Giá không được để trống.")]
-        [Range(0.01, double.MaxValue, ErrorMessage = "Giá phải lớn hơn 0.")]
+        [Range(1, double.MaxValue, ErrorMessage = "Giá phải lớn hơn 0.")]
         public decimal Price { get; set; }
 
         public string? Description { get; set; }

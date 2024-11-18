@@ -8,7 +8,7 @@
 <html lang="en">
 
 <head>
-    <title>Sự kiện &mdash; GreenGarden</title>
+    <title>Chi tiết sự kiện &mdash; GreenGarden</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -125,11 +125,22 @@
                                 @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 3)
                                 {
                                     <li>
-                                        <a href="~/Service/Cart" class="nav-link">
-                                            <i class="fas fa-shopping-cart"></i>
+                                        <a href="~/Service/Cart" class="nav-link cart-icon">
+                                            <span class="cart-wrapper">
+                                                <i id="cart-count" class="fas fa-shopping-cart"></i>
+                                                @if (HttpContextAccessor.HttpContext.Session.GetInt32("CartItemCount") > 0)
+                                                {
+                                                    <span class="cart-badge">
+                                                        @HttpContextAccessor.HttpContext.Session.GetInt32("CartItemCount")
+                                                    </span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="cart-badge">0</span>
+                                                }
+                                            </span>
                                         </a>
                                     </li>
-
                                 }
 
                             </ul>
@@ -138,6 +149,31 @@
                 </div>
             </div>
             <style>
+                  .cart-wrapper {
+                    position: relative;
+                    display: inline-block;
+                }
+
+                    .cart-wrapper .fas.fa-shopping-cart {
+                        font-size: 24px; /* Adjust icon size */
+                        color: #000; /* Adjust icon color */
+                    }
+
+                .cart-badge {
+                    position: absolute;
+                    top: -5px; /* Adjust vertical position */
+                    right: -10px; /* Adjust horizontal position */
+                    background-color: yellow; /* Badge background color */
+                    color: black; /* Text color */
+                    font-size: 14px; /* Badge font size */
+                    font-weight: bold;
+                    line-height: 1; /* Adjust text alignment */
+                    border-radius: 50%;
+                    padding: 4px 8px; /* Padding for badge shape */
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Add subtle shadow */
+                    z-index: 10;
+                    white-space: nowrap; /* Prevent text wrapping */
+                }
                 .site-navbar {
                     position: fixed; /* Cố định header */
                     top: 0; /* Đặt header ở đầu trang */
@@ -210,8 +246,8 @@
 
                     /* Định dạng ảnh bên trong khung */
                     .post-entry-1 img {
-                        width: 100%; /* Đảm bảo ảnh luôn đầy chiều rộng khung */
-                        height: 200px; /* Chiều cao cố định */
+                        width: 70%; /* Đảm bảo ảnh luôn đầy chiều rộng khung */
+                        height: 50%; /* Chiều cao cố định */
                         object-fit: cover; /* Đảm bảo ảnh không bị méo */
                         border-bottom: 1px solid #ddd; /* Đường viền dưới ảnh */
                     }
@@ -269,17 +305,25 @@
             <div class="site-section">
                 <div class="container">
                     <div class="row">
-                        <!-- Event Banner -->
-                        <div class="col-lg-12 mb-4">
-                            <div class="banner text-center">
-                                <h1 class="display-4 font-weight-bold">@events.EventName</h1>
-                                <img src="~/images/@events.PictureUrl" alt="" class="img-fluid mt-3" style=" width:100%; max-height: 500px; border-radius: 10px;">
-                            </div>
+                        <!-- Event Name -->
+                        <div class="col-md-12 text-center mb-4">
+                            <h1 class="display-4 font-weight-bold">@events.EventName</h1>
                         </div>
                     </div>
-
-                    <!-- Event Information -->
                     <div class="row">
+                        <!-- Event Banner -->
+                        <div class="col-md-12">
+                            <div class="banner text-center">
+                                <img src="~/images/@events.PictureUrl" alt="Event Banner" class="img-fluid mt-3" style="width:40%; max-height: 400px; border-radius: 10px; object-fit: cover;">
+                            </div>
+                        </div>
+
+                        <!-- Event Information -->
+                        
+                    </div>
+
+                    <div class="row mt-4">
+                        <!-- CTA Section -->
                         <div class="col-md-8">
                             <h2 class="mb-3">Thông tin sự kiện</h2>
                             <p><i class="fas fa-calendar-alt"></i> <strong>Ngày: </strong>@events.EventDate.ToString("dd-MM-yyyy")</p>
@@ -288,8 +332,6 @@
                             <h3 class="mt-4">Mô tả sự kiện</h3>
                             <p>@events.Description</p>
                         </div>
-
-                        <!-- CTA Section -->
                         <div class="col-md-4">
                             <div class="card">
                                 <div class="card-body text-center">
