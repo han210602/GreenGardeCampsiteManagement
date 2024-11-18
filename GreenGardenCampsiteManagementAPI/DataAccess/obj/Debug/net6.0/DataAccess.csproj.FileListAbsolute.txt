@@ -314,7 +314,6 @@ C:\Users\admin\Desktop\git\API\GreenGardenCampsiteManagement\GreenGardenCampsite
 C:\Users\admin\Desktop\git\API\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\DataAccess\obj\Debug\net6.0\DataAccess.pdb
 C:\Users\admin\Desktop\git\API\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\DataAccess\obj\Debug\net6.0\DataAccess.genruntimeconfig.cache
 C:\Users\admin\Desktop\git\API\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\DataAccess\obj\Debug\net6.0\ref\DataAccess.dll
-C:\Users\admin\Desktop\git\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\DataAccess\bin\Debug\net6.0\appsettings.json
 C:\Users\admin\Desktop\git\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\DataAccess\bin\Debug\net6.0\BusinessObject.deps.json
 C:\Users\admin\Desktop\git\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\DataAccess\bin\Debug\net6.0\BusinessObject.runtimeconfig.json
 C:\Users\admin\Desktop\git\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\DataAccess\bin\Debug\net6.0\BusinessObject.exe

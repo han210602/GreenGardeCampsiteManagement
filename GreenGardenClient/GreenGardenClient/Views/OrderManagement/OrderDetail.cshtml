@@ -83,10 +83,12 @@
 <style>
 
     .order-info {
-        padding: 20px;
-        margin-bottom: 20px;
-        border-radius: 10px;
-        margin-left: 20px
+        padding: 20px; /* Khoảng cách bên trong */
+        margin: 0 auto; /* Canh giữa khung theo chiều ngang */
+        border-radius: 10px; /* Bo góc */
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Đổ bóng */
+        max-width: 900px; /* Giới hạn chiều rộng */
+        text-align: center; /* Canh giữa nội dung */
     }
 
         .order-info p {
@@ -568,26 +570,27 @@
                             <div class="row d-flex justify-content-center">
                                 <!-- 3 mục trên hàng đầu tiên -->
                                 <div class="col-md-4">
-                                    <p><strong>Mã đơn:</strong>#@Model.OrderId</p>
+                                    <p><strong style="margin-right:10px">Mã đơn:</strong>#@Model.OrderId</p>
                                 </div>
                                 <div class="col-md-4">
-                                    <p><strong>Tên khách hàng:</strong>@Model.CustomerName</p>
+                                    <p><strong style="margin-right:10px">Tên khách hàng:</strong>@Model.CustomerName</p>
                                 </div>
                                 <div class="col-md-4">
-                                    <p><strong>Số điện thoại:</strong>@Model.PhoneCustomer</p>
+                                    <p><strong style="margin-right:10px">Số điện thoại:</strong>@Model.PhoneCustomer</p>
                                 </div>
                             </div>
                             <div class="row d-flex justify-content-center">
 
                                 <!-- 3 mục trên hàng thứ hai -->
                                 <div class="col-md-4">
-                                    <p><strong>Ngày đặt đơn:</strong> @Model.OrderDate</p>
+                                    <p><strong style="margin-right:10px">Ngày đặt đơn:</strong>@Model.OrderDate?.ToString("hh:mm:ss tt dd/MM/yyyy")</p>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <p><strong style="margin-right:10px">Ngày sử dụng:</strong>@Model.OrderUsageDate?.ToString("hh:mm:ss tt dd/MM/yyyy")</p>
                                 </div>
                                 <div class="col-md-4">
-                                    <p><strong>Ngày sử dụng:</strong>@Model.OrderUsageDate</p>
-                                </div>
-                                <div class="col-md-4">
-                                    <strong>Tổng Tiền:</strong> @Model.TotalAmount.ToString("C2", new System.Globalization.CultureInfo("vi-VN"))
+                                    <strong style="margin-right:10px">Tổng Tiền:</strong>@Model.TotalAmount.ToString("C2", new System.Globalization.CultureInfo("vi-VN"))
                                 </div>
                             </div>
                         </div>
@@ -783,62 +786,70 @@
                                     </div>
 
                                     <!-- Right-aligned Payment Button -->
-                                    <div class="d-flex justify-content-end">
-                                        @{
-                                            string actionName = Model.ActivityId switch
-                                            {
-                                                1 => "OrderOnline",
-                                                2 => "OrderUsing",
-                                                3 => "OrderCheckout",
-                                                1002 => "OrderCancel",
-                                                _ => "OrderOnline" // Hành động mặc định nếu ActivityId không khớp
-                                            };
-                                        }
+                                    
 
-                                        <a asp-controller="OrderManagement" asp-action="@actionName" class="btn btn-secondary back-link">Quay lại</a>
 
-                                        @* Các nút khác *@
-                                        @if (Model.ActivityId == 1)
+
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <!-- Back Button -->
+                                <div>
+                                    @{
+                                        string actionName = Model.ActivityId switch
                                         {
-                                            <!-- Cancel Button -->
-                                            <form id="cancelForm" class="mb-0" asp-controller="OrderManagement" asp-action="UpdateActivityOrder" method="post">
-                                                <input type="number" hidden name="idorder" value="@Model.OrderId" />
-                                                <input type="number" hidden name="idactivity" value="1002" />
-                                                <button type="button" class="btn btn-danger font-weight-bold px-4 py-2"
-                                                        style="font-size: 1.1rem; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);"
-                                                        data-bs-toggle="modal" data-bs-target="#cancelConfirmModal">
-                                                    Hủy
-                                                </button>
-                                            </form>
+                                            1 => "OrderOnline",
+                                            2 => "OrderUsing",
+                                            3 => "OrderCheckout",
+                                            1002 => "OrderCancel",
+                                            _ => "OrderOnline" // Hành động mặc định nếu ActivityId không khớp
+                                        };
+                                    }
 
-                                            <!-- Use Button -->
-                                            <form id="useForm" class="mb-0" asp-controller="OrderManagement" asp-action="UpdateActivityOrder" method="post">
-                                                <input type="number" hidden name="idorder" value="@Model.OrderId" />
-                                                <input type="number" hidden name="idactivity" value="2" />
-                                                <button type="button" class="btn btn-success font-weight-bold px-4 py-2"
-                                                        style="font-size: 1.1rem; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);"
-                                                        data-bs-toggle="modal" data-bs-target="#useConfirmModal">
-                                                    Sử dụng
-                                                </button>
-                                            </form>
-                                        }
-                                        else if (Model.ActivityId == 2)
-                                        {
-                                            <!-- Payment Button -->
-                                            <form id="paymentForm" class="mb-0" asp-controller="OrderManagement" asp-action="UpdateActivityOrder" method="post">
-                                                <input type="number" hidden name="idorder" value="@Model.OrderId" />
-                                                <input type="number" hidden name="idactivity" value="3" />
-                                                <button type="button" class="btn btn-primary font-weight-bold px-4 py-2"
-                                                        style="font-size: 1.1rem; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);"
-                                                        data-bs-toggle="modal" data-bs-target="#paymentConfirmModal">
-                                                    Thanh toán
-                                                </button>
-                                            </form>
-                                        }
-                                    </div>
+                                    <a asp-controller="OrderManagement" asp-action="@actionName" class="btn btn-secondary px-4 py-2">
+                                        <i class="fas fa-arrow-left me-2"></i>Quay lại
+                                    </a>
+                                </div>
 
+                                <!-- Other Buttons -->
+                                <div>
+                                    @if (Model.ActivityId == 1)
+                                    {
+                                        <!-- Cancel Button -->
+                                        <form id="cancelForm" class="d-inline-block" asp-controller="OrderManagement" asp-action="UpdateActivityOrder" method="post">
+                                            <input type="number" hidden name="idorder" value="@Model.OrderId" />
+                                            <input type="number" hidden name="idactivity" value="1002" />
+                                            <button type="button" class="btn btn-danger font-weight-bold px-4 py-2 mx-2"
+                                                    style="font-size: 1.1rem;"
+                                                    data-bs-toggle="modal" data-bs-target="#cancelConfirmModal">
+                                                <i class="fas fa-times-circle me-2"></i>Hủy
+                                            </button>
+                                        </form>
 
-
+                                        <!-- Use Button -->
+                                        <form id="useForm" class="d-inline-block" asp-controller="OrderManagement" asp-action="UpdateActivityOrder" method="post">
+                                            <input type="number" hidden name="idorder" value="@Model.OrderId" />
+                                            <input type="number" hidden name="idactivity" value="2" />
+                                            <button type="button" class="btn btn-success font-weight-bold px-4 py-2 mx-2"
+                                                    style="font-size: 1.1rem;"
+                                                    data-bs-toggle="modal" data-bs-target="#useConfirmModal">
+                                                <i class="fas fa-play-circle me-2"></i>Sử dụng
+                                            </button>
+                                        </form>
+                                    }
+                                    else if (Model.ActivityId == 2)
+                                    {
+                                        <!-- Payment Button -->
+                                        <form id="paymentForm" class="d-inline-block" asp-controller="OrderManagement" asp-action="UpdateActivityOrder" method="post">
+                                            <input type="number" hidden name="idorder" value="@Model.OrderId" />
+                                            <input type="number" hidden name="idactivity" value="3" />
+                                            <button type="button" class="btn btn-primary font-weight-bold px-4 py-2 mx-2"
+                                                    style="font-size: 1.1rem;"
+                                                    data-bs-toggle="modal" data-bs-target="#paymentConfirmModal">
+                                                <i class="fas fa-credit-card me-2"></i>Thanh toán
+                                            </button>
+                                        </form>
+                                    }
                                 </div>
                             </div>
 

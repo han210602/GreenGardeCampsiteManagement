@@ -580,11 +580,11 @@
 
                                 <div class="product-card">
                                     <div class="product-image">
-                                        <img src="~/images/img_1.jpg" alt="Bạc Xỉu">
+                                        <img src="@item.ImgUrl" alt="ve">
                                     </div>
                                     <div class="product-details">
                                         <div class="product-name">@item.TicketName</div>
-                                        <div class="product-description">Cà phê phin với sữa đặc Việt Nam.</div>
+                                        <div class="product-description">@item.TicketCategoryName</div>
                                         <div class="product-price">
                                             @String.Format("{0:0,0} ₫", @item.Price)
                                         </div>
@@ -612,9 +612,9 @@
 
                             <div id="pagination" class="dataTables_paginate paging_simple_numbers">
                                 <ul class="pagination">
-                                    <li class="paginate_button page-item previous disabled" id="prev-page"><a href="#" class="page-link">Lùi</a></li>
+                                    <li class="paginate_button page-item previous disabled" id="prev-page"><a href="#" class="page-link">Trước</a></li>
                                     <!-- Các nút số trang sẽ được tạo tự động -->
-                                    <li class="paginate_button page-item next" id="next-page"><a href="#" class="page-link">Tiếp</a></li>
+                                    <li class="paginate_button page-item next" id="next-page"><a href="#" class="page-link">Sau</a></li>
                                 </ul>
                             </div>
                         </div>

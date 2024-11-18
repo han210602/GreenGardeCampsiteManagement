@@ -580,11 +580,12 @@
 
                                 <div class="product-card">
                                     <div class="product-image">
-                                        <img src="~/images/img_1.jpg" alt="Bạc Xỉu">
+                                        <img src="@item.ImgUrl" alt="dungcu">
                                     </div>
                                     <div class="product-details">
-                                        <div class="product-name"><a asp-action="GearDetail" asp-controller="OrderManagement" asp-route-id="@item.GearId" asp-route-quantity="@item.Quantity" asp-route-quantityavai="@item.QuantityAvailable">@item.GearName</a></div>
-                                        <div class="product-description">Cà phê phin với sữa đặc Việt Nam.</div>
+                                        <div class="product-name">
+                                            @item.GearName</div>
+                                        <div class="product-description">@item.ImgUrl</div>
                                         <div class="product-price">
                                             @String.Format("{0:0,0} ₫", @item.RentalPrice)
                                         </div>
@@ -616,18 +617,25 @@
                             }
                         </div>
                         <div class="container-pagination-cart">
-                            <div class="d-flex ">
-                                <a asp-controller="OrderManagement" asp-action="ChangeUsagedate" asp-route-id="@ViewBag.id" class="btn btn-secondary">Quay lại</a>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <!-- Nút Quay lại -->
+                                <a href="javascript:history.back()" class="btn btn-secondary d-flex align-items-center">
+                                    <i class="fas fa-arrow-left me-2"></i>Quay lại
+                                </a>
 
-                                <button type="submit" class="btn btn-primary">Xác nhận chuyển ngày</button>
+                                <!-- Nút Xác nhận chuyển ngày -->
+                                <button type="submit" class="btn btn-primary d-flex align-items-center">
+                                    <i class="fas fa-check-circle me-2"></i>Xác nhận chuyển ngày
+                                </button>
                             </div>
+
 
 
                             <div id="pagination" class="dataTables_paginate paging_simple_numbers">
                                 <ul class="pagination">
-                                    <li class="paginate_button page-item previous disabled" id="prev-page"><a href="#" class="page-link">Lùi</a></li>
+                                    <li class="paginate_button page-item previous disabled" id="prev-page"><a href="#" class="page-link">Trước</a></li>
                                     <!-- Các nút số trang sẽ được tạo tự động -->
-                                    <li class="paginate_button page-item next" id="next-page"><a href="#" class="page-link">Tiếp</a></li>
+                                    <li class="paginate_button page-item next" id="next-page"><a href="#" class="page-link">Sau</a></li>
                                 </ul>
                             </div>
                         </div>

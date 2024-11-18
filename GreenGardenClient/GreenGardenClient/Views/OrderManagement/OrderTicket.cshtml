@@ -637,20 +637,18 @@
                                 <div class="menu">
     <!-- Các nút -->
                                 <div class="menu-items">
-                                        @if (@HttpContextAccessor.HttpContext.Session.GetString("TicketCart") != null)
-                                        {
+                                       
                                         <a href="~/OrderManagement/OrderTicket" class="menu-link active">
 
                                                 <i class="fas fa-ticket-alt"></i> <span>Đặt vé</span>
                                             </a>
-                                        }
-                                    else if (@HttpContextAccessor.HttpContext.Session.GetString("ComboCart") != null)
-                                        {
+                                        
+                                   
                                         <a href="~/OrderManagement/OrderCombo" class="menu-link">
 
-                                                <i class="fas fa-ticket-alt"></i> <span>Đặt Combo</span>
-                                            </a>
-                                        }
+                                        <i class="fas fa-gift"></i> <span>Đặt Combo</span>
+                                    </a>
+                                      
 
                                     <a href="~/OrderManagement/OrderGear" class="menu-link">
                                             <i class="fas fa-tools"></i> <span>Đặt dụng cụ</span>
@@ -727,7 +725,7 @@
                             {
                                 <div class="product-card">
                                     <div class="product-image">
-                                        <img src="~/images/img_1.jpg" alt="Bạc Xỉu">
+                                        <img src="~/images/Ticket/@item.ImgUrl" alt="Bạc Xỉu">
                                     </div>
                                     <div class="product-details">
                                         <div class="product-name">@item.TicketName</div>
@@ -735,6 +733,8 @@
                                         <div class="product-price">
                                             @String.Format("{0:0,0} ₫", @item.Price)
                                         </div>
+                                        <a asp-controller="OrderManagement" asp-action="TicketDetail" asp-route-id="@item.TicketId" asp-route-quantity="@item.Quantity">Chi tiết</a>
+
                                     </div>
                                     <div class="quantity-control">
                                         <button class="btn-quantity btn-decrease" type="button">-</button>
@@ -803,7 +803,7 @@
                                     const quantityValue = $(this).siblings('.quantity-value');
                                     let currentQuantity = parseInt(quantityInput.val());
 
-                                    if (currentQuantity > 1) {  // Prevent quantity from going below 1
+                                    if (currentQuantity >= 1) {  // Prevent quantity from going below 1
                                         currentQuantity -= 1;
 
                                         // Update displayed and hidden quantity values
@@ -828,9 +828,9 @@
 
                             <div id="pagination" class="dataTables_paginate paging_simple_numbers">
                                 <ul class="pagination">
-                                    <li class="paginate_button page-item previous disabled" id="prev-page"><a href="#" class="page-link">Lùi</a></li>
+                                    <li class="paginate_button page-item previous disabled" id="prev-page"><a href="#" class="page-link">Trước</a></li>
                                     <!-- Các nút số trang sẽ được tạo tự động -->
-                                    <li class="paginate_button page-item next" id="next-page"><a href="#" class="page-link">Tiếp</a></li>
+                                    <li class="paginate_button page-item next" id="next-page"><a href="#" class="page-link">Sau</a></li>
                                 </ul>
                             </div>
                         </div>

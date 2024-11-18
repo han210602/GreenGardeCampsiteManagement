@@ -807,6 +807,16 @@ namespace GreenGardenClient.Controllers.AdminController
 
 
         }
+        public IActionResult TicketDetail(int id, int quantity)
+        {
+
+            TicketVM foodAndDrinks = GetDataFromApi<List<TicketVM>>("https://localhost:7298/api/Ticket/GetAllTickets").ToList().FirstOrDefault(f => f.TicketId == id);
+
+            foodAndDrinks.Quantity = quantity;
+            return View("TicketDetail", foodAndDrinks);
+
+
+        }
         public IActionResult ComboDetail(int id, int quantity)
         {
 
@@ -1092,25 +1102,35 @@ namespace GreenGardenClient.Controllers.AdminController
         }
         public IActionResult OrderCombo()
         {
-            var ticketscart = HttpContext.Session.GetObjectFromJson<List<ComboVM>>("ComboCart") ?? new List<ComboVM>();
-
-            List<ComboVM> tickets = GetDataFromApi<List<ComboVM>>("https://localhost:7298/api/Combo/GetAllCombos\r\n");
-
-            foreach (var item in ticketscart)
+            var orders = HttpContext.Session.GetObjectFromJson<OrderVM>("OrderCart") ?? new OrderVM();
+            if (orders.CustomerName.IsNullOrEmpty() || orders.OrderUsageDate == null || orders.PhoneCustomer.IsNullOrEmpty())
             {
-                var ticket = tickets.ToList().FirstOrDefault(s => s.ComboId == item.ComboId);
-                if (ticket != null)
+                TempData["Notification"] = "Bạn phải điền đầy đủ thông tin bao gồm tên,số điện thoại và ngày sử dụng!";
+                return RedirectToAction("CreateOrder");
+
+            }
+            else
+            {
+                var ticketscart = HttpContext.Session.GetObjectFromJson<List<ComboVM>>("ComboCart") ?? new List<ComboVM>();
+
+                List<ComboVM> tickets = GetDataFromApi<List<ComboVM>>("https://localhost:7298/api/Combo/GetAllCombos\r\n");
+
+                foreach (var item in ticketscart)
                 {
-                    ticket.Quantity = item.Quantity;
+                    var ticket = tickets.ToList().FirstOrDefault(s => s.ComboId == item.ComboId);
+                    if (ticket != null)
+                    {
+                        ticket.Quantity = item.Quantity;
+                    }
                 }
-            }
 
-            if (TempData["Notification"] != null)
-            {
-                ViewBag.Notification = TempData["Notification"];
+                if (TempData["Notification"] != null)
+                {
+                    ViewBag.Notification = TempData["Notification"];
+                }
+                ViewBag.gears = tickets;
+                return View("OrderCombo");
             }
-            ViewBag.gears = tickets;
-            return View("OrderCombo");
         }
         public IActionResult ComboCart(List<int> id, List<string> name, List<decimal> price, List<int> quantity)
         {

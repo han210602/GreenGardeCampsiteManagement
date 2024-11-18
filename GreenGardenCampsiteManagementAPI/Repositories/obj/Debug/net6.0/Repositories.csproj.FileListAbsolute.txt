@@ -334,7 +334,6 @@ C:\Users\admin\Desktop\git\API\GreenGardenCampsiteManagement\GreenGardenCampsite
 C:\Users\admin\Desktop\git\API\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\Repositories\obj\Debug\net6.0\Repositories.pdb
 C:\Users\admin\Desktop\git\API\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\Repositories\obj\Debug\net6.0\Repositories.genruntimeconfig.cache
 C:\Users\admin\Desktop\git\API\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\Repositories\obj\Debug\net6.0\ref\Repositories.dll
-C:\Users\admin\Desktop\git\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\Repositories\bin\Debug\net6.0\appsettings.json
 C:\Users\admin\Desktop\git\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\Repositories\bin\Debug\net6.0\BusinessObject.deps.json
 C:\Users\admin\Desktop\git\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\Repositories\bin\Debug\net6.0\BusinessObject.runtimeconfig.json
 C:\Users\admin\Desktop\git\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\Repositories\bin\Debug\net6.0\BusinessObject.exe

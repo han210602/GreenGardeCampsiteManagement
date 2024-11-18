@@ -83,11 +83,15 @@
 <style>
 
     .order-info {
-        padding: 20px;
-        margin-bottom: 20px;
-        border-radius: 10px;
-        margin-left: 20px
+        padding: 20px; /* Khoảng cách bên trong */
+        margin: 0 auto; /* Canh giữa khung theo chiều ngang */
+        border-radius: 10px; /* Bo góc */
+        background: linear-gradient(135deg, #f9f9f9, #e6e6e6); /* Gradient nhẹ */
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Đổ bóng */
+        max-width: 900px; /* Giới hạn chiều rộng */
+        text-align: center; /* Canh giữa nội dung */
     }
+
 
         .order-info p {
             align-items: start;
@@ -554,7 +558,7 @@
     <main class="app-content">
         <div class="app-title">
             <ul class="app-breadcrumb breadcrumb side">
-                <li class="breadcrumb-item active">Quản lí đơn hàng/Chi tiết đơn hàng</li>
+                <li class="breadcrumb-item active">Quản lí đơn hàng/Xem chi tiết chuyển ngày</li>
             </ul>
             <div id="clock"></div>
         </div>
@@ -567,26 +571,27 @@
                             <div class="row d-flex justify-content-center">
                                 <!-- 3 mục trên hàng đầu tiên -->
                                 <div class="col-md-4">
-                                    <p><strong>Mã đơn:</strong>#@Model.OrderId</p>
+                                    <p><strong style="margin-right:10px">Mã đơn:</strong>    #@Model.OrderId</p>
                                 </div>
                                 <div class="col-md-4">
-                                    <p><strong>Tên khách hàng:</strong>@Model.CustomerName</p>
+                                    <p><strong style="margin-right:10px">Tên khách hàng:</strong>    @Model.CustomerName</p>
                                 </div>
                                 <div class="col-md-4">
-                                    <p><strong>Số điện thoại:</strong>@Model.PhoneCustomer</p>
+                                    <p><strong style="margin-right:10px">Số điện thoại:</strong>    @Model.PhoneCustomer</p>
                                 </div>
                             </div>
                             <div class="row d-flex justify-content-center">
 
                                 <!-- 3 mục trên hàng thứ hai -->
                                 <div class="col-md-4">
-                                    <p><strong>Ngày đặt đơn:</strong> @Model.OrderDate</p>
+                                    <p><strong style="margin-right:10px">Ngày đặt đơn:</strong>    @Model.OrderDate?.ToString("hh:mm:ss tt dd/MM/yyyy")</p>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <p><strong style="margin-right:10px">Ngày sử dụng:</strong>    @Model.OrderUsageDate?.ToString("hh:mm:ss tt dd/MM/yyyy")</p>
                                 </div>
                                 <div class="col-md-4">
-                                    <p><strong>Ngày sử dụng:</strong>@Model.OrderUsageDate</p>
-                                </div>
-                                <div class="col-md-4">
-                                    <strong>Tổng Tiền:</strong> @Model.TotalAmount.ToString("C2", new System.Globalization.CultureInfo("vi-VN"))
+                                    <strong style="margin-right:10px">Tổng Tiền:</strong>    @Model.TotalAmount.ToString("C2", new System.Globalization.CultureInfo("vi-VN"))
                                 </div>
                             </div>
                         </div>
@@ -746,20 +751,24 @@
                                         <span class="label font-weight-bold">Thanh toán:</span>
                                         <span class="amount text-danger font-weight-bold" style="font-size: 1.2rem;">@String.Format("{0:0,0}", @Model.AmountPayable) <span class="currency-symbol">₫</span></span>
                                     </div>
-                                    <a asp-controller="OrderManagement" asp-action="OrderOnline" class="btn btn-secondary back-link">Quay lại</a>
-
-                                    <!-- Right-aligned Payment Button -->
-
-                                    <div class="d-flex justify-content-end">
-                                    <a asp-controller="OrderManagement" asp-action="UpdateGearChangeDate" type="button" class="btn btn-success font-weight-bold px-4 py-2" style="font-size: 1.1rem; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-                                    Cập nhập đồ thuê
-                                    </a>
+                         
 
                                             
                                        
 
                                     </div>
                                 </div>
+
+                            <div class="d-flex justify-content-between align-items-center">
+                                <!-- Nút Quay lại -->
+                                <a asp-controller="OrderManagement" asp-action="OrderOnline" class="btn btn-secondary back-link d-flex align-items-center">
+                                    <i class="fas fa-arrow-left me-2"></i>Quay lại
+                                </a>
+
+                                <!-- Nút Cập nhật đồ thuê -->
+                                <a asp-controller="OrderManagement" asp-action="UpdateGearChangeDate" type="button" class="btn btn-success font-weight-bold d-flex align-items-center px-4 py-2" style="font-size: 1.1rem; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                                    <i class="fas fa-edit me-2"></i>Cập nhập đồ thuê
+                                </a>
                             </div>
 
                            
@@ -772,11 +781,11 @@
                 </div>
             </div>
 
-        </div>
+     
 
 
 
-
+        
     </main>
 
 

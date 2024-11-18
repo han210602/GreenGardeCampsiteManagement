@@ -65,31 +65,7 @@
 
 
 </head>
-<header class="app-header" style="display: flex; align-items: center; padding: 0 15px; background-color: #f6f5f5 !important;">
-    <!-- Sidebar Toggle -->
-    <a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar" style="margin-right: auto;">
-        <!-- Add an icon or text for the sidebar toggle -->
-    </a>
 
-    <!-- Centered Logo -->
-    <div style="flex: 500; display: flex; justify-content: center; align-items: center; padding-left: 50px;">
-        <img src="~/images/newlogo.jpg" alt="Logo" style="height: auto; width: 55%; max-width: 120px;margin-top: 10px;">
-    </div>
-
-
-    <!-- User Menu -->
-    <ul class="app-nav" style="display: flex; align-items: center; margin-left: auto; list-style: none; padding: 0;">
-        <li>
-            <a class="app-nav__item" href="~/Home" style="display: flex; align-items: center; text-decoration: none; color: black; background: rgb(195 195 195); padding: 10px 15px; border-radius: 5px; transition: background-color 0.3s;">
-                <!-- Replace with an icon -->
-                <i class="bx bx-home" style="font-size: 1.5rem; margin-right: 8px;"></i>
-                <!-- Add text next to the icon -->
-                <span style="font-size: 1rem;">Quay lại trang chủ</span>
-            </a>
-        </li>
-    </ul>
-
-</header>
 <style>
 
     .search-container {
@@ -414,6 +390,7 @@
         }
 
 </style>
+
 <body onload="time()" class="app sidebar-mini rtl">
     <header class="app-header">
         <a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
@@ -426,7 +403,31 @@
             </li>
         </ul>
     </header>
+    <header class="app-header" style="display: flex; align-items: center; padding: 0 15px; background-color: #f6f5f5 !important;">
+        <!-- Sidebar Toggle -->
+        <a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar" style="margin-right: auto;">
+            <!-- Add an icon or text for the sidebar toggle -->
+        </a>
 
+        <!-- Centered Logo -->
+        <div style="flex: 500; display: flex; justify-content: center; align-items: center; padding-left: 50px;">
+            <img src="~/images/newlogo.jpg" alt="Logo" style="height: auto; width: 55%; max-width: 120px;margin-top: 10px;">
+        </div>
+
+
+        <!-- User Menu -->
+        <ul class="app-nav" style="display: flex; align-items: center; margin-left: auto; list-style: none; padding: 0;">
+            <li>
+                <a class="app-nav__item" href="~/Home" style="display: flex; align-items: center; text-decoration: none; color: black; background: rgb(195 195 195); padding: 10px 15px; border-radius: 5px; transition: background-color 0.3s;">
+                    <!-- Replace with an icon -->
+                    <i class="bx bx-home" style="font-size: 1.5rem; margin-right: 8px;"></i>
+                    <!-- Add text next to the icon -->
+                    <span style="font-size: 1rem;">Quay lại trang chủ</span>
+                </a>
+            </li>
+        </ul>
+
+    </header>
     <!-- Sidebar menu-->
     <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
     <aside class="app-sidebar">
@@ -626,7 +627,7 @@
                                 <i class="zoom-icon fa fa-search-plus" onclick="openModal()" style="position: absolute; top: 10px; right: 10px; font-size: 24px; cursor: pointer;"></i>
 
                                 <!-- Hình ảnh -->
-                                <img src="~/images/doan1.jpg" alt="Lẩu cá mú nấu ngọt" class="img-fluid img-thumbnail" id="productImage">
+                                <img src="~/images/Food/@Model.ImgUrl" alt="Lẩu cá mú nấu ngọt" class="img-fluid img-thumbnail" id="productImage">
                             </div>
 
                             <!-- Modal để phóng to hình ảnh -->
@@ -636,34 +637,58 @@
                             </div>
 
                         </div>
-                        
+
                         <div class="col-md-6">
                             <form asp-controller="OrderManagement" asp-action="FoodDetailCart" method="post">
-                            <h2 class="product-title">@Model.ItemName</h2>
-                                <h4 class="product-price">@String.Format("{0:0,0} ₫", @Model.Price)</h4>
-                            <div class="d-flex align-items-center quantity-control">
-                                    <button class="btn btn-outline-secondary" onclick="ecreaseQuantity(event)">-</button>
+                                <h2 class="product-title">@Model.ItemName</h2>
+                                <div style="display: flex; align-items: center;">
+                                    <h3 class="price">
+                                        <i class="fas fa-tag" style="margin-right: 10px;"></i>
+                                        <span style="color: red;">@String.Format("{0:0,0} ₫", @Model.Price)</span>
+                                    </h3>
+
+                                </div>
+                                <div class="d-flex align-items-center quantity-control">
+                                    <button class="btn btn-outline-secondary" onclick="decreaseQuantity(event)">-</button>
                                     <input hidden name="id" value="@Model.ItemId"></input>
                                     <input hidden name="name" value="@Model.ItemName"></input>
                                     <input hidden name="price" value="@Model.Price"></input>
-                                <input type="number" id="quantity"  min="0" class="form-control mx-2 quantity-input" style="width: 60px;" value="@Model.Quantity" name="quantity">
-                                <button class="btn btn-outline-secondary" onclick="increaseQuantity(event)">+</button>
-                            </div>
-                            <p class="product-description mt-2">
-                                @Model.Description
-                            </p>
-                            <div class="d-flex mt-3">
-                                <button class="btn btn-primary me-2" onclick="addToCart()">Thêm vào giỏ hàng</button>
-                                <a class="btn btn-primary me-2">Quay lại </a>
-                         </form>
-                            </div>
-                       
+                                    <input readonly type="number" id="quantity" min="0" class="form-control mx-2 quantity-input" style="width: 60px;" value="@Model.Quantity" name="quantity">
+                                    <button class="btn btn-outline-secondary" onclick="increaseQuantity(event)">+</button>
+                                </div>
+                                <p class="product-description mt-2">
+                                    @Model.Description
+                                </p>
+                                <div class="d-flex mt-3">
+                                    <a class="btn btn-secondary" href="~/OrderManagement/OrderFood" style="margin-right:20px">
+                                        <i class="fas fa-arrow-left"></i> Quay lại
+                                    </a>
+
+                                    <button class="btn btn-primary me-2">
+                                        <i class="fas fa-shopping-cart"></i> Thêm vào giỏ hàng
+                                    </button>
+
+
+                                </div>
+
+                            </form>
+
                         </div>
                     </div>
 
 
                 </div>
             </div>
+
+
+
+
+
+
+
+
+
+
 
 
 
