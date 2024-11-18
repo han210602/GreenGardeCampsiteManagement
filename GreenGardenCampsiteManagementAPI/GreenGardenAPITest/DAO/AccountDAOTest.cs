@@ -1,11 +1,14 @@
 ﻿using BusinessObject.DTOs;
 using BusinessObject.Models;
+using Castle.Core.Configuration;
 using DataAccess.DAO;
 using Microsoft.EntityFrameworkCore;
 using Moq;
+using NSubstitute;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -357,10 +360,211 @@ namespace GreenGardenAPITest.DAO
             Assert.Contains("Email cannot be null or empty.", exception.Message);
         }
 
+        // Test for method ChangePassword
+        private async Task<GreenGardenContext> GetDbContextWithUsers()
+        {
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
 
+            var dbContext = new GreenGardenContext(options);
+            dbContext.Database.EnsureCreated();
 
+            if (!await dbContext.Users.AnyAsync())
+            {
+                dbContext.Users.AddRange(
+                    new User
+                    {
+                        UserId = 1,
+                        FirstName = "John",
+                        LastName = "Doe",
+                        Email = "john.doe@example.com",
+                        Password = "OldPassword123"
+                    },
+                    new User
+                    {
+                        UserId = 2,
+                        FirstName = "Jane",
+                        LastName = "Smith",
+                        Email = "jane.smith@example.com",
+                        Password = "Password456"
+                    }
+                );
 
+                await dbContext.SaveChangesAsync();
+            }
 
+            return dbContext;
+        }
+
+        [Fact]
+        public async Task ChangePassword_ShouldReturnError_WhenUserDoesNotExist()
+        {
+            // Arrange
+            var dbContext = await GetDbContextWithUsers();
+            AccountDAO.InitializeContext(dbContext);
+
+            var changePasswordDto = new ChangePassword
+            {
+                UserId = 999, // Non-existing user
+                OldPassword = "OldPassword123",
+                NewPassword = "NewPassword123",
+                ConfirmPassword = "NewPassword123"
+            };
+
+            // Act
+            var result = await AccountDAO.ChangePassword(changePasswordDto);
+
+            // Assert
+            Assert.Equal("Người dùng không tồn tại.", result);
+        }
+
+        [Fact]
+        public async Task ChangePassword_ShouldReturnError_WhenOldPasswordIsIncorrect()
+        {
+            // Arrange
+            var dbContext = await GetDbContextWithUsers();
+            AccountDAO.InitializeContext(dbContext);
+
+            var changePasswordDto = new ChangePassword
+            {
+                UserId = 1, // Valid user
+                OldPassword = "WrongPassword", // Incorrect old password
+                NewPassword = "NewPassword123",
+                ConfirmPassword = "NewPassword123"
+            };
+
+            // Act
+            var result = await AccountDAO.ChangePassword(changePasswordDto);
+
+            // Assert
+            Assert.Equal("Mật khẩu cũ không đúng.", result);
+        }
+
+        [Fact]
+        public async Task ChangePassword_ShouldReturnError_WhenNewPasswordAndConfirmPasswordDoNotMatch()
+        {
+            // Arrange
+            var dbContext = await GetDbContextWithUsers();
+            AccountDAO.InitializeContext(dbContext);
+
+            var changePasswordDto = new ChangePassword
+            {
+                UserId = 1, // Valid user
+                OldPassword = "OldPassword123",
+                NewPassword = "NewPassword123",
+                ConfirmPassword = "MismatchPassword123" // Mismatch
+            };
+
+            // Act
+            var result = await AccountDAO.ChangePassword(changePasswordDto);
+
+            // Assert
+            Assert.Equal("Mật khẩu mới và xác nhận mật khẩu không khớp.", result);
+        }
+
+        [Fact]
+        public async Task ChangePassword_ShouldReturnSuccess_WhenPasswordUpdateIsValid()
+        {
+            // Arrange
+            var dbContext = await GetDbContextWithUsers();
+            AccountDAO.InitializeContext(dbContext);
+
+            var changePasswordDto = new ChangePassword
+            {
+                UserId = 1, // Valid user
+                OldPassword = "OldPassword123",
+                NewPassword = "NewPassword123",
+                ConfirmPassword = "NewPassword123"
+            };
+
+            // Act
+            var result = await AccountDAO.ChangePassword(changePasswordDto);
+
+            // Assert
+            Assert.Equal("Cập nhật mật khẩu thành công.", result);
+
+            // Verify password was updated
+            var user = await dbContext.Users.FindAsync(1);
+            Assert.Equal("NewPassword123", user.Password);
+        }
+
+        //[Fact]
+        //public async Task ChangePassword_ShouldThrowException_WhenDatabaseSaveFails()
+        //{
+        //    // Arrange
+        //    var mockDbContext = new Mock<GreenGardenContext>();
+        //    mockDbContext.Setup(db => db.Users.SingleOrDefaultAsync(It.IsAny<Expression<Func<User, bool>>>()))
+        //        .ReturnsAsync(new User
+        //        {
+        //            UserId = 1,
+        //            Password = "OldPassword123"
+        //        });
+
+        //    mockDbContext.Setup(db => db.SaveChangesAsync(It.IsAny<CancellationToken>()))
+        //        .ThrowsAsync(new DbUpdateException("Database error"));
+
+        //    AccountDAO.InitializeContext(mockDbContext.Object);
+
+        //    var changePasswordDto = new ChangePassword
+        //    {
+        //        UserId = 1,
+        //        OldPassword = "OldPassword123",
+        //        NewPassword = "NewPassword123",
+        //        ConfirmPassword = "NewPassword123"
+        //    };
+
+        //    // Act & Assert
+        //    var exception = await Assert.ThrowsAsync<Exception>(() => AccountDAO.ChangePassword(changePasswordDto));
+        //    Assert.Contains("Đã xảy ra lỗi khi cập nhật mật khẩu", exception.Message);
+        //}
+
+        // 
+
+        // Test for method 
+        private Mock<IConfiguration> _mockConfiguration;
+        private GreenGardenContext _dbContext;
+
+        public AccountDAOTest()
+        {
+            // Mock IConfiguration to provide JWT settings
+            _mockConfiguration = new Mock<IConfiguration>();
+
+            _mockConfiguration.Setup(config => config["Jwt:Key"]).Returns("MySuperSecretKey12345");
+            _mockConfiguration.Setup(config => config.GetSection("Jwt:Issuer").Value).Returns("TestIssuer");
+            _mockConfiguration.Setup(config => config.GetSection("Jwt:Audience").Value).Returns("TestAudience");
+            _mockConfiguration.Setup(config => config.GetSection("Jwt:Subject").Value).Returns("TestSubject");
+
+            // Create in-memory database
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            _dbContext = new GreenGardenContext(options);
+            _dbContext.Users.AddRange(
+                new User
+                {
+                    UserId = 1,
+                    FirstName = "John",
+                    LastName = "Doe",
+                    Email = "john.doe@example.com",
+                    Password = "Password123",
+                    IsActive = true,
+                    RoleId = 1
+                },
+                new User
+                {
+                    UserId = 2,
+                    FirstName = "Jane",
+                    LastName = "Smith",
+                    Email = "jane.smith@example.com",
+                    Password = "Password456",
+                    IsActive = false,
+                    RoleId = 2
+                }
+            );
+            _dbContext.SaveChanges();
+        }
 
     }
 }

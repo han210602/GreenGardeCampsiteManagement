@@ -30,28 +30,27 @@ namespace DataAccess.DAO
 
         public static string Login(AccountDTO a, IConfiguration configuration)
         {
-            using (var context = new GreenGardenContext())
+
+            // Retrieve the user by email
+            var user = _context.Users.SingleOrDefault(u => u.Email == a.Email);
+            // Check if the user exists and is active
+            if (user == null || user.IsActive == false)
             {
-                // Retrieve the user by email
-                var user = context.Users.SingleOrDefault(u => u.Email == a.Email);
-                // Check if the user exists and is active
-                if (user == null || user.IsActive == false)
+                throw new Exception("Invalid email or account inactive.");
+            }
+
+            // Check if the password is correct
+            if (user.Password == a.Password)
+            {
+                // Reset login attempts on success
+                if (loginAttempts.ContainsKey(a.Email))
                 {
-                    throw new Exception("Invalid email or account inactive.");
+                    loginAttempts[a.Email] = 0;
                 }
 
-                // Check if the password is correct
-                if (user.Password == a.Password)
+                // Define JWT claims, including RoleId
+                var claims = new[]
                 {
-                    // Reset login attempts on success
-                    if (loginAttempts.ContainsKey(a.Email))
-                    {
-                        loginAttempts[a.Email] = 0;
-                    }
-
-                    // Define JWT claims, including RoleId
-                    var claims = new[]
-                    {
                 new Claim(JwtRegisteredClaimNames.Sub, configuration["Jwt:Subject"]),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim("UserId", user.UserId.ToString()),
@@ -59,48 +58,48 @@ namespace DataAccess.DAO
                 new Claim("RoleId", user.RoleId.ToString())
             };
 
-                    // Create JWT token
-                    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
-                    var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-                    var token = new JwtSecurityToken(
-                        issuer: configuration["Jwt:Issuer"],
-                        audience: configuration["Jwt:Audience"],
-                        claims: claims,
-                        expires: DateTime.UtcNow.AddMinutes(60),
-                        signingCredentials: signIn);
+                // Create JWT token
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
+                var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                var token = new JwtSecurityToken(
+                    issuer: configuration["Jwt:Issuer"],
+                    audience: configuration["Jwt:Audience"],
+                    claims: claims,
+                    expires: DateTime.UtcNow.AddMinutes(60),
+                    signingCredentials: signIn);
 
-                    var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+                var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
 
-                    var response = new LoginResponseDTO
-                    {
-                        Token = tokenString,
-                        FullName = user.FirstName + " " + user.LastName,
-                        UserId = user.UserId,
-                        ProfilePictureUrl = user.ProfilePictureUrl,
-                        Email = user.Email,
-                        Password = user.Password,
-                        Phone = user.PhoneNumber,
-                        RoleId = (int)user.RoleId
-                    };
+                var response = new LoginResponseDTO
+                {
+                    Token = tokenString,
+                    FullName = user.FirstName + " " + user.LastName,
+                    UserId = user.UserId,
+                    ProfilePictureUrl = user.ProfilePictureUrl,
+                    Email = user.Email,
+                    Password = user.Password,
+                    Phone = user.PhoneNumber,
+                    RoleId = (int)user.RoleId
+                };
 
-                    return JsonSerializer.Serialize(response);
+                return JsonSerializer.Serialize(response);
+            }
+            else
+            {
+                // Track login attempts
+                if (!loginAttempts.ContainsKey(a.Email))
+                {
+                    loginAttempts[a.Email] = 1;
                 }
                 else
                 {
-                    // Track login attempts
-                    if (!loginAttempts.ContainsKey(a.Email))
-                    {
-                        loginAttempts[a.Email] = 1;
-                    }
-                    else
-                    {
-                        loginAttempts[a.Email]++;
-                    }
-
-                    // Throw an error message if the login attempt fails
-                    throw new Exception("Invalid email or password.");
+                    loginAttempts[a.Email]++;
                 }
+
+                // Throw an error message if the login attempt fails
+                throw new Exception("Invalid email or password.");
             }
+
         }
 
         private static readonly ConcurrentDictionary<string, (string Code, DateTime Expiration)> VerificationCodes = new ConcurrentDictionary<string, (string, DateTime)>();
@@ -363,37 +362,35 @@ namespace DataAccess.DAO
 
         public static async Task<string> ChangePassword(ChangePassword changePasswordDto)
         {
-            using (var context = new GreenGardenContext())
+
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.UserId == changePasswordDto.UserId);
+            if (user == null)
             {
-
-                var user = await context.Users.SingleOrDefaultAsync(u => u.UserId == changePasswordDto.UserId);
-                if (user == null)
-                {
-                    return "Người dùng không tồn tại.";
-                }
-
-                if (user.Password != changePasswordDto.OldPassword)
-                {
-                    return "Mật khẩu cũ không đúng.";
-                }
-
-                if (changePasswordDto.NewPassword != changePasswordDto.ConfirmPassword)
-                {
-                    return "Mật khẩu mới và xác nhận mật khẩu không khớp.";
-                }
-
-                user.Password = changePasswordDto.NewPassword;
-
-                try
-                {
-                    await context.SaveChangesAsync();
-                    return "Cập nhật mật khẩu thành công.";
-                }
-                catch (DbUpdateException ex)
-                {
-                    throw new Exception("Đã xảy ra lỗi khi cập nhật mật khẩu: " + ex.InnerException?.Message);
-                }
+                return "Người dùng không tồn tại.";
             }
+
+            if (user.Password != changePasswordDto.OldPassword)
+            {
+                return "Mật khẩu cũ không đúng.";
+            }
+
+            if (changePasswordDto.NewPassword != changePasswordDto.ConfirmPassword)
+            {
+                return "Mật khẩu mới và xác nhận mật khẩu không khớp.";
+            }
+
+            user.Password = changePasswordDto.NewPassword;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+                return "Cập nhật mật khẩu thành công.";
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new Exception("Đã xảy ra lỗi khi cập nhật mật khẩu: " + ex.InnerException?.Message);
+            }
+
         }
 
     }
