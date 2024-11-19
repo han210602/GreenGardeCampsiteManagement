@@ -15,7 +15,9 @@ namespace DataAccess.DAO
 
         public static List<FoodAndDrinkDTO> GetAllFoodAndDrink()
         {
-            var items = context.FoodAndDrinks
+            try
+            {
+                var items = context.FoodAndDrinks
                 .Include(x => x.Category)
                 .Select(item => new FoodAndDrinkDTO
                 {
@@ -29,190 +31,243 @@ namespace DataAccess.DAO
                     CategoryId = item.Category.CategoryId
                 }).ToList();
 
-            return items;
+                return items;
+            }catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
         public static List<FoodAndDrinkDTO> GetAllCustomerFoodAndDrink()
         {
-            var items = context.FoodAndDrinks
-                .Include(x => x.Category).Where(s => s.Status == true)
-                .Select(item => new FoodAndDrinkDTO
-                {
-                    ItemId = item.ItemId,
-                    ItemName = item.ItemName,
-                    Price = item.Price,
-                    Description = item.Description,
-                    CategoryName = item.Category.CategoryName, // Lấy tên từ danh mục
-                    ImgUrl = item.ImgUrl
-                }).ToList();
+            try
+            {
+                var items = context.FoodAndDrinks
+               .Include(x => x.Category).Where(s => s.Status == true)
+               .Select(item => new FoodAndDrinkDTO
+               {
+                   ItemId = item.ItemId,
+                   ItemName = item.ItemName,
+                   Price = item.Price,
+                   Description = item.Description,
+                   CategoryName = item.Category.CategoryName, // Lấy tên từ danh mục
+                   ImgUrl = item.ImgUrl
+               }).ToList();
 
-            return items;
+                return items;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
         public static FoodAndDrinkDTO GetFoodAndDrinkDetail(int itemId)
         {
-            var item = context.FoodAndDrinks
-                .Include(x => x.Category)
-                .Where(i => i.ItemId == itemId) // Filter by ItemId
-                .Select(i => new FoodAndDrinkDTO
-                {
-                    ItemId = i.ItemId,
-                    ItemName = i.ItemName,
-                    Price = i.Price,
-                    Description = i.Description,
-                    CategoryName = i.Category.CategoryName,
-                    ImgUrl = i.ImgUrl,
-                     Status = i.Status,
-                    CategoryId = i.Category.CategoryId
-                })
-                .FirstOrDefault(); // Return the first match or null if not found
+            try
+            {
+                var item = context.FoodAndDrinks
+              .Include(x => x.Category)
+              .Where(i => i.ItemId == itemId) // Filter by ItemId
+              .Select(i => new FoodAndDrinkDTO
+              {
+                  ItemId = i.ItemId,
+                  ItemName = i.ItemName,
+                  Price = i.Price,
+                  Description = i.Description,
+                  CategoryName = i.Category.CategoryName,
+                  ImgUrl = i.ImgUrl,
+                  Status = i.Status,
+                  CategoryId = i.Category.CategoryId
+              })
+              .FirstOrDefault(); // Return the first match or null if not found
 
-            return item;
+                return item;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
 
 
         public static void AddFoodAndDrink(AddFoodOrDrinkDTO item)
         {
-            var foodAndDrink = new FoodAndDrink
+            try
             {
-                ItemId = item.ItemId,
-                ItemName = item.ItemName,
-                Price = item.Price,
-                CreatedAt = DateTime.Now,
-                Description = item.Description,
-                ImgUrl = item.ImgUrl,
-                CategoryId = item.CategoryId,
-                Status = true
-                
-            };
+                var foodAndDrink = new FoodAndDrink
+                {
+                    ItemId = item.ItemId,
+                    ItemName = item.ItemName,
+                    Price = item.Price,
+                    CreatedAt = DateTime.Now,
+                    Description = item.Description,
+                    ImgUrl = item.ImgUrl,
+                    CategoryId = item.CategoryId,
+                    Status = true
 
-            context.FoodAndDrinks.Add(foodAndDrink);
-            context.SaveChanges();
+                };
+
+                context.FoodAndDrinks.Add(foodAndDrink);
+                context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
 
         public static void UpdateFoodOrDrink(UpdateFoodOrDrinkDTO itemDto)
         {
-            var foodAndDrink = context.FoodAndDrinks.FirstOrDefault(f => f.ItemId == itemDto.ItemId);
-
-            if (foodAndDrink == null)
+            try
             {
-                throw new Exception($"Food and Drink with ID {itemDto.ItemId} does not exist.");
+                var foodAndDrink = context.FoodAndDrinks.FirstOrDefault(f => f.ItemId == itemDto.ItemId);
+
+                if (foodAndDrink == null)
+                {
+                    throw new Exception($"Food and Drink with ID {itemDto.ItemId} does not exist.");
+                }
+
+                foodAndDrink.ItemName = itemDto.ItemName;
+                foodAndDrink.Price = itemDto.Price;
+                foodAndDrink.Description = itemDto.Description;
+                foodAndDrink.CategoryId = itemDto.CategoryId; // Cập nhật danh mục
+                foodAndDrink.ImgUrl = itemDto.ImgUrl;
+
+                context.SaveChanges();
             }
-
-            foodAndDrink.ItemName = itemDto.ItemName;
-            foodAndDrink.Price = itemDto.Price;
-            foodAndDrink.Description = itemDto.Description;
-            foodAndDrink.CategoryId = itemDto.CategoryId; // Cập nhật danh mục
-            foodAndDrink.ImgUrl = itemDto.ImgUrl;
-
-            context.SaveChanges();
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
         public static List<FoodAndDrinkDTO> GetFoodAndDrinks(int? categoryId, int? sortBy, int? priceRange)
         {
-            var query = context.FoodAndDrinks
+            try
+            {
+                var query = context.FoodAndDrinks
                 .Include(food => food.Category).Where(s => s.Status == true) // Bao gồm thông tin danh mục
                 .AsNoTracking() // Không theo dõi thực thể để cải thiện hiệu suất
                 .AsQueryable();
 
-            // Lọc theo danh mục nếu categoryId được cung cấp
-            if (categoryId.HasValue)
-            {
-                query = query.Where(food => food.CategoryId == categoryId.Value);
-            }
-
-            // Lọc theo khoảng giá
-            if (priceRange.HasValue)
-            {
-                switch (priceRange.Value)
+                // Lọc theo danh mục nếu categoryId được cung cấp
+                if (categoryId.HasValue)
                 {
-                    case 1: // Dưới 100,000
-                        query = query.Where(food => food.Price < 300000);
-                        break;
-                    case 2: // 100,000 - 300,000
-                        query = query.Where(food => food.Price >= 300000 && food.Price <= 500000);
-                        break;
-                    case 3: // Trên 300,000
-                        query = query.Where(food => food.Price >= 500000);
-                        break;
+                    query = query.Where(food => food.CategoryId == categoryId.Value);
                 }
-            }
 
-            // Áp dụng sắp xếp nếu có tiêu chí sắp xếp hoặc độ phổ biến
-            bool isSorted = false;
-
-            // Sắp xếp theo độ phổ biến
-
-            // Sắp xếp theo tiêu chí sortBy
-            if (sortBy.HasValue)
-            {
-                switch (sortBy.Value)
+                // Lọc theo khoảng giá
+                if (priceRange.HasValue)
                 {
-                    case 1: // Sắp xếp theo giá từ thấp đến cao
-                        query = query.OrderBy(food => food.Price);
-                        break;
-                    case 2: // Sắp xếp theo giá từ cao đến thấp
-                        query = query.OrderByDescending(food => food.Price);
-                        break;
-                    case 3: // Sắp xếp theo ngày tạo mới nhất
-                        query = query.OrderBy(food => food.ItemName);
-                        break;
-                    case 4: // Sắp xếp theo số lượng có sẵn
-                        query = query.OrderByDescending(food => food.ItemName);
-                        break;
+                    switch (priceRange.Value)
+                    {
+                        case 1: // Dưới 100,000
+                            query = query.Where(food => food.Price < 300000);
+                            break;
+                        case 2: // 100,000 - 300,000
+                            query = query.Where(food => food.Price >= 300000 && food.Price <= 500000);
+                            break;
+                        case 3: // Trên 300,000
+                            query = query.Where(food => food.Price >= 500000);
+                            break;
+                    }
                 }
-                isSorted = true;
+
+                // Áp dụng sắp xếp nếu có tiêu chí sắp xếp hoặc độ phổ biến
+                bool isSorted = false;
+
+                // Sắp xếp theo độ phổ biến
+
+                // Sắp xếp theo tiêu chí sortBy
+                if (sortBy.HasValue)
+                {
+                    switch (sortBy.Value)
+                    {
+                        case 1: // Sắp xếp theo giá từ thấp đến cao
+                            query = query.OrderBy(food => food.Price);
+                            break;
+                        case 2: // Sắp xếp theo giá từ cao đến thấp
+                            query = query.OrderByDescending(food => food.Price);
+                            break;
+                        case 3: // Sắp xếp theo ngày tạo mới nhất
+                            query = query.OrderBy(food => food.ItemName);
+                            break;
+                        case 4: // Sắp xếp theo số lượng có sẵn
+                            query = query.OrderByDescending(food => food.ItemName);
+                            break;
+                    }
+                    isSorted = true;
+                }
+
+                // Sắp xếp mặc định (nếu không có tiêu chí sắp xếp nào)
+                if (!isSorted)
+                {
+                    query = query; // Mặc định sắp xếp theo tên món ăn
+                }
+
+                // Chuyển đổi sang DTO và lấy các thuộc tính cần thiết
+                var foodAndDrinks = query.Select(food => new FoodAndDrinkDTO
+                {
+                    ItemId = food.ItemId,
+                    ItemName = food.ItemName,
+                    Price = food.Price,
+                    Description = food.Description,
+                    CategoryName = food.Category.CategoryName, // Lấy tên danh mục
+                    ImgUrl = food.ImgUrl
+                }).ToList();
+
+                return foodAndDrinks;
             }
-
-            // Sắp xếp mặc định (nếu không có tiêu chí sắp xếp nào)
-            if (!isSorted)
+            catch (Exception ex)
             {
-                query = query; // Mặc định sắp xếp theo tên món ăn
+                throw new Exception(ex.Message);
             }
-
-            // Chuyển đổi sang DTO và lấy các thuộc tính cần thiết
-            var foodAndDrinks = query.Select(food => new FoodAndDrinkDTO
-            {
-                ItemId = food.ItemId,
-                ItemName = food.ItemName,
-                Price = food.Price,
-                Description = food.Description,
-                CategoryName = food.Category.CategoryName, // Lấy tên danh mục
-                ImgUrl = food.ImgUrl
-            }).ToList();
-
-            return foodAndDrinks;
         }
         public static List<FoodAndDrinkCategoryDTO> GetAllFoodAndDrinkCategories()
         {
-            var items = context.FoodAndDrinkCategories
+            try
+            {
+                var items = context.FoodAndDrinkCategories
 
-                .Select(item => new FoodAndDrinkCategoryDTO
-                {
-                    CategoryId = item.CategoryId,
-                    CategoryName = item.CategoryName,
-                    Description = item.Description,
-                    CreatedAt = item.CreatedAt,
+               .Select(item => new FoodAndDrinkCategoryDTO
+               {
+                   CategoryId = item.CategoryId,
+                   CategoryName = item.CategoryName,
+                   Description = item.Description,
+                   CreatedAt = item.CreatedAt,
 
-                }).ToList();
+               }).ToList();
 
-            return items;
+                return items;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
         public static void ChangeFoodStatus(int itemId)
         {
             // Tìm thiết bị dựa trên GearId
-            var campingGear = context.FoodAndDrinks.FirstOrDefault(g => g.ItemId == itemId);
-
-            // Kiểm tra xem thiết bị có tồn tại không
-            if (campingGear == null)
+            try
             {
-                throw new Exception($"Food and Drink with ID {itemId} does not exist.");
+                var campingGear = context.FoodAndDrinks.FirstOrDefault(g => g.ItemId == itemId);
+
+                // Kiểm tra xem thiết bị có tồn tại không
+                if (campingGear == null)
+                {
+                    throw new Exception($"Food and Drink with ID {itemId} does not exist.");
+                }
+
+                // Đổi trạng thái (nếu đang là true thì chuyển sang false, ngược lại)
+                campingGear.Status = !campingGear.Status;
+
+                // Lưu thay đổi vào cơ sở dữ liệu
+                context.SaveChanges();
             }
-
-            // Đổi trạng thái (nếu đang là true thì chuyển sang false, ngược lại)
-            campingGear.Status = !campingGear.Status;
-
-            // Lưu thay đổi vào cơ sở dữ liệu
-            context.SaveChanges();
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

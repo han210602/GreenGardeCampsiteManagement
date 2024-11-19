@@ -16,34 +16,20 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
         {
             _repo = repo;
         }
-        [HttpGet("GetProfit")]
-        public IActionResult GetProfit()
+        [HttpGet("GetProfit/{Month}")]
+        public IActionResult GetProfit(int Month)
         {
             try { 
            
-                var item = new ProfitDTO()
-                {
-                    TotalAmount = _repo.TotalAmount(),
-                    TotalOrderOnline = _repo.TotalOrderOnline(),
-                    TotalDepositOrderOnline = _repo.TotalDepositOrderOnline(),
-                    MoneyTotalDepositOrderOnline = _repo.MoneyTotalDepositOrderOnline(),
-                    TotalOrderCancel = _repo.TotalOrderCancel(),
-                    TotalDepositOrderCancel = _repo.TotalDepositOrderCancel(),
-                    MoneyTotalDepositOrderCancel = _repo.MoneyTotalDepositOrderCancel(),
-                    TotalOrderUsing = _repo.TotalOrderUsing(),
-                    TotalDepositOrderUsing = _repo.TotalDepositOrderUsing(),
-                    MoneyTotalDepositOrderUsing = _repo.MoneyTotalDepositOrderUsing(),
-                    TotalOrderCheckout = _repo.TotalOrderCheckout(),
-                    MoneyTotalAmountOrderCheckout = _repo.MoneyTotalAmountOrderCheckout(),
-                };
-                return Ok(item);
-        }
+                
+                return Ok(_repo.Profit(Month));
+                }
             catch (Exception ex)
             {
                 return StatusCode(500, $"Internal server error: {ex.Message}");
-    }
+            }
 
-}
+        }
         [HttpGet("GetListCustomer")]
         public IActionResult GetListCustomer()
         {

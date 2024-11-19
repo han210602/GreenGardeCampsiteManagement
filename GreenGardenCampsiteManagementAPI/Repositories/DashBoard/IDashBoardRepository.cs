@@ -9,6 +9,7 @@ namespace Repositories.DashBoard
 {
    public interface  IDashBoardRepository
     {
+        public ProfitDTO Profit(int datetime);
         public decimal TotalAmount();
         public int TotalOrderOnline();
         public int TotalDepositOrderOnline();

@@ -719,9 +719,7 @@
                                 </div>
                             }
                         </form>
-                        <script>
-                            const isTicketCartNotNull = @(@HttpContextAccessor.HttpContext.Session.GetString("TicketCart") == null ? "true" : "false");
-                        </script>
+                        
 
                         <script>
 
@@ -755,10 +753,7 @@
 
                                 // Increase quantity
                                 $('.btn-increase').click(function () {
-                                    if (isTicketCartNotNull !== "false") {
-                                        alert("Bạn đang đặt vé, nếu muốn đặt combo hãy hủy vé.");
-                                        return; 
-                                    }
+                                    
 
                                     // Phần logic tăng số lượng
                                     const quantityInput = $(this).siblings('.quantity-input');
@@ -967,33 +962,7 @@
 
 
     </script>
-    <script>
-        $(document).ready(function () {
-            // Tăng số lượng
-            $('.btn-increase').click(function (e) {
-                e.preventDefault(); // Ngăn submit form
-                var quantityElement = $(this).siblings('.quantity-value');
-                var hiddenInput = $(this).siblings('.quantity-input');
-                var currentQuantity = parseInt(quantityElement.text());
-                quantityElement.text(currentQuantity + 1);
-                hiddenInput.val(currentQuantity + 1);  // Cập nhật giá trị của input ẩn
-            });
-
-            // Giảm số lượng
-            $('.btn-decrease').click(function (e) {
-                e.preventDefault(); // Ngăn submit form
-                var quantityElement = $(this).siblings('.quantity-value');
-                var hiddenInput = $(this).siblings('.quantity-input');
-                var currentQuantity = parseInt(quantityElement.text());
-                if (currentQuantity > 0) {
-                    quantityElement.text(currentQuantity - 1);
-                    hiddenInput.val(currentQuantity - 1);  // Cập nhật giá trị của input ẩn
-                }
-            });
-        });
-
-
-    </script>
+   
     @*<script>
     $(document).ready(function () {
     var itemsPerPage = 3; // Số sản phẩm hiển thị trên mỗi trang

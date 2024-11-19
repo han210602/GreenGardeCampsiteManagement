@@ -13,55 +13,71 @@ namespace DataAccess.DAO
 
         public static List<UserDTO> GetAllUsers()
         {
-            var users = context.Users
-                .Include(user => user.Role)
-                .Select(user => new UserDTO
-                {
-                    UserId = user.UserId,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Email = user.Email,
-                    Password = user.Password,
-                    PhoneNumber = user.PhoneNumber,
-                    Address = user.Address,
-                    DateOfBirth = user.DateOfBirth,
-                    Gender = user.Gender,
-                    ProfilePictureUrl = user.ProfilePictureUrl,
-                    IsActive = user.IsActive,
-                    CreatedAt = user.CreatedAt,
-                    RoleName = user.Role.RoleName
-                }).ToList();
+            try
+            {
+                var users = context.Users
+               .Include(user => user.Role)
+               .Select(user => new UserDTO
+               {
+                   UserId = user.UserId,
+                   FirstName = user.FirstName,
+                   LastName = user.LastName,
+                   Email = user.Email,
+                   Password = user.Password,
+                   PhoneNumber = user.PhoneNumber,
+                   Address = user.Address,
+                   DateOfBirth = user.DateOfBirth,
+                   Gender = user.Gender,
+                   ProfilePictureUrl = user.ProfilePictureUrl,
+                   IsActive = user.IsActive,
+                   CreatedAt = user.CreatedAt,
+                   RoleName = user.Role.RoleName
+               }).ToList();
 
-            return users;
+                return users;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
         public static List<UserDTO> GetAllEmployees()
         {
-            var employees = context.Users
-                .Include(user => user.Role)
-                .Where(user => user.RoleId == 2) // Filter where RoleId is 2
-                .Select(user => new UserDTO
-                {
-                    UserId = user.UserId,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Email = user.Email,
-                    Password = user.Password,
-                    PhoneNumber = user.PhoneNumber,
-                    Address = user.Address,
-                    DateOfBirth = user.DateOfBirth,
-                    Gender = user.Gender,
-                    ProfilePictureUrl = user.ProfilePictureUrl,
-                    IsActive = user.IsActive,
-                    CreatedAt = user.CreatedAt,
-                    RoleName = user.Role.RoleName
-                })
-                .ToList();
+            try
+            {
+                var employees = context.Users
+               .Include(user => user.Role)
+               .Where(user => user.RoleId == 2) // Filter where RoleId is 2
+               .Select(user => new UserDTO
+               {
+                   UserId = user.UserId,
+                   FirstName = user.FirstName,
+                   LastName = user.LastName,
+                   Email = user.Email,
+                   Password = user.Password,
+                   PhoneNumber = user.PhoneNumber,
+                   Address = user.Address,
+                   DateOfBirth = user.DateOfBirth,
+                   Gender = user.Gender,
+                   ProfilePictureUrl = user.ProfilePictureUrl,
+                   IsActive = user.IsActive,
+                   CreatedAt = user.CreatedAt,
+                   RoleName = user.Role.RoleName
+               })
+               .ToList();
 
-            return employees;
+                return employees;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
         public static List<UserDTO> GetAllCustomers()
         {
-            var customer = context.Users
+            try
+            {
+                var customer = context.Users
                 .Include(user => user.Role)
                 .Where(user => user.RoleId == 3) // Filter where RoleId is 2
                 .Select(user => new UserDTO
@@ -82,13 +98,20 @@ namespace DataAccess.DAO
                 })
                 .ToList();
 
-            return customer;
+                return customer;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
 
         public static UserDTO GetUserById(int userId)
         {
-            var user = context.Users
+            try
+            {
+                var user = context.Users
                 .Include(u => u.Role)
                 .Where(u => u.UserId == userId)
                 .Select(u => new UserDTO
@@ -109,7 +132,12 @@ namespace DataAccess.DAO
                 })
                 .FirstOrDefault();
 
-            return user;
+                return user;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
         public static bool AddEmployee(AddUserDTO newEmployeeDto, IConfiguration configuration)
         {

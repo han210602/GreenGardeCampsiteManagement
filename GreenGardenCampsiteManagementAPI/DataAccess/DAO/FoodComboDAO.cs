@@ -38,19 +38,26 @@ namespace DataAccess.DAO
         public static void ChangeFoodComboStatus(int comboId)
         {
             // Tìm thiết bị dựa trên GearId
-            var campingGear = context.FoodCombos.FirstOrDefault(g => g.ComboId == comboId);
-
-            // Kiểm tra xem thiết bị có tồn tại không
-            if (campingGear == null)
+            try
             {
-                throw new Exception($"Food and Drink with ID {comboId} does not exist.");
+                var campingGear = context.FoodCombos.FirstOrDefault(g => g.ComboId == comboId);
+
+                // Kiểm tra xem thiết bị có tồn tại không
+                if (campingGear == null)
+                {
+                    throw new Exception($"Food and Drink with ID {comboId} does not exist.");
+                }
+
+                // Đổi trạng thái (nếu đang là true thì chuyển sang false, ngược lại)
+                campingGear.Status = !campingGear.Status;
+
+                // Lưu thay đổi vào cơ sở dữ liệu
+                context.SaveChanges();
             }
-
-            // Đổi trạng thái (nếu đang là true thì chuyển sang false, ngược lại)
-            campingGear.Status = !campingGear.Status;
-
-            // Lưu thay đổi vào cơ sở dữ liệu
-            context.SaveChanges();
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
         public static List<ComboFoodDTO> getAllCustomerComboFoods()
         {

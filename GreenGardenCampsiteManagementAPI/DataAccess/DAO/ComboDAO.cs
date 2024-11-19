@@ -63,19 +63,25 @@ namespace DataAccess.DAO
         public static void ChangeComboStatus(int comboId)
         {
             // Tìm thiết bị dựa trên GearId
-            var campingGear = context.Combos.FirstOrDefault(g => g.ComboId == comboId);
-
-            // Kiểm tra xem thiết bị có tồn tại không
-            if (campingGear == null)
+            try
             {
-                throw new Exception($"Combo with ID {comboId} does not exist.");
+                var campingGear = context.Combos.FirstOrDefault(g => g.ComboId == comboId);
+
+                // Kiểm tra xem thiết bị có tồn tại không
+                if (campingGear == null)
+                {
+                    throw new Exception($"Combo with ID {comboId} does not exist.");
+                }
+
+                // Đổi trạng thái (nếu đang là true thì chuyển sang false, ngược lại)
+                campingGear.Status = !campingGear.Status;
+
+                // Lưu thay đổi vào cơ sở dữ liệu
+                context.SaveChanges();
+            }catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
-
-            // Đổi trạng thái (nếu đang là true thì chuyển sang false, ngược lại)
-            campingGear.Status = !campingGear.Status;
-
-            // Lưu thay đổi vào cơ sở dữ liệu
-            context.SaveChanges();
         }
 
         public static ComboDetail GetComboDetail(int id)

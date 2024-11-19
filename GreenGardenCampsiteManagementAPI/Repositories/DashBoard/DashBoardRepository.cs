@@ -41,6 +41,11 @@ namespace Repositories.DashBoard
             return DashBoardDAO.MoneyTotalDepositOrderUsing();
         }
 
+        public ProfitDTO Profit(int datetime)
+        {
+            return DashBoardDAO.Profit(datetime);
+        }
+
         public decimal TotalAmount()
         {
             return DashBoardDAO.TotalAmount();

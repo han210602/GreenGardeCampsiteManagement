@@ -19,14 +19,18 @@ namespace GreenGardenClient.Controllers.AdminController
             response.EnsureSuccessStatusCode();
             return response.Content.ReadFromJsonAsync<T>().Result;
         }
-        public IActionResult Index()
+        public IActionResult Index(int month)
         {
             try
             {
+                if (month == null)
+                {
+                    month = 0;
+                }
                 var jwtToken = Request.Cookies["JWTToken"];
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
 
-                ProfitVM profitVM = GetDataFromApi<ProfitVM>("https://localhost:7298/api/DashBoard/GetProfit\r\n");
+                ProfitVM profitVM = GetDataFromApi<ProfitVM>($"https://localhost:7298/api/DashBoard/GetProfit/{month}");
                 List<Account> userdata = GetDataFromApi<List<Account>>("https://localhost:7298/api/DashBoard/GetListCustomer\r\n");
 
                 ViewBag.listuser = userdata;

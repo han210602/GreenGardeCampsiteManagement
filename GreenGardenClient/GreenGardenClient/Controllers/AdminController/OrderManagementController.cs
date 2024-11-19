@@ -60,6 +60,19 @@ namespace GreenGardenClient.Controllers.AdminController
             return View("Error");
 
         }
+        public IActionResult Previous()
+        {
+            if (HttpContext.Session.GetString("ComboCart") != null)
+            {
+                return RedirectToAction("OrderCombo");
+            }
+            else
+            {
+                return RedirectToAction("OrderTicket");
+            }
+
+
+        }
         public IActionResult OrderOnline()
         {
 
@@ -555,7 +568,7 @@ namespace GreenGardenClient.Controllers.AdminController
         public IActionResult OrderTicket()
         {
             var orders = HttpContext.Session.GetObjectFromJson<OrderVM>("OrderCart") ?? new OrderVM();
-            if (orders.CustomerName.IsNullOrEmpty()||orders.OrderUsageDate==null||orders.PhoneCustomer.IsNullOrEmpty())
+            if (orders.CustomerName.IsNullOrEmpty() || orders.OrderUsageDate == null || orders.PhoneCustomer.IsNullOrEmpty())
             {
                 TempData["Notification"] = "Bạn phải điền đầy đủ thông tin bao gồm tên,số điện thoại và ngày sử dụng!";
                 return RedirectToAction("CreateOrder");
@@ -563,27 +576,35 @@ namespace GreenGardenClient.Controllers.AdminController
             }
             else
             {
-                var ticketscart = HttpContext.Session.GetObjectFromJson<List<TicketVM>>("TicketCart") ?? new List<TicketVM>();
-                List<TicketVM> tickets = GetDataFromApi<List<TicketVM>>("https://localhost:7298/api/Ticket/GetAllTickets");
-
-                foreach (var item in ticketscart)
+                if (HttpContext.Session.GetString("ComboCart") != null)
                 {
-                    var ticket = tickets.ToList().FirstOrDefault(s => s.TicketId == item.TicketId);
-                    if (ticket != null)
+                    TempData["Notification"] = "Bạn đang đặt combo vui lòng không đặt thêm vé!";
+
+                    return RedirectToAction("CreateOrder");
+                }
+                else
+                {
+                    var ticketscart = HttpContext.Session.GetObjectFromJson<List<TicketVM>>("TicketCart") ?? new List<TicketVM>();
+                    List<TicketVM> tickets = GetDataFromApi<List<TicketVM>>("https://localhost:7298/api/Ticket/GetAllTickets");
+
+                    foreach (var item in ticketscart)
                     {
-                        ticket.Quantity = item.Quantity;
+                        var ticket = tickets.ToList().FirstOrDefault(s => s.TicketId == item.TicketId);
+                        if (ticket != null)
+                        {
+                            ticket.Quantity = item.Quantity;
+                        }
                     }
-                }
-                if (TempData["Notification"] != null)
-                {
-                    ViewBag.Notification = TempData["Notification"];
-                }
-                ViewBag.tickets = tickets;
+                    if (TempData["Notification"] != null)
+                    {
+                        ViewBag.Notification = TempData["Notification"];
+                    }
+                    ViewBag.tickets = tickets;
 
 
-                return View("OrderTicket");
+                    return View("OrderTicket");
+                }
             }
-            
 
 
         }
@@ -1094,25 +1115,34 @@ namespace GreenGardenClient.Controllers.AdminController
             }
             else
             {
-                var ticketscart = HttpContext.Session.GetObjectFromJson<List<ComboVM>>("ComboCart") ?? new List<ComboVM>();
-
-                List<ComboVM> tickets = GetDataFromApi<List<ComboVM>>("https://localhost:7298/api/Combo/GetAllCombos\r\n");
-
-                foreach (var item in ticketscart)
+                if (HttpContext.Session.GetString("TicketCart") !=null)
                 {
-                    var ticket = tickets.ToList().FirstOrDefault(s => s.ComboId == item.ComboId);
-                    if (ticket != null)
+                    TempData["Notification"] = "Bạn đang đặt vé vui lòng không đặt thêm combo!";
+
+                    return RedirectToAction("CreateOrder");
+                }
+                else
+                {
+                    var ticketscart = HttpContext.Session.GetObjectFromJson<List<ComboVM>>("ComboCart") ?? new List<ComboVM>();
+
+                    List<ComboVM> tickets = GetDataFromApi<List<ComboVM>>("https://localhost:7298/api/Combo/GetAllCombos\r\n");
+
+                    foreach (var item in ticketscart)
                     {
-                        ticket.Quantity = item.Quantity;
+                        var ticket = tickets.ToList().FirstOrDefault(s => s.ComboId == item.ComboId);
+                        if (ticket != null)
+                        {
+                            ticket.Quantity = item.Quantity;
+                        }
                     }
-                }
 
-                if (TempData["Notification"] != null)
-                {
-                    ViewBag.Notification = TempData["Notification"];
+                    if (TempData["Notification"] != null)
+                    {
+                        ViewBag.Notification = TempData["Notification"];
+                    }
+                    ViewBag.gears = tickets;
+                    return View("OrderCombo");
                 }
-                ViewBag.gears = tickets;
-                return View("OrderCombo");
             }
         }
         public IActionResult ComboCart(List<int> id, List<string> name, List<decimal> price, List<int> quantity)

@@ -63,7 +63,8 @@ namespace DataAccess.DAO
                 {
                     if (item.ActivityId == 3)
                     {
-                        totalamount += totalamount;
+                        totalamount +=item.TotalAmount;
+
                     }else if (item.ActivityId == 1002)
                     {
                         totalamount += item.Deposit;
@@ -350,5 +351,143 @@ namespace DataAccess.DAO
 
             }
         }
+
+        public static ProfitDTO Profit(int datetime)
+        {
+            try
+            {
+                decimal TotalAmount = 0;
+                int TotalOrderOnline = 0;
+                int TotalDepositOrderOnline = 0;
+                decimal MoneyTotalDepositOrderOnline = 0;
+                int TotalOrderCancel = 0;
+                int TotalDepositOrderCancel = 0;
+                decimal MoneyTotalDepositOrderCancel = 0;
+                int TotalOrderUsing = 0;
+                int TotalDepositOrderUsing = 0;
+                decimal MoneyTotalDepositOrderUsing = 0;
+                int TotalOrderCheckout = 0;
+                decimal MoneyTotalAmountOrderCheckout = 0;
+                if (datetime==0)
+                {
+                    foreach (var item in context.Orders)
+                    {
+                        if (item.ActivityId == 3)
+                        {
+                            TotalAmount += item.TotalAmount;
+                            MoneyTotalAmountOrderCheckout += item.TotalAmount;
+                            TotalOrderCheckout++;
+
+                        }
+                        else if (item.ActivityId == 1002)
+                        {
+                            TotalAmount += item.Deposit;
+                            TotalOrderCancel++;
+                            if (item.Deposit > 0)
+                            {
+                                TotalDepositOrderCancel++;
+                                MoneyTotalDepositOrderCancel += item.Deposit;
+                            }
+                        }
+                        else if (item.ActivityId == 2)
+                        {
+                            TotalAmount += item.Deposit;
+                            TotalOrderUsing++;
+                            if (item.Deposit > 0)
+                            {
+                                TotalDepositOrderUsing++;
+                                MoneyTotalDepositOrderUsing++;
+                            }
+                        }
+                        else if (item.ActivityId == 1)
+                        {
+                            TotalAmount += item.Deposit;
+                            TotalOrderOnline++;
+                            if (item.Deposit > 0)
+                            {
+                                TotalDepositOrderOnline++;
+                                MoneyTotalDepositOrderOnline += item.Deposit;
+                            }
+                        }
+                       
+                    }
+
+                }
+                else
+                {
+                    foreach (var item in context.Orders.Where(s=>
+                     (s.OrderDate.Value.Month==datetime&&s.OrderDate.Value.Year==DateTime.Now.Year)
+                    ||(s.OrderCheckoutDate.Value.Month==datetime && s.OrderCheckoutDate.Value.Year == DateTime.Now.Year)
+                    ||(s.OrderUsageDate.Value.Month==datetime && s.OrderUsageDate.Value.Year == DateTime.Now.Year))
+                    )
+                    {
+                        if (item.ActivityId == 3)
+                        {
+                            TotalAmount += item.TotalAmount;
+                            MoneyTotalAmountOrderCheckout += item.TotalAmount;
+                            TotalOrderCheckout++;
+
+                        }
+                        else if (item.ActivityId == 1002)
+                        {
+                            TotalAmount += item.Deposit;
+                            TotalOrderCancel++;
+                            if (item.Deposit > 0)
+                            {
+                                TotalDepositOrderCancel++;
+                                MoneyTotalDepositOrderCancel += item.Deposit;
+                            }
+                        }
+                        else if (item.ActivityId == 2)
+                        {
+                            TotalAmount += item.Deposit;
+                            TotalOrderUsing++;
+                            if (item.Deposit > 0)
+                            {
+                                TotalDepositOrderUsing++;
+                                MoneyTotalDepositOrderUsing++;
+                            }
+                        }
+                        else if (item.ActivityId == 1)
+                        {
+                            TotalAmount += item.Deposit;
+                            TotalOrderOnline++;
+                            if (item.Deposit > 0)
+                            {
+                                TotalDepositOrderOnline++;
+                                MoneyTotalDepositOrderOnline += item.Deposit;
+                            }
+                        }
+
+                    }
+                }
+
+
+
+                return new ProfitDTO()
+                {
+                    TotalAmount = TotalAmount,
+                    TotalOrderOnline = TotalOrderOnline,
+                    TotalDepositOrderOnline = TotalDepositOrderOnline,
+                    MoneyTotalDepositOrderOnline = MoneyTotalDepositOrderOnline, 
+                    TotalOrderCancel = TotalOrderCancel,
+                    TotalDepositOrderCancel = TotalDepositOrderCancel,
+                    MoneyTotalDepositOrderCancel = MoneyTotalDepositOrderCancel,
+                    TotalOrderUsing = TotalOrderUsing,
+                    TotalDepositOrderUsing = TotalDepositOrderUsing,
+                    MoneyTotalDepositOrderUsing = MoneyTotalDepositOrderUsing                   ,
+                    TotalOrderCheckout = TotalOrderCheckout,
+                    MoneyTotalAmountOrderCheckout = MoneyTotalAmountOrderCheckout,
+
+
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new NotImplementedException(ex.ToString());
+
+
+            }
+        }    
     }
 }

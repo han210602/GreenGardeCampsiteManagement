@@ -4,39 +4,7 @@
 @using GreenGardenClient.Models
 
 @model GreenGardenClient.Models.ProfitVM
-@{
-    if (ViewBag.Notification != null)
-    {
-        <div id="notification" class="alert alert-warning" role="alert">
-            @ViewBag.Notification
-        </div>
-    }
-}
-<style>
-    #notification {
-        position: fixed;
-        top: 20px; /* Khoảng cách từ đầu trang */
-        right: 20px; /* Khoảng cách từ bên phải */
-        z-index: 1050; /* Đảm bảo thông báo nằm trên các phần tử khác */
-        opacity: 1; /* Bắt đầu với độ mờ là 1 */
-        transition: opacity 1s ease-out, transform 1s ease-out; /* Hiệu ứng chuyển đổi cho độ mờ và biến đổi */
-        transform: translateY(-10px); /* Đưa thông báo lên một chút */
-        width: auto; /* Hoặc thay đổi thành một giá trị cụ thể, ví dụ: 300px */
-        max-width: 300px; /* Giới hạn chiều rộng tối đa */
-        padding: 15px; /* Khoảng cách bên trong cho thông báo */
-    }
-</style>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function () {
-        if ($("#notification").length) {
-            setTimeout(function () {
-                $("#notification").css("opacity", "0"); // Đặt độ mờ thành 0
-                $("#notification").css("transform", "translateY(10px)"); // Đưa thông báo xuống một chút khi ẩn
-            }, 3000); // Sau 3 giây
-        }
-    });
-</script>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -704,6 +672,10 @@
             <div class="col-md-6">
                 <!-- Tổng doanh thu -->
                 <div class="revenue-container">
+                    <form>
+                        <label for="monthYear">Chọn tháng và năm:</label>
+                        <input type="month" id="monthYear" name="monthYear">
+                    </form>
                     <h3>Tổng doanh thu</h3>
                     <p class="total-amount">
                         @Model.TotalAmount.ToString("C0", System.Globalization.CultureInfo.GetCultureInfo("vi-VN"))
@@ -713,6 +685,7 @@
                 <!-- Widget -->
                 <div class="row">
                     <!-- Đơn đặt trước -->
+
                     <div class="col-md-12 col-lg-6">
                         <div class="widget-small primary">
                             <i class="icon bx bx-calendar-check"></i> <!-- Icon đặt trước -->
@@ -824,7 +797,7 @@
 
 
         
-        <div class="row" style="margin-top 20px">
+        <div class="row" style="margin-top: 20px">
             <div class="col-md-12">
                 <div class="tile">
                     <div>
@@ -835,13 +808,12 @@
                                id="sampleTable">
                             <thead>
                                 <tr>
-                                    <th width="10%">ID</th>
+                                    <th width="10%">Số thứ tự</th>
                                     <th width="15%">Họ và tên</th>
                                     <th width="10%">Email</th>
 
                                     <th width="12%">Số Điện thoại</th>
 
-                                    <th width="14%">Trạng thái</th>
                                     <th width="10%">Năm sinh</th>
                                     <th width="10%">Giới tính</th>
 
@@ -852,7 +824,7 @@
                                 @{
                                     int a = 1;
                                 }
-                                @foreach (var account in ViewBag.listuser)
+                                @foreach (Account account in ViewBag.listuser)
 
                                 {
                                     <tr>
@@ -862,23 +834,19 @@
 
                                         <td>@account.PhoneNumber</td>
 
-                                        <td>@(account.IsActive ? "Hoạt động" : "Không hoạt động")</td>
+                                        <td>
+                                            @(account.DateOfBirth!=null ? account.DateOfBirth.Value.ToString("dd/MM/yyyy") : "")
+
+                                        </td>
+
+                                        <td>@(account.Gender?.Trim().ToLower() == "male" ? "Nam" : account.Gender?.Trim().ToLower() == "female" ? "Nữ" : "Khác")</td>
+
 
                                         
 
-                                        <td>@account.Gender</td>
 
 
-
-                                        
-
-
-
-
-
-
-
-                                    </tr>
+                                     </tr>
                                     a++;
                                 }
 
