@@ -4,7 +4,7 @@
 @model GreenGardenClient.Models.FoodAndDrinkVM
 @using GreenGardenClient.Models
 
-}
+
 @{
     if (ViewBag.Notification != null)
     {
@@ -159,7 +159,7 @@
 
     .app-sidebar {
         position: fixed;
-        top: 60px; /* Để không đè lên header */
+        top: 0px; /* Để không đè lên header */
         left: 0;
         width: 250px;
         height: 100%;
@@ -393,7 +393,6 @@
 
 <body onload="time()" class="app sidebar-mini rtl">
     <header class="app-header">
-        <a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
         <ul class="app-nav">
             <!-- User Menu-->
             <li>
@@ -431,6 +430,8 @@
     <!-- Sidebar menu-->
     <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
     <aside class="app-sidebar">
+        <a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
+
         <div class="app-sidebar__user">
             @if (@HttpContextAccessor.HttpContext.Session.GetString("Img") == null)
             {

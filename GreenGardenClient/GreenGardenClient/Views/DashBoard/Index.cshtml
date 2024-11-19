@@ -3,7 +3,7 @@
 
 @using GreenGardenClient.Models
 
-}
+@model GreenGardenClient.Models.ProfitVM
 @{
     if (ViewBag.Notification != null)
     {
@@ -238,7 +238,7 @@
 
     .app-sidebar {
         position: fixed;
-        top: 60px; /* Để không đè lên header */
+        top: 0px; /* Để không đè lên header */
         left: 0;
         width: 250px;
         height: 100%;
@@ -352,10 +352,7 @@
 <body onload="time()" class="app sidebar-mini rtl">
     <header class="app-header" style="display: flex; align-items: center; padding: 0 15px; background-color: #f6f5f5 !important;">
         <!-- Sidebar Toggle -->
-        <a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar" style="margin-right: auto;">
-            <!-- Add an icon or text for the sidebar toggle -->
-        </a>
-
+        
         <!-- Centered Logo -->
         <div style="flex: 500; display: flex; justify-content: center; align-items: center; padding-left: 50px;">
             <img src="~/images/newlogo.jpg" alt="Logo" style="height: auto; width: 55%; max-width: 120px;margin-top: 10px;">
@@ -385,6 +382,10 @@
     <!-- Sidebar menu-->
     <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
     <aside class="app-sidebar">
+        <a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar" style="margin-right: auto;">
+            <!-- Add an icon or text for the sidebar toggle -->
+        </a>
+
         <div class="app-sidebar__user">
 
                         @if (@HttpContextAccessor.HttpContext.Session.GetString("Img") == null)
@@ -616,131 +617,274 @@
                 </div>
             </div>
         </div>
+        <style>
+    .revenue-container {
+        border-radius: 8px; /* Bo tròn góc */
+        padding: 20px;
+        background-color: #f9f9f9; /* Nền sáng */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+    }
+
+    .total-amount {
+        font-size: 2.5rem; /* Tăng kích thước chữ */
+        font-weight: bold; /* Chữ đậm */
+        color: #28a745; /* Màu xanh lá cây */
+    }
+
+    .chart-container {
+        border-radius: 8px; /* Bo tròn góc */
+        padding: 20px;
+        background-color: #ffffff; /* Nền trắng */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+    }
+</style>
+
+        <style>
+            /* Tùy chỉnh widget */
+            .widget-small {
+                display: flex;
+                align-items: center;
+                padding: 15px;
+                border-radius: 8px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                margin-bottom: 15px;
+                color: #fff;
+            }
+
+                .widget-small .icon {
+                    margin-right: 15px;
+                    font-size: 3rem;
+                }
+
+                .widget-small.primary {
+                    background-color: #007bff;
+                }
+
+                .widget-small.info {
+                    background-color: #17a2b8;
+                }
+
+                .widget-small.warning {
+                    background-color: #dc3545 ;
+                    color: #212529;
+                }
+
+                .widget-small.danger {
+                    background-color: #28a745;
+                }
+
+            /* Tổng doanh thu */
+            .revenue-container {
+                background-color: #ffffff;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+
+            .total-amount {
+                font-size: 2.5rem;
+                font-weight: bold;
+                color: #28a745;
+                margin-top: 10px;
+            }
+
+            /* Biểu đồ */
+            .chart-container {
+                background-color: #ffffff;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+                height: 100%; /* Giữ biểu đồ co giãn */
+            }
+        </style>
+
         <div class="row">
-            <div class="col-md-6 col-lg-3">
-                <div class="widget-small primary coloured-icon">
-                    <i class='icon  bx bxs-user fa-3x'></i>
-                    <div class="info">
-                        <h4>Tổng Nhân viên</h4>
-                        <p><b>26 nhân viên</b></p>
+            <!-- Phần bên trái: Tổng doanh thu và các widget -->
+            <div class="col-md-6">
+                <!-- Tổng doanh thu -->
+                <div class="revenue-container">
+                    <h3>Tổng doanh thu</h3>
+                    <p class="total-amount">
+                        @Model.TotalAmount.ToString("C0", System.Globalization.CultureInfo.GetCultureInfo("vi-VN"))
+                    </p>
+                </div>
+
+                <!-- Widget -->
+                <div class="row">
+                    <!-- Đơn đặt trước -->
+                    <div class="col-md-12 col-lg-6">
+                        <div class="widget-small primary">
+                            <i class="icon bx bx-calendar-check"></i> <!-- Icon đặt trước -->
+                            <div class="info">
+                                <h5>Đơn đặt trước</h5>
+                                <p><b>Đã cọc: @Model.TotalDepositOrderOnline</b></p>
+                                <p><b>Tổng đơn: @Model.TotalOrderOnline</b></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Đơn đang sử dụng -->
+                    <div class="col-md-12 col-lg-6">
+                        <div class="widget-small info">
+                            <i class="icon bx bx-play-circle"></i> <!-- Icon sử dụng -->
+                            <div class="info">
+                                <h5>Đơn đang sử dụng</h5>
+                                <p><b>Đã cọc: @Model.TotalDepositOrderUsing</b></p>
+                                <p><b>Tổng đơn: @Model.TotalOrderUsing</b></p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
-                <div class="widget-small info coloured-icon">
-                    <i class='icon bx bxs-purchase-tag-alt fa-3x'></i>
-                    <div class="info">
-                        <h4>Tổng sản phẩm</h4>
-                        <p><b>8580 sản phẩm</b></p>
+
+                <div class="row">
+                    <!-- Đơn đã hủy -->
+                    <div class="col-md-12 col-lg-6">
+                        <div class="widget-small warning">
+                            <i class="icon bx bx-x-circle"></i> <!-- Icon hủy -->
+                            <div class="info">
+                                <h5>Đơn đã hủy</h5>
+                                <p><b>Đã cọc: @Model.TotalDepositOrderCancel</b></p>
+                                <p><b>Tổng đơn: @Model.TotalOrderCancel</b></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Đơn đã thanh toán -->
+                    <div class="col-md-12 col-lg-6">
+                        <div class="widget-small danger">
+                            <i class="icon bx bx-wallet"></i> <!-- Icon thanh toán -->
+                            <div class="info">
+                                <h5>Đơn đã thanh toán</h5>
+                                <p><b>Tổng đơn: @Model.TotalOrderCheckout</b></p>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
             </div>
-            <div class="col-md-6 col-lg-3">
-                <div class="widget-small warning coloured-icon">
-                    <i class='icon fa-3x bx bxs-shopping-bag-alt'></i>
-                    <div class="info">
-                        <h4>Tổng đơn hàng</h4>
-                        <p><b>457 đơn hàng</b></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
-                <div class="widget-small danger coloured-icon">
-                    <i class='icon fa-3x bx bxs-info-circle'></i>
-                    <div class="info">
-                        <h4>Bị cấm</h4>
-                        <p><b>4 nhân viên</b></p>
-                    </div>
+
+            <!-- Phần bên phải: Biểu đồ -->
+            <div class="col-md-6">
+                <div class="chart-container">
+                    <canvas id="revenueChart"></canvas>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6 col-lg-3">
-                <div class="widget-small primary coloured-icon">
-                    <i class='icon fa-3x bx bxs-chart'></i>
-                    <div class="info">
-                        <h4>Tổng thu nhập</h4>
-                        <p><b>104.890.000 đ</b></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
-                <div class="widget-small info coloured-icon">
-                    <i class='icon fa-3x bx bxs-user-badge'></i>
-                    <div class="info">
-                        <h4>Nhân viên mới</h4>
-                        <p><b>3 nhân viên</b></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
-                <div class="widget-small warning coloured-icon">
-                    <i class='icon fa-3x bx bxs-tag-x'></i>
-                    <div class="info">
-                        <h4>Hết hàng</h4>
-                        <p><b>1 sản phẩm</b></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
-                <div class="widget-small danger coloured-icon">
-                    <i class='icon fa-3x bx bxs-receipt'></i>
-                    <div class="info">
-                        <h4>Đơn hàng hủy</h4>
-                        <p><b>2 đơn hàng</b></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
+
+        <!-- Thư viện Chart.js -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <script>
+            // Dữ liệu cho biểu đồ
+            const ctx = document.getElementById('revenueChart').getContext('2d');
+            const revenueChart = new Chart(ctx, {
+                type: 'bar', // Biểu đồ cột
+                data: {
+                    labels: ['Tiền Cọc Đơn đặt trước', 'Tiền cọc đơn đang sử dụng', 'Tiền cọc đơn đã hủy', 'Tổng đã thanh toán'], // Nhãn của các cột
+                    datasets: [{
+                        label: 'Số tiền (VND)',
+                        data: [
+            @Model.MoneyTotalDepositOrderOnline,
+            @Model.MoneyTotalDepositOrderUsing,
+            @Model.MoneyTotalDepositOrderCancel,
+            @Model.MoneyTotalAmountOrderCheckout
+                            ],
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.6)', // Màu các cột
+                            'rgba(54, 162, 235, 0.6)',
+                            'rgba(255, 206, 86, 0.6)',
+                            'rgba(255, 99, 132, 0.6)'
+                        ],
+                        borderColor: [
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(255, 99, 132, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true, // Biểu đồ phản hồi khi thay đổi kích thước
+                    maintainAspectRatio: false, // Tắt duy trì tỷ lệ
+                    scales: {
+                        y: {
+                            beginAtZero: true, // Trục y bắt đầu từ 0
+                            ticks: {
+                                callback: function (value) {
+                                    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        </script>
+
+
+        
+        <div class="row" style="margin-top 20px">
             <div class="col-md-12">
                 <div class="tile">
                     <div>
-                        <h3 class="tile-title">SẢN PHẨM BÁN CHẠY</h3>
+                        <h3 class="tile-title">Khách hàng thân thiết</h3>
                     </div>
                     <div class="tile-body">
-                        <table class="table table-hover table-bordered" id="sampleTable">
+                        <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
+                               id="sampleTable">
                             <thead>
                                 <tr>
-                                    <th>Mã sản phẩm</th>
-                                    <th>Tên sản phẩm</th>
-                                    <th>Giá tiền</th>
-                                    <th>Danh mục</th>
+                                    <th width="10%">ID</th>
+                                    <th width="15%">Họ và tên</th>
+                                    <th width="10%">Email</th>
+
+                                    <th width="12%">Số Điện thoại</th>
+
+                                    <th width="14%">Trạng thái</th>
+                                    <th width="10%">Năm sinh</th>
+                                    <th width="10%">Giới tính</th>
+
+
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>71309005</td>
-                                    <td>Bàn ăn gỗ Theresa</td>
-                                    <td>5.600.000 đ</td>
-                                    <td>Bàn ăn</td>
-                                </tr>
-                                <tr>
-                                    <td>62304003</td>
-                                    <td>Bàn ăn Vitali mặt đá</td>
-                                    <td>33.235.000 đ</td>
-                                    <td>Bàn ăn</td>
-                                </tr>
-                                <tr>
-                                    <td>72109004</td>
-                                    <td>Ghế làm việc Zuno</td>
-                                    <td>3.800.000 đ</td>
-                                    <td>Ghế gỗ</td>
-                                </tr>
-                                <tr>
-                                    <td>83826226</td>
-                                    <td>Tủ ly - tủ bát</td>
-                                    <td>2.450.000 đ</td>
-                                    <td>Tủ</td>
-                                </tr>
-                                <tr>
-                                    <td>71304041</td>
-                                    <td>Bàn ăn mở rộng Vegas</td>
-                                    <td>21.550.000 đ</td>
-                                    <td>Bàn thông minh</td>
-                                </tr>
+                                @{
+                                    int a = 1;
+                                }
+                                @foreach (var account in ViewBag.listuser)
+
+                                {
+                                    <tr>
+                                        <td>@a</td>
+                                        <td>@account.FirstName @account.LastName</td>
+                                        <td>@account.Email</td>
+
+                                        <td>@account.PhoneNumber</td>
+
+                                        <td>@(account.IsActive ? "Hoạt động" : "Không hoạt động")</td>
+
+                                        
+
+                                        <td>@account.Gender</td>
+
+
+
+                                        
+
+
+
+
+
+
+
+                                    </tr>
+                                    a++;
+                                }
+
                             </tbody>
                         </table>
+
                     </div>
                 </div>
             </div>

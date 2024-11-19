@@ -3,7 +3,6 @@
 
 @using GreenGardenClient.Models
 
-}
 @{
     if (ViewBag.Notification != null)
     {
@@ -65,8 +64,7 @@
 
 </head>
 <header class="app-header">
-    <!-- Sidebar toggle button--><a class="app-sidebar__toggle" href="#" data-toggle="sidebar"
-                                    aria-label="Hide Sidebar"></a>
+  
     <!-- Navbar Right Menu-->
     <ul class="app-nav">
 
@@ -238,7 +236,7 @@
 
     .app-sidebar {
         position: fixed;
-        top: 60px; /* Để không đè lên header */
+        top: 0px; /* Để không đè lên header */
         left: 0;
         width: 250px;
         height: 100%;
@@ -381,6 +379,8 @@
     <!-- Sidebar menu-->
     <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
     <aside class="app-sidebar">
+        <a class="app-sidebar__toggle" href="#" data-toggle="sidebar"
+           aria-label="Hide Sidebar"></a>
         <div class="app-sidebar__user">
             @if (@HttpContextAccessor.HttpContext.Session.GetString("Img") == null)
             {
@@ -651,10 +651,13 @@
 
                                         <!-- Right-aligned buttons -->
                                         <div class="d-flex gap-3">
-                                            
-                                            <a href="~/OrderManagement/OrderTicket" class="btn btn-primary">
-                                                <i class="fas fa-ticket-alt"></i> Đặt ngay
+                                            <a href="~/OrderManagement/OrderCombo" class="btn btn-success">
+                                                <i class="fas fa-box"></i> Đặt Combo
                                             </a>
+                                            <a href="~/OrderManagement/OrderTicket" class="btn btn-info">
+                                                <i class="fas fa-ticket-alt"></i> Đặt vé
+                                            </a>
+
                                         </div>
                                     </div>
                                 </div>

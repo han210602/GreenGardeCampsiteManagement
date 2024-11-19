@@ -763,53 +763,123 @@
 </body>
 <footer class="site-footer bg-light">
     <div class="container">
-        <div class="row">
+        <div class="row gy-3">
+            <!-- Facebook Section -->
             <div class="col-lg-3">
-                <h2 class="footer-heading mb-3">Facebook</h2>
-                <div class="row">
-                    <div class="col-4 gal_col">
-                        <a href="#"><img src="~/images/Picture1.jpg" alt="Image" class="img-fluid"></a>
+                <h2 class="footer-heading mb-3 text-uppercase">Facebook</h2>
+                <div class="row g-2">
+                    <div class="col-4" style="margin:10px">
+                        <a href="#"><img src="~/images/Picture1.jpg" alt="Image" class="img-fluid rounded"></a>
                     </div>
-                    <div class="col-4 gal_col">
-                        <a href="#"><img src="~/images/Picture8.jpg" alt="Image" class="img-fluid"></a>
+                    <div class="col-4" style="margin:10px">
+                        <a href="#"><img src="~/images/Picture8.jpg" alt="Image" class="img-fluid rounded"></a>
                     </div>
-                    <div class="col-4 gal_col">
-                        <a href="#"><img src="~/images/Picture7.jpg" alt="Image" class="img-fluid"></a>
+                    <div class="col-4" style="margin:10px">
+                        <a href="#"><img src="~/images/Picture7.jpg" alt="Image" class="img-fluid rounded"></a>
                     </div>
-                    <div class="col-4 gal_col">
-                        <a href="#"><img src="~/images/Picture4.jpg" alt="Image" class="img-fluid"></a>
+                    <div class="col-4" style="margin:10px">
+                        <a href="#"><img src="~/images/Picture1.jpg" alt="Image" class="img-fluid rounded"></a>
                     </div>
-                    <div class="col-4 gal_col">
-                        <a href="#"><img src="~/images/Picture13.jpg" alt="Image" class="img-fluid"></a>
+                    <div class="col-4" style="margin:10px">
+                        <a href="#"><img src="~/images/Picture8.jpg" alt="Image" class="img-fluid rounded"></a>
                     </div>
-                    <div class="col-4 gal_col">
-                        <a href="#"><img src="~/images/Picture6.jpg" alt="Image" class="img-fluid"></a>
+                    <div class="col-4" style="margin:10px">
+                        <a href="#"><img src="~/images/Picture7.jpg" alt="Image" class="img-fluid rounded"></a>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-8 ml-auto">
-                <div class="row">
-                    <div class="col-lg-6 ml-auto">
-                        <h2 class="footer-heading mb-4">Truy cập nhanh</h2>
-                        <ul class="list-unstyled">
-                            <li><a href="#">Facebook</a></li>
-                            <li><a href="#">Instagram</a></li>
-                            <li><a href="#">Tiktok</a></li>
 
-                        </ul>
-                    </div>
-                    <div class="col-lg-6">
-                        <h2 class="footer-heading mb-4">Phản hồi</h2>
-                        <p>Nơi bạn đưa ra những phản hồi về dịch vụ,nhân viên tại sông quê</p>
-                        <form action="#" class="d-flex" class="subscribe">
-                            <input type="text" class="form-control mr-3" placeholder="Phản hồi">
-                            <input type="submit" value="Send" class="btn btn-primary">
-                        </form>
-                    </div>
 
+            <!-- Quick Links Section -->
+            <div class="col-lg-4">
+                <h2 class="footer-heading mb-3 text-uppercase">Truy cập nhanh</h2>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><a href="#" class="text-decoration-none link-colored"><i class="fab fa-facebook me-2"></i>Facebook</a></li>
+                    <li class="mb-2"><a href="#" class="text-decoration-none link-colored"><i class="fab fa-instagram me-2"></i>Instagram</a></li>
+                    <li class="mb-2"><a href="#" class="text-decoration-none link-colored"><i class="fab fa-tiktok me-2"></i>Tiktok</a></li>
+                </ul>
+            </div>
+
+            <!-- Google Maps Section -->
+            <div class="col-lg-5">
+                <h2 class="footer-heading mb-3 text-uppercase">Địa chỉ</h2>
+                <div class="map rounded overflow-hidden">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3408.2711745514057!2d105.91792687476992!3d21.05656318682401!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135a9ad89ed0681%3A0xdfe74944a2df349b!2sS%C3%B4ng%20Qu%C3%AA%20Green%20Garden!5e1!3m2!1svi!2s!4v1730041487949!5m2!1svi!2s"
+                            width="100%" height="200" frameborder="0" style="border:0;" allowfullscreen=""
+                            aria-hidden="false" tabindex="0"></iframe>
                 </div>
             </div>
         </div>
 
+        <hr class="bg-secondary my-3">
+
+        <!-- Footer Bottom -->
+        <div class="row">
+            <div class="col text-center">
+                <p class="mb-0 small text-secondary">&copy; 2024 Green Garden. All Rights Reserved. Designed by <a href="#" class="text-dark text-decoration-none">G43_SEP490</a>.</p>
+            </div>
+        </div>
+    </div>
 </footer>
+<style>
+    /* Footer chung */
+    .site-footer {
+        background: #f8f9fa; /* Màu nền sáng */
+        color: #212529; /* Màu chữ */
+        padding: 20px 0; /* Giảm chiều cao padding */
+    }
+
+    .footer-heading {
+        font-size: 1rem; /* Giảm kích thước tiêu đề */
+        font-weight: bold;
+        color: #212529; /* Màu chữ tiêu đề */
+        border-bottom: 2px solid #dee2e6;
+        padding-bottom: 8px;
+    }
+
+    .site-footer a {
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+        .site-footer a:hover {
+            color: #efba6c; /* Màu hover */
+        }
+
+    /* Áp dụng màu #efba6c cho liên kết */
+    .link-colored {
+        color: #efba6c;
+    }
+
+        .link-colored:hover {
+            color: #d99a50; /* Màu hover nhẹ hơn */
+        }
+
+    /* Hình ảnh Facebook */
+    .gal_col img {
+        border-radius: 4px; /* Bo góc nhẹ */
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .gal_col img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Bóng khi hover */
+        }
+
+    /* Google Maps */
+    .map iframe {
+        border-radius: 8px;
+        border: none;
+    }
+
+    /* Giảm khoảng cách giữa các phần */
+    .site-footer .row {
+        margin-bottom: 10px; /* Giảm khoảng cách */
+    }
+
+    hr {
+        margin: 15px 0; /* Thu gọn khoảng cách giữa các phần */
+    }
+
+</style>
 </html>

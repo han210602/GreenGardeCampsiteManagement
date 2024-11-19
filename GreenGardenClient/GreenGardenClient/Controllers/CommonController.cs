@@ -174,7 +174,7 @@ namespace GreenGardenClient.Controllers
                     else
                     {
                         Console.WriteLine($"API Error Response: {response.StatusCode} - {responseContent}");
-                        ViewBag.error = $"Đăng kí thất bại: {responseContent}";
+                        ViewBag.error = $"Đăng kí thất bại.";
                         return View(model);
                     }
                 }

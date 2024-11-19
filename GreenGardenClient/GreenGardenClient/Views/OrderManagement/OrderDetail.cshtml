@@ -189,7 +189,7 @@
 
     .app-sidebar {
         position: fixed;
-        top: 60px; /* Để không đè lên header */
+        top: 0px; /* Để không đè lên header */
         left: 0;
         width: 250px;
         height: 100%;
@@ -351,9 +351,7 @@
 <body onload="time()" class="app sidebar-mini rtl">
     <header class="app-header" style="display: flex; align-items: center; padding: 0 15px; background-color: #f6f5f5 !important;">
         <!-- Sidebar Toggle -->
-        <a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar" style="margin-right: auto;">
-            <!-- Add an icon or text for the sidebar toggle -->
-        </a>
+        
 
         <!-- Centered Logo -->
         <div style="flex: 500; display: flex; justify-content: center; align-items: center; padding-left: 50px;">
@@ -378,6 +376,9 @@
     <!-- Sidebar menu-->
     <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
     <aside class="app-sidebar">
+        <a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar" style="margin-right: auto;">
+            <!-- Add an icon or text for the sidebar toggle -->
+        </a>
         <div class="app-sidebar__user">
             @if (@HttpContextAccessor.HttpContext.Session.GetString("Img") == null)
             {
