@@ -130,7 +130,7 @@ namespace GreenGardenAPITest.DAO
             databaseContext.Database.EnsureCreated();
 
             // Simulate an exception scenario by setting the context to null or failing in some way
-            ActivityDAO.InitializeContext(null);  // Provide null context to force an exception
+            UserDAO.InitializeContext(null);  // Provide null context to force an exception
 
             // Act & Assert
             var exception = await Assert.ThrowsAsync<Exception>(() => Task.FromResult(UserDAO.GetAllUsers()));

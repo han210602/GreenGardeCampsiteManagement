@@ -3,12 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{0437BE36-C2C8-4DEA-9101-AD3561B4503F}|GreenGardenAPITest\\GreenGardenAPITest.csproj|c:\\users\\nguyen thanh hau\\desktop\\greengarden\\greengardencampsitemanagement\\greengardencampsitemanagementapi\\greengardenapitest\\dao\\orderdaotest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0437BE36-C2C8-4DEA-9101-AD3561B4503F}|GreenGardenAPITest\\GreenGardenAPITest.csproj|solutionrelative:greengardenapitest\\dao\\orderdaotest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{0BABBFBE-5824-4235-B0EA-845C3C693946}|DataAccess\\DataAccess.csproj|c:\\users\\nguyen thanh hau\\desktop\\greengarden\\greengardencampsitemanagement\\greengardencampsitemanagementapi\\dataaccess\\dao\\orderdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0BABBFBE-5824-4235-B0EA-845C3C693946}|DataAccess\\DataAccess.csproj|solutionrelative:dataaccess\\dao\\orderdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0437BE36-C2C8-4DEA-9101-AD3561B4503F}|GreenGardenAPITest\\GreenGardenAPITest.csproj|c:\\users\\nguyen thanh hau\\desktop\\greengarden\\greengardencampsitemanagement\\greengardencampsitemanagementapi\\greengardenapitest\\dao\\orderdaotest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0437BE36-C2C8-4DEA-9101-AD3561B4503F}|GreenGardenAPITest\\GreenGardenAPITest.csproj|solutionrelative:greengardenapitest\\dao\\orderdaotest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0437BE36-C2C8-4DEA-9101-AD3561B4503F}|GreenGardenAPITest\\GreenGardenAPITest.csproj|c:\\users\\nguyen thanh hau\\desktop\\greengarden\\greengardencampsitemanagement\\greengardencampsitemanagementapi\\greengardenapitest\\dao\\userdaotest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0437BE36-C2C8-4DEA-9101-AD3561B4503F}|GreenGardenAPITest\\GreenGardenAPITest.csproj|solutionrelative:greengardenapitest\\dao\\userdaotest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0BABBFBE-5824-4235-B0EA-845C3C693946}|DataAccess\\DataAccess.csproj|c:\\users\\nguyen thanh hau\\desktop\\greengarden\\greengardencampsitemanagement\\greengardencampsitemanagementapi\\dataaccess\\dao\\userdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0BABBFBE-5824-4235-B0EA-845C3C693946}|DataAccess\\DataAccess.csproj|solutionrelative:dataaccess\\dao\\userdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0437BE36-C2C8-4DEA-9101-AD3561B4503F}|GreenGardenAPITest\\GreenGardenAPITest.csproj|c:\\users\\nguyen thanh hau\\desktop\\greengarden\\greengardencampsitemanagement\\greengardencampsitemanagementapi\\greengardenapitest\\dao\\foodcombodaotest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -21,10 +29,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{0BABBFBE-5824-4235-B0EA-845C3C693946}|DataAccess\\DataAccess.csproj|c:\\users\\nguyen thanh hau\\desktop\\greengarden\\greengardencampsitemanagement\\greengardencampsitemanagementapi\\dataaccess\\dao\\dashboarddao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0BABBFBE-5824-4235-B0EA-845C3C693946}|DataAccess\\DataAccess.csproj|solutionrelative:dataaccess\\dao\\dashboarddao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0437BE36-C2C8-4DEA-9101-AD3561B4503F}|GreenGardenAPITest\\GreenGardenAPITest.csproj|c:\\users\\nguyen thanh hau\\desktop\\greengarden\\greengardencampsitemanagement\\greengardencampsitemanagementapi\\greengardenapitest\\dao\\userdaotest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0437BE36-C2C8-4DEA-9101-AD3561B4503F}|GreenGardenAPITest\\GreenGardenAPITest.csproj|solutionrelative:greengardenapitest\\dao\\userdaotest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0437BE36-C2C8-4DEA-9101-AD3561B4503F}|GreenGardenAPITest\\GreenGardenAPITest.csproj|c:\\users\\nguyen thanh hau\\desktop\\greengarden\\greengardencampsitemanagement\\greengardencampsitemanagementapi\\greengardenapitest\\dao\\ticketdaotest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -89,10 +93,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{11067DDA-55A5-4B58-AF46-0FEB4C1CA211}|BusinessObject\\BusinessObject.csproj|c:\\users\\nguyen thanh hau\\desktop\\greengarden\\greengardencampsitemanagement\\greengardencampsitemanagementapi\\businessobject\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{11067DDA-55A5-4B58-AF46-0FEB4C1CA211}|BusinessObject\\BusinessObject.csproj|solutionrelative:businessobject\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0BABBFBE-5824-4235-B0EA-845C3C693946}|DataAccess\\DataAccess.csproj|c:\\users\\nguyen thanh hau\\desktop\\greengarden\\greengardencampsitemanagement\\greengardencampsitemanagementapi\\dataaccess\\dao\\userdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0BABBFBE-5824-4235-B0EA-845C3C693946}|DataAccess\\DataAccess.csproj|solutionrelative:dataaccess\\dao\\userdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0BABBFBE-5824-4235-B0EA-845C3C693946}|DataAccess\\DataAccess.csproj|c:\\users\\nguyen thanh hau\\desktop\\greengarden\\greengardencampsitemanagement\\greengardencampsitemanagementapi\\dataaccess\\dao\\foodcombodao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -416,38 +416,12 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedHeight": 539,
-          "SelectedChildIndex": 7,
+          "DockedHeight": 441,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "DashBoardDAO.cs",
-              "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\DataAccess\\DAO\\DashBoardDAO.cs",
-              "RelativeDocumentMoniker": "DataAccess\\DAO\\DashBoardDAO.cs",
-              "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\DataAccess\\DAO\\DashBoardDAO.cs",
-              "RelativeToolTip": "DataAccess\\DAO\\DashBoardDAO.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAAGABAAAmAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-19T16:54:19.53Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "FoodAndDrinkDAOTest.cs",
-              "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenAPITest\\DAO\\FoodAndDrinkDAOTest.cs",
-              "RelativeDocumentMoniker": "GreenGardenAPITest\\DAO\\FoodAndDrinkDAOTest.cs",
-              "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenAPITest\\DAO\\FoodAndDrinkDAOTest.cs",
-              "RelativeToolTip": "GreenGardenAPITest\\DAO\\FoodAndDrinkDAOTest.cs",
-              "ViewState": "AgIAAGMBAAAAAAAAAAAswGoBAAAMAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-15T18:09:07.042Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
               "Title": "FoodComboDAOTest.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenAPITest\\DAO\\FoodComboDAOTest.cs",
               "RelativeDocumentMoniker": "GreenGardenAPITest\\DAO\\FoodComboDAOTest.cs",
@@ -455,12 +429,11 @@
               "RelativeToolTip": "GreenGardenAPITest\\DAO\\FoodComboDAOTest.cs",
               "ViewState": "AgIAAGUAAAAAAAAAAAAmwG4AAABjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-15T17:01:28.225Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-15T17:01:28.225Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "TicketDAOTest.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenAPITest\\DAO\\TicketDAOTest.cs",
               "RelativeDocumentMoniker": "GreenGardenAPITest\\DAO\\TicketDAOTest.cs",
@@ -468,12 +441,11 @@
               "RelativeToolTip": "GreenGardenAPITest\\DAO\\TicketDAOTest.cs",
               "ViewState": "AgIAAC8CAAAAAAAAAADwv0MCAAA1AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-14T04:08:59.317Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-14T04:08:59.317Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "TicketDAO.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\DataAccess\\DAO\\TicketDAO.cs",
               "RelativeDocumentMoniker": "DataAccess\\DAO\\TicketDAO.cs",
@@ -481,12 +453,11 @@
               "RelativeToolTip": "DataAccess\\DAO\\TicketDAO.cs",
               "ViewState": "AgIAADIAAAAAAAAAAADwvykAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-14T06:37:01.898Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-14T06:37:01.898Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "ComboDAO.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\DataAccess\\DAO\\ComboDAO.cs",
               "RelativeDocumentMoniker": "DataAccess\\DAO\\ComboDAO.cs",
@@ -494,38 +465,87 @@
               "RelativeToolTip": "DataAccess\\DAO\\ComboDAO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAI0AAAA5AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-18T06:43:55.361Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-18T06:43:55.361Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "OrderDAOTest.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenAPITest\\DAO\\OrderDAOTest.cs",
               "RelativeDocumentMoniker": "GreenGardenAPITest\\DAO\\OrderDAOTest.cs",
               "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenAPITest\\DAO\\OrderDAOTest.cs",
               "RelativeToolTip": "GreenGardenAPITest\\DAO\\OrderDAOTest.cs",
-              "ViewState": "AgIAAPsAAAAAAAAAAAAowDsBAABzAAAAAAAAAA==",
+              "ViewState": "AgIAAHsAAAAAAAAAAAAIwJ8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-19T16:04:20.85Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "OrderDAO.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\DataAccess\\DAO\\OrderDAO.cs",
               "RelativeDocumentMoniker": "DataAccess\\DAO\\OrderDAO.cs",
               "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\DataAccess\\DAO\\OrderDAO.cs",
               "RelativeToolTip": "DataAccess\\DAO\\OrderDAO.cs",
-              "ViewState": "AgIAABIAAAAAAAAAAAAAAFsAAAAuAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEcAAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-08T09:00:02.068Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 2,
+              "Title": "UserDAOTest.cs",
+              "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenAPITest\\DAO\\UserDAOTest.cs",
+              "RelativeDocumentMoniker": "GreenGardenAPITest\\DAO\\UserDAOTest.cs",
+              "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenAPITest\\DAO\\UserDAOTest.cs",
+              "RelativeToolTip": "GreenGardenAPITest\\DAO\\UserDAOTest.cs",
+              "ViewState": "AgIAAGEAAAAAAAAAAAAvwIQAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-18T14:43:47.176Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "UserDAO.cs",
+              "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\DataAccess\\DAO\\UserDAO.cs",
+              "RelativeDocumentMoniker": "DataAccess\\DAO\\UserDAO.cs",
+              "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\DataAccess\\DAO\\UserDAO.cs",
+              "RelativeToolTip": "DataAccess\\DAO\\UserDAO.cs",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAhwCoAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-08T06:10:57.543Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "FoodAndDrinkDAOTest.cs",
+              "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenAPITest\\DAO\\FoodAndDrinkDAOTest.cs",
+              "RelativeDocumentMoniker": "GreenGardenAPITest\\DAO\\FoodAndDrinkDAOTest.cs",
+              "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenAPITest\\DAO\\FoodAndDrinkDAOTest.cs",
+              "RelativeToolTip": "GreenGardenAPITest\\DAO\\FoodAndDrinkDAOTest.cs",
+              "ViewState": "AgIAAGMBAAAAAAAAAAAswGoBAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-15T18:09:07.042Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "DashBoardDAO.cs",
+              "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\DataAccess\\DAO\\DashBoardDAO.cs",
+              "RelativeDocumentMoniker": "DataAccess\\DAO\\DashBoardDAO.cs",
+              "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\DataAccess\\DAO\\DashBoardDAO.cs",
+              "RelativeToolTip": "DataAccess\\DAO\\DashBoardDAO.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAGABAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-19T16:54:19.53Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
               "Title": "FoodAndDrinkDAO.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\DataAccess\\DAO\\FoodAndDrinkDAO.cs",
               "RelativeDocumentMoniker": "DataAccess\\DAO\\FoodAndDrinkDAO.cs",
@@ -533,12 +553,11 @@
               "RelativeToolTip": "DataAccess\\DAO\\FoodAndDrinkDAO.cs",
               "ViewState": "AgIAAAIAAAAAAAAAAAAlwJMAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-14T06:38:46.717Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-14T06:38:46.717Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "EventDAOTest.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenAPITest\\DAO\\EventDAOTest.cs",
               "RelativeDocumentMoniker": "GreenGardenAPITest\\DAO\\EventDAOTest.cs",
@@ -546,25 +565,11 @@
               "RelativeToolTip": "GreenGardenAPITest\\DAO\\EventDAOTest.cs",
               "ViewState": "AgIAAHwBAAAAAAAAAAAAAFQBAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-16T12:58:28.829Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-16T12:58:28.829Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "UserDAOTest.cs",
-              "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenAPITest\\DAO\\UserDAOTest.cs",
-              "RelativeDocumentMoniker": "GreenGardenAPITest\\DAO\\UserDAOTest.cs",
-              "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenAPITest\\DAO\\UserDAOTest.cs",
-              "RelativeToolTip": "GreenGardenAPITest\\DAO\\UserDAOTest.cs",
-              "ViewState": "AgIAAIIAAAAAAAAAAADwv4gAAABoAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-18T14:43:47.176Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "ComboDAOTest.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenAPITest\\DAO\\ComboDAOTest.cs",
               "RelativeDocumentMoniker": "GreenGardenAPITest\\DAO\\ComboDAOTest.cs",
@@ -572,12 +577,11 @@
               "RelativeToolTip": "GreenGardenAPITest\\DAO\\ComboDAOTest.cs",
               "ViewState": "AgIAAGcBAAAAAAAAAAAlwHQBAAA+AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-14T06:03:14.764Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-14T06:03:14.764Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "AccountDAOTest.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenAPITest\\DAO\\AccountDAOTest.cs",
               "RelativeDocumentMoniker": "GreenGardenAPITest\\DAO\\AccountDAOTest.cs",
@@ -585,12 +589,11 @@
               "RelativeToolTip": "GreenGardenAPITest\\DAO\\AccountDAOTest.cs",
               "ViewState": "AgIAAJMAAAAAAAAAAAAAAGsBAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-17T15:02:46.303Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-17T15:02:46.303Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "AccountDAO.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\DataAccess\\DAO\\AccountDAO.cs",
               "RelativeDocumentMoniker": "DataAccess\\DAO\\AccountDAO.cs",
@@ -598,12 +601,11 @@
               "RelativeToolTip": "DataAccess\\DAO\\AccountDAO.cs",
               "ViewState": "AgIAAF0BAAAAAAAAAAAgwFwBAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-22T08:29:42.838Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-22T08:29:42.838Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "GreenGardenContext.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\Models\\GreenGardenContext.cs",
               "RelativeDocumentMoniker": "BusinessObject\\Models\\GreenGardenContext.cs",
@@ -611,12 +613,11 @@
               "RelativeToolTip": "BusinessObject\\Models\\GreenGardenContext.cs",
               "ViewState": "AgIAACQAAAAAAAAAAAAYwC4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-16T12:47:03.366Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-16T12:47:03.366Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\appsettings.json",
               "RelativeDocumentMoniker": "BusinessObject\\appsettings.json",
@@ -624,12 +625,11 @@
               "RelativeToolTip": "BusinessObject\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-10-07T07:42:43.351Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-07T07:42:43.351Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "ActivityDAOTest.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenAPITest\\DAO\\ActivityDAOTest.cs",
               "RelativeDocumentMoniker": "GreenGardenAPITest\\DAO\\ActivityDAOTest.cs",
@@ -637,12 +637,11 @@
               "RelativeToolTip": "GreenGardenAPITest\\DAO\\ActivityDAOTest.cs",
               "ViewState": "AgIAAAIAAAAAAAAAAAAjwFcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-14T05:39:34.488Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-14T05:39:34.488Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\DataAccess\\Program.cs",
               "RelativeDocumentMoniker": "DataAccess\\Program.cs",
@@ -650,12 +649,11 @@
               "RelativeToolTip": "DataAccess\\Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-22T08:22:10.194Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-22T08:22:10.194Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 19,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenCampsiteManagementAPI\\appsettings.json",
               "RelativeDocumentMoniker": "GreenGardenCampsiteManagementAPI\\appsettings.json",
@@ -663,12 +661,11 @@
               "RelativeToolTip": "GreenGardenCampsiteManagementAPI\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-09-22T08:22:09.458Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-22T08:22:09.458Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 20,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenCampsiteManagementAPI\\Program.cs",
               "RelativeDocumentMoniker": "GreenGardenCampsiteManagementAPI\\Program.cs",
@@ -676,12 +673,11 @@
               "RelativeToolTip": "GreenGardenCampsiteManagementAPI\\Program.cs",
               "ViewState": "AgIAAF0AAAAAAAAAAAArwIEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-22T08:22:09.406Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-22T08:22:09.406Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 21,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\Repositories\\Program.cs",
               "RelativeDocumentMoniker": "Repositories\\Program.cs",
@@ -689,12 +685,11 @@
               "RelativeToolTip": "Repositories\\Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-22T08:22:10.192Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-22T08:22:10.192Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 22,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\Program.cs",
               "RelativeDocumentMoniker": "BusinessObject\\Program.cs",
@@ -702,21 +697,7 @@
               "RelativeToolTip": "BusinessObject\\Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-22T08:22:10.193Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
-              "Title": "UserDAO.cs",
-              "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\DataAccess\\DAO\\UserDAO.cs",
-              "RelativeDocumentMoniker": "DataAccess\\DAO\\UserDAO.cs",
-              "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\DataAccess\\DAO\\UserDAO.cs",
-              "RelativeToolTip": "DataAccess\\DAO\\UserDAO.cs",
-              "ViewState": "AgIAAJsBAAAAAAAAAAAAAKwBAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-08T06:10:57.543Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-22T08:22:10.193Z"
             },
             {
               "$type": "Document",
@@ -728,8 +709,7 @@
               "RelativeToolTip": "DataAccess\\DAO\\FoodComboDAO.cs",
               "ViewState": "AgIAAEoAAAAAAAAAAAAAAFgAAABCAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-18T06:13:05.068Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-18T06:13:05.068Z"
             },
             {
               "$type": "Document",
@@ -741,8 +721,7 @@
               "RelativeToolTip": "DataAccess\\DAO\\EventDAO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAPIAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-06T08:44:34.796Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-06T08:44:34.796Z"
             },
             {
               "$type": "Document",
@@ -754,8 +733,7 @@
               "RelativeToolTip": "GreenGardenAPITest\\DAO\\CampingGearDAOTest.cs",
               "ViewState": "AgIAAFEAAAAAAAAAAAAAACEDAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-08T08:36:36.862Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-08T08:36:36.862Z"
             },
             {
               "$type": "Document",
@@ -767,8 +745,7 @@
               "RelativeToolTip": "DataAccess\\DAO\\CampingGearDAO.cs",
               "ViewState": "AgIAAAgBAAAAAAAAAAAAAMkAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-14T06:41:52.188Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-14T06:41:52.188Z"
             },
             {
               "$type": "Document",
@@ -780,8 +757,7 @@
               "RelativeToolTip": "DataAccess\\DAO\\ActivityDAO.cs",
               "ViewState": "AgIAABIAAAAAAAAAAAAAABcAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-08T06:51:13.191Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-08T06:51:13.191Z"
             },
             {
               "$type": "Document",
@@ -793,8 +769,7 @@
               "RelativeToolTip": "DataAccess\\DAO\\CampingCategoryDAO.cs",
               "ViewState": "AgIAAAUAAAAAAAAAAAAiwB4AAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-14T02:38:05.191Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-14T02:38:05.191Z"
             },
             {
               "$type": "Document",
@@ -1682,7 +1657,7 @@
           ]
         },
         {
-          "DockedHeight": 96,
+          "DockedHeight": 194,
           "SelectedChildIndex": -1,
           "Children": [
             {
