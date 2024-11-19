@@ -18,6 +18,6 @@ namespace Repositories.FoodAndDrink
 
         void AddFoodOrDrink(AddFoodOrDrinkDTO item);
         void UpdateFoodOrDrink(UpdateFoodOrDrinkDTO item);
-        void ChangeFoodStatus(int itemId, ChangeFoodStatus newStatus);
+        void ChangeFoodStatus(int itemId);
     }
 }

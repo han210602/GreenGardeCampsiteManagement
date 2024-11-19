@@ -35,7 +35,7 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
             try
             {
 
-                var user = _repo.GetAllTickets().ToList();
+                var user = _repo.GetAllCustomerTickets().ToList();
                 return Ok(user);
             }
             catch (Exception ex)
@@ -126,17 +126,13 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
             }
         }
         [HttpPut("ChangeTicketStatus")]
-        public IActionResult ChangeGearStatus([FromQuery] int ticketId, [FromBody] ChangeTicketStatus newStatus)
+        public IActionResult ChangeGearStatus([FromQuery] int ticketId)
         {
             if (ticketId <= 0)
             {
                 return BadRequest("Invalid item ID.");
             }
 
-            if (newStatus == null || newStatus.Status == null)
-            {
-                return BadRequest("Invalid status data.");
-            }
 
             try
             {
@@ -144,12 +140,12 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 var item = _repo.GetTicketDetail(ticketId);
                 if (item == null)
                 {
-                    return NotFound($"Food and drink item with ID {ticketId} does not exist.");
+                    return NotFound($"Ticket item with ID {ticketId} does not exist.");
                 }
 
                 // Update the status
-                _repo.ChangeTicketStatus(ticketId, newStatus);
-                return Ok($"Food and drink item {ticketId} status changed to {newStatus.Status.Value}.");
+                _repo.ChangeTicketStatus(ticketId);
+                return Ok($"Ticket item {ticketId} status changed.");
             }
             catch (Exception ex)
             {

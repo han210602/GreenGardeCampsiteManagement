@@ -33,9 +33,9 @@ namespace Repositories.Combo
         {
             ComboDAO.UpdateCombo(updatedCombo);
         }
-        public void ChangeComboStatus(int comboId, ChangeComboStatus newStatus)
+        public void ChangeComboStatus(int comboId)
         {
-            ComboDAO.ChangeComboStatus(comboId, newStatus); // Call DAO method
+            ComboDAO.ChangeComboStatus(comboId); // Call DAO method
         }
     }
 }

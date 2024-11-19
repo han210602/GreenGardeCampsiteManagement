@@ -11,6 +11,7 @@ namespace DataAccess.DAO
 {
     public class FoodComboDAO
     {
+        //private static GreenGardenContext context = new GreenGardenContext();
         private static GreenGardenContext _context;
         public static void InitializeContext(GreenGardenContext context)
         {
@@ -21,13 +22,16 @@ namespace DataAccess.DAO
             var listProducts = new List<ComboFoodDTO>();
             try
             {
-                listProducts = _context.FoodCombos.Select(f =>new ComboFoodDTO
+                
+                    listProducts = _context.FoodCombos.Select(f =>new ComboFoodDTO
                     {
                         ComboId = f.ComboId,
                         ComboName = f.ComboName,
                         Price = f.Price,
                         ImgUrl = f.ImgUrl,
                     }).ToList();    
+                
+
             }
             catch (Exception ex)
             {
@@ -35,12 +39,36 @@ namespace DataAccess.DAO
             }
             return listProducts;
         }
-        public static List<ComboFoodDTO> getComboFoodDetail()
+        public static void ChangeFoodComboStatus(int comboId)
+        {
+            // Tìm thiết bị dựa trên GearId
+            try
+            {
+                var campingGear = _context.FoodCombos.FirstOrDefault(g => g.ComboId == comboId);
+
+                // Kiểm tra xem thiết bị có tồn tại không
+                if (campingGear == null)
+                {
+                    throw new Exception($"Food and Drink with ID {comboId} does not exist.");
+                }
+
+                // Đổi trạng thái (nếu đang là true thì chuyển sang false, ngược lại)
+                campingGear.Status = !campingGear.Status;
+
+                // Lưu thay đổi vào cơ sở dữ liệu
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public static List<ComboFoodDTO> getAllCustomerComboFoods()
         {
             var listProducts = new List<ComboFoodDTO>();
             try
             {
-               
+                
                     listProducts = _context.FoodCombos.Where(s => s.Status == true).Select(f => new ComboFoodDTO
                     {
                         ComboId = f.ComboId,

@@ -17,11 +17,10 @@ namespace DataAccess.DAO
         }
         public static List<ActivityDTO> getAllActivity()
         {
-
             var listActivities = new List<ActivityDTO>();
             try
             {
-               
+                
                     listActivities = _context.Activities.Select(a => new ActivityDTO()
                     { 
                         ActivityId =a.ActivityId,

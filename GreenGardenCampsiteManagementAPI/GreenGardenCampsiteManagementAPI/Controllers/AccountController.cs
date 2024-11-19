@@ -1,13 +1,7 @@
 ﻿//using BusinessObject.Models;
 using AutoMapper;
 using BusinessObject.DTOs;
-using BusinessObject.Models;
-using DataAccess.DAO;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Repositories.Accounts;
 using System.Text.Json;
 
@@ -121,12 +115,21 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
 
 
         [HttpPost("SendResetPasswordEmail/{email}")]
-        public async Task<IActionResult> SendResetPasswordEmail(string email)
+        public IActionResult SendResetPasswordEmail(string email)
         {
             try
             {
-                var response = await _repo.SendResetPassword(email);
-                return Content(response, "application/json");
+                bool result = _repo.SendResetPassword(email);
+
+                // Kiểm tra kết quả và trả về response tương ứng
+                if (result)
+                {
+                    return Content(JsonSerializer.Serialize(new { Message = "Email đặt lại mật khẩu đã được gửi đến bạn." }), "application/json");
+                }
+                else
+                {
+                    return StatusCode(404, new { Message = "Email không tồn tại trong hệ thống." }); // Trả về lỗi nếu email không tồn tại
+                }
             }
             catch (Exception ex)
             {
@@ -134,6 +137,8 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, new { Message = ex.Message });
             }
         }
+
+
 
         [HttpPost("UpdateProfile")]
         public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfile updateProfile)
@@ -170,7 +175,7 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
 
 
         [HttpPost("ChangePassword")]
-        public async Task<IActionResult> ChangePassword([FromBody] ChangePassword changePasswordDto)
+        public IActionResult ChangePassword([FromBody] ChangePassword changePasswordDto)
         {
             if (changePasswordDto == null)
             {
@@ -179,15 +184,16 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
 
             try
             {
-                var message = await _repo.ChangePassword(changePasswordDto);
+                // Gọi phương thức trong repository để thay đổi mật khẩu
+                bool isPasswordChanged = _repo.ChangePassword(changePasswordDto);
 
-                if (message == "Password updated successfully.")
+                if (isPasswordChanged)
                 {
-                    return Ok(message);
+                    return Ok("Password updated successfully.");
                 }
                 else
                 {
-                    return BadRequest(message);
+                    return BadRequest("Password update failed.");
                 }
             }
             catch (Exception ex)
@@ -195,5 +201,6 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+
     }
 }

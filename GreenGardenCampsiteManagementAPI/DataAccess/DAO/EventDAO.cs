@@ -15,7 +15,6 @@ namespace DataAccess.DAO
         {
             _context = context;
         }
-
         public static List<EventDTO> GetAllEvents()
         {
             try
@@ -167,8 +166,7 @@ namespace DataAccess.DAO
         {
             try
             {
-                using (var context = new GreenGardenContext())
-                {
+               
                     // Thêm sự kiện vào cơ sở dữ liệu
                     var newEvent = new Event
                     {
@@ -184,11 +182,11 @@ namespace DataAccess.DAO
                         CreateBy = eventDTO.CreateBy // ID của người tạo sự kiện
                     };
 
-                    context.Events.Add(newEvent);
-                    await context.SaveChangesAsync();
+                    _context.Events.Add(newEvent);
+                    await _context.SaveChangesAsync();
 
                     // Lấy danh sách người dùng có RoleId = 3 để gửi email
-                    var usersToNotify = context.Users
+                    var usersToNotify = _context.Users
                                                .Where(u => u.RoleId == 3)
                                                .Select(u => u.Email)
                                                .ToList();
@@ -201,7 +199,7 @@ namespace DataAccess.DAO
                     await Task.WhenAll(emailTasks);
 
                     return true;
-                }
+                
             }
             catch (Exception ex)
             {
@@ -213,9 +211,8 @@ namespace DataAccess.DAO
         {
             try
             {
-                using (var context = new GreenGardenContext())
-                {
-                    var eventToUpdate = context.Events.FirstOrDefault(e => e.EventId == eventDTO.EventId);
+                
+                    var eventToUpdate = _context.Events.FirstOrDefault(e => e.EventId == eventDTO.EventId);
 
                     if (eventToUpdate == null)
                     {
@@ -231,9 +228,9 @@ namespace DataAccess.DAO
                     eventToUpdate.PictureUrl = eventDTO.PictureUrl;
                     eventToUpdate.IsActive = eventDTO.IsActive;
 
-                    context.SaveChanges();
+                    _context.SaveChanges();
                     return true;
-                }
+                
             }
             catch (Exception ex)
             {
@@ -244,19 +241,18 @@ namespace DataAccess.DAO
         {
             try
             {
-                using (var context = new GreenGardenContext())
-                {
-                    var eventToDelete = context.Events.FirstOrDefault(e => e.EventId == eventId);
+                
+                    var eventToDelete = _context.Events.FirstOrDefault(e => e.EventId == eventId);
 
                     if (eventToDelete == null)
                     {
                         throw new Exception("Event not found.");
                     }
 
-                    context.Events.Remove(eventToDelete);
-                    context.SaveChanges();
+                    _context.Events.Remove(eventToDelete);
+                    _context.SaveChanges();
                     return true;
-                }
+                
             }
             catch (Exception ex)
             {

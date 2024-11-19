@@ -121,18 +121,12 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
             }
         }
         [HttpPut("ChangeFoodStatus")]
-        public IActionResult ChangeFoodStatus([FromQuery] int itemId, [FromBody] ChangeFoodStatus newStatus)
+        public IActionResult ChangeFoodStatus([FromQuery] int itemId)
         {
             if (itemId <= 0)
             {
                 return BadRequest("Invalid item ID.");
             }
-
-            if (newStatus == null || newStatus.Status == null)
-            {
-                return BadRequest("Invalid status data.");
-            }
-
             try
             {
                 // Check if the item exists
@@ -143,8 +137,8 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 }
 
                 // Update the status
-                _repo.ChangeFoodStatus(itemId, newStatus);
-                return Ok($"Food and drink item {itemId} status changed to {newStatus.Status.Value}.");
+                _repo.ChangeFoodStatus(itemId);
+                return Ok($"Food and drink item {itemId} status changed.");
             }
             catch (Exception ex)
             {

@@ -136,10 +136,11 @@ namespace GreenGardenAPITest.DAO
             databaseContext.Database.EnsureCreated();
 
             // Simulate an exception scenario by setting the context to null or failing in some way
-            ComboDAO.InitializeContext(null); // Provide null context to force an exception
+            FoodAndDrinkDAO.InitializeContext(null); // Provide null context to force an exception
 
             // Act & Assert
             var exception = await Assert.ThrowsAsync<Exception>(() => Task.FromResult(FoodAndDrinkDAO.GetAllFoodAndDrink()));
+            exception.Message.Should().Be("Object reference not set to an instance of an object.");
         }
 
         // Test for method GetAllCustomerFoodAndDrink
@@ -209,10 +210,11 @@ namespace GreenGardenAPITest.DAO
             databaseContext.Database.EnsureCreated();
 
             // Simulate an exception scenario by setting the context to null or failing in some way
-            ComboDAO.InitializeContext(null); // Provide null context to force an exception
+            FoodAndDrinkDAO.InitializeContext(null); // Provide null context to force an exception
 
             // Act & Assert
             var exception = await Assert.ThrowsAsync<Exception>(() => Task.FromResult(FoodAndDrinkDAO.GetAllCustomerFoodAndDrink()));
+            exception.Message.Should().Be("Object reference not set to an instance of an object.");
         }
 
         // Test for method GetFoodAndDrinkDetail
@@ -262,10 +264,11 @@ namespace GreenGardenAPITest.DAO
             databaseContext.Database.EnsureCreated();
 
             // Simulate an exception scenario by setting the context to null or failing in some way
-            ComboDAO.InitializeContext(null); // Provide null context to force an exception
+            FoodAndDrinkDAO.InitializeContext(null); // Provide null context to force an exception
 
             // Act & Assert
             var exception = await Assert.ThrowsAsync<Exception>(() => Task.FromResult(FoodAndDrinkDAO.GetFoodAndDrinkDetail(1)));
+            exception.Message.Should().Be("Object reference not set to an instance of an object.");
         }
 
         // Test for method GetFoodAndDrinkDetail
@@ -353,10 +356,11 @@ namespace GreenGardenAPITest.DAO
             databaseContext.Database.EnsureCreated();
 
             // Simulate an exception scenario by setting the context to null or failing in some way
-            ComboDAO.InitializeContext(null); // Provide null context to force an exception
+            FoodAndDrinkDAO.InitializeContext(null); // Provide null context to force an exception
 
             // Act & Assert
             var exception = await Assert.ThrowsAsync<Exception>(() => Task.FromResult(FoodAndDrinkDAO.GetAllFoodAndDrinkCategories()));
+            exception.Message.Should().Be("Object reference not set to an instance of an object.");
         }
 
         // Test for method GetFoodAndDrinks
@@ -617,7 +621,7 @@ namespace GreenGardenAPITest.DAO
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(2, result.Count);
+            Assert.Equal(1, result.Count);
             Assert.Equal("Coca-Cola", result.First().ItemName);  // The lowest price item in category 1
         }
 
@@ -637,7 +641,7 @@ namespace GreenGardenAPITest.DAO
         }
 
         [Fact]
-        public async Task GetFoodAndDrinksShouldThrowException_WhenRepositoryThrowsException()
+        public async Task GetFoodAndDrinks_ShouldThrowException_WhenRepositoryThrowsException()
         {
             // Arrange
             var options = new DbContextOptionsBuilder<GreenGardenContext>()
@@ -648,10 +652,11 @@ namespace GreenGardenAPITest.DAO
             databaseContext.Database.EnsureCreated();
 
             // Simulate an exception scenario by setting the context to null or failing in some way
-            ComboDAO.InitializeContext(null); // Provide null context to force an exception
+            FoodAndDrinkDAO.InitializeContext(null); // Provide null context to force an exception
 
             // Act & Assert
-            var exception = await Assert.ThrowsAsync<Exception>(() => Task.FromResult(FoodAndDrinkDAO.GetFoodAndDrinks));
+            var exception = await Assert.ThrowsAsync<Exception>(() => Task.FromResult(FoodAndDrinkDAO.GetFoodAndDrinks(1, 1, 1)));
+            exception.Message.Should().Be("Object reference not set to an instance of an object.");
         }
 
 

@@ -104,13 +104,14 @@ namespace GreenGardenAPITest.DAO
             databaseContext.Database.EnsureCreated();
 
             // Simulate an exception scenario by setting the context to null or failing in some way
-            ComboDAO.InitializeContext(null); // Provide null context to force an exception
+            FoodComboDAO.InitializeContext(null); // Provide null context to force an exception
 
             // Act & Assert
             var exception = await Assert.ThrowsAsync<Exception>(() => Task.FromResult(FoodComboDAO.getAllComboFoods()));
+            exception.Message.Should().Be("Object reference not set to an instance of an object.");
         }
 
-        // Test for method GetAllComboFoods
+        // Test for method GetAllCustomerComboFoods
         private async Task<GreenGardenContext> GetDbContextWithCustomerComboFoods()
         {
             var options = new DbContextOptionsBuilder<GreenGardenContext>()
@@ -164,7 +165,7 @@ namespace GreenGardenAPITest.DAO
             FoodComboDAO.InitializeContext(dbContext);
 
             // Act
-            var result = FoodComboDAO.getComboFoodDetail();
+            var result = FoodComboDAO.getAllCustomerComboFoods();
 
             // Assert
             result.Should().NotBeNull();
@@ -209,7 +210,7 @@ namespace GreenGardenAPITest.DAO
             FoodComboDAO.InitializeContext(dbContext);
 
             // Act
-            var result = FoodComboDAO.getComboFoodDetail();
+            var result = FoodComboDAO.getAllCustomerComboFoods();
 
             // Assert
             result.Should().NotBeNull();
@@ -231,7 +232,7 @@ namespace GreenGardenAPITest.DAO
             ComboDAO.InitializeContext(null); // Provide null context to force an exception
 
             // Act & Assert
-            var exception = await Assert.ThrowsAsync<Exception>(() => Task.FromResult(FoodComboDAO.getComboFoodDetail()));
+            var exception = await Assert.ThrowsAsync<Exception>(() => Task.FromResult(FoodComboDAO.getAllCustomerComboFoods()));
         }
 
         // Test for method getComboFoodDetail
@@ -321,7 +322,7 @@ namespace GreenGardenAPITest.DAO
             ComboDAO.InitializeContext(null); // Provide null context to force an exception
 
             // Act & Assert
-            var exception = await Assert.ThrowsAsync<Exception>(() => Task.FromResult(FoodComboDAO.getComboFoodDetail()));
+            var exception = await Assert.ThrowsAsync<Exception>(() => Task.FromResult(FoodComboDAO.getComboFoodDetail(1)));
         }
     }
 }

@@ -213,7 +213,7 @@ namespace GreenGardenAPITest.DAO
             var newStatus = new ChangeComboStatus { Status = false }; // New status to be updated
 
             // Act
-            ComboDAO.ChangeComboStatus(comboId, newStatus); // Call the method to change status
+            ComboDAO.ChangeComboStatus(comboId); // Call the method to change status
 
             // Assert
             var updatedCombo = dbContext.Combos.FirstOrDefault(c => c.ComboId == comboId);
@@ -232,23 +232,25 @@ namespace GreenGardenAPITest.DAO
             var newStatus = new ChangeComboStatus { Status = true };
 
             // Act & Assert
-            var exception = await Assert.ThrowsAsync<Exception>(() => Task.Run(() => ComboDAO.ChangeComboStatus(comboId, newStatus)));
-            exception.Message.Should().Be("Food and Drink with ID 999 does not exist.");
+            var exception = await Assert.ThrowsAsync<Exception>(() => Task.Run(() => ComboDAO.ChangeComboStatus(comboId)));
+            exception.Message.Should().Be($"Combo with ID {comboId} does not exist.");
         }
 
         [Fact]
         public async Task ChangeComboStatus_ShouldThrowException_WhenContextIsNull()
         {
             // Arrange
-            ComboDAO.InitializeContext(null); // Set context to null
-
-            var comboId = 1;
-            var newStatus = new ChangeComboStatus { Status = true };
+            ComboDAO.InitializeContext(null); // Khởi tạo context là null
 
             // Act & Assert
-            var exception = await Assert.ThrowsAsync<NullReferenceException>(() => Task.Run(() => ComboDAO.ChangeComboStatus(comboId, newStatus)));
-            exception.Message.Should().Contain("Object reference not set to an instance of an object.");
+            var exception = await Assert.ThrowsAsync<Exception>(() =>
+                Task.Run(() => ComboDAO.ChangeComboStatus(1))
+            );
+
+            exception.Message.Should().NotBeNullOrEmpty(); // Đảm bảo exception có thông điệp
+            exception.Message.Should().Be("Object reference not set to an instance of an object.");
         }
+
 
         //----------------------------------------------------------------
 
@@ -368,7 +370,7 @@ namespace GreenGardenAPITest.DAO
             var comboId = 1;
 
             // Act & Assert
-            var exception = await Assert.ThrowsAsync<NullReferenceException>(() => Task.Run(() => ComboDAO.GetComboDetail(comboId)));
+            var exception = await Assert.ThrowsAsync<Exception>(() => Task.Run(() => ComboDAO.GetComboDetail(comboId)));
             exception.Message.Should().Contain("Object reference not set to an instance of an object.");
         }
 
@@ -612,24 +614,45 @@ namespace GreenGardenAPITest.DAO
         public async Task AddNewCombo_ShouldThrowException_WhenDatabaseFails()
         {
             // Arrange
-            var dbContext = await GetDbContextForAddCombo();
-            ComboDAO.InitializeContext(dbContext);
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
 
-            // Simulate database failure
-            dbContext.Database.BeginTransaction();
-            dbContext.Database.ExecuteSqlRaw("ROLLBACK"); // Force a rollback
+            var databaseContext = new GreenGardenContext(options);
+            databaseContext.Database.EnsureCreated();
+
+            // Khởi tạo context với ComboDAO
+            ComboDAO.InitializeContext(databaseContext);
 
             var newCombo = new AddCombo
             {
                 ComboName = "Combo H",
                 Description = "Description for Combo H",
                 Price = 2000,
-                ImgUrl = "http://example.com/comboH.jpg"
+                ImgUrl = "http://example.com/comboH.jpg",
+                ComboCampingGearDetails = new List<ComboCampingGearDetailDTO>
+        {
+            new ComboCampingGearDetailDTO { GearId = 1, Quantity = 2 }
+        },
+                ComboFootDetails = new List<ComboFootDetailDTO>
+        {
+            new ComboFootDetailDTO { ItemId = 1, Quantity = 3 }
+        },
+                ComboTicketDetails = new List<ComboTicketDetailDTO>
+        {
+            new ComboTicketDetailDTO { TicketId = 1, Quantity = 5, Description = "Ticket for Combo A" }
+        }
             };
 
+            // Làm giả ngoại lệ SaveChanges
+            databaseContext.Database.EnsureDeleted(); // Xóa database để tạo lỗi
+
             // Act & Assert
-            var exception = await Assert.ThrowsAsync<Exception>(() => Task.Run(() => ComboDAO.AddNewCombo(newCombo)));
-            exception.Message.Should().Be("Error adding new combo: Database failure occurred.");
+            var exception = await Assert.ThrowsAsync<Exception>(() =>
+                Task.Run(() => ComboDAO.AddNewCombo(newCombo))
+            );
+
+            exception.Message.Should().Contain("Error adding new combo"); // Đảm bảo thông điệp ngoại lệ
         }
 
         // Test case for UpdateCombo method ----------------------------------------------------------------

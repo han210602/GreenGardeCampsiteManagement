@@ -86,6 +86,7 @@ namespace GreenGardenAPITest.DAO
             var emptyContext = new GreenGardenContext(options);
             emptyContext.Database.EnsureCreated(); // Ensure the empty database is created
 
+            
             ActivityDAO.InitializeContext(emptyContext); // Initialize the TicketDAO context with the empty db
 
             // Act

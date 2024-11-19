@@ -1,10 +1,4 @@
 ﻿using BusinessObject.DTOs;
-using BusinessObject.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Repositories.Accounts
 {
@@ -13,10 +7,10 @@ namespace Repositories.Accounts
         List<ViewUserDTO> GetAllAccount();
         ViewUserDTO GetAccountById(int id);
         string Login(AccountDTO a);
-        Task<string> SendResetPassword(string email);
-        Task<string> Register(Register a, string enteredCode); 
+        bool SendResetPassword(string email);
+        Task<string> Register(Register a, string enteredCode);
         Task<string> SendVerificationCode(string email);
         Task<string> UpdateProfile(UpdateProfile updateProfile);
-        Task<string> ChangePassword(ChangePassword changePasswordDto);
+        bool ChangePassword(ChangePassword changePasswordDto);
     }
 }

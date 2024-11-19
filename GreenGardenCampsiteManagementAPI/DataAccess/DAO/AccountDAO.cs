@@ -1,19 +1,15 @@
-﻿using BusinessObject.Models;
-using BusinessObject.DTOs;
+﻿using BusinessObject.DTOs;
+using BusinessObject.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 using System.Text.Json;
-using Microsoft.EntityFrameworkCore;
-using System.Net.Mail;
-using System.Net;
-using System.Collections.Concurrent;
 
 namespace DataAccess.DAO
 {
@@ -24,81 +20,87 @@ namespace DataAccess.DAO
         {
             _context = context;
         }
-
         // Assuming you have a list of User objects
         private static Dictionary<string, int> loginAttempts = new Dictionary<string, int>();
 
         public static string Login(AccountDTO a, IConfiguration configuration)
         {
-
-            // Retrieve the user by email
-            var user = _context.Users.SingleOrDefault(u => u.Email == a.Email);
-            // Check if the user exists and is active
-            if (user == null || user.IsActive == false)
+            using (var context = new GreenGardenContext())
             {
-                throw new Exception("Invalid email or account inactive.");
-            }
-
-            // Check if the password is correct
-            if (user.Password == a.Password)
-            {
-                // Reset login attempts on success
-                if (loginAttempts.ContainsKey(a.Email))
+                // Retrieve the user by email
+                var user = context.Users.SingleOrDefault(u => u.Email == a.Email);
+                // Check if the user exists and is active
+                if (user == null)
                 {
-                    loginAttempts[a.Email] = 0;
+                    throw new Exception("Địa chỉ email không tồn tại.");
                 }
-
-                // Define JWT claims, including RoleId
-                var claims = new[]
+                if (user.IsActive == false)
                 {
-                new Claim(JwtRegisteredClaimNames.Sub, configuration["Jwt:Subject"]),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim("UserId", user.UserId.ToString()),
-                new Claim("Email", user.Email),
-                new Claim("RoleId", user.RoleId.ToString())
-            };
+                    throw new Exception("Tài khoản của bạn đã bị khóa.");
 
-                // Create JWT token
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
-                var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-                var token = new JwtSecurityToken(
-                    issuer: configuration["Jwt:Issuer"],
-                    audience: configuration["Jwt:Audience"],
-                    claims: claims,
-                    expires: DateTime.UtcNow.AddMinutes(60),
-                    signingCredentials: signIn);
-
-                var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
-
-                var response = new LoginResponseDTO
+                }
+                // Check if the password is correct
+                if (user.Password == a.Password)
                 {
-                    Token = tokenString,
-                    FullName = user.FirstName + " " + user.LastName,
-                    UserId = user.UserId,
-                    ProfilePictureUrl = user.ProfilePictureUrl,
-                    Email = user.Email,
-                    Password = user.Password,
-                    Phone = user.PhoneNumber,
-                    RoleId = (int)user.RoleId
-                };
+                    // Reset login attempts on success
+                    if (loginAttempts.ContainsKey(a.Email))
+                    {
+                        loginAttempts[a.Email] = 0;
+                    }
 
-                return JsonSerializer.Serialize(response);
-            }
-            else
-            {
-                // Track login attempts
-                if (!loginAttempts.ContainsKey(a.Email))
-                {
-                    loginAttempts[a.Email] = 1;
+                    // Define JWT claims, including RoleId
+                    var claims = new[]
+                    {
+    new Claim(JwtRegisteredClaimNames.Sub, configuration["Jwt:Subject"]),
+    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+    new Claim("UserId", user.UserId.ToString()),
+    new Claim("Email", user.Email),
+    new Claim("RoleId", user.RoleId.ToString())
+};
+
+                    // Create JWT token
+                    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
+                    var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                    var token = new JwtSecurityToken(
+                        issuer: configuration["Jwt:Issuer"],
+                        audience: configuration["Jwt:Audience"],
+                        claims: claims,
+                        expires: DateTime.UtcNow.AddMinutes(60),
+                        signingCredentials: signIn);
+
+                    var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+
+                    var response = new LoginResponseDTO
+                    {
+                        Token = tokenString,
+                        FullName = user.FirstName + " " + user.LastName,
+                        UserId = user.UserId,
+                        ProfilePictureUrl = user.ProfilePictureUrl,
+                        Email = user.Email,
+                        Password = user.Password,
+                        Phone = user.PhoneNumber,
+                        RoleId = (int)user.RoleId
+                    };
+
+                    return JsonSerializer.Serialize(response);
                 }
                 else
                 {
-                    loginAttempts[a.Email]++;
-                }
+                    // Track login attempts
+                    if (!loginAttempts.ContainsKey(a.Email))
+                    {
+                        loginAttempts[a.Email] = 1;
+                    }
+                    else
+                    {
+                        loginAttempts[a.Email]++;
+                    }
 
-                // Throw an error message if the login attempt fails
-                throw new Exception("Invalid email or password.");
+                    // Throw an error message if the login attempt fails
+                    throw new Exception("Mật khẩu không đúng");
+                }
             }
+
 
         }
 
@@ -215,94 +217,111 @@ namespace DataAccess.DAO
         }
 
 
-        public static async Task<string> SendResetPassword(string email, IConfiguration configuration)
+        public static bool SendResetPassword(string email, IConfiguration configuration)
         {
-            using (var context = new GreenGardenContext())
+            try
             {
-
-                var user = context.Users.SingleOrDefault(u => u.Email == email);
-                if (user == null)
+                using (var context = new GreenGardenContext())
                 {
-                    throw new Exception("Email không tồn tại.");
+                    // Kiểm tra sự tồn tại của email trong cơ sở dữ liệu
+                    var user = context.Users.SingleOrDefault(u => u.Email == email);
+                    if (user == null)
+                    {
+                        return false;
+                    }
+
+                    // Tạo mật khẩu mới ngẫu nhiên
+                    Random random = new Random();
+                    int newPassword = random.Next(100000, 1000000);
+
+                    // Cập nhật mật khẩu mới vào cơ sở dữ liệu
+                    user.Password = newPassword.ToString();
+                    context.Users.Update(user);
+                    context.SaveChanges();
+
+                    // Cấu hình gửi email
+                    var fromAddress = new MailAddress("CustomerService94321@gmail.com", "Dịch vụ Khách hàng");
+                    var toAddress = new MailAddress(email);
+                    const string fromPassword = "lwrtmwkgshlqaycp";  // Mật khẩu ứng dụng của bạn
+                    const string subject = "Reset Password";
+                    string body = $"Mật khẩu mới của bạn là: {newPassword}";
+
+                    var smtp = new SmtpClient
+                    {
+                        Host = "smtp.gmail.com",
+                        Port = 587,
+                        EnableSsl = true,
+                        DeliveryMethod = SmtpDeliveryMethod.Network,
+                        UseDefaultCredentials = false,
+                        Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
+                    };
+
+                    using (var message = new MailMessage(fromAddress, toAddress)
+                    {
+                        Subject = subject,
+                        Body = body,
+                        IsBodyHtml = true
+                    })
+                    {
+                        // Gửi email và xử lý ngoại lệ
+                        try
+                        {
+                            smtp.Send(message);
+                            Console.WriteLine("Email đã được gửi thành công!");
+                        }
+                        catch (Exception ex)
+                        {
+                            // Xử lý lỗi khi gửi email
+                            Console.WriteLine($"Gửi email thất bại: {ex.Message}");
+                            throw new Exception("Gửi email thất bại.");
+                        }
+                    }
                 }
 
-                Random random = new Random();
-                int newPassword = random.Next(100000, 1000000);
-
-
-                user.Password = newPassword.ToString();
-                context.Users.Update(user);
-                context.SaveChanges();
-
-
-                var fromAddress = new MailAddress("CustomerService94321@gmail.com", "Dịch vụ Khách hàng");
-                var toAddress = new MailAddress(email);
-                const string fromPassword = "lwrtmwkgshlqaycp";
-                const string subject = "Reset Password";
-                string body = $"Mật khẩu mới của bạn là: {newPassword}";
-
-                // Cấu hình SmtpClient
-                var smtp = new SmtpClient
-                {
-                    Host = "smtp.gmail.com",
-                    Port = 587,
-                    EnableSsl = true,
-                    DeliveryMethod = SmtpDeliveryMethod.Network,
-                    UseDefaultCredentials = false,
-                    Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
-                };
-
-
-                using (var message = new MailMessage(fromAddress, toAddress)
-                {
-                    Subject = subject,
-                    Body = body,
-                    IsBodyHtml = true
-                })
-                {
-                    try
-                    {
-                        await smtp.SendMailAsync(message);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"Failed to send email: {ex.Message}");
-                        throw new Exception("Gửi email thất bại.");
-                    }
-                }
-
-                Console.WriteLine("Email sent successfully!");
-                return JsonSerializer.Serialize(new { Message = "Email đặt lại mật khẩu đã được gửi đến bạn." });
+                return true;  // Trả về true nếu gửi email thành công và cập nhật mật khẩu thành công
+            }
+            catch (Exception ex)
+            {
+                // Xử lý lỗi chung và gửi thông báo lỗi
+                Console.WriteLine($"Lỗi: {ex.Message}");
+                return false;  // Trả về false nếu có lỗi
             }
         }
 
+
+
         public static List<ViewUserDTO> GetAllAccounts()
         {
-
-            // Retrieve all users from the database and map them to UserDTO
-            var users = _context.Users.Select(user => new ViewUserDTO
+            try
             {
-                UserId = user.UserId,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email,
-                Password = user.Password,
-                PhoneNumber = user.PhoneNumber,
-                Address = user.Address,
-                DateOfBirth = user.DateOfBirth,
-                Gender = user.Gender,
-                ProfilePictureUrl = user.ProfilePictureUrl,
-                IsActive = user.IsActive,
-                CreatedAt = user.CreatedAt,
-                RoleId = user.RoleId
-            }).ToList();
+                // Retrieve all users from the database and map them to UserDTO
+                var users = _context.Users.Select(user => new ViewUserDTO
+                {
+                    UserId = user.UserId,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    Password = user.Password,
+                    PhoneNumber = user.PhoneNumber,
+                    Address = user.Address,
+                    DateOfBirth = user.DateOfBirth,
+                    Gender = user.Gender,
+                    ProfilePictureUrl = user.ProfilePictureUrl,
+                    IsActive = user.IsActive,
+                    CreatedAt = user.CreatedAt,
+                    RoleId = user.RoleId
+                }).ToList();
 
-            return users;
+                return users;
+            }
+            catch (Exception ex)
+            {
 
+                throw new Exception(ex.Message);
+            }
         }
         public static ViewUserDTO GetAccountById(int userId)
         {
-
             // Retrieve the user with the given UserId from the database and map it to ViewUserDTO
             var user = _context.Users
                 .Where(u => u.UserId == userId)
@@ -329,6 +348,7 @@ namespace DataAccess.DAO
         }
         public static async Task<string> UpdateProfile(UpdateProfile updateProfileDto)
         {
+
 
             var user = await _context.Users.SingleOrDefaultAsync(u => u.UserId == updateProfileDto.UserId);
             if (user == null)
@@ -360,38 +380,44 @@ namespace DataAccess.DAO
 
         }
 
-        public static async Task<string> ChangePassword(ChangePassword changePasswordDto)
+        public static bool ChangePassword(ChangePassword changePasswordDto)
         {
 
-            var user = await _context.Users.SingleOrDefaultAsync(u => u.UserId == changePasswordDto.UserId);
+            var user = _context.Users.SingleOrDefault(u => u.UserId == changePasswordDto.UserId);
             if (user == null)
             {
-                return "Người dùng không tồn tại.";
+                // Nếu người dùng không tồn tại, trả về false.
+                return false;
             }
 
             if (user.Password != changePasswordDto.OldPassword)
             {
-                return "Mật khẩu cũ không đúng.";
+                // Nếu mật khẩu cũ không đúng, trả về false.
+                return false;
             }
 
             if (changePasswordDto.NewPassword != changePasswordDto.ConfirmPassword)
             {
-                return "Mật khẩu mới và xác nhận mật khẩu không khớp.";
+                // Nếu mật khẩu mới và xác nhận không khớp, trả về false.
+                return false;
             }
 
             user.Password = changePasswordDto.NewPassword;
 
             try
             {
-                await _context.SaveChangesAsync();
-                return "Cập nhật mật khẩu thành công.";
+                _context.SaveChanges(); // Gọi SaveChanges đồng bộ
+                                        // Nếu thay đổi mật khẩu thành công, trả về true.
+                return true;
             }
             catch (DbUpdateException ex)
             {
+                // Nếu có lỗi khi lưu vào cơ sở dữ liệu, ném ngoại lệ.
                 throw new Exception("Đã xảy ra lỗi khi cập nhật mật khẩu: " + ex.InnerException?.Message);
             }
 
         }
+
 
     }
 }

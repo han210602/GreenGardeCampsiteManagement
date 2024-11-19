@@ -15,6 +15,6 @@ namespace Repositories.Combo
         void AddCombo(AddCombo newCombo);
 
         void UpdateCombo(AddCombo updatedCombo);
-        void ChangeComboStatus(int comboId, ChangeComboStatus newStatus);
+        void ChangeComboStatus(int comboId);
     }
 }

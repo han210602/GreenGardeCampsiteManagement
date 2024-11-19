@@ -11,37 +11,41 @@ namespace DataAccess.DAO
 {
     public class OrderDAO
     {
+        private static GreenGardenContext _context;
+        public static void InitializeContext(GreenGardenContext context)
+        {
+            _context = context;
+        }
         public static List<OrderDTO> getAllOrder()
         {
             var listProducts = new List<OrderDTO>();
             try
             {
-                using (var context = new GreenGardenContext())
-                {
-                    listProducts = context.Orders
-                        .Include(u => u.Customer)
-                        .Include(e => e.Employee)
-                        .Include(a => a.Activity)
-                        .Select(o => new OrderDTO()
-                        {
-                            OrderId = o.OrderId,
-                            CustomerId = o.CustomerId,
-                            EmployeeId = o.EmployeeId,
-                            EmployeeName = o.Employee.FirstName + "" + o.Employee.LastName,
-                            CustomerName = o.CustomerId != null ? o.Customer.FirstName + "" + o.Customer.LastName : o.CustomerName,
-                            PhoneCustomer = o.PhoneCustomer == null ? o.Customer.PhoneNumber : o.PhoneCustomer,
-                            OrderDate = o.OrderDate,
-                            OrderUsageDate = o.OrderUsageDate,
-                            Deposit = o.Deposit,
-                            TotalAmount = o.TotalAmount,
-                            AmountPayable = o.AmountPayable,
-                            StatusOrder = o.StatusOrder,
-                            ActivityId = o.ActivityId,
-                            ActivityName = o.Activity.ActivityName,
-                            OrderCheckoutDate=o.OrderCheckoutDate
-                        })
-                        .ToList();
-                }
+
+                listProducts = _context.Orders
+                    .Include(u => u.Customer)
+                    .Include(e => e.Employee)
+                    .Include(a => a.Activity)
+                    .Select(o => new OrderDTO()
+                    {
+                        OrderId = o.OrderId,
+                        CustomerId = o.CustomerId,
+                        EmployeeId = o.EmployeeId,
+                        EmployeeName = o.Employee.FirstName + "" + o.Employee.LastName,
+                        CustomerName = o.CustomerId != null ? o.Customer.FirstName + "" + o.Customer.LastName : o.CustomerName,
+                        PhoneCustomer = o.PhoneCustomer == null ? o.Customer.PhoneNumber : o.PhoneCustomer,
+                        OrderDate = o.OrderDate,
+                        OrderUsageDate = o.OrderUsageDate,
+                        Deposit = o.Deposit,
+                        TotalAmount = o.TotalAmount,
+                        AmountPayable = o.AmountPayable,
+                        StatusOrder = o.StatusOrder,
+                        ActivityId = o.ActivityId,
+                        ActivityName = o.Activity.ActivityName,
+                        OrderCheckoutDate = o.OrderCheckoutDate
+                    })
+                    .ToList();
+
 
             }
             catch (Exception ex)
@@ -55,34 +59,33 @@ namespace DataAccess.DAO
             var customerOrders = new List<CustomerOrderDTO>();
             try
             {
-                using (var context = new GreenGardenContext())
-                {
-                    customerOrders = context.Orders
-                        .Where(o => o.CustomerId == customerId
-                                    && (statusOrder == null || o.StatusOrder == statusOrder)
-                                    && (activityId == null || o.ActivityId == activityId))
-                        .Include(u => u.Customer)
-                        .Include(a => a.Activity)
-                        .Select(o => new CustomerOrderDTO()
-                        {
-                            OrderId = o.OrderId,
-                            CustomerId = o.CustomerId,
-                            CustomerName = o.CustomerId != null ? o.Customer.FirstName + " " + o.Customer.LastName : o.CustomerName,
-                            PhoneCustomer = o.PhoneCustomer == null ? o.Customer.PhoneNumber : o.PhoneCustomer,
-                            OrderDate = o.OrderDate,
-                            OrderUsageDate = o.OrderUsageDate,
-                            Deposit = o.Deposit,
-                            TotalAmount = o.TotalAmount,
-                            AmountPayable = o.AmountPayable,
-                            StatusOrder = o.StatusOrder,
-                            ActivityId = o.ActivityId,
-                            ActivityName = o.Activity.ActivityName,
-                            
-                        })
-                        .OrderBy(o => o.ActivityId) // Sắp xếp theo ActivityId
-                        .ThenByDescending(o => o.OrderDate) // Sau đó sắp xếp theo OrderDate giảm dần
-                        .ToList();
-                }
+
+                customerOrders = _context.Orders
+                    .Where(o => o.CustomerId == customerId
+                                && (statusOrder == null || o.StatusOrder == statusOrder)
+                                && (activityId == null || o.ActivityId == activityId))
+                    .Include(u => u.Customer)
+                    .Include(a => a.Activity)
+                    .Select(o => new CustomerOrderDTO()
+                    {
+                        OrderId = o.OrderId,
+                        CustomerId = o.CustomerId,
+                        CustomerName = o.CustomerId != null ? o.Customer.FirstName + " " + o.Customer.LastName : o.CustomerName,
+                        PhoneCustomer = o.PhoneCustomer == null ? o.Customer.PhoneNumber : o.PhoneCustomer,
+                        OrderDate = o.OrderDate,
+                        OrderUsageDate = o.OrderUsageDate,
+                        Deposit = o.Deposit,
+                        TotalAmount = o.TotalAmount,
+                        AmountPayable = o.AmountPayable,
+                        StatusOrder = o.StatusOrder,
+                        ActivityId = o.ActivityId,
+                        ActivityName = o.Activity.ActivityName,
+
+                    })
+                    .OrderBy(o => o.ActivityId) // Sắp xếp theo ActivityId
+                    .ThenByDescending(o => o.OrderDate) // Sau đó sắp xếp theo OrderDate giảm dần
+                    .ToList();
+
             }
             catch (Exception ex)
             {
@@ -90,39 +93,36 @@ namespace DataAccess.DAO
             }
             return customerOrders;
         }
-
-
         public static List<OrderDTO> getAllOrderDepositAndUsing()
         {
             var listProducts = new List<OrderDTO>();
             try
             {
-                using (var context = new GreenGardenContext())
-                {
-                    listProducts = context.Orders
-                        .Include(u => u.Customer)
-                        .Include(e => e.Employee)
-                        .Include(a => a.Activity)
-                        .Where(o=>o.ActivityId==2 && o.StatusOrder==true)
-                        .Select(o => new OrderDTO()
-                        {
-                            OrderId = o.OrderId,
-                            CustomerId = o.CustomerId,
-                            EmployeeId = o.EmployeeId,
-                            EmployeeName = o.Employee.FirstName + "" + o.Employee.LastName,
-                            CustomerName = o.CustomerId != null ? o.Customer.FirstName + "" + o.Customer.LastName : o.CustomerName,
-                            PhoneCustomer = o.PhoneCustomer != null ? o.Customer.PhoneNumber : o.PhoneCustomer,
-                            OrderDate = o.OrderDate,
-                            OrderUsageDate = o.OrderUsageDate,
-                            Deposit = o.Deposit,
-                            TotalAmount = o.TotalAmount,
-                            AmountPayable = o.AmountPayable,
-                            StatusOrder = o.StatusOrder,
-                            ActivityId = o.ActivityId,
-                            ActivityName = o.Activity.ActivityName
-                        })
-                        .ToList();
-                }
+
+                listProducts = _context.Orders
+                    .Include(u => u.Customer)
+                    .Include(e => e.Employee)
+                    .Include(a => a.Activity)
+                    .Where(o => o.ActivityId == 2 && o.StatusOrder == true)
+                    .Select(o => new OrderDTO()
+                    {
+                        OrderId = o.OrderId,
+                        CustomerId = o.CustomerId,
+                        EmployeeId = o.EmployeeId,
+                        EmployeeName = o.Employee.FirstName + "" + o.Employee.LastName,
+                        CustomerName = o.CustomerId != null ? o.Customer.FirstName + "" + o.Customer.LastName : o.CustomerName,
+                        PhoneCustomer = o.PhoneCustomer != null ? o.Customer.PhoneNumber : o.PhoneCustomer,
+                        OrderDate = o.OrderDate,
+                        OrderUsageDate = o.OrderUsageDate,
+                        Deposit = o.Deposit,
+                        TotalAmount = o.TotalAmount,
+                        AmountPayable = o.AmountPayable,
+                        StatusOrder = o.StatusOrder,
+                        ActivityId = o.ActivityId,
+                        ActivityName = o.Activity.ActivityName
+                    })
+                    .ToList();
+
 
             }
             catch (Exception ex)
@@ -138,7 +138,7 @@ namespace DataAccess.DAO
                 using (var context = new GreenGardenContext())
                 {
                     var order = context.Orders.FirstOrDefault(o => o.OrderId == id);
-                    if ((order!=null))
+                    if ((order != null))
                     {
                         order.Deposit = money;
                         order.StatusOrder = true;
@@ -158,7 +158,6 @@ namespace DataAccess.DAO
 
             }
         }
-
         public static bool DeleteOrder(int id)
         {
 
@@ -168,12 +167,12 @@ namespace DataAccess.DAO
                 {
                     var order = context.Orders.FirstOrDefault(o => o.OrderId == id);
                     if (order != null)
-                    { 
-                        var list_ticket=context.OrderTicketDetails.Where(o=>o.OrderId==id).ToList();
-                        var list_foot=context.OrderFoodDetails.Where(o=>o.OrderId==id).ToList();    
-                        var list_combo=context.OrderComboDetails.Where(o => o.OrderId == id).ToList();
-                        var list_camping=context.OrderCampingGearDetails.Where(o=>o.OrderId == id).ToList();
-                        var list_combofoot=context.OrderFoodComboDetails.Where(o=>o.OrderId==id).ToList();
+                    {
+                        var list_ticket = context.OrderTicketDetails.Where(o => o.OrderId == id).ToList();
+                        var list_foot = context.OrderFoodDetails.Where(o => o.OrderId == id).ToList();
+                        var list_combo = context.OrderComboDetails.Where(o => o.OrderId == id).ToList();
+                        var list_camping = context.OrderCampingGearDetails.Where(o => o.OrderId == id).ToList();
+                        var list_combofoot = context.OrderFoodComboDetails.Where(o => o.OrderId == id).ToList();
                         context.RemoveRange(list_ticket);
                         context.RemoveRange(list_foot);
                         context.RemoveRange(list_camping);
@@ -199,12 +198,11 @@ namespace DataAccess.DAO
 
 
         }
-
         public static bool CreateOrder(OrderDTO order, OrderTicketDetailDTO order_ticket, OrderCampingGearDetailDTO order_camping_gear, OrderFoodDetailDTO order_food, OrderFoodComboDetailDTO order_foot_combo, OrderComboDetailDTO order_combo)
         {
-            if(order_combo!=null)
+            if (order_combo != null)
             {
-                
+
             }
             else
             {
@@ -217,16 +215,15 @@ namespace DataAccess.DAO
 
             return false;
         }
-
         public static bool CreateUniqueOrder(CreateUniqueOrderRequest order_request)
-        {   
-                var order=order_request.Order;
-                var order_ticket = order_request.OrderTicket;
-                var order_camping_gear=order_request.OrderCampingGear;
-                var order_food = order_request.OrderFood;
-                var order_foot_combo=order_request.OrderFoodCombo;
+        {
+            var order = order_request.Order;
+            var order_ticket = order_request.OrderTicket;
+            var order_camping_gear = order_request.OrderCampingGear;
+            var order_food = order_request.OrderFood;
+            var order_foot_combo = order_request.OrderFoodCombo;
 
-            
+
             try
             {
                 using (var context = new GreenGardenContext())
@@ -341,7 +338,6 @@ namespace DataAccess.DAO
 
 
         }
-
         //        context.Add(new Order()
         //        {
         //            CustomerId = order.CustomerId,
@@ -410,10 +406,10 @@ namespace DataAccess.DAO
                 {
                     order = context.Orders
                         .Include(o => o.OrderTicketDetails).ThenInclude(t => t.Ticket)
-                        .Include(o => o.OrderFoodDetails).ThenInclude(t=>t.Item)
-                        .Include(o => o.OrderCampingGearDetails).ThenInclude(g=>g.Gear)
-                        .Include(o => o.OrderComboDetails).ThenInclude(c=>c.Combo)
-                        .Include(o => o.OrderFoodComboDetails).ThenInclude(f=>f.Combo)
+                        .Include(o => o.OrderFoodDetails).ThenInclude(t => t.Item)
+                        .Include(o => o.OrderCampingGearDetails).ThenInclude(g => g.Gear)
+                        .Include(o => o.OrderComboDetails).ThenInclude(c => c.Combo)
+                        .Include(o => o.OrderFoodComboDetails).ThenInclude(f => f.Combo)
                         .Select(o => new OrderDetailDTO()
                         {
                             OrderId = o.OrderId,
@@ -426,48 +422,48 @@ namespace DataAccess.DAO
                             AmountPayable = o.AmountPayable,
                             StatusOrder = o.StatusOrder,
                             ActivityId = o.ActivityId,
-                            ActivityName=o.Activity.ActivityName,
+                            ActivityName = o.Activity.ActivityName,
                             PhoneCustomer = o.PhoneCustomer == null ? o.Customer.PhoneNumber : o.PhoneCustomer,
 
-                            OrderTicketDetails = o.OrderTicketDetails.Select(o=>new OrderTicketDetailDTO
+                            OrderTicketDetails = o.OrderTicketDetails.Select(o => new OrderTicketDetailDTO
                             {
-                                TicketId= o.TicketId,
-                                Name=o.Ticket.TicketName,
-                                Quantity=o.Quantity,
-                                Price=o.Ticket.Price,
-                                Description=o.Description,
+                                TicketId = o.TicketId,
+                                Name = o.Ticket.TicketName,
+                                Quantity = o.Quantity,
+                                Price = o.Ticket.Price,
+                                Description = o.Description,
                             }).ToList(),
-                           OrderCampingGearDetails=o.OrderCampingGearDetails.Select(o=> new OrderCampingGearDetailDTO 
-                           { 
-                                GearId=o.GearId,
-                                Name=o.Gear.GearName,
-                                Quantity=o.Quantity,
+                            OrderCampingGearDetails = o.OrderCampingGearDetails.Select(o => new OrderCampingGearDetailDTO
+                            {
+                                GearId = o.GearId,
+                                Name = o.Gear.GearName,
+                                Quantity = o.Quantity,
                                 Price = o.Gear.RentalPrice,
 
-                           }).ToList(),
-                           OrderFoodDetails=o.OrderFoodDetails.Select(o=>new OrderFoodDetailDTO
-                           {
-                               ItemId=o.ItemId,
-                               Name=o.Item.ItemName,
-                               Quantity=o.Quantity,
-                               Price =o.Item.Price,
-                           }).ToList(),
-                           OrderFoodComboDetails = o.OrderFoodComboDetails.Select(o => new OrderFoodComboDetailDTO
-                           {
-                               ComboId=o.ComboId,
-                               Name = o.Combo.ComboName,
-                               Quantity = o.Quantity,
-                               Price =o.Combo.Price,
-                           }).ToList(),
+                            }).ToList(),
+                            OrderFoodDetails = o.OrderFoodDetails.Select(o => new OrderFoodDetailDTO
+                            {
+                                ItemId = o.ItemId,
+                                Name = o.Item.ItemName,
+                                Quantity = o.Quantity,
+                                Price = o.Item.Price,
+                            }).ToList(),
+                            OrderFoodComboDetails = o.OrderFoodComboDetails.Select(o => new OrderFoodComboDetailDTO
+                            {
+                                ComboId = o.ComboId,
+                                Name = o.Combo.ComboName,
+                                Quantity = o.Quantity,
+                                Price = o.Combo.Price,
+                            }).ToList(),
                             OrderComboDetails = o.OrderComboDetails.Select(o => new OrderComboDetailDTO
-                           {
-                               ComboId=o.ComboId,
-                               Name = o.Combo.ComboName,
-                               Quantity = o.Quantity,
-                               Price =  o.Combo.Price,
-                           }).ToList()
+                            {
+                                ComboId = o.ComboId,
+                                Name = o.Combo.ComboName,
+                                Quantity = o.Quantity,
+                                Price = o.Combo.Price,
+                            }).ToList()
 
-                        }).FirstOrDefault(o=>o.OrderId==id);
+                        }).FirstOrDefault(o => o.OrderId == id);
                 }
 
             }
@@ -519,7 +515,7 @@ namespace DataAccess.DAO
                                 GearId = og.GearId,
                                 Name = og.Gear.GearName,
                                 Quantity = og.Quantity,
-                                Price =  og.Gear.RentalPrice,
+                                Price = og.Gear.RentalPrice,
                             }).ToList(),
 
                             OrderFoodDetails = o.OrderFoodDetails.Select(of => new OrderFoodDetailDTO
@@ -527,7 +523,7 @@ namespace DataAccess.DAO
                                 ItemId = of.ItemId,
                                 Name = of.Item.ItemName,
                                 Quantity = of.Quantity,
-                                Price =  of.Item.Price,
+                                Price = of.Item.Price,
                             }).ToList(),
 
                             OrderFoodComboDetails = o.OrderFoodComboDetails.Select(ofc => new OrderFoodComboDetailDTO
@@ -535,7 +531,7 @@ namespace DataAccess.DAO
                                 ComboId = ofc.ComboId,
                                 Name = ofc.Combo.ComboName,
                                 Quantity = ofc.Quantity,
-                                Price =  ofc.Combo.Price,
+                                Price = ofc.Combo.Price,
                             }).ToList(),
 
                             OrderComboDetails = o.OrderComboDetails.Select(oc => new OrderComboDetailDTO
@@ -543,7 +539,7 @@ namespace DataAccess.DAO
                                 ComboId = oc.ComboId,
                                 Name = oc.Combo.ComboName,
                                 Quantity = oc.Quantity,
-                                Price =  oc.Combo.Price,
+                                Price = oc.Combo.Price,
                             }).ToList()
 
                         }).FirstOrDefault(o => o.OrderId == orderId);
@@ -555,7 +551,6 @@ namespace DataAccess.DAO
             }
             return orderDetail;
         }
-
         public static bool UpdateActivityOrder(int idorder, int idactivity)
         {
             try
@@ -649,7 +644,6 @@ namespace DataAccess.DAO
 
             }
         }
-
         public static List<OrderCampingGearByUsageDateDTO> GetListOrderGearByUsageDate(DateTime usagedate)
         {
             var listProducts = new List<OrderCampingGearByUsageDateDTO>();
@@ -658,8 +652,8 @@ namespace DataAccess.DAO
                 using (var context = new GreenGardenContext())
                 {
                     listProducts = context.OrderCampingGearDetails.Include(o => o.Order)
-                        .Where(s => s.Order.OrderUsageDate.Value.Date == usagedate.Date) 
-                        .Where(s=>s.Order.ActivityId!=1002&&s.Order.ActivityId!=3)// Compare dates directly
+                        .Where(s => s.Order.OrderUsageDate.Value.Date == usagedate.Date)
+                        .Where(s => s.Order.ActivityId != 1002 && s.Order.ActivityId != 3)// Compare dates directly
                         .Select(s => new OrderCampingGearByUsageDateDTO
                         {
                             GearId = s.GearId,
@@ -677,7 +671,6 @@ namespace DataAccess.DAO
 
 
         }
-
         public static bool CreateComboOrder(CreateComboOrderRequest order_request)
         {
 
@@ -745,7 +738,7 @@ namespace DataAccess.DAO
 
                         List<OrderComboDetail> tickets = order_combo.Select(t => new OrderComboDetail
                         {
-                            ComboId=t.ComboId,
+                            ComboId = t.ComboId,
                             OrderId = id,
                             Quantity = t.Quantity,
                         }).ToList();
@@ -802,15 +795,14 @@ namespace DataAccess.DAO
 
 
         }
-
         public static bool UpdateTicket(List<OrderTicketAddlDTO> tickets)
         {
             try
             {
                 using (var context = new GreenGardenContext())
                 {
-                    
-                    
+
+
                     if (tickets[0].TicketId != 0)
                     {
                         var list = context.OrderTicketDetails.Where(s => s.OrderId == tickets[0].OrderId);
@@ -863,7 +855,7 @@ namespace DataAccess.DAO
                         });
                         context.OrderCampingGearDetails.AddRange(newlist);
                     }
-                  
+
                     context.SaveChanges();
                     return true;
                 }
@@ -934,7 +926,7 @@ namespace DataAccess.DAO
                     {
                         DeleteOrder(tickets[0].OrderId);
                     }
-                    
+
                     context.SaveChanges();
                     return true;
                 }
@@ -980,7 +972,6 @@ namespace DataAccess.DAO
 
 
         }
-
         public static bool UpdateOrder(UpdateOrderDTO order)
         {
 
@@ -988,10 +979,11 @@ namespace DataAccess.DAO
             {
                 using (var context = new GreenGardenContext())
                 {
-                    var item = context.Orders.FirstOrDefault(s=>s.OrderId==order.OrderId);
-                    if(item != null) {
+                    var item = context.Orders.FirstOrDefault(s => s.OrderId == order.OrderId);
+                    if (item != null)
+                    {
                         item.OrderUsageDate = order.OrderUsageDate;
-                        item.TotalAmount=order.TotalAmount;
+                        item.TotalAmount = order.TotalAmount;
                         item.AmountPayable = order.TotalAmount - item.Deposit;
                         item.OrderCheckoutDate = order.OrderCheckoutDate;
                         context.SaveChanges();

@@ -22,7 +22,11 @@ namespace Repositories.ComboFood
         }
         public List<ComboFoodDTO> CustomerComboFoods()
         {
-            return FoodComboDAO.getComboFoodDetail();
+            return FoodComboDAO.getAllCustomerComboFoods();
+        }
+        public void ChangeComboFoodStatus(int comboId)
+        {
+            FoodComboDAO.ChangeFoodComboStatus(comboId); // Call DAO method
         }
     }
 }

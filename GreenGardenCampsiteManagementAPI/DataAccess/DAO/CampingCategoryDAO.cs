@@ -10,17 +10,13 @@ namespace DataAccess.DAO
 {
     public  class CampingCategoryDAO
     {
-        //private static GreenGardenContext context = new GreenGardenContext();
-        private static GreenGardenContext _context;
-        public static void InitializeContext(GreenGardenContext context)
-        {
-            _context = context;
-        }
+        private static GreenGardenContext context = new GreenGardenContext();
 
         // Lấy tất cả trang thiết bị
         public List<CampingGearDTO> GetAllCampingGears()
         {
-            return _context.CampingGears.Select(gear => new CampingGearDTO
+            try { 
+            return context.CampingGears.Select(gear => new CampingGearDTO
             {
                 GearId = gear.GearId,
                 GearName = gear.GearName,
@@ -28,6 +24,11 @@ namespace DataAccess.DAO
                 ImgUrl = gear.ImgUrl,
                 Description = gear.Description,
             }).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
     }

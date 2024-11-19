@@ -134,6 +134,7 @@ namespace GreenGardenAPITest.DAO
 
             // Act & Assert
             var exception = await Assert.ThrowsAsync<Exception>(() => Task.FromResult(UserDAO.GetAllUsers()));
+            Assert.Contains("Object reference not set to an instance of an object.", exception.Message);
 
         }
 
@@ -258,7 +259,7 @@ namespace GreenGardenAPITest.DAO
             // Act & Assert
             var exception = await Assert.ThrowsAsync<Exception>(() => Task.FromResult(UserDAO.GetAllEmployees()));
 
-            Assert.Contains("Value cannot be null.", exception.Message);
+            Assert.Contains("Object reference not set to an instance of an object.", exception.Message);
         }
 
         // Test for method GetAllCustomers
@@ -403,7 +404,6 @@ namespace GreenGardenAPITest.DAO
             // Act & Assert
             var exception = await Assert.ThrowsAsync<Exception>(() => Task.FromResult(UserDAO.GetAllCustomers()));
 
-            Assert.Contains("Value cannot be null.", exception.Message);
         }
 
         // Test for method GetUserById

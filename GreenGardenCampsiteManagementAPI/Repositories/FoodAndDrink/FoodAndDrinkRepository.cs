@@ -41,9 +41,9 @@ namespace Repositories.FoodAndDrink
         {
             return FoodAndDrinkDAO.GetFoodAndDrinks(categoryId, sortBy, priceRange);
         }
-        public void ChangeFoodStatus(int itemId, ChangeFoodStatus newStatus)
+        public void ChangeFoodStatus(int itemId)
         {
-            FoodAndDrinkDAO.ChangeFoodStatus(itemId, newStatus); // Call DAO method
+            FoodAndDrinkDAO.ChangeFoodStatus(itemId); // Call DAO method
         }
 
     }
