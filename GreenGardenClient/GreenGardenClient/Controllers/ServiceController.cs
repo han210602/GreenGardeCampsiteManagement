@@ -995,6 +995,7 @@ namespace GreenGardenClient.Controllers
                     if (response.IsSuccessStatusCode)
                     {
                         HttpContext.Session.Remove("Cart");
+                        HttpContext.Session.SetInt32("CartItemCount", 0);
                         TempData["Notification"] = "Đặt hàng thành công!";
                         return RedirectToAction("OrderHistory");
                     }
@@ -1051,6 +1052,7 @@ namespace GreenGardenClient.Controllers
                     if (response.IsSuccessStatusCode)
                     {
                         HttpContext.Session.Remove("Cart");
+                        HttpContext.Session.SetInt32("CartItemCount", 0);
                         TempData["Notification"] = "Đặt hàng thành công!";
                         return RedirectToAction("Index");
                     }
