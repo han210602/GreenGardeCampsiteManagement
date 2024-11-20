@@ -455,60 +455,103 @@
             </li>
             <script>
                 document.addEventListener("DOMContentLoaded", function () {
-                    var currentUrl = window.location.pathname;
-                    var manageOrdersMenu = document.getElementById("manageOrdersMenu");
-
-                    // Kiểm tra các URL và thêm lớp selected tương ứng
-                    if (currentUrl.includes("OrderOnline")) {
-                        document.getElementById("orderOnline").classList.add("selected");
-                        manageOrdersMenu.classList.add("selected");
-                    } else if (currentUrl.includes("OrderUsing")) {
-                        document.getElementById("orderUsing").classList.add("selected");
-                        manageOrdersMenu.classList.add("selected");
-                    } else if (currentUrl.includes("OrderCheckOut")) {
-                        document.getElementById("orderCheckOut").classList.add("selected");
-                        manageOrdersMenu.classList.add("selected");
-                    } else if (currentUrl.includes("OrderCancel")) {
-                        document.getElementById("orderCancel").classList.add("selected");
-                        manageOrdersMenu.classList.add("selected");
-                    } else if (currentUrl.includes("CreateOrder")) {
-                        document.getElementById("createOrder").classList.add("selected");
-                        manageOrdersMenu.classList.add("selected");
-                    }
-                });
-                document.addEventListener("DOMContentLoaded", function () {
                     const submenu = document.getElementById("submenuList");
+                    const manageOrdersMenu = document.getElementById("manageOrdersMenu");
                     const manageOrdersButton = document.getElementById("manageOrders");
                     const submenuItems = document.querySelectorAll("#manageOrdersMenu .submenu .app-menu__item");
 
-                    // Kiểm tra URL để tự động mở submenu khi truy cập các mục cụ thể
-                    if (window.location.href.includes("OrderOnline") ||
-                        window.location.href.includes("OrderUsing") ||
-                        window.location.href.includes("OrderCheckOut") ||
-                        window.location.href.includes("OrderCancel") ||
-                        window.location.href.includes("CreateOrder")) {
-                        submenu.style.display = "block";
+                    const currentUrl = window.location.pathname;
+
+                    console.log("Current URL:", currentUrl);
+
+                    // Map submenu items with their corresponding IDs and URLs
+                    const menuMappings = {
+                        "orderOnline": "/OrderOnline",
+                        "orderUsing": "/OrderUsing",
+                        "orderCheckOut": "/OrderCheckOut",
+                        "orderCancel": "/OrderCancel",
+                        "createOrder": "/CreateOrder",
+                    };
+
+                    // Reset all submenu items before highlighting
+                    submenuItems.forEach(item => {
+                        item.classList.remove("selected");
+                        console.log("Removed 'selected' class from:", item.id);
+                    });
+
+                    // Automatically open submenu and highlight based on URL or localStorage
+                    let matched = false; // Flag to track if a match was found
+                    for (const [id, path] of Object.entries(menuMappings)) {
+                        if (currentUrl.includes(path)) {
+                            console.log(`URL match found for path: ${path} (ID: ${id})`);
+                            const activeItem = document.getElementById(id);
+                            if (activeItem) {
+                                activeItem.classList.add("selected"); // Highlight active submenu item
+                                console.log("Active submenu item set to:", id);
+                                submenu.style.display = "block"; // Keep submenu open
+                                console.log("Submenu opened.");
+                                manageOrdersMenu.classList.add("selected"); // Highlight parent menu
+                                localStorage.setItem("activeSubmenuItem", id); // Save the active submenu item
+                                console.log("Saved active submenu item to localStorage:", id);
+                            }
+                            matched = true;
+                            break;
+                        }
                     }
 
-                    // Toggle submenu khi click vào "Quản lý Đơn hàng"
+                    if (!matched) {
+                        console.log("No matching submenu item for the current URL.");
+                    }
+
+                    // Restore submenu state and active submenu item on page load
+                    const savedActiveItem = localStorage.getItem("activeSubmenuItem");
+                    console.log("Saved active item from localStorage:", savedActiveItem);
+
+                    if (!matched && savedActiveItem) {
+                        const activeItem = document.getElementById(savedActiveItem);
+                        if (activeItem) {
+                            activeItem.classList.add("selected");
+                            console.log("Restored active submenu item from localStorage:", savedActiveItem);
+                            submenu.style.display = "block";
+                            console.log("Submenu reopened based on saved state.");
+                            manageOrdersMenu.classList.add("selected");
+                        }
+                    }
+
+                    // Toggle submenu visibility only when clicking the parent menu
                     manageOrdersButton.addEventListener("click", function (event) {
-                        event.stopPropagation(); // Ngăn sự kiện lan truyền
-                        submenu.style.display = submenu.style.display === "block" ? "none" : "block";
+                        event.stopPropagation(); // Prevent event bubbling
+                        const isVisible = submenu.style.display === "block";
+                        submenu.style.display = isVisible ? "none" : "block";
+
+                        console.log(`Parent menu clicked. Submenu visibility toggled to: ${isVisible ? "hidden" : "visible"}`);
+
+                        if (!isVisible) {
+                            // Restore active state if submenu is reopened
+                            const savedItem = localStorage.getItem("activeSubmenuItem");
+                            if (savedItem) {
+                                document.getElementById(savedItem)?.classList.add("selected");
+                                console.log("Restored active submenu item on reopening:", savedItem);
+                            }
+                        }
                     });
 
-                    // Đảm bảo rằng khi click vào bất kỳ mục con nào, menu vẫn mở
+                    // Ensure submenu stays open when clicking a submenu item and save active state
                     submenuItems.forEach(item => {
                         item.addEventListener("click", function (event) {
-                            event.stopPropagation(); // Ngăn sự kiện lan truyền
-                            submenu.style.display = "block";
-                        });
-                    });
+                            submenu.style.display = "block"; // Ensure submenu stays open
+                            console.log("Submenu item clicked:", this.id);
 
-                    // Đóng menu khi click ra ngoài
-                    document.addEventListener("click", function (event) {
-                        if (!manageOrdersButton.contains(event.target) && !submenu.contains(event.target)) {
-                            submenu.style.display = "none";
-                        }
+                            // Save the clicked submenu item as active
+                            submenuItems.forEach(i => {
+                                i.classList.remove("selected"); // Remove active class from all items
+                                console.log("Removed 'selected' class from:", i.id);
+                            });
+                            this.classList.add("selected"); // Add active class to clicked item
+                            console.log("Set 'selected' class for:", this.id);
+                            localStorage.setItem("activeSubmenuItem", this.id); // Save to localStorage
+                            console.log("Saved new active submenu item to localStorage:", this.id);
+                        });
                     });
                 });
 

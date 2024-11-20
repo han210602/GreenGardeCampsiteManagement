@@ -9,6 +9,8 @@ namespace GreenGardenClient.Controllers
 {
     public class CommonController : Controller
     {
+        [BindProperty]
+        public IFormFile ProfilePictureUrl { get; set; }
         private readonly IHttpClientFactory _clientFactory;
 
         public CommonController(IHttpClientFactory clientFactory)
@@ -198,7 +200,7 @@ namespace GreenGardenClient.Controllers
         {
             try
             {
-                
+
                 if (string.IsNullOrEmpty(email))
                 {
                     ModelState.AddModelError("EmailError", "Vui lòng nhập email của bạn");
@@ -385,8 +387,28 @@ namespace GreenGardenClient.Controllers
             }
         }
         [HttpPost]
-        public async Task<IActionResult> ChangeProfile(UpdateProfile updateProfile)
+        public async Task<IActionResult> ChangeProfile(UpdateProfile updateProfile, IFormFile ProfilePictureUrl, string CurrentPictureUrl)
         {
+
+            if (ProfilePictureUrl != null)
+            {
+                // Tạo đường dẫn lưu file mới
+                string filePath = Path.Combine("wwwroot/images/Avatar", ProfilePictureUrl.FileName);
+
+                // Lưu file vào thư mục wwwroot/images
+                using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await ProfilePictureUrl.CopyToAsync(fileStream);
+                }
+
+                // Cập nhật đường dẫn hình ảnh vào model với ảnh mới
+                updateProfile.ProfilePictureUrl = ProfilePictureUrl.FileName;
+            }
+            else
+            {
+                // Sử dụng ảnh hiện tại nếu không có ảnh mới
+                updateProfile.ProfilePictureUrl = CurrentPictureUrl;
+            }
             // Retrieve the userId from the session
             var userId = HttpContext.Session.GetInt32("UserId");
 
@@ -398,11 +420,11 @@ namespace GreenGardenClient.Controllers
             }
 
             // Ensure the submitted updateProfile model is valid
-            if (!ModelState.IsValid)
-            {
-                TempData["Error"] = "Thông tin không hợp lệ.";
-                return RedirectToAction("UpdateProfile"); // Return to UpdateProfile view with an error message
-            }
+            //if (!ModelState.IsValid)
+            //    {
+            //    TempData["Error"] = "Thông tin không hợp lệ.";
+            //    return RedirectToAction("UpdateProfile"); // Return to UpdateProfile view with an error message
+            //}
 
             // Prepare the API URL for updating the profile
             string apiUrl = "https://localhost:7298/api/Account/UpdateProfile";
@@ -422,6 +444,9 @@ namespace GreenGardenClient.Controllers
                     HttpContext.Session.SetString("Fullname", updateProfile.FirstName + " " + updateProfile.LastName);
                     HttpContext.Session.SetString("Email", updateProfile.Email);
                     HttpContext.Session.SetString("NumberPhone", updateProfile.PhoneNumber);
+
+                    HttpContext.Session.SetString("Img", updateProfile.ProfilePictureUrl);
+
                     return RedirectToAction("UpdateProfile"); // Redirect to UpdateProfile after successful update
                 }
                 else
