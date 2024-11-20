@@ -3,6 +3,7 @@ using BusinessObject.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,8 +17,8 @@ namespace DataAccess.DAO
         {
             try
             {
-                var list=new List<UserDTO>();
-                var data=context.Orders.Include(o => o.Customer).Where(o=>o.CustomerId!=null&&o.Customer.IsActive==true).ToList();
+                var list = new List<UserDTO>();
+                var data = context.Orders.Include(o => o.Customer).Where(o => o.CustomerId != null && o.Customer.IsActive == true).ToList();
                 foreach (var item in data)
                 {
                     if (list.FirstOrDefault(s => s.UserId == item.CustomerId) == null)
@@ -41,7 +42,8 @@ namespace DataAccess.DAO
                     }
                 }
                 return list;
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
@@ -49,308 +51,9 @@ namespace DataAccess.DAO
 
         }
 
-        public static List<FoodAndDrinkDTO> ListFoodAndDrink()
-        {
-            throw new NotImplementedException();
-        }
-
-        public static decimal TotalAmount()
-        {
-            try
-            {
-                decimal totalamount = 0;
-                foreach (var item in context.Orders)
-                {
-                    if (item.ActivityId == 3)
-                    {
-                        totalamount +=item.TotalAmount;
-
-                    }else if (item.ActivityId == 1002)
-                    {
-                        totalamount += item.Deposit;
-                    }
-                    else if(item.ActivityId==2)
-                    {
-                        totalamount += item.Deposit;
-                    }
-                    else if(item.ActivityId==1)
-                    {
-                        totalamount += item.Deposit;
-                    }
-                }
 
 
-                return totalamount;
-            }catch (Exception ex) {
-                throw new NotImplementedException(ex.ToString());
-
-
-            }
-        }
-
-        public static decimal MoneyTotalDepositOrderOnline()
-        {
-            try
-            {
-                decimal totalamount = 0;
-                foreach (var item in context.Orders)
-                {
-                   if(item.ActivityId == 1){
-                        totalamount += item.Deposit;
-                   }
-                }
-
-
-                return totalamount;
-            }
-            catch (Exception ex)
-            {
-                throw new NotImplementedException(ex.ToString());
-
-
-            }
-        }
-        public static int TotalDepositOrderOnline()
-        {
-            try
-            {
-                int totalamount = 0;
-                foreach (var item in context.Orders)
-                {
-                    if (item.ActivityId == 1&&item.Deposit>0)
-                    {
-                        totalamount++;
-                    }
-                }
-
-
-                return totalamount;
-            }
-            catch (Exception ex)
-            {
-                throw new NotImplementedException(ex.ToString());
-
-
-            }
-        }
-
-        public static int TotalOrderOnline()
-        {
-            try
-            {
-                int totalamount = 0;
-                foreach (var item in context.Orders)
-                {
-                    if (item.ActivityId == 1)
-                    {
-                        totalamount++;
-                    }
-                }
-
-
-                return totalamount;
-            }
-            catch (Exception ex)
-            {
-                throw new NotImplementedException(ex.ToString());
-
-
-            }
-        }
-        public static decimal MoneyTotalDepositOrderCancel()
-        {
-            try
-            {
-                decimal totalamount = 0;
-                foreach (var item in context.Orders)
-                {
-                    if (item.ActivityId == 1002&&item.Deposit>0)
-                    {
-                        totalamount += item.Deposit;
-                    }
-                }
-
-
-                return totalamount;
-            }
-            catch (Exception ex)
-            {
-                throw new NotImplementedException(ex.ToString());
-
-
-            }
-        }
-        public static int TotalOrderCancel()
-        {
-            try
-            {
-                int totalamount = 0;
-                foreach (var item in context.Orders)
-                {
-                    if (item.ActivityId == 1002)
-                    {
-                        totalamount++;
-                    }
-                }
-
-
-                return totalamount;
-            }
-            catch (Exception ex)
-            {
-                throw new NotImplementedException(ex.ToString());
-
-
-            }
-        }
-        public static int TotalDepositOrderCancel()
-        {
-            try
-            {
-                int totalamount = 0;
-                foreach (var item in context.Orders)
-                {
-                    if (item.ActivityId == 1002&&item.Deposit>0)
-                    {
-                        totalamount++;
-                    }
-                }
-
-
-                return totalamount;
-            }
-            catch (Exception ex)
-            {
-                throw new NotImplementedException(ex.ToString());
-
-
-            }
-        }
-        public static int TotalOrderCheckout()
-        {
-            try
-            {
-                int totalamount = 0;
-                foreach (var item in context.Orders)
-                {
-                    if (item.ActivityId == 3)
-                    {
-                        totalamount++;
-                    }
-                }
-
-
-                return totalamount;
-            }
-            catch (Exception ex)
-            {
-                throw new NotImplementedException(ex.ToString());
-
-
-            }
-        }
-        public static decimal MoneyTotalOrderCheckout()
-        {
-            try
-            {
-                decimal totalamount = 0;
-                foreach (var item in context.Orders)
-                {
-                    if (item.ActivityId == 3)
-                    {
-                        totalamount += item.TotalAmount;
-                    }
-                }
-
-
-                return totalamount;
-            }
-            catch (Exception ex)
-            {
-                throw new NotImplementedException(ex.ToString());
-
-
-            }
-        }
-
-        public static int TotalOrderUsing()
-        {
-            try
-            {
-                int totalamount = 0;
-                foreach (var item in context.Orders)
-                {
-                    if (item.ActivityId == 2)
-                    {
-                        totalamount++;
-                    }
-                }
-
-
-                return totalamount;
-            }
-            catch (Exception ex)
-            {
-                throw new NotImplementedException(ex.ToString());
-
-
-            }
-        }
-        public static int TotalEmployee()
-        {
-            throw new NotImplementedException();
-        }
-
-        public static int TotalDepositOrderUsing()
-        {
-
-            try
-            {
-                int totalamount = 0;
-                foreach (var item in context.Orders)
-                {
-                    if (item.ActivityId == 2&&item.Deposit>0)
-                    {
-                        totalamount++;
-                    }
-                }
-
-
-                return totalamount;
-            }
-            catch (Exception ex)
-            {
-                throw new NotImplementedException(ex.ToString());
-
-
-            }
-
-        }
-        public static decimal MoneyTotalDepositOrderUsing()
-        {
-            try
-            {
-                decimal totalamount = 0;
-                foreach (var item in context.Orders)
-                {
-                    if (item.ActivityId == 2&&item.Deposit>0)
-                    {
-                        totalamount += item.Deposit;
-                    }
-                }
-
-
-                return totalamount;
-            }
-            catch (Exception ex)
-            {
-                throw new NotImplementedException(ex.ToString());
-
-
-            }
-        }
-
-        public static ProfitDTO Profit(int datetime)
+        public static ProfitDTO Profit(string datetime)
         {
             try
             {
@@ -366,7 +69,7 @@ namespace DataAccess.DAO
                 decimal MoneyTotalDepositOrderUsing = 0;
                 int TotalOrderCheckout = 0;
                 decimal MoneyTotalAmountOrderCheckout = 0;
-                if (datetime==0)
+                if (datetime.Equals("0"))
                 {
                     foreach (var item in context.Orders)
                     {
@@ -375,7 +78,6 @@ namespace DataAccess.DAO
                             TotalAmount += item.TotalAmount;
                             MoneyTotalAmountOrderCheckout += item.TotalAmount;
                             TotalOrderCheckout++;
-
                         }
                         else if (item.ActivityId == 1002)
                         {
@@ -407,17 +109,21 @@ namespace DataAccess.DAO
                                 MoneyTotalDepositOrderOnline += item.Deposit;
                             }
                         }
-                       
+
                     }
 
                 }
                 else
                 {
-                    foreach (var item in context.Orders.Where(s=>
-                     (s.OrderDate.Value.Month==datetime&&s.OrderDate.Value.Year==DateTime.Now.Year)
-                    ||(s.OrderCheckoutDate.Value.Month==datetime && s.OrderCheckoutDate.Value.Year == DateTime.Now.Year)
-                    ||(s.OrderUsageDate.Value.Month==datetime && s.OrderUsageDate.Value.Year == DateTime.Now.Year))
-                    )
+                    DateTime targetDate = DateTime.ParseExact(datetime, "yyyy-MM", CultureInfo.InvariantCulture);
+
+                    // Filter orders directly using Year and Month comparison
+                    var list = context.Orders.Where(s =>
+                        (s.OrderDate.HasValue && s.OrderDate.Value.Year == targetDate.Year && s.OrderDate.Value.Month == targetDate.Month) ||
+                        (s.OrderCheckoutDate.HasValue && s.OrderCheckoutDate.Value.Year == targetDate.Year && s.OrderCheckoutDate.Value.Month == targetDate.Month) ||
+                        (s.OrderUsageDate.HasValue && s.OrderUsageDate.Value.Year == targetDate.Year && s.OrderUsageDate.Value.Month == targetDate.Month))
+                        .ToList();
+                    foreach (var item in list)
                     {
                         if (item.ActivityId == 3)
                         {
@@ -467,13 +173,13 @@ namespace DataAccess.DAO
                     TotalAmount = TotalAmount,
                     TotalOrderOnline = TotalOrderOnline,
                     TotalDepositOrderOnline = TotalDepositOrderOnline,
-                    MoneyTotalDepositOrderOnline = MoneyTotalDepositOrderOnline, 
+                    MoneyTotalDepositOrderOnline = MoneyTotalDepositOrderOnline,
                     TotalOrderCancel = TotalOrderCancel,
                     TotalDepositOrderCancel = TotalDepositOrderCancel,
                     MoneyTotalDepositOrderCancel = MoneyTotalDepositOrderCancel,
                     TotalOrderUsing = TotalOrderUsing,
                     TotalDepositOrderUsing = TotalDepositOrderUsing,
-                    MoneyTotalDepositOrderUsing = MoneyTotalDepositOrderUsing                   ,
+                    MoneyTotalDepositOrderUsing = MoneyTotalDepositOrderUsing,
                     TotalOrderCheckout = TotalOrderCheckout,
                     MoneyTotalAmountOrderCheckout = MoneyTotalAmountOrderCheckout,
 
@@ -486,6 +192,7 @@ namespace DataAccess.DAO
 
 
             }
-        }    
+        }
+
     }
 }

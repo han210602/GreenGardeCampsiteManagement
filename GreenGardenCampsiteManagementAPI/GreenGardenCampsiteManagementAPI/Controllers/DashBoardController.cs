@@ -17,13 +17,14 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
             _repo = repo;
         }
         [HttpGet("GetProfit/{Month}")]
-        public IActionResult GetProfit(int Month)
+        public IActionResult GetProfit(string Month)
         {
-            try { 
-           
-                
+            try
+            {
+
+
                 return Ok(_repo.Profit(Month));
-                }
+            }
             catch (Exception ex)
             {
                 return StatusCode(500, $"Internal server error: {ex.Message}");
@@ -33,8 +34,9 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
         [HttpGet("GetListCustomer")]
         public IActionResult GetListCustomer()
         {
-             try { 
-            
+            try
+            {
+
                 return Ok(_repo.ListCustomer());
             }
             catch (Exception ex)
