@@ -53,8 +53,7 @@
                     <div class="col-3 ">
                         <div class="site-logo">
                             <a href="~/Home" class="font-weight-bold">
-
-                                <img src="~/images/logo.jpg" alt="Image" class="img-fluid">
+                                <img src="~/images/newlogo.jpg" alt="Image" class="img-fluid" style="width: 55%; height: auto;">
                             </a>
                         </div>
                     </div>
@@ -100,6 +99,7 @@
                                         </a>
 
 
+
                                         <ul class="dropdown">
                                                 @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 1)
                                                 {
@@ -115,7 +115,7 @@
                                                 {
 
                                                 <li><a href="~/Service/OrderHistory" class="nav-link">Lịch sử đặt hàng</a></li>
-                                                <li class="active"><a href="~/Service/Cart" class="nav-link">Giỏ hàng</a></li>
+                                                <li><a href="~/Service/Cart" class="nav-link">Giỏ hàng</a></li>
                                                 <li><a href="~/Home/Logout" class="nav-link">Đăng xuất</a></li>
 
                                                 }
@@ -145,6 +145,7 @@
                                         </a>
                                     </li>
                                 }
+
                             </ul>
                         </nav>
                     </div>
@@ -370,7 +371,7 @@
                                             +
                                         </button>
 
-                                        <button class="btn btn-danger ml-2" onclick="removeCartItem(@item.Id, '@item.Type', '@item.TypeCategory')">Xóa</button>
+                                        <button onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?')" class="btn btn-danger ml-2" onclick="removeCartItem(@item.Id, '@item.Type', '@item.TypeCategory')">Xóa</button>
                                     </div>
 
                                 </div>

@@ -841,7 +841,7 @@
                                 </button>
 
                                 <!-- Delete Button -->
-                                <a class="btn-delete" href="javascript:void(0);" onclick="confirmDelete('@eventItem.EventId')" style="display: inline;">
+                                <a class="btn-delete" href="javascript:void(0);" onclick="confirmDelete('@eventItem.EventId')" onclick="return confirm('Bạn có chắc chắn muốn thay đổi không?')" style="display: inline;">
                                     <i class="fas fa-trash"></i> Xóa
                                 </a>
                           
