@@ -292,25 +292,29 @@
                             <h2 class="text-center mb-4">Đăng Nhập</h2>
                             <div class="form-group">
                                 <label for="email">Email:</label>
-                                <input type="email" class="form-control" id="email" name="email" placeholder="Nhập email của bạn" required value="@ViewBag.email">
-
+                                <input type="text" class="form-control" id="email" name="email" placeholder="Nhập email của bạn" value="@ViewBag.email">
+                                @if (ViewData.ModelState["EmailError"]?.Errors.Count > 0)
+                                {
+                                    <span class="text-danger">
+                                        @ViewData.ModelState["EmailError"]?.Errors[0]?.ErrorMessage
+                                    </span>
+                                }
                             </div>
+
                             <div class="form-group">
                                 <label for="password">Mật khẩu:</label>
                                 <div class="password-container">
-                                    <input type="password" class="form-control" id="password" name="password" placeholder="Nhập mật khẩu" required value="@ViewBag.pass">
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Nhập mật khẩu" value="@ViewBag.pass">
                                     <i id="togglePassword" class="fas fa-eye-slash"></i>
                                 </div>
+                                @if (ViewData.ModelState["PasswordError"]?.Errors.Count > 0)
+                                {
+                                    <span class="text-danger">
+                                        @ViewData.ModelState["PasswordError"]?.Errors[0]?.ErrorMessage
+                                    </span>
+                                }
                             </div>
-                            @if (ViewData.ModelState != null && ViewData.ModelState.ErrorCount > 0)
-                            {
-                                <div class="text-danger mb-3">
-                                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
-                                    {
-                                        <p>@error.ErrorMessage</p>
-                                    }
-                                </div>
-                            }
+
                             <button type="submit" class="btn btn-primary btn-block">Đăng Nhập</button>
                             <p class="text-center mt-3"><a href="/Common/ResetPassword" class="text-muted">Quên mật khẩu?</a></p>
                             <p class="text-center">Chưa có tài khoản? <a href="/Common/Register">Đăng ký</a></p>

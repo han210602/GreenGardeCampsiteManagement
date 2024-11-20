@@ -325,7 +325,7 @@
                             <div class="text-danger mb-3">
 
                                 <p>@ViewBag.error</p>
-
+                                <p>@ViewBag.errorp</p>
                             </div>
 
                             <!-- Nút đăng ký -->
@@ -342,26 +342,10 @@
 
         <script>
             function validatePassword() {
-                const password = document.getElementById('password').value;
-                const confirmPassword = document.getElementById('confirmPassword').value;
-
-                // Kiểm tra xem hàm validatePassword có đang được chạy không
-                console.log("validatePassword() function is running");
-
-                if (password !== confirmPassword) {
-                    const errorElement = document.getElementById('passwordError');
-                    errorElement.style.display = 'block';
-                    console.log("Passwords do not match. Showing error message.");
-
-                    // Ẩn thông báo sau 2-3 giây
-                    setTimeout(() => {
-                        errorElement.style.display = 'none';
-                        console.log("Hiding error message after 3 seconds.");
-                    }, 3000); // 3000 milliseconds = 3 giây
-                } else {
+                
                     // Nếu mật khẩu khớp, submit form
                     document.getElementById('registerForm').submit();
-                }
+                
             }
             document.addEventListener("DOMContentLoaded", function () {
                 const verificationError = document.getElementById("verificationError");

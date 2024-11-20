@@ -320,7 +320,6 @@
 <body onload="time()" class="app sidebar-mini rtl">
     <header class="app-header" style="display: flex; align-items: center; padding: 0 15px; background-color: #f6f5f5 !important;">
         <!-- Sidebar Toggle -->
-        
         <!-- Centered Logo -->
         <div style="flex: 500; display: flex; justify-content: center; align-items: center; padding-left: 50px;">
             <img src="~/images/newlogo.jpg" alt="Logo" style="height: auto; width: 55%; max-width: 120px;margin-top: 10px;">
@@ -356,16 +355,16 @@
 
         <div class="app-sidebar__user">
 
-                        @if (@HttpContextAccessor.HttpContext.Session.GetString("Img") == null)
-                                                {
+            @if (@HttpContextAccessor.HttpContext.Session.GetString("Img") == null)
+            {
 
                 <img src="~/images/p22.jpg" alt="Trang cá nhân" class="app-sidebar__user-avatar" width="50px">
 
             }
-                                                else
-                                                {
+            else
+            {
                 <img src="~/images/Avatar/@HttpContextAccessor.HttpContext.Session.GetString("Img")" alt="Trang cá nhân" class="app-sidebar__user-avatar" src="~/images/img_1.jpg" width="50px">
-                                                }
+            }
 
             <div>
                 <p class="app-sidebar__user-designation">Xin chào</p>
@@ -547,8 +546,8 @@
                 </a>
             </li>
 
-       
-          
+
+
             <li>
                 <a class="app-menu__item" href="~/EventManagement/Index">
                     <i class='app-menu__icon bx bx-calendar-event'></i>
@@ -586,26 +585,26 @@
             </div>
         </div>
         <style>
-    .revenue-container {
-        border-radius: 8px; /* Bo tròn góc */
-        padding: 20px;
-        background-color: #f9f9f9; /* Nền sáng */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
-    }
+            .revenue-container {
+                border-radius: 8px; /* Bo tròn góc */
+                padding: 20px;
+                background-color: #f9f9f9; /* Nền sáng */
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+            }
 
-    .total-amount {
-        font-size: 2.5rem; /* Tăng kích thước chữ */
-        font-weight: bold; /* Chữ đậm */
-        color: #28a745; /* Màu xanh lá cây */
-    }
+            .total-amount {
+                font-size: 2.5rem; /* Tăng kích thước chữ */
+                font-weight: bold; /* Chữ đậm */
+                color: #28a745; /* Màu xanh lá cây */
+            }
 
-    .chart-container {
-        border-radius: 8px; /* Bo tròn góc */
-        padding: 20px;
-        background-color: #ffffff; /* Nền trắng */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
-    }
-</style>
+            .chart-container {
+                border-radius: 8px; /* Bo tròn góc */
+                padding: 20px;
+                background-color: #ffffff; /* Nền trắng */
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+            }
+        </style>
 
         <style>
             /* Tùy chỉnh widget */
@@ -633,7 +632,7 @@
                 }
 
                 .widget-small.warning {
-                    background-color: #dc3545 ;
+                    background-color: #dc3545;
                     color: #212529;
                 }
 
@@ -671,16 +670,43 @@
             <!-- Phần bên trái: Tổng doanh thu và các widget -->
             <div class="col-md-6">
                 <!-- Tổng doanh thu -->
-                <div class="revenue-container">
-                    <form>
-                        <label for="monthYear">Chọn tháng và năm:</label>
-                        <input type="month" id="monthYear" name="monthYear">
+                <div class="revenue-container p-3 bg-light rounded">
+                    <form id="monthForm" asp-controller="DashBoard" asp-action="Index" method="get" class="row g-3 align-items-center">
+                        <div class="col-auto">
+                            <label for="monthYear" class="col-form-label fw-bold">Chọn tháng và năm:</label>
+                        </div>
+                        <div class="col-auto">
+                            <input type="month"
+                                   id="monthYear"
+                                   name="datetime"
+                                   onchange="validateAndSubmit(this)"
+                                   value="@ViewBag.datetime"
+                                   class="form-control form-control-sm">
+                        </div>
+                        <div class="col-auto">
+                            <a asp-controller="DashBoard" asp-action="Index" asp-route-datetime="0" class="btn btn-primary btn-sm">
+                                Tất cả
+                            </a>
+                        </div>
                     </form>
-                    <h3>Tổng doanh thu</h3>
-                    <p class="total-amount">
+
+
+                    <script>
+                        function validateAndSubmit(input) {
+                            if (input.value) { // Check if a value is selected
+                                input.form.submit();
+                            } else {
+                                alert('Vui lòng chọn tháng và năm!');
+                            }
+                        }
+                    </script>
+                    <hr>
+                    <h3 class="text-primary">Tổng doanh thu:</h3>
+                    <p class="total-amount fs-4 fw-bold text-success">
                         @Model.TotalAmount.ToString("C0", System.Globalization.CultureInfo.GetCultureInfo("vi-VN"))
                     </p>
                 </div>
+
 
                 <!-- Widget -->
                 <div class="row">
@@ -762,7 +788,7 @@
             @Model.MoneyTotalDepositOrderUsing,
             @Model.MoneyTotalDepositOrderCancel,
             @Model.MoneyTotalAmountOrderCheckout
-                            ],
+                                        ],
                         backgroundColor: [
                             'rgba(75, 192, 192, 0.6)', // Màu các cột
                             'rgba(54, 162, 235, 0.6)',
@@ -796,7 +822,7 @@
         </script>
 
 
-        
+
         <div class="row" style="margin-top: 20px">
             <div class="col-md-12">
                 <div class="tile">
@@ -835,18 +861,18 @@
                                         <td>@account.PhoneNumber</td>
 
                                         <td>
-                                            @(account.DateOfBirth!=null ? account.DateOfBirth.Value.ToString("dd/MM/yyyy") : "")
+                                            @(account.DateOfBirth != null ? account.DateOfBirth.Value.ToString("dd/MM/yyyy") : "")
 
                                         </td>
 
                                         <td>@(account.Gender?.Trim().ToLower() == "male" ? "Nam" : account.Gender?.Trim().ToLower() == "female" ? "Nữ" : "Khác")</td>
 
 
-                                        
 
 
 
-                                     </tr>
+
+                                    </tr>
                                     a++;
                                 }
 
@@ -857,161 +883,65 @@
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-md-12">
                 <div class="tile">
                     <div>
-                        <h3 class="tile-title">TỔNG ĐƠN HÀNG</h3>
+                        <h3 class="tile-title">Sự kiện trong tháng</h3>
                     </div>
-                    <div class="tile-body">
-                        <table class="table table-hover table-bordered" id="sampleTable">
-                            <thead>
-                                <tr>
-                                    <th>ID đơn hàng</th>
-                                    <th>Khách hàng</th>
-                                    <th>Đơn hàng</th>
-                                    <th>Số lượng</th>
-                                    <th>Tổng tiền</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>MD0837</td>
-                                    <td>Triệu Thanh Phú</td>
-                                    <td>Ghế làm việc Zuno, Bàn ăn gỗ Theresa</td>
-                                    <td>2 sản phẩm</td>
-                                    <td>9.400.000 đ</td>
-                                </tr>
-                                <tr>
-                                    <td>MĐ8265</td>
-                                    <td>Nguyễn Thị Ngọc Cẩm</td>
-                                    <td>Ghế ăn gỗ Lucy màu trắng</td>
-                                    <td>1 sản phẩm</td>
-                                    <td>3.800.000 đ</td>
-                                </tr>
-                                <tr>
-                                    <td>MT9835</td>
-                                    <td>Đặng Hoàng Phúc</td>
-                                    <td>Giường ngủ Jimmy, Bàn ăn mở rộng cao cấp Dolas, Ghế làm việc Zuno</td>
-                                    <td>3 sản phẩm</td>
-                                    <td>40.650.000 đ</td>
-                                </tr>
-                                <tr>
-                                    <td>ER3835</td>
-                                    <td>Nguyễn Thị Mỹ Yến</td>
-                                    <td>Bàn ăn mở rộng Gepa</td>
-                                    <td>1 sản phẩm</td>
-                                    <td>16.770.000 đ</td>
-                                </tr>
-                                <tr>
-                                    <td>AL3947</td>
-                                    <td>Phạm Thị Ngọc</td>
-                                    <td>Bàn ăn Vitali mặt đá, Ghế ăn gỗ Lucy màu trắng</td>
-                                    <td>2 sản phẩm</td>
-                                    <td>19.770.000 đ</td>
-                                </tr>
-                                <tr>
-                                    <td>QY8723</td>
-                                    <td>Ngô Thái An</td>
-                                    <td>Giường ngủ Kara 1.6x2m</td>
-                                    <td>1 sản phẩm</td>
-                                    <td>14.500.000 đ</td>
-                                </tr>
-                                <tr>
-                                    <th colspan="4">Tổng cộng:</th>
-                                    <td>104.890.000 đ</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <!-- Top Bar with Search -->
+                    <!-- Event Cards -->
+                    <div class="row">
+                        @foreach (var eventItem in ViewBag.listevent)
+                        {
+                            <div class="event-card col-md-4">
+                                <div class="d-flex">
+                                    <!-- Event Image on the Left -->
+                                    <div class="event-image mr-3">
+                                        <img src="/images/@eventItem.PictureUrl" alt="Event Image" class="event-thumbnail">
+                                    </div>
+
+                                    <!-- Event Details on the Right -->
+                                    <div class="event-details">
+                                        <strong>
+                                            <i class="fas fa-calendar-day mr-1" style="color: #007bff;"></i> @eventItem.EventName
+                                        </strong><br>
+                                        <span>
+                                            <i class="fas fa-clock" style="color: #28a745; margin-right: 5px;"></i>
+                                            @eventItem.StartTime - @eventItem.EndTime
+                                        </span><br>
+                                        <span>
+                                            <!-- Calendar icon with event date -->
+                                            <i class="fas fa-calendar-alt mr-1" style="color: #ffc107;"></i> Từ @eventItem.EventDate.ToString("dd/MM/yyyy")
+                                        </span><br>
+
+                                        <span>
+                                            <i class="fas fa-map-marker-alt mr-1" style="color: #17a2b8;"></i> @eventItem.Location
+                                        </span><br>
+
+                                        <span class="stats-link">
+                                            <i class="fas fa-info-circle mr-1" style="color: #6c757d;"></i>
+                                            <a href="@Url.Action("UpdateEvent", "EventManagement", new { id = @eventItem.EventId })" style="text-decoration: none; color: inherit;">
+                                                (Chi tiết)
+                                            </a>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div id="pagination" class="dataTables_paginate paging_simple_numbers">
+                        <ul class="pagination">
+                            <li class="paginate_button page-item previous disabled" id="prev-page"><a href="#" class="page-link">Lùi</a></li>
+                            <!-- Các nút số trang sẽ được tạo tự động -->
+                            <li class="paginate_button page-item next" id="next-page"><a href="#" class="page-link">Tiếp</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="tile">
-                    <div>
-                        <h3 class="tile-title">SẢN PHẨM ĐÃ HẾT</h3>
-                    </div>
-                    <div class="tile-body">
-                        <table class="table table-hover table-bordered" id="sampleTable">
-                            <thead>
-                                <tr>
-                                    <th>Mã sản phẩm</th>
-                                    <th>Tên sản phẩm</th>
-                                    <th>Ảnh</th>
-                                    <th>Số lượng</th>
-                                    <th>Tình trạng</th>
-                                    <th>Giá tiền</th>
-                                    <th>Danh mục</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>83826226</td>
-                                    <td>Tủ ly - tủ bát</td>
-                                    <td><img src="/img-sanpham/tu.jpg" alt="" width="100px;"></td>
-                                    <td>0</td>
-                                    <td><span class="badge bg-danger">Hết hàng</span></td>
-                                    <td>2.450.000 đ</td>
-                                    <td>Tủ</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="tile">
-                    <div>
-                        <h3 class="tile-title">NHÂN VIÊN MỚI</h3>
-                    </div>
-                    <div class="tile-body">
-                        <table class="table table-hover table-bordered" id="sampleTable">
-                            <thead>
-                                <tr>
-                                    <th>Họ và tên</th>
-                                    <th>Địa chỉ</th>
-                                    <th>Ngày sinh</th>
-                                    <th>Giới tính</th>
-                                    <th>SĐT</th>
-                                    <th>Chức vụ</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Hồ Thị Thanh Ngân</td>
-                                    <td>155-157 Trần Quốc Thảo, Quận 3, Hồ Chí Minh </td>
-                                    <td>12/02/1999</td>
-                                    <td>Nữ</td>
-                                    <td>0926737168</td>
-                                    <td>Bán hàng</td>
-                                </tr>
-                                <tr>
-                                    <td>Trần Khả Ái</td>
-                                    <td>6 Nguyễn Lương Bằng, Tân Phú, Quận 7, Hồ Chí Minh</td>
-                                    <td>22/12/1999</td>
-                                    <td>Nữ</td>
-                                    <td>0931342432</td>
-                                    <td>Bán hàng</td>
-                                </tr>
-                                <tr>
-                                    <td>Nguyễn Đặng Trọng Nhân</td>
-                                    <td>59C Nguyễn Đình Chiểu, Quận 3, Hồ Chí Minh </td>
-                                    <td>23/07/1996</td>
-                                    <td>Nam</td>
-                                    <td>0846881155</td>
-                                    <td>Dịch vụ</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
+
 
     </main>
     <script>
@@ -1088,6 +1018,122 @@
         }
         ;
     </script>
+    <script>
+        $(document).ready(function () {
+            var itemsPerPage = 6; // Số sản phẩm hiển thị trên mỗi trang
+            var currentPage = 1;  // Trang hiện tại
+            var totalItems = $('.event-card').length; // Tổng số sản phẩm ban đầu
+            var totalPages = Math.ceil(totalItems / itemsPerPage); // Tổng số trang ban đầu
+
+            // Hàm hiển thị sản phẩm cho trang hiện tại
+            function showPage(page, items) {
+                // Ẩn tất cả sản phẩm
+                $('.event-card').hide();
+
+                // Tính toán sản phẩm bắt đầu và kết thúc cho trang hiện tại
+                var startItem = (page - 1) * itemsPerPage;
+                var endItem = Math.min(startItem + itemsPerPage, items.length); // Đảm bảo không vượt quá số lượng sản phẩm
+
+                // Hiển thị sản phẩm của trang hiện tại
+                items.slice(startItem, endItem).show();
+
+                // Cập nhật nút phân trang
+                $('#pagination .page-item').removeClass('active');
+                $('#pagination .page-item[data-page="' + page + '"]').addClass('active');
+
+                // Kiểm tra trạng thái nút Lùi và Tiếp
+                if (page === 1) {
+                    $('#prev-page').addClass('disabled');
+                } else {
+                    $('#prev-page').removeClass('disabled');
+                }
+
+                if (page === Math.ceil(items.length / itemsPerPage)) {
+                    $('#next-page').addClass('disabled');
+                } else {
+                    $('#next-page').removeClass('disabled');
+                }
+            }
+
+            // Hàm cập nhật nút phân trang
+            function updatePagination(totalItems) {
+                $('#pagination').find('.page-item:not(#prev-page, #next-page)').remove(); // Xóa các nút trang cũ
+                var totalPages = Math.ceil(totalItems / itemsPerPage); // Tính lại tổng số trang
+
+                // Tạo các nút phân trang
+                for (var i = 1; i <= totalPages; i++) {
+                    $('<li class="paginate_button page-item" data-page="' + i + '"><a href="#" class="page-link">' + i + '</a></li>').insertBefore('#next-page');
+                }
+            }
+
+            // Xử lý sự kiện tìm kiếm
+            $('#searchInput').on('keyup', function () {
+                var searchValue = $(this).val().toLowerCase();
+
+                // Lọc sản phẩm dựa trên giá trị tìm kiếm
+                var filteredItems = $('.event-card').filter(function () {
+                    return $(this).text().toLowerCase().indexOf(searchValue) > -1;
+                });
+
+                if (filteredItems.length > 0) {
+                    // Nếu có tìm kiếm và kết quả tìm thấy
+                    updatePagination(filteredItems.length); // Cập nhật lại phân trang dựa trên số lượng kết quả
+                    currentPage = 1; // Đặt lại trang hiện tại về 1
+                    showPage(currentPage, filteredItems); // Hiển thị sản phẩm sau khi tìm kiếm
+                } else {
+                    // Nếu không có kết quả tìm kiếm, ẩn toàn bộ sản phẩm và làm trống phân trang
+                    $('.event-card').hide();
+                    $('#pagination').find('.page-item:not(#prev-page, #next-page)').remove(); // Xóa các nút trang
+                }
+            });
+
+            // Xử lý sự kiện khi bấm vào các nút số trang
+            $('#pagination').on('click', '.page-item', function (e) {
+                e.preventDefault();
+                var page = $(this).data('page');
+                if (page) {
+                    currentPage = page;
+                    var items = $('#searchInput').val() ? $('.event-card').filter(function () {
+                        return $(this).text().toLowerCase().indexOf($('#searchInput').val().toLowerCase()) > -1;
+                    }) : $('.event-card');
+                    showPage(currentPage, items);
+                }
+            });
+
+            // Xử lý sự kiện khi bấm vào nút Lùi
+            $('#prev-page').click(function (e) {
+                e.preventDefault();
+                if (currentPage > 1) {
+                    currentPage--;
+                    var items = $('#searchInput').val() ? $('.event-card').filter(function () {
+                        return $(this).text().toLowerCase().indexOf($('#searchInput').val().toLowerCase()) > -1;
+                    }) : $('event-card');
+                    showPage(currentPage, items);
+                }
+            });
+
+            // Xử lý sự kiện khi bấm vào nút Tiếp
+            $('#next-page').click(function (e) {
+                e.preventDefault();
+                var items = $('#searchInput').val() ? $('.event-card').filter(function () {
+                    return $(this).text().toLowerCase().indexOf($('#searchInput').val().toLowerCase()) > -1;
+                }) : $('.event-card');
+                var totalItems = items.length;
+                var totalPages = Math.ceil(totalItems / itemsPerPage);
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    showPage(currentPage, items);
+                }
+            });
+
+            // Hiển thị trang đầu tiên khi tải trang
+            updatePagination(totalItems); // Khởi tạo nút phân trang ban đầu
+            showPage(currentPage, $('.event-card')); // Hiển thị sản phẩm ban đầu
+        });
+
+
+    </script>
+
 </body>
 
 </html>

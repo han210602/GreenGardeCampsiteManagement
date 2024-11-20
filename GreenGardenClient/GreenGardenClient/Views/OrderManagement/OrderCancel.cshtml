@@ -4,39 +4,7 @@
 @using GreenGardenClient.Models
 
 
-@{
-    if (ViewBag.Notification != null)
-    {
-        <div id="notification" class="alert alert-warning" role="alert">
-            @ViewBag.Notification
-        </div>
-    }
-}
-<style>
-    #notification {
-        position: fixed;
-        top: 20px; /* Khoảng cách từ đầu trang */
-        right: 20px; /* Khoảng cách từ bên phải */
-        z-index: 1050; /* Đảm bảo thông báo nằm trên các phần tử khác */
-        opacity: 1; /* Bắt đầu với độ mờ là 1 */
-        transition: opacity 1s ease-out, transform 1s ease-out; /* Hiệu ứng chuyển đổi cho độ mờ và biến đổi */
-        transform: translateY(-10px); /* Đưa thông báo lên một chút */
-        width: auto; /* Hoặc thay đổi thành một giá trị cụ thể, ví dụ: 300px */
-        max-width: 300px; /* Giới hạn chiều rộng tối đa */
-        padding: 15px; /* Khoảng cách bên trong cho thông báo */
-    }
-</style>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function () {
-        if ($("#notification").length) {
-            setTimeout(function () {
-                $("#notification").css("opacity", "0"); // Đặt độ mờ thành 0
-                $("#notification").css("transform", "translateY(10px)"); // Đưa thông báo xuống một chút khi ẩn
-            }, 3000); // Sau 3 giây
-        }
-    });
-</script>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -381,7 +349,73 @@
         </ul>
 
     </header>
+    @{
+        if (ViewBag.NotificationSuccess != null)
+        {
+            <div id="notification-success" class="notification alert alert-success" role="alert">
+                <i class="fas fa-bell"></i> <!-- Bell Icon -->
+                @ViewBag.NotificationSuccess
+            </div>
+        }
+    }
+    @{
+        if (ViewBag.NotificationError != null)
+        {
+            <div id="notification-success" class="notification alert alert-danger" role="alert">
+                <i class="fas fa-bell"></i> <!-- Bell Icon -->
+                @ViewBag.NotificationError
+            </div>
+        }
+    }
+    <style>
+        .notification {
+            position: fixed;
+            top: 20px; /* Distance from the top */
+            right: -350px; /* Start outside the viewport */
+            z-index: 1050; /* Ensure it appears above other elements */
+            opacity: 1; /* Fully visible initially */
+            transition: transform 0.5s ease-out, opacity 1s ease-out; /* Smooth slide and fade effects */
+            max-width: 300px; /* Restrict maximum width */
+            padding: 15px; /* Padding inside the notification */
+            border-radius: 5px; /* Rounded corners */
+        }
 
+        /* Success notification styles */
+        .alert-success {
+            background-color: #d4edda; /* Light green background */
+            color: #155724; /* Dark green text */
+            border: 1px solid #c3e6cb; /* Green border */
+        }
+
+        /* Error notification styles */
+        .alert-danger {
+            background-color: #f8d7da; /* Light red background */
+            color: #721c24; /* Dark red text */
+            border: 1px solid #f5c6cb; /* Red border */
+        }
+    </style>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            function showAndHideNotification(selector) {
+                if ($(selector).length) {
+                    // Slide notification into view
+                    $(selector).css("transform", "translateX(-350px)"); // Slide in
+                    setTimeout(function () {
+                        // Slide notification back out after 5 seconds
+                        $(selector).css("transform", "translateX(0)"); // Slide out
+                        $(selector).css("opacity", "0"); // Optional fade-out effect
+                    }, 5000); // Display for 5 seconds before sliding out
+                }
+            }
+
+            // Show success and error notifications
+            showAndHideNotification("#notification-success");
+            showAndHideNotification("#notification-error");
+        });
+    </script>
     <!-- Sidebar menu-->
     <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
     <aside class="app-sidebar">

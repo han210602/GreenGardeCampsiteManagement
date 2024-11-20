@@ -32,6 +32,22 @@ namespace GreenGardenClient.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(string email, string password)
         {
+            var emailRegex = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+            if (string.IsNullOrEmpty(email))
+            {
+                ModelState.AddModelError("EmailError", "Vui lòng nhập email của bạn");
+
+            }
+            else if (!Regex.IsMatch(email, emailRegex))
+            {
+                ModelState.AddModelError("EmailError", "Sai địng dạng email");
+            }
+            if (string.IsNullOrEmpty(password))
+            {
+                ModelState.AddModelError("PasswordError", "Vui lòng nhập mật khẩu của bạn");
+
+            }
+
             var client = _clientFactory.CreateClient();
 
             string apiUrl = "https://localhost:7298/api/Account/Login";
@@ -77,8 +93,7 @@ namespace GreenGardenClient.Controllers
                 }
                 else
                 {
-                    var errorResponse = await response.Content.ReadAsStringAsync();
-                    ModelState.AddModelError("", $"{errorResponse}");
+                    ModelState.AddModelError("PasswordError", "Email hoặc mật khẩu của bị sai. Vui lòng nhập lại");
                 }
 
             }
@@ -88,7 +103,7 @@ namespace GreenGardenClient.Controllers
             }
             ViewBag.email = email;
             ViewBag.pass = password;
-            return View();
+            return View(new Login { Email = email, Password = password });
         }
         [HttpGet]
 
@@ -142,7 +157,7 @@ namespace GreenGardenClient.Controllers
 
                 return View(model);
             }
-
+            
 
 
             // API endpoint with verification code included as a query parameter
@@ -200,6 +215,11 @@ namespace GreenGardenClient.Controllers
         {
             try
             {
+                var userId = HttpContext.Session.GetInt32("UserId");
+                if (!userId.HasValue)
+                {
+                    return RedirectToAction("Error");
+                }
 
                 if (string.IsNullOrEmpty(email))
                 {
@@ -247,8 +267,7 @@ namespace GreenGardenClient.Controllers
             var userId = HttpContext.Session.GetInt32("UserId");
             if (!userId.HasValue)
             {
-                TempData["Error"] = "Không tìm thấy người dùng.";
-                return RedirectToAction("ChangePassword");
+                return RedirectToAction("Error");
             }
             var oldPassword = HttpContext.Session.GetString("Password");
             if (oldPassword == null || oldPassword != model.OldPassword)
@@ -356,8 +375,7 @@ namespace GreenGardenClient.Controllers
             // Check if userId is available; if not, redirect to login
             if (userId == null)
             {
-                TempData["ErrorMessage"] = "Vui lòng đăng nhập để cập nhật hồ sơ.";
-                return RedirectToAction("Login", "Common");
+                return RedirectToAction("Error");
             }
 
             string apiUrl = $"https://localhost:7298/api/Account/GetAccountById?id={userId}";
@@ -415,8 +433,7 @@ namespace GreenGardenClient.Controllers
             // Check if userId is available; if not, redirect to login
             if (userId == null)
             {
-                TempData["Error"] = "Vui lòng đăng nhập để cập nhật hồ sơ.";
-                return RedirectToAction("Login", "Common");
+                return RedirectToAction("Error");
             }
 
             // Ensure the submitted updateProfile model is valid

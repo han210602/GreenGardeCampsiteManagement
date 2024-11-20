@@ -364,22 +364,6 @@
             </script>
         </header>
 
-        @if (TempData["Error"] != null)
-        {
-            var userId = HttpContextAccessor.HttpContext.Session.GetInt32("UserId");
-            var userRole = HttpContextAccessor.HttpContext.Session.GetString("RoleId");
-
-            <div class="alert alert-warning" role="alert" style="text-align: center;">
-                @if (userId == null) // Kiểm tra xem người dùng có đăng nhập không
-                {
-                    <span>Bạn chưa đăng nhập, vui lòng <a href="@Url.Action("Login", "Common")">đăng nhập</a> để thêm vào giỏ hàng.</span>
-                }
-                else if (userRole != "3") // Kiểm tra xem người dùng có quyền khách hàng không
-                {
-                    <span>Vui lòng đăng nhập với quyền khách hàng để thêm vào giỏ hàng!</span>
-                }
-            </div>
-        }
         <div style="margin-top: 50px" class="site-section">
             <div class="container">
                 <div class="row justify-content-center text-center">

@@ -137,7 +137,7 @@ namespace GreenGardenClient.Controllers.AdminController
 
                 if (response.IsSuccessStatusCode)
                 {
-                    TempData["Notification"] = "Đồ ăn- đồ uống đã được thay đổi thành công!";
+                    TempData["NotificationSuccess"] = "Đồ ăn- đồ uống đã được thay đổi thành công!";
                     // Nếu thành công, chuyển hướng về trang Index
                     return RedirectToAction("UpdateFoodAndDrink", new { itemId = model.ItemId });
                 }
@@ -172,13 +172,13 @@ namespace GreenGardenClient.Controllers.AdminController
                 if (response.IsSuccessStatusCode)
                 {
                     // Nếu thành công, chuyển hướng về trang chi tiết thiết bị
-                    TempData["Notification"] = "Trạng thái đồ ăn, đồ uống đã được thay đổi thành công!";
+                    TempData["NotificationSuccess"] = "Trạng thái đồ ăn, đồ uống đã được thay đổi thành công!";
                     return RedirectToAction("UpdateFoodAndDrink", new { itemId });
                 }
                 else
                 {
                     // Thêm lỗi nếu API không trả về thành công
-                    TempData["Notification"] = "Không thể thay đổi trạng thái thiết bị.";
+                    TempData["NotificationError"] = "Không thể thay đổi trạng thái đồ ăn.";
                     return RedirectToAction("UpdateFoodAndDrink", new { itemId });
                 }
             }
@@ -252,7 +252,7 @@ namespace GreenGardenClient.Controllers.AdminController
                     // Kiểm tra phản hồi
                     if (response.IsSuccessStatusCode)
                     {
-                        TempData["Notification"] = "Món ăn đã được thêm thành công.";
+                        TempData["NotificationSuccess"] = "Món ăn đã được thêm thành công.";
                         return RedirectToAction("Index");
                     }
                     else

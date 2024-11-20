@@ -36,11 +36,11 @@ namespace GreenGardenClient.Models
         public string GearName { get; set; } = null!;
 
         [Required(ErrorMessage = "Số lượng thiết bị có sẵn là bắt buộc.")]
-        [Range(1, int.MaxValue, ErrorMessage = "Số lượng thiết bị phải lớn hơn 0.")]
+        [Range(0, int.MaxValue, ErrorMessage = "Số lượng thiết bị phải lớn hơn hoặc bằng 0.")]
         public int QuantityAvailable { get; set; }
 
         [Required(ErrorMessage = "Giá thuê là bắt buộc.")]
-        [Range(1, double.MaxValue, ErrorMessage = "Giá thuê phải lớn hơn 0.")]
+        [Range(0, double.MaxValue, ErrorMessage = "Giá thuê phải lớn hơn hoặc bằng 0.")]
         public decimal RentalPrice { get; set; }
 
         [MaxLength(500, ErrorMessage = "Mô tả không được vượt quá 500 ký tự.")]

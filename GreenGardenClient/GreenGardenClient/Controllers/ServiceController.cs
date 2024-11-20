@@ -401,8 +401,7 @@ namespace GreenGardenClient.Controllers
             // Ensure customerId is found
             if (!customerId.HasValue)
             {
-                TempData["ErrorMessage"] = "Vui lòng đăng nhập để xem lịch sử đặt hàng!";
-                return RedirectToAction("Login");
+                return RedirectToAction("Error");
             }
 
             ViewBag.CurrentCategoryId = activityId; // Set current category for highlighting
@@ -455,6 +454,13 @@ namespace GreenGardenClient.Controllers
         }
         public async Task<IActionResult> OrderDetailHistory(int orderId)
         {
+            var customerId = HttpContext.Session.GetInt32("UserId");
+
+            // Ensure customerId is found
+            if (!customerId.HasValue)
+            {
+                return RedirectToAction("Error");
+            }
             var apiUrl = $"https://localhost:7298/api/OrderManagement/GetCustomerOrderDetail/{orderId}";
 
             try
@@ -507,6 +513,13 @@ namespace GreenGardenClient.Controllers
         [HttpPost]
         public async Task<IActionResult> CancelOrder(int orderId)
         {
+            var customerId = HttpContext.Session.GetInt32("UserId");
+
+            // Ensure customerId is found
+            if (!customerId.HasValue)
+            {
+                return RedirectToAction("Error");
+            }
             var apiUrl = $"https://localhost:7298/api/OrderManagement/ChangeCustomerActivity?orderId={orderId}";
 
             try
@@ -634,6 +647,13 @@ namespace GreenGardenClient.Controllers
         }
         public async Task<IActionResult> Cart()
         {
+            var customerId = HttpContext.Session.GetInt32("UserId");
+
+            // Ensure customerId is found
+            if (!customerId.HasValue)
+            {
+                return RedirectToAction("Error");
+            }
             var cartItems = GetCartItems();
 
             // Lấy ngày sử dụng đầu tiên
@@ -695,6 +715,7 @@ namespace GreenGardenClient.Controllers
 
         private List<CartItem> GetCartItems()
         {
+
             var session = HttpContext.Session.GetString("Cart");
             if (session == null)
             {
@@ -818,6 +839,13 @@ namespace GreenGardenClient.Controllers
         [HttpPost]
         public IActionResult Reset()
         {
+            var customerId = HttpContext.Session.GetInt32("UserId");
+
+            // Ensure customerId is found
+            if (!customerId.HasValue)
+            {
+                return RedirectToAction("Error");
+            }
             // Xóa toàn bộ sản phẩm trong giỏ hàng
             HttpContext.Session.Remove("Cart"); // Nếu giỏ hàng lưu trong Session
               HttpContext.Session.SetInt32("CartItemCount", 0);

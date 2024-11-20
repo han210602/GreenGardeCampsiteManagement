@@ -2745,19 +2745,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ADMIN\\.nuget\\packages\\": {}
+    "C:\\Users\\admin\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ADMIN\\Desktop\\New folder (8)\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\BusinessObject.csproj",
+      "projectUniqueName": "C:\\Users\\admin\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\BusinessObject.csproj",
       "projectName": "BusinessObject",
-      "projectPath": "C:\\Users\\ADMIN\\Desktop\\New folder (8)\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\BusinessObject.csproj",
-      "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ADMIN\\Desktop\\New folder (8)\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\obj\\",
+      "projectPath": "C:\\Users\\admin\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\BusinessObject.csproj",
+      "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\admin\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -2777,6 +2777,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -2828,7 +2833,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202\\RuntimeIdentifierGraph.json"
       }
     }
   }

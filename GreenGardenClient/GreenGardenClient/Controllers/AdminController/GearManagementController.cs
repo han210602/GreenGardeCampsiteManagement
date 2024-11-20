@@ -133,7 +133,7 @@ namespace GreenGardenClient.Controllers.AdminController
 
                 if (response.IsSuccessStatusCode)
                 {
-                    TempData["Notification"] = "Thiết bị đã được thay đổi thành công!";
+                    TempData["NotificationSuccess"] = "Thiết bị đã được thay đổi thành công!";
                     // Nếu thành công, chuyển hướng về trang Index
                     return RedirectToAction("GearDetail", new { gearId = model.GearId });
                 }
@@ -164,13 +164,13 @@ namespace GreenGardenClient.Controllers.AdminController
                 if (response.IsSuccessStatusCode)
                 {
                     // Nếu thành công, chuyển hướng về trang chi tiết thiết bị
-                    TempData["Notification"] = "Trạng thái thiết bị đã được thay đổi thành công!";
+                    TempData["NotificationSuccess"] = "Trạng thái thiết bị đã được thay đổi thành công!";
                     return RedirectToAction("GearDetail", new { gearId });
                 }
                 else
                 {
                     // Thêm lỗi nếu API không trả về thành công
-                    TempData["Notification"] = "Không thể thay đổi trạng thái thiết bị.";
+                    TempData["NotificationError"] = "Không thể thay đổi trạng thái thiết bị.";
                     return RedirectToAction("GearDetail", new { gearId });
                 }
             }
@@ -247,7 +247,7 @@ namespace GreenGardenClient.Controllers.AdminController
                     ViewBag.Gear = model;
                     if (response.IsSuccessStatusCode)
                     {
-                        TempData["Notification"] = "Thiết bị đã được thêm thành công.";
+                        TempData["NotificationSuccess"] = "Thiết bị đã được thêm thành công.";
                         return RedirectToAction("Index");
                     }
                     else

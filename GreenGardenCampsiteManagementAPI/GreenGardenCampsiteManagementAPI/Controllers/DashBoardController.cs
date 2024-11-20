@@ -17,7 +17,7 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
             _repo = repo;
         }
         [HttpGet("GetProfit/{Month}")]
-        public IActionResult GetProfit(int Month)
+        public IActionResult GetProfit(string Month)
         {
             try { 
            

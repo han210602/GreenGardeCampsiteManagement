@@ -73,7 +73,7 @@ namespace GreenGardenClient.Controllers.AdminController
         {
 
 
-            return View(); // Otherwise, return the view with userdata
+            return View( new EventVM()); // Otherwise, return the view with userdata
 
         }
         [HttpPost]
@@ -132,6 +132,7 @@ namespace GreenGardenClient.Controllers.AdminController
                     // Check if the response was successful
                     if (response.IsSuccessStatusCode)
                     {
+                        TempData["NotificationSuccess"] = "Sự kiện đã được thêm thành công.";
                         // Redirect to event list or success page
                         return RedirectToAction("Index");
                     }
@@ -142,7 +143,7 @@ namespace GreenGardenClient.Controllers.AdminController
                         Console.WriteLine($"API Error Response: {response.StatusCode} - {responseContent}");
 
                         // Redirect to error page
-                        return RedirectToAction("Error", "Home");
+                        return View(model);
                     }
                 }
                 catch (Exception ex)
@@ -151,7 +152,7 @@ namespace GreenGardenClient.Controllers.AdminController
                     Console.WriteLine($"Exception occurred: {ex.Message}");
 
                     // Redirect to error page in case of an exception
-                    return RedirectToAction("Error", "Home");
+                    return View(model);
                 }
             }
         }
@@ -209,6 +210,7 @@ namespace GreenGardenClient.Controllers.AdminController
 
                 if (response.IsSuccessStatusCode)
                 {
+                    TempData["NotificationSuccess"] = "Sự kiện đã được cập nhật thành công.";
                     // Nếu thành công, chuyển hướng về trang Index
                     return RedirectToAction("UpdateEvent");
                 }

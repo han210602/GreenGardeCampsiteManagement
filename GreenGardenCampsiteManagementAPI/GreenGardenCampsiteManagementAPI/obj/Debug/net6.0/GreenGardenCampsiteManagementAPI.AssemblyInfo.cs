@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GreenGardenCampsiteManagementAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cfa727069450640c3ad42eaf5432639484e7dfb8")]
 [assembly: System.Reflection.AssemblyProductAttribute("GreenGardenCampsiteManagementAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GreenGardenCampsiteManagementAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

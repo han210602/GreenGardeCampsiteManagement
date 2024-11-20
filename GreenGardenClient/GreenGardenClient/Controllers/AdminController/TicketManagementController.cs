@@ -132,7 +132,7 @@ namespace GreenGardenClient.Controllers.AdminController
 
                 if (response.IsSuccessStatusCode)
                 {
-                    TempData["Notification"] = "Vé đã được thay đổi thành công.";
+                    TempData["NotificationSuccess"] = "Vé đã được thay đổi thành công.";
                     // Nếu thành công, chuyển hướng về trang Index
                     return RedirectToAction("UpdateTicketDetail", new { ticketId = model.TicketId });
                 }
@@ -163,13 +163,13 @@ namespace GreenGardenClient.Controllers.AdminController
                 if (response.IsSuccessStatusCode)
                 {
                     // Nếu thành công, chuyển hướng về trang chi tiết thiết bị
-                    TempData["Notification"] = "Trạng thái vé đã được thay đổi thành công!";
+                    TempData["NotificationSuccess"] = "Trạng thái vé đã được thay đổi thành công!";
                     return RedirectToAction("UpdateTicketDetail", new { ticketId });
                 }
                 else
                 {
                     // Thêm lỗi nếu API không trả về thành công
-                    TempData["Notification"] = "Không thể thay đổi trạng thái thiết bị.";
+                    TempData["NotificationError"] = "Không thể thay đổi trạng thái vé.";
                     return RedirectToAction("UpdateTicketDetail", new { ticketId });
                 }
             }
@@ -238,7 +238,7 @@ namespace GreenGardenClient.Controllers.AdminController
 
                     if (response.IsSuccessStatusCode)
                     {
-                        TempData["Notification"] = "Vé đã được thêm thành công.";
+                        TempData["NotificationSuccess"] = "Vé đã được thêm thành công.";
                         return RedirectToAction("Index");
                     }
                     else

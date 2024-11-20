@@ -6,34 +6,85 @@ namespace GreenGardenClient.Controllers.AdminController
 {
     public class DashBoardController : Controller
     {
-        private HttpClient _httpClient;
+        private readonly IHttpClientFactory _clientFactory;
 
-        public DashBoardController()
+        public DashBoardController(IHttpClientFactory clientFactory)
         {
-            _httpClient = new HttpClient(); // Use 'this._httpClient' to initialize the private field
+            _clientFactory = clientFactory;
         }
+
+
         private T GetDataFromApi<T>(string url)
         {
+            var client = _clientFactory.CreateClient();
 
-            HttpResponseMessage response = _httpClient.GetAsync(url).Result;
-            response.EnsureSuccessStatusCode();
-            return response.Content.ReadFromJsonAsync<T>().Result;
+            // Retrieve JWT token from cookies
+            var jwtToken = Request.Cookies["JWTToken"];
+
+            // Check if JWT token is present; if not, return default (null)
+            if (string.IsNullOrEmpty(jwtToken))
+            {
+                return default(T);
+            }
+
+            // Set Authorization header
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
+
+            try
+            {
+                using var response = client.GetAsync(url).Result;
+
+                // Check if access is forbidden, return default if unauthorized
+                if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)
+                {
+                    return default(T);
+                }
+
+                response.EnsureSuccessStatusCode(); // Throws if not successful
+
+                return response.Content.ReadFromJsonAsync<T>().Result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                return default(T); // Return default value in case of an error
+            }
         }
-        public IActionResult Index(int month)
+        public IActionResult Index(string datetime)
         {
             try
             {
-                if (month == null)
+                if (datetime == null)
                 {
-                    month = 0;
+                    datetime = "0";
                 }
-                var jwtToken = Request.Cookies["JWTToken"];
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
 
-                ProfitVM profitVM = GetDataFromApi<ProfitVM>($"https://localhost:7298/api/DashBoard/GetProfit/{month}");
+
+                ProfitVM profitVM = GetDataFromApi<ProfitVM>($"https://localhost:7298/api/DashBoard/GetProfit/{datetime}");
                 List<Account> userdata = GetDataFromApi<List<Account>>("https://localhost:7298/api/DashBoard/GetListCustomer\r\n");
+                List<EventVM> events = new List<EventVM>();
 
+                // Fetch events from the API
+                var allEvents = GetDataFromApi<List<EventVM>>("https://localhost:7298/api/Event/GetAllEvents");
+
+                // Ensure allEvents is not null before filtering
+                if (allEvents != null)
+                {
+                    events = allEvents
+                        .Where(s => s.EventDate.ToString("yyyy/MM") == DateTime.Now.ToString("yyyy/MM"))
+                        .ToList();
+                }
+
+                // Ensure events is initialized to an empty list if no matching events are found
+                if (events == null || events.Count == 0)
+                {
+                    events = new List<EventVM>();
+                }
+
+
+                ViewBag.datetime = datetime;
                 ViewBag.listuser = userdata;
+                ViewBag.listevent = events;
 
                 return View(profitVM);
             }

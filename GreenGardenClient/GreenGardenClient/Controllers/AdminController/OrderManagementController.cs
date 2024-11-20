@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using System.Diagnostics.Eventing.Reader;
 using System.Net.Http.Headers;
 using System.Text;
 
@@ -14,7 +15,8 @@ namespace GreenGardenClient.Controllers.AdminController
 
         public OrderManagementController()
         {
-            _httpClient = new HttpClient(); // Use 'this._httpClient' to initialize the private field
+            _httpClient = new HttpClient();
+
         }
         private T GetDataFromApi<T>(string url)
         {
@@ -25,36 +27,8 @@ namespace GreenGardenClient.Controllers.AdminController
         }
 
 
-      
-        public IActionResult Index()
-        {
 
 
-
-            try
-            {
-                var jwtToken = Request.Cookies["JWTToken"];
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
-
-                List<OrderVM> orderdata = GetDataFromApi<List<OrderVM>>("https://localhost:7298/api/OrderManagement/GetAllOrders");
-                List<ActivityVM> activities = GetDataFromApi<List<ActivityVM>>("https://localhost:7298/api/Activity/GetAllActivities");
-
-                ViewBag.dataorder = orderdata;
-
-                ViewBag.activities = activities;
-                if (TempData["Notification"] != null)
-                {
-                    ViewBag.Notification = TempData["Notification"];
-                }
-                return View();
-            }
-            catch (Exception e)
-            {
-                return RedirectToAction("Error");
-            }
-
-
-        }
         public IActionResult Error()
         {
             return View("Error");
@@ -76,8 +50,9 @@ namespace GreenGardenClient.Controllers.AdminController
         public IActionResult OrderOnline()
         {
 
-           
-                String Notification = "";
+            try
+            {
+
                 var jwtToken = Request.Cookies["JWTToken"];
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
                 List<OrderVM> orderdata = new List<OrderVM>();
@@ -88,7 +63,7 @@ namespace GreenGardenClient.Controllers.AdminController
                     activities = GetDataFromApi<List<ActivityVM>>("https://localhost:7298/api/Activity/GetAllActivities").Where(s => s.ActivityId == 1 || s.ActivityId == 2 || s.ActivityId == 1002).ToList();
 
                 }
-                else
+                else if (HttpContext.Session.GetInt32("RoleId").Value == 1)
                 {
                     orderdata = GetDataFromApi<List<OrderVM>>("https://localhost:7298/api/OrderManagement/GetAllOrderOnline")
                     .Where(s => s.ActivityId == 1)
@@ -100,23 +75,23 @@ namespace GreenGardenClient.Controllers.AdminController
                     // Duyệt qua bản sao của orderdata
                     foreach (var item in orderdata.ToList())
                     {
-                        if (item != null&& item.OrderUsageDate.HasValue&& item.OrderUsageDate.Value.Date < DateTime.Now.Date&&item.StatusOrder == false)
+                        if (item != null && item.OrderUsageDate.HasValue && item.OrderUsageDate.Value.Date < DateTime.Now.Date && item.StatusOrder == false)
                         {
                             string apiUrl = $"https://localhost:7298/api/OrderManagement/UpdateActivityOrder/{item.OrderId}/{1002}";
                             HttpResponseMessage response = _httpClient.PutAsync(apiUrl, null).Result;
                             item.ActivityId = 1002;
-                        TempData["Notification"] += $"Đơn {item.OrderId} đã bị hủy do tới ngày đặt trước nhưng chưa cọc.\n";
+                            TempData["NotificationError"] += $"Đơn {item.OrderId} đã bị hủy do tới ngày đặt trước nhưng chưa cọc.\n";
                             orderdata.Remove(item);
                             return RedirectToAction("OrderCancel");
 
                             // Xóa item khỏi danh sách gốc
                         }
-                        else if (item != null&& item.OrderUsageDate.HasValue&& item.OrderUsageDate.Value.Date < DateTime.Now.Date&&item.StatusOrder == true)
+                        else if (item != null && item.OrderUsageDate.HasValue && item.OrderUsageDate.Value.Date < DateTime.Now.Date && item.StatusOrder == true)
                         {
                             string apiUrl = $"https://localhost:7298/api/OrderManagement/UpdateActivityOrder/{item.OrderId}/{1002}";
                             HttpResponseMessage response = _httpClient.PutAsync(apiUrl, null).Result;
                             item.ActivityId = 1002;
-                        TempData["Notification"] += $"Đơn {item.OrderId} đã bị hủy do quá ngày sử dụng.\n";
+                            TempData["NotificationError"] += $"Đơn {item.OrderId} đã bị hủy do quá ngày sử dụng.\n";
                             orderdata.Remove(item);
                             return RedirectToAction("OrderCancel");
                             // Xóa item khỏi danh sách gốc
@@ -127,20 +102,29 @@ namespace GreenGardenClient.Controllers.AdminController
 
 
                 }
+                else
+                {
+                    return RedirectToAction("Error");
+
+                }
                 ViewBag.dataorder = orderdata;
 
                 ViewBag.activities = activities;
-                ViewBag.Notification = Notification;
-                if (TempData["Notification"] != null)
+                if (TempData["NotificationSuccess"] != null)
                 {
-                    ViewBag.Notification = TempData["Notification"];
+                    ViewBag.NotificationSuccess = TempData["NotificationSuccess"];
+                }
+                if (TempData["NotificationError"] != null)
+                {
+                    ViewBag.NotificationSuccess = TempData["NotificationError"];
                 }
                 return View("OrderOnline");
-            
-            
 
-
-
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error");
+            }
         }
         public IActionResult OrderToday()
         {
@@ -148,7 +132,6 @@ namespace GreenGardenClient.Controllers.AdminController
             try
             {
 
-                String Notification = "";
                 var jwtToken = Request.Cookies["JWTToken"];
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
                 List<OrderVM> orderdata = new List<OrderVM>();
@@ -159,7 +142,7 @@ namespace GreenGardenClient.Controllers.AdminController
                     activities = GetDataFromApi<List<ActivityVM>>("https://localhost:7298/api/Activity/GetAllActivities").Where(s => s.ActivityId == 1 || s.ActivityId == 2 || s.ActivityId == 1002).ToList();
 
                 }
-                else
+                else if (HttpContext.Session.GetInt32("RoleId").Value == 1)
                 {
                     orderdata = GetDataFromApi<List<OrderVM>>("https://localhost:7298/api/OrderManagement/GetAllOrderOnline")
                     .Where(s => s.ActivityId == 1 && s.OrderUsageDate.Value.ToString("yyyy/MM/dd").Equals(DateTime.Now.ToString("yyyy/MM/dd")))
@@ -176,7 +159,7 @@ namespace GreenGardenClient.Controllers.AdminController
                             string apiUrl = $"https://localhost:7298/api/OrderManagement/UpdateActivityOrder/{item.OrderId}/{1002}";
                             HttpResponseMessage response = _httpClient.PutAsync(apiUrl, null).Result;
                             item.ActivityId = 1002;
-                            TempData["Notification"] += $"Đơn {item.OrderId} đã bị hủy do tới ngày đặt trước nhưng chưa cọc.\n";
+                            TempData["NotificationError"] += $"Đơn {item.OrderId} đã bị hủy do tới ngày đặt trước nhưng chưa cọc.\n";
                             orderdata.Remove(item);
                             return RedirectToAction("OrderCancel");
 
@@ -187,7 +170,7 @@ namespace GreenGardenClient.Controllers.AdminController
                             string apiUrl = $"https://localhost:7298/api/OrderManagement/UpdateActivityOrder/{item.OrderId}/{1002}";
                             HttpResponseMessage response = _httpClient.PutAsync(apiUrl, null).Result;
                             item.ActivityId = 1002;
-                            TempData["Notification"] += $"Đơn {item.OrderId} đã bị hủy do quá ngày sử dụng.\n";
+                            TempData["NotificationError"] += $"Đơn {item.OrderId} đã bị hủy do quá ngày sử dụng.\n";
                             orderdata.Remove(item);
                             return RedirectToAction("OrderCancel");
                             // Xóa item khỏi danh sách gốc
@@ -198,13 +181,21 @@ namespace GreenGardenClient.Controllers.AdminController
 
 
                 }
+                else
+                {
+                    return RedirectToAction("Error");
+
+                }
                 ViewBag.dataorder = orderdata;
 
                 ViewBag.activities = activities;
-                ViewBag.Notification = Notification;
-                if (TempData["Notification"] != null)
+                if (TempData["NotificationSuccess"] != null)
                 {
-                    ViewBag.Notification = TempData["Notification"];
+                    ViewBag.NotificationSuccess = TempData["NotificationSuccess"];
+                }
+                if (TempData["NotificationError"] != null)
+                {
+                    ViewBag.NotificationSuccess = TempData["NotificationError"];
                 }
                 return View("OrderToday");
 
@@ -221,26 +212,35 @@ namespace GreenGardenClient.Controllers.AdminController
         {
             try
             {
-                String Notification = "";
-
-
-                var jwtToken = Request.Cookies["JWTToken"];
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
-                List<OrderVM> orderdata = GetDataFromApi<List<OrderVM>>("https://localhost:7298/api/OrderManagement/GetAllOrders");
-                orderdata = orderdata.Where(s => s.ActivityId == 2).ToList();
-                List<ActivityVM> activities = GetDataFromApi<List<ActivityVM>>("https://localhost:7298/api/Activity/GetAllActivities");
-                activities = activities.Where(s => s.ActivityId == 2 || s.ActivityId == 3).ToList();
-
-                ViewBag.dataorder = orderdata;
-
-                ViewBag.activities = activities;
-                ViewBag.Notification = Notification;
-                if (TempData["Notification"] != null)
+                if (HttpContext.Session.GetInt32("RoleId").Value == 2 || HttpContext.Session.GetInt32("RoleId").Value == 1)
                 {
-                    ViewBag.Notification = TempData["Notification"];
+                    var jwtToken = Request.Cookies["JWTToken"];
+                    _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
+                    List<OrderVM> orderdata = GetDataFromApi<List<OrderVM>>("https://localhost:7298/api/OrderManagement/GetAllOrders");
+                    orderdata = orderdata.Where(s => s.ActivityId == 2).ToList();
+                    List<ActivityVM> activities = GetDataFromApi<List<ActivityVM>>("https://localhost:7298/api/Activity/GetAllActivities");
+                    activities = activities.Where(s => s.ActivityId == 2 || s.ActivityId == 3).ToList();
+
+                    ViewBag.dataorder = orderdata;
+
+                    ViewBag.activities = activities;
+                    if (TempData["NotificationSuccess"] != null)
+                    {
+                        ViewBag.NotificationSuccess = TempData["NotificationSuccess"];
+                    }
+                    if (TempData["NotificationError"] != null)
+                    {
+                        ViewBag.NotificationSuccess = TempData["NotificationError"];
+                    }
+
+                    return View("OrderUsing");
+                }
+                else
+                {
+                    return RedirectToAction("Error");
                 }
 
-                return View("OrderUsing");
+
             }
             catch (Exception e)
             {
@@ -254,25 +254,34 @@ namespace GreenGardenClient.Controllers.AdminController
         {
             try
             {
-                String Notification = "";
 
 
-                var jwtToken = Request.Cookies["JWTToken"];
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
-                List<OrderVM> orderdata = GetDataFromApi<List<OrderVM>>("https://localhost:7298/api/OrderManagement/GetAllOrders");
-                orderdata = orderdata
-                    .Where(s => s.ActivityId == 3).OrderByDescending(s=>s.OrderCheckoutDate)
-                    .ToList();
-
-
-                ViewBag.dataorder = orderdata;
-                ViewBag.Notification = Notification;
-                if (TempData["Notification"] != null)
+                if (HttpContext.Session.GetInt32("RoleId").Value == 2 || HttpContext.Session.GetInt32("RoleId").Value == 1)
                 {
-                    ViewBag.Notification = TempData["Notification"];
-                }
+                    var jwtToken = Request.Cookies["JWTToken"];
+                    _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
+                    List<OrderVM> orderdata = GetDataFromApi<List<OrderVM>>("https://localhost:7298/api/OrderManagement/GetAllOrders");
+                    orderdata = orderdata
+                        .Where(s => s.ActivityId == 3 && s.OrderCheckoutDate != null).OrderByDescending(s => s.OrderCheckoutDate)
+                        .ToList();
 
-                return View("OrderCheckOut");
+
+                    ViewBag.dataorder = orderdata;
+                    if (TempData["NotificationSuccess"] != null)
+                    {
+                        ViewBag.NotificationSuccess = TempData["NotificationSuccess"];
+                    }
+                    if (TempData["NotificationError"] != null)
+                    {
+                        ViewBag.NotificationSuccess = TempData["NotificationError"];
+                    }
+
+                    return View("OrderCheckOut");
+                }
+                else
+                {
+                    return RedirectToAction("Error");
+                }
             }
             catch (Exception e)
             {
@@ -282,76 +291,36 @@ namespace GreenGardenClient.Controllers.AdminController
 
 
         }
-        //public IActionResult OrderToPost()
-        //{
-        //    try
-        //    {
-        //        var orderdata = HttpContext.Session.GetObjectFromJson<UpdateOrderDTO>("order") ?? new UpdateOrderDTO();
 
-        //        String Notification = "";
-        //        var jwtToken = Request.Cookies["JWTToken"];
-        //        int daysDifference = (DateTime.Now.Date - orderdata.OrderUsageDate.Value.Date).Days;
-        //        UpdateOrderDTO updateorder = new UpdateOrderDTO();
-        //        if (daysDifference >= 1)
-        //        {
-        //            decimal money_ticket = 0;
-        //            decimal money_ticketday = 0;
-        //            foreach (var item in orderdata.OrderTicketDetails)
-        //            {
-        //                money_ticketday += (item.Price * (decimal)item.Quantity) * (daysDifference + 1);
-        //                money_ticket += (item.Price * (decimal)item.Quantity);
-        //            }
-        //            updateorder = new UpdateOrderDTO()
-        //            {
-        //                OrderId = orderdata.OrderId,
-        //                OrderUsageDate = orderdata.OrderUsageDate,
-        //                TotalAmount = orderdata.TotalAmount - money_ticket + money_ticketday
-        //            };
-
-        //        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
-        //        List<OrderVM> orderdata = GetDataFromApi<List<OrderVM>>("https://localhost:7298/api/OrderManagement/GetAllOrders");
-        //        orderdata = orderdata
-        //            .Where(s => s.ActivityId == 1003)
-        //            .ToList();
-
-        //        ViewBag.dataorder = orderdata;
-        //        ViewBag.Notification = Notification;
-        //        if (TempData["Notification"] != null)
-        //        {
-        //            ViewBag.Notification = TempData["Notification"];
-        //        }
-
-        //        return View("OrderToPost");
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return RedirectToAction("Error");
-
-        //    }
-
-
-        //}
         public IActionResult OrderCancel()
         {
             try
             {
-                String Notification = "";
 
 
-                var jwtToken = Request.Cookies["JWTToken"];
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
-                List<OrderVM> orderdata = GetDataFromApi<List<OrderVM>>("https://localhost:7298/api/OrderManagement/GetAllOrders");
-                orderdata = orderdata.Where(s => s.ActivityId == 1002).ToList();
-
-                ViewBag.dataorder = orderdata;
-
-                ViewBag.Notification = Notification;
-                if (TempData["Notification"] != null)
+                if (HttpContext.Session.GetInt32("RoleId").Value == 2 || HttpContext.Session.GetInt32("RoleId").Value == 1)
                 {
-                    ViewBag.Notification = TempData["Notification"];
-                }
+                    var jwtToken = Request.Cookies["JWTToken"];
+                    _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
+                    List<OrderVM> orderdata = GetDataFromApi<List<OrderVM>>("https://localhost:7298/api/OrderManagement/GetAllOrders");
+                    orderdata = orderdata.Where(s => s.ActivityId == 1002).ToList();
 
-                return View("OrderCancel");
+                    ViewBag.dataorder = orderdata;
+
+                    if (TempData["NotificationSuccess"] != null)
+                    {
+                        ViewBag.NotificationSuccess = TempData["NotificationSuccess"];
+                    }
+                    if (TempData["NotificationError"] != null)
+                    {
+                        ViewBag.NotificationSuccess = TempData["NotificationError"];
+                    }
+                    return View("OrderCancel");
+                }
+                else
+                {
+                    return RedirectToAction("Error");
+                }
             }
             catch (Exception e)
             {
@@ -369,7 +338,6 @@ namespace GreenGardenClient.Controllers.AdminController
             {
 
                 var order = HttpContext.Session.GetObjectFromJson<UpdateOrderDTO>("order");
-                Console.WriteLine("llllllllllll" + order.OrderUsageDate);
                 var jwtToken = Request.Cookies["JWTToken"];
 
                 if (idactivity == 2)
@@ -381,13 +349,13 @@ namespace GreenGardenClient.Controllers.AdminController
                         string apiUrl = $"https://localhost:7298/api/OrderManagement/UpdateActivityOrder/{idorder}/{idactivity}";
 
                         HttpResponseMessage response = _httpClient.PutAsync(apiUrl, null).Result;
-                        TempData["Notification"] = $"Đơn #{idorder} đã chuyển sang trạng đang sử dụng.";
+                        TempData["NotificationSuccess"] = $"Đơn #{idorder} đã chuyển sang trạng đang sử dụng.";
 
                         return RedirectToAction("OrderUsing");
                     }
                     else
                     {
-                        TempData["Notification"] = $"Đơn #{idorder} chưa tới ngày sử dụng.";
+                        TempData["NotificationError"] = $"Đơn #{idorder} chưa tới ngày sử dụng.";
 
                         return RedirectToAction("OrderOnline");
                     }
@@ -416,7 +384,7 @@ namespace GreenGardenClient.Controllers.AdminController
 
                     if (response1.IsSuccessStatusCode)
                     {
-                        TempData["Notification"] = $"Đơn #{idorder} đã thanh toán thành công.";
+                        TempData["NotificationSuccess"] = $"Đơn #{idorder} đã thanh toán thành công.";
                         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
 
                         string apiUrl = $"https://localhost:7298/api/OrderManagement/UpdateActivityOrder/{idorder}/{idactivity}";
@@ -426,7 +394,7 @@ namespace GreenGardenClient.Controllers.AdminController
                     }
                     else
                     {
-                        TempData["Notification"] = $"Đơn #{idorder} đã thanh toán thất bại.";
+                        TempData["NotificationError"] = $"Đơn #{idorder} đã thanh toán thất bại.";
                         return RedirectToAction("OrderDetail", new { id = order.OrderId });
                     }
 
@@ -440,7 +408,7 @@ namespace GreenGardenClient.Controllers.AdminController
                     string apiUrl = $"https://localhost:7298/api/OrderManagement/UpdateActivityOrder/{idorder}/{idactivity}";
 
                     HttpResponseMessage response = _httpClient.PutAsync(apiUrl, null).Result;
-                    TempData["Notification"] = $"Đơn #{idorder} đã bị hủy.";
+                    TempData["NotificationError"] = $"Đơn #{idorder} đã hủy thành công.";
 
                     return RedirectToAction("OrderCancel");
 
@@ -463,7 +431,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
 
                 string apiUrl = $"https://localhost:7298/api/OrderManagement/EnterDeposit/{idorder}/{money}";
-                TempData["Notification"] = "Đặt cọc thành công!";
+                TempData["NotificationSuccess"] = "Đặt cọc thành công!";
 
                 // Send the PUT request
                 HttpResponseMessage response = _httpClient.PutAsync(apiUrl, null).Result;
@@ -471,7 +439,7 @@ namespace GreenGardenClient.Controllers.AdminController
             }
             catch (Exception ex)
             {
-                TempData["Notification"] = "Xảy ra lỗi trong quá trình cọc!";
+                TempData["NotificationError"] = "Xảy ra lỗi trong quá trình cọc!";
 
             }
             if (page == 1)
@@ -495,7 +463,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
                 // Construct the API URL with the parameters
                 string apiUrl = $"https://localhost:7298/api/OrderManagement/CancelDeposit/{idorder}";
-                TempData["Notification"] = "Hủy đặt cọc thành công!";
+                TempData["NotificationSuccess"] = "Hủy đặt cọc thành công!";
 
                 // Send the PUT request
                 HttpResponseMessage response = _httpClient.PutAsync(apiUrl, null).Result;
@@ -503,7 +471,7 @@ namespace GreenGardenClient.Controllers.AdminController
             }
             catch (Exception ex)
             {
-                TempData["Notification"] = "Xảy ra lỗi trong quá trình hủy cọc!";
+                TempData["NotificationError"] = "Xảy ra lỗi trong quá trình hủy cọc!";
 
             }
             if (page == 1)
@@ -531,9 +499,13 @@ namespace GreenGardenClient.Controllers.AdminController
                         ViewBag.date = date;
 
                     }
-                    if (TempData["Notification"] != null)
+                    if (TempData["NotificationSuccess"] != null)
                     {
-                        ViewBag.Notification = TempData["Notification"];
+                        ViewBag.NotificationSuccess = TempData["NotificationSuccess"];
+                    }
+                    if (TempData["NotificationError"] != null)
+                    {
+                        ViewBag.NotificationError = TempData["NotificationError"];
                     }
                     return View(orders);
                 }
@@ -559,7 +531,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 PhoneCustomer = phone
             };
 
-            TempData["Notification"] = "Lưu thành công thông tin khách hàng!";
+            TempData["NotificationSuccess"] = "Lưu thành công thông tin khách hàng!";
             HttpContext.Session.SetObjectAsJson("OrderCart", cart);
             return RedirectToAction("CreateOrder");
 
@@ -567,44 +539,62 @@ namespace GreenGardenClient.Controllers.AdminController
         }
         public IActionResult OrderTicket()
         {
-            var orders = HttpContext.Session.GetObjectFromJson<OrderVM>("OrderCart") ?? new OrderVM();
-            if (orders.CustomerName.IsNullOrEmpty() || orders.OrderUsageDate == null || orders.PhoneCustomer.IsNullOrEmpty())
+            try
             {
-                TempData["Notification"] = "Bạn phải điền đầy đủ thông tin bao gồm tên,số điện thoại và ngày sử dụng!";
-                return RedirectToAction("CreateOrder");
-
-            }
-            else
-            {
-                if (HttpContext.Session.GetString("ComboCart") != null)
+                if (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)
                 {
-                    TempData["Notification"] = "Bạn đang đặt combo vui lòng không đặt thêm vé!";
+                    var orders = HttpContext.Session.GetObjectFromJson<OrderVM>("OrderCart") ?? new OrderVM();
+                    var combo = HttpContext.Session.GetObjectFromJson<List<TicketVM>>("ComboCart") ?? new List<TicketVM>();
 
-                    return RedirectToAction("CreateOrder");
+                    if (orders.CustomerName.IsNullOrEmpty() || orders.OrderUsageDate == null || orders.PhoneCustomer.IsNullOrEmpty())
+                    {
+                        TempData["NotificationError"] = "Bạn phải điền đầy đủ thông tin bao gồm tên,số điện thoại và ngày sử dụng!";
+                        return RedirectToAction("CreateOrder");
+
+                    }
+                    else
+                    {
+                        if (!combo.IsNullOrEmpty())
+                        {
+                            TempData["NotificationError"] = "Bạn đang đặt combo vui lòng không đặt thêm vé!";
+
+                            return RedirectToAction("CreateOrder");
+                        }
+                        else
+                        {
+                            var ticketscart = HttpContext.Session.GetObjectFromJson<List<TicketVM>>("TicketCart") ?? new List<TicketVM>();
+                            List<TicketVM> tickets = GetDataFromApi<List<TicketVM>>("https://localhost:7298/api/Ticket/GetAllTickets");
+
+                            foreach (var item in ticketscart)
+                            {
+                                var ticket = tickets.ToList().FirstOrDefault(s => s.TicketId == item.TicketId);
+                                if (ticket != null)
+                                {
+                                    ticket.Quantity = item.Quantity;
+                                }
+                            }
+                            if (TempData["NotificationSuccess"] != null)
+                            {
+                                ViewBag.NotificationSuccess = TempData["NotificationSuccess"];
+                            }
+                            if (TempData["NotificationError"] != null)
+                            {
+                                ViewBag.NotificationSuccess = TempData["NotificationError"];
+                            }
+                            ViewBag.tickets = tickets;
+                            return View("OrderTicket");
+                        }
+                    }
                 }
                 else
                 {
-                    var ticketscart = HttpContext.Session.GetObjectFromJson<List<TicketVM>>("TicketCart") ?? new List<TicketVM>();
-                    List<TicketVM> tickets = GetDataFromApi<List<TicketVM>>("https://localhost:7298/api/Ticket/GetAllTickets");
-
-                    foreach (var item in ticketscart)
-                    {
-                        var ticket = tickets.ToList().FirstOrDefault(s => s.TicketId == item.TicketId);
-                        if (ticket != null)
-                        {
-                            ticket.Quantity = item.Quantity;
-                        }
-                    }
-                    if (TempData["Notification"] != null)
-                    {
-                        ViewBag.Notification = TempData["Notification"];
-                    }
-                    ViewBag.tickets = tickets;
-
-
-                    return View("OrderTicket");
+                    return RedirectToAction("Error");
                 }
+            } catch (Exception e)
+            {
+                return RedirectToAction("Error");
             }
+
 
 
         }
@@ -615,14 +605,19 @@ namespace GreenGardenClient.Controllers.AdminController
 
             if (quantity > 0)
             {
+                TempData["NotificationSuccess"] = "Đã thêm sản phẩm thành công";
                 var item = cart.FirstOrDefault(t => t.TicketId == id);
 
                 if (item != null)
                 {
+
+
                     item.Quantity = quantity;
                 }
                 else
                 {
+
+
                     cart.Add(new TicketVM() { TicketId = id, TicketName = name, Price = price, Quantity = quantity });
 
                 }
@@ -632,12 +627,13 @@ namespace GreenGardenClient.Controllers.AdminController
                 var item = cart.FirstOrDefault(t => t.TicketId == id);
                 if (item != null)
                 {
+                    TempData["NotificationError"] = "Đã bỏ sản phẩm khỏi đơn.";
+
+
                     cart.Remove(item);
                 }
 
             }
-
-            TempData["Notification"] = "Thêm vào giỏ hàng thành công! Nếu không còn thay đổi gì thì lên đơn thôi nào.";
 
             HttpContext.Session.SetObjectAsJson("TicketCart", cart);
             return RedirectToAction("OrderTicket");
@@ -670,13 +666,14 @@ namespace GreenGardenClient.Controllers.AdminController
                     if (item != null)
                     {
                         cart.Remove(item);
+
                     }
 
                 }
 
 
             }
-            TempData["Notification"] = "Thêm vào giỏ hàng thành công! Hãy tiếp tục đặt đồ cắm trại nào.";
+            TempData["NotificationSuccess"] = "Thêm vào giỏ hàng thành công! Hãy tiếp tục đặt đồ cắm trại nào.";
             HttpContext.Session.SetObjectAsJson("TicketCart", cart);
             return RedirectToAction("OrderTicket");
         }
@@ -684,50 +681,61 @@ namespace GreenGardenClient.Controllers.AdminController
         {
             try
             {
-                var ticketscart = HttpContext.Session.GetObjectFromJson<List<GearVM>>("GearCart") ?? new List<GearVM>();
-                var orders = HttpContext.Session.GetObjectFromJson<OrderVM>("OrderCart") ?? new OrderVM();
-                if (orders.OrderUsageDate == null)
+                if (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)
                 {
-                    TempData["Notification"] = "Muốn thuê đồ phải đặt ngày";
+                    var ticketscart = HttpContext.Session.GetObjectFromJson<List<GearVM>>("GearCart") ?? new List<GearVM>();
+                    var orders = HttpContext.Session.GetObjectFromJson<OrderVM>("OrderCart") ?? new OrderVM();
+                    if (orders.OrderUsageDate == null)
+                    {
+                        TempData["NotificationError"] = "Muốn thuê đồ phải đặt ngày";
 
-                    return RedirectToAction("CreateOrder");
+                        return RedirectToAction("CreateOrder");
+                    }
+                    else
+                    {
+                        string formattedDate = orders.OrderUsageDate.Value.ToString("yyyy-MM-dd");
+
+                        List<GearVM> tickets = GetDataFromApi<List<GearVM>>("https://localhost:7298/api/CampingGear/GetAllCampingGears");
+                        var jwtToken = Request.Cookies["JWTToken"];
+                        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
+                        List<OrderCampingGearByUsageDateDTO> ordergear = GetDataFromApi<List<OrderCampingGearByUsageDateDTO>>($"https://localhost:7298/api/OrderManagement/GetListOrderGearByUsageDate/{formattedDate}");
+                        foreach (var item in tickets)
+                        {
+                            var ticket = ordergear.ToList().Where(s => s.GearId == item.GearId);
+                            if (ticket != null)
+                            {
+                                foreach (var item1 in ticket)
+                                {
+                                    item.QuantityAvailable = item.QuantityAvailable - item1.Quantity.Value;
+                                }
+                            }
+                        }
+
+                        foreach (var item in ticketscart)
+                        {
+                            var ticket = tickets.ToList().FirstOrDefault(s => s.GearId == item.GearId);
+                            if (ticket != null)
+                            {
+                                ticket.Quantity = item.Quantity;
+                                ticket.QuantityAvailable -= item.Quantity;
+                            }
+                        }
+
+                        if (TempData["NotificationSuccess"] != null)
+                        {
+                            ViewBag.NotificationSuccess = TempData["NotificationSuccess"];
+                        }
+                        if (TempData["NotificationError"] != null)
+                        {
+                            ViewBag.NotificationError = TempData["NotificationError"];
+                        }
+                        ViewBag.gears = tickets;
+                        return View("OrderGear");
+                    }
                 }
                 else
                 {
-                    string formattedDate = orders.OrderUsageDate.Value.ToString("yyyy-MM-dd");
-
-                    List<GearVM> tickets = GetDataFromApi<List<GearVM>>("https://localhost:7298/api/CampingGear/GetAllCampingGears");
-                    var jwtToken = Request.Cookies["JWTToken"];
-                    _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
-                    List<OrderCampingGearByUsageDateDTO> ordergear = GetDataFromApi<List<OrderCampingGearByUsageDateDTO>>($"https://localhost:7298/api/OrderManagement/GetListOrderGearByUsageDate/{formattedDate}");
-                    foreach (var item in tickets)
-                    {
-                        var ticket = ordergear.ToList().Where(s => s.GearId == item.GearId);
-                        if (ticket != null)
-                        {
-                            foreach (var item1 in ticket)
-                            {
-                                item.QuantityAvailable = item.QuantityAvailable - item1.Quantity.Value;
-                            }
-                        }
-                    }
-
-                    foreach (var item in ticketscart)
-                    {
-                        var ticket = tickets.ToList().FirstOrDefault(s => s.GearId == item.GearId);
-                        if (ticket != null)
-                        {
-                            ticket.Quantity = item.Quantity;
-                            ticket.QuantityAvailable -= item.Quantity;
-                        }
-                    }
-
-                    if (TempData["Notification"] != null)
-                    {
-                        ViewBag.Notification = TempData["Notification"];
-                    }
-                    ViewBag.gears = tickets;
-                    return View("OrderGear");
+                    return RedirectToAction("Error");
                 }
             }
             catch (Exception e)
@@ -774,71 +782,191 @@ namespace GreenGardenClient.Controllers.AdminController
             }
 
             HttpContext.Session.SetObjectAsJson("GearCart", cart);
-            TempData["Notification"] = "Thêm vào giỏ hàng thành công. Hãy tiếp tục đặt đồ ăn nào";
+            TempData["NotificationSuccess"] = "Đã thêm sàn phẩm vào đơn!";
 
             return RedirectToAction("OrderGear");
         }
         public IActionResult OrderFood()
         {
-            var ticketscart = HttpContext.Session.GetObjectFromJson<List<FoodAndDrinkVM>>("FoodCart") ?? new List<FoodAndDrinkVM>();
-
-            List<FoodAndDrinkVM> foodAndDrinks = GetDataFromApi<List<FoodAndDrinkVM>>("https://localhost:7298/api/FoodAndDrink/GetAllFoodAndDrink");
-
-            foreach (var item in ticketscart)
+            try
             {
-                var ticket = foodAndDrinks.ToList().FirstOrDefault(s => s.ItemId == item.ItemId);
-                if (ticket != null)
+                if (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)
                 {
-                    ticket.Description = item.Description;
-                    ticket.Quantity = item.Quantity;
+                    var ticketscart = HttpContext.Session.GetObjectFromJson<List<FoodAndDrinkVM>>("FoodCart") ?? new List<FoodAndDrinkVM>();
+
+                    List<FoodAndDrinkVM> foodAndDrinks = GetDataFromApi<List<FoodAndDrinkVM>>("https://localhost:7298/api/FoodAndDrink/GetAllFoodAndDrink");
+
+                    foreach (var item in ticketscart)
+                    {
+                        var ticket = foodAndDrinks.ToList().FirstOrDefault(s => s.ItemId == item.ItemId);
+                        if (ticket != null)
+                        {
+                            ticket.Description = item.Description;
+                            ticket.Quantity = item.Quantity;
+                        }
+                    }
+
+                    if (TempData["NotificationSuccess"] != null)
+                    {
+                        ViewBag.NotificationSuccess = TempData["NotificationSuccess"];
+                    }
+                    if (TempData["NotificationError"] != null)
+                    {
+                        ViewBag.NotificationError = TempData["NotificationError"];
+                    }
+                    ViewBag.gears = foodAndDrinks;
+                    return View("OrderFood");
+                }
+                else
+                {
+                    return RedirectToAction("Error");
                 }
             }
-
-            if (TempData["Notification"] != null)
+            catch (Exception e)
             {
-                ViewBag.Notification = TempData["Notification"];
+                return RedirectToAction("Error");
             }
-            ViewBag.gears = foodAndDrinks;
-            return View("OrderFood");
+
         }
         public IActionResult FoodDetail(int id, int quantity)
         {
+            try
+            {
+                if (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)
+                {
+                    var cart = HttpContext.Session.GetObjectFromJson<List<FoodAndDrinkVM>>("FoodCart") ?? new List<FoodAndDrinkVM>();
 
-            FoodAndDrinkVM foodAndDrinks = GetDataFromApi<List<FoodAndDrinkVM>>("https://localhost:7298/api/FoodAndDrink/GetAllFoodAndDrink").ToList().FirstOrDefault(f => f.ItemId == id);
+                    FoodAndDrinkVM foodAndDrinks = GetDataFromApi<List<FoodAndDrinkVM>>("https://localhost:7298/api/FoodAndDrink/GetAllFoodAndDrink").ToList().FirstOrDefault(f => f.ItemId == id);
+                    if (cart.FirstOrDefault(s => s.ItemId == id) == null)
+                    {
+                        foodAndDrinks.Quantity = 0;
+                    }
+                    else
+                    {
+                        foodAndDrinks.Quantity = cart.FirstOrDefault(s => s.ItemId == id).Quantity;
 
-            foodAndDrinks.Quantity = quantity;
-            return View("FoodDetail", foodAndDrinks);
+                    }
+                    return View("FoodDetail", foodAndDrinks);
+                }
+                else
+                {
+                    return RedirectToAction("Error");
+
+                }
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Error");
+
+            }
+
 
 
         }
         public IActionResult TicketDetail(int id, int quantity)
         {
+            try
+            {
+                if (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)
+                {
+                    var cart = HttpContext.Session.GetObjectFromJson<List<TicketVM>>("TicketCart") ?? new List<TicketVM>();
 
-            TicketVM foodAndDrinks = GetDataFromApi<List<TicketVM>>("https://localhost:7298/api/Ticket/GetAllTickets").ToList().FirstOrDefault(f => f.TicketId == id);
 
-            foodAndDrinks.Quantity = quantity;
-            return View("TicketDetail", foodAndDrinks);
+                    TicketVM foodAndDrinks = GetDataFromApi<List<TicketVM>>("https://localhost:7298/api/Ticket/GetAllTickets").ToList().FirstOrDefault(f => f.TicketId == id);
+                    if (cart.FirstOrDefault(s => s.TicketId == id) == null)
+                    {
+                        foodAndDrinks.Quantity = 0;
+                    }
+                    else
+                    {
+                        foodAndDrinks.Quantity = cart.FirstOrDefault(s => s.TicketId == id).Quantity;
+
+
+                    }
+                    return View("TicketDetail", foodAndDrinks);
+                }
+                else
+                {
+                    return RedirectToAction("Error");
+
+                }
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Error");
+
+            }
 
 
         }
         public IActionResult ComboDetail(int id, int quantity)
         {
+            try
+            {
+                if (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)
+                {
+                    var cart = HttpContext.Session.GetObjectFromJson<List<ComboVM>>("ComboCart") ?? new List<ComboVM>();
 
-            ComboDetailVM foodAndDrinks = GetDataFromApi<ComboDetailVM>($"https://localhost:7298/api/Combo/GetComboDetail/{id}");
+                    ComboDetailVM foodAndDrinks = GetDataFromApi<ComboDetailVM>($"https://localhost:7298/api/Combo/GetComboDetail/{id}");
 
-            foodAndDrinks.Quantity = quantity;
-            return View("ComboDetail", foodAndDrinks);
+                    if (cart.FirstOrDefault(s => s.ComboId == id) == null)
+                    {
+                        foodAndDrinks.Quantity = 0;
+                    }
+                    else
+                    {
+                        foodAndDrinks.Quantity = cart.FirstOrDefault(s => s.ComboId == id).Quantity;
 
 
+                    }
+                    return View("ComboDetail", foodAndDrinks);
+
+                }
+                else
+                {
+                    return RedirectToAction("Error");
+
+                }
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Error");
+
+            }
         }
         public IActionResult ComboFoodDetail(int id, int quantity)
         {
+            try
+            {
+                if (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)
+                {
+                    var cart = HttpContext.Session.GetObjectFromJson<List<ComboFoodVM>>("ComboFoodCart") ?? new List<ComboFoodVM>();
 
-            ComboFoodDetailVM foodAndDrinks = GetDataFromApi<ComboFoodDetailVM>($"https://localhost:7298/api/ComboFood/GetComboFoodDetail/{id}");
 
-            foodAndDrinks.Quantity = quantity;
-            return View("ComboFoodDetail", foodAndDrinks);
+                    ComboFoodDetailVM foodAndDrinks = GetDataFromApi<ComboFoodDetailVM>($"https://localhost:7298/api/ComboFood/GetComboFoodDetail/{id}");
+                    if (cart.FirstOrDefault(s => s.ComboId == id) == null)
+                    {
+                        foodAndDrinks.Quantity = 0;
+                    }
+                    else
+                    {
+                        foodAndDrinks.Quantity = cart.FirstOrDefault(s => s.ComboId == id).Quantity;
 
+
+                    }
+                    return View("ComboFoodDetail", foodAndDrinks);
+                }
+                else
+                {
+                    return RedirectToAction("Error");
+
+                }
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Error");
+
+            }
 
         }
         [HttpPost]
@@ -850,6 +978,8 @@ namespace GreenGardenClient.Controllers.AdminController
 
             if (quantity > 0)
             {
+                TempData["NotificationSuccess"] = "Đã thêm sản phẩm vào đơn!";
+
                 var item = cart.FirstOrDefault(t => t.ComboId == id);
 
                 if (item != null)
@@ -864,6 +994,8 @@ namespace GreenGardenClient.Controllers.AdminController
             }
             else
             {
+                TempData["NotificationError"] = "Đã bỏ sản phẩm khỏi đơn!";
+
                 var item = cart.FirstOrDefault(t => t.ComboId == id);
                 if (item != null)
                 {
@@ -875,7 +1007,6 @@ namespace GreenGardenClient.Controllers.AdminController
 
 
 
-            TempData["Notification"] = "Thêm vào giỏ hàng thành công! Nếu không còn thay đổi gì thì lên đơn thôi nào.";
 
             HttpContext.Session.SetObjectAsJson("ComboFoodCart", cart);
             return RedirectToAction("OrderComboFood");
@@ -891,6 +1022,8 @@ namespace GreenGardenClient.Controllers.AdminController
 
             if (quantity > 0)
             {
+                TempData["NotificationSuccess"] = "Đã thêm sản phẩm vào đơn!";
+
                 var item = cart.FirstOrDefault(t => t.ComboId == id);
 
                 if (item != null)
@@ -905,6 +1038,8 @@ namespace GreenGardenClient.Controllers.AdminController
             }
             else
             {
+                TempData["NotificationError"] = "Đã bỏ sản phẩm khỏi đơn!";
+
                 var item = cart.FirstOrDefault(t => t.ComboId == id);
                 if (item != null)
                 {
@@ -916,7 +1051,6 @@ namespace GreenGardenClient.Controllers.AdminController
 
 
 
-            TempData["Notification"] = "Thêm vào giỏ hàng thành công.";
 
             HttpContext.Session.SetObjectAsJson("ComboCart", cart);
             return RedirectToAction("OrderCombo");
@@ -928,6 +1062,8 @@ namespace GreenGardenClient.Controllers.AdminController
 
             if (quantity > 0)
             {
+                TempData["NotificationSuccess"] = "Đã thêm sản phẩm vào đơn!";
+
                 var item = cart.FirstOrDefault(t => t.ItemId == id);
 
                 if (item != null)
@@ -942,6 +1078,8 @@ namespace GreenGardenClient.Controllers.AdminController
             }
             else
             {
+                TempData["NotificationError"] = "Đã bỏ sản phẩm khỏi đơn!";
+
                 var item = cart.FirstOrDefault(t => t.ItemId == id);
                 if (item != null)
                 {
@@ -950,7 +1088,6 @@ namespace GreenGardenClient.Controllers.AdminController
 
             }
 
-            TempData["Notification"] = "Thêm vào giỏ hàng thành công! Nếu không còn thay đổi gì thì lên đơn thôi nào.";
 
             HttpContext.Session.SetObjectAsJson("FoodCart", cart);
             return RedirectToAction("OrderFood");
@@ -958,13 +1095,27 @@ namespace GreenGardenClient.Controllers.AdminController
         }
         public IActionResult GearDetail(int id, int quantity, int quantityavai)
         {
+            try
+            {
+                if (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)
+                {
+                    GearVM tickets = GetDataFromApi<List<GearVM>>("https://localhost:7298/api/CampingGear/GetAllCampingGears").ToList().FirstOrDefault(s => s.GearId == id);
 
-            GearVM tickets = GetDataFromApi<List<GearVM>>("https://localhost:7298/api/CampingGear/GetAllCampingGears").ToList().FirstOrDefault(s => s.GearId == id);
+                    tickets.Quantity = quantity;
+                    tickets.QuantityAvailable = quantityavai;
+                    return View("GearDetail", tickets);
+                }
+                else
+                {
+                    return RedirectToAction("Error");
 
-            tickets.Quantity = quantity;
-            tickets.QuantityAvailable = quantityavai;
-            return View("GearDetail", tickets);
+                }
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Error");
 
+            }
 
         }
         [HttpPost]
@@ -974,6 +1125,8 @@ namespace GreenGardenClient.Controllers.AdminController
 
             if (quantity > 0)
             {
+                TempData["NotificationSuccess"] = "Đã thêm sản phẩm vào đơn!";
+
                 var item = cart.FirstOrDefault(t => t.GearId == id);
 
                 if (item != null)
@@ -988,6 +1141,8 @@ namespace GreenGardenClient.Controllers.AdminController
             }
             else
             {
+                TempData["NotificationError"] = "Đã bỏ sản phẩm khỏi đơn!";
+
                 var item = cart.FirstOrDefault(t => t.GearId == id);
                 if (item != null)
                 {
@@ -996,7 +1151,6 @@ namespace GreenGardenClient.Controllers.AdminController
 
             }
 
-            TempData["Notification"] = "Thêm vào giỏ hàng thành công! Nếu không còn thay đổi gì thì lên đơn thôi nào.";
 
             HttpContext.Session.SetObjectAsJson("GearCart", cart);
             return RedirectToAction("OrderGear");
@@ -1037,32 +1191,51 @@ namespace GreenGardenClient.Controllers.AdminController
 
 
             }
-            TempData["Notification"] = "Thêm vào giỏ hàng thành công! Nếu không còn thay đổi gì thì lên đơn thôi nào.";
+            TempData["NotificationSuccess"] = "Đá thêm sản phẩm vào đơn! ";
 
             HttpContext.Session.SetObjectAsJson("FoodCart", cart);
             return RedirectToAction("OrderFood");
         }
         public IActionResult OrderComboFood()
         {
-            var ticketscart = HttpContext.Session.GetObjectFromJson<List<ComboFoodVM>>("ComboFoodCart") ?? new List<ComboFoodVM>();
-
-            List<ComboFoodVM> tickets = GetDataFromApi<List<ComboFoodVM>>("https://localhost:7298/api/ComboFood/GetAllOrders\r\n");
-
-            foreach (var item in ticketscart)
+            try
             {
-                var ticket = tickets.ToList().FirstOrDefault(s => s.ComboId == item.ComboId);
-                if (ticket != null)
+                if (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)
                 {
-                    ticket.Quantity = item.Quantity;
+                    var ticketscart = HttpContext.Session.GetObjectFromJson<List<ComboFoodVM>>("ComboFoodCart") ?? new List<ComboFoodVM>();
+
+                    List<ComboFoodVM> tickets = GetDataFromApi<List<ComboFoodVM>>("https://localhost:7298/api/ComboFood/GetAllOrders\r\n");
+
+                    foreach (var item in ticketscart)
+                    {
+                        var ticket = tickets.ToList().FirstOrDefault(s => s.ComboId == item.ComboId);
+                        if (ticket != null)
+                        {
+                            ticket.Quantity = item.Quantity;
+                        }
+                    }
+                    if (TempData["NotificationSuccess"] != null)
+                    {
+                        ViewBag.NotificationSuccess = TempData["NotificationSuccess"];
+                    }
+                    if (TempData["NotificationError"] != null)
+                    {
+                        ViewBag.NotificationSuccess = TempData["NotificationError"];
+                    }
+                    ViewBag.gears = tickets;
+                    return View("OrderComboFood");
+                }
+                else
+                {
+                    return RedirectToAction("Error");
+
                 }
             }
-            if (TempData["Notification"] != null)
+            catch (Exception e)
             {
-                ViewBag.Notification = TempData["Notification"];
-            }
+                return RedirectToAction("Error");
 
-            ViewBag.gears = tickets;
-            return View("OrderComboFood");
+            }
         }
         public IActionResult ComboFoodCart(List<int> id, List<string> name, List<decimal> price, List<int> quantity)
         {
@@ -1099,50 +1272,72 @@ namespace GreenGardenClient.Controllers.AdminController
 
 
             }
-            TempData["Notification"] = "Thêm vào giỏ hàng thành công! Nếu không còn thay đổi gì thì lên đơn thôi nào.";
+            TempData["NotificationSuccess"] = "Đã thêm sản phẩm vào đơn!";
 
             HttpContext.Session.SetObjectAsJson("ComboFoodCart", cart);
             return RedirectToAction("OrderComboFood");
         }
         public IActionResult OrderCombo()
         {
-            var orders = HttpContext.Session.GetObjectFromJson<OrderVM>("OrderCart") ?? new OrderVM();
-            if (orders.CustomerName.IsNullOrEmpty() || orders.OrderUsageDate == null || orders.PhoneCustomer.IsNullOrEmpty())
+            try
             {
-                TempData["Notification"] = "Bạn phải điền đầy đủ thông tin bao gồm tên,số điện thoại và ngày sử dụng!";
-                return RedirectToAction("CreateOrder");
-
-            }
-            else
-            {
-                if (HttpContext.Session.GetString("TicketCart") !=null)
+                if (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)
                 {
-                    TempData["Notification"] = "Bạn đang đặt vé vui lòng không đặt thêm combo!";
+                    var orders = HttpContext.Session.GetObjectFromJson<OrderVM>("OrderCart") ?? new OrderVM();
+                    var combo = HttpContext.Session.GetObjectFromJson<List<TicketVM>>("TicketCart") ?? new List<TicketVM>();
 
-                    return RedirectToAction("CreateOrder");
+                    if (orders.CustomerName.IsNullOrEmpty() || orders.OrderUsageDate == null || orders.PhoneCustomer.IsNullOrEmpty())
+                    {
+                        TempData["NotificationError"] = "Bạn phải điền đầy đủ thông tin bao gồm tên,số điện thoại và ngày sử dụng!";
+                        return RedirectToAction("CreateOrder");
+
+                    }
+                    else
+                    {
+                        if (!combo.IsNullOrEmpty())
+                        {
+                            TempData["NotificationError"] = "Bạn đang đặt vé vui lòng không đặt thêm combo!";
+
+                            return RedirectToAction("CreateOrder");
+                        }
+                        else
+                        {
+                            var ticketscart = HttpContext.Session.GetObjectFromJson<List<ComboVM>>("ComboCart") ?? new List<ComboVM>();
+
+                            List<ComboVM> tickets = GetDataFromApi<List<ComboVM>>("https://localhost:7298/api/Combo/GetAllCombos\r\n");
+
+                            foreach (var item in ticketscart)
+                            {
+                                var ticket = tickets.ToList().FirstOrDefault(s => s.ComboId == item.ComboId);
+                                if (ticket != null)
+                                {
+                                    ticket.Quantity = item.Quantity;
+                                }
+                            }
+
+                            if (TempData["NotificationSuccess"] != null)
+                            {
+                                ViewBag.NotificationSuccess = TempData["NotificationSuccess"];
+                            }
+                            if (TempData["NotificationError"] != null)
+                            {
+                                ViewBag.NotificationError = TempData["NotificationError"];
+                            }
+                            ViewBag.gears = tickets;
+                            return View("OrderCombo");
+                        }
+                    }
                 }
                 else
                 {
-                    var ticketscart = HttpContext.Session.GetObjectFromJson<List<ComboVM>>("ComboCart") ?? new List<ComboVM>();
+                    return RedirectToAction("Error");
 
-                    List<ComboVM> tickets = GetDataFromApi<List<ComboVM>>("https://localhost:7298/api/Combo/GetAllCombos\r\n");
-
-                    foreach (var item in ticketscart)
-                    {
-                        var ticket = tickets.ToList().FirstOrDefault(s => s.ComboId == item.ComboId);
-                        if (ticket != null)
-                        {
-                            ticket.Quantity = item.Quantity;
-                        }
-                    }
-
-                    if (TempData["Notification"] != null)
-                    {
-                        ViewBag.Notification = TempData["Notification"];
-                    }
-                    ViewBag.gears = tickets;
-                    return View("OrderCombo");
                 }
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Error");
+
             }
         }
         public IActionResult ComboCart(List<int> id, List<string> name, List<decimal> price, List<int> quantity)
@@ -1180,65 +1375,80 @@ namespace GreenGardenClient.Controllers.AdminController
 
 
             }
-            TempData["Notification"] = "Thêm vào giỏ hàng thành công.";
+            TempData["NotificationSuccess"] = "Thêm vào giỏ hàng thành công.";
 
             HttpContext.Session.SetObjectAsJson("ComboCart", cart);
             return RedirectToAction("OrderCombo");
         }
         public IActionResult Cart()
         {
-            var tickets = HttpContext.Session.GetObjectFromJson<List<TicketVM>>("TicketCart") ?? new List<TicketVM>();
-            var gears = HttpContext.Session.GetObjectFromJson<List<GearVM>>("GearCart") ?? new List<GearVM>();
-            var foods = HttpContext.Session.GetObjectFromJson<List<FoodAndDrinkVM>>("FoodCart") ?? new List<FoodAndDrinkVM>();
-            var combos = HttpContext.Session.GetObjectFromJson<List<ComboVM>>("ComboCart") ?? new List<ComboVM>();
-            var combofoods = HttpContext.Session.GetObjectFromJson<List<ComboFoodVM>>("ComboFoodCart") ?? new List<ComboFoodVM>();
-            if(tickets.IsNullOrEmpty()&&combos.IsNullOrEmpty())
+            try
             {
-                TempData["Notification"] = "Phải đặt vé hoặc combo bao gồm vé mới có thể lên đơn.";
+                if (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)
+                {
+                    var tickets = HttpContext.Session.GetObjectFromJson<List<TicketVM>>("TicketCart") ?? new List<TicketVM>();
+                    var gears = HttpContext.Session.GetObjectFromJson<List<GearVM>>("GearCart") ?? new List<GearVM>();
+                    var foods = HttpContext.Session.GetObjectFromJson<List<FoodAndDrinkVM>>("FoodCart") ?? new List<FoodAndDrinkVM>();
+                    var combos = HttpContext.Session.GetObjectFromJson<List<ComboVM>>("ComboCart") ?? new List<ComboVM>();
+                    var combofoods = HttpContext.Session.GetObjectFromJson<List<ComboFoodVM>>("ComboFoodCart") ?? new List<ComboFoodVM>();
+                    if (tickets.IsNullOrEmpty() && combos.IsNullOrEmpty())
+                    {
+                        TempData["NotificationError"] = "Phải đặt vé hoặc combo bao gồm vé mới có thể lên đơn.";
 
-                return RedirectToAction("CreateOrder");
-            }else
-            {
-                var orders = HttpContext.Session.GetObjectFromJson<OrderVM>("OrderCart") ?? new OrderVM();
-                decimal total = 0;
-                foreach (var item in tickets)
-                {
-                    total += item.Quantity * item.Price;
-                }
-                foreach (var item in gears)
-                {
-                    total += item.Quantity * item.RentalPrice;
-                }
-                foreach (var item in foods)
-                {
-                    total += item.Quantity * item.Price;
-                }
-                foreach (var item in combos)
-                {
-                    total += item.Quantity * item.Price;
-                }
-                foreach (var item in combofoods)
-                {
-                    total += item.Quantity * item.Price;
-                }
+                        return RedirectToAction("CreateOrder");
+                    } else
+                    {
+                        var orders = HttpContext.Session.GetObjectFromJson<OrderVM>("OrderCart") ?? new OrderVM();
+                        decimal total = 0;
+                        foreach (var item in tickets)
+                        {
+                            total += item.Quantity * item.Price;
+                        }
+                        foreach (var item in gears)
+                        {
+                            total += item.Quantity * item.RentalPrice;
+                        }
+                        foreach (var item in foods)
+                        {
+                            total += item.Quantity * item.Price;
+                        }
+                        foreach (var item in combos)
+                        {
+                            total += item.Quantity * item.Price;
+                        }
+                        foreach (var item in combofoods)
+                        {
+                            total += item.Quantity * item.Price;
+                        }
 
-                ViewBag.tickets = tickets;
-                ViewBag.gears = gears;
-                ViewBag.foods = foods;
-                ViewBag.order = orders;
-                ViewBag.combos = combos;
-                ViewBag.combofoods = combofoods;
-                ViewBag.Total = total;
-                var viewModel = new DepositVM
+                        ViewBag.tickets = tickets;
+                        ViewBag.gears = gears;
+                        ViewBag.foods = foods;
+                        ViewBag.order = orders;
+                        ViewBag.combos = combos;
+                        ViewBag.combofoods = combofoods;
+                        ViewBag.Total = total;
+                        var viewModel = new DepositVM
+                        {
+
+                            Total = 3_500_000
+                        };
+                        viewModel.CalculateRoundedValues();
+
+                        return View("Cart", viewModel);
+                    }
+                }
+                else
                 {
+                    return RedirectToAction("Error");
 
-                    Total = 3_500_000
-                };
-                viewModel.CalculateRoundedValues();
-
-                return View("Cart", viewModel);
+                }
             }
-            
+            catch (Exception e)
+            {
+                return RedirectToAction("Error");
+
+            }
         }
         [HttpPost]
         public async Task<IActionResult> Order(decimal deposit, decimal total)
@@ -1307,7 +1517,7 @@ namespace GreenGardenClient.Controllers.AdminController
                     if (response.IsSuccessStatusCode)
                     {
                         var result = await response.Content.ReadAsStringAsync();
-                        TempData["Notification"] = "Tạo đơn thành công.";
+                        TempData["NotificationSuccess"] = "Tạo đơn thành công.";
                         // Xóa OrderCart
                         HttpContext.Session.Remove("OrderCart");
 
@@ -1338,13 +1548,12 @@ namespace GreenGardenClient.Controllers.AdminController
                     else
                     {
                         var errorMessage = await response.Content.ReadAsStringAsync();
-                        TempData["Notification"] = "Tạo đơn thất bại.";
-                        return RedirectToAction("Error");  // Return success message or redirect if needed
+                        TempData["NotificationError"] = "Tạo đơn thất bại.";
+                        return RedirectToAction("CreateOrder");  // Return success message or redirect if needed
                     }
                 }
                 catch (Exception ex)
                 {
-                    TempData["Notification"] = "Xảy ra lỗi ngoài luồng khi tạo đơn.";
 
                     return RedirectToAction("Error");  // Return success message or redirect if needed
                 }
@@ -1400,7 +1609,7 @@ namespace GreenGardenClient.Controllers.AdminController
                     if (response.IsSuccessStatusCode)
                     {
                         var result = await response.Content.ReadAsStringAsync();
-                        TempData["Notification"] = "Tạo đơn thành công.";
+                        TempData["NotificationSuccess"] = "Tạo đơn thành công.";
                         HttpContext.Session.Remove("OrderCart");
 
                         // Xóa TicketCart
@@ -1431,8 +1640,8 @@ namespace GreenGardenClient.Controllers.AdminController
                     else
                     {
                         var errorMessage = await response.Content.ReadAsStringAsync();
-                        TempData["Notification"] = "Tạo đơn thất bại.";
-                        return RedirectToAction("Error");  // Return success message or redirect if needed
+                        TempData["NotificationError"] = "Tạo đơn thất bại.";
+                        return RedirectToAction("CreateOrder");  // Return success message or redirect if needed
                     }
                 }
                 catch (Exception ex)
@@ -1460,7 +1669,7 @@ namespace GreenGardenClient.Controllers.AdminController
 
             // Xóa FoodCart
             HttpContext.Session.Remove("FoodCart");
-            TempData["Notification"] = "Đã xóa hết sản phẩm trong giỏ hàng";
+            TempData["NotificationSuccess"] = "Đã khởi tạo lại đơn!";
 
             // Xóa ComboFoodCart
             HttpContext.Session.Remove("ComboFoodCart");
@@ -1472,53 +1681,63 @@ namespace GreenGardenClient.Controllers.AdminController
         {
             try
             {
-                var jwtToken = Request.Cookies["JWTToken"];
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
-                OrderDetailVM orderdata = GetDataFromApi<OrderDetailVM>($"https://localhost:7298/api/OrderManagement/GetOrderDetail/{id}");
 
-
-                int daysDifference = (DateTime.Now.Date - orderdata.OrderUsageDate.Value.Date).Days;
-                if (daysDifference >= 1)
+                if (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)
                 {
-                    if (orderdata.ActivityId == 2)
+                    var jwtToken = Request.Cookies["JWTToken"];
+                    _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
+                    OrderDetailVM orderdata = GetDataFromApi<OrderDetailVM>($"https://localhost:7298/api/OrderManagement/GetOrderDetail/{id}");
+
+
+                    int daysDifference = (DateTime.Now.Date - orderdata.OrderUsageDate.Value.Date).Days;
+                    if (daysDifference >= 1)
                     {
-                        decimal money_ticket = 0;
-                        decimal money_ticketday = 0;
-                        foreach (var item in orderdata.OrderTicketDetails)
+                        if (orderdata.ActivityId == 2)
                         {
-                            money_ticketday += (item.Price * (decimal)item.Quantity) * (daysDifference + 1);
-                            money_ticket += (item.Price * (decimal)item.Quantity);
+                            decimal money_ticket = 0;
+                            decimal money_ticketday = 0;
+                            foreach (var item in orderdata.OrderTicketDetails)
+                            {
+                                money_ticketday += (item.Price * (decimal)item.Quantity) * (daysDifference + 1);
+                                money_ticket += (item.Price * (decimal)item.Quantity);
+                            }
+                            orderdata.TotalAmount = orderdata.TotalAmount - money_ticket + money_ticketday;
+                            orderdata.OrderCheckoutDate = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-ddTHH:mm"));
+                            orderdata.AmountPayable = orderdata.TotalAmount - orderdata.Deposit;
                         }
-                        orderdata.TotalAmount = orderdata.TotalAmount - money_ticket + money_ticketday;
-                        orderdata.OrderCheckoutDate = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-ddTHH:mm"));
-                        orderdata.AmountPayable = orderdata.TotalAmount - orderdata.Deposit;
+
                     }
+                    UpdateOrderDTO updateorder = new UpdateOrderDTO()
+                    {
+                        OrderId = orderdata.OrderId,
+                        OrderUsageDate = orderdata.OrderUsageDate,
+                        TotalAmount = orderdata.TotalAmount,
+                        OrderCheckoutDate = orderdata.OrderCheckoutDate != null ? orderdata.OrderCheckoutDate : DateTime.Parse(DateTime.Now.ToString("yyyy-MM-ddTHH:mm"))
+                    };
+
+                    if (orderdata.ActivityId == 2 || orderdata.ActivityId == 1)
+                    {
+                        HttpContext.Session.SetObjectAsJson("order", updateorder);
+                        HttpContext.Session.SetObjectAsJson("TicketUpdateCart", orderdata.OrderTicketDetails);
+                        HttpContext.Session.SetObjectAsJson("ComboUpdateCart", orderdata.OrderComboDetails);
+                        HttpContext.Session.SetObjectAsJson("ComboFoodUpdateCart", orderdata.OrderFoodComboDetails);
+                        HttpContext.Session.SetObjectAsJson("FoodUpdateCart", orderdata.OrderFoodDetails);
+                        HttpContext.Session.SetObjectAsJson("GearUpdateCart", orderdata.OrderCampingGearDetails);
+                    }
+                    if (TempData["NotificationSuccess"] != null)
+                    {
+                        ViewBag.NotificationSuccess = TempData["NotificationSuccess"];
+                    }
+                    if (TempData["NotificationError"] != null)
+                    {
+                        ViewBag.NotificationSuccess = TempData["NotificationError"];
+                    }
+                    ViewBag.date = daysDifference + 1;
+                    return View("OrderDetail", orderdata);
+                } else {
+                    return RedirectToAction("Error");
 
                 }
-                UpdateOrderDTO updateorder = new UpdateOrderDTO()
-                {
-                    OrderId = orderdata.OrderId,
-                    OrderUsageDate = orderdata.OrderUsageDate,
-                    TotalAmount = orderdata.TotalAmount,
-                    OrderCheckoutDate = orderdata.OrderCheckoutDate != null ? orderdata.OrderCheckoutDate : DateTime.Parse(DateTime.Now.ToString("yyyy-MM-ddTHH:mm"))
-                };
-
-                if (orderdata.ActivityId == 2 || orderdata.ActivityId == 1)
-                {
-                    HttpContext.Session.SetObjectAsJson("order", updateorder);
-                    HttpContext.Session.SetObjectAsJson("TicketUpdateCart", orderdata.OrderTicketDetails);
-                    HttpContext.Session.SetObjectAsJson("ComboUpdateCart", orderdata.OrderComboDetails);
-                    HttpContext.Session.SetObjectAsJson("ComboFoodUpdateCart", orderdata.OrderFoodComboDetails);
-                    HttpContext.Session.SetObjectAsJson("FoodUpdateCart", orderdata.OrderFoodDetails);
-                    HttpContext.Session.SetObjectAsJson("GearUpdateCart", orderdata.OrderCampingGearDetails);
-                }
-                if (TempData["Notification"] != null)
-                {
-                    ViewBag.Notification = TempData["Notification"];
-                }
-                ViewBag.date = daysDifference + 1;
-                return View("OrderDetail", orderdata);
-
             }
             catch (Exception e)
             {
@@ -1532,78 +1751,110 @@ namespace GreenGardenClient.Controllers.AdminController
         [HttpGet]
         public IActionResult ChangeUsagedate(int idorder, DateTime? changedate)
         {
-            var jwtToken = Request.Cookies["JWTToken"];
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
-            OrderDetailVM orderdata = GetDataFromApi<OrderDetailVM>($"https://localhost:7298/api/OrderManagement/GetOrderDetail/{idorder}");
-            string formattedDate = changedate.Value.ToString("yyyy-MM-dd");
-
-            List<GearVM> tickets = GetDataFromApi<List<GearVM>>("https://localhost:7298/api/CampingGear/GetAllCampingGears");
-            List<OrderCampingGearByUsageDateDTO> ordergear = GetDataFromApi<List<OrderCampingGearByUsageDateDTO>>($"https://localhost:7298/api/OrderManagement/GetListOrderGearByUsageDate/{formattedDate}");
-            foreach (var item in tickets)
+            try
             {
-                var ticket = ordergear.ToList().Where(s => s.GearId == item.GearId);
-                if (ticket != null)
+                if (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)
                 {
-                    foreach (var item1 in ticket)
+                    var jwtToken = Request.Cookies["JWTToken"];
+                    _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
+                    OrderDetailVM orderdata = GetDataFromApi<OrderDetailVM>($"https://localhost:7298/api/OrderManagement/GetOrderDetail/{idorder}");
+                    string formattedDate = changedate.Value.ToString("yyyy-MM-dd");
+
+                    List<GearVM> tickets = GetDataFromApi<List<GearVM>>("https://localhost:7298/api/CampingGear/GetAllCampingGears");
+                    List<OrderCampingGearByUsageDateDTO> ordergear = GetDataFromApi<List<OrderCampingGearByUsageDateDTO>>($"https://localhost:7298/api/OrderManagement/GetListOrderGearByUsageDate/{formattedDate}");
+                    foreach (var item in tickets)
                     {
-                        item.QuantityAvailable = item.QuantityAvailable - item1.Quantity.Value;
+                        var ticket = ordergear.ToList().Where(s => s.GearId == item.GearId);
+                        if (ticket != null)
+                        {
+                            foreach (var item1 in ticket)
+                            {
+                                item.QuantityAvailable = item.QuantityAvailable - item1.Quantity.Value;
+                            }
+                        }
                     }
+                    foreach (var item in orderdata.OrderCampingGearDetails)
+                    {
+                        var ticket = tickets.FirstOrDefault(s => item.GearId == s.GearId);
+                        item.QuantityAvaiable = ticket.QuantityAvailable;
+                    }
+                    UpdateOrderDTO updateorder = new UpdateOrderDTO()
+                    {
+                        OrderId = orderdata.OrderId,
+                        OrderUsageDate = changedate,
+                        TotalAmount = orderdata.TotalAmount,
+                    };
+
+                    HttpContext.Session.SetObjectAsJson("order", updateorder);
+                    HttpContext.Session.SetObjectAsJson("GearUpdateDateCart", orderdata.OrderCampingGearDetails);
+
+                    if (TempData["NotificationSuccess"] != null)
+                    {
+                        ViewBag.NotificationSuccess = TempData["NotificationSuccess"];
+                    }
+                    if (TempData["NotificationError"] != null)
+                    {
+                        ViewBag.NotificationSuccess = TempData["NotificationError"];
+                    }
+                    return View("ChangeUsagedate", orderdata);
+                }
+                else
+                {
+                    return RedirectToAction("Error");
+
                 }
             }
-            foreach (var item in orderdata.OrderCampingGearDetails)
+            catch (Exception e)
             {
-                var ticket = tickets.FirstOrDefault(s => item.GearId == s.GearId);
-                item.QuantityAvaiable = ticket.QuantityAvailable;
+                return RedirectToAction("Error");
             }
-            UpdateOrderDTO updateorder = new UpdateOrderDTO()
-            {
-                OrderId = orderdata.OrderId,
-                OrderUsageDate = changedate,
-                TotalAmount = orderdata.TotalAmount,
-            };
-
-            HttpContext.Session.SetObjectAsJson("order", updateorder);
-            HttpContext.Session.SetObjectAsJson("GearUpdateDateCart", orderdata.OrderCampingGearDetails);
-
-            if (TempData["Notification"] != null)
-            {
-                ViewBag.Notification = TempData["Notification"];
-            }
-            return View("ChangeUsagedate", orderdata);
         }
         public IActionResult UpdateGearChangeDate()
         {
-            var ticketscart = HttpContext.Session.GetObjectFromJson<List<OrderCampingGearDetailDTO>>("GearUpdateDateCart") ?? new List<OrderCampingGearDetailDTO>();
-            var order = HttpContext.Session.GetObjectFromJson<UpdateOrderDTO>("order") ?? new UpdateOrderDTO();
-            string formattedDate = order.OrderUsageDate.Value.ToString("yyyy-MM-dd");
-            var jwtToken = Request.Cookies["JWTToken"];
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
-            List<GearVM> tickets = GetDataFromApi<List<GearVM>>("https://localhost:7298/api/CampingGear/GetAllCampingGears");
-            List<OrderCampingGearByUsageDateDTO> ordergear = GetDataFromApi<List<OrderCampingGearByUsageDateDTO>>($"https://localhost:7298/api/OrderManagement/GetListOrderGearByUsageDate/{formattedDate}");
-            foreach (var item in tickets)
+            try
             {
-                var ticket = ordergear.ToList().Where(s => s.GearId == item.GearId);
-                if (ticket != null)
+                if (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)
                 {
-                    foreach (var item1 in ticket)
+                    var ticketscart = HttpContext.Session.GetObjectFromJson<List<OrderCampingGearDetailDTO>>("GearUpdateDateCart") ?? new List<OrderCampingGearDetailDTO>();
+                    var order = HttpContext.Session.GetObjectFromJson<UpdateOrderDTO>("order") ?? new UpdateOrderDTO();
+                    string formattedDate = order.OrderUsageDate.Value.ToString("yyyy-MM-dd");
+                    var jwtToken = Request.Cookies["JWTToken"];
+                    _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
+                    List<GearVM> tickets = GetDataFromApi<List<GearVM>>("https://localhost:7298/api/CampingGear/GetAllCampingGears");
+                    List<OrderCampingGearByUsageDateDTO> ordergear = GetDataFromApi<List<OrderCampingGearByUsageDateDTO>>($"https://localhost:7298/api/OrderManagement/GetListOrderGearByUsageDate/{formattedDate}");
+                    foreach (var item in tickets)
                     {
-                        item.QuantityAvailable = item.QuantityAvailable - item1.Quantity.Value;
+                        var ticket = ordergear.ToList().Where(s => s.GearId == item.GearId);
+                        if (ticket != null)
+                        {
+                            foreach (var item1 in ticket)
+                            {
+                                item.QuantityAvailable = item.QuantityAvailable - item1.Quantity.Value;
+                            }
+                        }
                     }
+
+                    foreach (var item in ticketscart)
+                    {
+                        var ticket = tickets.ToList().FirstOrDefault(s => s.GearId == item.GearId);
+                        if (ticket != null)
+                        {
+                            ticket.Quantity = item.Quantity.Value;
+                        }
+                    }
+
+                    ViewBag.id = order.OrderId;
+                    ViewBag.gears = tickets;
+                    return View("UpdateGearChangeDate");
+                } else {
+                    return RedirectToAction("Error");
+
                 }
             }
-
-            foreach (var item in ticketscart)
+            catch (Exception e)
             {
-                var ticket = tickets.ToList().FirstOrDefault(s => s.GearId == item.GearId);
-                if (ticket != null)
-                {
-                    ticket.Quantity = item.Quantity.Value;
-                }
+                return RedirectToAction("Error");
             }
-
-            ViewBag.id = order.OrderId;
-            ViewBag.gears = tickets;
-            return View("UpdateGearChangeDate");
         }
         [HttpPost]
         public async Task<IActionResult> UpdateGearChangeDate(List<int> id, List<decimal> price, List<int> quantity)
@@ -1669,7 +1920,7 @@ namespace GreenGardenClient.Controllers.AdminController
                     if (response1.IsSuccessStatusCode)
                     {
                         // Both updates were successful
-                        TempData["Notification"] = "Đơn đã cập nhập lại và chuyển ngày thành công.";
+                        TempData["NotificationSuccess"] = "Đơn đã cập nhập lại và chuyển ngày thành công.";
                         return RedirectToAction("ChangeUsagedate", new { idorder = order.OrderId, changedate = order.OrderUsageDate });
                     }
                     else
@@ -1698,26 +1949,45 @@ namespace GreenGardenClient.Controllers.AdminController
         [HttpGet]
         public IActionResult UpdateTicket()
         {
-            var order = HttpContext.Session.GetObjectFromJson<UpdateOrderDTO>("order") ?? new UpdateOrderDTO();
-
-            var ticketscart = HttpContext.Session.GetObjectFromJson<List<OrderTicketDetailDTO>>("TicketUpdateCart") ?? new List<OrderTicketDetailDTO>();
-            List<TicketVM> tickets = GetDataFromApi<List<TicketVM>>("https://localhost:7298/api/Ticket/GetAllTickets");
-
-            foreach (var item in ticketscart)
+            try
             {
-                var ticket = tickets.ToList().FirstOrDefault(s => s.TicketId == item.TicketId);
-                if (ticket != null)
+                if (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)
                 {
-                    ticket.Quantity = item.Quantity.Value;
+                    var order = HttpContext.Session.GetObjectFromJson<UpdateOrderDTO>("order") ?? new UpdateOrderDTO();
+
+                    var ticketscart = HttpContext.Session.GetObjectFromJson<List<OrderTicketDetailDTO>>("TicketUpdateCart") ?? new List<OrderTicketDetailDTO>();
+                    List<TicketVM> tickets = GetDataFromApi<List<TicketVM>>("https://localhost:7298/api/Ticket/GetAllTickets");
+
+                    foreach (var item in ticketscart)
+                    {
+                        var ticket = tickets.ToList().FirstOrDefault(s => s.TicketId == item.TicketId);
+                        if (ticket != null)
+                        {
+                            ticket.Quantity = item.Quantity.Value;
+                        }
+                    }
+                    if (TempData["NotificationSuccess"] != null)
+                    {
+                        ViewBag.NotificationSuccess = TempData["NotificationSuccess"];
+                    }
+                    if (TempData["NotificationError"] != null)
+                    {
+                        ViewBag.NotificationSuccess = TempData["NotificationError"];
+                    }
+                    ViewBag.id = order.OrderId;
+                    ViewBag.tickets = tickets;
+                    return View("UpdateTicket");
+                }
+                else
+                {
+                    return RedirectToAction("Error");
+
                 }
             }
-            if (TempData["Notification"] != null)
+            catch (Exception e)
             {
-                ViewBag.Notification = TempData["Notification"];
+                return RedirectToAction("Error");
             }
-            ViewBag.id = order.OrderId;
-            ViewBag.tickets = tickets;
-            return View("UpdateTicket");
 
 
 
@@ -1786,7 +2056,7 @@ namespace GreenGardenClient.Controllers.AdminController
                     if (response1.IsSuccessStatusCode)
                     {
                         // Both updates were successful
-                        TempData["Notification"] = "Cập nhập lại vé thành công.";
+                        TempData["NotificationSuccess"] = "Cập nhập lại vé thành công.";
                         return RedirectToAction("OrderDetail", new { id = order.OrderId });
                     }
                     else
@@ -1816,37 +2086,52 @@ namespace GreenGardenClient.Controllers.AdminController
         }
         public IActionResult UpdateGear()
         {
-            var ticketscart = HttpContext.Session.GetObjectFromJson<List<OrderCampingGearDetailDTO>>("GearUpdateCart") ?? new List<OrderCampingGearDetailDTO>();
-            var order = HttpContext.Session.GetObjectFromJson<UpdateOrderDTO>("order") ?? new UpdateOrderDTO();
-            string formattedDate = order.OrderUsageDate.Value.ToString("yyyy-MM-dd");
-            var jwtToken = Request.Cookies["JWTToken"];
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
-            List<GearVM> tickets = GetDataFromApi<List<GearVM>>("https://localhost:7298/api/CampingGear/GetAllCampingGears");
-            List<OrderCampingGearByUsageDateDTO> ordergear = GetDataFromApi<List<OrderCampingGearByUsageDateDTO>>($"https://localhost:7298/api/OrderManagement/GetListOrderGearByUsageDate/{formattedDate}");
-            foreach (var item in tickets)
+            try
             {
-                var ticket = ordergear.ToList().Where(s => s.GearId == item.GearId);
-                if (ticket != null)
+                if (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)
                 {
-                    foreach (var item1 in ticket)
+                    var ticketscart = HttpContext.Session.GetObjectFromJson<List<OrderCampingGearDetailDTO>>("GearUpdateCart") ?? new List<OrderCampingGearDetailDTO>();
+                    var order = HttpContext.Session.GetObjectFromJson<UpdateOrderDTO>("order") ?? new UpdateOrderDTO();
+                    string formattedDate = order.OrderUsageDate.Value.ToString("yyyy-MM-dd");
+                    var jwtToken = Request.Cookies["JWTToken"];
+                    _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
+                    List<GearVM> tickets = GetDataFromApi<List<GearVM>>("https://localhost:7298/api/CampingGear/GetAllCampingGears");
+                    List<OrderCampingGearByUsageDateDTO> ordergear = GetDataFromApi<List<OrderCampingGearByUsageDateDTO>>($"https://localhost:7298/api/OrderManagement/GetListOrderGearByUsageDate/{formattedDate}");
+                    foreach (var item in tickets)
                     {
-                        item.QuantityAvailable = item.QuantityAvailable - item1.Quantity.Value;
+                        var ticket = ordergear.ToList().Where(s => s.GearId == item.GearId);
+                        if (ticket != null)
+                        {
+                            foreach (var item1 in ticket)
+                            {
+                                item.QuantityAvailable = item.QuantityAvailable - item1.Quantity.Value;
+                            }
+                        }
                     }
-                }
-            }
 
-            foreach (var item in ticketscart)
-            {
-                var ticket = tickets.ToList().FirstOrDefault(s => s.GearId == item.GearId);
-                if (ticket != null)
+                    foreach (var item in ticketscart)
+                    {
+                        var ticket = tickets.ToList().FirstOrDefault(s => s.GearId == item.GearId);
+                        if (ticket != null)
+                        {
+                            ticket.Quantity = item.Quantity.Value;
+                        }
+                    }
+
+                    ViewBag.id = order.OrderId;
+                    ViewBag.gears = tickets;
+                    return View("UpdateGear");
+                }
+                else
                 {
-                    ticket.Quantity = item.Quantity.Value;
+                    return RedirectToAction("Error");
+
                 }
             }
-
-            ViewBag.id = order.OrderId;
-            ViewBag.gears = tickets;
-            return View("UpdateGear");
+            catch (Exception e)
+            {
+                return RedirectToAction("Error");
+            }
         }
         [HttpPost]
         public async Task<IActionResult> UpdateGear(List<int> id, List<decimal> price, List<int> quantity)
@@ -1912,7 +2197,7 @@ namespace GreenGardenClient.Controllers.AdminController
                     if (response1.IsSuccessStatusCode)
                     {
                         // Both updates were successful
-                        TempData["Notification"] = "Cập nhập lại đồ dùng cắm trại thành công.";
+                        TempData["NotificationSuccess"] = "Cập nhập lại đồ dùng cắm trại thành công.";
                         return RedirectToAction("OrderDetail", new { id = order.OrderId });
                     }
                     else
@@ -1941,25 +2226,40 @@ namespace GreenGardenClient.Controllers.AdminController
 
         public IActionResult UpdateFood()
         {
-            var ticketscart = HttpContext.Session.GetObjectFromJson<List<OrderFoodDetailDTO>>("FoodUpdateCart") ?? new List<OrderFoodDetailDTO>();
-            var order = HttpContext.Session.GetObjectFromJson<UpdateOrderDTO>("order") ?? new UpdateOrderDTO();
-
-            List<FoodAndDrinkVM> foodAndDrinks = GetDataFromApi<List<FoodAndDrinkVM>>("https://localhost:7298/api/FoodAndDrink/GetAllFoodAndDrink");
-
-            foreach (var item in ticketscart)
+            try
             {
-                var ticket = foodAndDrinks.ToList().FirstOrDefault(s => s.ItemId == item.ItemId);
-                if (ticket != null)
+                if (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)
                 {
-                    ticket.Description = item.Description;
-                    ticket.Quantity = item.Quantity.Value;
+                    var ticketscart = HttpContext.Session.GetObjectFromJson<List<OrderFoodDetailDTO>>("FoodUpdateCart") ?? new List<OrderFoodDetailDTO>();
+                    var order = HttpContext.Session.GetObjectFromJson<UpdateOrderDTO>("order") ?? new UpdateOrderDTO();
+
+                    List<FoodAndDrinkVM> foodAndDrinks = GetDataFromApi<List<FoodAndDrinkVM>>("https://localhost:7298/api/FoodAndDrink/GetAllFoodAndDrink");
+
+                    foreach (var item in ticketscart)
+                    {
+                        var ticket = foodAndDrinks.ToList().FirstOrDefault(s => s.ItemId == item.ItemId);
+                        if (ticket != null)
+                        {
+                            ticket.Description = item.Description;
+                            ticket.Quantity = item.Quantity.Value;
+                        }
+                    }
+
+                    ViewBag.id = order.OrderId;
+
+                    ViewBag.gears = foodAndDrinks;
+                    return View("UpdateFood");
+                }
+                else
+                {
+                    return RedirectToAction("Error");
+
                 }
             }
-
-            ViewBag.id = order.OrderId;
-
-            ViewBag.gears = foodAndDrinks;
-            return View("UpdateFood");
+            catch (Exception e)
+            {
+                return RedirectToAction("Error");
+            }
         }
         [HttpPost]
         public async Task<IActionResult> UpdateFood(List<int> id, List<decimal> price, List<int> quantity, List<string> description)
@@ -2025,7 +2325,7 @@ namespace GreenGardenClient.Controllers.AdminController
                     if (response1.IsSuccessStatusCode)
                     {
                         // Both updates were successful
-                        TempData["Notification"] = "Cập nhập lại đồ ăn thành công.";
+                        TempData["NotificationSuccess"] = "Cập nhập lại đồ ăn thành công.";
                         return RedirectToAction("OrderDetail", new { id = order.OrderId });
                     }
                     else
@@ -2056,25 +2356,40 @@ namespace GreenGardenClient.Controllers.AdminController
 
         public IActionResult UpdateComboFood()
         {
-            var ticketscart = HttpContext.Session.GetObjectFromJson<List<OrderFoodComboDetailDTO>>("ComboFoodUpdateCart") ?? new List<OrderFoodComboDetailDTO>();
-            var order = HttpContext.Session.GetObjectFromJson<UpdateOrderDTO>("order") ?? new UpdateOrderDTO();
-
-            List<ComboFoodVM> tickets = GetDataFromApi<List<ComboFoodVM>>("https://localhost:7298/api/ComboFood/GetAllOrders");
-
-            foreach (var item in ticketscart)
+            try
             {
-                var ticket = tickets.ToList().FirstOrDefault(s => s.ComboId == item.ComboId);
-                if (ticket != null)
+                if (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)
                 {
-                    ticket.Quantity = item.Quantity.Value;
+                    var ticketscart = HttpContext.Session.GetObjectFromJson<List<OrderFoodComboDetailDTO>>("ComboFoodUpdateCart") ?? new List<OrderFoodComboDetailDTO>();
+                    var order = HttpContext.Session.GetObjectFromJson<UpdateOrderDTO>("order") ?? new UpdateOrderDTO();
+
+                    List<ComboFoodVM> tickets = GetDataFromApi<List<ComboFoodVM>>("https://localhost:7298/api/ComboFood/GetAllOrders");
+
+                    foreach (var item in ticketscart)
+                    {
+                        var ticket = tickets.ToList().FirstOrDefault(s => s.ComboId == item.ComboId);
+                        if (ticket != null)
+                        {
+                            ticket.Quantity = item.Quantity.Value;
+                        }
+                    }
+
+
+                    ViewBag.gears = tickets;
+                    ViewBag.id = order.OrderId;
+
+                    return View("UpdateComboFood");
+                }
+                else
+                {
+                    return RedirectToAction("Error");
+
                 }
             }
-
-
-            ViewBag.gears = tickets;
-            ViewBag.id = order.OrderId;
-
-            return View("UpdateComboFood");
+            catch (Exception e)
+            {
+                return RedirectToAction("Error");
+            }
         }
         [HttpPost]
         public async Task<IActionResult> UpdateComboFood(List<int> id, List<decimal> price, List<int> quantity)
@@ -2139,7 +2454,7 @@ namespace GreenGardenClient.Controllers.AdminController
                     if (response1.IsSuccessStatusCode)
                     {
                         // Both updates were successful
-                        TempData["Notification"] = "Cập nhập lại combo đồ ăn thành công.";
+                        TempData["NotificationSuccess"] = "Cập nhập lại combo đồ ăn thành công.";
                         return RedirectToAction("OrderDetail", new { id = order.OrderId });
 
                     }
@@ -2167,29 +2482,45 @@ namespace GreenGardenClient.Controllers.AdminController
         }
         public IActionResult UpdateCombo()
         {
-            var ticketscart = HttpContext.Session.GetObjectFromJson<List<ComboVM>>("ComboUpdateCart") ?? new List<ComboVM>();
-            var order = HttpContext.Session.GetObjectFromJson<UpdateOrderDTO>("order") ?? new UpdateOrderDTO();
-
-            List<ComboVM> tickets = GetDataFromApi<List<ComboVM>>("https://localhost:7298/api/Combo/GetAllCombos");
-
-            foreach (var item in ticketscart)
+            try
             {
-                var ticket = tickets.ToList().FirstOrDefault(s => s.ComboId == item.ComboId);
-                if (ticket != null)
+                if (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)
                 {
-                    ticket.Quantity = item.Quantity;
+                    var ticketscart = HttpContext.Session.GetObjectFromJson<List<ComboVM>>("ComboUpdateCart") ?? new List<ComboVM>();
+                    var order = HttpContext.Session.GetObjectFromJson<UpdateOrderDTO>("order") ?? new UpdateOrderDTO();
+
+                    List<ComboVM> tickets = GetDataFromApi<List<ComboVM>>("https://localhost:7298/api/Combo/GetAllCombos");
+
+                    foreach (var item in ticketscart)
+                    {
+                        var ticket = tickets.ToList().FirstOrDefault(s => s.ComboId == item.ComboId);
+                        if (ticket != null)
+                        {
+                            ticket.Quantity = item.Quantity;
+                        }
+                    }
+
+                    ViewBag.id = order.OrderId;
+
+                    ViewBag.gears = tickets;
+                    return View("UpdateCombo");
+                }
+                else
+                {
+                    return RedirectToAction("Error");
+
                 }
             }
-
-            ViewBag.id = order.OrderId;
-
-            ViewBag.gears = tickets;
-            return View("UpdateCombo");
-        }
-
+            catch (Exception e)
+            {
+                return RedirectToAction("Error");
+            }
+        } 
+    
         [HttpPost]
         public async Task<IActionResult> UpdateCombo(List<int> id, List<decimal> price, List<int> quantity)
         {
+            
             var order = HttpContext.Session.GetObjectFromJson<UpdateOrderDTO>("order") ?? new UpdateOrderDTO();
             var ticketscart = HttpContext.Session.GetObjectFromJson<List<OrderComboDetailDTO>>("ComboUpdateCart") ?? new List<OrderComboDetailDTO>();
 
@@ -2252,7 +2583,7 @@ namespace GreenGardenClient.Controllers.AdminController
                     if (response1.IsSuccessStatusCode)
                     {
                         // Both updates were successful
-                        TempData["Notification"] = "Cập nhập lại combo thành công.";
+                        TempData["NotificationSuccess"] = "Cập nhập lại combo thành công.";
                         return RedirectToAction("OrderDetail", new { id = order.OrderId });
                     }
                     else

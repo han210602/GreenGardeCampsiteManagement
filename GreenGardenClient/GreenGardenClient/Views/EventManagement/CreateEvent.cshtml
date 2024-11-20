@@ -2,7 +2,7 @@
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
 @using GreenGardenClient.Models
-
+@model GreenGardenClient.Models.EventVM
 
 @{
     if (ViewBag.Notification != null)
@@ -296,7 +296,73 @@
         </ul>
 
     </header>
+    @{
+        if (@TempData["NotificationSuccess"] != null)
+        {
+            <div id="notification-success" class="notification alert alert-success" role="alert">
+                <i class="fas fa-bell"></i> <!-- Bell Icon -->
+                @TempData["NotificationSuccess"]
+            </div>
+        }
+    }
+    @{
+        if (@TempData["NotificationError"] != null)
+        {
+            <div id="notification-success" class="notification alert alert-danger" role="alert">
+                <i class="fas fa-bell"></i> <!-- Bell Icon -->
+                @TempData["NotificationError"]
+            </div>
+        }
+    }
+    <style>
+        .notification {
+            position: fixed;
+            top: 20px; /* Distance from the top */
+            right: -350px; /* Start outside the viewport */
+            z-index: 1050; /* Ensure it appears above other elements */
+            opacity: 1; /* Fully visible initially */
+            transition: transform 0.5s ease-out, opacity 1s ease-out; /* Smooth slide and fade effects */
+            max-width: 300px; /* Restrict maximum width */
+            padding: 15px; /* Padding inside the notification */
+            border-radius: 5px; /* Rounded corners */
+        }
 
+        /* Success notification styles */
+        .alert-success {
+            background-color: #d4edda; /* Light green background */
+            color: #155724; /* Dark green text */
+            border: 1px solid #c3e6cb; /* Green border */
+        }
+
+        /* Error notification styles */
+        .alert-danger {
+            background-color: #f8d7da; /* Light red background */
+            color: #721c24; /* Dark red text */
+            border: 1px solid #f5c6cb; /* Red border */
+        }
+    </style>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            function showAndHideNotification(selector) {
+                if ($(selector).length) {
+                    // Slide notification into view
+                    $(selector).css("transform", "translateX(-350px)"); // Slide in
+                    setTimeout(function () {
+                        // Slide notification back out after 5 seconds
+                        $(selector).css("transform", "translateX(0)"); // Slide out
+                        $(selector).css("opacity", "0"); // Optional fade-out effect
+                    }, 5000); // Display for 5 seconds before sliding out
+                }
+            }
+
+            // Show success and error notifications
+            showAndHideNotification("#notification-success");
+            showAndHideNotification("#notification-error");
+        });
+    </script>
     <!-- Sidebar menu-->
     <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
     <aside class="app-sidebar">
@@ -500,33 +566,41 @@
                                     <div class="form-fields col-md-8">
                                         <div class="mb-3">
                                             <label for="EventName" class="form-label">Tên sự kiện:</label>
-                                            <input type="text" class="form-control form-control-sm" id="EventName" name="EventName" placeholder="Nhập tên sự kiện" required>
+                                            <input type="text" class="form-control form-control-sm" id="EventName" name="EventName" value="@Model.EventName" placeholder="Nhập tên sự kiện">
                                         </div>
-
+                                        <span asp-validation-for="EventName" class="text-danger"></span>
                                         <div class="mb-3">
                                             <label for="Description" class="form-label">Mô tả:</label>
-                                            <textarea class="form-control form-control-sm" id="Description" name="Description" rows="3" placeholder="Nhập mô tả"></textarea>
+                                            <textarea class="form-control form-control-sm" id="Description" value="@Model.EventName" name="Description" rows="3" placeholder="Nhập mô tả"></textarea>
                                         </div>
                                         <div class="mb-3">
                                             <label for="EventDate" class="form-label">Ngày sự kiện:</label>
-                                            <input type="date" class="form-control form-control-sm" id="EventDate" name="EventDate" required>
+                                            <input type="date"
+                                                   class="form-control form-control-sm"
+                                                   value="@(Model.EventDate==null ? DateTime.Today: Model.EventDate)"
+                                                   id="EventDate"
+                                                   name="EventDate">
                                         </div>
+                                        <span asp-validation-for="EventDate" class="text-danger"></span>
 
                                         <div class="mb-3 row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-6"> 
                                                 <label for="StartTime" class="form-label">Thời gian bắt đầu:</label>
-                                                <input type="time" class="form-control form-control-sm" id="StartTime" name="StartTime" required>
+                                                <input type="time" class="form-control form-control-sm" id="StartTime" value="@Model.StartTime" name="StartTime">
+                                                <span asp-validation-for="StartTime" class="text-danger"></span>
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="EndTime" class="form-label">Thời gian kết thúc:</label>
-                                                <input type="time" class="form-control form-control-sm" id="EndTime" name="EndTime" required>
+                                                <input type="time" class="form-control form-control-sm" id="EndTime" value="@Model.EndTime" name="EndTime">
+                                                <span asp-validation-for="EndTime" class="text-danger"></span>
                                             </div>
                                         </div>
                                         <div class="text-danger" id="error-message" style="display: none;"></div>
                                         <div class="mb-3">
                                             <label for="Location" class="form-label">Địa điểm:</label>
-                                            <input type="text" class="form-control form-control-sm" id="Location" name="Location" placeholder="Nhập địa điểm">
+                                            <input type="text" class="form-control form-control-sm" id="Location" value="@(Model.Location!=null?Model.Location:"Gần đình chùa Quán Tính,Giang Biên,Long Biên,Hà Nội")" name="Location" placeholder="Nhập địa điểm">
                                         </div>
+                                        <span asp-validation-for="Location" class="text-danger"></span>
                                     </div>
 
                                     <!-- Phần tải lên file ảnh và xem trước ảnh ở bên phải -->

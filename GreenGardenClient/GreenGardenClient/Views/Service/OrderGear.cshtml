@@ -176,6 +176,7 @@
                     z-index: 10;
                     white-space: nowrap; /* Prevent text wrapping */
                 }
+
                 .site-navbar {
                     position: fixed; /* Cố định header */
                     top: 0; /* Đặt header ở đầu trang */
@@ -184,13 +185,14 @@
                     z-index: 1000; /* Đảm bảo header nằm trên các phần tử khác */
                     background-color: #f6f5f5 !important;
                     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ cho header */
-                    padding: 0 0; /* Khoảng cách trên và dưới */
+                    padding: 10px 0; /* Khoảng cách trên và dưới */
                 }
 
                     /* Khoảng trống bên dưới để bù cho chiều cao header */
                     .site-navbar + .content {
                         padding-top: 70px; /* Điều chỉnh theo chiều cao thực tế của header */
                     }
+
                 .site-menu .dropdown {
                     display: none; /* Ẩn menu thả xuống */
                     position: absolute; /* Để menu thả xuống xuất hiện bên dưới mục Services */
@@ -263,15 +265,6 @@
                     .filter-form select:focus {
                         border-color: #80bdff; /* Màu viền khi ô chọn được kích hoạt */
                         box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Hiệu ứng bóng đổ khi focus */
-                    }
-
-                .button-container {
-                    margin-top: 10px; /* Khoảng cách phía trên nếu cần */
-                }
-
-                    .button-container form,
-                    .button-container a {
-                        margin: 0px 7px; /* Khoảng cách giữa các nút */
                     }
 
                 .pagination {
@@ -359,7 +352,6 @@
                     border-radius: 5px;
                     text-decoration: none;
                 }
-
             </style>
             <script>
                 $(document).ready(function () {
@@ -375,23 +367,8 @@
             </script>
         </header>
 
-        @if (TempData["Error"] != null)
-        {
-            var userId = HttpContextAccessor.HttpContext.Session.GetInt32("UserId");
-            var userRole = HttpContextAccessor.HttpContext.Session.GetString("RoleId");
 
-            <div class="alert alert-warning" role="alert" style="text-align: center;">
-                @if (userId == null) // Kiểm tra xem người dùng có đăng nhập không
-                {
-                    <span>Bạn chưa đăng nhập, vui lòng <a href="@Url.Action("Login", "Common")">đăng nhập</a> để thêm vào giỏ hàng.</span>
-                }
-                else if (userRole != "3") // Kiểm tra xem người dùng có quyền khách hàng không
-                {
-                    <span>Vui lòng đăng nhập với quyền khách hàng để thêm vào giỏ hàng!</span>
-                }
-            </div>
-        }
-        <div style="margin-top: 50px" class="site-section">
+        <div style="margin-top: 30px" class="site-section">
             <div class="container">
                 <div class="row justify-content-center text-center">
                     <div class="col-md-7">
@@ -497,7 +474,7 @@
                                                         <input type="hidden" name="redirectAction" value="OrderGear" />
                                                         <button type="button"  onclick="return addToCart('@item.GearId')" class="btn btn-primary">Thêm <i class="fas fa-shopping-cart"></i></button>
                                                     </form> 
-                                                    <a href="@Url.Action("CampingGearDetail", "Service", new { gearId = item.GearId })" class="btn btn-secondary ms-2">Xem chi tiết</a> <!-- Thêm lớp 'ms-2' để tạo khoảng cách bên trái -->
+                                                    <a href="@Url.Action("CampingGearDetail", "Service", new { gearId = item.GearId })" class="btn btn-secondary ml-2">Xem chi tiết</a> <!-- Thêm lớp 'ms-2' để tạo khoảng cách bên trái -->
                                                 </div>
 
                                             </div>
