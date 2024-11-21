@@ -731,7 +731,7 @@ namespace GreenGardenClient.Controllers
             HttpContext.Session.SetString("Cart", session);
         }
         [HttpPost]
-        public async Task<IActionResult> AddToCartAsync(int Id, string Name, string CategoryName, string Type, string TypeCategory, decimal price, int quantity, string usageDate, string redirectAction)
+        public async Task<IActionResult> AddToCartAsync(int Id, string Name,string image, string CategoryName, string Type, string TypeCategory, decimal price, int quantity, string usageDate, string redirectAction)
         {
             // Kiểm tra người dùng đã đăng nhập chưa
             var userId = HttpContext.Session.GetInt32("UserId");
@@ -810,6 +810,7 @@ namespace GreenGardenClient.Controllers
                     Name = Name,
                     CategoryName = CategoryName,
                     Type = Type,
+                    Image = image,
                     TypeCategory = TypeCategory,
                     Price = price,
                     Quantity = quantity,
@@ -921,7 +922,7 @@ namespace GreenGardenClient.Controllers
 
 
         
-        public IActionResult Checkout()
+        public IActionResult Error()
         {
             return View();
         }

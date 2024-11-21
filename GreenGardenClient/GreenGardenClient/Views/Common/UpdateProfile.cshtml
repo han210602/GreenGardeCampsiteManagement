@@ -220,6 +220,7 @@
                     z-index: 10;
                     white-space: nowrap; /* Prevent text wrapping */
                 }
+
                 .site-navbar {
                     position: fixed; /* Cố định header */
                     top: 0; /* Đặt header ở đầu trang */
@@ -313,68 +314,6 @@
                     .event-thumbnail:hover {
                         transform: scale(1.05);
                     }
-
-                .image-preview {
-                    width: 300px; /* Set a consistent width for the image */
-                    height: 300px; /* Set a consistent height */
-                    border-radius: 50%; /* Make the container circular */
-                    overflow: hidden; /* Ensure the image doesn't overflow the container */
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    border: 2px solid #ddd; /* Optional: Add a subtle border */
-                    margin: 0 auto; /* Center the container */
-                }
-
-                /* Container for the image */
-                .image-preview-container {
-                    width: 300px; /* Set a consistent width for the image */
-                    height: 300px; /* Set a consistent height */
-                    border-radius: 50%; /* Make the container circular */
-                    overflow: hidden; /* Ensure the image doesn't overflow the container */
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    border: 2px solid #ddd; /* Optional: Add a subtle border */
-                    margin: 0 auto; /* Center the container */
-                }
-
-                /* Style for the image */
-                .event-thumbnail-large {
-                    width: 300px; /* Set a consistent width for the image */
-                    height: 300px; /* Set a consistent height */
-                    object-fit: cover; /* Crop the image to fit the dimensions without distortion */
-                    border-radius: 50%; /* Make the image circular (optional, for avatars) */
-                    border: 2px solid #ddd; /* Add a subtle border */
-                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a soft shadow for a modern look */
-                    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add smooth hover effects */
-                }
-
-                /* Hide the default file input */
-                .file-input {
-                    display: none;
-                }
-
-                /* Custom button for file upload */
-                .file-upload-label {
-                    display: inline-block;
-                    margin-top: 10px; /* Space between the button and the image */
-                    background-color: #efba6c; /* Blue background */
-                    color: white; /* White text */
-                    padding: 10px 20px;
-                    border-radius: 6px;
-                    cursor: pointer;
-                    font-size: 14px;
-                    text-align: center;
-                    transition: background-color 0.3s ease, transform 0.2s ease;
-                    margin-left: 80px;
-                }
-
-                    /* Hover effect for the button */
-                    .file-upload-label:hover {
-                        background-color: #efba6c;
-                        transform: scale(1.05); /* Slightly enlarge the button on hover */
-                    }
             </style>
             <script>
                 $(document).ready(function () {
@@ -402,17 +341,11 @@
                                 {
                                     <img id="currentImage_@user.UserId" src="~/images/Avatar/@user.ProfilePictureUrl" alt="Avt Image" class="event-thumbnail-large" />
                                 }
-                                else
-                                {
-                                    <div class="image-preview">
-                                        <img id="currentImage_@user.UserId" src="~/images/p22.jpg" alt="Default Image" class="event-thumbnail-large" />
-                                    </div>
-                                }
 
                                 <input type="hidden" name="CurrentPictureUrl" value="@user?.ProfilePictureUrl" />
                                 <div class="mt-3">
-                                    <label for="ProfilePictureUrl_@user.UserId" class="file-upload-label">Chọn Ảnh</label>
-                                    <input type="file" name="ProfilePictureUrl" id="ProfilePictureUrl_@user.UserId" accept=".jpg, .png" class="file-input" onchange="previewImage(event, @user.UserId)" />
+                                    <!-- Add onchange event to preview image -->
+                                    <input type="file" name="ProfilePictureUrl" accept=".jpg, .png" class="file-input" onchange="previewImage(event, @user.UserId)" />
                                 </div>
                             </div>
                         </div>
@@ -466,7 +399,7 @@
                                 <label class="col-sm-3 col-form-label">Giới tính:</label>
                                 <div class="col-sm-9">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" id="male" name="Gender" value="male" @(Model.Gender?.ToLower() == "male  " ? "checked" : "")>
+                                        <input class="form-check-input" type="radio" id="male" name="Gender" value="male" @(Model.Gender?.ToLower() == "male " ? "checked" : "")>
                                         <label class="form-check-label" for="male">Nam</label>
                                     </div>
                                     <div class="form-check form-check-inline">
@@ -485,6 +418,7 @@
                                 <div class="col-sm-9">
                                     <input type="date" id="DateOfBirth" name="DateOfBirth" class="form-control form-control-sm" value="@Model.DateOfBirth?.ToString("yyyy-MM-dd")">
                                 </div>
+                                <small id="dateError" class="text-danger" style="display: none;">Ngày sinh không được vượt quá ngày hiện tại.</small>
                             </div>
 
                             <div class="text-center mt-4">
@@ -496,50 +430,7 @@
                 </form>
             </div>
         </div>
-        <script>
-            function previewImage(event, eventId) {
-                const fileInput = event.target;
-                const file = fileInput.files[0]; // Get the selected file
 
-                if (file) {
-                    // Validate file type
-                    const allowedExtensions = ['image/jpeg', 'image/png', 'image/jpg'];
-                    if (!allowedExtensions.includes(file.type)) {
-                        alert("Vui lòng chọn một hình ảnh hợp lệ (.jpg, .png).");
-                        fileInput.value = ""; // Reset the input
-                        return;
-                    }
-
-                    // Create a temporary object URL for the new image
-                    const newImageUrl = URL.createObjectURL(file);
-
-                    // Find the current image element by ID
-                    let currentImage = document.getElementById(`currentImage_${eventId}`);
-
-                    if (currentImage) {
-                        // Update the `src` of the existing image element
-                        currentImage.src = newImageUrl;
-                    } else {
-                        // Create a new image element if none exists
-                        currentImage = document.createElement("img");
-                        currentImage.src = newImageUrl;
-                        currentImage.alt = "Preview Image";
-                        currentImage.className = "event-thumbnail-large";
-                        currentImage.id = `currentImage_${eventId}`;
-
-                        // Insert the new image before the file input element
-                        fileInput.parentElement.insertBefore(currentImage, fileInput);
-                    }
-
-                    // Revoke the temporary URL after the image is loaded
-                    currentImage.onload = function () {
-                        URL.revokeObjectURL(newImageUrl);
-                    };
-                } else {
-                    alert("Không thể tải ảnh. Vui lòng thử lại.");
-                }
-            }
-        </script>
         <script>
 
             function validateForm() {
@@ -573,6 +464,28 @@
 
                 return valid;
             }
+            document.getElementById("DateOfBirth").addEventListener("change", function () {
+                const dateInput = new Date(this.value); // Ngày sinh được nhập
+                const today = new Date(); // Ngày hiện tại
+
+                // Xóa thời gian để chỉ so sánh ngày
+                dateInput.setHours(0, 0, 0, 0);
+                today.setHours(0, 0, 0, 0);
+
+                const errorMessage = document.getElementById("dateError");
+
+                if (dateInput > today) {
+                    // Hiển thị thông báo lỗi
+                    errorMessage.style.display = "block";
+
+                    // Đặt lại giá trị về ngày hiện tại
+                    const todayFormatted = today.toISOString().split("T")[0];
+                    this.value = todayFormatted;
+                } else {
+                    // Ẩn thông báo lỗi
+                    errorMessage.style.display = "none";
+                }
+            });
         </script>
 
 

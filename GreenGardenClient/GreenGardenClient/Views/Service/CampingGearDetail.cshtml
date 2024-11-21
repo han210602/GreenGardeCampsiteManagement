@@ -364,19 +364,12 @@
                         <div class="tile-body row">
                             <!-- Image Section -->
                             <div class="col-md-4">
-                                <div class="product-image position-relative">
-                                    <!-- Zoom Icon -->
-                                    <i class="zoom-icon fa fa-search-plus" onclick="openModal()" style="position: absolute; top: 10px; right: 10px; font-size: 24px; cursor: pointer;"></i>
-
-                                    <!-- Image -->
-                                    <img src="~/images/Gear/@campingGear.ImgUrl" alt="Product Image" class="img-fluid img-thumbnail" id="productImage">
+                                <div class="product-image position-relative">                                 
+                                    <img src="~/images/Gear/@campingGear.ImgUrl" alt="Product Image" class="img-fluid img-thumbnail" id="productImage"
+                                         style="width: 377px; height: 455px; object-fit: cover; margin-bottom:50px;">
                                 </div>
 
-                                <!-- Modal for Zoomed Image -->
-                                <div id="imageModal" class="modal" onclick="closeModal()">
-                                    <span class="close">&times;</span>
-                                    <img class="modal-content" id="zoomedImage">
-                                </div>
+                                
                             </div>
 
                             <!-- Content Section -->
@@ -416,6 +409,7 @@
                                             <input type="hidden" name="Id" value="@campingGear.GearId" />
                                             <input type="hidden" name="Name" value="@campingGear.GearName" />
                                             <input type="hidden" name="CategoryName" value="@campingGear.GearCategoryName" />
+                                            <input type="hidden" name="image" value="@campingGear.ImgUrl" />
                                             <input type="hidden" name="Type" value="Gear" />
                                             <input type="hidden" name="TypeCategory" value="GearCategory" />
                                             <input type="hidden" name="price" value="@campingGear.RentalPrice" />

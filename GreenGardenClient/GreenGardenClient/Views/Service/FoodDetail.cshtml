@@ -393,18 +393,10 @@
                             <!-- Image Section -->
                             <div class="col-md-4">
                                 <div class="product-image position-relative">
-                                    <!-- Zoom Icon -->
-                                    <i class="zoom-icon fa fa-search-plus" onclick="openModal()" style="position: absolute; top: 10px; right: 10px; font-size: 24px; cursor: pointer;"></i>
-
-                                    <!-- Image -->
-                                    <img src="~/images/Food/@foodAndDrink.ImgUrl" alt="Product Image" class="img-fluid img-thumbnail" id="productImage" style="margin-bottom:30px">
+                                    <img src="~/images/Food/@foodAndDrink.ImgUrl" alt="Product Image" class="img-fluid img-thumbnail" id="productImage"
+                                         style="width: 377px; height: 455px; object-fit: cover; margin-bottom:50px;">
                                 </div>
 
-                                <!-- Modal for Zoomed Image -->
-                                <div id="imageModal" class="modal" onclick="closeModal()">
-                                    <span class="close">&times;</span>
-                                    <img class="modal-content" id="zoomedImage">
-                                </div>
                             </div>
 
                             <!-- Content Section -->
@@ -445,6 +437,7 @@
                                             <input type="hidden" name="Id" value="@foodAndDrink.ItemId" />
                                             <input type="hidden" name="Name" value="@foodAndDrink.ItemName" />
                                             <input type="hidden" name="CategoryName" value="@foodAndDrink.CategoryName" />
+                                            <input type="hidden" name="image" value="@foodAndDrink.ImgUrl" />
                                             <input type="hidden" name="Type" value="FoodAndDrink" />
                                             <input type="hidden" name="TypeCategory" value="FoodAndDrinkCategory" />
                                             <input type="hidden" name="price" value="@foodAndDrink.Price" />

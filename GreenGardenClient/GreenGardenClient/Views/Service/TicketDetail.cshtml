@@ -390,18 +390,9 @@
                         <div class="tile-body row">
                             <!-- Image Section -->
                             <div class="col-md-4">
-                                <div class="product-image position-relative">
-                                    <!-- Zoom Icon -->
-                                    <i class="zoom-icon fa fa-search-plus" onclick="openModal()" style="position: absolute; top: 10px; right: 10px; font-size: 24px; cursor: pointer;"></i>
-
-                                    <!-- Image -->
-                                    <img src="~/images/Ticket/@tickets.ImgUrl" alt="Product Image" class="img-fluid img-thumbnail" id="productImage">
-                                </div>
-
-                                <!-- Modal for Zoomed Image -->
-                                <div id="imageModal" class="modal" onclick="closeModal()">
-                                    <span class="close">&times;</span>
-                                    <img class="modal-content" id="zoomedImage">
+                                <div class="product-image position-relative">                                    
+                                    <img src="~/images/Ticket/@tickets.ImgUrl" alt="Product Image" class="img-fluid img-thumbnail" id="productImage"
+                                         style="width: 377px; height: 455px; object-fit: cover; margin-bottom:50px;">
                                 </div>
                             </div>
 
@@ -439,6 +430,7 @@
                                         <form method="post" action="/Service/AddToCart">
                                             <input type="hidden" name="Id" value="@tickets.TicketId" />
                                             <input type="hidden" name="Name" value="@tickets.TicketName" />
+                                            <input type="hidden" name="image" value="@tickets.ImgUrl" />
                                             <input type="hidden" name="CategoryName" value="@tickets.TicketCategoryName" />
                                             <input type="hidden" name="Type" value="Ticket" />
                                             <input type="hidden" name="TypeCategory" value="TicketCategory" />

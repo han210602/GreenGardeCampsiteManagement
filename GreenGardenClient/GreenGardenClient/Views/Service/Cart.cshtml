@@ -342,10 +342,26 @@
                             @foreach (var item in Model)
                             {
                                 <div class="cart-item d-flex mb-3" id="cart-item-@item.Id">
-                                    <img src="~/images//img_1.jpg" alt="@item.Name" class="img-thumbnail" style="width: 120px;">
+                                    @if (@item.Type == "Gear")
+                                    {
+                                        <img src="~/images/Gear/@item.Image" alt="@item.Name" class="img-thumbnail" style="width: 120px;">
+                                    }
+                                    else if (@item.Type == "Combo")
+                                    {
+                                        <img src="~/images/Combo/@item.Image" alt="@item.Name" class="img-thumbnail" style="width: 120px;">
+                                    }
+                                    else if (@item.Type == "Ticket")
+                                    {
+                                        <img src="~/images/Ticket/@item.Image" alt="@item.Name" class="img-thumbnail" style="width: 120px;">
+                                    }
+                                    else if (@item.Type == "FoodAndDrink")
+                                    {
+                                        <img src="~/images/Food/@item.Image" alt="@item.Name" class="img-thumbnail" style="width: 120px;">
+                                    }
+
                                     <div class="cart-item-details ml-3">
-                                        <h5>@item.Name</h5>
-                                        <p>@item.TypeCategory</p>
+                                        <h5>@item.Name</h5>                                      
+                                        <p>@item.CategoryName</p>
                                         <p>Giá: <span id="price_@item.Id-@item.Type-@item.TypeCategory">@item.Price.ToString("N0")</span> đ</p>
 
                                     </div>
@@ -371,7 +387,7 @@
                                             +
                                         </button>
 
-                                        <button onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?')" class="btn btn-danger ml-2" onclick="removeCartItem(@item.Id, '@item.Type', '@item.TypeCategory')">Xóa</button>
+                                        <button class="btn btn-danger ml-2" onclick="removeCartItem(@item.Id, '@item.Type', '@item.TypeCategory')">Xóa</button>
                                     </div>
 
                                 </div>
@@ -539,24 +555,28 @@
 
 
         function removeCartItem(itemId) {
-            $.ajax({
-                url: '/Service/RemoveFromCart',
-                type: 'POST',
-                data: { ticketId: itemId },
-                success: function () {
-                    $('#cart-item-' + itemId).remove();
-                    updateTotalPrice();
-                    updateCartCount();
-                    // Kiểm tra nếu giỏ hàng trống thì xóa ngày sử dụng trong sessionStorage
-                    if ($('.cart-item').length === 0) {
-                        sessionStorage.removeItem('usageDateForAll');
+            // Hiển thị thông báo xác nhận
+            if (confirm('Bạn có muốn xóa sản phẩm này khỏi giỏ hàng không?')) {
+                $.ajax({
+                    url: '/Service/RemoveFromCart',
+                    type: 'POST',
+                    data: { ticketId: itemId },
+                    success: function () {
+                        $('#cart-item-' + itemId).remove();
+                        updateTotalPrice();
+                        updateCartCount();
+                        // Kiểm tra nếu giỏ hàng trống thì xóa ngày sử dụng trong sessionStorage
+                        if ($('.cart-item').length === 0) {
+                            sessionStorage.removeItem('usageDateForAll');
+                        }
+                    },
+                    error: function () {
+                        alert('Có lỗi xảy ra khi xóa sản phẩm.');
                     }
-                },
-                error: function () {
-                    alert('Có lỗi xảy ra khi xóa sản phẩm.');
-                }
-            });
+                });
+            }
         }
+
 
 
 

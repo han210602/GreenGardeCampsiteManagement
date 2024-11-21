@@ -45,7 +45,7 @@
             <div class="site-mobile-menu-body"></div>
         </div>
 
-     
+
 
         <header class="site-navbar site-navbar-target" role="banner">
             <div class="container">
@@ -185,7 +185,7 @@
                     z-index: 1000; /* Đảm bảo header nằm trên các phần tử khác */
                     background-color: #f6f5f5 !important;
                     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ cho header */
-                    padding: 10px 0; /* Khoảng cách trên và dưới */
+                    padding: 0 0; /* Khoảng cách trên và dưới */
                 }
 
                     /* Khoảng trống bên dưới để bù cho chiều cao header */
@@ -265,6 +265,15 @@
                     .filter-form select:focus {
                         border-color: #80bdff; /* Màu viền khi ô chọn được kích hoạt */
                         box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Hiệu ứng bóng đổ khi focus */
+                    }
+
+                .button-container {
+                    margin-top: 10px; /* Khoảng cách phía trên nếu cần */
+                }
+
+                    .button-container form,
+                    .button-container a {
+                        margin: 0px 7px; /* Khoảng cách giữa các nút */
                     }
 
                 .pagination {
@@ -352,6 +361,7 @@
                     border-radius: 5px;
                     text-decoration: none;
                 }
+
             </style>
             <script>
                 $(document).ready(function () {
@@ -367,8 +377,23 @@
             </script>
         </header>
 
+        @if (TempData["Error"] != null)
+        {
+            var userId = HttpContextAccessor.HttpContext.Session.GetInt32("UserId");
+            var userRole = HttpContextAccessor.HttpContext.Session.GetString("RoleId");
 
-        <div style="margin-top: 30px" class="site-section">
+            <div class="alert alert-warning" role="alert" style="text-align: center;">
+                @if (userId == null) // Kiểm tra xem người dùng có đăng nhập không
+                {
+                    <span>Bạn chưa đăng nhập, vui lòng <a href="@Url.Action("Login", "Common")">đăng nhập</a> để thêm vào giỏ hàng.</span>
+                }
+                else if (userRole != "3") // Kiểm tra xem người dùng có quyền khách hàng không
+                {
+                    <span>Vui lòng đăng nhập với quyền khách hàng để thêm vào giỏ hàng!</span>
+                }
+            </div>
+        }
+        <div style="margin-top: 50px" class="site-section">
             <div class="container">
                 <div class="row justify-content-center text-center">
                     <div class="col-md-7">
@@ -466,15 +491,16 @@
                                                         <input type="hidden" name="Id" value="@item.GearId" />
                                                         <input type="hidden" name="Name" value="@item.GearName" />
                                                         <input type="hidden" name="CategoryName" value="@item.GearCategoryName" />
+                                                        <input type="hidden" name="image" value="@item.ImgUrl" />
                                                         <input type="hidden" name="Type" value="Gear" />
                                                         <input type="hidden" name="TypeCategory" value="GearCategory" />
                                                         <input type="hidden" name="price" value="@item.RentalPrice" />
                                                         <input type="hidden" name="quantity" value="1" />
                                                         <input type="hidden" id="hidden-date-@item.GearId" name="usageDate" />
                                                         <input type="hidden" name="redirectAction" value="OrderGear" />
-                                                        <button type="button"  onclick="return addToCart('@item.GearId')" class="btn btn-primary">Thêm <i class="fas fa-shopping-cart"></i></button>
-                                                    </form> 
-                                                    <a href="@Url.Action("CampingGearDetail", "Service", new { gearId = item.GearId })" class="btn btn-secondary ml-2">Xem chi tiết</a> <!-- Thêm lớp 'ms-2' để tạo khoảng cách bên trái -->
+                                                        <button type="button" onclick="return addToCart('@item.GearId')" class="btn btn-primary">Thêm <i class="fas fa-shopping-cart"></i></button>
+                                                    </form>
+                                                    <a href="@Url.Action("CampingGearDetail", "Service", new { gearId = item.GearId })" class="btn btn-secondary ms-2">Xem chi tiết</a> <!-- Thêm lớp 'ms-2' để tạo khoảng cách bên trái -->
                                                 </div>
 
                                             </div>
@@ -835,13 +861,9 @@
             <div class="col-lg-4">
                 <h2 class="footer-heading mb-3 text-uppercase">Truy cập nhanh</h2>
                 <ul class="list-unstyled">
-                    <li class="mb-2"><a href="https://www.facebook.com/profile.php?id=100063831185228" class="text-decoration-none link-colored"><i class="fab fa-facebook me-2"></i>Facebook</a></li>
-                    <li class="mb-2"><a href="" class="text-decoration-none link-colored"><i class="fab fa-instagram me-2"></i>Instagram</a></li>
-                    <li class="mb-2">
-                        <a href="" class="text-decoration-none link-colored">
-                            <i class="fab fa-tiktok me-2"></i>Tiktok
-                        </a>
-                    </li>
+                    <li class="mb-2"><a href="#" class="text-decoration-none link-colored"><i class="fab fa-facebook me-2"></i>Facebook</a></li>
+                    <li class="mb-2"><a href="#" class="text-decoration-none link-colored"><i class="fab fa-instagram me-2"></i>Instagram</a></li>
+                    <li class="mb-2"><a href="#" class="text-decoration-none link-colored"><i class="fab fa-tiktok me-2"></i>Tiktok</a></li>
                 </ul>
             </div>
 
