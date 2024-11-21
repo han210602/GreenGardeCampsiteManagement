@@ -29,8 +29,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- DataTables CSS and JS -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
-    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.foundation.min.css">
+    <script src="https://cdn.datatables.net/1.10.24/js/dataTables.foundation.min.js"></script>
 
     <!-- SweetAlert JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
@@ -330,6 +330,22 @@
         .app-menu__item:hover {
             background-color: #ddd;
         }
+
+    .amount-cell {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .text-label {
+        font-weight: bold; /* Làm chữ đậm hơn */
+        text-align: left; /* Đảm bảo chữ nằm bên trái */
+    }
+
+    .text-amount {
+        text-align: right; /* Đảm bảo tiền nằm bên phải */
+        white-space: nowrap; /* Đảm bảo số không bị xuống dòng */
+    }
 
 </style>
 <body onload="time()" class="app sidebar-mini rtl">
@@ -669,10 +685,12 @@
                                 <th width="12%">Ngày thanh toán</th>         <!-- Order Date -->
 
                                 <th class="text-right" width="12%">Tiền cọc</th>        <!-- Deposit -->
-                                <th class="text-right" width="12%">Thu</th>             <!-- Income -->
-                                <th class="text-right" width="12%">Tổng tiền</th>       <!-- Total Amount -->
+                                <th class="text-right" width="12%">Tổng tiền</th>
+                                <th class="text-right" width="12%">Thanh Toán</th>             <!-- Income -->
+                                <!-- Total Amount -->
                             </tr>
                         </thead>
+
                         <tbody>
                             @foreach (OrderVM item in ViewBag.dataorder)
                             {
@@ -686,8 +704,23 @@
                                     <td>@item.OrderCheckoutDate?.ToString("hh:mm:ss tt dd/MM/yyyy")</td>
 
                                     <td class="text-right">@String.Format("{0:0,0} ₫", item.Deposit)</td>
-                                    <td class="text-right">@String.Format("{0:0,0} ₫", item.AmountPayable)</td>
-                                    <td class="text-right">@String.Format("{0:0,0} ₫", @item.TotalAmount)</td>
+                                    <td class="text-right">@String.Format("{0:0,0} ₫", item.TotalAmount)</td>
+
+                                    @if (item.AmountPayable >= 0)
+                                    {
+                                        <td class="amount-cell">
+                                            <span class="text-label">Thu:</span>
+                                            <span class="text-amount">@String.Format("{0:0,0}", Math.Abs(item.AmountPayable))</span>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="amount-cell">
+                                            <span class="text-label">Hoàn:</span>
+                                            <span class="text-amount">@String.Format("{0:0,0}", Math.Abs(item.AmountPayable))</span>
+                                        </td>
+                                    }
+
                                 </tr>
                             }
                         </tbody>

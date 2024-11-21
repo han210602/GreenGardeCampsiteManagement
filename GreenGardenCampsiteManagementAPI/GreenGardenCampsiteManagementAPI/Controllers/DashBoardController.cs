@@ -1,4 +1,5 @@
 ﻿using BusinessObject.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Repositories.Activities;
@@ -16,6 +17,8 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
         {
             _repo = repo;
         }
+        [Authorize("AdminPolicy")]
+
         [HttpGet("GetProfit/{Month}")]
         public IActionResult GetProfit(string Month)
         {
@@ -30,6 +33,8 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
             }
 
         }
+        [Authorize("AdminPolicy")]
+
         [HttpGet("GetListCustomer")]
         public IActionResult GetListCustomer()
         {

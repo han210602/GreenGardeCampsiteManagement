@@ -256,7 +256,7 @@
                 </div>
             </div>
             <div class="site-section">
-                <div class="container">
+                <div class="container" style="margin-top:20px">
                     <!-- Thêm tiêu đề cho phần dịch vụ -->
                     <div class="row justify-content-center mb-5">
                         <div class="col-md-7 text-center">
@@ -443,6 +443,17 @@
             duration: 1200, // Đặt thời gian cho hiệu ứng (tùy chọn)
         });
     </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Tìm thẻ có class "site-section"
+            var targetElement = document.querySelector(".site-section");
+            if (targetElement) {
+                // Cuộn tới thẻ .site-section
+                targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+        });
+    </script>
+
     <script src="~/js/jquery-3.3.1.min.js"></script>
     <script src="~/js/jquery-migrate-3.0.0.js"></script>
     <script src="~/js/popper.min.js"></script>

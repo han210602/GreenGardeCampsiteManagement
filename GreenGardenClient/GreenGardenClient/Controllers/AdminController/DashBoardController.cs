@@ -54,43 +54,51 @@ namespace GreenGardenClient.Controllers.AdminController
         {
             try
             {
-                if (datetime == null)
+                if (HttpContext.Session.GetInt32("RoleId").Value == 1)
                 {
-                    datetime = "0";
+                    if (datetime == null)
+                    {
+                        datetime = "0";
+                    }
+
+
+                    ProfitVM profitVM = GetDataFromApi<ProfitVM>($"https://localhost:7298/api/DashBoard/GetProfit/{datetime}");
+                    List<Account> userdata = GetDataFromApi<List<Account>>("https://localhost:7298/api/DashBoard/GetListCustomer\r\n");
+                    List<EventVM> events = new List<EventVM>();
+
+                    // Fetch events from the API
+                    var allEvents = GetDataFromApi<List<EventVM>>("https://localhost:7298/api/Event/GetAllEvents");
+
+                    // Ensure allEvents is not null before filtering
+                    if (allEvents != null)
+                    {
+                        events = allEvents
+                            .Where(s => s.EventDate.ToString("yyyy/MM") == DateTime.Now.ToString("yyyy/MM"))
+                            .ToList();
+                    }
+
+                    // Ensure events is initialized to an empty list if no matching events are found
+                    if (events == null || events.Count == 0)
+                    {
+                        events = new List<EventVM>();
+                    }
+
+
+                    ViewBag.datetime = datetime;
+                    ViewBag.listuser = userdata;
+                    ViewBag.listevent = events;
+
+                    return View(profitVM);
                 }
-
-
-                ProfitVM profitVM = GetDataFromApi<ProfitVM>($"https://localhost:7298/api/DashBoard/GetProfit/{datetime}");
-                List<Account> userdata = GetDataFromApi<List<Account>>("https://localhost:7298/api/DashBoard/GetListCustomer\r\n");
-                List<EventVM> events = new List<EventVM>();
-
-                // Fetch events from the API
-                var allEvents = GetDataFromApi<List<EventVM>>("https://localhost:7298/api/Event/GetAllEvents");
-
-                // Ensure allEvents is not null before filtering
-                if (allEvents != null)
+                else
                 {
-                    events = allEvents
-                        .Where(s => s.EventDate.ToString("yyyy/MM") == DateTime.Now.ToString("yyyy/MM"))
-                        .ToList();
+                    return View("~/Views/Home/Index.cshtml");
+
                 }
-
-                // Ensure events is initialized to an empty list if no matching events are found
-                if (events == null || events.Count == 0)
-                {
-                    events = new List<EventVM>();
-                }
-
-
-                ViewBag.datetime = datetime;
-                ViewBag.listuser = userdata;
-                ViewBag.listevent = events;
-
-                return View(profitVM);
             }
             catch (Exception e)
             {
-                return RedirectToAction("Error");
+                return View("~/Views/OrderManagement/Error.cshtml");
             }
         }
     }

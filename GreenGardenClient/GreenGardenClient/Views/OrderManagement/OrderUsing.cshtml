@@ -28,8 +28,9 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- DataTables CSS and JS -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
-    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.foundation.min.css">
+    <script src="https://cdn.datatables.net/1.10.24/js/dataTables.foundation.min.js"></script>
+
 
     <!-- SweetAlert JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
@@ -397,6 +398,22 @@
             color: #721c24; /* Dark red text */
             border: 1px solid #f5c6cb; /* Red border */
         }
+
+        .amount-cell {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .text-label {
+            font-weight: bold; /* Làm chữ đậm hơn */
+            text-align: left; /* Đảm bảo chữ nằm bên trái */
+        }
+
+        .text-amount {
+            text-align: right; /* Đảm bảo tiền nằm bên phải */
+            white-space: nowrap; /* Đảm bảo số không bị xuống dòng */
+        }
     </style>
 
 
@@ -662,9 +679,10 @@
                                 <th width="13%">Số điện thoại</th>   <!-- Phone Number -->
                                 <th width="12%">Ngày đặt</th>         <!-- Order Date -->
                                 <th width="12%">Ngày sử dụng</th>     <!-- Usage Date -->
-                                <th width="10%" class="text-right">Tiền cọc</th>        <!-- Deposit -->
-                                <th width="15%" class="text-right">Thu</th>             <!-- Income -->
+                                <th width="10%" class="text-right">Tiền cọc</th>
                                 <th width="15%" class="text-right">Tổng tiền</th>            <!-- Total Amount -->
+                                <!-- Deposit -->
+                                <th width="15%" class="text-right">Thanh toán</th>             <!-- Income -->
 
                                 
                             </tr>
@@ -685,9 +703,23 @@
                                     <td>@item.OrderDate?.ToString("hh:mm:ss tt dd/MM/yyyy")</td>
                                     <td>@item.OrderUsageDate?.ToString("hh:mm:ss tt dd/MM/yyyy")</td>
                                     <td class="text-right">@String.Format("{0:0,0} ₫", item.Deposit)</td>
-                                    <td class="text-right">@String.Format("{0:0,0} ₫", item.AmountPayable)</td>
                                     <td class="text-right">@String.Format("{0:0,0} ₫", item.TotalAmount)</td>
-                                    
+
+                                    @if (item.AmountPayable >= 0)
+                                    {
+                                        <td class="amount-cell">
+                                            <span class="text-label">Thu:</span>
+                                            <span class="text-amount">@String.Format("{0:0,0}", Math.Abs(item.AmountPayable))</span>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="amount-cell">
+                                            <span class="text-label">Hoàn:</span>
+                                            <span class="text-amount">@String.Format("{0:0,0}", Math.Abs(item.AmountPayable))</span>
+                                        </td>
+                                    }
+
 
                                 </tr>
                             }

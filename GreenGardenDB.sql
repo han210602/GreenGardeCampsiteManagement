@@ -1,7 +1,6 @@
-
 USE [GreenGarden]
 GO
-/****** Object:  Table [dbo].[Activities]    Script Date: 11/13/2024 9:16:05 PM ******/
+/****** Object:  Table [dbo].[Activities]    Script Date: 11/21/2024 9:18:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -16,7 +15,7 @@ CREATE TABLE [dbo].[Activities](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Amenities]    Script Date: 11/13/2024 9:16:06 PM ******/
+/****** Object:  Table [dbo].[Amenities]    Script Date: 11/21/2024 9:18:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -33,7 +32,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[CampingCategories]    Script Date: 11/13/2024 9:16:06 PM ******/
+/****** Object:  Table [dbo].[CampingCategories]    Script Date: 11/21/2024 9:18:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -49,7 +48,7 @@ CREATE TABLE [dbo].[CampingCategories](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[CampingGear]    Script Date: 11/13/2024 9:16:06 PM ******/
+/****** Object:  Table [dbo].[CampingGear]    Script Date: 11/21/2024 9:18:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -70,7 +69,7 @@ CREATE TABLE [dbo].[CampingGear](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ComboCampingGearDetails]    Script Date: 11/13/2024 9:16:06 PM ******/
+/****** Object:  Table [dbo].[ComboCampingGearDetails]    Script Date: 11/21/2024 9:18:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -87,7 +86,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ComboFootDetails]    Script Date: 11/13/2024 9:16:06 PM ******/
+/****** Object:  Table [dbo].[ComboFootDetails]    Script Date: 11/21/2024 9:18:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -104,7 +103,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Combos]    Script Date: 11/13/2024 9:16:06 PM ******/
+/****** Object:  Table [dbo].[Combos]    Script Date: 11/21/2024 9:18:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -123,7 +122,7 @@ CREATE TABLE [dbo].[Combos](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ComboTicketDetails]    Script Date: 11/13/2024 9:16:06 PM ******/
+/****** Object:  Table [dbo].[ComboTicketDetails]    Script Date: 11/21/2024 9:18:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -140,7 +139,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Events]    Script Date: 11/13/2024 9:16:06 PM ******/
+/****** Object:  Table [dbo].[Events]    Script Date: 11/21/2024 9:18:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -163,7 +162,7 @@ CREATE TABLE [dbo].[Events](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[FoodAndDrinkCategories]    Script Date: 11/13/2024 9:16:06 PM ******/
+/****** Object:  Table [dbo].[FoodAndDrinkCategories]    Script Date: 11/21/2024 9:18:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -179,7 +178,7 @@ CREATE TABLE [dbo].[FoodAndDrinkCategories](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[FoodAndDrinks]    Script Date: 11/13/2024 9:16:06 PM ******/
+/****** Object:  Table [dbo].[FoodAndDrinks]    Script Date: 11/21/2024 9:18:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -200,7 +199,7 @@ CREATE TABLE [dbo].[FoodAndDrinks](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[FoodCombos]    Script Date: 11/13/2024 9:16:06 PM ******/
+/****** Object:  Table [dbo].[FoodCombos]    Script Date: 11/21/2024 9:18:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -219,7 +218,7 @@ CREATE TABLE [dbo].[FoodCombos](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[FootComboItems]    Script Date: 11/13/2024 9:16:06 PM ******/
+/****** Object:  Table [dbo].[FootComboItems]    Script Date: 11/21/2024 9:18:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -235,7 +234,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[OrderCampingGearDetails]    Script Date: 11/13/2024 9:16:06 PM ******/
+/****** Object:  Table [dbo].[OrderCampingGearDetails]    Script Date: 11/21/2024 9:18:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -252,7 +251,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[OrderComboDetails]    Script Date: 11/13/2024 9:16:06 PM ******/
+/****** Object:  Table [dbo].[OrderComboDetails]    Script Date: 11/21/2024 9:18:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -269,7 +268,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[OrderFoodComboDetails]    Script Date: 11/13/2024 9:16:06 PM ******/
+/****** Object:  Table [dbo].[OrderFoodComboDetails]    Script Date: 11/21/2024 9:18:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -286,7 +285,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[OrderFoodDetails]    Script Date: 11/13/2024 9:16:06 PM ******/
+/****** Object:  Table [dbo].[OrderFoodDetails]    Script Date: 11/21/2024 9:18:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -303,7 +302,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Orders]    Script Date: 11/13/2024 9:16:06 PM ******/
+/****** Object:  Table [dbo].[Orders]    Script Date: 11/21/2024 9:18:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -328,7 +327,7 @@ CREATE TABLE [dbo].[Orders](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[OrderTicketDetails]    Script Date: 11/13/2024 9:16:06 PM ******/
+/****** Object:  Table [dbo].[OrderTicketDetails]    Script Date: 11/21/2024 9:18:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -345,7 +344,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Roles]    Script Date: 11/13/2024 9:16:06 PM ******/
+/****** Object:  Table [dbo].[Roles]    Script Date: 11/21/2024 9:18:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -360,7 +359,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[TicketCategories]    Script Date: 11/13/2024 9:16:06 PM ******/
+/****** Object:  Table [dbo].[TicketCategories]    Script Date: 11/21/2024 9:18:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -376,7 +375,7 @@ CREATE TABLE [dbo].[TicketCategories](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Tickets]    Script Date: 11/13/2024 9:16:06 PM ******/
+/****** Object:  Table [dbo].[Tickets]    Script Date: 11/21/2024 9:18:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -395,7 +394,7 @@ CREATE TABLE [dbo].[Tickets](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Users]    Script Date: 11/13/2024 9:16:06 PM ******/
+/****** Object:  Table [dbo].[Users]    Script Date: 11/21/2024 9:18:58 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -446,25 +445,23 @@ SET IDENTITY_INSERT [dbo].[CampingCategories] OFF
 GO
 SET IDENTITY_INSERT [dbo].[CampingGear] ON 
 GO
-INSERT [dbo].[CampingGear] ([gear_id], [gear_name], [quantityAvailable], [rentalPrice], [Description], [created_at], [gear_category_id], [img_url], [status]) VALUES (1, N'Bộ bàn ghế Camp (6 người)', 10, CAST(100000.00 AS Decimal(10, 2)), N'Bộ bàn ghế dành cho 6 người, dễ dàng lắp đặt.', CAST(N'2024-10-07T10:04:06.603' AS DateTime), 3, NULL, 1)
+INSERT [dbo].[CampingGear] ([gear_id], [gear_name], [quantityAvailable], [rentalPrice], [Description], [created_at], [gear_category_id], [img_url], [status]) VALUES (1, N'Bộ bàn ghế Camp (6 người)', 10, CAST(100000.00 AS Decimal(10, 2)), N'Bộ bàn ghế dành cho 6 người, dễ dàng lắp đặt.', CAST(N'2024-10-07T10:04:06.603' AS DateTime), 3, N'Screenshot 2024-11-21 172803.png', 1)
 GO
-INSERT [dbo].[CampingGear] ([gear_id], [gear_name], [quantityAvailable], [rentalPrice], [Description], [created_at], [gear_category_id], [img_url], [status]) VALUES (2, N'Chảo nướng (6 người)', 15, CAST(150000.00 AS Decimal(10, 2)), N'Chảo nướng dành cho 6 người, phù hợp cho các bữa tiệc ngoài trời.', CAST(N'2024-10-07T10:04:06.603' AS DateTime), 2, NULL, 1)
+INSERT [dbo].[CampingGear] ([gear_id], [gear_name], [quantityAvailable], [rentalPrice], [Description], [created_at], [gear_category_id], [img_url], [status]) VALUES (2, N'Chảo nướng (6 người)', 15, CAST(150000.00 AS Decimal(10, 2)), N'Chảo nướng dành cho 6 người, phù hợp cho các bữa tiệc ngoài trời.', CAST(N'2024-10-07T10:04:06.603' AS DateTime), 2, N'Screenshot 2024-11-21 173122.png', 1)
 GO
-INSERT [dbo].[CampingGear] ([gear_id], [gear_name], [quantityAvailable], [rentalPrice], [Description], [created_at], [gear_category_id], [img_url], [status]) VALUES (3, N'Bếp nướng đá (10-20 người)', 5, CAST(250000.00 AS Decimal(10, 2)), N'Bếp nướng đá cho 10-20 người, lý tưởng cho cắm trại lớn.', CAST(N'2024-10-07T10:04:06.603' AS DateTime), 2, NULL, 1)
+INSERT [dbo].[CampingGear] ([gear_id], [gear_name], [quantityAvailable], [rentalPrice], [Description], [created_at], [gear_category_id], [img_url], [status]) VALUES (3, N'Bếp nướng đá (10-20 người)', 5, CAST(250000.00 AS Decimal(10, 2)), N'Bếp nướng đá cho 10-20 người, lý tưởng cho cắm trại lớn.', CAST(N'2024-10-07T10:04:06.603' AS DateTime), 2, N'Screenshot 2024-11-21 173334.png', 1)
 GO
-INSERT [dbo].[CampingGear] ([gear_id], [gear_name], [quantityAvailable], [rentalPrice], [Description], [created_at], [gear_category_id], [img_url], [status]) VALUES (4, N'Lều grand', 8, CAST(200000.00 AS Decimal(10, 2)), N'Lều lớn dành cho 4-6 người, thoải mái và bền.', CAST(N'2024-10-07T10:04:06.603' AS DateTime), 1, NULL, 1)
+INSERT [dbo].[CampingGear] ([gear_id], [gear_name], [quantityAvailable], [rentalPrice], [Description], [created_at], [gear_category_id], [img_url], [status]) VALUES (4, N'Lều grand', 8, CAST(200000.00 AS Decimal(10, 2)), N'Lều lớn dành cho 4-6 người, thoải mái và bền.', CAST(N'2024-10-07T10:04:06.603' AS DateTime), 1, N'Screenshot 2024-11-21 173510.png', 1)
 GO
-INSERT [dbo].[CampingGear] ([gear_id], [gear_name], [quantityAvailable], [rentalPrice], [Description], [created_at], [gear_category_id], [img_url], [status]) VALUES (5, N'Bếp từ', 12, CAST(150000.00 AS Decimal(10, 2)), N'Bếp từ tiện lợi, dễ sử dụng và an toàn.', CAST(N'2024-10-07T10:04:06.603' AS DateTime), 2, NULL, 1)
+INSERT [dbo].[CampingGear] ([gear_id], [gear_name], [quantityAvailable], [rentalPrice], [Description], [created_at], [gear_category_id], [img_url], [status]) VALUES (5, N'Bếp từ', 12, CAST(150000.00 AS Decimal(10, 2)), N'Bếp từ tiện lợi, dễ sử dụng và an toàn.', CAST(N'2024-10-07T10:04:06.603' AS DateTime), 2, N'Screenshot 2024-11-21 173947.png', 1)
 GO
-INSERT [dbo].[CampingGear] ([gear_id], [gear_name], [quantityAvailable], [rentalPrice], [Description], [created_at], [gear_category_id], [img_url], [status]) VALUES (6, N'Quạt', 20, CAST(60000.00 AS Decimal(10, 2)), N'Quạt điện, giúp không khí mát mẻ trong suốt chuyến đi.', CAST(N'2024-10-07T10:04:06.603' AS DateTime), 3, NULL, 1)
+INSERT [dbo].[CampingGear] ([gear_id], [gear_name], [quantityAvailable], [rentalPrice], [Description], [created_at], [gear_category_id], [img_url], [status]) VALUES (6, N'Quạt', 20, CAST(60000.00 AS Decimal(10, 2)), N'Quạt điện, giúp không khí mát mẻ trong suốt chuyến đi.', CAST(N'2024-10-07T10:04:06.603' AS DateTime), 3, N'Screenshot 2024-11-21 174033.png', 1)
 GO
-INSERT [dbo].[CampingGear] ([gear_id], [gear_name], [quantityAvailable], [rentalPrice], [Description], [created_at], [gear_category_id], [img_url], [status]) VALUES (7, N'Loa kéo', 10, CAST(250000.00 AS Decimal(10, 2)), N'Loa kéo, âm thanh lớn, thích hợp cho các bữa tiệc ngoài trời.', CAST(N'2024-10-07T10:04:06.603' AS DateTime), 3, NULL, 1)
+INSERT [dbo].[CampingGear] ([gear_id], [gear_name], [quantityAvailable], [rentalPrice], [Description], [created_at], [gear_category_id], [img_url], [status]) VALUES (7, N'Loa kéo', 10, CAST(250000.00 AS Decimal(10, 2)), N'Loa kéo, âm thanh lớn, thích hợp cho các bữa tiệc ngoài trời.', CAST(N'2024-10-07T10:04:06.603' AS DateTime), 3, N'Screenshot 2024-11-21 174442.png', 1)
 GO
-INSERT [dbo].[CampingGear] ([gear_id], [gear_name], [quantityAvailable], [rentalPrice], [Description], [created_at], [gear_category_id], [img_url], [status]) VALUES (8, N'Tăng bạt', 5, CAST(100000.00 AS Decimal(10, 2)), N'Tăng bạt để che nắng, gió cho khu vực cắm trại.', CAST(N'2024-10-07T10:04:06.603' AS DateTime), 3, NULL, 1)
+INSERT [dbo].[CampingGear] ([gear_id], [gear_name], [quantityAvailable], [rentalPrice], [Description], [created_at], [gear_category_id], [img_url], [status]) VALUES (8, N'Tăng bạt', 5, CAST(100000.00 AS Decimal(10, 2)), N'Tăng bạt để che nắng, gió cho khu vực cắm trại.', CAST(N'2024-10-07T10:04:06.603' AS DateTime), 3, N'Screenshot 2024-11-21 174614.png', 1)
 GO
-INSERT [dbo].[CampingGear] ([gear_id], [gear_name], [quantityAvailable], [rentalPrice], [Description], [created_at], [gear_category_id], [img_url], [status]) VALUES (9, N'Thảm', 15, CAST(50000.00 AS Decimal(10, 2)), N'Thảm trải đất, tạo không gian thoải mái khi ngồi.', CAST(N'2024-10-07T10:04:06.603' AS DateTime), 3, NULL, 1)
-GO
-INSERT [dbo].[CampingGear] ([gear_id], [gear_name], [quantityAvailable], [rentalPrice], [Description], [created_at], [gear_category_id], [img_url], [status]) VALUES (12, N'dhdhdhdhd', 33, CAST(30000.00 AS Decimal(10, 2)), N'string', CAST(N'2024-10-16T20:00:44.740' AS DateTime), 2, N'string', 1)
+INSERT [dbo].[CampingGear] ([gear_id], [gear_name], [quantityAvailable], [rentalPrice], [Description], [created_at], [gear_category_id], [img_url], [status]) VALUES (9, N'Thảm', 15, CAST(50000.00 AS Decimal(10, 2)), N'Thảm trải đất, tạo không gian thoải mái khi ngồi.', CAST(N'2024-10-07T10:04:06.603' AS DateTime), 3, N'Screenshot 2024-11-21 174715.png', 1)
 GO
 SET IDENTITY_INSERT [dbo].[CampingGear] OFF
 GO
@@ -510,15 +507,17 @@ INSERT [dbo].[ComboFootDetails] ([combo_id], [item_id], [quantity], [Description
 GO
 SET IDENTITY_INSERT [dbo].[Combos] ON 
 GO
-INSERT [dbo].[Combos] ([combo_id], [combo_name], [Description], [price], [created_at], [img_url], [status]) VALUES (1, N'Combo và BBQ từ 5-10 người', N'Tính theo đầu người.', CAST(300000.00 AS Decimal(10, 2)), CAST(N'2024-10-07T13:55:06.890' AS DateTime), NULL, 1)
+INSERT [dbo].[Combos] ([combo_id], [combo_name], [Description], [price], [created_at], [img_url], [status]) VALUES (1, N'Combo và BBQ từ 5-10 người', N'Tính theo đầu người.', CAST(300000.00 AS Decimal(10, 2)), CAST(N'2024-10-07T13:55:06.890' AS DateTime), N'combo510.jpg', 1)
 GO
-INSERT [dbo].[Combos] ([combo_id], [combo_name], [Description], [price], [created_at], [img_url], [status]) VALUES (2, N'Combo và BBQ từ 15-20 người', N'Tính theo đầu người.', CAST(250000.00 AS Decimal(10, 2)), CAST(N'2024-10-07T13:55:06.890' AS DateTime), NULL, 1)
+INSERT [dbo].[Combos] ([combo_id], [combo_name], [Description], [price], [created_at], [img_url], [status]) VALUES (2, N'Combo và BBQ từ 15-20 người', N'Tính theo đầu người.', CAST(250000.00 AS Decimal(10, 2)), CAST(N'2024-10-07T13:55:06.890' AS DateTime), N'combo1520.jpg', 1)
 GO
 SET IDENTITY_INSERT [dbo].[Combos] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Events] ON 
 GO
-INSERT [dbo].[Events] ([event_id], [event_name], [description], [event_date], [start_time], [end_time], [location], [picture_url], [is_active], [created_at], [create_by]) VALUES (2, N'Xin loi thay', NULL, CAST(N'2024-11-13' AS Date), CAST(N'17:31:00' AS Time), CAST(N'18:28:00' AS Time), N'Sam son', NULL, 1, CAST(N'2024-11-11T17:28:18.083' AS DateTime), 2)
+INSERT [dbo].[Events] ([event_id], [event_name], [description], [event_date], [start_time], [end_time], [location], [picture_url], [is_active], [created_at], [create_by]) VALUES (2, N'Tesstt nè', NULL, CAST(N'2024-11-12' AS Date), CAST(N'17:31:00' AS Time), CAST(N'18:28:00' AS Time), N'Sam son', NULL, NULL, CAST(N'2024-11-11T17:28:18.083' AS DateTime), 2)
+GO
+INSERT [dbo].[Events] ([event_id], [event_name], [description], [event_date], [start_time], [end_time], [location], [picture_url], [is_active], [created_at], [create_by]) VALUES (3, N'Tesstt nè', N'gádfngvhhghmv', CAST(N'2024-11-21' AS Date), CAST(N'00:00:00' AS Time), CAST(N'13:08:00' AS Time), N'Ha Noi', NULL, 1, CAST(N'2024-11-20T23:08:35.837' AS DateTime), 2)
 GO
 SET IDENTITY_INSERT [dbo].[Events] OFF
 GO
@@ -540,31 +539,31 @@ SET IDENTITY_INSERT [dbo].[FoodAndDrinkCategories] OFF
 GO
 SET IDENTITY_INSERT [dbo].[FoodAndDrinks] ON 
 GO
-INSERT [dbo].[FoodAndDrinks] ([item_id], [item_name], [price], [quantityAvailable], [Description], [created_at], [category_id], [img_url], [status]) VALUES (1, N'Cá trắm đen nướng 1kg', CAST(300000.00 AS Decimal(10, 2)), 50, N'Cá trắm đen nướng thơm ngon, phục vụ với nước chấm chua ngọt.', CAST(N'2024-10-07T13:43:59.463' AS DateTime), 1, NULL, 1)
+INSERT [dbo].[FoodAndDrinks] ([item_id], [item_name], [price], [quantityAvailable], [Description], [created_at], [category_id], [img_url], [status]) VALUES (1, N'Cá trắm đen nướng 1kg', CAST(300000.00 AS Decimal(10, 2)), 50, N'Cá trắm đen nướng thơm ngon, phục vụ với nước chấm chua ngọt.', CAST(N'2024-10-07T13:43:59.463' AS DateTime), 1, N'catramdennuong.jpg', 1)
 GO
-INSERT [dbo].[FoodAndDrinks] ([item_id], [item_name], [price], [quantityAvailable], [Description], [created_at], [category_id], [img_url], [status]) VALUES (2, N'Cá trắm trắng nướng', CAST(600000.00 AS Decimal(10, 2)), 45, N'Cá trắm trắng nướng vàng ươm, ăn kèm rau sống.', CAST(N'2024-10-07T13:43:59.463' AS DateTime), 1, NULL, 1)
+INSERT [dbo].[FoodAndDrinks] ([item_id], [item_name], [price], [quantityAvailable], [Description], [created_at], [category_id], [img_url], [status]) VALUES (2, N'Cá trắm trắng nướng', CAST(600000.00 AS Decimal(10, 2)), 45, N'Cá trắm trắng nướng vàng ươm, ăn kèm rau sống.', CAST(N'2024-10-07T13:43:59.463' AS DateTime), 1, N'catramtrangnuong.jpg', 1)
 GO
-INSERT [dbo].[FoodAndDrinks] ([item_id], [item_name], [price], [quantityAvailable], [Description], [created_at], [category_id], [img_url], [status]) VALUES (3, N'Cá trắm trắng hấp bia', CAST(1000000.00 AS Decimal(10, 2)), 30, N'Cá trắm trắng hấp bia ngọt thịt, mát lành.', CAST(N'2024-10-07T13:43:59.463' AS DateTime), 1, NULL, 1)
+INSERT [dbo].[FoodAndDrinks] ([item_id], [item_name], [price], [quantityAvailable], [Description], [created_at], [category_id], [img_url], [status]) VALUES (3, N'Cá trắm trắng hấp bia', CAST(1000000.00 AS Decimal(10, 2)), 30, N'Cá trắm trắng hấp bia ngọt thịt, mát lành.', CAST(N'2024-10-07T13:43:59.463' AS DateTime), 1, N'cachephapbiasa.jpg', 1)
 GO
-INSERT [dbo].[FoodAndDrinks] ([item_id], [item_name], [price], [quantityAvailable], [Description], [created_at], [category_id], [img_url], [status]) VALUES (4, N'Cá chép nướng', CAST(400000.00 AS Decimal(10, 2)), 20, N'Cá chép nướng than, thịt mềm và đậm đà.', CAST(N'2024-10-07T13:43:59.463' AS DateTime), 1, NULL, 1)
+INSERT [dbo].[FoodAndDrinks] ([item_id], [item_name], [price], [quantityAvailable], [Description], [created_at], [category_id], [img_url], [status]) VALUES (4, N'Cá chép nướng', CAST(400000.00 AS Decimal(10, 2)), 20, N'Cá chép nướng than, thịt mềm và đậm đà.', CAST(N'2024-10-07T13:43:59.463' AS DateTime), 1, N'cachepnuong.jpg', 1)
 GO
-INSERT [dbo].[FoodAndDrinks] ([item_id], [item_name], [price], [quantityAvailable], [Description], [created_at], [category_id], [img_url], [status]) VALUES (5, N'Cá chép nướng mỡ hành', CAST(600000.00 AS Decimal(10, 2)), 40, N'Cá chép nướng mỡ hành, giòn tan và thơm phức.', CAST(N'2024-10-07T13:43:59.463' AS DateTime), 1, NULL, 1)
+INSERT [dbo].[FoodAndDrinks] ([item_id], [item_name], [price], [quantityAvailable], [Description], [created_at], [category_id], [img_url], [status]) VALUES (5, N'Cá chép nướng mỡ hành', CAST(600000.00 AS Decimal(10, 2)), 40, N'Cá chép nướng mỡ hành, giòn tan và thơm phức.', CAST(N'2024-10-07T13:43:59.463' AS DateTime), 1, N'catramtrangnuong.jpg', 1)
 GO
-INSERT [dbo].[FoodAndDrinks] ([item_id], [item_name], [price], [quantityAvailable], [Description], [created_at], [category_id], [img_url], [status]) VALUES (6, N'Lẩu cá trắm trắng', CAST(400000.00 AS Decimal(10, 2)), 25, N'Lẩu cá trắm trắng nóng hổi, tươi ngon.', CAST(N'2024-10-07T13:43:59.463' AS DateTime), 1, NULL, 1)
+INSERT [dbo].[FoodAndDrinks] ([item_id], [item_name], [price], [quantityAvailable], [Description], [created_at], [category_id], [img_url], [status]) VALUES (6, N'Lẩu cá trắm trắng', CAST(400000.00 AS Decimal(10, 2)), 25, N'Lẩu cá trắm trắng nóng hổi, tươi ngon.', CAST(N'2024-10-07T13:43:59.463' AS DateTime), 1, N'lauhaisan.jpg', 1)
 GO
-INSERT [dbo].[FoodAndDrinks] ([item_id], [item_name], [price], [quantityAvailable], [Description], [created_at], [category_id], [img_url], [status]) VALUES (7, N'Lẩu cá trắm trắng với nấm', CAST(600000.00 AS Decimal(10, 2)), 25, N'Lẩu cá trắm trắng kết hợp với nấm, thơm ngọt.', CAST(N'2024-10-07T13:43:59.463' AS DateTime), 1, NULL, 1)
+INSERT [dbo].[FoodAndDrinks] ([item_id], [item_name], [price], [quantityAvailable], [Description], [created_at], [category_id], [img_url], [status]) VALUES (7, N'Lẩu cá trắm trắng om dưa', CAST(600000.00 AS Decimal(10, 2)), 25, N'Lẩu cá trắm trắng kết hợp với nấm, thơm ngọt.', CAST(N'2024-10-07T13:43:59.463' AS DateTime), 1, N'laucachepomdua.jpg', 1)
 GO
-INSERT [dbo].[FoodAndDrinks] ([item_id], [item_name], [price], [quantityAvailable], [Description], [created_at], [category_id], [img_url], [status]) VALUES (8, N'Lẩu cá chép (Om dưa)', CAST(400000.00 AS Decimal(10, 2)), 25, N'Lẩu cá chép om dưa, chua chua ngọt ngọt.', CAST(N'2024-10-07T13:43:59.463' AS DateTime), 1, NULL, 1)
+INSERT [dbo].[FoodAndDrinks] ([item_id], [item_name], [price], [quantityAvailable], [Description], [created_at], [category_id], [img_url], [status]) VALUES (8, N'Lẩu cá chép (Om dưa)', CAST(400000.00 AS Decimal(10, 2)), 25, N'Lẩu cá chép om dưa, chua chua ngọt ngọt.', CAST(N'2024-10-07T13:43:59.463' AS DateTime), 1, N'laucachepomdua.jpg', 1)
 GO
-INSERT [dbo].[FoodAndDrinks] ([item_id], [item_name], [price], [quantityAvailable], [Description], [created_at], [category_id], [img_url], [status]) VALUES (9, N'Lẩu cá chép (Om dưa) với rau sống', CAST(600000.00 AS Decimal(10, 2)), 25, N'Lẩu cá chép om dưa, thêm rau sống tươi ngon.', CAST(N'2024-10-07T13:43:59.463' AS DateTime), 1, NULL, 1)
+INSERT [dbo].[FoodAndDrinks] ([item_id], [item_name], [price], [quantityAvailable], [Description], [created_at], [category_id], [img_url], [status]) VALUES (9, N'Lẩu cá chép (Om dưa) với rau sống', CAST(600000.00 AS Decimal(10, 2)), 25, N'Lẩu cá chép om dưa, thêm rau sống tươi ngon.', CAST(N'2024-10-07T13:43:59.463' AS DateTime), 1, N'laucachepomdua.jpg', 1)
 GO
 INSERT [dbo].[FoodAndDrinks] ([item_id], [item_name], [price], [quantityAvailable], [Description], [created_at], [category_id], [img_url], [status]) VALUES (10, N'Cá chép/Trắm trắng hấp bia sả', CAST(400000.00 AS Decimal(10, 2)), 25, N'Cá chép/trắm trắng hấp bia và sả, thơm lừng.', CAST(N'2024-10-07T13:43:59.463' AS DateTime), 1, NULL, 1)
 GO
 INSERT [dbo].[FoodAndDrinks] ([item_id], [item_name], [price], [quantityAvailable], [Description], [created_at], [category_id], [img_url], [status]) VALUES (11, N'Cá chép/Trắm trắng hấp bia sả (tùy chọn)', CAST(1000000.00 AS Decimal(10, 2)), 25, N'Cá hấp với bia và sả, lựa chọn hảo hạng.', CAST(N'2024-10-07T13:43:59.463' AS DateTime), 1, NULL, 1)
 GO
-INSERT [dbo].[FoodAndDrinks] ([item_id], [item_name], [price], [quantityAvailable], [Description], [created_at], [category_id], [img_url], [status]) VALUES (12, N'Gà nướng', CAST(400000.00 AS Decimal(10, 2)), 25, N'Gà nướng mềm mại, ướp gia vị đậm đà.', CAST(N'2024-10-07T13:43:59.463' AS DateTime), 2, NULL, 1)
+INSERT [dbo].[FoodAndDrinks] ([item_id], [item_name], [price], [quantityAvailable], [Description], [created_at], [category_id], [img_url], [status]) VALUES (12, N'Gà nướng', CAST(400000.00 AS Decimal(10, 2)), 25, N'Gà nướng mềm mại, ướp gia vị đậm đà.', CAST(N'2024-10-07T13:43:59.463' AS DateTime), 2, N'ganuong.jpg', 1)
 GO
-INSERT [dbo].[FoodAndDrinks] ([item_id], [item_name], [price], [quantityAvailable], [Description], [created_at], [category_id], [img_url], [status]) VALUES (13, N'Gà nướng mật ong', CAST(600000.00 AS Decimal(10, 2)), 25, N'Gà nướng mật ong ngọt ngào, thơm phức.', CAST(N'2024-10-07T13:43:59.463' AS DateTime), 2, NULL, 1)
+INSERT [dbo].[FoodAndDrinks] ([item_id], [item_name], [price], [quantityAvailable], [Description], [created_at], [category_id], [img_url], [status]) VALUES (13, N'Gà nướng mật ong', CAST(600000.00 AS Decimal(10, 2)), 25, N'Gà nướng mật ong ngọt ngào, thơm phức.', CAST(N'2024-10-07T13:43:59.463' AS DateTime), 2, N'ganuong.jpg', 1)
 GO
 INSERT [dbo].[FoodAndDrinks] ([item_id], [item_name], [price], [quantityAvailable], [Description], [created_at], [category_id], [img_url], [status]) VALUES (14, N'Gà luộc', CAST(400000.00 AS Decimal(10, 2)), 25, N'Gà luộc mềm, ăn kèm nước chấm gừng.', CAST(N'2024-10-07T13:43:59.463' AS DateTime), 2, NULL, 1)
 GO
@@ -656,11 +655,13 @@ INSERT [dbo].[FoodAndDrinks] ([item_id], [item_name], [price], [quantityAvailabl
 GO
 INSERT [dbo].[FoodAndDrinks] ([item_id], [item_name], [price], [quantityAvailable], [Description], [created_at], [category_id], [img_url], [status]) VALUES (58, N'Coca cola (Thùng)', CAST(250000.00 AS Decimal(10, 2)), 25, N'.', CAST(N'2024-10-07T13:43:59.463' AS DateTime), 5, NULL, 1)
 GO
+INSERT [dbo].[FoodAndDrinks] ([item_id], [item_name], [price], [quantityAvailable], [Description], [created_at], [category_id], [img_url], [status]) VALUES (1006, N'string', CAST(10.00 AS Decimal(10, 2)), 0, N'string', CAST(N'2024-11-13T14:31:17.510' AS DateTime), 2, N'string', 1)
+GO
 SET IDENTITY_INSERT [dbo].[FoodAndDrinks] OFF
 GO
 SET IDENTITY_INSERT [dbo].[FoodCombos] ON 
 GO
-INSERT [dbo].[FoodCombos] ([combo_id], [combo_name], [Description], [price], [created_at], [img_url], [status]) VALUES (1, N'Combo BBQ', N'.', CAST(150000.00 AS Decimal(10, 2)), CAST(N'2024-10-07T13:46:27.720' AS DateTime), NULL, 1)
+INSERT [dbo].[FoodCombos] ([combo_id], [combo_name], [Description], [price], [created_at], [img_url], [status]) VALUES (1, N'Combo BBQ', N'.', CAST(150000.00 AS Decimal(10, 2)), CAST(N'2024-10-07T13:46:27.720' AS DateTime), N'combofood.jpg', 1)
 GO
 SET IDENTITY_INSERT [dbo].[FoodCombos] OFF
 GO
@@ -732,6 +733,22 @@ INSERT [dbo].[OrderCampingGearDetails] ([gear_id], [order_id], [quantity], [Desc
 GO
 INSERT [dbo].[OrderCampingGearDetails] ([gear_id], [order_id], [quantity], [Description]) VALUES (1, 2209, 1, NULL)
 GO
+INSERT [dbo].[OrderCampingGearDetails] ([gear_id], [order_id], [quantity], [Description]) VALUES (1, 2217, 1, NULL)
+GO
+INSERT [dbo].[OrderCampingGearDetails] ([gear_id], [order_id], [quantity], [Description]) VALUES (1, 2222, 4, NULL)
+GO
+INSERT [dbo].[OrderCampingGearDetails] ([gear_id], [order_id], [quantity], [Description]) VALUES (1, 2224, 2, NULL)
+GO
+INSERT [dbo].[OrderCampingGearDetails] ([gear_id], [order_id], [quantity], [Description]) VALUES (1, 2227, 2, NULL)
+GO
+INSERT [dbo].[OrderCampingGearDetails] ([gear_id], [order_id], [quantity], [Description]) VALUES (1, 2236, 2, NULL)
+GO
+INSERT [dbo].[OrderCampingGearDetails] ([gear_id], [order_id], [quantity], [Description]) VALUES (1, 2239, 5, NULL)
+GO
+INSERT [dbo].[OrderCampingGearDetails] ([gear_id], [order_id], [quantity], [Description]) VALUES (1, 2242, 2, NULL)
+GO
+INSERT [dbo].[OrderCampingGearDetails] ([gear_id], [order_id], [quantity], [Description]) VALUES (1, 2243, 3, NULL)
+GO
 INSERT [dbo].[OrderCampingGearDetails] ([gear_id], [order_id], [quantity], [Description]) VALUES (2, 2107, 2, NULL)
 GO
 INSERT [dbo].[OrderCampingGearDetails] ([gear_id], [order_id], [quantity], [Description]) VALUES (2, 2109, 2, NULL)
@@ -778,6 +795,26 @@ INSERT [dbo].[OrderCampingGearDetails] ([gear_id], [order_id], [quantity], [Desc
 GO
 INSERT [dbo].[OrderCampingGearDetails] ([gear_id], [order_id], [quantity], [Description]) VALUES (2, 2209, 1, NULL)
 GO
+INSERT [dbo].[OrderCampingGearDetails] ([gear_id], [order_id], [quantity], [Description]) VALUES (2, 2217, 1, NULL)
+GO
+INSERT [dbo].[OrderCampingGearDetails] ([gear_id], [order_id], [quantity], [Description]) VALUES (2, 2222, 3, NULL)
+GO
+INSERT [dbo].[OrderCampingGearDetails] ([gear_id], [order_id], [quantity], [Description]) VALUES (2, 2224, 2, NULL)
+GO
+INSERT [dbo].[OrderCampingGearDetails] ([gear_id], [order_id], [quantity], [Description]) VALUES (2, 2235, 5, NULL)
+GO
+INSERT [dbo].[OrderCampingGearDetails] ([gear_id], [order_id], [quantity], [Description]) VALUES (2, 2236, 2, NULL)
+GO
+INSERT [dbo].[OrderCampingGearDetails] ([gear_id], [order_id], [quantity], [Description]) VALUES (2, 2238, 2, NULL)
+GO
+INSERT [dbo].[OrderCampingGearDetails] ([gear_id], [order_id], [quantity], [Description]) VALUES (2, 2239, 1, NULL)
+GO
+INSERT [dbo].[OrderCampingGearDetails] ([gear_id], [order_id], [quantity], [Description]) VALUES (2, 2241, 3, NULL)
+GO
+INSERT [dbo].[OrderCampingGearDetails] ([gear_id], [order_id], [quantity], [Description]) VALUES (2, 2242, 2, NULL)
+GO
+INSERT [dbo].[OrderCampingGearDetails] ([gear_id], [order_id], [quantity], [Description]) VALUES (2, 2243, 2, NULL)
+GO
 INSERT [dbo].[OrderCampingGearDetails] ([gear_id], [order_id], [quantity], [Description]) VALUES (3, 2107, 1, NULL)
 GO
 INSERT [dbo].[OrderCampingGearDetails] ([gear_id], [order_id], [quantity], [Description]) VALUES (3, 2114, 1, NULL)
@@ -787,6 +824,16 @@ GO
 INSERT [dbo].[OrderCampingGearDetails] ([gear_id], [order_id], [quantity], [Description]) VALUES (3, 2200, 1, NULL)
 GO
 INSERT [dbo].[OrderCampingGearDetails] ([gear_id], [order_id], [quantity], [Description]) VALUES (3, 2205, 3, NULL)
+GO
+INSERT [dbo].[OrderCampingGearDetails] ([gear_id], [order_id], [quantity], [Description]) VALUES (3, 2236, 2, NULL)
+GO
+INSERT [dbo].[OrderCampingGearDetails] ([gear_id], [order_id], [quantity], [Description]) VALUES (3, 2238, 1, NULL)
+GO
+INSERT [dbo].[OrderCampingGearDetails] ([gear_id], [order_id], [quantity], [Description]) VALUES (3, 2242, 2, NULL)
+GO
+INSERT [dbo].[OrderCampingGearDetails] ([gear_id], [order_id], [quantity], [Description]) VALUES (3, 2243, 2, NULL)
+GO
+INSERT [dbo].[OrderCampingGearDetails] ([gear_id], [order_id], [quantity], [Description]) VALUES (4, 2236, 1, NULL)
 GO
 INSERT [dbo].[OrderComboDetails] ([combo_id], [order_id], [quantity], [Description]) VALUES (1, 2111, 7, NULL)
 GO
@@ -801,6 +848,12 @@ GO
 INSERT [dbo].[OrderComboDetails] ([combo_id], [order_id], [quantity], [Description]) VALUES (1, 2177, 7, NULL)
 GO
 INSERT [dbo].[OrderComboDetails] ([combo_id], [order_id], [quantity], [Description]) VALUES (1, 2208, 2, NULL)
+GO
+INSERT [dbo].[OrderComboDetails] ([combo_id], [order_id], [quantity], [Description]) VALUES (1, 2239, 3, NULL)
+GO
+INSERT [dbo].[OrderComboDetails] ([combo_id], [order_id], [quantity], [Description]) VALUES (1, 2240, 1, NULL)
+GO
+INSERT [dbo].[OrderComboDetails] ([combo_id], [order_id], [quantity], [Description]) VALUES (1, 2245, 3, NULL)
 GO
 INSERT [dbo].[OrderComboDetails] ([combo_id], [order_id], [quantity], [Description]) VALUES (2, 2122, 2, NULL)
 GO
@@ -819,6 +872,16 @@ GO
 INSERT [dbo].[OrderFoodComboDetails] ([combo_id], [order_id], [quantity], [Description]) VALUES (1, 2173, 2, NULL)
 GO
 INSERT [dbo].[OrderFoodComboDetails] ([combo_id], [order_id], [quantity], [Description]) VALUES (1, 2209, 1, NULL)
+GO
+INSERT [dbo].[OrderFoodComboDetails] ([combo_id], [order_id], [quantity], [Description]) VALUES (1, 2224, 1, NULL)
+GO
+INSERT [dbo].[OrderFoodComboDetails] ([combo_id], [order_id], [quantity], [Description]) VALUES (1, 2231, 1, NULL)
+GO
+INSERT [dbo].[OrderFoodComboDetails] ([combo_id], [order_id], [quantity], [Description]) VALUES (1, 2235, 1, NULL)
+GO
+INSERT [dbo].[OrderFoodComboDetails] ([combo_id], [order_id], [quantity], [Description]) VALUES (1, 2244, 2, NULL)
+GO
+INSERT [dbo].[OrderFoodComboDetails] ([combo_id], [order_id], [quantity], [Description]) VALUES (1, 2245, 4, NULL)
 GO
 INSERT [dbo].[OrderFoodDetails] ([item_id], [order_id], [quantity], [Description]) VALUES (1, 2107, 1, NULL)
 GO
@@ -858,6 +921,10 @@ INSERT [dbo].[OrderFoodDetails] ([item_id], [order_id], [quantity], [Description
 GO
 INSERT [dbo].[OrderFoodDetails] ([item_id], [order_id], [quantity], [Description]) VALUES (1, 2215, 1, N'Cá tr?m den nu?ng 1kg')
 GO
+INSERT [dbo].[OrderFoodDetails] ([item_id], [order_id], [quantity], [Description]) VALUES (1, 2224, 3, NULL)
+GO
+INSERT [dbo].[OrderFoodDetails] ([item_id], [order_id], [quantity], [Description]) VALUES (1, 2235, 3, NULL)
+GO
 INSERT [dbo].[OrderFoodDetails] ([item_id], [order_id], [quantity], [Description]) VALUES (2, 2107, 1, NULL)
 GO
 INSERT [dbo].[OrderFoodDetails] ([item_id], [order_id], [quantity], [Description]) VALUES (2, 2109, 1, NULL)
@@ -888,6 +955,8 @@ INSERT [dbo].[OrderFoodDetails] ([item_id], [order_id], [quantity], [Description
 GO
 INSERT [dbo].[OrderFoodDetails] ([item_id], [order_id], [quantity], [Description]) VALUES (2, 2215, 1, N'Cá tr?m tr?ng nu?ng')
 GO
+INSERT [dbo].[OrderFoodDetails] ([item_id], [order_id], [quantity], [Description]) VALUES (2, 2224, 2, NULL)
+GO
 INSERT [dbo].[OrderFoodDetails] ([item_id], [order_id], [quantity], [Description]) VALUES (3, 2115, 1, NULL)
 GO
 INSERT [dbo].[OrderFoodDetails] ([item_id], [order_id], [quantity], [Description]) VALUES (3, 2139, 1, N'Cá tr?m tr?ng h?p bia')
@@ -898,19 +967,19 @@ INSERT [dbo].[OrderFoodDetails] ([item_id], [order_id], [quantity], [Description
 GO
 SET IDENTITY_INSERT [dbo].[Orders] ON 
 GO
-INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2107, NULL, NULL, N'Nguyen Dang Hoang', CAST(N'2024-10-26T11:35:24.893' AS DateTime), CAST(N'2024-10-25T11:34:00.000' AS DateTime), CAST(0.00 AS Decimal(10, 2)), CAST(1710000.00 AS Decimal(10, 2)), CAST(1710000.00 AS Decimal(10, 2)), 0, 1002, N'0981694286', NULL)
+INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2107, NULL, NULL, N'Nguyen Dang Hoang', CAST(N'2024-10-26T11:35:24.893' AS DateTime), CAST(N'2024-10-25T11:34:00.000' AS DateTime), CAST(0.00 AS Decimal(10, 2)), CAST(1710000.00 AS Decimal(10, 2)), CAST(1710000.00 AS Decimal(10, 2)), 0, 3, N'0981694286', NULL)
 GO
-INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2109, NULL, NULL, N'Nguyen Dang Hoang', CAST(N'2024-10-26T15:35:42.843' AS DateTime), CAST(N'2024-10-25T15:35:00.000' AS DateTime), CAST(200000.00 AS Decimal(10, 2)), CAST(1760000.00 AS Decimal(10, 2)), CAST(1560000.00 AS Decimal(10, 2)), 1, 1002, N'0981694286', NULL)
+INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2109, NULL, NULL, N'Nguyen Dang Hoang', CAST(N'2024-10-26T15:35:42.843' AS DateTime), CAST(N'2024-10-25T15:35:00.000' AS DateTime), CAST(200000.00 AS Decimal(10, 2)), CAST(1760000.00 AS Decimal(10, 2)), CAST(1560000.00 AS Decimal(10, 2)), 1, 3, N'0981694286', NULL)
 GO
-INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2111, NULL, 2, N'Nguyen Dang Hoang', CAST(N'2024-10-26T15:45:45.223' AS DateTime), CAST(N'2024-10-30T15:45:00.000' AS DateTime), CAST(200000.00 AS Decimal(10, 2)), CAST(4500000.00 AS Decimal(10, 2)), CAST(4300000.00 AS Decimal(10, 2)), 1, 1002, NULL, NULL)
+INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2111, NULL, 2, N'Nguyen Dang Hoang', CAST(N'2024-10-26T15:45:45.223' AS DateTime), CAST(N'2024-10-30T15:45:00.000' AS DateTime), CAST(200000.00 AS Decimal(10, 2)), CAST(4500000.00 AS Decimal(10, 2)), CAST(4300000.00 AS Decimal(10, 2)), 1, 3, NULL, NULL)
 GO
 INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2114, NULL, 2, N'Nguyen Dang Hoang', CAST(N'2024-10-26T21:29:20.930' AS DateTime), CAST(N'2024-10-26T21:26:00.000' AS DateTime), CAST(200000.00 AS Decimal(10, 2)), CAST(2610000.00 AS Decimal(10, 2)), CAST(2410000.00 AS Decimal(10, 2)), 1, 1002, N'0981694286', NULL)
 GO
 INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2115, NULL, 2, N'Nguyen Dang Hoang', CAST(N'2024-10-26T21:30:21.517' AS DateTime), CAST(N'2024-10-26T21:29:00.000' AS DateTime), CAST(200000.00 AS Decimal(10, 2)), CAST(3460000.00 AS Decimal(10, 2)), CAST(3260000.00 AS Decimal(10, 2)), 1, 1002, N'0981694286', NULL)
 GO
-INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2121, 1003, NULL, N'Test Customer', CAST(N'2024-10-27T17:24:52.187' AS DateTime), CAST(N'2024-10-28T00:00:00.000' AS DateTime), CAST(0.00 AS Decimal(10, 2)), CAST(130000.00 AS Decimal(10, 2)), CAST(130000.00 AS Decimal(10, 2)), 0, 1002, N'1234567890', NULL)
+INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2121, 1003, NULL, N'Test Customer', CAST(N'2024-10-27T17:24:52.187' AS DateTime), CAST(N'2024-10-28T00:00:00.000' AS DateTime), CAST(0.00 AS Decimal(10, 2)), CAST(130000.00 AS Decimal(10, 2)), CAST(130000.00 AS Decimal(10, 2)), 0, 3, N'1234567890', NULL)
 GO
-INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2122, NULL, 2, N'Nguyen Dang Hoang', CAST(N'2024-10-27T22:52:21.480' AS DateTime), CAST(N'2024-10-27T22:51:00.000' AS DateTime), CAST(200000.00 AS Decimal(10, 2)), CAST(1300000.00 AS Decimal(10, 2)), CAST(1100000.00 AS Decimal(10, 2)), 1, 1002, N'0981694286', NULL)
+INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2122, NULL, 2, N'Nguyen Dang Hoang', CAST(N'2024-10-27T22:52:21.480' AS DateTime), CAST(N'2024-10-27T22:51:00.000' AS DateTime), CAST(200000.00 AS Decimal(10, 2)), CAST(1300000.00 AS Decimal(10, 2)), CAST(1100000.00 AS Decimal(10, 2)), 1, 3, N'0981694286', CAST(N'2024-11-20T19:03:00.000' AS DateTime))
 GO
 INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2125, NULL, 2, N'Nguyen Dang Hoang', CAST(N'2024-10-28T22:07:49.113' AS DateTime), CAST(N'2024-10-28T22:06:00.000' AS DateTime), CAST(200000.00 AS Decimal(10, 2)), CAST(1320000.00 AS Decimal(10, 2)), CAST(1120000.00 AS Decimal(10, 2)), 1, 1002, N'0981694286', NULL)
 GO
@@ -1036,17 +1105,17 @@ INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name]
 GO
 INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2203, NULL, 2, N'Nguyen Dang Hoang', CAST(N'2024-11-09T11:18:01.030' AS DateTime), CAST(N'2024-11-09T11:11:00.000' AS DateTime), CAST(0.00 AS Decimal(10, 2)), CAST(390000.00 AS Decimal(10, 2)), CAST(390000.00 AS Decimal(10, 2)), 0, 3, N'0981694286', CAST(N'2024-11-11T14:14:00.000' AS DateTime))
 GO
-INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2205, NULL, 2, N'Nguyen Dang Hoang', CAST(N'2024-11-11T15:07:37.860' AS DateTime), CAST(N'2024-11-11T15:06:00.000' AS DateTime), CAST(100000.00 AS Decimal(10, 2)), CAST(2140000.00 AS Decimal(10, 2)), CAST(2040000.00 AS Decimal(10, 2)), 1, 2, N'0981694286', NULL)
+INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2205, NULL, 2, N'Nguyen Dang Hoang', CAST(N'2024-11-11T15:07:37.860' AS DateTime), CAST(N'2024-11-11T15:06:00.000' AS DateTime), CAST(100000.00 AS Decimal(10, 2)), CAST(5200000.00 AS Decimal(10, 2)), CAST(5100000.00 AS Decimal(10, 2)), 1, 3, N'0981694286', CAST(N'2024-11-20T19:04:00.000' AS DateTime))
 GO
 INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2206, NULL, 2, N'Nguyen Dang Hoang', CAST(N'2024-11-11T17:26:37.607' AS DateTime), CAST(N'2024-11-12T17:26:00.000' AS DateTime), CAST(0.00 AS Decimal(10, 2)), CAST(510000.00 AS Decimal(10, 2)), CAST(510000.00 AS Decimal(10, 2)), 0, 1002, N'0981694286', NULL)
 GO
 INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2207, NULL, 2, N'danghoang', CAST(N'2024-11-12T19:30:26.147' AS DateTime), CAST(N'2024-11-12T19:30:00.000' AS DateTime), CAST(300000.00 AS Decimal(10, 2)), CAST(410000.00 AS Decimal(10, 2)), CAST(110000.00 AS Decimal(10, 2)), 1, 1002, N'0981694286', NULL)
 GO
-INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2208, NULL, 2, N'danghoang', CAST(N'2024-11-12T19:32:59.507' AS DateTime), CAST(N'2024-11-12T19:32:00.000' AS DateTime), CAST(100000.00 AS Decimal(10, 2)), CAST(1100000.00 AS Decimal(10, 2)), CAST(1000000.00 AS Decimal(10, 2)), 1, 2, N'0981694286', NULL)
+INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2208, NULL, 2, N'danghoang', CAST(N'2024-11-12T19:32:59.507' AS DateTime), CAST(N'2024-11-12T19:32:00.000' AS DateTime), CAST(100000.00 AS Decimal(10, 2)), CAST(1100000.00 AS Decimal(10, 2)), CAST(1000000.00 AS Decimal(10, 2)), 1, 3, N'0981694286', CAST(N'2024-11-20T20:31:00.000' AS DateTime))
 GO
 INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2209, NULL, 2, N'danghoang', CAST(N'2024-11-12T19:45:45.393' AS DateTime), CAST(N'2024-11-12T19:45:00.000' AS DateTime), CAST(1000000.00 AS Decimal(10, 2)), CAST(1430000.00 AS Decimal(10, 2)), CAST(430000.00 AS Decimal(10, 2)), 1, 1002, N'0981694286', NULL)
 GO
-INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2210, NULL, 2, N'Nguyen Van An', CAST(N'2024-11-13T13:19:00.137' AS DateTime), CAST(N'2024-11-13T13:18:00.000' AS DateTime), CAST(100000.00 AS Decimal(10, 2)), CAST(240000.00 AS Decimal(10, 2)), CAST(140000.00 AS Decimal(10, 2)), 1, 1, N'0981694286', NULL)
+INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2210, NULL, 2, N'Nguyen Van An', CAST(N'2024-11-13T13:19:00.137' AS DateTime), CAST(N'2024-11-13T13:18:00.000' AS DateTime), CAST(100000.00 AS Decimal(10, 2)), CAST(240000.00 AS Decimal(10, 2)), CAST(140000.00 AS Decimal(10, 2)), 1, 1002, N'0981694286', NULL)
 GO
 INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2211, 4, NULL, N'Nguyen Tuan  Dung', CAST(N'2024-11-13T13:34:12.520' AS DateTime), CAST(N'2024-11-12T13:35:00.000' AS DateTime), CAST(0.00 AS Decimal(10, 2)), CAST(80000.00 AS Decimal(10, 2)), CAST(80000.00 AS Decimal(10, 2)), 0, 1002, N'1122334455', NULL)
 GO
@@ -1056,7 +1125,63 @@ INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name]
 GO
 INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2214, NULL, 2, N'Nguyen Van An', CAST(N'2024-11-13T13:46:07.057' AS DateTime), CAST(N'2024-11-06T13:46:00.000' AS DateTime), CAST(50000.00 AS Decimal(10, 2)), CAST(260000.00 AS Decimal(10, 2)), CAST(210000.00 AS Decimal(10, 2)), 1, 1002, N'0981694286', NULL)
 GO
-INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2215, 4, NULL, N'Nguyen Tuan  Dung', CAST(N'2024-11-13T13:50:29.307' AS DateTime), CAST(N'2024-11-14T13:51:00.000' AS DateTime), CAST(0.00 AS Decimal(10, 2)), CAST(980000.00 AS Decimal(10, 2)), CAST(980000.00 AS Decimal(10, 2)), 0, 1, N'1122334455', NULL)
+INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2215, 4, NULL, N'Nguyen Tuan  Dung', CAST(N'2024-11-13T13:50:29.307' AS DateTime), CAST(N'2024-11-14T13:51:00.000' AS DateTime), CAST(20000.00 AS Decimal(10, 2)), CAST(980000.00 AS Decimal(10, 2)), CAST(960000.00 AS Decimal(10, 2)), 1, 1002, N'1122334455', NULL)
+GO
+INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2216, 4, NULL, N'Nguyen Tuan  Dung', CAST(N'2024-11-13T21:37:54.133' AS DateTime), CAST(N'2024-11-13T21:46:00.000' AS DateTime), CAST(0.00 AS Decimal(10, 2)), CAST(80000.00 AS Decimal(10, 2)), CAST(80000.00 AS Decimal(10, 2)), 0, 1002, N'1122334455', NULL)
+GO
+INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2217, NULL, 2, N'Nguyen Van An', CAST(N'2024-11-14T08:42:09.953' AS DateTime), CAST(N'2024-11-14T08:38:00.000' AS DateTime), CAST(300000.00 AS Decimal(10, 2)), CAST(380000.00 AS Decimal(10, 2)), CAST(80000.00 AS Decimal(10, 2)), 1, 1002, N'0981694286', NULL)
+GO
+INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2218, NULL, 2, N'Nguyen Dang Hoang', CAST(N'2024-11-14T08:42:48.843' AS DateTime), CAST(N'2024-11-16T08:42:00.000' AS DateTime), CAST(60000.00 AS Decimal(10, 2)), CAST(160000.00 AS Decimal(10, 2)), CAST(100000.00 AS Decimal(10, 2)), 1, 1002, N'0981694286', NULL)
+GO
+INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2219, NULL, 2, N'Nguyen Dang Hoang', CAST(N'2024-11-14T08:43:30.090' AS DateTime), CAST(N'2024-11-16T08:43:00.000' AS DateTime), CAST(70000.00 AS Decimal(10, 2)), CAST(130000.00 AS Decimal(10, 2)), CAST(60000.00 AS Decimal(10, 2)), 1, 1002, N'0981694286', NULL)
+GO
+INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2220, NULL, 2, N'Nguyen Van An', CAST(N'2024-11-14T10:04:23.113' AS DateTime), CAST(N'2024-11-14T10:04:00.000' AS DateTime), CAST(10000.00 AS Decimal(10, 2)), CAST(80000.00 AS Decimal(10, 2)), CAST(70000.00 AS Decimal(10, 2)), 1, 1002, N'0981694286', NULL)
+GO
+INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2221, NULL, 2, N'Nguyen Van An', CAST(N'2024-11-14T10:05:04.140' AS DateTime), CAST(N'2024-11-14T10:04:00.000' AS DateTime), CAST(10000.00 AS Decimal(10, 2)), CAST(80000.00 AS Decimal(10, 2)), CAST(70000.00 AS Decimal(10, 2)), 1, 1002, N'0981694286', NULL)
+GO
+INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2222, NULL, 2, N'Nguyen Van An', CAST(N'2024-11-17T17:23:15.840' AS DateTime), CAST(N'2024-11-17T17:13:00.000' AS DateTime), CAST(0.00 AS Decimal(10, 2)), CAST(1110000.00 AS Decimal(10, 2)), CAST(1110000.00 AS Decimal(10, 2)), 0, 1002, N'1234567345', NULL)
+GO
+INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2223, NULL, 2, N'Nguyen Van An', CAST(N'2024-11-18T12:07:32.557' AS DateTime), CAST(N'2024-11-18T12:07:00.000' AS DateTime), CAST(0.00 AS Decimal(10, 2)), CAST(1200000.00 AS Decimal(10, 2)), CAST(1200000.00 AS Decimal(10, 2)), 0, 3, N'0981694286', CAST(N'2024-11-20T20:54:00.000' AS DateTime))
+GO
+INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2224, NULL, 2, N'Nguyen Dang Hoang', CAST(N'2024-11-18T12:28:42.620' AS DateTime), CAST(N'2024-11-18T12:28:00.000' AS DateTime), CAST(2000000.00 AS Decimal(10, 2)), CAST(2960000.00 AS Decimal(10, 2)), CAST(960000.00 AS Decimal(10, 2)), 1, 1002, N'0981694286', NULL)
+GO
+INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2225, NULL, 2, N'Nguyen Van An', CAST(N'2024-11-18T12:30:30.170' AS DateTime), CAST(N'2024-11-21T12:29:00.000' AS DateTime), CAST(0.00 AS Decimal(10, 2)), CAST(320000.00 AS Decimal(10, 2)), CAST(320000.00 AS Decimal(10, 2)), 0, 3, N'0981694286', CAST(N'2024-11-20T20:55:00.000' AS DateTime))
+GO
+INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2226, NULL, 2, N'Nguyen Dang Hoang', CAST(N'2024-11-18T14:11:36.713' AS DateTime), CAST(N'2024-11-18T14:11:00.000' AS DateTime), CAST(100000.00 AS Decimal(10, 2)), CAST(160000.00 AS Decimal(10, 2)), CAST(60000.00 AS Decimal(10, 2)), 1, 1002, N'0981694286', NULL)
+GO
+INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2227, NULL, 2, N'Nguyen Van An', CAST(N'2024-11-18T18:20:55.563' AS DateTime), CAST(N'2024-11-18T18:20:00.000' AS DateTime), CAST(100000.00 AS Decimal(10, 2)), CAST(330000.00 AS Decimal(10, 2)), CAST(230000.00 AS Decimal(10, 2)), 1, 1002, N'0981694286', NULL)
+GO
+INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2228, NULL, 2, N'Nguyen Van An', CAST(N'2024-11-19T11:16:23.843' AS DateTime), CAST(N'2024-11-19T11:15:00.000' AS DateTime), CAST(300000.00 AS Decimal(10, 2)), CAST(500000.00 AS Decimal(10, 2)), CAST(200000.00 AS Decimal(10, 2)), 1, 1002, N'0981694286', NULL)
+GO
+INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2229, NULL, 2, N'Nguyen Van An', CAST(N'2024-11-19T12:00:31.270' AS DateTime), CAST(N'2024-11-21T12:00:00.000' AS DateTime), CAST(90000.00 AS Decimal(10, 2)), CAST(240000.00 AS Decimal(10, 2)), CAST(150000.00 AS Decimal(10, 2)), 1, 1002, N'0981694286', NULL)
+GO
+INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2230, NULL, 2, N'Nguyen Van An', CAST(N'2024-11-20T14:50:54.380' AS DateTime), CAST(N'2024-11-20T14:50:00.000' AS DateTime), CAST(0.00 AS Decimal(10, 2)), CAST(80000.00 AS Decimal(10, 2)), CAST(80000.00 AS Decimal(10, 2)), 0, 3, N'0981694286', CAST(N'2024-11-20T20:54:00.000' AS DateTime))
+GO
+INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2231, NULL, 2, N'Nguyen Van An', CAST(N'2024-11-20T18:40:15.870' AS DateTime), CAST(N'2024-11-20T18:38:00.000' AS DateTime), CAST(100000.00 AS Decimal(10, 2)), CAST(310000.00 AS Decimal(10, 2)), CAST(210000.00 AS Decimal(10, 2)), 1, 1002, N'0981694286', NULL)
+GO
+INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2232, NULL, 2, N'Nguyen Van An', CAST(N'2024-11-20T20:56:13.287' AS DateTime), CAST(N'2024-11-20T20:53:00.000' AS DateTime), CAST(300000.00 AS Decimal(10, 2)), CAST(480000.00 AS Decimal(10, 2)), CAST(180000.00 AS Decimal(10, 2)), 1, 1002, N'0981694286', NULL)
+GO
+INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2235, NULL, 2, N'Nguyen Van An', CAST(N'2024-11-21T11:40:58.053' AS DateTime), CAST(N'2024-11-21T11:40:00.000' AS DateTime), CAST(2000000.00 AS Decimal(10, 2)), CAST(1880000.00 AS Decimal(10, 2)), CAST(-120000.00 AS Decimal(10, 2)), 1, 3, N'0981694286', CAST(N'2024-11-21T12:02:00.000' AS DateTime))
+GO
+INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2236, NULL, 2, N'Nguyen Van An', CAST(N'2024-11-21T11:59:55.650' AS DateTime), CAST(N'2024-11-21T11:59:00.000' AS DateTime), CAST(200000.00 AS Decimal(10, 2)), CAST(1410000.00 AS Decimal(10, 2)), CAST(1210000.00 AS Decimal(10, 2)), 1, 2, N'0981694286', NULL)
+GO
+INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2237, NULL, 2, N'Nguyen Van An', CAST(N'2024-11-21T12:01:27.790' AS DateTime), CAST(N'2024-11-21T12:01:00.000' AS DateTime), CAST(100000.00 AS Decimal(10, 2)), CAST(240000.00 AS Decimal(10, 2)), CAST(140000.00 AS Decimal(10, 2)), 1, 2, N'0981694286', NULL)
+GO
+INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2238, NULL, 2, N'Nguyen Van An', CAST(N'2024-11-21T12:17:02.113' AS DateTime), CAST(N'2024-11-23T18:14:00.000' AS DateTime), CAST(0.00 AS Decimal(10, 2)), CAST(710000.00 AS Decimal(10, 2)), CAST(710000.00 AS Decimal(10, 2)), 0, 1, N'0981694286', NULL)
+GO
+INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2239, NULL, 2, N'Nguyen Van An', CAST(N'2024-11-21T12:17:42.103' AS DateTime), CAST(N'2024-11-23T14:23:00.000' AS DateTime), CAST(2000000.00 AS Decimal(10, 2)), CAST(1550000.00 AS Decimal(10, 2)), CAST(-450000.00 AS Decimal(10, 2)), 1, 1, N'0981694286', NULL)
+GO
+INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2240, NULL, 2, N'Nguyen Van An', CAST(N'2024-11-21T12:18:40.353' AS DateTime), CAST(N'2024-11-21T12:18:00.000' AS DateTime), CAST(700000.00 AS Decimal(10, 2)), CAST(300000.00 AS Decimal(10, 2)), CAST(-400000.00 AS Decimal(10, 2)), 1, 2, N'0981694286', NULL)
+GO
+INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2241, NULL, 2, N'Nguyen Van An', CAST(N'2024-11-21T12:56:34.543' AS DateTime), CAST(N'2024-11-23T14:24:00.000' AS DateTime), CAST(500000.00 AS Decimal(10, 2)), CAST(660000.00 AS Decimal(10, 2)), CAST(160000.00 AS Decimal(10, 2)), 1, 1, N'0981694286', NULL)
+GO
+INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2242, NULL, 2, N'Nguyen Dang Hoang', CAST(N'2024-11-21T13:00:50.780' AS DateTime), CAST(N'2024-11-23T13:00:00.000' AS DateTime), CAST(800000.00 AS Decimal(10, 2)), CAST(1080000.00 AS Decimal(10, 2)), CAST(280000.00 AS Decimal(10, 2)), 1, 1, N'0981694286', NULL)
+GO
+INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2243, NULL, 2, N'Nguyen Dang Hoang', CAST(N'2024-11-21T13:01:21.907' AS DateTime), CAST(N'2024-11-23T13:00:00.000' AS DateTime), CAST(900000.00 AS Decimal(10, 2)), CAST(1180000.00 AS Decimal(10, 2)), CAST(280000.00 AS Decimal(10, 2)), 1, 1, N'0981694286', NULL)
+GO
+INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2244, NULL, 3, N'Nguyen Dang Hoang', CAST(N'2024-11-21T18:15:53.770' AS DateTime), CAST(N'2024-11-21T18:09:00.000' AS DateTime), CAST(2000000.00 AS Decimal(10, 2)), CAST(640000.00 AS Decimal(10, 2)), CAST(-1360000.00 AS Decimal(10, 2)), 1, 2, N'0981694286', NULL)
+GO
+INSERT [dbo].[Orders] ([order_id], [customer_id], [employee_id], [customer_name], [order_date], [order_usage_date], [deposit], [total_amount], [amount_payable], [status_order], [activity_id], [phone_customer], [order_checkout_date]) VALUES (2245, NULL, 2, N'Nguyen Van An', CAST(N'2024-11-21T20:22:55.620' AS DateTime), CAST(N'2024-11-21T20:22:00.000' AS DateTime), CAST(1000000.00 AS Decimal(10, 2)), CAST(1500000.00 AS Decimal(10, 2)), CAST(500000.00 AS Decimal(10, 2)), 1, 1, N'0981694286', NULL)
 GO
 SET IDENTITY_INSERT [dbo].[Orders] OFF
 GO
@@ -1204,6 +1329,56 @@ INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Descrip
 GO
 INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (1, 2215, 1, NULL)
 GO
+INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (1, 2216, 1, NULL)
+GO
+INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (1, 2217, 1, NULL)
+GO
+INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (1, 2218, 2, NULL)
+GO
+INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (1, 2219, 1, NULL)
+GO
+INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (1, 2220, 1, NULL)
+GO
+INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (1, 2221, 1, NULL)
+GO
+INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (1, 2222, 2, NULL)
+GO
+INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (1, 2223, 5, NULL)
+GO
+INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (1, 2224, 2, NULL)
+GO
+INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (1, 2225, 4, NULL)
+GO
+INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (1, 2226, 2, NULL)
+GO
+INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (1, 2227, 1, NULL)
+GO
+INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (1, 2228, 5, NULL)
+GO
+INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (1, 2229, 3, NULL)
+GO
+INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (1, 2230, 1, NULL)
+GO
+INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (1, 2231, 2, NULL)
+GO
+INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (1, 2232, 6, NULL)
+GO
+INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (1, 2235, 1, NULL)
+GO
+INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (1, 2236, 2, NULL)
+GO
+INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (1, 2237, 3, NULL)
+GO
+INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (1, 2238, 2, NULL)
+GO
+INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (1, 2241, 2, NULL)
+GO
+INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (1, 2242, 1, NULL)
+GO
+INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (1, 2243, 1, NULL)
+GO
+INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (1, 2244, 3, NULL)
+GO
 INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (2, 2107, 2, NULL)
 GO
 INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (2, 2109, 2, NULL)
@@ -1302,6 +1477,24 @@ INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Descrip
 GO
 INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (2, 2214, 2, NULL)
 GO
+INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (2, 2217, 1, NULL)
+GO
+INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (2, 2219, 1, NULL)
+GO
+INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (2, 2222, 2, NULL)
+GO
+INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (2, 2224, 1, NULL)
+GO
+INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (2, 2227, 1, NULL)
+GO
+INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (2, 2228, 2, NULL)
+GO
+INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (2, 2236, 1, NULL)
+GO
+INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (2, 2241, 1, NULL)
+GO
+INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (2, 2244, 2, NULL)
+GO
 INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (3, 2139, 2, NULL)
 GO
 INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (3, 2199, 2, NULL)
@@ -1311,6 +1504,8 @@ GO
 INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (3, 2206, 2, NULL)
 GO
 INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (3, 2209, 1, NULL)
+GO
+INSERT [dbo].[OrderTicketDetails] ([ticket_id], [order_id], [quantity], [Description]) VALUES (3, 2228, 2, NULL)
 GO
 SET IDENTITY_INSERT [dbo].[Roles] ON 
 GO
@@ -1332,25 +1527,27 @@ SET IDENTITY_INSERT [dbo].[TicketCategories] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Tickets] ON 
 GO
-INSERT [dbo].[Tickets] ([ticket_id], [ticket_name], [price], [created_at], [ticket_category_id], [img_url], [status]) VALUES (1, N'Người lớn', CAST(80000.00 AS Decimal(10, 2)), CAST(N'2024-10-07T09:48:33.180' AS DateTime), 2, NULL, 1)
+INSERT [dbo].[Tickets] ([ticket_id], [ticket_name], [price], [created_at], [ticket_category_id], [img_url], [status]) VALUES (1, N'Người lớn', CAST(80000.00 AS Decimal(10, 2)), CAST(N'2024-10-07T09:48:33.180' AS DateTime), 2, N'Screenshot 2024-11-21 180016.png', 1)
 GO
-INSERT [dbo].[Tickets] ([ticket_id], [ticket_name], [price], [created_at], [ticket_category_id], [img_url], [status]) VALUES (2, N'Trẻ em (3T- <1,4m)', CAST(50000.00 AS Decimal(10, 2)), CAST(N'2024-10-07T09:48:33.180' AS DateTime), 2, NULL, 1)
+INSERT [dbo].[Tickets] ([ticket_id], [ticket_name], [price], [created_at], [ticket_category_id], [img_url], [status]) VALUES (2, N'Trẻ em (3T- <1,4m)', CAST(50000.00 AS Decimal(10, 2)), CAST(N'2024-10-07T09:48:33.180' AS DateTime), 2, N'Screenshot 2024-11-21 175802.png', 1)
 GO
-INSERT [dbo].[Tickets] ([ticket_id], [ticket_name], [price], [created_at], [ticket_category_id], [img_url], [status]) VALUES (3, N'Trẻ em < 3T', CAST(0.00 AS Decimal(10, 2)), CAST(N'2024-10-07T09:48:33.180' AS DateTime), 2, NULL, 1)
+INSERT [dbo].[Tickets] ([ticket_id], [ticket_name], [price], [created_at], [ticket_category_id], [img_url], [status]) VALUES (3, N'Trẻ em < 3T', CAST(0.00 AS Decimal(10, 2)), CAST(N'2024-10-07T09:48:33.180' AS DateTime), 2, N'Screenshot 2024-11-21 175916.png', 1)
 GO
-INSERT [dbo].[Tickets] ([ticket_id], [ticket_name], [price], [created_at], [ticket_category_id], [img_url], [status]) VALUES (4, N'Nhóm 20-50 khách', CAST(50000.00 AS Decimal(10, 2)), CAST(N'2024-10-07T09:48:33.180' AS DateTime), 1, NULL, 1)
+INSERT [dbo].[Tickets] ([ticket_id], [ticket_name], [price], [created_at], [ticket_category_id], [img_url], [status]) VALUES (4, N'Nhóm 20-50 khách', CAST(50000.00 AS Decimal(10, 2)), CAST(N'2024-10-07T09:48:33.180' AS DateTime), 1, N'Screenshot 2024-11-21 180212.png', 1)
 GO
-INSERT [dbo].[Tickets] ([ticket_id], [ticket_name], [price], [created_at], [ticket_category_id], [img_url], [status]) VALUES (5, N'Nhóm trên 50 khách', CAST(40000.00 AS Decimal(10, 2)), CAST(N'2024-10-07T09:48:33.180' AS DateTime), 1, NULL, 1)
+INSERT [dbo].[Tickets] ([ticket_id], [ticket_name], [price], [created_at], [ticket_category_id], [img_url], [status]) VALUES (5, N'Nhóm trên 50 khách', CAST(40000.00 AS Decimal(10, 2)), CAST(N'2024-10-07T09:48:33.180' AS DateTime), 1, N'Screenshot 2024-11-21 180303.png', 1)
+GO
+INSERT [dbo].[Tickets] ([ticket_id], [ticket_name], [price], [created_at], [ticket_category_id], [img_url], [status]) VALUES (6, N'string', CAST(10.00 AS Decimal(10, 2)), CAST(N'2024-11-13T21:30:55.017' AS DateTime), 1, N'string', 0)
 GO
 SET IDENTITY_INSERT [dbo].[Tickets] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Users] ON 
 GO
-INSERT [dbo].[Users] ([user_id], [first_name], [last_name], [email], [password], [phone_number], [address], [date_of_birth], [gender], [profile_picture_url], [is_active], [created_at], [role_id]) VALUES (2, N'Dang', N'Hoang', N'hoangndhe164015@fpt.edu.vn', N'123456', N'0981694286', N'Sam Son Thanh Hoa', CAST(N'0006-06-21' AS Date), N'male  ', N'/images/owner.png', 1, CAST(N'2024-10-07T09:17:50.273' AS DateTime), 1)
+INSERT [dbo].[Users] ([user_id], [first_name], [last_name], [email], [password], [phone_number], [address], [date_of_birth], [gender], [profile_picture_url], [is_active], [created_at], [role_id]) VALUES (2, N'Đăng', N'Hoàng', N'hoangndhe164015@fpt.edu.vn', N'1234567', N'0981694286', N'Sầm sơn, Thanh Hóa', CAST(N'0006-06-21' AS Date), N'other ', N'447736781_930120299125668_2391234246024360015_n.jpg', 1, CAST(N'2024-10-07T09:17:50.273' AS DateTime), 1)
 GO
-INSERT [dbo].[Users] ([user_id], [first_name], [last_name], [email], [password], [phone_number], [address], [date_of_birth], [gender], [profile_picture_url], [is_active], [created_at], [role_id]) VALUES (3, N'Phung Cong ', N'Tu', N'tu@gmail.com', N'123456', N'0987654321', N'456 Elm St, Riverside', CAST(N'1990-03-22' AS Date), N'male  ', N'http://example.com/profile/jane.jpg', 1, CAST(N'2024-10-07T09:17:50.273' AS DateTime), 2)
+INSERT [dbo].[Users] ([user_id], [first_name], [last_name], [email], [password], [phone_number], [address], [date_of_birth], [gender], [profile_picture_url], [is_active], [created_at], [role_id]) VALUES (3, N'Tui', N'Ne', N'tu@gmail.com', N'123456', N'0987654321', N'456 Elm St, Riverside', CAST(N'1990-03-22' AS Date), N'male  ', N'Screenshot 2024-10-29 104719.png', 1, CAST(N'2024-10-07T09:17:50.273' AS DateTime), 2)
 GO
-INSERT [dbo].[Users] ([user_id], [first_name], [last_name], [email], [password], [phone_number], [address], [date_of_birth], [gender], [profile_picture_url], [is_active], [created_at], [role_id]) VALUES (4, N'Nguyen Tuan ', N'Dung', N'dung@gmail.com', N'123456', N'1122334455', N'789 Oak St, Mountain View', CAST(N'1995-07-30' AS Date), N'other ', N'http://example.com/profile/sam.jpg', 1, CAST(N'2024-10-07T09:17:50.273' AS DateTime), 3)
+INSERT [dbo].[Users] ([user_id], [first_name], [last_name], [email], [password], [phone_number], [address], [date_of_birth], [gender], [profile_picture_url], [is_active], [created_at], [role_id]) VALUES (4, N'Nguyen Tuan ', N'Dung', N'dung@gmail.com', N'1234567', N'1122334455', N'789 Oak St, Mountain View', CAST(N'1995-07-30' AS Date), N'other ', N'409828268_814603424010690_193134261700068709_n.jpg', 1, CAST(N'2024-10-07T09:17:50.273' AS DateTime), 3)
 GO
 INSERT [dbo].[Users] ([user_id], [first_name], [last_name], [email], [password], [phone_number], [address], [date_of_birth], [gender], [profile_picture_url], [is_active], [created_at], [role_id]) VALUES (1003, N'Phung Con', N'Tu', N'tupc2002@gmail.com', N'566020', N'012345678', NULL, NULL, NULL, NULL, 0, CAST(N'2024-10-08T22:44:07.097' AS DateTime), 3)
 GO
@@ -1358,11 +1555,13 @@ INSERT [dbo].[Users] ([user_id], [first_name], [last_name], [email], [password],
 GO
 INSERT [dbo].[Users] ([user_id], [first_name], [last_name], [email], [password], [phone_number], [address], [date_of_birth], [gender], [profile_picture_url], [is_active], [created_at], [role_id]) VALUES (1005, N'Doi', N'Tan', N'doituan12345@gmail.com', N'10052002tan', N'0344780136', NULL, NULL, NULL, NULL, 1, CAST(N'2024-10-29T22:42:28.397' AS DateTime), 3)
 GO
+INSERT [dbo].[Users] ([user_id], [first_name], [last_name], [email], [password], [phone_number], [address], [date_of_birth], [gender], [profile_picture_url], [is_active], [created_at], [role_id]) VALUES (1007, N'Đăng', N'Hoàng', N'dh694286@gmail.com', N'12345678', N'0981694285', NULL, NULL, NULL, NULL, 1, CAST(N'2024-11-14T14:54:44.233' AS DateTime), 3)
+GO
 SET IDENTITY_INSERT [dbo].[Users] OFF
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [UQ__Roles__783254B16A44ECCD]    Script Date: 11/13/2024 9:16:06 PM ******/
+/****** Object:  Index [UQ__Roles__783254B16A44ECCD]    Script Date: 11/21/2024 9:18:58 PM ******/
 ALTER TABLE [dbo].[Roles] ADD UNIQUE NONCLUSTERED 
 (
 	[role_name] ASC
@@ -1370,7 +1569,7 @@ ALTER TABLE [dbo].[Roles] ADD UNIQUE NONCLUSTERED
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [UQ__Users__A1936A6B0CB566FE]    Script Date: 11/13/2024 9:16:06 PM ******/
+/****** Object:  Index [UQ__Users__A1936A6B0CB566FE]    Script Date: 11/21/2024 9:18:58 PM ******/
 ALTER TABLE [dbo].[Users] ADD  CONSTRAINT [UQ__Users__A1936A6B0CB566FE] UNIQUE NONCLUSTERED 
 (
 	[phone_number] ASC
@@ -1378,7 +1577,7 @@ ALTER TABLE [dbo].[Users] ADD  CONSTRAINT [UQ__Users__A1936A6B0CB566FE] UNIQUE N
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [UQ__Users__AB6E61644EC97341]    Script Date: 11/13/2024 9:16:06 PM ******/
+/****** Object:  Index [UQ__Users__AB6E61644EC97341]    Script Date: 11/21/2024 9:18:58 PM ******/
 ALTER TABLE [dbo].[Users] ADD  CONSTRAINT [UQ__Users__AB6E61644EC97341] UNIQUE NONCLUSTERED 
 (
 	[email] ASC

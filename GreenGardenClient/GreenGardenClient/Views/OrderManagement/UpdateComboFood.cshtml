@@ -4,12 +4,45 @@
 @using GreenGardenClient.Models
 
 
+@{
+    if (ViewBag.Notification != null)
+    {
+        <div id="notification" class="alert alert-warning" role="alert">
+            @ViewBag.Notification
+        </div>
+    }
+}
+<style>
+    #notification {
+        position: fixed;
+        top: 20px; /* Khoảng cách từ đầu trang */
+        right: 20px; /* Khoảng cách từ bên phải */
+        z-index: 1050; /* Đảm bảo thông báo nằm trên các phần tử khác */
+        opacity: 1; /* Bắt đầu với độ mờ là 1 */
+        transition: opacity 1s ease-out, transform 1s ease-out; /* Hiệu ứng chuyển đổi cho độ mờ và biến đổi */
+        transform: translateY(-10px); /* Đưa thông báo lên một chút */
+        width: auto; /* Hoặc thay đổi thành một giá trị cụ thể, ví dụ: 300px */
+        max-width: 300px; /* Giới hạn chiều rộng tối đa */
+        padding: 15px; /* Khoảng cách bên trong cho thông báo */
+    }
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        if ($("#notification").length) {
+            setTimeout(function () {
+                $("#notification").css("opacity", "0"); // Đặt độ mờ thành 0
+                $("#notification").css("transform", "translateY(10px)"); // Đưa thông báo xuống một chút khi ẩn
+            }, 3000); // Sau 3 giây
+        }
+    });
+</script>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <title>Danh sách nhân viên | Quản trị Admin</title>
+    <title>Đơn Đang sử dụng | Cập nhập combo đồ ăn</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -45,6 +78,63 @@
     </ul>
 </header>
 <style>
+    .filter-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    /* Căn chỉnh các nút lọc con bên trái của nút filter */
+    #filterButtons {
+        position: absolute;
+        right: 100%; /* Đặt bên trái của nút lọc */
+        top: 0; /* Căn ngang hàng */
+        display: flex;
+        flex-direction: row; /* Sắp xếp theo hàng ngang */
+        gap: 10px; /* Khoảng cách giữa các nút */
+        padding: 5px;
+        z-index: 10; /* Đảm bảo các nút lọc nổi lên trên */
+        margin-top: -10px;
+    }
+
+    /* Thiết lập mặc định ẩn */
+    .d-none {
+        display: none;
+    }
+
+    .btn-booking i,
+    .btn-booking {
+        color: #4CAF50; /* Màu xanh lá cho Đặt vé */
+    }
+
+    .btn-tools i,
+    .btn-tools {
+        color: #FF0000; /* Màu cam cho Đặt dụng cụ */
+    }
+
+    .btn-booking i,
+    .btn-booking span {
+        color: #4CAF50; /* Màu xanh lá cây cho Đặt vé */
+    }
+
+    /* Đổi màu cho icon và chữ "Đặt dụng cụ" */
+    .btn-tools i,
+    .btn-tools span {
+        color: #FF0000; /* Màu cam cho Đặt dụng cụ */
+    }
+
+
+    .btn-booking:hover i,
+    .btn-tools:hover i,
+    .btn-order-food:hover i,
+    .btn-combo-food:hover i,
+    .btn-booking:hover,
+    .btn-tools:hover,
+    .btn-order-food:hover,
+    .btn-combo-food:hover {
+        opacity: 0.8; /* Hiệu ứng mờ khi hover */
+    }
+
     .product-card {
         padding: 15px;
         margin-bottom: 15px;
@@ -318,12 +408,50 @@
             background-color: #ddd;
         }
 
+    .product-details a {
+        display: inline-block;
+        padding: 5px 5px; /* Reduce padding to make the button smaller */
+        font-size: 10px; /* Smaller font size */
+        font-weight: bold;
+        color: #fff;
+        background-color: #efba6c;
+        text-decoration: none; /* Remove underline */
+        border-radius: 5px; /* Rounded corners */
+        transition: background-color 0.3s ease; /* Smooth hover transition */
+    }
+
+        .product-details a:hover {
+            background-color: #efba6c; /* Darker blue on hover */
+        }
+    /* Style for the container */
+    /* Style for the container */
+    .top-bar {
+        background-color: #f8f9fa; /* Light gray background */
+        padding: 10px 20px;
+        border-radius: 8px;
+    }
+
+        /* Link button styling */
+        .top-bar .btn {
+            margin-left: 10px;
+            color: #343a40; /* Default dark color for text */
+        }
+
+    /* Active link styling */
+    .active-link {
+        color: #ffc107 !important; /* Yellow color for active state */
+        font-weight: bold; /* Optional: make text bold when active */
+    }
+
+    /* Optional styling for the search input */
+    #searchInput {
+        max-width: 250px;
+    }
+</style>
 </style>
 <body onload="time()" class="app sidebar-mini rtl">
     <header class="app-header" style="display: flex; align-items: center; padding: 0 15px; background-color: #f6f5f5 !important;">
         <!-- Sidebar Toggle -->
-     
-
         <!-- Centered Logo -->
         <div style="flex: 500; display: flex; justify-content: center; align-items: center; padding-left: 50px;">
             <img src="~/images/newlogo.jpg" alt="Logo" style="height: auto; width: 55%; max-width: 120px;margin-top: 10px;">
@@ -419,6 +547,7 @@
                     </li>
                 </ul>
             </li>
+
             <script>
                 document.addEventListener("DOMContentLoaded", function () {
                     const submenu = document.getElementById("submenuList");
@@ -566,100 +695,102 @@
         </ul>
     </aside>
 
+
     <main class="app-content">
-        
+
         <div class="app-title">
             <ul class="app-breadcrumb breadcrumb side">
-                <li class="breadcrumb-item active"><a href="#"><b>Danh sách các đơn đặt</b></a><a href="#"><b>/Tạo đơn</b></a><a href="#"><b>/Đặt vé</b></a></li>
+                <li class="breadcrumb-item active">Quản lí đơn hàng/Tạo đơn mới/Đặt Combo đồ ăn</li>
             </ul>
             <div id="clock"></div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="tile">
+
                     <form asp-controller="OrderManagement" asp-action="UpdateComboFood" method="post">
 
                         <div class="tile-body">
                             <div class="top-bar d-flex justify-content-between align-items-center">
 
-                            <div class="search-container">
-                                <label for="searchInput">Tìm kiếm:</label>
-                                <input type="search" id="searchInput" class="form-control form-control-sm" placeholder="Nhập từ khóa..." aria-controls="sampleTable">
-                            </div>
-                            <div class="menu">
-                                <!-- Các nút -->
-                                <div class="menu-items">
-
-                                    <a href="~/OrderManagement/UpdateFood" class="menu-link">
-                                        <i class="fas fa-utensils"></i> Đồ ăn
-                                    </a>
-                                        <a href="~/OrderManagement/UpdateComboFood" class="menu-link active">
-                                        <i class="fas fa-box"></i> Đồ ăn theo combo
-                                    </a>
+                                <div class="search-container">
+                                    <label for="searchInput">Tìm kiếm:</label>
+                                    <input type="search" id="searchInput" class="form-control form-control-sm" placeholder="Nhập từ khóa..." aria-controls="sampleTable">
                                 </div>
+                                <div class="menu">
+                                    <!-- Các nút -->
+                                    <div class="menu-items">
+
+                                        <a href="~/OrderManagement/UpdateFood" class="menu-link">
+                                            <i class="fas fa-utensils"></i> Đồ ăn
+                                        </a>
+                                        <a href="~/OrderManagement/UpdateComboFood" class="menu-link active">
+                                            <i class="fas fa-box"></i> Đồ ăn theo combo
+                                        </a>
+                                    </div>
 
 
+                                </div>
+                                <style>
+                                    .menu {
+                                        padding: 10px;
+                                        background-color: #f8f9fa; /* Màu nền nhẹ */
+                                        border-radius: 8px; /* Bo góc */
+                                        display: flex;
+                                        justify-content: center; /* Căn giữa các nút */
+                                    }
+
+                                    .menu-items {
+                                        display: flex; /* Hiển thị ngang */
+                                        gap: 20px; /* Khoảng cách giữa các nút */
+                                    }
+
+                                    .menu-link {
+                                        display: flex;
+                                        align-items: center;
+                                        padding: 10px 15px;
+                                        text-decoration: none; /* Bỏ gạch chân */
+                                        color: #495057; /* Màu chữ cơ bản */
+                                        border-radius: 4px; /* Bo góc */
+                                        transition: all 0.3s ease; /* Hiệu ứng chuyển đổi màu */
+                                    }
+
+                                        .menu-link:hover {
+                                            background-color: #e9ecef; /* Thay đổi màu nền khi hover */
+                                            color: #212529; /* Đổi màu chữ khi hover */
+                                        }
+
+                                        .menu-link.active {
+                                            color: #d99b53; /* Chữ trắng */
+                                            font-weight: bold; /* Chữ in đậm */
+                                        }
+
+                                </style>
                             </div>
-                            <style>
-                                .menu {
-                                    padding: 10px;
-                                    background-color: #f8f9fa; /* Màu nền nhẹ */
-                                    border-radius: 8px; /* Bo góc */
-                                    display: flex;
-                                    justify-content: center; /* Căn giữa các nút */
-                                }
-
-                                .menu-items {
-                                    display: flex; /* Hiển thị ngang */
-                                    gap: 20px; /* Khoảng cách giữa các nút */
-                                }
-
-                                .menu-link {
-                                    display: flex;
-                                    align-items: center;
-                                    padding: 10px 15px;
-                                    text-decoration: none; /* Bỏ gạch chân */
-                                    color: #495057; /* Màu chữ cơ bản */
-                                    border-radius: 4px; /* Bo góc */
-                                    transition: all 0.3s ease; /* Hiệu ứng chuyển đổi màu */
-                                }
-
-                                    .menu-link:hover {
-                                        background-color: #e9ecef; /* Thay đổi màu nền khi hover */
-                                        color: #212529; /* Đổi màu chữ khi hover */
-                                    }
-
-                                    .menu-link.active {
-                                        color: #d99b53; /* Chữ trắng */
-                                        font-weight: bold; /* Chữ in đậm */
-                                    }
-
-                            </style>
-                        </div>
 
 
                             @foreach (ComboFoodVM item in ViewBag.gears)
                             {
 
-                                                        <div class="product-card">
-                                                            <div class="product-image">
+                                <div class="product-card">
+                                    <div class="product-image">
                                         <img src="~/images/Food/@item.ImgUrl" alt="product">
-                                                            </div>
-                                                            <div class="product-details">
-                                                                        <div class="product-name">@item.ComboName</div>
-                                                                <div class="product-price">
+                                    </div>
+                                    <div class="product-details">
+                                        <div class="product-name">@item.ComboName</div>
+                                        <div class="product-price">
                                             @String.Format("{0:0,0} ₫", @item.Price)
-                                                                </div>
-                                                            </div>
-                                                            <div class="quantity-control">
-                                                                <button class="btn-quantity btn-decrease">-</button>
-                                                                <span class="quantity-value">@item.Quantity</span>
-                                                                <button class="btn-quantity btn-increase">+</button>
-                                                                 <input  class="quantity-input" hidden name="quantity" value="@item.Quantity" />
-                                                                      <input type="text" value="@item.ComboId" hidden name="id">
-                                                                <input type="number" value="@item.Price" hidden name="price">
-                                                            </div>
-                                                        </div>
+                                        </div>
+                                    </div>
+                                    <div class="quantity-control">
+                                        <button class="btn-quantity btn-decrease">-</button>
+                                        <span class="quantity-value">@item.Quantity</span>
+                                        <button class="btn-quantity btn-increase">+</button>
+                                        <input class="quantity-input" hidden name="quantity" value="@item.Quantity" />
+                                        <input type="text" value="@item.ComboId" hidden name="id">
+                                        <input type="number" value="@item.Price" hidden name="price">
+                                    </div>
+                                </div>
 
 
                             }
@@ -680,7 +811,6 @@
                             </div>
                         </div>
                     </form>
-
                 </div>
             </div>
 
@@ -697,7 +827,7 @@
     </script>
     <script>
         $(document).ready(function () {
-            var itemsPerPage = 3; // Số sản phẩm hiển thị trên mỗi trang
+            var itemsPerPage = 4; // Số sản phẩm hiển thị trên mỗi trang
             var currentPage = 1;  // Trang hiện tại
             var totalItems = $('.product-card').length; // Tổng số sản phẩm ban đầu
             var totalPages = Math.ceil(totalItems / itemsPerPage); // Tổng số trang ban đầu
@@ -837,103 +967,7 @@
 
 
     </script>
-    @*<script>
-    $(document).ready(function () {
-    var itemsPerPage = 3; // Số sản phẩm hiển thị trên mỗi trang
-    var currentPage = 1;  // Trang hiện tại
-    var totalItems = $('.product-card').length; // Tổng số sản phẩm
-    var totalPages = Math.ceil(totalItems / itemsPerPage); // Tổng số trang
 
-    // Hàm hiển thị sản phẩm cho trang hiện tại
-    function showPage(page) {
-    // Ẩn tất cả sản phẩm
-    $('.product-card').hide();
-
-    // Hiển thị sản phẩm của trang hiện tại
-    var startItem = (page - 1) * itemsPerPage;
-    var endItem = startItem + itemsPerPage;
-
-    $('.product-card').slice(startItem, endItem).show();
-
-    // Cập nhật nút phân trang
-    $('#pagination .page-item').removeClass('active');
-    $('#pagination .page-item[data-page="' + page + '"]').addClass('active');
-
-    // Kiểm tra trạng thái nút Lùi và Tiếp
-    if (page == 1) {
-    $('#prev-page').addClass('disabled');
-    } else {
-    $('#prev-page').removeClass('disabled');
-    }
-
-    if (page == totalPages) {
-    $('#next-page').addClass('disabled');
-    } else {
-    $('#next-page').removeClass('disabled');
-    }
-    }
-
-    // Tạo các nút phân trang
-    for (var i = 1; i <= totalPages; i++) {
-    $('<li class="paginate_button page-item" data-page="' + i + '"><a href="#" class="page-link">' + i + '</a></li>').insertBefore('#next-page');
-    }
-
-    // Xử lý sự kiện khi bấm vào các nút số trang
-    $('#pagination').on('click', '.page-item', function (e) {
-    e.preventDefault();
-    var page = $(this).data('page');
-    if (page) {
-    currentPage = page;
-    showPage(currentPage);
-    }
-    });
-
-    // Xử lý sự kiện khi bấm vào nút Lùi
-    $('#prev-page').click(function (e) {
-    e.preventDefault();
-    if (currentPage > 1) {
-    currentPage--;
-    showPage(currentPage);
-    }
-    });
-
-    // Xử lý sự kiện khi bấm vào nút Tiếp
-    $('#next-page').click(function (e) {
-    e.preventDefault();
-    if (currentPage < totalPages) {
-    currentPage++;
-    showPage(currentPage);
-    }
-    });
-
-    // Hiển thị trang đầu tiên
-    showPage(currentPage);
-    });
-
-
-    </script>
-
-
-    <script>
-    // Khi trang được tải, gán sự kiện cho trường tìm kiếm
-    $(document).ready(function () {
-    // Lắng nghe sự kiện khi người dùng nhập vào ô tìm kiếm
-    $('#searchInput').on('keyup', function () {
-    // Lấy giá trị từ ô tìm kiếm và chuyển thành chữ thường để không phân biệt chữ hoa/chữ thường
-    var searchValue = $(this).val().toLowerCase();
-
-    // Lặp qua tất cả các dòng sản phẩm trong bảng
-    $('.product-card').filter(function () {
-    // Lấy văn bản của sản phẩm, mô tả, và giá, rồi kiểm tra xem nó có khớp với giá trị tìm kiếm không
-    $(this).toggle($(this).text().toLowerCase().indexOf(searchValue) > -1);
-    });
-    });
-    });
-
-
-
-    </script>*@
-    <!-- Essential javascripts for application to work-->
     <script src="~/js/jquery-3.2.1.min.js"></script>
     <script src="~/js/popper.min.js"></script>
     <script src="~/js/bootstrap.min.js"></script>

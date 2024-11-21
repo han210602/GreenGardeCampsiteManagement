@@ -253,8 +253,20 @@
       "PackagePath": "staticwebassets\\images\\Food\\ca_tram_den_nuong - Copy - Copy.jpg"
     },
     {
+      "Id": "C:\\Users\\admin\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\Food\\cachephapbiasa.jpg",
+      "PackagePath": "staticwebassets\\images\\Food\\cachephapbiasa.jpg"
+    },
+    {
+      "Id": "C:\\Users\\admin\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\Food\\cachepnuong.jpg",
+      "PackagePath": "staticwebassets\\images\\Food\\cachepnuong.jpg"
+    },
+    {
       "Id": "C:\\Users\\admin\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\Food\\catramdennuong.jpg",
       "PackagePath": "staticwebassets\\images\\Food\\catramdennuong.jpg"
+    },
+    {
+      "Id": "C:\\Users\\admin\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\Food\\catramtrangnuong.jpg",
+      "PackagePath": "staticwebassets\\images\\Food\\catramtrangnuong.jpg"
     },
     {
       "Id": "C:\\Users\\admin\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\Food\\combofood.jpg",
@@ -265,8 +277,20 @@
       "PackagePath": "staticwebassets\\images\\Food\\duoi-bo - Copy.jpg"
     },
     {
+      "Id": "C:\\Users\\admin\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\Food\\ganuong.jpg",
+      "PackagePath": "staticwebassets\\images\\Food\\ganuong.jpg"
+    },
+    {
       "Id": "C:\\Users\\admin\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\Food\\istockphoto_675566100.jpg",
       "PackagePath": "staticwebassets\\images\\Food\\istockphoto_675566100.jpg"
+    },
+    {
+      "Id": "C:\\Users\\admin\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\Food\\laucachepomdua.jpg",
+      "PackagePath": "staticwebassets\\images\\Food\\laucachepomdua.jpg"
+    },
+    {
+      "Id": "C:\\Users\\admin\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\Food\\lauhaisan.jpg",
+      "PackagePath": "staticwebassets\\images\\Food\\lauhaisan.jpg"
     },
     {
       "Id": "C:\\Users\\admin\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\Gear\\409828268_814603424010690_193134261700068709_n.jpg",
@@ -279,6 +303,42 @@
     {
       "Id": "C:\\Users\\admin\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\Gear\\Colorful Modern Camping Club Logo.png",
       "PackagePath": "staticwebassets\\images\\Gear\\Colorful Modern Camping Club Logo.png"
+    },
+    {
+      "Id": "C:\\Users\\admin\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\Gear\\Screenshot 2024-11-21 172803.png",
+      "PackagePath": "staticwebassets\\images\\Gear\\Screenshot 2024-11-21 172803.png"
+    },
+    {
+      "Id": "C:\\Users\\admin\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\Gear\\Screenshot 2024-11-21 173122.png",
+      "PackagePath": "staticwebassets\\images\\Gear\\Screenshot 2024-11-21 173122.png"
+    },
+    {
+      "Id": "C:\\Users\\admin\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\Gear\\Screenshot 2024-11-21 173334.png",
+      "PackagePath": "staticwebassets\\images\\Gear\\Screenshot 2024-11-21 173334.png"
+    },
+    {
+      "Id": "C:\\Users\\admin\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\Gear\\Screenshot 2024-11-21 173510.png",
+      "PackagePath": "staticwebassets\\images\\Gear\\Screenshot 2024-11-21 173510.png"
+    },
+    {
+      "Id": "C:\\Users\\admin\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\Gear\\Screenshot 2024-11-21 173947.png",
+      "PackagePath": "staticwebassets\\images\\Gear\\Screenshot 2024-11-21 173947.png"
+    },
+    {
+      "Id": "C:\\Users\\admin\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\Gear\\Screenshot 2024-11-21 174033.png",
+      "PackagePath": "staticwebassets\\images\\Gear\\Screenshot 2024-11-21 174033.png"
+    },
+    {
+      "Id": "C:\\Users\\admin\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\Gear\\Screenshot 2024-11-21 174442.png",
+      "PackagePath": "staticwebassets\\images\\Gear\\Screenshot 2024-11-21 174442.png"
+    },
+    {
+      "Id": "C:\\Users\\admin\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\Gear\\Screenshot 2024-11-21 174614.png",
+      "PackagePath": "staticwebassets\\images\\Gear\\Screenshot 2024-11-21 174614.png"
+    },
+    {
+      "Id": "C:\\Users\\admin\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\Gear\\Screenshot 2024-11-21 174715.png",
+      "PackagePath": "staticwebassets\\images\\Gear\\Screenshot 2024-11-21 174715.png"
     },
     {
       "Id": "C:\\Users\\admin\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\Gear\\canh-ga-nuong.jpg",
@@ -307,6 +367,26 @@
     {
       "Id": "C:\\Users\\admin\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\Ticket\\Login.png",
       "PackagePath": "staticwebassets\\images\\Ticket\\Login.png"
+    },
+    {
+      "Id": "C:\\Users\\admin\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\Ticket\\Screenshot 2024-11-21 175802.png",
+      "PackagePath": "staticwebassets\\images\\Ticket\\Screenshot 2024-11-21 175802.png"
+    },
+    {
+      "Id": "C:\\Users\\admin\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\Ticket\\Screenshot 2024-11-21 175916.png",
+      "PackagePath": "staticwebassets\\images\\Ticket\\Screenshot 2024-11-21 175916.png"
+    },
+    {
+      "Id": "C:\\Users\\admin\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\Ticket\\Screenshot 2024-11-21 180016.png",
+      "PackagePath": "staticwebassets\\images\\Ticket\\Screenshot 2024-11-21 180016.png"
+    },
+    {
+      "Id": "C:\\Users\\admin\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\Ticket\\Screenshot 2024-11-21 180212.png",
+      "PackagePath": "staticwebassets\\images\\Ticket\\Screenshot 2024-11-21 180212.png"
+    },
+    {
+      "Id": "C:\\Users\\admin\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\Ticket\\Screenshot 2024-11-21 180303.png",
+      "PackagePath": "staticwebassets\\images\\Ticket\\Screenshot 2024-11-21 180303.png"
     },
     {
       "Id": "C:\\Users\\admin\\Desktop\\New folder\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\Ticket\\picture11.jpg",

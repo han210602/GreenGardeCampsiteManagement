@@ -5,11 +5,12 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <title>Danh sách nhân viên | Quản trị Admin</title>
+    <title>Đơn đang sử dụng | Cập nhập vé</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -213,6 +214,7 @@
         border-right: 1px solid #ccc; /* Viền phải của sidebar */
     }
 
+
     .app-sidebar__user {
         display: flex;
         flex-direction: column;
@@ -317,11 +319,68 @@
             background-color: #ddd;
         }
 
+    .top-bar {
+        background-color: #f8f9fa; /* Light gray background */
+        padding: 10px 20px;
+        border-radius: 8px;
+    }
+
+        /* Link button styling */
+        .top-bar .btn {
+            margin-left: 10px;
+            color: #343a40; /* Default dark color for text */
+        }
+
+    /* Active link styling */
+    .active-link {
+        color: #ffc107 !important; /* Yellow color for active state */
+        font-weight: bold; /* Optional: make text bold when active */
+    }
+
+    /* Optional styling for the search input */
+    #searchInput {
+        max-width: 250px;
+    }
+
+    .product-details a {
+        display: inline-block;
+        padding: 5px 5px; /* Reduce padding to make the button smaller */
+        font-size: 10px; /* Smaller font size */
+        font-weight: bold;
+        color: #fff;
+        background-color: #efba6c;
+        text-decoration: none; /* Remove underline */
+        border-radius: 5px; /* Rounded corners */
+        transition: background-color 0.3s ease; /* Smooth hover transition */
+    }
+
+        .product-details a:hover {
+            background-color: #efba6c; /* Darker blue on hover */
+        }
+
+    .filter-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    /* Căn chỉnh các nút lọc con bên trái của nút filter */
+    #filterButtons {
+        position: absolute;
+        right: 100%; /* Đặt bên trái của nút lọc */
+        top: 0; /* Căn ngang hàng */
+        display: flex;
+        flex-direction: row; /* Sắp xếp theo hàng ngang */
+        gap: 10px; /* Khoảng cách giữa các nút */
+        padding: 5px;
+        z-index: 10; /* Đảm bảo các nút lọc nổi lên trên */
+        margin-top: -10px;
+    }
+
 </style>
 <body onload="time()" class="app sidebar-mini rtl">
     <header class="app-header" style="display: flex; align-items: center; padding: 0 15px; background-color: #f6f5f5 !important;">
-        <!-- Sidebar Toggle -->
-        
+
 
         <!-- Centered Logo -->
         <div style="flex: 500; display: flex; justify-content: center; align-items: center; padding-left: 50px;">
@@ -342,7 +401,73 @@
         </ul>
 
     </header>
+    @{
+        if (ViewBag.NotificationSuccess != null)
+        {
+            <div id="notification-success" class="notification alert alert-success" role="alert">
+                <i class="fas fa-bell"></i> <!-- Bell Icon -->
+                @ViewBag.NotificationSuccess
+            </div>
+        }
+    }
+    @{
+        if (ViewBag.NotificationError != null)
+        {
+            <div id="notification-success" class="notification alert alert-danger" role="alert">
+                <i class="fas fa-bell"></i> <!-- Bell Icon -->
+                @ViewBag.NotificationError
+            </div>
+        }
+    }
+    <style>
+        .notification {
+            position: fixed;
+            top: 20px; /* Distance from the top */
+            right: -350px; /* Start outside the viewport */
+            z-index: 1050; /* Ensure it appears above other elements */
+            opacity: 1; /* Fully visible initially */
+            transition: transform 0.5s ease-out, opacity 1s ease-out; /* Smooth slide and fade effects */
+            max-width: 300px; /* Restrict maximum width */
+            padding: 15px; /* Padding inside the notification */
+            border-radius: 5px; /* Rounded corners */
+        }
 
+        /* Success notification styles */
+        .alert-success {
+            background-color: #d4edda; /* Light green background */
+            color: #155724; /* Dark green text */
+            border: 1px solid #c3e6cb; /* Green border */
+        }
+
+        /* Error notification styles */
+        .alert-danger {
+            background-color: #f8d7da; /* Light red background */
+            color: #721c24; /* Dark red text */
+            border: 1px solid #f5c6cb; /* Red border */
+        }
+    </style>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            function showAndHideNotification(selector) {
+                if ($(selector).length) {
+                    // Slide notification into view
+                    $(selector).css("transform", "translateX(-350px)"); // Slide in
+                    setTimeout(function () {
+                        // Slide notification back out after 5 seconds
+                        $(selector).css("transform", "translateX(0)"); // Slide out
+                        $(selector).css("opacity", "0"); // Optional fade-out effect
+                    }, 5000); // Display for 5 seconds before sliding out
+                }
+            }
+
+            // Show success and error notifications
+            showAndHideNotification("#notification-success");
+            showAndHideNotification("#notification-error");
+        });
+    </script>
     <!-- Sidebar menu-->
     <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
     <aside class="app-sidebar">
@@ -568,13 +693,14 @@
     <main class="app-content">
         <div class="app-title">
             <ul class="app-breadcrumb breadcrumb side">
-                <li class="breadcrumb-item active"><a href="#"><b>Danh sách các đơn đặt</b></a><a href="#"><b>/Tạo đơn</b></a><a href="#"><b>/Đặt vé</b></a></li>
+                <li class="breadcrumb-item active">Quản lí đơn hàng/Tạo đơn mới/Đặt vé</li>
             </ul>
             <div id="clock"></div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="tile">
+
                     <form asp-controller="OrderManagement" asp-action="UpdateTicket" method="post">
 
                         <div class="tile-body">
@@ -630,12 +756,13 @@
                         </div>
                     </form>
 
+
                 </div>
             </div>
 
         </div>
+    
 
-     
 
     </main>
     <script>
@@ -760,33 +887,6 @@
 
 
     </script>
-    <script>
-        $(document).ready(function () {
-            // Tăng số lượng
-            $('.btn-increase').click(function (e) {
-                e.preventDefault(); // Ngăn submit form
-                var quantityElement = $(this).siblings('.quantity-value');
-                var hiddenInput = $(this).siblings('.quantity-input');
-                var currentQuantity = parseInt(quantityElement.text());
-                quantityElement.text(currentQuantity + 1);
-                hiddenInput.val(currentQuantity + 1);  // Cập nhật giá trị của input ẩn
-            });
-
-            // Giảm số lượng
-            $('.btn-decrease').click(function (e) {
-                e.preventDefault(); // Ngăn submit form
-                var quantityElement = $(this).siblings('.quantity-value');
-                var hiddenInput = $(this).siblings('.quantity-input');
-                var currentQuantity = parseInt(quantityElement.text());
-                if (currentQuantity > 0) {
-                    quantityElement.text(currentQuantity - 1);
-                    hiddenInput.val(currentQuantity - 1);  // Cập nhật giá trị của input ẩn
-                }
-            });
-        });
-
-
-    </script>
 
     <script src="~/js/jquery-3.2.1.min.js"></script>
     <script src="~/js/popper.min.js"></script>
@@ -851,6 +951,33 @@
             }
         }
         ;
+    </script>
+    <script>
+        $(document).ready(function () {
+            // Tăng số lượng
+            $('.btn-increase').click(function (e) {
+                e.preventDefault(); // Ngăn submit form
+                var quantityElement = $(this).siblings('.quantity-value');
+                var hiddenInput = $(this).siblings('.quantity-input');
+                var currentQuantity = parseInt(quantityElement.text());
+                quantityElement.text(currentQuantity + 1);
+                hiddenInput.val(currentQuantity + 1);  // Cập nhật giá trị của input ẩn
+            });
+
+            // Giảm số lượng
+            $('.btn-decrease').click(function (e) {
+                e.preventDefault(); // Ngăn submit form
+                var quantityElement = $(this).siblings('.quantity-value');
+                var hiddenInput = $(this).siblings('.quantity-input');
+                var currentQuantity = parseInt(quantityElement.text());
+                if (currentQuantity > 0) {
+                    quantityElement.text(currentQuantity - 1);
+                    hiddenInput.val(currentQuantity - 1);  // Cập nhật giá trị của input ẩn
+                }
+            });
+        });
+
+
     </script>
 </body>
 

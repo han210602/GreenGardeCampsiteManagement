@@ -11,7 +11,7 @@
 <html lang="en">
 
 <head>
-    <title>Danh sách nhân viên | Quản trị Admin</title>
+    <title>Tạo đơn hàng | Chi tiết vé</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -251,10 +251,11 @@
     .product-image {
         text-align: center; /* Căn giữa hình ảnh */
         margin-bottom: 20px;
+        width:50%;
     }
 
         .product-image img {
-            max-width: 80%; /* Giới hạn chiều rộng của ảnh (80% của khung chứa) */
+            max-width: 100%; /* Giới hạn chiều rộng của ảnh (80% của khung chứa) */
             height: auto;
             border-radius: 10px;
             transition: transform 0.2s ease-in-out;
@@ -639,7 +640,7 @@
                                 <i class="zoom-icon fa fa-search-plus" onclick="openModal()" style="position: absolute; top: 10px; right: 10px; font-size: 24px; cursor: pointer;"></i>
 
                                 <!-- Hình ảnh -->
-                                <img src="~/images/Ticket/@Model.ImgUrl" alt="Lẩu cá mú nấu ngọt" class="img-fluid img-thumbnail" id="productImage">
+                                <img  src="~/images/Ticket/@Model.ImgUrl" alt="Lẩu cá mú nấu ngọt" class="img-fluid img-thumbnail" id="productImage">
                             </div>
 
                             <!-- Modal để phóng to hình ảnh -->

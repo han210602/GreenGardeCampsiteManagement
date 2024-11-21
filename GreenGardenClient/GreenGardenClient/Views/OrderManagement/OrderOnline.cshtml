@@ -47,8 +47,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- DataTables CSS and JS -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
-    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.foundation.min.css">
+    <script src="https://cdn.datatables.net/1.10.24/js/dataTables.foundation.min.js"></script>
 
     <!-- SweetAlert JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
@@ -775,7 +775,7 @@
 
                                             // Check if the selected date is in the past
                                             if (selectedDate < currentDate) {
-                                                alert("Ngày sử dụng phải lớn hơn ngày hiện tại. Vui lòng chọn ngày hợp lệ.");
+                                                alert("Ngày sử dụng phải lớn hơn hoặc bằng ngày hiện tại. Vui lòng chọn ngày hợp lệ");
                                                 return false; // Prevent form submission
                                             }
 
@@ -871,8 +871,8 @@
                                                 const depositAmount = parseFloat(depositAmountInput.value);
 
                                                 // Check if the deposit amount is valid and not greater than totalAmount
-                                                if (isNaN(depositAmount) || depositAmount <= 0) {
-                                                    alert("Số tiền đặt cọc phải lớn hơn 0. Vui lòng nhập số tiền hợp lệ.");
+                                                if (isNaN(depositAmount) || depositAmount <= 1000) {
+                                                    alert("Số tiền đặt cọc phải lớn hơn 1.000 VNĐ. Vui lòng nhập số tiền hợp lệ.");
                                                     return false; // Prevent form submission
                                                 }
 

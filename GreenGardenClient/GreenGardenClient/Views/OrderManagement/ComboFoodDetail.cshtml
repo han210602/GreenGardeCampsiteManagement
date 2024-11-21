@@ -9,7 +9,7 @@
 <html lang="en">
 
 <head>
-    <title>Danh sách nhân viên | Quản trị Admin</title>
+    <title>Tạo đơn hàng | Chi tiết combo đồ ăn</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -780,9 +780,9 @@
                                     </div>
 
                                     <div class="d-flex justify-content-end mt-3">
-                                        <button class="btn btn-secondary" onclick="goBack()" style="margin-left:20px">Quay lại</button>
+                                        <button class="btn btn-secondary" onclick="goBack()" style="margin-left:20px">  <i class="fas fa-arrow-left"></i> Quay lại</button>
 
-                                        <button class="btn btn-primary me-2" onclick="addToCart()">Thêm vào giỏ hàng</button>
+                                        <button class="btn btn-primary me-2" onclick="addToCart()"> <i class="fas fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
                                     </div>
 
                                 </form>
@@ -818,10 +818,7 @@
             value = value > 0 ? value - 1 : 0;
             document.getElementById('quantity').value = value;
 
-            // Show alert when value reaches 0
-            if (value === 0) {
-                alert("Số lượng đã giảm tới 0!");
-            }
+          
         }
     </script>
 
