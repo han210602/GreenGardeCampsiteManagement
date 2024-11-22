@@ -805,7 +805,252 @@ namespace GreenGardenAPITest.DAO
 
         }
 
-        // Test for method  -----------------------------------------------------------
+        // Test for method ChangeGearStatus  -----------------------------------------------------------
+        [Fact]
+        public async Task ChangeGearStatus_ShouldUpdateStatus_WhenGearExists()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using var dbContext = new GreenGardenContext(options);
+            CampingGearDAO.InitializeContext(dbContext); // Initialize context for the DAO
+
+            int gearId = 1; // Existing GearId
+            dbContext.CampingGears.Add(new CampingGear
+            {
+                GearId = gearId,
+                GearName = "Tent",
+                Status = true // Initial Status
+            });
+            dbContext.SaveChanges();
+
+            // Act
+            CampingGearDAO.ChangeGearStatus(gearId);
+
+            // Assert
+            var updatedGear = dbContext.CampingGears.FirstOrDefault(g => g.GearId == gearId);
+            Assert.NotNull(updatedGear);
+            Assert.False(updatedGear.Status); // Status should have toggled from true to false
+        }
+
+        [Fact]
+        public async Task ChangeGearStatus_ShouldThrowException_WhenGearDoesNotExist()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using var dbContext = new GreenGardenContext(options);
+            CampingGearDAO.InitializeContext(dbContext); // Initialize context for the DAO
+
+            int nonExistentGearId = 999; // Non-existing GearId
+
+            // Act & Assert
+            var exception = Assert.Throws<Exception>(() => CampingGearDAO.ChangeGearStatus(nonExistentGearId));
+            Assert.Equal($"Camping gear with ID {nonExistentGearId} does not exist.", exception.Message);
+        }
+
+        [Fact]
+        public async Task ChangeGearStatus_ShouldThrowException_WhenContextIsNull()
+        {
+            // Arrange
+            OrderDAO.InitializeContext(null); // Initialize with a null context
+
+            // Act & Assert
+            var exception = Assert.Throws<Exception>(() => CampingGearDAO.ChangeGearStatus(1));
+            Assert.NotNull(exception);
+            Assert.Contains("Object reference not set to an instance of an object", exception.Message);
+        }
+
+        // Test for method AddCampingGear  -----------------------------------------------------------
+        [Fact]
+        public void AddCampingGear_ShouldAddGear_WhenValidDtoIsProvided()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using var dbContext = new GreenGardenContext(options);
+            CampingGearDAO.InitializeContext(dbContext); // Initialize the context for the DAO
+
+            var gearDto = new AddCampingGearDTO
+            {
+                GearId = 1,
+                GearName = "Tent",
+                QuantityAvailable = 10,
+                RentalPrice = 50m,
+                Description = "High quality tent",
+                GearCategoryId = 2,
+                ImgUrl = "http://example.com/tent.jpg",
+                Status = true,
+                CreatedAt = DateTime.Now // Optional field
+            };
+
+            // Act
+            CampingGearDAO.AddCampingGear(gearDto); // Call the method to add camping gear
+
+            // Assert
+            var campingGear = dbContext.CampingGears.FirstOrDefault(g => g.GearId == gearDto.GearId);
+            Assert.NotNull(campingGear); // Ensure the gear was added
+            Assert.Equal(gearDto.GearName, campingGear.GearName); // Check GearName
+            Assert.Equal(gearDto.QuantityAvailable, campingGear.QuantityAvailable); // Check QuantityAvailable
+            Assert.Equal(gearDto.RentalPrice, campingGear.RentalPrice); // Check RentalPrice
+            Assert.Equal(gearDto.Description, campingGear.Description); // Check Description
+            Assert.Equal(gearDto.GearCategoryId, campingGear.GearCategoryId); // Check GearCategoryId
+            Assert.Equal(gearDto.ImgUrl, campingGear.ImgUrl); // Check ImgUrl
+            Assert.True(campingGear.Status); // Check that the Status is true
+        }
+
+        [Fact]
+        public void AddCampingGear_ShouldThrowException_WhenGearNameIsNullOrEmpty()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using var dbContext = new GreenGardenContext(options);
+            CampingGearDAO.InitializeContext(dbContext); // Initialize the context for the DAO
+
+            var gearDto = new AddCampingGearDTO
+            {
+                GearId = 1,
+                GearName = "", // Invalid empty GearName
+                QuantityAvailable = 10,
+                RentalPrice = 50m,
+                Description = "High quality tent",
+                GearCategoryId = 2,
+                ImgUrl = "http://example.com/tent.jpg",
+                Status = true,
+                CreatedAt = DateTime.Now
+            };
+
+            // Act & Assert
+            var exception = Assert.Throws<Exception>(() =>  CampingGearDAO.AddCampingGear(gearDto));
+            Assert.Contains("GearName", exception.Message); // Check if the error message mentions GearName
+        }
+
+        [Fact]
+        public void AddCampingGear_ShouldThrowException_WhenQuantityAvailableIsZero()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using var dbContext = new GreenGardenContext(options);
+            CampingGearDAO.InitializeContext(dbContext);
+
+            var gearDto = new AddCampingGearDTO
+            {
+                GearId = 2,
+                GearName = "Tent",
+                QuantityAvailable = 0, // Invalid quantity
+                RentalPrice = 50m,
+                Description = "High quality tent",
+                GearCategoryId = 2,
+                ImgUrl = "http://example.com/tent.jpg",
+                Status = true,
+                CreatedAt = DateTime.Now
+            };
+
+            // Act & Assert
+            var exception = Assert.Throws<Exception>(() => CampingGearDAO.AddCampingGear(gearDto));
+            Assert.Contains("QuantityAvailable", exception.Message); // Check if the error message mentions QuantityAvailable
+        }
+
+        [Fact]
+        public void AddCampingGear_ShouldAddGear_WhenOptionalFieldsAreNull()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using var dbContext = new GreenGardenContext(options);
+            CampingGearDAO.InitializeContext(dbContext);
+
+            var gearDto = new AddCampingGearDTO
+            {
+                GearId = 1,
+                GearName = "Tent",
+                QuantityAvailable = 10,
+                RentalPrice = 50m,
+                Description = null, // Optional field
+                GearCategoryId = 1,
+                ImgUrl = "http://example.com/tent.jpg", // Optional field
+                Status = true,
+                CreatedAt = null // Optional field
+            };
+
+            // Act
+            CampingGearDAO.AddCampingGear(gearDto); // Call the method to add camping gear
+
+            // Assert
+            var campingGear = dbContext.CampingGears.FirstOrDefault(g => g.GearId == gearDto.GearId);
+            Assert.NotNull(campingGear); // Ensure the gear was added
+            Assert.Null(campingGear.Description); // Ensure Description is null (since it was not provided)
+            Assert.Null(campingGear.CreatedAt); // Ensure CreatedAt is null (since it was not provided)
+            Assert.Equal(gearDto.ImgUrl, campingGear.ImgUrl); // Ensure ImgUrl was added correctly
+        }
+
+        [Fact]
+        public void AddCampingGear_ShouldThrowException_WhenImgUrlIsNull()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using var dbContext = new GreenGardenContext(options);
+            CampingGearDAO.InitializeContext(dbContext);
+
+            var gearDto = new AddCampingGearDTO
+            {
+                GearId = 1,
+                GearName = "Tent",
+                QuantityAvailable = 10,
+                RentalPrice = 50m,
+                Description = "Comfortable sleeping bag",
+                GearCategoryId = 1,
+                ImgUrl = null, // ImgUrl is required but null
+                Status = true,
+                CreatedAt = DateTime.Now
+            };
+
+            // Act & Assert
+            var exception = Assert.Throws<Exception>(() => CampingGearDAO.AddCampingGear(gearDto));
+            Assert.Contains("ImgUrl", exception.Message); // Ensure error mentions ImgUrl
+        }
+
+        [Fact]
+        public void AddCampingGear_ShouldThrowException_WhenDbContextIsNull()
+        {
+            // Arrange
+            CampingGearDAO.InitializeContext(null); // Initialize with a null context
+
+            var gearDto = new AddCampingGearDTO
+            {
+                GearId = 1,
+                GearName = "Tent",
+                QuantityAvailable = 10,
+                RentalPrice = 50m,
+                Description = "High quality tent",
+                GearCategoryId = 2,
+                ImgUrl = "http://example.com/tent.jpg"
+            };
+
+            // Act & Assert
+            var exception = Assert.Throws<Exception>(() => CampingGearDAO.AddCampingGear(gearDto));
+            Assert.NotNull(exception);
+            Assert.Contains("Object reference not set to an instance of an object", exception.Message);
+        }
+
+        
 
     }
 }

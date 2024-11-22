@@ -260,5 +260,35 @@ namespace DataAccess.DAO
             }
         }
 
+        public static List<EventDTO> GetTop3NewestEvents()
+        {
+            try
+            {
+                var events = _context.Events.Include(user => user.CreateByNavigation)
+                    .OrderByDescending(eventEntity => eventEntity.EventDate) // Sắp xếp theo ngày diễn ra
+                    .Take(3) // Lấy 3 sự kiện đầu tiên
+                    .Select(eventEntity => new EventDTO
+                    {
+                        EventId = eventEntity.EventId,
+                        EventName = eventEntity.EventName,
+                        Description = eventEntity.Description,
+                        EventDate = eventEntity.EventDate,
+                        StartTime = eventEntity.StartTime,
+                        EndTime = eventEntity.EndTime,
+                        Location = eventEntity.Location,
+                        PictureUrl = eventEntity.PictureUrl,
+                        IsActive = eventEntity.IsActive,
+                        CreatedAt = eventEntity.CreatedAt,
+                        CreatedByUserName = eventEntity.CreateByNavigation.FirstName + " " + eventEntity.CreateByNavigation.LastName
+                    }).ToList();
+
+                return events;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error retrieving events: " + ex.Message);
+            }
+        }
+
     }
 }

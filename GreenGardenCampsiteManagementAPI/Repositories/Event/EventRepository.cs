@@ -32,5 +32,10 @@ namespace Repositories.Event
         {
             return EventDAO.DeleteEvent(eventId);
         }
+
+        public List<EventDTO> GetTop3NewestEvents()
+        {
+            return EventDAO.GetTop3NewestEvents();
+        }
     }
 }

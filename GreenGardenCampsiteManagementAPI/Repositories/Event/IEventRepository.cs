@@ -11,5 +11,6 @@ namespace Repositories.Event
         bool UpdateEvent(UpdateEventDTO eventDTO);
         bool DeleteEvent(int eventId);
         EventDTO GetEventById(int id);
+        List<EventDTO> GetTop3NewestEvents();
     }
 }

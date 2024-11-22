@@ -3,16 +3,56 @@
   "WorkspaceRootPath": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{0437BE36-C2C8-4DEA-9101-AD3561B4503F}|GreenGardenAPITest\\GreenGardenAPITest.csproj|c:\\users\\nguyen thanh hau\\desktop\\greengarden\\greengardencampsitemanagement\\greengardencampsitemanagementapi\\greengardenapitest\\dao\\orderdaotest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0437BE36-C2C8-4DEA-9101-AD3561B4503F}|GreenGardenAPITest\\GreenGardenAPITest.csproj|solutionrelative:greengardenapitest\\dao\\orderdaotest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0437BE36-C2C8-4DEA-9101-AD3561B4503F}|GreenGardenAPITest\\GreenGardenAPITest.csproj|c:\\users\\nguyen thanh hau\\desktop\\greengarden\\greengardencampsitemanagement\\greengardencampsitemanagementapi\\greengardenapitest\\dao\\campinggeardaotest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0437BE36-C2C8-4DEA-9101-AD3561B4503F}|GreenGardenAPITest\\GreenGardenAPITest.csproj|solutionrelative:greengardenapitest\\dao\\campinggeardaotest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{11067DDA-55A5-4B58-AF46-0FEB4C1CA211}|BusinessObject\\BusinessObject.csproj|c:\\users\\nguyen thanh hau\\desktop\\greengarden\\greengardencampsitemanagement\\greengardencampsitemanagementapi\\businessobject\\dtos\\campinggeardto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{11067DDA-55A5-4B58-AF46-0FEB4C1CA211}|BusinessObject\\BusinessObject.csproj|solutionrelative:businessobject\\dtos\\campinggeardto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0BABBFBE-5824-4235-B0EA-845C3C693946}|DataAccess\\DataAccess.csproj|c:\\users\\nguyen thanh hau\\desktop\\greengarden\\greengardencampsitemanagement\\greengardencampsitemanagementapi\\dataaccess\\dao\\campinggeardao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0BABBFBE-5824-4235-B0EA-845C3C693946}|DataAccess\\DataAccess.csproj|solutionrelative:dataaccess\\dao\\campinggeardao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0BABBFBE-5824-4235-B0EA-845C3C693946}|DataAccess\\DataAccess.csproj|c:\\users\\nguyen thanh hau\\desktop\\greengarden\\greengardencampsitemanagement\\greengardencampsitemanagementapi\\dataaccess\\dao\\orderdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0BABBFBE-5824-4235-B0EA-845C3C693946}|DataAccess\\DataAccess.csproj|solutionrelative:dataaccess\\dao\\orderdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{0437BE36-C2C8-4DEA-9101-AD3561B4503F}|GreenGardenAPITest\\GreenGardenAPITest.csproj|c:\\users\\nguyen thanh hau\\desktop\\greengarden\\greengardencampsitemanagement\\greengardencampsitemanagementapi\\greengardenapitest\\dao\\combodaotest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0437BE36-C2C8-4DEA-9101-AD3561B4503F}|GreenGardenAPITest\\GreenGardenAPITest.csproj|solutionrelative:greengardenapitest\\dao\\combodaotest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0437BE36-C2C8-4DEA-9101-AD3561B4503F}|GreenGardenAPITest\\GreenGardenAPITest.csproj|c:\\users\\nguyen thanh hau\\desktop\\greengarden\\greengardencampsitemanagement\\greengardencampsitemanagementapi\\greengardenapitest\\dao\\orderdaotest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0437BE36-C2C8-4DEA-9101-AD3561B4503F}|GreenGardenAPITest\\GreenGardenAPITest.csproj|solutionrelative:greengardenapitest\\dao\\orderdaotest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{11067DDA-55A5-4B58-AF46-0FEB4C1CA211}|BusinessObject\\BusinessObject.csproj|c:\\users\\nguyen thanh hau\\desktop\\greengarden\\greengardencampsitemanagement\\greengardencampsitemanagementapi\\businessobject\\dtos\\createuniqueorderrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{11067DDA-55A5-4B58-AF46-0FEB4C1CA211}|BusinessObject\\BusinessObject.csproj|solutionrelative:businessobject\\dtos\\createuniqueorderrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{11067DDA-55A5-4B58-AF46-0FEB4C1CA211}|BusinessObject\\BusinessObject.csproj|c:\\users\\nguyen thanh hau\\desktop\\greengarden\\greengardencampsitemanagement\\greengardencampsitemanagementapi\\businessobject\\dtos\\orderdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{11067DDA-55A5-4B58-AF46-0FEB4C1CA211}|BusinessObject\\BusinessObject.csproj|solutionrelative:businessobject\\dtos\\orderdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0BABBFBE-5824-4235-B0EA-845C3C693946}|DataAccess\\DataAccess.csproj|c:\\users\\nguyen thanh hau\\desktop\\greengarden\\greengardencampsitemanagement\\greengardencampsitemanagementapi\\dataaccess\\dao\\eventdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0BABBFBE-5824-4235-B0EA-845C3C693946}|DataAccess\\DataAccess.csproj|solutionrelative:dataaccess\\dao\\eventdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0437BE36-C2C8-4DEA-9101-AD3561B4503F}|GreenGardenAPITest\\GreenGardenAPITest.csproj|c:\\users\\nguyen thanh hau\\desktop\\greengarden\\greengardencampsitemanagement\\greengardencampsitemanagementapi\\greengardenapitest\\dao\\eventdaotest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0437BE36-C2C8-4DEA-9101-AD3561B4503F}|GreenGardenAPITest\\GreenGardenAPITest.csproj|solutionrelative:greengardenapitest\\dao\\eventdaotest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{0437BE36-C2C8-4DEA-9101-AD3561B4503F}|GreenGardenAPITest\\GreenGardenAPITest.csproj|c:\\users\\nguyen thanh hau\\desktop\\greengarden\\greengardencampsitemanagement\\greengardencampsitemanagementapi\\greengardenapitest\\dao\\ticketdaotest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0437BE36-C2C8-4DEA-9101-AD3561B4503F}|GreenGardenAPITest\\GreenGardenAPITest.csproj|solutionrelative:greengardenapitest\\dao\\ticketdaotest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BDF1E7A6-3036-4CE4-ABA7-A5172708D1FC}|Repositories\\Repositories.csproj|c:\\users\\nguyen thanh hau\\desktop\\greengarden\\greengardencampsitemanagement\\greengardencampsitemanagementapi\\repositories\\event\\eventrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BDF1E7A6-3036-4CE4-ABA7-A5172708D1FC}|Repositories\\Repositories.csproj|solutionrelative:repositories\\event\\eventrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BDF1E7A6-3036-4CE4-ABA7-A5172708D1FC}|Repositories\\Repositories.csproj|c:\\users\\nguyen thanh hau\\desktop\\greengarden\\greengardencampsitemanagement\\greengardencampsitemanagementapi\\repositories\\event\\ieventrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BDF1E7A6-3036-4CE4-ABA7-A5172708D1FC}|Repositories\\Repositories.csproj|solutionrelative:repositories\\event\\ieventrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{11067DDA-55A5-4B58-AF46-0FEB4C1CA211}|BusinessObject\\BusinessObject.csproj|c:\\users\\nguyen thanh hau\\desktop\\greengarden\\greengardencampsitemanagement\\greengardencampsitemanagementapi\\businessobject\\dtos\\orderticketdetaildto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -21,14 +61,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{11067DDA-55A5-4B58-AF46-0FEB4C1CA211}|BusinessObject\\BusinessObject.csproj|c:\\users\\nguyen thanh hau\\desktop\\greengarden\\greengardencampsitemanagement\\greengardencampsitemanagementapi\\businessobject\\dtos\\ordercampinggeardetaildto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{11067DDA-55A5-4B58-AF46-0FEB4C1CA211}|BusinessObject\\BusinessObject.csproj|solutionrelative:businessobject\\dtos\\ordercampinggeardetaildto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{11067DDA-55A5-4B58-AF46-0FEB4C1CA211}|BusinessObject\\BusinessObject.csproj|c:\\users\\nguyen thanh hau\\desktop\\greengarden\\greengardencampsitemanagement\\greengardencampsitemanagementapi\\businessobject\\dtos\\orderdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{11067DDA-55A5-4B58-AF46-0FEB4C1CA211}|BusinessObject\\BusinessObject.csproj|solutionrelative:businessobject\\dtos\\orderdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{11067DDA-55A5-4B58-AF46-0FEB4C1CA211}|BusinessObject\\BusinessObject.csproj|c:\\users\\nguyen thanh hau\\desktop\\greengarden\\greengardencampsitemanagement\\greengardencampsitemanagementapi\\businessobject\\dtos\\createuniqueorderrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{11067DDA-55A5-4B58-AF46-0FEB4C1CA211}|BusinessObject\\BusinessObject.csproj|solutionrelative:businessobject\\dtos\\createuniqueorderrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{11067DDA-55A5-4B58-AF46-0FEB4C1CA211}|BusinessObject\\BusinessObject.csproj|c:\\users\\nguyen thanh hau\\desktop\\greengarden\\greengardencampsitemanagement\\greengardencampsitemanagementapi\\businessobject\\models\\greengardencontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -79,14 +111,6 @@
       "RelativeMoniker": "D:0:0:{0BABBFBE-5824-4235-B0EA-845C3C693946}|DataAccess\\DataAccess.csproj|solutionrelative:dataaccess\\dao\\foodanddrinkdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0437BE36-C2C8-4DEA-9101-AD3561B4503F}|GreenGardenAPITest\\GreenGardenAPITest.csproj|c:\\users\\nguyen thanh hau\\desktop\\greengarden\\greengardencampsitemanagement\\greengardencampsitemanagementapi\\greengardenapitest\\dao\\eventdaotest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0437BE36-C2C8-4DEA-9101-AD3561B4503F}|GreenGardenAPITest\\GreenGardenAPITest.csproj|solutionrelative:greengardenapitest\\dao\\eventdaotest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0437BE36-C2C8-4DEA-9101-AD3561B4503F}|GreenGardenAPITest\\GreenGardenAPITest.csproj|c:\\users\\nguyen thanh hau\\desktop\\greengarden\\greengardencampsitemanagement\\greengardencampsitemanagementapi\\greengardenapitest\\dao\\combodaotest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0437BE36-C2C8-4DEA-9101-AD3561B4503F}|GreenGardenAPITest\\GreenGardenAPITest.csproj|solutionrelative:greengardenapitest\\dao\\combodaotest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{0437BE36-C2C8-4DEA-9101-AD3561B4503F}|GreenGardenAPITest\\GreenGardenAPITest.csproj|c:\\users\\nguyen thanh hau\\desktop\\greengarden\\greengardencampsitemanagement\\greengardencampsitemanagementapi\\greengardenapitest\\dao\\accountdaotest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0437BE36-C2C8-4DEA-9101-AD3561B4503F}|GreenGardenAPITest\\GreenGardenAPITest.csproj|solutionrelative:greengardenapitest\\dao\\accountdaotest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -127,18 +151,6 @@
       "RelativeMoniker": "D:0:0:{0BABBFBE-5824-4235-B0EA-845C3C693946}|DataAccess\\DataAccess.csproj|solutionrelative:dataaccess\\dao\\foodcombodao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0BABBFBE-5824-4235-B0EA-845C3C693946}|DataAccess\\DataAccess.csproj|c:\\users\\nguyen thanh hau\\desktop\\greengarden\\greengardencampsitemanagement\\greengardencampsitemanagementapi\\dataaccess\\dao\\eventdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0BABBFBE-5824-4235-B0EA-845C3C693946}|DataAccess\\DataAccess.csproj|solutionrelative:dataaccess\\dao\\eventdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0437BE36-C2C8-4DEA-9101-AD3561B4503F}|GreenGardenAPITest\\GreenGardenAPITest.csproj|c:\\users\\nguyen thanh hau\\desktop\\greengarden\\greengardencampsitemanagement\\greengardencampsitemanagementapi\\greengardenapitest\\dao\\campinggeardaotest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0437BE36-C2C8-4DEA-9101-AD3561B4503F}|GreenGardenAPITest\\GreenGardenAPITest.csproj|solutionrelative:greengardenapitest\\dao\\campinggeardaotest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0BABBFBE-5824-4235-B0EA-845C3C693946}|DataAccess\\DataAccess.csproj|c:\\users\\nguyen thanh hau\\desktop\\greengarden\\greengardencampsitemanagement\\greengardencampsitemanagementapi\\dataaccess\\dao\\campinggeardao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0BABBFBE-5824-4235-B0EA-845C3C693946}|DataAccess\\DataAccess.csproj|solutionrelative:dataaccess\\dao\\campinggeardao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{0BABBFBE-5824-4235-B0EA-845C3C693946}|DataAccess\\DataAccess.csproj|c:\\users\\nguyen thanh hau\\desktop\\greengarden\\greengardencampsitemanagement\\greengardencampsitemanagementapi\\dataaccess\\dao\\activitydao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0BABBFBE-5824-4235-B0EA-845C3C693946}|DataAccess\\DataAccess.csproj|solutionrelative:dataaccess\\dao\\activitydao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -169,10 +181,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{11067DDA-55A5-4B58-AF46-0FEB4C1CA211}|BusinessObject\\BusinessObject.csproj|c:\\users\\nguyen thanh hau\\desktop\\greengarden\\greengardencampsitemanagement\\greengardencampsitemanagementapi\\businessobject\\dtos\\ticketdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{11067DDA-55A5-4B58-AF46-0FEB4C1CA211}|BusinessObject\\BusinessObject.csproj|solutionrelative:businessobject\\dtos\\ticketdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{11067DDA-55A5-4B58-AF46-0FEB4C1CA211}|BusinessObject\\BusinessObject.csproj|c:\\users\\nguyen thanh hau\\desktop\\greengarden\\greengardencampsitemanagement\\greengardencampsitemanagementapi\\businessobject\\dtos\\campinggeardto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{11067DDA-55A5-4B58-AF46-0FEB4C1CA211}|BusinessObject\\BusinessObject.csproj|solutionrelative:businessobject\\dtos\\campinggeardto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{BDF1E7A6-3036-4CE4-ABA7-A5172708D1FC}|Repositories\\Repositories.csproj|c:\\users\\nguyen thanh hau\\desktop\\greengarden\\greengardencampsitemanagement\\greengardencampsitemanagementapi\\repositories\\campinggear\\campinggearrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -424,31 +432,31 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedHeight": 334,
-          "SelectedChildIndex": 0,
+          "DockedHeight": 535,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 5,
               "Title": "OrderDAOTest.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenAPITest\\DAO\\OrderDAOTest.cs",
               "RelativeDocumentMoniker": "GreenGardenAPITest\\DAO\\OrderDAOTest.cs",
               "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenAPITest\\DAO\\OrderDAOTest.cs",
               "RelativeToolTip": "GreenGardenAPITest\\DAO\\OrderDAOTest.cs",
-              "ViewState": "AgIAAHoJAAAAAAAAAAAAAK8JAABSAAAAAAAAAA==",
+              "ViewState": "AgIAAAgNAAAAAAAAAAAqwIgNAABFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-19T16:04:20.85Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "OrderDAO.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\DataAccess\\DAO\\OrderDAO.cs",
               "RelativeDocumentMoniker": "DataAccess\\DAO\\OrderDAO.cs",
               "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\DataAccess\\DAO\\OrderDAO.cs",
               "RelativeToolTip": "DataAccess\\DAO\\OrderDAO.cs",
-              "ViewState": "AgIAAF8DAAAAAAAAAAAYwHMDAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAALgDAAAAAAAAAAAQwLsEAABRAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-08T09:00:02.068Z",
               "EditorCaption": ""
@@ -461,25 +469,156 @@
               "RelativeDocumentMoniker": "BusinessObject\\DTOs\\CreateUniqueOrderRequest.cs",
               "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\DTOs\\CreateUniqueOrderRequest.cs",
               "RelativeToolTip": "BusinessObject\\DTOs\\CreateUniqueOrderRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAARAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-16T10:18:37.266Z"
+              "WhenOpened": "2024-10-16T10:18:37.266Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 2,
+              "Title": "CampingGearDAO.cs",
+              "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\DataAccess\\DAO\\CampingGearDAO.cs",
+              "RelativeDocumentMoniker": "DataAccess\\DAO\\CampingGearDAO.cs",
+              "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\DataAccess\\DAO\\CampingGearDAO.cs",
+              "RelativeToolTip": "DataAccess\\DAO\\CampingGearDAO.cs",
+              "ViewState": "AgIAAGMAAAAAAAAAAAAuwH0AAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-14T06:41:52.188Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "CampingGearDAOTest.cs",
+              "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenAPITest\\DAO\\CampingGearDAOTest.cs",
+              "RelativeDocumentMoniker": "GreenGardenAPITest\\DAO\\CampingGearDAOTest.cs",
+              "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenAPITest\\DAO\\CampingGearDAOTest.cs",
+              "RelativeToolTip": "GreenGardenAPITest\\DAO\\CampingGearDAOTest.cs",
+              "ViewState": "AgIAAFcDAAAAAAAAAAAAwIwDAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-08T08:36:36.862Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ComboDAOTest.cs",
+              "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenAPITest\\DAO\\ComboDAOTest.cs",
+              "RelativeDocumentMoniker": "GreenGardenAPITest\\DAO\\ComboDAOTest.cs",
+              "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenAPITest\\DAO\\ComboDAOTest.cs",
+              "RelativeToolTip": "GreenGardenAPITest\\DAO\\ComboDAOTest.cs",
+              "ViewState": "AgIAAPoAAAAAAAAAAAAAAPwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-14T06:03:14.764Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "CampingGearDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\DTOs\\CampingGearDTO.cs",
+              "RelativeDocumentMoniker": "BusinessObject\\DTOs\\CampingGearDTO.cs",
+              "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\DTOs\\CampingGearDTO.cs",
+              "RelativeToolTip": "BusinessObject\\DTOs\\CampingGearDTO.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAAwA8AAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-27T13:53:00.905Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "OrderDTO.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\DTOs\\OrderDTO.cs",
               "RelativeDocumentMoniker": "BusinessObject\\DTOs\\OrderDTO.cs",
               "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\DTOs\\OrderDTO.cs",
               "RelativeToolTip": "BusinessObject\\DTOs\\OrderDTO.cs",
-              "ViewState": "AgIAAGMAAAAAAAAAAAAtwHQAAAAyAAAAAAAAAA==",
+              "ViewState": "AgIAABwAAAAAAAAAAAAgwC0AAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-08T08:13:47.06Z"
+              "WhenOpened": "2024-10-08T08:13:47.06Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 8,
+              "Title": "EventDAO.cs",
+              "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\DataAccess\\DAO\\EventDAO.cs",
+              "RelativeDocumentMoniker": "DataAccess\\DAO\\EventDAO.cs",
+              "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\DataAccess\\DAO\\EventDAO.cs",
+              "RelativeToolTip": "DataAccess\\DAO\\EventDAO.cs",
+              "ViewState": "AgIAAAMBAAAAAAAAAAAUwAYBAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-06T08:44:34.796Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "EventDAOTest.cs",
+              "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenAPITest\\DAO\\EventDAOTest.cs",
+              "RelativeDocumentMoniker": "GreenGardenAPITest\\DAO\\EventDAOTest.cs",
+              "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenAPITest\\DAO\\EventDAOTest.cs",
+              "RelativeToolTip": "GreenGardenAPITest\\DAO\\EventDAOTest.cs",
+              "ViewState": "AgIAAJcBAAAAAAAAAAAAAFQBAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-16T12:58:28.829Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "TicketDAOTest.cs",
+              "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenAPITest\\DAO\\TicketDAOTest.cs",
+              "RelativeDocumentMoniker": "GreenGardenAPITest\\DAO\\TicketDAOTest.cs",
+              "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenAPITest\\DAO\\TicketDAOTest.cs",
+              "RelativeToolTip": "GreenGardenAPITest\\DAO\\TicketDAOTest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEoBAAB5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-14T04:08:59.317Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "EventRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\Repositories\\Event\\EventRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\Event\\EventRepository.cs",
+              "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\Repositories\\Event\\EventRepository.cs",
+              "RelativeToolTip": "Repositories\\Event\\EventRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACYAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-22T14:48:57.69Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "IEventRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\Repositories\\Event\\IEventRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\Event\\IEventRepository.cs",
+              "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\Repositories\\Event\\IEventRepository.cs",
+              "RelativeToolTip": "Repositories\\Event\\IEventRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-22T14:48:58.583Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "OrderTicketDetailDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\DTOs\\OrderTicketDetailDTO.cs",
+              "RelativeDocumentMoniker": "BusinessObject\\DTOs\\OrderTicketDetailDTO.cs",
+              "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\DTOs\\OrderTicketDetailDTO.cs",
+              "RelativeToolTip": "BusinessObject\\DTOs\\OrderTicketDetailDTO.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAowBUAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-08T07:28:00.367Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
               "Title": "OrderCampingGearDetailDTO.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\DTOs\\OrderCampingGearDetailDTO.cs",
               "RelativeDocumentMoniker": "BusinessObject\\DTOs\\OrderCampingGearDetailDTO.cs",
@@ -491,33 +630,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "OrderTicketDetailDTO.cs",
-              "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\DTOs\\OrderTicketDetailDTO.cs",
-              "RelativeDocumentMoniker": "BusinessObject\\DTOs\\OrderTicketDetailDTO.cs",
-              "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\DTOs\\OrderTicketDetailDTO.cs",
-              "RelativeToolTip": "BusinessObject\\DTOs\\OrderTicketDetailDTO.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAowBUAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-08T07:28:00.367Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "TicketDAOTest.cs",
-              "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenAPITest\\DAO\\TicketDAOTest.cs",
-              "RelativeDocumentMoniker": "GreenGardenAPITest\\DAO\\TicketDAOTest.cs",
-              "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenAPITest\\DAO\\TicketDAOTest.cs",
-              "RelativeToolTip": "GreenGardenAPITest\\DAO\\TicketDAOTest.cs",
-              "ViewState": "AgIAAEEBAAAAAAAAAAAAAEoBAAB5AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-14T04:08:59.317Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 15,
               "Title": "GreenGardenContext.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\Models\\GreenGardenContext.cs",
               "RelativeDocumentMoniker": "BusinessObject\\Models\\GreenGardenContext.cs",
@@ -529,7 +642,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 16,
               "Title": "OrderCampingGearDetail.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\Models\\OrderCampingGearDetail.cs",
               "RelativeDocumentMoniker": "BusinessObject\\Models\\OrderCampingGearDetail.cs",
@@ -541,7 +654,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 17,
               "Title": "DashBoardDAO.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\DataAccess\\DAO\\DashBoardDAO.cs",
               "RelativeDocumentMoniker": "DataAccess\\DAO\\DashBoardDAO.cs",
@@ -553,7 +666,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 18,
               "Title": "DashBoardRepository.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\Repositories\\DashBoard\\DashBoardRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\DashBoard\\DashBoardRepository.cs",
@@ -565,7 +678,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 19,
               "Title": "IDashBoardRepository.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\Repositories\\DashBoard\\IDashBoardRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\DashBoard\\IDashBoardRepository.cs",
@@ -577,7 +690,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 20,
               "Title": "UserDAOTest.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenAPITest\\DAO\\UserDAOTest.cs",
               "RelativeDocumentMoniker": "GreenGardenAPITest\\DAO\\UserDAOTest.cs",
@@ -589,7 +702,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 23,
               "Title": "ComboDAO.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\DataAccess\\DAO\\ComboDAO.cs",
               "RelativeDocumentMoniker": "DataAccess\\DAO\\ComboDAO.cs",
@@ -601,7 +714,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 25,
               "Title": "TicketDAO.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\DataAccess\\DAO\\TicketDAO.cs",
               "RelativeDocumentMoniker": "DataAccess\\DAO\\TicketDAO.cs",
@@ -613,7 +726,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 21,
               "Title": "UserDAO.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\DataAccess\\DAO\\UserDAO.cs",
               "RelativeDocumentMoniker": "DataAccess\\DAO\\UserDAO.cs",
@@ -625,7 +738,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 22,
               "Title": "FoodComboDAOTest.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenAPITest\\DAO\\FoodComboDAOTest.cs",
               "RelativeDocumentMoniker": "GreenGardenAPITest\\DAO\\FoodComboDAOTest.cs",
@@ -637,7 +750,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 24,
               "Title": "FoodAndDrinkDAOTest.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenAPITest\\DAO\\FoodAndDrinkDAOTest.cs",
               "RelativeDocumentMoniker": "GreenGardenAPITest\\DAO\\FoodAndDrinkDAOTest.cs",
@@ -649,7 +762,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 26,
               "Title": "FoodAndDrinkDAO.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\DataAccess\\DAO\\FoodAndDrinkDAO.cs",
               "RelativeDocumentMoniker": "DataAccess\\DAO\\FoodAndDrinkDAO.cs",
@@ -661,31 +774,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "EventDAOTest.cs",
-              "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenAPITest\\DAO\\EventDAOTest.cs",
-              "RelativeDocumentMoniker": "GreenGardenAPITest\\DAO\\EventDAOTest.cs",
-              "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenAPITest\\DAO\\EventDAOTest.cs",
-              "RelativeToolTip": "GreenGardenAPITest\\DAO\\EventDAOTest.cs",
-              "ViewState": "AgIAAHwBAAAAAAAAAAAAAFQBAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-16T12:58:28.829Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "ComboDAOTest.cs",
-              "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenAPITest\\DAO\\ComboDAOTest.cs",
-              "RelativeDocumentMoniker": "GreenGardenAPITest\\DAO\\ComboDAOTest.cs",
-              "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenAPITest\\DAO\\ComboDAOTest.cs",
-              "RelativeToolTip": "GreenGardenAPITest\\DAO\\ComboDAOTest.cs",
-              "ViewState": "AgIAAGcBAAAAAAAAAAAlwHQBAAA+AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-14T06:03:14.764Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 27,
               "Title": "AccountDAOTest.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenAPITest\\DAO\\AccountDAOTest.cs",
               "RelativeDocumentMoniker": "GreenGardenAPITest\\DAO\\AccountDAOTest.cs",
@@ -697,7 +786,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 28,
               "Title": "AccountDAO.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\DataAccess\\DAO\\AccountDAO.cs",
               "RelativeDocumentMoniker": "DataAccess\\DAO\\AccountDAO.cs",
@@ -709,7 +798,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 29,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\appsettings.json",
               "RelativeDocumentMoniker": "BusinessObject\\appsettings.json",
@@ -721,7 +810,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 30,
               "Title": "ActivityDAOTest.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenAPITest\\DAO\\ActivityDAOTest.cs",
               "RelativeDocumentMoniker": "GreenGardenAPITest\\DAO\\ActivityDAOTest.cs",
@@ -733,7 +822,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 31,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\DataAccess\\Program.cs",
               "RelativeDocumentMoniker": "DataAccess\\Program.cs",
@@ -745,7 +834,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 32,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenCampsiteManagementAPI\\appsettings.json",
               "RelativeDocumentMoniker": "GreenGardenCampsiteManagementAPI\\appsettings.json",
@@ -757,7 +846,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 33,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenCampsiteManagementAPI\\Program.cs",
               "RelativeDocumentMoniker": "GreenGardenCampsiteManagementAPI\\Program.cs",
@@ -769,7 +858,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 34,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\Repositories\\Program.cs",
               "RelativeDocumentMoniker": "Repositories\\Program.cs",
@@ -781,7 +870,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 35,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\Program.cs",
               "RelativeDocumentMoniker": "BusinessObject\\Program.cs",
@@ -793,7 +882,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 36,
               "Title": "FoodComboDAO.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\DataAccess\\DAO\\FoodComboDAO.cs",
               "RelativeDocumentMoniker": "DataAccess\\DAO\\FoodComboDAO.cs",
@@ -805,43 +894,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
-              "Title": "EventDAO.cs",
-              "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\DataAccess\\DAO\\EventDAO.cs",
-              "RelativeDocumentMoniker": "DataAccess\\DAO\\EventDAO.cs",
-              "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\DataAccess\\DAO\\EventDAO.cs",
-              "RelativeToolTip": "DataAccess\\DAO\\EventDAO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAPIAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-06T08:44:34.796Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 32,
-              "Title": "CampingGearDAOTest.cs",
-              "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenAPITest\\DAO\\CampingGearDAOTest.cs",
-              "RelativeDocumentMoniker": "GreenGardenAPITest\\DAO\\CampingGearDAOTest.cs",
-              "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenAPITest\\DAO\\CampingGearDAOTest.cs",
-              "RelativeToolTip": "GreenGardenAPITest\\DAO\\CampingGearDAOTest.cs",
-              "ViewState": "AgIAAFEAAAAAAAAAAAAAACEDAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-08T08:36:36.862Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 33,
-              "Title": "CampingGearDAO.cs",
-              "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\DataAccess\\DAO\\CampingGearDAO.cs",
-              "RelativeDocumentMoniker": "DataAccess\\DAO\\CampingGearDAO.cs",
-              "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\DataAccess\\DAO\\CampingGearDAO.cs",
-              "RelativeToolTip": "DataAccess\\DAO\\CampingGearDAO.cs",
-              "ViewState": "AgIAAAgBAAAAAAAAAAAAAMkAAAAdAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-14T06:41:52.188Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 37,
               "Title": "ActivityDAO.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\DataAccess\\DAO\\ActivityDAO.cs",
               "RelativeDocumentMoniker": "DataAccess\\DAO\\ActivityDAO.cs",
@@ -853,7 +906,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 38,
               "Title": "CampingCategoryDAO.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\DataAccess\\DAO\\CampingCategoryDAO.cs",
               "RelativeDocumentMoniker": "DataAccess\\DAO\\CampingCategoryDAO.cs",
@@ -865,7 +918,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 39,
               "Title": "Order.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\Models\\Order.cs",
               "RelativeDocumentMoniker": "BusinessObject\\Models\\Order.cs",
@@ -877,7 +930,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 40,
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\Models\\User.cs",
               "RelativeDocumentMoniker": "BusinessObject\\Models\\User.cs",
@@ -889,7 +942,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 41,
               "Title": "UserDTO.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\DTOs\\UserDTO.cs",
               "RelativeDocumentMoniker": "BusinessObject\\DTOs\\UserDTO.cs",
@@ -901,7 +954,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 42,
               "Title": "AccountDTO.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\DTOs\\AccountDTO.cs",
               "RelativeDocumentMoniker": "BusinessObject\\DTOs\\AccountDTO.cs",
@@ -913,7 +966,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 43,
               "Title": "TicketRepository.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\Repositories\\Tickets\\TicketRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\Tickets\\TicketRepository.cs",
@@ -925,7 +978,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 44,
               "Title": "TicketDTO.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\DTOs\\TicketDTO.cs",
               "RelativeDocumentMoniker": "BusinessObject\\DTOs\\TicketDTO.cs",
@@ -937,19 +990,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
-              "Title": "CampingGearDTO.cs",
-              "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\DTOs\\CampingGearDTO.cs",
-              "RelativeDocumentMoniker": "BusinessObject\\DTOs\\CampingGearDTO.cs",
-              "ToolTip": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\DTOs\\CampingGearDTO.cs",
-              "RelativeToolTip": "BusinessObject\\DTOs\\CampingGearDTO.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAAAgAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-27T13:53:00.905Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 45,
               "Title": "CampingGearRepository.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\Repositories\\CampingGear\\CampingGearRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\CampingGear\\CampingGearRepository.cs",
@@ -961,7 +1002,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 46,
               "Title": "CampingCategoryDTO.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\DTOs\\CampingCategoryDTO.cs",
               "RelativeDocumentMoniker": "BusinessObject\\DTOs\\CampingCategoryDTO.cs",
@@ -973,7 +1014,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 45,
+              "DocumentIndex": 47,
               "Title": "ComboCampingGearDetailDTO.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\DTOs\\ComboCampingGearDetailDTO.cs",
               "RelativeDocumentMoniker": "BusinessObject\\DTOs\\ComboCampingGearDetailDTO.cs",
@@ -985,7 +1026,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 48,
               "Title": "GreenGardenAPITest.csproj",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenAPITest\\GreenGardenAPITest.csproj",
               "RelativeDocumentMoniker": "GreenGardenAPITest\\GreenGardenAPITest.csproj",
@@ -997,7 +1038,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 47,
+              "DocumentIndex": 49,
               "Title": "FoodAndDrinkDTO.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\DTOs\\FoodAndDrinkDTO.cs",
               "RelativeDocumentMoniker": "BusinessObject\\DTOs\\FoodAndDrinkDTO.cs",
@@ -1009,7 +1050,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 48,
+              "DocumentIndex": 50,
               "Title": "FootComboItem.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\Models\\FootComboItem.cs",
               "RelativeDocumentMoniker": "BusinessObject\\Models\\FootComboItem.cs",
@@ -1021,7 +1062,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 49,
+              "DocumentIndex": 51,
               "Title": "ComboFoodDTO.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\DTOs\\ComboFoodDTO.cs",
               "RelativeDocumentMoniker": "BusinessObject\\DTOs\\ComboFoodDTO.cs",
@@ -1033,7 +1074,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 51,
+              "DocumentIndex": 53,
               "Title": "ComboCampingGearDetail.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\Models\\ComboCampingGearDetail.cs",
               "RelativeDocumentMoniker": "BusinessObject\\Models\\ComboCampingGearDetail.cs",
@@ -1045,7 +1086,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 50,
+              "DocumentIndex": 52,
               "Title": "Combo.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\Models\\Combo.cs",
               "RelativeDocumentMoniker": "BusinessObject\\Models\\Combo.cs",
@@ -1057,7 +1098,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 52,
+              "DocumentIndex": 54,
               "Title": "ComboDTO.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\DTOs\\ComboDTO.cs",
               "RelativeDocumentMoniker": "BusinessObject\\DTOs\\ComboDTO.cs",
@@ -1069,7 +1110,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 53,
+              "DocumentIndex": 55,
               "Title": "ActivityDTO.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\DTOs\\ActivityDTO.cs",
               "RelativeDocumentMoniker": "BusinessObject\\DTOs\\ActivityDTO.cs",
@@ -1081,7 +1122,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 54,
+              "DocumentIndex": 56,
               "Title": "ITicketRepository.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\Repositories\\Tickets\\ITicketRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\Tickets\\ITicketRepository.cs",
@@ -1093,7 +1134,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 55,
+              "DocumentIndex": 57,
               "Title": "OrderManagementRepository.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\Repositories\\OrderManagement\\OrderManagementRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\OrderManagement\\OrderManagementRepository.cs",
@@ -1105,7 +1146,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 56,
+              "DocumentIndex": 58,
               "Title": "IOrderManagementRepository.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\Repositories\\OrderManagement\\IOrderManagementRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\OrderManagement\\IOrderManagementRepository.cs",
@@ -1117,7 +1158,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 57,
+              "DocumentIndex": 59,
               "Title": "AccountController.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenCampsiteManagementAPI\\Controllers\\AccountController.cs",
               "RelativeDocumentMoniker": "GreenGardenCampsiteManagementAPI\\Controllers\\AccountController.cs",
@@ -1129,7 +1170,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 58,
+              "DocumentIndex": 60,
               "Title": "CampingGearController.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenCampsiteManagementAPI\\Controllers\\CampingGearController.cs",
               "RelativeDocumentMoniker": "GreenGardenCampsiteManagementAPI\\Controllers\\CampingGearController.cs",
@@ -1141,7 +1182,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 59,
+              "DocumentIndex": 61,
               "Title": "ActivityController.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenCampsiteManagementAPI\\Controllers\\ActivityController.cs",
               "RelativeDocumentMoniker": "GreenGardenCampsiteManagementAPI\\Controllers\\ActivityController.cs",
@@ -1153,7 +1194,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 60,
+              "DocumentIndex": 62,
               "Title": "BusinessObject.csproj",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\BusinessObject.csproj",
               "RelativeDocumentMoniker": "BusinessObject\\BusinessObject.csproj",
@@ -1165,7 +1206,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 61,
+              "DocumentIndex": 63,
               "Title": "Role.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\Models\\Role.cs",
               "RelativeDocumentMoniker": "BusinessObject\\Models\\Role.cs",
@@ -1177,7 +1218,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 62,
+              "DocumentIndex": 64,
               "Title": "OrderManagementController.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenCampsiteManagementAPI\\Controllers\\OrderManagementController.cs",
               "RelativeDocumentMoniker": "GreenGardenCampsiteManagementAPI\\Controllers\\OrderManagementController.cs",
@@ -1189,7 +1230,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 63,
+              "DocumentIndex": 65,
               "Title": "IAccountRepository.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\Repositories\\Accounts\\IAccountRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\Accounts\\IAccountRepository.cs",
@@ -1201,7 +1242,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 64,
+              "DocumentIndex": 66,
               "Title": "AccountRepository.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\Repositories\\Accounts\\AccountRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\Accounts\\AccountRepository.cs",
@@ -1213,7 +1254,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 65,
+              "DocumentIndex": 67,
               "Title": "TicketController.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenCampsiteManagementAPI\\Controllers\\TicketController.cs",
               "RelativeDocumentMoniker": "GreenGardenCampsiteManagementAPI\\Controllers\\TicketController.cs",
@@ -1225,7 +1266,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 66,
+              "DocumentIndex": 68,
               "Title": "TicketCategoryDTO.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\DTOs\\TicketCategoryDTO.cs",
               "RelativeDocumentMoniker": "BusinessObject\\DTOs\\TicketCategoryDTO.cs",
@@ -1237,7 +1278,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 67,
+              "DocumentIndex": 69,
               "Title": "UserController.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenCampsiteManagementAPI\\Controllers\\UserController.cs",
               "RelativeDocumentMoniker": "GreenGardenCampsiteManagementAPI\\Controllers\\UserController.cs",
@@ -1249,7 +1290,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 70,
+              "DocumentIndex": 72,
               "Title": "ComboFoodController.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenCampsiteManagementAPI\\Controllers\\ComboFoodController.cs",
               "RelativeDocumentMoniker": "GreenGardenCampsiteManagementAPI\\Controllers\\ComboFoodController.cs",
@@ -1261,7 +1302,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 69,
+              "DocumentIndex": 71,
               "Title": "EventController.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenCampsiteManagementAPI\\Controllers\\EventController.cs",
               "RelativeDocumentMoniker": "GreenGardenCampsiteManagementAPI\\Controllers\\EventController.cs",
@@ -1273,7 +1314,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 68,
+              "DocumentIndex": 70,
               "Title": "FoodAndDrinkController.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenCampsiteManagementAPI\\Controllers\\FoodAndDrinkController.cs",
               "RelativeDocumentMoniker": "GreenGardenCampsiteManagementAPI\\Controllers\\FoodAndDrinkController.cs",
@@ -1285,7 +1326,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 71,
+              "DocumentIndex": 73,
               "Title": "ComboController.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenCampsiteManagementAPI\\Controllers\\ComboController.cs",
               "RelativeDocumentMoniker": "GreenGardenCampsiteManagementAPI\\Controllers\\ComboController.cs",
@@ -1297,7 +1338,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 72,
+              "DocumentIndex": 74,
               "Title": "CreateComboOrderRequest.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\DTOs\\CreateComboOrderRequest.cs",
               "RelativeDocumentMoniker": "BusinessObject\\DTOs\\CreateComboOrderRequest.cs",
@@ -1309,7 +1350,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 73,
+              "DocumentIndex": 75,
               "Title": "FootComboItemDTO.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\DTOs\\FootComboItemDTO.cs",
               "RelativeDocumentMoniker": "BusinessObject\\DTOs\\FootComboItemDTO.cs",
@@ -1321,7 +1362,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 74,
+              "DocumentIndex": 76,
               "Title": "ComboFootDetailDTO.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\DTOs\\ComboFootDetailDTO.cs",
               "RelativeDocumentMoniker": "BusinessObject\\DTOs\\ComboFootDetailDTO.cs",
@@ -1333,7 +1374,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 75,
+              "DocumentIndex": 77,
               "Title": "ComboTicketDetailDTO.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\DTOs\\ComboTicketDetailDTO.cs",
               "RelativeDocumentMoniker": "BusinessObject\\DTOs\\ComboTicketDetailDTO.cs",
@@ -1345,7 +1386,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 77,
+              "DocumentIndex": 79,
               "Title": "ComboFoodRepository.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\Repositories\\ComboFood\\ComboFoodRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\ComboFood\\ComboFoodRepository.cs",
@@ -1357,7 +1398,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 76,
+              "DocumentIndex": 78,
               "Title": "FoodCombo.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\Models\\FoodCombo.cs",
               "RelativeDocumentMoniker": "BusinessObject\\Models\\FoodCombo.cs",
@@ -1369,7 +1410,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 78,
+              "DocumentIndex": 80,
               "Title": "IComboFoodRepository.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\Repositories\\ComboFood\\IComboFoodRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\ComboFood\\IComboFoodRepository.cs",
@@ -1381,7 +1422,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 79,
+              "DocumentIndex": 81,
               "Title": "IComboRepository.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\Repositories\\Combo\\IComboRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\Combo\\IComboRepository.cs",
@@ -1393,7 +1434,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 80,
+              "DocumentIndex": 82,
               "Title": "ComboFootDetail.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\Models\\ComboFootDetail.cs",
               "RelativeDocumentMoniker": "BusinessObject\\Models\\ComboFootDetail.cs",
@@ -1405,7 +1446,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 81,
+              "DocumentIndex": 83,
               "Title": "ComboTicketDetail.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\Models\\ComboTicketDetail.cs",
               "RelativeDocumentMoniker": "BusinessObject\\Models\\ComboTicketDetail.cs",
@@ -1417,7 +1458,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 82,
+              "DocumentIndex": 84,
               "Title": "ComboRepository.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\Repositories\\Combo\\ComboRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\Combo\\ComboRepository.cs",
@@ -1429,7 +1470,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 84,
+              "DocumentIndex": 86,
               "Title": "OrderFoodDetailDTO.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\DTOs\\OrderFoodDetailDTO.cs",
               "RelativeDocumentMoniker": "BusinessObject\\DTOs\\OrderFoodDetailDTO.cs",
@@ -1441,7 +1482,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 83,
+              "DocumentIndex": 85,
               "Title": "OrderComboDetailDTO.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\DTOs\\OrderComboDetailDTO.cs",
               "RelativeDocumentMoniker": "BusinessObject\\DTOs\\OrderComboDetailDTO.cs",
@@ -1453,7 +1494,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 85,
+              "DocumentIndex": 87,
               "Title": "OrderFoodComboDetailDTO.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\DTOs\\OrderFoodComboDetailDTO.cs",
               "RelativeDocumentMoniker": "BusinessObject\\DTOs\\OrderFoodComboDetailDTO.cs",
@@ -1465,7 +1506,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 86,
+              "DocumentIndex": 88,
               "Title": "IFoodAndDrinkRepository.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\Repositories\\FoodAndDrink\\IFoodAndDrinkRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\FoodAndDrink\\IFoodAndDrinkRepository.cs",
@@ -1477,7 +1518,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 87,
+              "DocumentIndex": 89,
               "Title": "FoodAndDrinkRepository.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\Repositories\\FoodAndDrink\\FoodAndDrinkRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\FoodAndDrink\\FoodAndDrinkRepository.cs",
@@ -1489,7 +1530,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 88,
+              "DocumentIndex": 90,
               "Title": "ICampingGearRepository.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\Repositories\\CampingGear\\ICampingGearRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\CampingGear\\ICampingGearRepository.cs",
@@ -1501,7 +1542,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 90,
+              "DocumentIndex": 92,
               "Title": "appsettings.Development.json",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenCampsiteManagementAPI\\appsettings.Development.json",
               "RelativeDocumentMoniker": "GreenGardenCampsiteManagementAPI\\appsettings.Development.json",
@@ -1513,7 +1554,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 89,
+              "DocumentIndex": 91,
               "Title": "launchSettings.json",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenCampsiteManagementAPI\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "GreenGardenCampsiteManagementAPI\\Properties\\launchSettings.json",
@@ -1525,7 +1566,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 91,
+              "DocumentIndex": 93,
               "Title": "FoodAndDrinkCategoryDTO.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\DTOs\\FoodAndDrinkCategoryDTO.cs",
               "RelativeDocumentMoniker": "BusinessObject\\DTOs\\FoodAndDrinkCategoryDTO.cs",
@@ -1537,7 +1578,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 93,
+              "DocumentIndex": 95,
               "Title": "MapperProfile.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenCampsiteManagementAPI\\ConfigAutoMapper\\MapperProfile.cs",
               "RelativeDocumentMoniker": "GreenGardenCampsiteManagementAPI\\ConfigAutoMapper\\MapperProfile.cs",
@@ -1549,7 +1590,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 92,
+              "DocumentIndex": 94,
               "Title": "MapperInstanse.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenCampsiteManagementAPI\\ConfigAutoMapper\\MapperInstanse.cs",
               "RelativeDocumentMoniker": "GreenGardenCampsiteManagementAPI\\ConfigAutoMapper\\MapperInstanse.cs",
@@ -1561,7 +1602,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 101,
+              "DocumentIndex": 103,
               "Title": "UserController.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\Do an\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenCampsiteManagementAPI\\Controllers\\UserController.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\admin\\Desktop\\Do an\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenCampsiteManagementAPI\\Controllers\\UserController.cs",
@@ -1572,7 +1613,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 94,
+              "DocumentIndex": 96,
               "Title": "IActivityRepository.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\Repositories\\Activities\\IActivityRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\Activities\\IActivityRepository.cs",
@@ -1584,7 +1625,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 95,
+              "DocumentIndex": 97,
               "Title": "FoodComboDTO.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\BusinessObject\\DTOs\\FoodComboDTO.cs",
               "RelativeDocumentMoniker": "BusinessObject\\DTOs\\FoodComboDTO.cs",
@@ -1596,7 +1637,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 96,
+              "DocumentIndex": 98,
               "Title": "ActiviyRepository.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\Repositories\\Activities\\ActiviyRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\Activities\\ActiviyRepository.cs",
@@ -1608,7 +1649,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 97,
+              "DocumentIndex": 99,
               "Title": "WeatherForecast.cs",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenCampsiteManagementAPI\\WeatherForecast.cs",
               "RelativeDocumentMoniker": "GreenGardenCampsiteManagementAPI\\WeatherForecast.cs",
@@ -1620,7 +1661,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 102,
+              "DocumentIndex": 104,
               "Title": "IOrderTicketDetailReponsitory.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\Do an\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\Repositories\\IReponsitory\\IOrderTicketDetailReponsitory.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\admin\\Desktop\\Do an\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\Repositories\\IReponsitory\\IOrderTicketDetailReponsitory.cs",
@@ -1631,7 +1672,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 103,
+              "DocumentIndex": 105,
               "Title": "IUserReponsitory.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\Do an\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\Repositories\\IReponsitory\\IUserReponsitory.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\admin\\Desktop\\Do an\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\Repositories\\IReponsitory\\IUserReponsitory.cs",
@@ -1642,7 +1683,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 104,
+              "DocumentIndex": 106,
               "Title": "IActivityReponsitory.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\Do an\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\Repositories\\IReponsitory\\IActivityReponsitory.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\admin\\Desktop\\Do an\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\Repositories\\IReponsitory\\IActivityReponsitory.cs",
@@ -1653,7 +1694,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 98,
+              "DocumentIndex": 100,
               "Title": "DataAccess.csproj",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\DataAccess\\DataAccess.csproj",
               "RelativeDocumentMoniker": "DataAccess\\DataAccess.csproj",
@@ -1665,7 +1706,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 100,
+              "DocumentIndex": 102,
               "Title": "LoginController.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\Do an\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenCampsiteManagementAPI\\Controllers\\LoginController.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\admin\\Desktop\\Do an\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenCampsiteManagementAPI\\Controllers\\LoginController.cs",
@@ -1676,7 +1717,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 99,
+              "DocumentIndex": 101,
               "Title": "GreenGardenCampsiteManagementAPI.csproj",
               "DocumentMoniker": "C:\\Users\\Nguyen Thanh Hau\\Desktop\\GreenGarden\\GreenGardenCampsiteManagement\\GreenGardenCampsiteManagementAPI\\GreenGardenCampsiteManagementAPI\\GreenGardenCampsiteManagementAPI.csproj",
               "RelativeDocumentMoniker": "GreenGardenCampsiteManagementAPI\\GreenGardenCampsiteManagementAPI.csproj",
@@ -1689,7 +1730,7 @@
           ]
         },
         {
-          "DockedHeight": 301,
+          "DockedHeight": 100,
           "SelectedChildIndex": -1,
           "Children": [
             {

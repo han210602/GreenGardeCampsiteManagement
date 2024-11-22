@@ -2528,9 +2528,1014 @@ namespace GreenGardenAPITest.DAO
             var exception = await Assert.ThrowsAsync<Exception>(() => Task.Run(() => OrderDAO.UpdateFood(foods)));
             Assert.Equal("Object reference not set to an instance of an object.", exception.Message);
         }
+
+        // Test for UpdateCombo method
+        [Fact]
+        public async Task UpdateCombo_ShouldUpdateCombosSuccessfully_WhenValidCombosAreProvided()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            var combos = new List<OrderComboAddDTO>
+        {
+            new OrderComboAddDTO { OrderId = 1, ComboId = 2, Quantity = 3 },
+            new OrderComboAddDTO { OrderId = 1, ComboId = 3, Quantity = 1 }
+        };
+
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                dbContext.Orders.Add(new Order { OrderId = 1 });
+                dbContext.OrderComboDetails.Add(new OrderComboDetail { OrderId = 1, ComboId = 1, Quantity = 2 });
+                await dbContext.SaveChangesAsync();
+            }
+
+            // Act
+            bool result;
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                OrderDAO.InitializeContext(dbContext);
+                result = OrderDAO.UpdateCombo(combos); // Call the method
+            }
+
+            // Assert
+            Assert.True(result); // Ensure the method returns true
+
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                var updatedCombos = dbContext.OrderComboDetails.Where(o => o.OrderId == 1).ToList();
+                Assert.Equal(2, updatedCombos.Count); // Ensure there are 2 combos now
+                Assert.Contains(updatedCombos, c => c.ComboId == 2 && c.Quantity == 3);
+                Assert.Contains(updatedCombos, c => c.ComboId == 3 && c.Quantity == 1);
+            }
+        }
+
+        [Fact]
+        public async Task UpdateCombo_ShouldReplaceExistingCombos_WhenValidCombosAreProvided()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            var combos = new List<OrderComboAddDTO>
+        {
+            new OrderComboAddDTO { OrderId = 1, ComboId = 2, Quantity = 5 }
+        };
+
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                dbContext.Orders.Add(new Order { OrderId = 1 });
+                dbContext.OrderComboDetails.Add(new OrderComboDetail { OrderId = 1, ComboId = 1, Quantity = 2 });
+                await dbContext.SaveChangesAsync();
+            }
+
+            // Act
+            bool result;
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                OrderDAO.InitializeContext(dbContext);
+                result = OrderDAO.UpdateCombo(combos); // Call the method
+            }
+
+            // Assert
+            Assert.True(result); // Ensure the method returns true
+
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                var updatedCombos = dbContext.OrderComboDetails.Where(o => o.OrderId == 1).ToList();
+                Assert.Single(updatedCombos); // Ensure only one combo exists
+                Assert.Equal(2, updatedCombos[0].ComboId); // ComboId should be 2
+                Assert.Equal(5, updatedCombos[0].Quantity); // Quantity should be 5
+            }
+        }
+
+        [Fact]
+        public async Task UpdateCombo_ShouldCallDeleteOrder_WhenComboIdIsZero()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            var combos = new List<OrderComboAddDTO>
+        {
+            new OrderComboAddDTO { OrderId = 1, ComboId = 0, Quantity = 0 } // ComboId is 0
+        };
+
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                dbContext.Orders.Add(new Order { OrderId = 1 });
+                dbContext.OrderComboDetails.Add(new OrderComboDetail { OrderId = 1, ComboId = 1, Quantity = 2 });
+                await dbContext.SaveChangesAsync();
+            }
+
+            // Act
+            bool result;
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                OrderDAO.InitializeContext(dbContext);
+                result = OrderDAO.UpdateCombo(combos); // Call the method
+            }
+
+            // Assert
+            Assert.True(result); // Ensure the method returns true
+
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                var existingCombos = dbContext.OrderComboDetails.Where(o => o.OrderId == 1).ToList();
+                Assert.Empty(existingCombos); // There should be no combos left
+            }
+        }
+
+        [Fact]
+        public async Task UpdateCombo_ShouldReturnFalse_WhenComboIdIsInvalid()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            var combos = new List<OrderComboAddDTO>
+        {
+            new OrderComboAddDTO { OrderId = 1, ComboId = 999, Quantity = 2 } // Invalid ComboId
+        };
+
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                dbContext.Orders.Add(new Order { OrderId = 1 });
+                dbContext.OrderComboDetails.Add(new OrderComboDetail { OrderId = 1, ComboId = 1, Quantity = 2 });
+                await dbContext.SaveChangesAsync();
+            }
+
+            // Act & Assert
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                Assert.Throws<Exception>(() => OrderDAO.UpdateCombo(combos)); // Expecting an exception due to invalid ComboId
+            }
+        }
+
+        [Fact]
+        public async Task UpdateCombo_ShouldThrowException_WhenExceptionOccurs()
+        {
+            var combos = new List<OrderComboAddDTO>
+        {
+            new OrderComboAddDTO { OrderId = 1, ComboId = 101, Quantity = 2 }
+        };
+
+            // Simulating an exception by passing null context
+            OrderDAO.InitializeContext(null);
+
+            var exception = await Assert.ThrowsAsync<Exception>(() => Task.Run(() => OrderDAO.UpdateCombo(combos)));
+            Assert.Equal("Object reference not set to an instance of an object.", exception.Message);
+        }
+
+        // Test for UpdateFoodCombo method
+        [Fact]
+        public async Task UpdateFoodCombo_ShouldUpdateFoodCombosSuccessfully_WhenValidFoodCombosAreProvided()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            var foodCombos = new List<OrderFoodComboAddDTO>
+        {
+            new OrderFoodComboAddDTO { OrderId = 1, ComboId = 101, Quantity = 2 },
+            new OrderFoodComboAddDTO { OrderId = 1, ComboId = 102, Quantity = 1 }
+        };
+
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                dbContext.Orders.Add(new Order { OrderId = 1 });
+                dbContext.OrderFoodComboDetails.Add(new OrderFoodComboDetail { OrderId = 1, ComboId = 100, Quantity = 3 });
+                await dbContext.SaveChangesAsync();
+            }
+
+            // Act
+            bool result;
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                OrderDAO.InitializeContext(dbContext);
+                result = OrderDAO.UpdateFoodCombo(foodCombos); // Call the method
+            }
+
+            // Assert
+            Assert.True(result); // Ensure the method returns true
+
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                var updatedFoodCombos = dbContext.OrderFoodComboDetails.Where(o => o.OrderId == 1).ToList();
+                Assert.Equal(2, updatedFoodCombos.Count); // Ensure two food combos are present
+                Assert.Contains(updatedFoodCombos, c => c.ComboId == 101 && c.Quantity == 2);
+                Assert.Contains(updatedFoodCombos, c => c.ComboId == 102 && c.Quantity == 1);
+            }
+        }
+
+        [Fact]
+        public async Task UpdateFoodCombo_ShouldRemoveAllFoodCombos_WhenComboIdIsZero()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            var foodCombos = new List<OrderFoodComboAddDTO>
+        {
+            new OrderFoodComboAddDTO { OrderId = 1, ComboId = 0, Quantity = 0 } // ComboId is 0 to remove all food combos
+        };
+
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                dbContext.Orders.Add(new Order { OrderId = 1 });
+                dbContext.OrderFoodComboDetails.Add(new OrderFoodComboDetail { OrderId = 1, ComboId = 100, Quantity = 3 });
+                await dbContext.SaveChangesAsync();
+            }
+
+            // Act
+            bool result;
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                OrderDAO.InitializeContext(dbContext);
+                result = OrderDAO.UpdateFoodCombo(foodCombos); // Call the method
+            }
+
+            // Assert
+            Assert.True(result); // Ensure the method returns true
+
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                var existingFoodCombos = dbContext.OrderFoodComboDetails.Where(o => o.OrderId == 1).ToList();
+                Assert.Empty(existingFoodCombos); // Ensure no food combos remain
+            }
+        }
+
+        [Fact]
+        public async Task UpdateFoodCombo_ShouldThrowException_WhenExceptionIsThrown()
+        {
+            var foodCombos = new List<OrderFoodComboAddDTO>
+        {
+            new OrderFoodComboAddDTO { OrderId = 1, ComboId = 101, Quantity = 2 }
+        };
+
+            // Simulating an exception by passing null context
+            OrderDAO.InitializeContext(null);
+
+            var exception = await Assert.ThrowsAsync<Exception>(() => Task.Run(() => OrderDAO.UpdateFoodCombo(foodCombos)));
+            Assert.Equal("Object reference not set to an instance of an object.", exception.Message);
+        }
+
+        // Test for UpdateOrder method
+        [Fact]
+        public async Task UpdateOrder_ShouldUpdateOrderSuccessfully_WhenValidOrderIsProvided()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                dbContext.Orders.Add(new Order
+                {
+                    OrderId = 1,
+                    OrderUsageDate = DateTime.Parse("2024-01-01"),
+                    TotalAmount = 100m,
+                    AmountPayable = 80m,
+                    Deposit = 20m,
+                    OrderCheckoutDate = null
+                });
+                await dbContext.SaveChangesAsync();
+            }
+
+            var updatedOrder = new UpdateOrderDTO
+            {
+                OrderId = 1,
+                OrderUsageDate = DateTime.Parse("2024-02-01"),
+                TotalAmount = 200m,
+                OrderCheckoutDate = DateTime.Parse("2024-02-02")
+            };
+
+            // Act
+            bool result;
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                OrderDAO.InitializeContext(dbContext);
+                result = OrderDAO.UpdateOrder(updatedOrder);
+            }
+
+            // Assert
+            Assert.True(result); // Ensure the method returns true
+
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                var order = dbContext.Orders.FirstOrDefault(o => o.OrderId == 1);
+                Assert.NotNull(order);
+                Assert.Equal(updatedOrder.OrderUsageDate, order.OrderUsageDate);
+                Assert.Equal(updatedOrder.TotalAmount, order.TotalAmount);
+                Assert.Equal(updatedOrder.TotalAmount - 20m, order.AmountPayable); // TotalAmount - Deposit
+                Assert.Equal(updatedOrder.OrderCheckoutDate, order.OrderCheckoutDate);
+            }
+        }
+
+        [Fact]
+        public async Task UpdateOrder_ShouldReturnFalse_WhenOrderDoesNotExist()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            var nonExistentOrder = new UpdateOrderDTO
+            {
+                OrderId = 999,
+                OrderUsageDate = DateTime.Parse("2024-02-01"),
+                TotalAmount = 200m,
+                OrderCheckoutDate = DateTime.Parse("2024-02-02")
+            };
+
+            // Act
+            bool result;
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                OrderDAO.InitializeContext(dbContext);
+                result = OrderDAO.UpdateOrder(nonExistentOrder);
+            }
+
+            // Assert
+            Assert.False(result); // Ensure the method returns false
+        }
+
+        [Fact]
+        public async Task UpdateOrder_ShouldThrowException_WhenOrderCheckoutDateIsEarlierThanOrderUsageDate()   
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                dbContext.Orders.Add(new Order
+                {
+                    OrderId = 1,
+                    OrderUsageDate = DateTime.Parse("2024-02-01"),
+                    TotalAmount = 100m,
+                    AmountPayable = 80m,
+                    Deposit = 20m,
+                    OrderCheckoutDate = null
+                });
+                await dbContext.SaveChangesAsync();
+            }
+
+            var invalidOrder = new UpdateOrderDTO
+            {
+                OrderId = 1,
+                OrderUsageDate = DateTime.Parse("2024-02-01"),
+                OrderCheckoutDate = DateTime.Parse("2024-01-05"), // Invalid: Checkout date earlier than usage date
+                TotalAmount = 150m
+            };
+
+            // Act & Assert
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                OrderDAO.InitializeContext(dbContext);
+                var exception = Assert.Throws<Exception>(() => OrderDAO.UpdateOrder(invalidOrder));
+                Assert.Equal("OrderCheckoutDate cannot be earlier than OrderUsageDate.", exception.Message);
+            }
+        }
+
+        [Fact]
+        public async Task UpdateOrder_ShouldUpdateSuccessfully_WhenOrderCheckoutDateEqualsOrderUsageDate()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                dbContext.Orders.Add(new Order
+                {
+                    OrderId = 1,
+                    OrderUsageDate = DateTime.Parse("2024-02-01"),
+                    TotalAmount = 100m,
+                    AmountPayable = 80m,
+                    Deposit = 20m,
+                    OrderCheckoutDate = null
+                });
+                await dbContext.SaveChangesAsync();
+            }
+
+            var validOrder = new UpdateOrderDTO
+            {
+                OrderId = 1,
+                OrderUsageDate = DateTime.Parse("2024-02-01"),
+                OrderCheckoutDate = DateTime.Parse("2024-02-01"), // Valid: Checkout date equals usage date
+                TotalAmount = 150m
+            };
+
+            // Act
+            bool result;
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                OrderDAO.InitializeContext(dbContext);
+                result = OrderDAO.UpdateOrder(validOrder);
+            }
+
+            // Assert
+            Assert.True(result);
+
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                var order = dbContext.Orders.FirstOrDefault(o => o.OrderId == 1);
+                Assert.NotNull(order);
+                Assert.Equal(validOrder.OrderCheckoutDate, order.OrderCheckoutDate);
+                Assert.Equal(validOrder.OrderUsageDate, order.OrderUsageDate);
+            }
+        }
+
+        [Fact]
+        public async Task UpdateOrder_ShouldThrowException_WhenDatabaseContextIsNull()
+        {
+            // Arrange
+            var updatedOrder = new UpdateOrderDTO
+            {
+                OrderId = 1,
+                OrderUsageDate = DateTime.Parse("2024-02-01"),
+                TotalAmount = 200m,
+                OrderCheckoutDate = DateTime.Parse("2024-02-02")
+            };
+
+            // Simulate a null context
+            OrderDAO.InitializeContext(null);
+
+            // Act & Assert
+            var exception = await Assert.ThrowsAsync<Exception>(() => Task.Run(() => OrderDAO.UpdateOrder(updatedOrder)));
+            Assert.Equal("Object reference not set to an instance of an object.", exception.Message);
+        }
+
+        [Fact]
+        public async Task UpdateOrder_ShouldReturnFalse_NullFields()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                dbContext.Orders.Add(new Order
+                {
+                    OrderId = 1,
+                    OrderUsageDate = DateTime.Parse("2024-01-01"),
+                    TotalAmount = 100m,
+                    AmountPayable = 80m,
+                    Deposit = 20m,
+                    OrderCheckoutDate = null
+                });
+                await dbContext.SaveChangesAsync();
+            }
+
+            var updatedOrder = new UpdateOrderDTO
+            {
+                OrderId = 1,
+                OrderUsageDate = null, // Optional field left null
+                TotalAmount = 150m,
+                OrderCheckoutDate = null // Optional field left null
+            };
+
+            // Act
+            bool result;
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                OrderDAO.InitializeContext(dbContext);
+                result = OrderDAO.UpdateOrder(updatedOrder);
+            }
+
+            // Assert
+            Assert.False(result); // Ensure the method returns true
+
+            
+        }
+
+        [Fact]
+        public async Task UpdateOrder_ShouldReturnFalse_NullOrderUsageDateFields()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                dbContext.Orders.Add(new Order
+                {
+                    OrderId = 1,
+                    OrderUsageDate = DateTime.Parse("2024-01-01"),
+                    TotalAmount = 100m,
+                    AmountPayable = 80m,
+                    Deposit = 20m,
+                    OrderCheckoutDate = null
+                });
+                await dbContext.SaveChangesAsync();
+            }
+
+            var updatedOrder = new UpdateOrderDTO
+            {
+                OrderId = 1,
+                OrderUsageDate = null, // Optional field left null
+                TotalAmount = 150m,
+                OrderCheckoutDate = DateTime.Parse("2024-01-01") 
+            };
+
+            // Act
+            bool result;
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                OrderDAO.InitializeContext(dbContext);
+                result = OrderDAO.UpdateOrder(updatedOrder);
+            }
+
+            // Assert
+            Assert.False(result); // Ensure the method returns true
+
+
+        }
+
+        // Test for UpdateOrder method
+        [Fact]
+        public async Task CheckOut_ShouldReturnTrue_WhenValidOrderRequestIsProvided()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            var orderRequest = new CheckOut
+            {
+                Order = new CustomerOrderAddDTO
+                {
+                    CustomerId = 1,
+                    CustomerName = "John Doe",
+                    OrderUsageDate = DateTime.Parse("2024-01-01"),
+                    TotalAmount = 100m,
+                    PhoneCustomer = "1234567890"
+                },
+                OrderTicket = new List<OrderTicketAddlDTO>
+        {
+            new OrderTicketAddlDTO { TicketId = 1, Quantity = 2 },
+            new OrderTicketAddlDTO { TicketId = 2, Quantity = 3 }
+        },
+                OrderCampingGear = new List<OrderCampingGearAddDTO>
+        {
+            new OrderCampingGearAddDTO { GearId = 1, Quantity = 1 },
+            new OrderCampingGearAddDTO { GearId = 2, Quantity = 2 }
+        },
+                OrderFood = new List<OrderFoodAddDTO>
+        {
+            new OrderFoodAddDTO { ItemId = 1, Quantity = 1, Description = "Burger" }
+        },
+                OrderFoodCombo = new List<OrderFoodComboAddDTO>
+        {
+            new OrderFoodComboAddDTO { ComboId = 1, Quantity = 2 }
+        }
+            };
+
+            // Act
+            bool result;
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                OrderDAO.InitializeContext(dbContext); // Initialize context
+                result = OrderDAO.CheckOut(orderRequest); // Call the method
+            }
+
+            // Assert
+            Assert.True(result); // Ensure the method returns true
+
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                var order = dbContext.Orders.FirstOrDefault(o => o.CustomerName == "John Doe");
+                Assert.NotNull(order); // Ensure the order is added
+                Assert.Equal(100m, order.TotalAmount); // Verify total amount
+
+                var tickets = dbContext.OrderTicketDetails.Where(t => t.OrderId == order.OrderId).ToList();
+                Assert.Equal(2, tickets.Count); // Ensure tickets are added
+                Assert.Contains(tickets, t => t.TicketId == 1 && t.Quantity == 2);
+
+                var gears = dbContext.OrderCampingGearDetails.Where(g => g.OrderId == order.OrderId).ToList();
+                Assert.Equal(2, gears.Count); // Ensure camping gears are added
+
+                var foods = dbContext.OrderFoodDetails.Where(f => f.OrderId == order.OrderId).ToList();
+                Assert.Single(foods); // Ensure foods are added
+
+                var combos = dbContext.OrderFoodComboDetails.Where(c => c.OrderId == order.OrderId).ToList();
+                Assert.Single(combos); // Ensure food combos are added
+            }
+        }
+
+        [Fact]
+        public async Task CheckOut_ShouldReturnFalse_WhenOrderTicketIsNull()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            var orderRequest = new CheckOut
+            {
+                Order = new CustomerOrderAddDTO
+                {
+                    CustomerId = 1,
+                    CustomerName = "John Doe",
+                    OrderUsageDate = DateTime.Parse("2024-01-01"),
+                    TotalAmount = 100m,
+                    PhoneCustomer = "1234567890"
+                },
+                OrderTicket = null, // No tickets
+                OrderCampingGear = null,
+                OrderFood = null,
+                OrderFoodCombo = null
+            };
+
+            // Act
+            bool result;
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                OrderDAO.InitializeContext(dbContext);
+                result = OrderDAO.CheckOut(orderRequest); // Call the method
+            }
+
+            // Assert
+            Assert.False(result); // Ensure the method returns false
+        }
+
+        [Fact]
+        public async Task CheckOut_ShouldHandlePartialOrderDetailsCorrectly()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            var orderRequest = new CheckOut
+            {
+                Order = new CustomerOrderAddDTO
+                {
+                    CustomerId = 1,
+                    CustomerName = "John Doe",
+                    OrderUsageDate = DateTime.Parse("2024-01-01"),
+                    TotalAmount = 50m,
+                    PhoneCustomer = "1234567890"
+                },
+                OrderTicket = new List<OrderTicketAddlDTO>
+        {
+            new OrderTicketAddlDTO { TicketId = 1, Quantity = 2 }
+        },
+                OrderCampingGear = null, // No camping gears
+                OrderFood = null, // No food
+                OrderFoodCombo = null // No food combos
+            };
+
+            // Act
+            bool result;
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                OrderDAO.InitializeContext(dbContext);
+                result = OrderDAO.CheckOut(orderRequest); // Call the method
+            }
+
+            // Assert
+            Assert.True(result); // Ensure the method returns true
+
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                var order = dbContext.Orders.FirstOrDefault(o => o.CustomerName == "John Doe");
+                Assert.NotNull(order); // Ensure the order is added
+                Assert.Equal(50m, order.TotalAmount); // Verify total amount
+
+                var tickets = dbContext.OrderTicketDetails.Where(t => t.OrderId == order.OrderId).ToList();
+                Assert.Single(tickets); // Ensure tickets are added
+                Assert.Contains(tickets, t => t.TicketId == 1 && t.Quantity == 2);
+
+                var gears = dbContext.OrderCampingGearDetails.Where(g => g.OrderId == order.OrderId).ToList();
+                Assert.Empty(gears); // No camping gears
+
+                var foods = dbContext.OrderFoodDetails.Where(f => f.OrderId == order.OrderId).ToList();
+                Assert.Empty(foods); // No food
+
+                var combos = dbContext.OrderFoodComboDetails.Where(c => c.OrderId == order.OrderId).ToList();
+                Assert.Empty(combos); // No food combos
+            }
+        }
+
+        [Fact]
+        public async Task CheckOut_ShouldThrowException_WhenDatabaseFails()
+        {
+            // Arrange
+            var orderRequest = new CheckOut
+            {
+                Order = new CustomerOrderAddDTO
+                {
+                    CustomerId = 1,
+                    CustomerName = "John Doe",
+                    OrderUsageDate = DateTime.Parse("2024-01-01"),
+                    TotalAmount = 100m,
+                    PhoneCustomer = "1234567890"
+                },
+                OrderTicket = new List<OrderTicketAddlDTO>
+        {
+            new OrderTicketAddlDTO { TicketId = 1, Quantity = 2 }
+        },
+                OrderCampingGear = null,
+                OrderFood = null,
+                OrderFoodCombo = null
+            };
+
+            // Simulating an exception by passing null context
+            OrderDAO.InitializeContext(null);
+
+            // Act & Assert
+            var exception = Assert.Throws<Exception>(() => OrderDAO.CheckOut(orderRequest));
+            Assert.NotNull(exception);
+            Assert.Contains("Object reference not set to an instance of an object", exception.Message);
+        }
+
+        // Test for CheckoutComboOrder method
+        [Fact]
+        public async Task CheckoutComboOrder_ShouldReturnTrue_WhenValidOrderRequestIsProvided()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            var orderRequest = new CheckoutCombo
+            {
+                Order = new CustomerOrderAddDTO
+                {
+                    CustomerId = 1,
+                    CustomerName = "John Doe",
+                    OrderUsageDate = DateTime.Parse("2024-01-01"),
+                    TotalAmount = 100m,
+                    PhoneCustomer = "1234567890"
+                },
+                OrderCombo = new List<OrderComboAddDTO>
+        {
+            new OrderComboAddDTO { ComboId = 1, Quantity = 2 },
+            new OrderComboAddDTO { ComboId = 2, Quantity = 3 }
+        },
+                OrderCampingGear = new List<OrderCampingGearAddDTO>
+        {
+            new OrderCampingGearAddDTO { GearId = 1, Quantity = 1 },
+            new OrderCampingGearAddDTO { GearId = 2, Quantity = 2 }
+        },
+                OrderFood = new List<OrderFoodAddDTO>
+        {
+            new OrderFoodAddDTO { ItemId = 1, Quantity = 1, Description = "Burger" }
+        },
+                OrderFoodCombo = new List<OrderFoodComboAddDTO>
+        {
+            new OrderFoodComboAddDTO { ComboId = 1, Quantity = 2 }
+        }
+            };
+
+            // Act
+            bool result;
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                OrderDAO.InitializeContext(dbContext);
+                result = OrderDAO.CheckoutComboOrder(orderRequest);
+            }
+
+            // Assert
+            Assert.True(result);
+
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                var order = dbContext.Orders.FirstOrDefault(o => o.CustomerName == "John Doe");
+                Assert.NotNull(order);
+                Assert.Equal(100m, order.TotalAmount);
+
+                var combos = dbContext.OrderComboDetails.Where(c => c.OrderId == order.OrderId).ToList();
+                Assert.Equal(2, combos.Count);
+                Assert.Contains(combos, c => c.ComboId == 1 && c.Quantity == 2);
+
+                var gears = dbContext.OrderCampingGearDetails.Where(g => g.OrderId == order.OrderId).ToList();
+                Assert.Equal(2, gears.Count);
+
+                var foods = dbContext.OrderFoodDetails.Where(f => f.OrderId == order.OrderId).ToList();
+                Assert.Single(foods);
+
+                var foodCombos = dbContext.OrderFoodComboDetails.Where(fc => fc.OrderId == order.OrderId).ToList();
+                Assert.Single(foodCombos);
+            }
+        }
+
+        [Fact]
+        public async Task CheckoutComboOrder_ShouldReturnFalse_WhenOrderComboIsNull()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            var orderRequest = new CheckoutCombo
+            {
+                Order = new CustomerOrderAddDTO
+                {
+                    CustomerId = 1,
+                    CustomerName = "John Doe",
+                    OrderUsageDate = DateTime.Parse("2024-01-01"),
+                    TotalAmount = 100m,
+                    PhoneCustomer = "1234567890"
+                },
+                OrderCombo = null,
+                OrderCampingGear = null,
+                OrderFood = null,
+                OrderFoodCombo = null
+            };
+
+            // Act
+            bool result;
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                OrderDAO.InitializeContext(dbContext);
+                result = OrderDAO.CheckoutComboOrder(orderRequest);
+            }
+
+            // Assert
+            Assert.False(result);
+        }
+
+        [Fact]
+        public async Task CheckoutComboOrder_ShouldHandlePartialOrderDetailsCorrectly()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            var orderRequest = new CheckoutCombo
+            {
+                Order = new CustomerOrderAddDTO
+                {
+                    CustomerId = 1,
+                    CustomerName = "John Doe",
+                    OrderUsageDate = DateTime.Parse("2024-01-01"),
+                    TotalAmount = 50m,
+                    PhoneCustomer = "1234567890"
+                },
+                OrderCombo = new List<OrderComboAddDTO>
+        {
+            new OrderComboAddDTO { ComboId = 1, Quantity = 2 }
+        },
+                OrderCampingGear = null,
+                OrderFood = null,
+                OrderFoodCombo = null
+            };
+
+            // Act
+            bool result;
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                OrderDAO.InitializeContext(dbContext);
+                result = OrderDAO.CheckoutComboOrder(orderRequest);
+            }
+
+            // Assert
+            Assert.True(result);
+
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                var order = dbContext.Orders.FirstOrDefault(o => o.CustomerName == "John Doe");
+                Assert.NotNull(order);
+                Assert.Equal(50m, order.TotalAmount);
+
+                var combos = dbContext.OrderComboDetails.Where(c => c.OrderId == order.OrderId).ToList();
+                Assert.Single(combos);
+                Assert.Contains(combos, c => c.ComboId == 1 && c.Quantity == 2);
+
+                var gears = dbContext.OrderCampingGearDetails.Where(g => g.OrderId == order.OrderId).ToList();
+                Assert.Empty(gears);
+
+                var foods = dbContext.OrderFoodDetails.Where(f => f.OrderId == order.OrderId).ToList();
+                Assert.Empty(foods);
+
+                var foodCombos = dbContext.OrderFoodComboDetails.Where(fc => fc.OrderId == order.OrderId).ToList();
+                Assert.Empty(foodCombos);
+            }
+        }
+
+        [Fact]
+        public async Task CheckoutComboOrder_ShouldThrowException_WhenDatabaseFails()
+        {
+            // Arrange
+            var orderRequest = new CheckoutCombo
+            {
+                Order = new CustomerOrderAddDTO
+                {
+                    CustomerId = 1,
+                    CustomerName = "John Doe",
+                    OrderUsageDate = DateTime.Parse("2024-01-01"),
+                    TotalAmount = 100m,
+                    PhoneCustomer = "1234567890"
+                },
+                OrderCombo = new List<OrderComboAddDTO>
+        {
+            new OrderComboAddDTO { ComboId = 1, Quantity = 2 }
+        },
+                OrderCampingGear = null,
+                OrderFood = null,
+                OrderFoodCombo = null
+            };
+
+            // Simulating an exception by passing null context
+            OrderDAO.InitializeContext(null);
+
+            // Act & Assert
+            var exception = Assert.Throws<Exception>(() => OrderDAO.CheckoutComboOrder(orderRequest));
+            Assert.NotNull(exception);
+            Assert.Contains("Object reference not set to an instance of an object", exception.Message);
+        }
+
+        // Test for CheckoutComboOrder method
+        [Fact]
+        public void UpdateActivity_ShouldReturnTrue_WhenOrderExists()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            int orderId = 1;
+
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                dbContext.Orders.Add(new Order
+                {
+                    OrderId = orderId,
+                    ActivityId = 1001 // Original ActivityId
+                });
+                dbContext.SaveChanges();
+            }
+
+            // Act
+            bool result;
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                OrderDAO.InitializeContext(dbContext);
+                result = OrderDAO.UpdateActivity(orderId);
+            }
+
+            // Assert
+            Assert.True(result);
+
+            using (var dbContext = new GreenGardenContext(options))
+            {
+                var order = dbContext.Orders.FirstOrDefault(o => o.OrderId == orderId);
+                Assert.NotNull(order);
+                Assert.Equal(1002, order.ActivityId); // Ensure ActivityId is updated
+            }
+        }
+
+        [Fact]
+        public void UpdateActivity_ShouldReturnFalse_WhenOrderDoesNotExist()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using var dbContext = new GreenGardenContext(options);
+            OrderDAO.InitializeContext(dbContext); // Initialize context for the DAO
+
+            int nonExistentOrderId = 999;
+
+            // Act
+            bool result = OrderDAO.UpdateActivity(nonExistentOrderId);
+
+            // Assert
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void UpdateActivity_ShouldThrowException_WhenDatabaseFails()
+        {
+            // Arrange
+            int orderId = 1;
+
+            // Simulating a database failure by passing null context
+            OrderDAO.InitializeContext(null);
+
+            // Act & Assert
+            var exception = Assert.Throws<Exception>(() => OrderDAO.UpdateActivity(orderId));
+            Assert.NotNull(exception);
+            Assert.Contains("Lỗi khi cập nhật ActivityId", exception.Message);
+        }
+
     }
-
-
 
 }
 
