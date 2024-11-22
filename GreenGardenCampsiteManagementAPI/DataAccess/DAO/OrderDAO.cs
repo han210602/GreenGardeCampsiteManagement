@@ -638,17 +638,17 @@ namespace DataAccess.DAO
             var listProducts = new List<OrderCampingGearByUsageDateDTO>();
             try
             {
-                
-                    listProducts = _context.OrderCampingGearDetails.Include(o => o.Order)
-                        .Where(s => s.Order.OrderUsageDate.Value.Date == usagedate.Date)
-                        .Where(s => s.Order.ActivityId != 1002 && s.Order.ActivityId != 3)// Compare dates directly
-                        .Select(s => new OrderCampingGearByUsageDateDTO
-                        {
-                            GearId = s.GearId,
-                            Quantity = s.Quantity,
-                        })
-                        .ToList();
-                
+
+                listProducts = _context.OrderCampingGearDetails.Include(o => o.Order)
+                    .Where(s => s.Order.OrderUsageDate.Value.Date == usagedate.Date)
+                    .Where(s => s.Order.ActivityId != 1002 && s.Order.ActivityId != 3)// Compare dates directly
+                    .Select(s => new OrderCampingGearByUsageDateDTO
+                    {
+                        GearId = s.GearId,
+                        Quantity = s.Quantity,
+                    })
+                    .ToList();
+
             }
             catch (Exception ex)
             {
@@ -671,107 +671,107 @@ namespace DataAccess.DAO
 
             try
             {
-                
 
-                    if (order_combo == null)
+
+                if (order_combo == null)
+                {
+                    return false;
+                }
+                else
+                {
+
+                    Order newOrder;
+
+                    if (order.Deposit > 0)
                     {
-                        return false;
+                        newOrder = new Order
+                        {
+                            EmployeeId = order.EmployeeId,
+                            CustomerName = order.CustomerName,
+                            OrderUsageDate = order.OrderUsageDate,
+                            Deposit = order.Deposit,
+                            TotalAmount = order.TotalAmount,
+                            AmountPayable = order.TotalAmount - order.Deposit,
+                            StatusOrder = true,
+                            ActivityId = 1,
+                            PhoneCustomer = order.PhoneCustomer
+
+                        };
                     }
                     else
                     {
-
-                        Order newOrder;
-
-                        if (order.Deposit > 0)
+                        newOrder = new Order
                         {
-                            newOrder = new Order
-                            {
-                                EmployeeId = order.EmployeeId,
-                                CustomerName = order.CustomerName,
-                                OrderUsageDate = order.OrderUsageDate,
-                                Deposit = order.Deposit,
-                                TotalAmount = order.TotalAmount,
-                                AmountPayable = order.TotalAmount - order.Deposit,
-                                StatusOrder = true,
-                                ActivityId = 1,
-                                PhoneCustomer = order.PhoneCustomer
-
-                            };
-                        }
-                        else
-                        {
-                            newOrder = new Order
-                            {
-                                EmployeeId = order.EmployeeId,
-                                CustomerName = order.CustomerName,
-                                OrderUsageDate = order.OrderUsageDate,
-                                OrderDate = DateTime.Now,
-                                Deposit = order.Deposit,
-                                TotalAmount = order.TotalAmount,
-                                AmountPayable = order.TotalAmount - order.Deposit,
-                                StatusOrder = false,
-                                ActivityId = 2,
-                                PhoneCustomer = order.PhoneCustomer
-                            };
-                        }
-
-                        // Add the order and save to the database
-                        _context.Orders.Add(newOrder);
-                        _context.SaveChanges();
-
-                        int id = newOrder.OrderId;
-
-
-                        List<OrderComboDetail> tickets = order_combo.Select(t => new OrderComboDetail
-                        {
-                            ComboId = t.ComboId,
-                            OrderId = id,
-                            Quantity = t.Quantity,
-                        }).ToList();
-                        _context.OrderComboDetails.AddRange(tickets);
-
-                        if (order_camping_gear != null)
-                        {
-                            List<OrderCampingGearDetail> gears = order_camping_gear.Select(g => new OrderCampingGearDetail
-                            {
-                                GearId = g.GearId,
-                                Quantity = g.Quantity,
-                                OrderId = id,
-                            }).ToList();
-                            _context.OrderCampingGearDetails.AddRange(gears);
-                            _context.SaveChanges();
-
-                        }
-                        if (order_food != null)
-                        {
-                            List<OrderFoodDetail> foods = order_food.Select(f => new OrderFoodDetail
-                            {
-                                OrderId = id,
-                                ItemId = f.ItemId,
-                                Quantity = f.Quantity,
-                                Description = f.Description,
-                            }).ToList();
-                            _context.OrderFoodDetails.AddRange(foods);
-                            _context.SaveChanges();
-
-                        }
-                        if (order_foot_combo != null)
-                        {
-                            List<OrderFoodComboDetail> foodCombos = order_foot_combo.Select(c => new OrderFoodComboDetail
-                            {
-                                OrderId = id,
-                                ComboId = c.ComboId,
-                                Quantity = c.Quantity,
-                            }).ToList();
-                            _context.OrderFoodComboDetails.AddRange(foodCombos);
-                            _context.SaveChanges();
-
-                        }
-                        return true;
+                            EmployeeId = order.EmployeeId,
+                            CustomerName = order.CustomerName,
+                            OrderUsageDate = order.OrderUsageDate,
+                            OrderDate = DateTime.Now,
+                            Deposit = order.Deposit,
+                            TotalAmount = order.TotalAmount,
+                            AmountPayable = order.TotalAmount - order.Deposit,
+                            StatusOrder = false,
+                            ActivityId = 2,
+                            PhoneCustomer = order.PhoneCustomer
+                        };
                     }
 
+                    // Add the order and save to the database
+                    _context.Orders.Add(newOrder);
+                    _context.SaveChanges();
 
-                
+                    int id = newOrder.OrderId;
+
+
+                    List<OrderComboDetail> tickets = order_combo.Select(t => new OrderComboDetail
+                    {
+                        ComboId = t.ComboId,
+                        OrderId = id,
+                        Quantity = t.Quantity,
+                    }).ToList();
+                    _context.OrderComboDetails.AddRange(tickets);
+
+                    if (order_camping_gear != null)
+                    {
+                        List<OrderCampingGearDetail> gears = order_camping_gear.Select(g => new OrderCampingGearDetail
+                        {
+                            GearId = g.GearId,
+                            Quantity = g.Quantity,
+                            OrderId = id,
+                        }).ToList();
+                        _context.OrderCampingGearDetails.AddRange(gears);
+                        _context.SaveChanges();
+
+                    }
+                    if (order_food != null)
+                    {
+                        List<OrderFoodDetail> foods = order_food.Select(f => new OrderFoodDetail
+                        {
+                            OrderId = id,
+                            ItemId = f.ItemId,
+                            Quantity = f.Quantity,
+                            Description = f.Description,
+                        }).ToList();
+                        _context.OrderFoodDetails.AddRange(foods);
+                        _context.SaveChanges();
+
+                    }
+                    if (order_foot_combo != null)
+                    {
+                        List<OrderFoodComboDetail> foodCombos = order_foot_combo.Select(c => new OrderFoodComboDetail
+                        {
+                            OrderId = id,
+                            ComboId = c.ComboId,
+                            Quantity = c.Quantity,
+                        }).ToList();
+                        _context.OrderFoodComboDetails.AddRange(foodCombos);
+                        _context.SaveChanges();
+
+                    }
+                    return true;
+                }
+
+
+
             }
             catch (Exception ex)
             {
@@ -785,32 +785,29 @@ namespace DataAccess.DAO
         {
             try
             {
-                using (var context = new GreenGardenContext())
+
+                if (tickets[0].TicketId != 0)
                 {
+                    var list = _context.OrderTicketDetails.Where(s => s.OrderId == tickets[0].OrderId);
+                    _context.OrderTicketDetails.RemoveRange(list);
+                    _context.SaveChanges();
 
-
-                    if (tickets[0].TicketId != 0)
+                    var newlist = tickets.Select(s => new OrderTicketDetail()
                     {
-                        var list = context.OrderTicketDetails.Where(s => s.OrderId == tickets[0].OrderId);
-                        context.OrderTicketDetails.RemoveRange(list);
-                        context.SaveChanges();
+                        OrderId = s.OrderId,
+                        TicketId = s.TicketId,
+                        Quantity = s.Quantity,
 
-                        var newlist = tickets.Select(s => new OrderTicketDetail()
-                        {
-                            OrderId = s.OrderId,
-                            TicketId = s.TicketId,
-                            Quantity = s.Quantity,
-
-                        });
-                        context.OrderTicketDetails.AddRange(newlist);
-                    }
-                    else
-                    {
-                        DeleteOrder(tickets[0].OrderId);
-                    }
-                    context.SaveChanges();
-                    return true;
+                    });
+                    _context.OrderTicketDetails.AddRange(newlist);
                 }
+                else
+                {
+                    DeleteOrder(tickets[0].OrderId);
+                }
+                _context.SaveChanges();
+                return true;
+
             }
             catch (Exception ex)
             {
@@ -824,27 +821,26 @@ namespace DataAccess.DAO
         {
             try
             {
-                using (var context = new GreenGardenContext())
+
+                var list = _context.OrderCampingGearDetails.Where(s => s.OrderId == tickets[0].OrderId);
+                _context.OrderCampingGearDetails.RemoveRange(list);
+                _context.SaveChanges();
+
+                if (tickets[0].GearId != 0)
                 {
-                    var list = context.OrderCampingGearDetails.Where(s => s.OrderId == tickets[0].OrderId);
-                    context.OrderCampingGearDetails.RemoveRange(list);
-                    context.SaveChanges();
-
-                    if (tickets[0].GearId != 0)
+                    var newlist = tickets.Select(s => new OrderCampingGearDetail()
                     {
-                        var newlist = tickets.Select(s => new OrderCampingGearDetail()
-                        {
-                            OrderId = s.OrderId,
-                            GearId = s.GearId,
-                            Quantity = s.Quantity,
+                        OrderId = s.OrderId,
+                        GearId = s.GearId,
+                        Quantity = s.Quantity,
 
-                        });
-                        context.OrderCampingGearDetails.AddRange(newlist);
-                    }
-
-                    context.SaveChanges();
-                    return true;
+                    });
+                    _context.OrderCampingGearDetails.AddRange(newlist);
                 }
+
+                _context.SaveChanges();
+                return true;
+
             }
             catch (Exception ex)
             {
@@ -858,26 +854,25 @@ namespace DataAccess.DAO
         {
             try
             {
-                using (var context = new GreenGardenContext())
+
+                var list = _context.OrderFoodDetails.Where(s => s.OrderId == tickets[0].OrderId);
+                _context.OrderFoodDetails.RemoveRange(list);
+                _context.SaveChanges();
+
+                if (tickets[0].ItemId != 0)
                 {
-                    var list = context.OrderFoodDetails.Where(s => s.OrderId == tickets[0].OrderId);
-                    context.OrderFoodDetails.RemoveRange(list);
-                    context.SaveChanges();
-
-                    if (tickets[0].ItemId != 0)
+                    var newlist = tickets.Select(s => new OrderFoodDetail()
                     {
-                        var newlist = tickets.Select(s => new OrderFoodDetail()
-                        {
-                            OrderId = s.OrderId,
-                            ItemId = s.ItemId,
-                            Quantity = s.Quantity,
+                        OrderId = s.OrderId,
+                        ItemId = s.ItemId,
+                        Quantity = s.Quantity,
 
-                        });
-                        context.OrderFoodDetails.AddRange(newlist);
-                    }
-                    context.SaveChanges();
-                    return true;
+                    });
+                    _context.OrderFoodDetails.AddRange(newlist);
                 }
+                _context.SaveChanges();
+                return true;
+
             }
             catch (Exception ex)
             {
