@@ -83,6 +83,25 @@
         </li>
     </ul>
 </header>
+
+@{
+    if (TempData["SuccessMessage"] != null)
+    {
+        <div id="notification-success" class="notification alert alert-success" role="alert">
+            <i class="fas fa-bell"></i> <!-- Bell Icon -->
+        @TempData["SuccessMessage"]
+        </div>
+    }
+
+    if (TempData["ErrorMessage"] != null)
+    {
+        <div id="notification-error" class="notification alert alert-danger" role="alert">
+            <i class="fas fa-bell"></i> <!-- Bell Icon -->
+        @TempData["ErrorMessage"]
+        </div>
+    }
+}
+
 <style>
     .product-card {
         padding: 15px;
@@ -440,6 +459,15 @@
         border: none;
     }
 
+    .notification {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        transform: translateX(350px);
+        opacity: 1;
+        transition: transform 0.5s ease, opacity 0.5s ease;
+    }
+
 </style>
 <body onload="time()" class="app sidebar-mini rtl">
     <header class="app-header" style="display: flex; align-items: center; padding: 0 15px; background-color: #f6f5f5 !important;">
@@ -729,6 +757,7 @@
 
 
     </main>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
     <script>
@@ -739,7 +768,25 @@
 
     </script>
 
+    <script>
+        $(document).ready(function () {
+            function showAndHideNotification(selector) {
+                if ($(selector).length) {
+                    // Slide notification into view
+                    $(selector).css("transform", "translateX(-350px)"); // Slide in
+                    setTimeout(function () {
+                        // Slide notification back out after 5 seconds
+                        $(selector).css("transform", "translateX(0)"); // Slide out
+                        $(selector).css("opacity", "0"); // Optional fade-out effect
+                    }, 5000); // Display for 5 seconds before sliding out
+                }
+            }
 
+            // Show success and error notifications
+            showAndHideNotification("#notification-success");
+            showAndHideNotification("#notification-error");
+        });
+    </script>
 
     <script src="~/js/jquery-3.2.1.min.js"></script>
     <script src="~/js/popper.min.js"></script>

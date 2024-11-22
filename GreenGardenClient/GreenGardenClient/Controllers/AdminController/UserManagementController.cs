@@ -45,13 +45,12 @@ namespace GreenGardenClient.Controllers.AdminController
 
                 if (response.IsSuccessStatusCode)
                 {
-                    TempData["SuccessMessage"] = "User blocked successfully.";
+                    TempData["SuccessMessage"] = "Chặn người dùng thành công.";
                     return RedirectToAction("Index");
                 }
                 else
                 {
-                    var errorMessage = await response.Content.ReadAsStringAsync();
-                    TempData["ErrorMessage"] = $"Failed to block user: {errorMessage}";
+                    TempData["ErrorMessage"] = "Đã xảy ra lỗi khi mở khoá người dùng";
                     return RedirectToAction("Index");
                 }
             }
@@ -80,8 +79,8 @@ namespace GreenGardenClient.Controllers.AdminController
                 // Kiểm tra trạng thái phản hồi
                 if (response.IsSuccessStatusCode)
                 {
-                    Console.WriteLine("API call succeeded.");
-                    TempData["SuccessMessage"] = "User Unblocked successfully.";
+                    TempData["SuccessMessage"] = "Mở khoá người dùng thành công";
+                    Console.WriteLine(TempData["SuccessMessage"]); // Log giá trị để kiểm tra
                     return RedirectToAction("Index");
                 }
                 else

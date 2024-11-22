@@ -508,6 +508,48 @@
         gap: 10px; /* Tạo khoảng cách giữa hai nút */
         padding-top: 10px;
     }
+
+    .action-buttons-container {
+        display: flex; /* Sử dụng flexbox để căn chỉnh nút trên một hàng */
+        justify-content: center; /* Căn giữa các nút theo chiều ngang */
+        align-items: center; /* Căn giữa theo chiều dọc */
+        gap: 10px; /* Khoảng cách giữa các nút */
+        width: 100%; /* Đảm bảo chiều rộng của container */
+    }
+
+    .action-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 16px;
+        font-size: 1.2rem;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        min-width: 150px; /* Đặt chiều rộng tối thiểu cho các nút */
+        height: 50px; /* Đặt chiều cao cho các nút */
+    }
+
+    .delete-button {
+        background-color: #d9534f;
+        color: white;
+    }
+
+    .block-button {
+        background-color: #ff4d4d;
+        color: white;
+    }
+
+    .unblock-button {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .action-button i {
+        margin-right: 8px; /* Khoảng cách giữa biểu tượng và chữ */
+    }
+
+
 </style>
 
 <body onload="time()" class="app sidebar-mini rtl">
@@ -730,7 +772,27 @@
                         <!-- Ảnh đại diện bên trái -->
                         <div class="col-md-4 d-flex justify-content-center align-items-center flex-column">
                             <!-- Ảnh đại diện lớn hơn -->
-                            <img src="@Model.ProfilePictureUrl" id="profilePicture1" alt="Ảnh đại diện" class="img-fluid rounded-circle" style="width: 200px; height: 200px; object-fit: cover;">
+                            @if (!string.IsNullOrEmpty(HttpContextAccessor.HttpContext.Session.GetString("UserId")))
+                            {
+                                @if (@Model.ProfilePictureUrl == null)
+                                {
+                                    <!-- Default image for logged-in user without a profile picture -->
+                                    <img src="~/images/p22.jpg" alt="Trang cá nhân" style="width: 350px; height: 350px; object-fit: cover; border-radius: 50%;">
+                                }
+                                else
+                                {
+                                    <!-- Profile picture for logged-in user -->
+                                    <img src="~/images/Avatar/@Model.ProfilePictureUrl" alt="Trang cá nhân" style="width: 300px; height: 300px; object-fit: cover; border-radius: 50%;">
+                                }
+                            }
+                            else
+                            {
+                                <!-- No image is displayed if the user is not logged in -->
+                                <p>Vui lòng đăng nhập để xem ảnh.</p>
+                            }
+                            <p style="font-size: 1.5rem;margin-top: 20px;
+    margin-left: 30px;">Ảnh đại diện</p>
+
                         </div>
 
                         <!-- Các thông tin khác bên phải -->
@@ -770,7 +832,7 @@
                                 <label for="password">Mật khẩu</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                                    <input type="text" class="form-control" id="password" placeholder="Nhập mật khẩu" value="@Model.Password" readonly>
+                                    <input type="password" class="form-control" id="password" placeholder="Nhập mật khẩu" value="@Model.Password" readonly>
                                 </div>
                             </div>
 
@@ -810,31 +872,50 @@
                                 </div>
                             </div>
 
-
-                            <div class="d-flex justify-content-center mt-4">
+                            <div class="action-buttons-container">
+                                <!-- Nút Xóa -->
                                 <form id="DeleteForm_@Model.UserId" asp-controller="EmployeeManagement" asp-action="DeleteEmployee" asp-route-id="@Model.UserId" method="post">
-                                    <button type="button" class="block-button" data-form-id="DeleteForm_@Model.UserId" onclick="showConfirmationModal(this);" style="display: inline-flex; align-items: center; justify-content: center; background-color: #d9534f; color: white; padding: 12px 20px; font-size: 1.2rem; border-radius: 6px; cursor: pointer; border: none;">
-                                        <i class="fas fa-trash" style="margin-right: 8px;"></i> Xóa
+                                    <button type="button" class="action-button delete-button" data-form-id="DeleteForm_@Model.UserId" data-message="Bạn có chắc chắn muốn xóa không?" onclick="showConfirmationModal(this);">
+                                        <i class="fas fa-trash"></i> Xóa
                                     </button>
                                 </form>
+
+                                @if (@Model.IsActive == true)
+                                {
+                                    <!-- Nút Chặn -->
+                                    <form id="blockForm_@Model.UserId" asp-controller="EmployeeManagement" asp-action="BlockEmployee" asp-route-id="@Model.UserId" method="post">
+                                        <button type="button" class="action-button block-button" data-form-id="blockForm_@Model.UserId" data-message="Bạn có chắc chắn muốn chặn không?" onclick="showConfirmationModal(this);">
+                                            <i class="fas fa-lock"></i> Chặn
+                                        </button>
+                                    </form>
+                                }
+                                else if (@Model.IsActive == false)
+                                {
+                                    <!-- Nút Mở Chặn -->
+                                    <form id="unblockForm_@Model.UserId" asp-controller="EmployeeManagement" asp-action="UnBlockEmployee" asp-route-id="@Model.UserId" method="post">
+                                        <button type="button" class="action-button unblock-button" data-form-id="unblockForm_@Model.UserId" data-message="Bạn có chắc chắn muốn mở chặn không?" onclick="showConfirmationModal(this);">
+                                            <i class="fas fa-lock-open"></i> Mở Chặn
+                                        </button>
+                                    </form>
+                                }
                             </div>
 
-                            <div id="confirmationModal" class="modal" tabindex="-1" role="dialog" style="display: none;">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-body">
-                                            <p>Bạn có chắc chắn muốn xóa không?</p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-danger" id="confirmDeleteButton">Xác nhận</button>
-                                            <button type="button" class="btn btn-secondary" id="cancelButton">Hủy</button>
-                                        </div>
+
+
+                                <!-- Confirmation Modal -->
+                            <div id="confirmationModal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center;">
+                                <div style="background: white; padding: 20px; border-radius: 8px; text-align: center; width: 300px;">
+                                    <p id="confirmationMessage" style="margin-bottom: 20px;">Bạn có chắc chắn thực hiện hành động này?</p>
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <button id="confirmButton" style="background-color: #4CAF50; color: white; padding: 8px 12px; border: none; border-radius: 4px; cursor: pointer; flex: 1; margin-right: 8px;">
+                                            Xác nhận
+                                        </button>
+                                        <button id="cancelButton" style="background-color: #ff4d4d; color: white; padding: 8px 12px; border: none; border-radius: 4px; cursor: pointer; flex: 1;">
+                                            Hủy
+                                        </button>
                                     </div>
                                 </div>
                             </div>
-
-
-
 
                 
 
@@ -856,35 +937,31 @@
 
 
     </main>
+
     <script>
         function showConfirmationModal(button) {
-            const formId = button.getAttribute("data-form-id");
             const modal = document.getElementById("confirmationModal");
+            const message = button.getAttribute("data-message");
+            const formId = button.getAttribute("data-form-id");
 
-            // Hiển thị modal
-            modal.style.display = "block";
+            // Hiển thị thông báo tùy chỉnh
+            document.getElementById("confirmationMessage").innerText = message;
 
-            // Khi người dùng nhấn "Xác nhận", submit form
-            const confirmButton = document.getElementById("confirmDeleteButton");
+            // Gắn sự kiện cho nút Xác nhận
+            const confirmButton = document.getElementById("confirmButton");
             confirmButton.onclick = function () {
                 document.getElementById(formId).submit();
-                modal.style.display = "none"; // Ẩn modal sau khi submit
             };
 
-            // Khi người dùng nhấn "Hủy", ẩn modal
-            const cancelButton = document.getElementById("cancelButton");
-            cancelButton.onclick = function () {
-                modal.style.display = "none"; // Ẩn modal khi nhấn "Hủy"
+            // Hiển thị modal
+            modal.style.display = "flex";
+
+            // Đóng modal khi nhấn nút Hủy
+            document.getElementById("cancelButton").onclick = function () {
+                modal.style.display = "none";
             };
         }
 
-        // Đóng modal khi người dùng nhấn ra ngoài modal (tùy chọn)
-        window.onclick = function (event) {
-            const modal = document.getElementById("confirmationModal");
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        };
 
     </script>
     <script>

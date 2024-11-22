@@ -447,6 +447,53 @@
             display: block; /* Hiển thị khi được gán */
         }
 
+    .action-container {
+        display: flex; /* Sử dụng flexbox */
+        align-items: center; /* Căn giữa theo chiều dọc */
+        justify-content: flex-start; /* Căn tất cả về bên trái */
+        gap: 10px; /* Khoảng cách giữa chữ và nút */
+        width: 100%; /* Đảm bảo vùng chứa rộng 100% */
+    }
+
+    .action-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #333;
+        margin: 0;
+    }
+
+    .action-buttons {
+        display: flex;
+        justify-content: flex-end; /* Căn các nút về phía cuối */
+        align-items: center;
+    }
+
+    .action-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 16px;
+        font-size: 1rem;
+        font-weight: bold;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        width: auto;
+        height: 45px;
+    }
+
+    .block-button {
+        background-color: #ff4d4d; /* Màu đỏ cho nút chặn */
+    }
+
+    .unblock-button {
+        background-color: #4CAF50; /* Màu xanh cho nút mở chặn */
+    }
+
+    .action-button i {
+        margin-right: 8px; /* Khoảng cách giữa icon và text */
+    }
   
 </style>
 
@@ -670,8 +717,29 @@
             <div class="row">
                 <!-- Ảnh đại diện bên trái -->
                 <div class="col-md-4 d-flex justify-content-center align-items-center flex-column">
-                    <!-- Ảnh đại diện lớn hơn -->
-                    <img src="@Model.ProfilePictureUrl" id="profilePicture1" alt="Ảnh đại diện" class="img-fluid rounded-circle" style="width: 200px; height: 200px; object-fit: cover;">
+
+                            @if (!string.IsNullOrEmpty(HttpContextAccessor.HttpContext.Session.GetString("UserId")))
+                            {
+                                @if (@Model.ProfilePictureUrl == null)
+                                {
+                                    <!-- Default image for logged-in user without a profile picture -->
+                                    <img src="~/images/p22.jpg" alt="Trang cá nhân" style="width: 350px; height: 350px; object-fit: cover; border-radius: 50%;">
+                                }
+                                else
+                                {
+                                    <!-- Profile picture for logged-in user -->
+                                    <img src="~/images/Avatar/@Model.ProfilePictureUrl" alt="Trang cá nhân" style="width: 300px; height: 300px; object-fit: cover; border-radius: 50%;">
+                                }
+                            }
+                            else
+                            {
+                                <!-- No image is displayed if the user is not logged in -->
+                                <p>Vui lòng đăng nhập để xem ảnh.</p>
+                            }
+
+                            <p style="font-size: 1.5rem;margin-top: 20px;
+    margin-left: 30px;">Ảnh đại diện</p>
+          
                 </div>
 
                 <!-- Các thông tin khác bên phải -->
@@ -711,7 +779,7 @@
                             <label for="password">Mật khẩu</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                                        <input type="text" class="form-control" id="password" placeholder="Nhập mật khẩu" value="@Model.Password" readonly>
+                                        <input type="password" class="form-control" id="password" placeholder="Nhập mật khẩu" value="@Model.Password" readonly>
                             </div>
                         </div>
 
@@ -750,29 +818,35 @@
 
                             </div>
                         </div>
-                            <div style="display: flex; justify-content: center; gap: 8px; width: 100%;">
-                                <!-- Form Chặn -->
-                                <form id="blockForm_@Model.UserId" asp-controller="UserManagement" asp-action="BlockUser" asp-route-id="@Model.UserId" method="post" style="flex: 1;">
-                                    <button type="button" class="block-button" data-action="block" data-form-id="blockForm_@Model.UserId" onclick="showConfirmationModal(this);"
-                                            style="background-color: #ff4d4d; color: white; padding: 8px 12px; border: none; border-radius: 4px; cursor: pointer; width: 100%; flex-basis: 0;">
-                                        <i class="fas fa-lock"></i> Chặn
 
-                                    </button>
-                                </form>
 
-                                <!-- Form Mở Chặn -->
-                                <form id="unblockForm_@Model.UserId" asp-controller="UserManagement" asp-action="UnBlockUser" asp-route-id="@Model.UserId" method="post" style="flex: 1;">
-                                    <button type="button" class="unblock-button" data-action="unblock" data-form-id="unblockForm_@Model.UserId" onclick="showConfirmationModal(this);"
-                                            style="background-color: #4CAF50; color: white; padding: 8px 12px; border: none; border-radius: 4px; cursor: pointer; width: 100%; flex-basis: 0;">
-                                        <i class="fas fa-lock-open"></i> Mở Chặn
-                                    </button>
-                                </form>
 
-                                <!-- Button Quay Lại -->
-                            
+                            <div class="action-container">
+                                <!-- Tiêu đề -->
+                                <p class="action-title">Chỉnh trạng thái:</p>
+
+                                <!-- Khu vực nút -->
+                                <div class="action-buttons">
+                                    @if (@Model.IsActive == true)
+                                    {
+                                        <!-- Form Chặn -->
+                                        <form id="blockForm_@Model.UserId" asp-controller="UserManagement" asp-action="BlockUser" asp-route-id="@Model.UserId" method="post">
+                                            <button type="button" class="action-button block-button" data-action="block" data-form-id="blockForm_@Model.UserId" onclick="showConfirmationModal(this);">
+                                                <i class="fas fa-lock"></i> Chặn
+                                            </button>
+                                        </form>
+                                    }
+                                    else if (@Model.IsActive == false)
+                                    {
+                                        <!-- Form Mở Chặn -->
+                                        <form id="unblockForm_@Model.UserId" asp-controller="UserManagement" asp-action="UnBlockUser" asp-route-id="@Model.UserId" method="post">
+                                            <button type="button" class="action-button unblock-button" data-action="unblock" data-form-id="unblockForm_@Model.UserId" onclick="showConfirmationModal(this);">
+                                                <i class="fas fa-lock-open"></i> Mở Chặn
+                                            </button>
+                                        </form>
+                                    }
+                                </div>
                             </div>
-
-
 
 
 

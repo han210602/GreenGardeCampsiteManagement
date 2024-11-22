@@ -9,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddHttpContextAccessor(); // Trong Program.cs (ASP.NET Core 6+)
+// HOẶC
 
 builder.Services.AddHttpClient();
 builder.Services.AddSession();

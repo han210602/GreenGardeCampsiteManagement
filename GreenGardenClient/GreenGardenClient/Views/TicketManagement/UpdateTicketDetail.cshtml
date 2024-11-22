@@ -301,26 +301,24 @@
         gap: 20px;
     }
 
-    /* Image container */
     .event-image-container {
-        flex: 1;
-        max-width: 40%; /* Ensure the image takes up 40% of the space */
-        text-align: center;
+        display: flex;
+        flex-direction: column; /* Đưa các phần tử thành cột */
+        align-items: center; /* Căn giữa theo chiều ngang */
+        justify-content: flex-start; /* Đưa nội dung lên đầu */
+        gap: 10px; /* Khoảng cách giữa các phần tử */
     }
 
     .event-thumbnail-large {
         max-width: 100%;
         height: auto;
-        max-height: 300px; /* Limit the maximum height of the image */
-        object-fit: cover; /* Maintain aspect ratio while cropping */
+        max-height: 300px;
+        object-fit: cover;
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         transition: transform 0.3s ease;
     }
 
-        .event-thumbnail-large:hover {
-            transform: scale(1.05); /* Add hover effect for better interactivity */
-        }
 
     /* Details container */
     .event-details {
@@ -375,9 +373,13 @@
         cursor: pointer;
         width: 100px; /* Set a fixed width to make it smaller horizontally */
         max-width: 100%; /* Ensure it does not exceed container width on smaller screens */
+   
+        display: block; /* Đặt nút ở dòng riêng */
+        margin-top: 10px; /* Thêm khoảng cách trên nút */
+        margin-left:30px;
+    
     }
-    /* Button container */
-    /* Button Styling */
+
     .button-container .btn {
         width: 100px; /* Đặt chiều rộng cố định cho tất cả các nút */
         padding: 10px 0; /* Thiết lập padding cho cùng chiều cao */
@@ -888,7 +890,7 @@
                                 
                                 <div class="button-container mt-4 d-flex justify-content-end">
                                     <!-- Update Button -->
-                                    <button type="submit" class="btn btn-primary me-2" onclick="return confirm('Bạn có chắc chắn muốn thay đổi0?')">
+                                    <button type="submit" class="btn btn-primary me-2" onclick="return confirm('Bạn có chắc chắn muốn thay đổi?')">
                                         <i class="fas fa-sync-alt"></i> Cập nhật
                                     </button>
 

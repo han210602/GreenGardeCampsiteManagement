@@ -79,6 +79,8 @@ namespace GreenGardenClient.Controllers
                         HttpContext.Session.SetString("NumberPhone", loginResponse.Phone);
                         HttpContext.Session.SetString("Password", loginResponse.Password);
                         HttpContext.Session.SetString("Fullname", loginResponse.FullName);
+
+
                         if (loginResponse.ProfilePictureUrl != null)
                         {
                             HttpContext.Session.SetString("Img", loginResponse.ProfilePictureUrl);
@@ -157,7 +159,7 @@ namespace GreenGardenClient.Controllers
 
                 return View(model);
             }
-            
+
 
 
             // API endpoint with verification code included as a query parameter

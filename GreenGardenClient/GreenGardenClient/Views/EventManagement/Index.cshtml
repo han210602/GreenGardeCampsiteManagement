@@ -734,13 +734,13 @@
 
             </div>
 
-            <div id="pagination" class="dataTables_paginate paging_simple_numbers">
-                <ul class="pagination">
-                    <li class="paginate_button page-item previous disabled" id="prev-page"><a href="#" class="page-link">Lùi</a></li>
-                    <!-- Các nút số trang sẽ được tạo tự động -->
-                    <li class="paginate_button page-item next" id="next-page"><a href="#" class="page-link">Tiếp</a></li>
-                </ul>
-            </div>
+        <div id="pagination" class="dataTables_paginate paging_simple_numbers">
+            <ul class="pagination">
+                <li class="paginate_button page-item previous disabled" id="prev-page"><a href="#" class="page-link">Trước</a></li>
+                <!-- Các nút số trang sẽ được tạo tự động -->
+                <li class="paginate_button page-item next" id="next-page"><a href="#" class="page-link">Sau</a></li>
+            </ul>
+        </div>
 
     </main>
 
@@ -759,115 +759,99 @@
             var itemsPerPage = 6; // Số sản phẩm hiển thị trên mỗi trang
             var currentPage = 1;  // Trang hiện tại
             var totalItems = $('.event-card').length; // Tổng số sản phẩm ban đầu
-            var totalPages = Math.ceil(totalItems / itemsPerPage); // Tổng số trang ban đầu
 
             // Hàm hiển thị sản phẩm cho trang hiện tại
             function showPage(page, items) {
-                // Ẩn tất cả sản phẩm
-                $('.event-card').hide();
+                $('.event-card').hide(); // Ẩn tất cả sản phẩm
 
-                // Tính toán sản phẩm bắt đầu và kết thúc cho trang hiện tại
                 var startItem = (page - 1) * itemsPerPage;
-                var endItem = Math.min(startItem + itemsPerPage, items.length); // Đảm bảo không vượt quá số lượng sản phẩm
+                var endItem = Math.min(startItem + itemsPerPage, items.length);
 
-                // Hiển thị sản phẩm của trang hiện tại
-                items.slice(startItem, endItem).show();
+                items.slice(startItem, endItem).show(); // Hiển thị sản phẩm trang hiện tại
 
-                // Cập nhật nút phân trang
                 $('#pagination .page-item').removeClass('active');
                 $('#pagination .page-item[data-page="' + page + '"]').addClass('active');
 
-                // Kiểm tra trạng thái nút Lùi và Tiếp
-                if (page === 1) {
-                    $('#prev-page').addClass('disabled');
-                } else {
-                    $('#prev-page').removeClass('disabled');
-                }
-
-                if (page === Math.ceil(items.length / itemsPerPage)) {
-                    $('#next-page').addClass('disabled');
-                } else {
-                    $('#next-page').removeClass('disabled');
-                }
+                $('#prev-page').toggleClass('disabled', page === 1);
+                $('#next-page').toggleClass('disabled', page === Math.ceil(items.length / itemsPerPage));
             }
 
-            // Hàm cập nhật nút phân trang
+            // Hàm cập nhật các nút phân trang
             function updatePagination(totalItems) {
                 $('#pagination').find('.page-item:not(#prev-page, #next-page)').remove(); // Xóa các nút trang cũ
-                var totalPages = Math.ceil(totalItems / itemsPerPage); // Tính lại tổng số trang
+                var totalPages = Math.ceil(totalItems / itemsPerPage);
 
-                // Tạo các nút phân trang
                 for (var i = 1; i <= totalPages; i++) {
                     $('<li class="paginate_button page-item" data-page="' + i + '"><a href="#" class="page-link">' + i + '</a></li>').insertBefore('#next-page');
                 }
             }
 
-            // Xử lý sự kiện tìm kiếm
+            // Hàm xử lý khi tìm kiếm
             $('#searchInput').on('keyup', function () {
                 var searchValue = $(this).val().toLowerCase();
 
-                // Lọc sản phẩm dựa trên giá trị tìm kiếm
                 var filteredItems = $('.event-card').filter(function () {
                     return $(this).text().toLowerCase().indexOf(searchValue) > -1;
                 });
 
                 if (filteredItems.length > 0) {
-                    // Nếu có tìm kiếm và kết quả tìm thấy
-                    updatePagination(filteredItems.length); // Cập nhật lại phân trang dựa trên số lượng kết quả
-                    currentPage = 1; // Đặt lại trang hiện tại về 1
-                    showPage(currentPage, filteredItems); // Hiển thị sản phẩm sau khi tìm kiếm
+                    updatePagination(filteredItems.length); // Cập nhật phân trang
+                    currentPage = 1; // Quay về trang đầu tiên
+                    showPage(currentPage, filteredItems); // Hiển thị kết quả
                 } else {
-                    // Nếu không có kết quả tìm kiếm, ẩn toàn bộ sản phẩm và làm trống phân trang
-                    $('.event-card').hide();
-                    $('#pagination').find('.page-item:not(#prev-page, #next-page)').remove(); // Xóa các nút trang
+                    $('.event-card').hide(); // Ẩn tất cả sản phẩm
+                    $('#pagination').find('.page-item:not(#prev-page, #next-page)').remove(); // Xóa phân trang
                 }
             });
 
-            // Xử lý sự kiện khi bấm vào các nút số trang
+            // Xử lý sự kiện khi nhấn các nút phân trang
             $('#pagination').on('click', '.page-item', function (e) {
                 e.preventDefault();
                 var page = $(this).data('page');
                 if (page) {
                     currentPage = page;
-                    var items = $('#searchInput').val() ? $('.event-card').filter(function () {
-                        return $(this).text().toLowerCase().indexOf($('#searchInput').val().toLowerCase()) > -1;
-                    }) : $('.event-card');
+                    var items = $('#searchInput').val()
+                        ? $('.event-card').filter(function () {
+                            return $(this).text().toLowerCase().indexOf($('#searchInput').val().toLowerCase()) > -1;
+                        })
+                        : $('.event-card');
                     showPage(currentPage, items);
                 }
             });
 
-            // Xử lý sự kiện khi bấm vào nút Lùi
+            // Xử lý nút Lùi
             $('#prev-page').click(function (e) {
                 e.preventDefault();
                 if (currentPage > 1) {
                     currentPage--;
-                    var items = $('#searchInput').val() ? $('.event-card').filter(function () {
-                        return $(this).text().toLowerCase().indexOf($('#searchInput').val().toLowerCase()) > -1;
-                    }) : $('event-card');
+                    var items = $('#searchInput').val()
+                        ? $('.event-card').filter(function () {
+                            return $(this).text().toLowerCase().indexOf($('#searchInput').val().toLowerCase()) > -1;
+                        })
+                        : $('.event-card');
                     showPage(currentPage, items);
                 }
             });
 
-            // Xử lý sự kiện khi bấm vào nút Tiếp
+            // Xử lý nút Tiếp
             $('#next-page').click(function (e) {
                 e.preventDefault();
-                var items = $('#searchInput').val() ? $('.event-card').filter(function () {
-                    return $(this).text().toLowerCase().indexOf($('#searchInput').val().toLowerCase()) > -1;
-                }) : $('.event-card');
-                var totalItems = items.length;
-                var totalPages = Math.ceil(totalItems / itemsPerPage);
+                var items = $('#searchInput').val()
+                    ? $('.event-card').filter(function () {
+                        return $(this).text().toLowerCase().indexOf($('#searchInput').val().toLowerCase()) > -1;
+                    })
+                    : $('.event-card');
+                var totalPages = Math.ceil(items.length / itemsPerPage);
                 if (currentPage < totalPages) {
                     currentPage++;
                     showPage(currentPage, items);
                 }
             });
 
-            // Hiển thị trang đầu tiên khi tải trang
-            updatePagination(totalItems); // Khởi tạo nút phân trang ban đầu
-            showPage(currentPage, $('.event-card')); // Hiển thị sản phẩm ban đầu
+            // Khởi tạo hiển thị ban đầu
+            updatePagination(totalItems);
+            showPage(currentPage, $('.event-card'));
         });
-
-
     </script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

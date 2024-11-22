@@ -1,4 +1,4 @@
-/* Base */
+﻿/* Base */
 html {
   overflow-x: hidden; }
 
@@ -250,12 +250,23 @@ h1, h2, h3, h4, h5,
 .color-white-opacity-5 {
   color: rgba(255, 255, 255, 0.5); }
 
+.container {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    height: 100vh; 
+}
+
 .btn {
-  font-size: .8rem;
-  text-transform: uppercase;
-  letter-spacing: .2rem;
-  padding: 10px 20px;
-  text-decoration: none; }
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2rem;
+    padding: 10px 20px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
   .btn:active, .btn:focus {
     outline: none;
     -webkit-box-shadow: none;
