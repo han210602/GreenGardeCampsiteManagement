@@ -18,7 +18,7 @@ namespace GreenGardenClient.Models
     {
         public int ItemId { get; set; }
         public string ItemName { get; set; } = null!;
-        public decimal Price { get; set; }
+        public decimal? Price { get; set; }
         //public int CategoryId { get; set; }
         public string? Description { get; set; }
         public string CategoryName { get; set; }
@@ -32,7 +32,7 @@ namespace GreenGardenClient.Models
 
         [Required(ErrorMessage = "Giá không được để trống.")]
         [Range(0, double.MaxValue, ErrorMessage = "Giá phải lớn hơn hoặc bằng 0.")]
-        public decimal Price { get; set; }
+        public decimal? Price { get; set; }
 
         public string? Description { get; set; }
 
@@ -52,8 +52,8 @@ namespace GreenGardenClient.Models
     {
         public int ItemId { get; set; }
 
-        public decimal Price { get; set; }
-        public int QuantityAvailable { get; set; }
+        public decimal? Price { get; set; }
+        public int? QuantityAvailable { get; set; }
         public string? Description { get; set; }
         public string ItemName { get; set; }
         public string? ImgUrl { get; set; }

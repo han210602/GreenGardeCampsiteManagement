@@ -209,6 +209,7 @@
     <Folder Include="wwwroot\images\gear\" />
     <Folder Include="wwwroot\images\Food\" />
     <Folder Include="wwwroot\images\Gear\" />
+    <Folder Include="wwwroot\images\Event\" />
     <Folder Include="wwwroot\images\Ticket\" />
     <Folder Include="wwwroot\images\User\" />
   </ItemGroup>

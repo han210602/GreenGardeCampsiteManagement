@@ -37,9 +37,9 @@ namespace GreenGardenClient.Models
         [Required(ErrorMessage = "Tên vé không được để trống.")]
         [StringLength(100, ErrorMessage = "Tên vé không được vượt quá 100 ký tự.")]
         public string TicketName { get; set; } = null!;
-
+        [Required(ErrorMessage = "Giá vé không được để trống.")]
         [Range(0, double.MaxValue, ErrorMessage = "Giá vé phải lớn hơn hoặc bằng 0.")]
-        public decimal Price { get; set; }
+        public decimal? Price { get; set; }
 
         public DateTime CreatedAt { get; set; }
 

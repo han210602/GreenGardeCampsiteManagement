@@ -43,12 +43,12 @@ namespace GreenGardenClient.Controllers.AdminController
             int? userId = HttpContext.Session.GetInt32("UserId");
             if (userId == null)
             {
-                return RedirectToAction("Index", "Error");
+                return RedirectToAction("Index", "Home");
             }
 
             if (userRole != 1 && userRole != 2)
             {
-                return RedirectToAction("Index", "Error");
+                return RedirectToAction("Index", "Home");
             }
             ViewBag.CampingGear = gear;
 
@@ -64,12 +64,12 @@ namespace GreenGardenClient.Controllers.AdminController
             if (userId == null)
             {
                 // Redirect to login page if UserId is not found in session
-                return RedirectToAction("Index", "Error");
+                return RedirectToAction("Index", "Home");
             }
 
             if (userRole != 1 && userRole != 2)
             {
-                return RedirectToAction("Index", "Error");
+                return RedirectToAction("Index", "Home");
             }
             var apiUrl = $"https://localhost:7298/api/CampingGear/GetCampingGearDetail?id={gearId}";
 
@@ -214,12 +214,12 @@ namespace GreenGardenClient.Controllers.AdminController
             int? userId = HttpContext.Session.GetInt32("UserId");
             if (userId == null)
             {
-                return RedirectToAction("Index", "Error");
+                return RedirectToAction("Index", "Home");
             }
 
             if (userRole != 1 && userRole != 2)
             {
-                return RedirectToAction("Index", "Error");
+                return RedirectToAction("Index", "Home");
             }
             // Gán lại danh sách danh mục cho ViewBag
             ViewBag.CampingCategories = campingCategories;

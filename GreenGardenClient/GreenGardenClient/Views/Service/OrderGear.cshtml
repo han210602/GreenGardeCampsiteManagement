@@ -185,7 +185,7 @@
                     z-index: 1000; /* Đảm bảo header nằm trên các phần tử khác */
                     background-color: #f6f5f5 !important;
                     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ cho header */
-                    padding: 0 0; /* Khoảng cách trên và dưới */
+                    padding: 10px 0; /* Khoảng cách trên và dưới */
                 }
 
                     /* Khoảng trống bên dưới để bù cho chiều cao header */
@@ -393,132 +393,148 @@
                 }
             </div>
         }
-        <div style="margin-top: 50px" class="site-section">
-            <div class="container">
-                <div class="row justify-content-center text-center">
-                    <div class="col-md-7">
-                        <div class="heading-39101 mb-5">
-                            <span class="backdrop text-center">GreenGarden</span>
-                            <span class="subtitle-39191">Đồ đồ dùng</span>
-                            <h3>Danh sách đồ dùng cắm trại</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <!-- Cột bên trái: Bộ lọc -->
-                    <div data-aos="fade-up">
-                        <div class="filter-form">
-                            <h4 class="mb-4">
-                                Bộ lọc
-                                <div id="filterToggleIcon" class="filter-toggle-icon">
-                                    <i class="icon-filter">☰</i> <!-- Thay bằng icon CSS phù hợp nếu có -->
-                                </div>
+     <div style="margin-top: 100px">
+            <div class="ftco-blocks-cover-1">
+                <div class="site-section-cover overlay" style="background-image: url('@Url.Content("~/images/p22.jpg")')">
+                    <div class="container">
+                        <div class="row align-items-center justify-content-center text-center">
+                            <div class="col-md-5" data-aos="fade-up">
+                                <h1 class="mb-3 text-white">Về dịch vụ</h1>
+                                <p>Những dịch vụ nổi bật tại sông quê giúp khách hàng trải nghiệm tốt nhất.</p>
 
-                            </h4>
-                            <div id="filterContainer" style="display: none;">
-                                <form id="filterForm" method="get" action="@Url.Action("OrderGear", "Service")">
-                                    <input type="hidden" name="sortBy" id="sortByInput" value="@ViewBag.SortBy" />
-                                    <div class="row">
-                                        <!-- Bộ lọc Sắp xếp theo -->
-                                        <div class="col-lg-4 col-md-4 mb-3 d-flex align-items-center">
-                                            <label for="sort" class="mr-2">Sắp xếp theo:</label>
-                                            <select id="sort" name="sortBy" class="form-control">
-                                                <option value="0" @(ViewBag.SortBy == null || ViewBag.SortBy == "0" ? "selected" : "")>Mặc định</option>
-                                                <option value="1" @(ViewBag.SortBy == "1" ? "selected" : "")>Giá: Thấp đến Cao</option>
-                                                <option value="2" @(ViewBag.SortBy == "2" ? "selected" : "")>Giá: Cao đến Thấp</option>
-                                                <option value="3" @(ViewBag.SortBy == "3" ? "selected" : "")>Tên: A-Z</option>
-                                                <option value="4" @(ViewBag.SortBy == "4" ? "selected" : "")>Tên: Z-A</option>
-                                                <option value="1" @(ViewBag.Popularity == "1" ? "selected" : "")>Phổ biến</option>
-                                                <option value="1" @(ViewBag.Popularity == "2" ? "selected" : "")>Mới nhất</option>
-                                            </select>
-                                        </div>
-
-                                        <!-- Bộ lọc Loại đồ dùng -->
-                                        <div class="col-lg-4 col-md-4 mb-3 d-flex align-items-center">
-                                            <label for="categoryFilter" class="mr-2">Loại đồ dùng:</label>
-                                            <select id="categoryFilter" name="categoryId" class="form-control">
-                                                <option value="">Tất cả</option>
-                                                @foreach (var category in campingCategories)
-                                                {
-                                                    <option value="@category.GearCategoryId" @(ViewBag.CurrentCategoryId == category.GearCategoryId ? "selected" : "")>
-                                                        @category.GearCategoryName
-                                                    </option>
-                                                }
-                                            </select>
-                                        </div>
-
-                                        <!-- Bộ lọc Giá -->
-                                        <div class="col-lg-4 col-md-4 mb-3 d-flex align-items-center">
-                                            <label for="priceFilter" class="mr-2">Giá:</label>
-                                            <select id="priceFilter" name="priceRange" class="form-control">
-                                                <option value="">Tất cả</option>
-                                                <option value="1" @(ViewBag.PriceRange == "1" ? "selected" : "")>Dưới 100,000 ₫</option>
-                                                <option value="2" @(ViewBag.PriceRange == "2" ? "selected" : "")>100,000 ₫ - 200,000 ₫</option>
-                                                <option value="3" @(ViewBag.PriceRange == "3" ? "selected" : "")>Trên 200,000 ₫</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </form>
                             </div>
-                        </div>
-
-
-                    </div>
-                    <!-- Cột bên phải: Danh sách sản phẩm -->
-                    <div class="col-lg-12 col-md-auto  ml-auto">
-                        <div id="gearList" class="row">
-                            @if (campingGears != null && campingGears.Any())
-                            {
-                                foreach (var item in campingGears)
-                                {
-                                    <div class="product-card col-lg-4 col-md-6 mb-4" data-aos="fade-up">
-                                        <div class="listing-item" id="product-@item.GearId">
-                                            <div class="listing-image">
-                                                <img src="~/images/Gear/@item.ImgUrl" alt="Image" class="img-fluid">
-                                            </div>
-                                            <div class="listing-item-content">
-                                                <h2 class="px-3 mb-1 category bg-primary">@item.RentalPrice.ToString("N0") ₫</h2>
-                                                <h2 class="mb-2">
-                                                    @item.GearName
-                                                </h2>
-                                                <h2 class="mb-2">
-                                                    <p>Số lượng còn lại: <strong>@item.QuantityAvailable</strong></p>
-                                                </h2>
-
-                                                <div class="button-container d-flex justify-content-between align-items-center">
-                                                    <form method="post" action="/Service/AddToCart" class="d-flex align-items-center">
-                                                        <!-- Thêm lớp 'me-2' để tạo khoảng cách bên phải -->
-                                                        <input type="hidden" name="Id" value="@item.GearId" />
-                                                        <input type="hidden" name="Name" value="@item.GearName" />
-                                                        <input type="hidden" name="CategoryName" value="@item.GearCategoryName" />
-                                                        <input type="hidden" name="image" value="@item.ImgUrl" />
-                                                        <input type="hidden" name="Type" value="Gear" />
-                                                        <input type="hidden" name="TypeCategory" value="GearCategory" />
-                                                        <input type="hidden" name="price" value="@item.RentalPrice" />
-                                                        <input type="hidden" name="quantity" value="1" />
-                                                        <input type="hidden" id="hidden-date-@item.GearId" name="usageDate" />
-                                                        <input type="hidden" name="redirectAction" value="OrderGear" />
-                                                        <button type="button" onclick="return addToCart('@item.GearId')" class="btn btn-primary">Thêm <i class="fas fa-shopping-cart"></i></button>
-                                                    </form>
-                                                    <a href="@Url.Action("CampingGearDetail", "Service", new { gearId = item.GearId })" class="btn btn-secondary ms-2">Xem chi tiết</a> <!-- Thêm lớp 'ms-2' để tạo khoảng cách bên trái -->
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                }
-                            }
-                            else
-                            {
-                                <p>Không có dữ liệu để hiển thị.</p>
-                            }
                         </div>
                     </div>
                 </div>
             </div>
 
-        </div>
+            <div class="site-section">
+                <div class="container" style="margin-top:20px">
+                    <div class="row justify-content-center text-center">
+                        <div class="col-md-7">
+                            <div class="heading-39101 mb-5">
+                                <span class="backdrop text-center">GreenGarden</span>
+                                <span class="subtitle-39191">Danh sách đồ dùng</span>
+                                <h3>Danh sách đồ dùng cắm trại</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- Cột bên trái: Bộ lọc -->
+                        <div data-aos="fade-up">
+                            <div class="filter-form">
+                                <h4 class="mb-4">
+                                    Bộ lọc
+                                    <div id="filterToggleIcon" class="filter-toggle-icon">
+                                        <i class="icon-filter">☰</i> <!-- Thay bằng icon CSS phù hợp nếu có -->
+                                    </div>
+
+                                </h4>
+                                <div id="filterContainer" style="display: none;">
+                                    <form id="filterForm" method="get" action="@Url.Action("OrderGear", "Service")">
+                                        <input type="hidden" name="sortBy" id="sortByInput" value="@ViewBag.SortBy" />
+                                        <div class="row">
+                                            <!-- Bộ lọc Sắp xếp theo -->
+                                            <div class="col-lg-4 col-md-4 mb-3 d-flex align-items-center">
+                                                <label for="sort" class="mr-2">Sắp xếp theo:</label>
+                                                <select id="sort" name="sortBy" class="form-control">
+                                                    <option value="0" @(ViewBag.SortBy == null || ViewBag.SortBy == "0" ? "selected" : "")>Mặc định</option>
+                                                    <option value="1" @(ViewBag.SortBy == "1" ? "selected" : "")>Giá: Thấp đến Cao</option>
+                                                    <option value="2" @(ViewBag.SortBy == "2" ? "selected" : "")>Giá: Cao đến Thấp</option>
+                                                    <option value="3" @(ViewBag.SortBy == "3" ? "selected" : "")>Tên: A-Z</option>
+                                                    <option value="4" @(ViewBag.SortBy == "4" ? "selected" : "")>Tên: Z-A</option>
+                                                    <option value="1" @(ViewBag.Popularity == "1" ? "selected" : "")>Phổ biến</option>
+                                                    <option value="1" @(ViewBag.Popularity == "2" ? "selected" : "")>Mới nhất</option>
+                                                </select>
+                                            </div>
+
+                                            <!-- Bộ lọc Loại đồ dùng -->
+                                            <div class="col-lg-4 col-md-4 mb-3 d-flex align-items-center">
+                                                <label for="categoryFilter" class="mr-2">Loại đồ dùng:</label>
+                                                <select id="categoryFilter" name="categoryId" class="form-control">
+                                                    <option value="">Tất cả</option>
+                                                    @foreach (var category in campingCategories)
+                                                    {
+                                                        <option value="@category.GearCategoryId" @(ViewBag.CurrentCategoryId == category.GearCategoryId ? "selected" : "")>
+                                                            @category.GearCategoryName
+                                                        </option>
+                                                    }
+                                                </select>
+                                            </div>
+
+                                            <!-- Bộ lọc Giá -->
+                                            <div class="col-lg-4 col-md-4 mb-3 d-flex align-items-center">
+                                                <label for="priceFilter" class="mr-2">Giá:</label>
+                                                <select id="priceFilter" name="priceRange" class="form-control">
+                                                    <option value="">Tất cả</option>
+                                                    <option value="1" @(ViewBag.PriceRange == "1" ? "selected" : "")>Dưới 100,000 ₫</option>
+                                                    <option value="2" @(ViewBag.PriceRange == "2" ? "selected" : "")>100,000 ₫ - 200,000 ₫</option>
+                                                    <option value="3" @(ViewBag.PriceRange == "3" ? "selected" : "")>Trên 200,000 ₫</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <!-- Cột bên phải: Danh sách sản phẩm -->
+                        <div class="col-lg-12 col-md-auto  ml-auto">
+                            <div id="gearList" class="row">
+                                @if (campingGears != null && campingGears.Any())
+                                {
+                                    foreach (var item in campingGears)
+                                    {
+                                        <div class="product-card col-lg-4 col-md-6 mb-4" data-aos="fade-up">
+                                            <div class="listing-item" id="product-@item.GearId">
+                                                <div class="listing-image">
+                                                    <img src="~/images/Gear/@item.ImgUrl" alt="Image" class="img-fluid">
+                                                </div>
+                                                <div class="listing-item-content">
+                                                    <h2 class="px-3 mb-1 category bg-primary">@item.RentalPrice.ToString("N0") ₫</h2>
+                                                    <h2 class="mb-2">
+                                                        @item.GearName
+                                                    </h2>
+                                                    <h2 class="mb-2">
+                                                        <p>Số lượng còn lại: <strong>@item.QuantityAvailable</strong></p>
+                                                    </h2>
+
+                                                    <div class="button-container d-flex justify-content-between align-items-center">
+                                                        <form method="post" action="/Service/AddToCart" class="d-flex align-items-center">
+                                                            <!-- Thêm lớp 'me-2' để tạo khoảng cách bên phải -->
+                                                            <input type="hidden" name="Id" value="@item.GearId" />
+                                                            <input type="hidden" name="Name" value="@item.GearName" />
+                                                            <input type="hidden" name="CategoryName" value="@item.GearCategoryName" />
+                                                            <input type="hidden" name="image" value="@item.ImgUrl" />
+                                                            <input type="hidden" name="Type" value="Gear" />
+                                                            <input type="hidden" name="TypeCategory" value="GearCategory" />
+                                                            <input type="hidden" name="price" value="@item.RentalPrice" />
+                                                            <input type="hidden" name="quantity" value="1" />
+                                                            <input type="hidden" id="hidden-date-@item.GearId" name="usageDate" />
+                                                            <input type="hidden" name="redirectAction" value="OrderGear" />
+                                                            <button type="button" onclick="return addToCart('@item.GearId')" class="btn btn-primary">Thêm <i class="fas fa-shopping-cart"></i></button>
+                                                        </form>
+                                                        <a href="@Url.Action("CampingGearDetail", "Service", new { gearId = item.GearId })" class="btn btn-secondary ms-2">Xem chi tiết</a> <!-- Thêm lớp 'ms-2' để tạo khoảng cách bên trái -->
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <p>Không có dữ liệu để hiển thị.</p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+     </div>
 
 
     </div>
@@ -533,7 +549,14 @@
     </nav>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-
+        document.addEventListener("DOMContentLoaded", function () {
+            // Tìm thẻ có class "site-section"
+            var targetElement = document.querySelector(".site-section");
+            if (targetElement) {
+                // Cuộn tới thẻ .site-section
+                targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+        });
         $(document).ready(function () {
             var itemsPerPage = 6; // Number of products per page
             var currentPage = 1;  // Current page

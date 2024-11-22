@@ -11,13 +11,10 @@ namespace GreenGardenClient.Models
 
         public string? Description { get; set; }
 
-        [Required(ErrorMessage = "Ngày sự kiện không được để trống.")]
         public DateTime EventDate { get; set; }
 
-        [Required(ErrorMessage = "Thời gian bắt đầu không được để trống.")]
-        public TimeSpan StartTime { get; set; }
+        public TimeSpan? StartTime { get; set; }
 
-        [Required(ErrorMessage = "Thời gian kết thúc không được để trống.")]
         public TimeSpan? EndTime { get; set; }
 
         [Required(ErrorMessage = "Địa điểm không được để trống.")]

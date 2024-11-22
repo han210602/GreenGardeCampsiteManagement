@@ -26,12 +26,12 @@ namespace GreenGardenClient.Controllers.AdminController
             if (userId == null)
             {
                 // Redirect to login page if UserId is not found in session
-                return RedirectToAction("Index", "Error");
+                return RedirectToAction("Index", "Home");
             }
 
             if (userRole != 1 && userRole != 2)
             {
-                return RedirectToAction("Index", "Error");
+                return RedirectToAction("Index", "Home");
             }
             if (events == null)
             {
@@ -90,12 +90,12 @@ namespace GreenGardenClient.Controllers.AdminController
             if (userId == null)
             {
                 // Redirect to login page if UserId is not found in session
-                return RedirectToAction("Index", "Error");
+                return RedirectToAction("Index", "Home");
             }
 
             if (userRole != 1 && userRole != 2)
             {
-                return RedirectToAction("Index", "Error");
+                return RedirectToAction("Index", "Home");
             }
             return View( new EventVM()); // Otherwise, return the view with userdata
 
@@ -103,14 +103,23 @@ namespace GreenGardenClient.Controllers.AdminController
         [HttpPost]
         public async Task<IActionResult> CreateEvent(EventVM model)
         {
-           
-           
-
+            if (model.EventDate == null)
+            {
+                ModelState.AddModelError("EventDate", "Ngày sự kiện không được để trống");
+            }
+            if (model.StartTime == null)
+            {
+                ModelState.AddModelError("StartTime", "Thời gian bắt đầu sự kiện không được để trống");
+            }
+            if (model.EndTime == null)
+            {
+                ModelState.AddModelError("EndTime", "Thời gian kết thúc sự kiện không được để trống");
+            }
             int? userId = HttpContext.Session.GetInt32("UserId");
             if (userId == null)
             {
                 // Redirect to login page if UserId is not found in session
-                return RedirectToAction("Index", "Error");
+                return RedirectToAction("Index", "Home");
             }
 
        
@@ -120,7 +129,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 StreamContent fileContent = new StreamContent(PictureUrl.OpenReadStream());
                 formData.Add(fileContent, "file", PictureUrl.FileName);
 
-                string filePath = Path.Combine("wwwroot/images", PictureUrl.FileName);
+                string filePath = Path.Combine("wwwroot/images/Event", PictureUrl.FileName);
                 using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     await PictureUrl.CopyToAsync(fileStream);
@@ -193,12 +202,12 @@ namespace GreenGardenClient.Controllers.AdminController
             int? userId = HttpContext.Session.GetInt32("UserId");
             if (userId == null)
             {
-                return RedirectToAction("Index", "Error");
+                return RedirectToAction("Index", "Home");
             }
 
             if (userRole != 1 && userRole != 2)
             {
-                return RedirectToAction("Index", "Error");
+                return RedirectToAction("Index", "Home");
             }
             // Check if event data is null and redirect to an error page if not found
             if (eventItem == null)
@@ -218,7 +227,7 @@ namespace GreenGardenClient.Controllers.AdminController
             if (PictureUrl != null)
             {
                 // Tạo đường dẫn lưu file mới
-                string filePath = Path.Combine("wwwroot/images", PictureUrl.FileName);
+                string filePath = Path.Combine("wwwroot/images/Event", PictureUrl.FileName);
 
                 // Lưu file vào thư mục wwwroot/images
                 using (FileStream fileStream = new FileStream(filePath, FileMode.Create))

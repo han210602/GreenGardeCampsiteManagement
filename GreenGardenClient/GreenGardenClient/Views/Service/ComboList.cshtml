@@ -521,9 +521,22 @@
         </div>
         </div>
         *@
+        <div style="margin-top:100px">
+            <div class="ftco-blocks-cover-1">
+                <div class="site-section-cover overlay" style="background-image: url('@Url.Content("~/images/p22.jpg")')">
+                    <div class="container">
+                        <div class="row align-items-center justify-content-center text-center">
+                            <div class="col-md-5" data-aos="fade-up">
+                                <h1 class="mb-3 text-white">Về dịch vụ</h1>
+                                <p>Những dịch vụ nổi bật tại sông quê giúp khách hàng trải nghiệm tốt nhất.</p>
 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         <div class="site-section">
-            <div class="container" style="margin-top: 50px">
+            <div class="container" style="margin-top: 30px">
                 <div class="row justify-content-center text-center">
                     <div class="col-md-7">
                         <div class="heading-39101 mb-5">
@@ -589,7 +602,7 @@
             </div>
 
         </div>
-
+        </div>
     </div>
 
 
@@ -598,6 +611,14 @@
     <script>
         AOS.init({
             duration: 1200,
+        });
+        document.addEventListener("DOMContentLoaded", function () {
+            // Tìm thẻ có class "site-section"
+            var targetElement = document.querySelector(".site-section");
+            if (targetElement) {
+                // Cuộn tới thẻ .site-section
+                targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
         });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
