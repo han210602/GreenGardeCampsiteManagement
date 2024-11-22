@@ -746,7 +746,7 @@
                 <div class="tile">
                     @foreach (var eventItem in Model)
                     {
-                        <form asp-action="UpdateEvent" asp-controller="EventManagement" onclick="return validateEventForm('@eventItem.EventId')" enctype="multipart/form-data" method="post" accept-charset="UTF-8">
+                        <form asp-action="UpdateEvent" asp-controller="EventManagement" onsubmit="return validateForm('@eventItem.EventId')" enctype="multipart/form-data" method="post" accept-charset="UTF-8">
                             <!-- Hidden field for EventId to identify the event -->
                             <input type="hidden" name="EventId" value="@eventItem.EventId" />
                    
@@ -775,7 +775,7 @@
                                     <div class="d-flex align-items-center mb-3">
                                         <i class="fas fa-calendar-day me-2" style="color: #007bff;"></i>
                                         <label for="EventName_@eventItem.EventId" class="me-2">Tên sự kiện:</label>
-                                        <input type="text" class="form-control small-input-inline" id="EventName_@eventItem.EventId" name="EventName" placeholder="Nhập tên sự kiện" value="@eventItem.EventName" required>
+                                        <input type="text" class="form-control small-input-inline" id="EventName_@eventItem.EventId" name="EventName" placeholder="Nhập tên sự kiện" value="@eventItem.EventName">
 
                                         <!-- Placeholder to fill space -->
                                         <div class="flex-grow-1"></div>
@@ -785,7 +785,7 @@
                                             <i class="fas fa-arrow-left"></i> Quay lại
                                         </a>
                                     </div>
-                                    <small id="EventNameError" style="font-size: 1.1em;" class="text-danger"></small>
+                                    <span id="EventNameError" class="text-danger"></span>
 
                                     <!-- Description -->
                                     <div class="mb-3">
@@ -800,15 +800,15 @@
                                     <div class="d-flex align-items-center mb-3">
                                         <i class="fas fa-clock me-2" style="color: #ffc107;"></i>
                                         <label for="EventDate_@eventItem.EventId" class="me-2">Ngày sự kiện:</label>
-                                        <input type="date" class="form-control small-input-inline" id="EventDate_@eventItem.EventId" name="EventDate" value="@eventItem.EventDate.ToString("yyyy-MM-dd")" required>
+                                        <input type="date" class="form-control small-input-inline" id="EventDate_@eventItem.EventId" name="EventDate" value="@eventItem.EventDate.ToString("yyyy-MM-dd")">
                                     </div>
-                                    <small id="EventDateError" style="font-size: 1.1em;" class="text-danger"></small>
+                                    <span id="EventDateError_@eventItem.EventId" class="text-danger"></span>
                                     <div class="d-flex align-items-center mb-3">
                                         <i class="fas fa-map-marker-alt me-2" style="color: #17a2b8;"></i>
                                         <label for="Location_@eventItem.EventId" class="me-2">Địa điểm:</label>
                                         <input type="text" class="form-control flex-grow-1" id="Location_@eventItem.EventId" name="Location" placeholder="Nhập địa điểm" value="@eventItem.Location">
                                     </div>
-                                    <small id="LocationError" style="font-size: 1.1em;" class="text-danger"></small>
+                                    <span id="LocationError" class="text-danger"></span>
 
 
 
@@ -829,14 +829,14 @@
                                             <input type="time" class="form-control small-input" id="EndTime_@eventItem.EventId" name="EndTime" value="@eventItem.EndTime">
                                         </div>
                                     </div>
-                                    <div id="timeError" class="text-danger" style="display:none;">Thời gian kết thúc không được sớm hơn thời gian bắt đầu.</div>
+                                    <span id="timeError_@eventItem.EventId" class="text-danger"></span>
 
                                 </div>
                             </div>
 
                             <div class="button-container">
                                 <!-- Update Button -->
-                                <button type="submit" class="btn-update" onclick="validateTime()">
+                                <button type="submit" class="btn-update" onclick="return confirm('Bạn có chắc chắn muốn thay đổi không?')">
                                     <i class="fas fa-sync-alt"></i> Cập nhập
                                 </button>
 
@@ -850,38 +850,63 @@
                         </form>
                        
                     }
-                   
-                   <script>
-                        function validateEventForm(eventId) {
+
+                    <script>
+                        function validateForm(eventId) {
                             let isValid = true;
 
                             // Lấy các giá trị input
                             const eventName = document.getElementById(`EventName_${eventId}`).value.trim();
-                            const eventDate = document.getElementById(`EventDate_${eventId}`).value;
+                            const eventDateInput = document.getElementById(`EventDate_${eventId}`);
+                            const eventDate = new Date(eventDateInput.value);
                             const location = document.getElementById(`Location_${eventId}`).value.trim();
-                            const today = new Date().toISOString().split('T')[0]; // Ngày hiện tại định dạng yyyy-MM-dd
+                            const startTime = document.getElementById(`StartTime_${eventId}`).value;
+                            const endTime = document.getElementById(`EndTime_${eventId}`).value;
+                            const today = new Date();
+                            today.setHours(0, 0, 0, 0); // Đặt giờ hiện tại về 00:00:00 để chỉ so sánh ngày
 
                             // Kiểm tra tên sự kiện
                             const eventNameError = document.getElementById("EventNameError");
-                            if (eventName === "") {
+                            if (!eventName) {
                                 eventNameError.innerText = "Tên sự kiện không được để trống.";
                                 isValid = false;
                             } else {
                                 eventNameError.innerText = "";
                             }
 
+                            // Kiểm tra ngày sự kiện
+                            const dateError = document.getElementById(`EventDateError_${eventId}`);
+                            if (!eventDateInput.value || eventDate < today) {
+                                dateError.innerText = "Ngày sự kiện không được nằm trong quá khứ. Vui lòng chọn ngày hợp lệ.";
+                                isValid = false;
+                            } else {
+                                dateError.innerText = "";
+                            }
+
                             // Kiểm tra địa điểm
                             const locationError = document.getElementById("LocationError");
-                            if (location === "") {
+                            if (!location) {
                                 locationError.innerText = "Địa điểm không được để trống.";
                                 isValid = false;
                             } else {
                                 locationError.innerText = "";
                             }
 
+                            // Kiểm tra thời gian bắt đầu và kết thúc
+                            const timeError = document.getElementById(`timeError_${eventId}`);
+                            if (startTime && endTime && startTime >= endTime) {
+                                timeError.innerText = "Thời gian kết thúc phải lớn hơn thời gian bắt đầu.";
+                                timeError.style.display = "block";
+                                isValid = false;
+                            } else {
+                                timeError.innerText = "";
+                                timeError.style.display = "none";
+                            }
+
                             return isValid;
                         }
                     </script>
+
 
                 </div>
             </div>

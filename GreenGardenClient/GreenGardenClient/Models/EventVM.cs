@@ -28,6 +28,7 @@ namespace GreenGardenClient.Models
         public DateTime? CreatedAt { get; set; }
         public int? CreateBy { get; set; }
         public string CreatedByUserName { get; set; }
+
     }
 
     public class UpdateEvent

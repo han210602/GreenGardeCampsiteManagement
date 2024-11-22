@@ -237,6 +237,10 @@
       "PackagePath": "staticwebassets\\images\\Avatar\\duoi-bo.jpg"
     },
     {
+      "Id": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\Colorful Modern Camping Club Logo.png",
+      "PackagePath": "staticwebassets\\images\\Colorful Modern Camping Club Logo.png"
+    },
+    {
       "Id": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\Combo\\Colorful Modern Camping Club Logo.png",
       "PackagePath": "staticwebassets\\images\\Combo\\Colorful Modern Camping Club Logo.png"
     },
@@ -247,6 +251,10 @@
     {
       "Id": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\Combo\\combo510.jpg",
       "PackagePath": "staticwebassets\\images\\Combo\\combo510.jpg"
+    },
+    {
+      "Id": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\Erik-01.jpg",
+      "PackagePath": "staticwebassets\\images\\Erik-01.jpg"
     },
     {
       "Id": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\Food\\Colorful Modern Camping Club Logo.png",
@@ -427,6 +435,10 @@
     {
       "Id": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\contact.jpg",
       "PackagePath": "staticwebassets\\images\\contact.jpg"
+    },
+    {
+      "Id": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\haduythai.jpg",
+      "PackagePath": "staticwebassets\\images\\haduythai.jpg"
     },
     {
       "Id": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\image_with_updated_borders.png",

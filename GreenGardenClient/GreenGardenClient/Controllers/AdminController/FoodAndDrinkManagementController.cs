@@ -40,7 +40,18 @@ namespace GreenGardenClient.Controllers.AdminController
         public async Task<IActionResult> Index()
         {
             var gear = await GetDataFromApiAsync<List<FoodAndDrinkVMNew>>("https://localhost:7298/api/FoodAndDrink/GetAllFoodAndDrink");
+            var userRole = HttpContext.Session.GetInt32("RoleId");
 
+            int? userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+            {
+                return RedirectToAction("Index", "Error");
+            }
+
+            if (userRole != 1 && userRole != 2)
+            {
+                return RedirectToAction("Index", "Error");
+            }
             ViewBag.FoodAndDrink = gear;
 
 
@@ -49,7 +60,19 @@ namespace GreenGardenClient.Controllers.AdminController
         [HttpGet]
         public async Task<IActionResult> UpdateFoodAndDrink(int itemId)
         {
+            var userRole = HttpContext.Session.GetInt32("RoleId");
 
+            int? userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+            {
+                // Redirect to login page if UserId is not found in session
+                return RedirectToAction("Index", "Error");
+            }
+
+            if (userRole != 1 && userRole != 2)
+            {
+                return RedirectToAction("Index", "Error");
+            }
             var apiUrl = $"https://localhost:7298/api/FoodAndDrink/GetFoodAndDrinkDetail?itemId={itemId}";
 
             try
@@ -194,7 +217,18 @@ namespace GreenGardenClient.Controllers.AdminController
         {
             var categories = await GetDataFromApiAsync<List<CategoryVM>>("https://localhost:7298/api/FoodAndDrink/GetAllFoodAndDrinkCategories");
 
+            var userRole = HttpContext.Session.GetInt32("RoleId");
 
+            int? userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+            {
+                return RedirectToAction("Index", "Error");
+            }
+
+            if (userRole != 1 && userRole != 2)
+            {
+                return RedirectToAction("Index", "Error");
+            }
 
             ViewBag.Categories = categories;
 

@@ -38,7 +38,18 @@ namespace GreenGardenClient.Controllers.AdminController
         public async Task<IActionResult> Index()
         {
             var ticket = await GetDataFromApiAsync<List<TicketVM>>("https://localhost:7298/api/Ticket/GetAllTickets");
+            var userRole = HttpContext.Session.GetInt32("RoleId");
 
+            int? userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+            {
+                return RedirectToAction("Index", "Error");
+            }
+
+            if (userRole != 1 && userRole != 2)
+            {
+                return RedirectToAction("Index", "Error");
+            }
             ViewBag.Ticket = ticket;
 
 
@@ -47,6 +58,19 @@ namespace GreenGardenClient.Controllers.AdminController
         [HttpGet("UpdateTicketDetail")]
         public async Task<IActionResult> UpdateTicketDetail(int ticketId)
         {
+            var userRole = HttpContext.Session.GetInt32("RoleId");
+
+            int? userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+            {
+                // Redirect to login page if UserId is not found in session
+                return RedirectToAction("Index", "Error");
+            }
+
+            if (userRole != 1 && userRole != 2)
+            {
+                return RedirectToAction("Index", "Error");
+            }
             var apiUrl = $"https://localhost:7298/api/Ticket/GetTicketDetail?id={ticketId}";
 
             try
@@ -184,7 +208,19 @@ namespace GreenGardenClient.Controllers.AdminController
         public async Task<IActionResult> CreateTicket()
         {
             var ticketCategories = await GetDataFromApiAsync<List<TicketCategoryVM>>("https://localhost:7298/api/Ticket/GetAllTicketCategories");
+            var userRole = HttpContext.Session.GetInt32("RoleId");
 
+            int? userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+            {
+                // Redirect to login page if UserId is not found in session
+                return RedirectToAction("Index", "Error");
+            }
+
+            if (userRole != 1 && userRole != 2)
+            {
+                return RedirectToAction("Index", "Error");
+            }
             // Gán dữ liệu vào ViewBag để truyền sang View
             ViewBag.TicketCategories = ticketCategories;
 

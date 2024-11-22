@@ -30,6 +30,19 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 return StatusCode(500, $"Lỗi server: {ex.Message}");
             }
         }
+        [HttpGet("GetTop3NewestEvents")]
+        public IActionResult GetTop3NewestEvents()
+        {
+            try
+            {
+                var events = _repo.GetTop3NewestEvents();
+                return Ok(events);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi server: {ex.Message}");
+            }
+        }
         [HttpGet("GetEventByCreatedBy")]
         public IActionResult GetEventByCreatedBy(int eventId)
         {

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "g5dIUbMqjS2m6NarJIjGLRHnToitSnP2ER2D6ry/JSA=",
+  "Hash": "aNmVYtnxM7yF+CbMGVLkeS38KDhFl2LL+ZKH6Dya1ig=",
   "Source": "GreenGardenClient",
   "BasePath": "_content/GreenGardenClient",
   "Mode": "Default",
@@ -1088,6 +1088,23 @@
       "OriginalItemSpec": "wwwroot\\images\\canh-ga-nuong - Copy.jpg"
     },
     {
+      "Identity": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\Colorful Modern Camping Club Logo.png",
+      "SourceId": "GreenGardenClient",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\",
+      "BasePath": "_content/GreenGardenClient",
+      "RelativePath": "images/Colorful Modern Camping Club Logo.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\Colorful Modern Camping Club Logo.png"
+    },
+    {
       "Identity": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\Combo\\Colorful Modern Camping Club Logo.png",
       "SourceId": "GreenGardenClient",
       "SourceType": "Discovered",
@@ -1171,6 +1188,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\đậu tẩm hành - Copy (2).jpg"
+    },
+    {
+      "Identity": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\Erik-01.jpg",
+      "SourceId": "GreenGardenClient",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\",
+      "BasePath": "_content/GreenGardenClient",
+      "RelativePath": "images/Erik-01.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\Erik-01.jpg"
     },
     {
       "Identity": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\Food\\ca_tram_den_nuong - Copy - Copy.jpg",
@@ -1630,6 +1664,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\Gear\\Screenshot 2024-11-21 174715.png"
+    },
+    {
+      "Identity": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\haduythai.jpg",
+      "SourceId": "GreenGardenClient",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\",
+      "BasePath": "_content/GreenGardenClient",
+      "RelativePath": "images/haduythai.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\haduythai.jpg"
     },
     {
       "Identity": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\wwwroot\\images\\image_with_updated_borders.png",

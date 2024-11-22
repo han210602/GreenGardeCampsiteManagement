@@ -164,6 +164,18 @@ namespace DataAccess.DAO
             {
                 using (var context = new GreenGardenContext())
                 {
+                    // Kiểm tra nếu thời gian bắt đầu lớn hơn thời gian kết thúc
+                    if (TimeSpan.Parse(eventDTO.StartTime) >= TimeSpan.Parse(eventDTO.EndTime))
+                    {
+                        return false; // Thời gian bắt đầu phải nhỏ hơn thời gian kết thúc
+                    }
+
+                    // Kiểm tra nếu ngày diễn ra bé hơn ngày hiện tại hoặc null
+                    if (eventDTO.EventDate == null || eventDTO.EventDate.Date < DateTime.Now.Date)
+                    {
+                        return false; // Ngày diễn ra phải lớn hơn hoặc bằng ngày hiện tại
+                    }
+
                     // Thêm sự kiện vào cơ sở dữ liệu
                     var newEvent = new Event
                     {
@@ -203,6 +215,7 @@ namespace DataAccess.DAO
                 throw new Exception("Error adding event and sending emails: " + ex.Message);
             }
         }
+
 
         public static bool UpdateEvent(UpdateEventDTO eventDTO)
         {
@@ -256,6 +269,35 @@ namespace DataAccess.DAO
             catch (Exception ex)
             {
                 throw new Exception("Error deleting event: " + ex.Message);
+            }
+        }
+        public static List<EventDTO> GetTop3NewestEvents()
+        {
+            try
+            {
+                var events = context.Events.Include(user => user.CreateByNavigation)
+                    .OrderByDescending(eventEntity => eventEntity.EventDate) // Sắp xếp theo ngày diễn ra
+                    .Take(3) // Lấy 3 sự kiện đầu tiên
+                    .Select(eventEntity => new EventDTO
+                    {
+                        EventId = eventEntity.EventId,
+                        EventName = eventEntity.EventName,
+                        Description = eventEntity.Description,
+                        EventDate = eventEntity.EventDate,
+                        StartTime = eventEntity.StartTime,
+                        EndTime = eventEntity.EndTime,
+                        Location = eventEntity.Location,
+                        PictureUrl = eventEntity.PictureUrl,
+                        IsActive = eventEntity.IsActive,
+                        CreatedAt = eventEntity.CreatedAt,
+                        CreatedByUserName = eventEntity.CreateByNavigation.FirstName + " " + eventEntity.CreateByNavigation.LastName
+                    }).ToList();
+
+                return events;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error retrieving events: " + ex.Message);
             }
         }
 

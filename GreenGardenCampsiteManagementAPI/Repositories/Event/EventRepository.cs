@@ -10,6 +10,10 @@ namespace Repositories.Event
         {
             return EventDAO.GetAllEvents();
         }
+        public List<EventDTO> GetTop3NewestEvents()
+        {
+            return EventDAO.GetTop3NewestEvents();
+        }
         public List<EventDTO> GetEventByCreatedBy(int id)
         {
             return EventDAO.GetEventByCreatedBy(id);

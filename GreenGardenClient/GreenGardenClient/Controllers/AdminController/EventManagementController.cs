@@ -20,10 +20,22 @@ namespace GreenGardenClient.Controllers.AdminController
         public IActionResult Index()
         {
             var events = GetDataFromApi<List<EventVM>>("https://localhost:7298/api/Event/GetAllEvents");
+            var userRole = HttpContext.Session.GetInt32("RoleId");
 
+            int? userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+            {
+                // Redirect to login page if UserId is not found in session
+                return RedirectToAction("Index", "Error");
+            }
+
+            if (userRole != 1 && userRole != 2)
+            {
+                return RedirectToAction("Index", "Error");
+            }
             if (events == null)
             {
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Index", "Error");
             }
 
 
@@ -72,13 +84,36 @@ namespace GreenGardenClient.Controllers.AdminController
         public IActionResult CreateEvent()
         {
 
+            var userRole = HttpContext.Session.GetInt32("RoleId");
 
+            int? userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+            {
+                // Redirect to login page if UserId is not found in session
+                return RedirectToAction("Index", "Error");
+            }
+
+            if (userRole != 1 && userRole != 2)
+            {
+                return RedirectToAction("Index", "Error");
+            }
             return View( new EventVM()); // Otherwise, return the view with userdata
 
         }
         [HttpPost]
         public async Task<IActionResult> CreateEvent(EventVM model)
         {
+           
+           
+
+            int? userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+            {
+                // Redirect to login page if UserId is not found in session
+                return RedirectToAction("Index", "Error");
+            }
+
+       
             if (PictureUrl != null && PictureUrl.Length > 0)
             {
                 MultipartFormDataContent formData = new MultipartFormDataContent();
@@ -107,12 +142,7 @@ namespace GreenGardenClient.Controllers.AdminController
 
 
                     // Get UserId from Session
-                    int? userId = HttpContext.Session.GetInt32("UserId");
-                    if (userId == null)
-                    {
-                        // Redirect to login page if UserId is not found in session
-                        return RedirectToAction("Index");
-                    }
+                    
 
                     var requestData = new
                     {
@@ -138,11 +168,7 @@ namespace GreenGardenClient.Controllers.AdminController
                     }
                     else
                     {
-                        // Log the API error response and redirect to error page
-                        var responseContent = await response.Content.ReadAsStringAsync();
-                        Console.WriteLine($"API Error Response: {response.StatusCode} - {responseContent}");
-
-                        // Redirect to error page
+                        TempData["NotificationError"] = "Sự kiện đã thêm thất bại.";
                         return View(model);
                     }
                 }
@@ -162,11 +188,22 @@ namespace GreenGardenClient.Controllers.AdminController
         {
             // Fetch event data from the API asynchronously
             var eventItem = GetDataFromApi<UpdateEvent>($"https://localhost:7298/api/Event/GetEventById?eventId={id}");
+            var userRole = HttpContext.Session.GetInt32("RoleId");
 
+            int? userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+            {
+                return RedirectToAction("Index", "Error");
+            }
+
+            if (userRole != 1 && userRole != 2)
+            {
+                return RedirectToAction("Index", "Error");
+            }
             // Check if event data is null and redirect to an error page if not found
             if (eventItem == null)
             {
-                return RedirectToAction("Error", "Home"); // Redirect if the event is not found
+                return RedirectToAction("Index", "Error"); // Redirect if the event is not found
             }
 
             var eventList = new List<UpdateEvent> { eventItem };

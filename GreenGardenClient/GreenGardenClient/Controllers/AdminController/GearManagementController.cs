@@ -38,7 +38,18 @@ namespace GreenGardenClient.Controllers.AdminController
         public async Task<IActionResult> Index()
         {
             var gear = await GetDataFromApiAsync<List<GearVM>>("https://localhost:7298/api/CampingGear/GetAllCampingGears");
+            var userRole = HttpContext.Session.GetInt32("RoleId");
 
+            int? userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+            {
+                return RedirectToAction("Index", "Error");
+            }
+
+            if (userRole != 1 && userRole != 2)
+            {
+                return RedirectToAction("Index", "Error");
+            }
             ViewBag.CampingGear = gear;
 
 
@@ -47,6 +58,19 @@ namespace GreenGardenClient.Controllers.AdminController
         [HttpGet("GearDetail")]
         public async Task<IActionResult> GearDetail(int gearId)
         {
+            var userRole = HttpContext.Session.GetInt32("RoleId");
+
+            int? userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+            {
+                // Redirect to login page if UserId is not found in session
+                return RedirectToAction("Index", "Error");
+            }
+
+            if (userRole != 1 && userRole != 2)
+            {
+                return RedirectToAction("Index", "Error");
+            }
             var apiUrl = $"https://localhost:7298/api/CampingGear/GetCampingGearDetail?id={gearId}";
 
             try
@@ -185,7 +209,18 @@ namespace GreenGardenClient.Controllers.AdminController
         public async Task<IActionResult> CreateGear()
         {
             var campingCategories = await GetDataFromApiAsync<List<GearCategoryVM>>("https://localhost:7298/api/CampingGear/GetAllCampingGearCategories");
+            var userRole = HttpContext.Session.GetInt32("RoleId");
 
+            int? userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+            {
+                return RedirectToAction("Index", "Error");
+            }
+
+            if (userRole != 1 && userRole != 2)
+            {
+                return RedirectToAction("Index", "Error");
+            }
             // Gán lại danh sách danh mục cho ViewBag
             ViewBag.CampingCategories = campingCategories;
 

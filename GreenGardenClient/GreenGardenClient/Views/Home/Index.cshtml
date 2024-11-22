@@ -394,48 +394,37 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="post-entry-1 h-100">
-                                <a href="single.html">
-                                    <img src="images/picture10.jpg" alt="Image"
-                                         class="img-fluid">
-                                </a>
-                                <div class="post-entry-1-contents">
-
-                                    <h2><a href="single.html">Làm Việc nhóm</a></h2>
-                                    <span class="meta d-inline-block mb-3">13/10/2024 <span class="mx-2">by</span> <a href="#">Nhân viên</a></span>
-                                    <p>Nơi giúp trẻ em tìm được niềm vui mới sau những tuần học căng thẳng</p>
+                        @if (ViewBag.Event != null && ViewBag.Event.Count > 0)
+                        {
+                            foreach (var eventItem in ViewBag.Event)
+                            {
+                                <div class="col-lg-4 col-md-6 mb-4">
+                                    <div class="post-entry-1 h-100">
+                                        <a href="single.html">
+                                            <img src="~/images/@eventItem.PictureUrl" alt="@eventItem.EventName" class="img-fluid"
+                                                 style="width: 350px; height: 263px; object-fit: cover;">
+                                        </a>
+                                        <div class="post-entry-1-contents">
+                                            <h2><a href="@Url.Action("EventDetail", "Common", new { eventId = eventItem.EventId })">@eventItem.EventName</a></h2>
+                                            <span class="meta d-inline-block mb-3">
+                                                @eventItem.EventDate.ToString("dd/MM/yyyy")
+                                                <span class="mx-2">by</span>
+                                                <a href="#">@eventItem.CreatedByUserName</a>
+                                            </span>
+                                            <p>@eventItem.Description</p>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="post-entry-1 h-100">
-                                <a href="single.html">
-                                    <img src="images/picture13.jpg" alt="Image"
-                                         class="img-fluid">
-                                </a>
-                                <div class="post-entry-1-contents">
-
-                                    <h2><a href="single.html">Họp lớp</a></h2>
-                                    <span class="meta d-inline-block mb-3">13/10/2024<span class="mx-2">by</span> <a href="#">Admin</a></span>
-                                    <p>Đây là dịp để mọi người gặp nhau sau bao lâu xa cách</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="post-entry-1 h-100">
-                                <a href="single.html">
-                                    <img src="images/picture11.jpg" alt="Image"
-                                         class="img-fluid">
-                                </a>
-                                <div class="post-entry-1-contents">
-
-                                    <h2><a href="single.html">Hội thảo mới nhất</a></h2>
-                                    <span class="meta d-inline-block mb-3">13/10/2024 <span class="mx-2">by</span> <a href="#">Admin</a></span>
-                                    <p>Nơi chia sẻ những kinh nghiệm bài học về du lịch nông nghiệp.</p>
-                                </div>
-                            </div>
+                            }
+                        }
+                        else
+                        {
+                            <p class="text-danger">Không có sự kiện nào để hiển thị.</p>
+                        }
+                    </div>
+                    <div class="row">
+                        <div class="col-12 text-end mt-4">
+                            <a href="~/Common/Event" class="btn btn-link text-decoration-none">Xem thêm</a>
                         </div>
                     </div>
                 </div>
