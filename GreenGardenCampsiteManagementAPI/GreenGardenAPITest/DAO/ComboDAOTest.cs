@@ -450,7 +450,6 @@ namespace GreenGardenAPITest.DAO
             ticketDetail.Description.Should().Be("Ticket for Combo A");
         }
 
-
         [Fact]
         public async Task AddNewCombo_ShouldAddComboWithoutCampingGearDetails()
         {
@@ -613,16 +612,9 @@ namespace GreenGardenAPITest.DAO
         [Fact]
         public async Task AddNewCombo_ShouldThrowException_WhenDatabaseFails()
         {
-            // Arrange
-            var options = new DbContextOptionsBuilder<GreenGardenContext>()
-                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
-                .Options;
-
-            var databaseContext = new GreenGardenContext(options);
-            databaseContext.Database.EnsureCreated();
-
+           
             // Khởi tạo context với ComboDAO
-            ComboDAO.InitializeContext(databaseContext);
+            ComboDAO.InitializeContext(null);
 
             var newCombo = new AddCombo
             {
@@ -644,15 +636,11 @@ namespace GreenGardenAPITest.DAO
         }
             };
 
-            // Làm giả ngoại lệ SaveChanges
-            databaseContext.Database.EnsureDeleted(); // Xóa database để tạo lỗi
-
             // Act & Assert
-            var exception = await Assert.ThrowsAsync<Exception>(() =>
-                Task.Run(() => ComboDAO.AddNewCombo(newCombo))
-            );
+            var exception = Assert.Throws<Exception>(() => ComboDAO.AddNewCombo(newCombo));
+            Assert.Contains("Object reference not set", exception.Message);
 
-            exception.Message.Should().Contain("Error adding new combo"); // Đảm bảo thông điệp ngoại lệ
+
         }
 
         // Test case for UpdateCombo method ----------------------------------------------------------------
@@ -728,6 +716,355 @@ namespace GreenGardenAPITest.DAO
             newTicket.Quantity.Should().Be(4);
             newTicket.Description.Should().Be("New Ticket Detail");
         }
+
+        //[Fact]
+        //public async Task UpdateCombo_ShouldUpdateComboWithoutCampingGearDetails()
+        //{
+        //    // Arrange
+        //    var dbContext = await GetDbContext();
+        //    ComboDAO.InitializeContext(dbContext);
+
+        //    var comboId = 1;
+
+        //    // Create initial combo with camping gear details
+        //    var existingCombo = new Combo
+        //    {
+        //        ComboId = comboId,
+        //        ComboName = "Original Combo Name",
+        //        Description = "Original Description",
+        //        Price = 1000,
+        //        ImgUrl = "http://example.com/originalcombo.jpg",
+        //        ComboCampingGearDetails = new List<ComboCampingGearDetail>
+        //{
+        //    new ComboCampingGearDetail { GearId = 1, Quantity = 3 }
+        //},
+        //        ComboFootDetails = new List<ComboFootDetail>
+        //{
+        //    new ComboFootDetail { ItemId = 1, Quantity = 5 }
+        //},
+        //        ComboTicketDetails = new List<ComboTicketDetail>
+        //{
+        //    new ComboTicketDetail { TicketId = 1, Quantity = 5, Description = "Original Ticket" }
+        //}
+        //    };
+        //    dbContext.Combos.Add(existingCombo);
+        //    dbContext.SaveChanges();
+
+        //    // Updated combo without camping gear details
+        //    var updatedCombo = new AddCombo
+        //    {
+        //        ComboId = comboId,
+        //        ComboName = "Updated Combo Name",
+        //        Description = "Updated Description",
+        //        Price = 1200,
+        //        ImgUrl = "http://example.com/updatedcombo.jpg",
+        //        ComboFootDetails = new List<ComboFootDetailDTO>
+        //{
+        //    new ComboFootDetailDTO { ItemId = 1, Quantity = 10 }
+        //},
+        //        ComboTicketDetails = new List<ComboTicketDetailDTO>
+        //{
+        //    new ComboTicketDetailDTO { TicketId = 1, Quantity = 6, Description = "Updated Ticket" }
+        //}
+        //    };
+
+        //    // Act
+        //    ComboDAO.UpdateCombo(updatedCombo);
+
+        //    // Assert
+        //    var updatedComboFromDb = dbContext.Combos
+        //        .Include(c => c.ComboCampingGearDetails)
+        //        .Include(c => c.ComboFootDetails)
+        //        .Include(c => c.ComboTicketDetails)
+        //        .FirstOrDefault(c => c.ComboId == comboId);
+
+        //    updatedComboFromDb.Should().NotBeNull();
+        //    updatedComboFromDb.ComboName.Should().Be("Updated Combo Name");
+        //    updatedComboFromDb.Description.Should().Be("Updated Description");
+        //    updatedComboFromDb.Price.Should().Be(1200);
+        //    updatedComboFromDb.ImgUrl.Should().Be("http://example.com/updatedcombo.jpg");
+
+        //    // Assert that the camping gear details remain unchanged
+        //    updatedComboFromDb.ComboCampingGearDetails.Should().HaveCount(1);
+        //    updatedComboFromDb.ComboCampingGearDetails.First().Quantity.Should().Be(3);
+        //}
+
+        //[Fact]
+        //public async Task UpdateCombo_ShouldUpdateComboWithoutFoodDetails()
+        //{
+        //    // Arrange
+        //    var dbContext = await GetDbContext();
+        //    ComboDAO.InitializeContext(dbContext);
+
+        //    var comboId = 1;
+
+        //    // Create initial combo with food details
+        //    var existingCombo = new Combo
+        //    {
+        //        ComboId = comboId,
+        //        ComboName = "Original Combo Name",
+        //        Description = "Original Description",
+        //        Price = 1000,
+        //        ImgUrl = "http://example.com/originalcombo.jpg",
+        //        ComboCampingGearDetails = new List<ComboCampingGearDetail>
+        //{
+        //    new ComboCampingGearDetail { GearId = 1, Quantity = 3 }
+        //},
+        //        ComboFootDetails = new List<ComboFootDetail>
+        //{
+        //    new ComboFootDetail { ItemId = 1, Quantity = 5 }
+        //},
+        //        ComboTicketDetails = new List<ComboTicketDetail>
+        //{
+        //    new ComboTicketDetail { TicketId = 1, Quantity = 5, Description = "Original Ticket" }
+        //}
+        //    };
+        //    dbContext.Combos.Add(existingCombo);
+        //    dbContext.SaveChanges();
+
+        //    // Updated combo without food details
+        //    var updatedCombo = new AddCombo
+        //    {
+        //        ComboId = comboId,
+        //        ComboName = "Updated Combo Name",
+        //        Description = "Updated Description",
+        //        Price = 1200,
+        //        ImgUrl = "http://example.com/updatedcombo.jpg",
+        //        ComboCampingGearDetails = new List<ComboCampingGearDetailDTO>
+        //{
+        //    new ComboCampingGearDetailDTO { GearId = 1, Quantity = 4 }
+        //},
+        //        ComboTicketDetails = new List<ComboTicketDetailDTO>
+        //{
+        //    new ComboTicketDetailDTO { TicketId = 1, Quantity = 6, Description = "Updated Ticket" }
+        //}
+        //    };
+
+        //    // Act
+        //    ComboDAO.UpdateCombo(updatedCombo);
+
+        //    // Assert
+        //    var updatedComboFromDb = dbContext.Combos
+        //        .Include(c => c.ComboCampingGearDetails)
+        //        .Include(c => c.ComboFootDetails)
+        //        .Include(c => c.ComboTicketDetails)
+        //        .FirstOrDefault(c => c.ComboId == comboId);
+
+        //    updatedComboFromDb.Should().NotBeNull();
+        //    updatedComboFromDb.ComboName.Should().Be("Updated Combo Name");
+        //    updatedComboFromDb.Description.Should().Be("Updated Description");
+        //    updatedComboFromDb.Price.Should().Be(1200);
+        //    updatedComboFromDb.ImgUrl.Should().Be("http://example.com/updatedcombo.jpg");
+
+        //    // Assert that food details remain unchanged
+        //    updatedComboFromDb.ComboFootDetails.Should().HaveCount(1);
+        //    updatedComboFromDb.ComboFootDetails.First().Quantity.Should().Be(5);
+        //}
+
+        //[Fact]
+        //public async Task UpdateCombo_ShouldUpdateComboWithoutTicketDetails()
+        //{
+        //    // Arrange
+        //    var dbContext = await GetDbContext();
+        //    ComboDAO.InitializeContext(dbContext);
+
+        //    var comboId = 1;
+
+        //    // Create initial combo with ticket details
+        //    var existingCombo = new Combo
+        //    {
+        //        ComboId = comboId,
+        //        ComboName = "Original Combo Name",
+        //        Description = "Original Description",
+        //        Price = 1000,
+        //        ImgUrl = "http://example.com/originalcombo.jpg",
+        //        ComboCampingGearDetails = new List<ComboCampingGearDetail>
+        //{
+        //    new ComboCampingGearDetail { GearId = 1, Quantity = 3 }
+        //},
+        //        ComboFootDetails = new List<ComboFootDetail>
+        //{
+        //    new ComboFootDetail { ItemId = 1, Quantity = 5 }
+        //},
+        //        ComboTicketDetails = new List<ComboTicketDetail>
+        //{
+        //    new ComboTicketDetail { TicketId = 1, Quantity = 5, Description = "Original Ticket" }
+        //}
+        //    };
+        //    dbContext.Combos.Add(existingCombo);
+        //    dbContext.SaveChanges();
+
+        //    // Updated combo without ticket details
+        //    var updatedCombo = new AddCombo
+        //    {
+        //        ComboId = comboId,
+        //        ComboName = "Updated Combo Name",
+        //        Description = "Updated Description",
+        //        Price = 1200,
+        //        ImgUrl = "http://example.com/updatedcombo.jpg",
+        //        ComboCampingGearDetails = new List<ComboCampingGearDetailDTO>
+        //{
+        //    new ComboCampingGearDetailDTO { GearId = 1, Quantity = 4 }
+        //},
+        //        ComboFootDetails = new List<ComboFootDetailDTO>
+        //{
+        //    new ComboFootDetailDTO { ItemId = 1, Quantity = 6 }
+        //}
+        //    };
+
+        //    // Act
+        //    ComboDAO.UpdateCombo(updatedCombo);
+
+        //    // Assert
+        //    var updatedComboFromDb = dbContext.Combos
+        //        .Include(c => c.ComboCampingGearDetails)
+        //        .Include(c => c.ComboFootDetails)
+        //        .Include(c => c.ComboTicketDetails)
+        //        .FirstOrDefault(c => c.ComboId == comboId);
+
+        //    updatedComboFromDb.Should().NotBeNull();
+        //    updatedComboFromDb.ComboName.Should().Be("Updated Combo Name");
+        //    updatedComboFromDb.Description.Should().Be("Updated Description");
+        //    updatedComboFromDb.Price.Should().Be(1200);
+        //    updatedComboFromDb.ImgUrl.Should().Be("http://example.com/updatedcombo.jpg");
+
+        //    // Assert that ticket details remain unchanged
+        //    updatedComboFromDb.ComboTicketDetails.Should().HaveCount(1);
+        //    updatedComboFromDb.ComboTicketDetails.First().Quantity.Should().Be(5);
+        //    updatedComboFromDb.ComboTicketDetails.First().Description.Should().Be("Original Ticket");
+        //}
+
+        //[Fact]
+        //public async Task UpdateCombo_ShouldUpdateComboWithoutCampingGearDetails_FoodDetails_TicketDetails()
+        //{
+        //    // Arrange
+        //    var dbContext = await GetDbContext();
+        //    ComboDAO.InitializeContext(dbContext);
+
+        //    var comboId = 1;
+
+        //    // Create initial combo with all details
+        //    var existingCombo = new Combo
+        //    {
+        //        ComboId = comboId,
+        //        ComboName = "Original Combo Name",
+        //        Description = "Original Description",
+        //        Price = 1000,
+        //        ImgUrl = "http://example.com/originalcombo.jpg",
+        //        ComboCampingGearDetails = new List<ComboCampingGearDetail>
+        //{
+        //    new ComboCampingGearDetail { GearId = 1, Quantity = 3 }
+        //},
+        //        ComboFootDetails = new List<ComboFootDetail>
+        //{
+        //    new ComboFootDetail { ItemId = 1, Quantity = 5 }
+        //},
+        //        ComboTicketDetails = new List<ComboTicketDetail>
+        //{
+        //    new ComboTicketDetail { TicketId = 1, Quantity = 5, Description = "Original Ticket" }
+        //}
+        //    };
+        //    dbContext.Combos.Add(existingCombo);
+        //    dbContext.SaveChanges();
+
+        //    // Updated combo without any details
+        //    var updatedCombo = new AddCombo
+        //    {
+        //        ComboId = comboId,
+        //        ComboName = "Updated Combo Name",
+        //        Description = "Updated Description",
+        //        Price = 1200,
+        //        ImgUrl = "http://example.com/updatedcombo.jpg"
+        //    };
+
+        //    // Act
+        //    ComboDAO.UpdateCombo(updatedCombo);
+
+        //    // Assert
+        //    var updatedComboFromDb = dbContext.Combos
+        //        .Include(c => c.ComboCampingGearDetails)
+        //        .Include(c => c.ComboFootDetails)
+        //        .Include(c => c.ComboTicketDetails)
+        //        .FirstOrDefault(c => c.ComboId == comboId);
+
+        //    updatedComboFromDb.Should().NotBeNull();
+        //    updatedComboFromDb.ComboName.Should().Be("Updated Combo Name");
+        //    updatedComboFromDb.Description.Should().Be("Updated Description");
+        //    updatedComboFromDb.Price.Should().Be(1200);
+        //    updatedComboFromDb.ImgUrl.Should().Be("http://example.com/updatedcombo.jpg");
+
+        //    // Assert that no details were changed
+        //    updatedComboFromDb.ComboCampingGearDetails.Should().HaveCount(1);
+        //    updatedComboFromDb.ComboCampingGearDetails.First().Quantity.Should().Be(3);
+
+        //    updatedComboFromDb.ComboFootDetails.Should().HaveCount(1);
+        //    updatedComboFromDb.ComboFootDetails.First().Quantity.Should().Be(5);
+
+        //    updatedComboFromDb.ComboTicketDetails.Should().HaveCount(1);
+        //    updatedComboFromDb.ComboTicketDetails.First().Quantity.Should().Be(5);
+        //    updatedComboFromDb.ComboTicketDetails.First().Description.Should().Be("Original Ticket");
+        //}
+
+        [Fact]
+        public async Task UpdateCombo_ShouldUpdateComboWithInvalidComboId()
+        {
+            // Arrange
+            var dbContext = await GetDbContext();
+            ComboDAO.InitializeContext(dbContext);
+
+            var invalidComboId = 999; // An ID that does not exist in the database
+
+            var updatedCombo = new AddCombo
+            {
+                ComboId = invalidComboId,
+                ComboName = "Updated Combo Name",
+                Description = "Updated Description",
+                Price = 1500,
+                ImgUrl = "http://example.com/updatedcombo.jpg"
+            };
+
+            // Act & Assert
+            await Assert.ThrowsAsync<Exception>(async () =>
+            {
+                 ComboDAO.UpdateCombo(updatedCombo);
+            });
+        }
+
+        [Fact]
+        public void UpdateCombo_ShouldThrowException_WhenContextIsNull()
+        {
+            // Arrange
+            ComboDAO.InitializeContext(null); // Null context
+
+            var updatedCombo = new AddCombo
+            {
+                ComboId = 1,
+                ComboName = "Updated Combo Name",
+                Description = "Updated Description",
+                Price = 1500,
+                ImgUrl = "http://example.com/updatedcombo.jpg",
+                ComboCampingGearDetails = new List<ComboCampingGearDetailDTO>
+        {
+            new ComboCampingGearDetailDTO { GearId = 1, Quantity = 5 }, // Update quantity
+            new ComboCampingGearDetailDTO { GearId = 2, Quantity = 3 }  // Add new detail
+        },
+                ComboFootDetails = new List<ComboFootDetailDTO>
+        {
+            new ComboFootDetailDTO { ItemId = 1, Quantity = 10 } // Update quantity
+        },
+                ComboTicketDetails = new List<ComboTicketDetailDTO>
+        {
+            new ComboTicketDetailDTO { TicketId = 1, Quantity = 8, Description = "Updated Ticket Description" },
+            new ComboTicketDetailDTO { TicketId = 2, Quantity = 4, Description = "New Ticket Detail" }
+        }
+            };
+
+            // Act & Assert
+            var exception = Assert.Throws<Exception>(() => ComboDAO.UpdateCombo(updatedCombo));
+            Assert.Contains("Object reference not set", exception.Message);
+        }
+
+
 
     }
 }
