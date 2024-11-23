@@ -659,7 +659,6 @@ namespace GreenGardenAPITest.DAO
             exception.Message.Should().Be("Object reference not set to an instance of an object.");
         }
 
-
         [Fact]
         public async Task GetFoodAndDrinks_ShouldReturnEmpty_WhenCategoryHasNoItems()
         {
@@ -674,6 +673,352 @@ namespace GreenGardenAPITest.DAO
             Assert.Empty(result);  // No items for non-existent category
         }
 
+        // Test for method AddFoodAndDrink
+        [Fact]
+        public async Task AddFoodAndDrink_ShouldAddItem_WhenInputIsValid()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using var dbContext = new GreenGardenContext(options);
+            FoodAndDrinkDAO.InitializeContext(dbContext);
+
+            var itemDto = new AddFoodOrDrinkDTO
+            {
+                ItemId = 1,
+                ItemName = "Pizza",
+                Price = 12.50m,
+                Description = "Delicious cheesy pizza",
+                ImgUrl = "http://example.com/pizza.jpg",
+                CategoryId = 2
+            };
+
+            // Act
+            FoodAndDrinkDAO.AddFoodAndDrink(itemDto);
+
+            // Assert
+            var addedItem = dbContext.FoodAndDrinks.FirstOrDefault(f => f.ItemId == itemDto.ItemId);
+            Assert.NotNull(addedItem);
+            Assert.Equal(itemDto.ItemName, addedItem.ItemName);
+            Assert.Equal(itemDto.Price, addedItem.Price);
+            Assert.Equal(itemDto.Description, addedItem.Description);
+            Assert.Equal(itemDto.ImgUrl, addedItem.ImgUrl);
+            Assert.Equal(itemDto.CategoryId, addedItem.CategoryId);
+            Assert.True(addedItem.Status);
+        }
+
+        [Fact]
+        public async Task AddFoodAndDrink_ShouldThrowException_WhenItemNameIsNull()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using var dbContext = new GreenGardenContext(options);
+            FoodAndDrinkDAO.InitializeContext(dbContext);
+
+            var itemDto = new AddFoodOrDrinkDTO
+            {
+                ItemId = 1,
+                ItemName = null!, // Invalid input
+                Price = 10.00m,
+                Description = "Tasty burger",
+                ImgUrl = "http://example.com/burger.jpg",
+                CategoryId = 3
+            };
+
+            // Act & Assert
+            var exception = Assert.Throws<Exception>(() => FoodAndDrinkDAO.AddFoodAndDrink(itemDto));
+            Assert.Contains("Object reference not set", exception.Message);
+        }
+
+        [Fact]
+        public async Task AddFoodAndDrink_ShouldThrowException_WhenContextIsNull()
+        {
+            // Arrange
+            FoodAndDrinkDAO.InitializeContext(null); // Null context
+
+            var itemDto = new AddFoodOrDrinkDTO
+            {
+                ItemId = 1,
+                ItemName = "Burger",
+                Price = 8.99m,
+                Description = "Juicy burger",
+                ImgUrl = "http://example.com/burger.jpg",
+                CategoryId = 1
+            };
+
+            // Act & Assert
+            var exception = Assert.Throws<Exception>(() => FoodAndDrinkDAO.AddFoodAndDrink(itemDto));
+            Assert.Contains("Object reference not set", exception.Message);
+        }
+
+        [Fact]
+        public async Task AddFoodAndDrink_ShouldAddItemWithNullOptionalFields()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using var dbContext = new GreenGardenContext(options);
+            FoodAndDrinkDAO.InitializeContext(dbContext);
+
+            var itemDto = new AddFoodOrDrinkDTO
+            {
+                ItemId = 2,
+                ItemName = "Sandwich",
+                Price = 5.00m,
+                Description = null, // Optional field
+                ImgUrl = null, // Optional field
+                CategoryId = null // Optional field
+            };
+
+            // Act
+            FoodAndDrinkDAO.AddFoodAndDrink(itemDto);
+
+            // Assert
+            var addedItem = dbContext.FoodAndDrinks.FirstOrDefault(f => f.ItemId == itemDto.ItemId);
+            Assert.NotNull(addedItem);
+            Assert.Equal(itemDto.ItemName, addedItem.ItemName);
+            Assert.Equal(itemDto.Price, addedItem.Price);
+            Assert.Null(addedItem.Description); // Ensure optional field is null
+            Assert.Null(addedItem.ImgUrl); // Ensure optional field is null
+            Assert.Null(addedItem.CategoryId); // Ensure optional field is null
+            Assert.True(addedItem.Status);
+        }
+
+        [Fact]
+        public async Task AddFoodAndDrink_ShouldThrowException_WhenPriceIsNull()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using var dbContext = new GreenGardenContext(options);
+            FoodAndDrinkDAO.InitializeContext(dbContext);
+
+            var itemDto = new AddFoodOrDrinkDTO
+            {
+                ItemId = 1,
+                ItemName = "Juice",
+                Price = 0, // Invalid price
+                Description = "Fresh orange juice",
+                ImgUrl = "http://example.com/juice.jpg",
+                CategoryId = 2
+            };
+
+            // Act & Assert
+            var exception = Assert.Throws<Exception>(() => FoodAndDrinkDAO.AddFoodAndDrink(itemDto));
+            Assert.Contains("The field Price must be a positive value", exception.Message);
+        }
+
+        // Test for method UpdateFoodOrDrink
+        [Fact]
+        public async Task UpdateFoodOrDrink_ShouldUpdateSuccessfully_WhenItemExists()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using var dbContext = new GreenGardenContext(options);
+            FoodAndDrinkDAO.InitializeContext(dbContext);
+
+            var existingItem = new FoodAndDrink
+            {
+                ItemId = 1,
+                ItemName = "Original Burger",
+                Price = 5.99m,
+                Description = "Classic beef burger",
+                CategoryId = 1,
+                ImgUrl = "http://example.com/original.jpg"
+            };
+            dbContext.FoodAndDrinks.Add(existingItem);
+            await dbContext.SaveChangesAsync();
+
+            var updateDto = new UpdateFoodOrDrinkDTO
+            {
+                ItemId = 1,
+                ItemName = "Updated Burger",
+                Price = 6.99m,
+                Description = "Updated description",
+                CategoryId = 2,
+                ImgUrl = "http://example.com/updated.jpg"
+            };
+
+            // Act
+            FoodAndDrinkDAO.UpdateFoodOrDrink(updateDto);
+
+            // Assert
+            var updatedItem = dbContext.FoodAndDrinks.FirstOrDefault(f => f.ItemId == 1);
+            Assert.NotNull(updatedItem);
+            Assert.Equal("Updated Burger", updatedItem.ItemName);
+            Assert.Equal(6.99m, updatedItem.Price);
+            Assert.Equal("Updated description", updatedItem.Description);
+            Assert.Equal(2, updatedItem.CategoryId);
+            Assert.Equal("http://example.com/updated.jpg", updatedItem.ImgUrl);
+        }
+
+        [Fact]
+        public async Task UpdateFoodOrDrink_ShouldThrowException_WhenContextIsNull()
+        {
+            // Arrange
+            FoodAndDrinkDAO.InitializeContext(null); // Null context
+
+            var updateDto = new UpdateFoodOrDrinkDTO
+            {
+                ItemId = 1,
+                ItemName = "Updated Burger",
+                Price = 6.99m,
+                Description = "Updated description",
+                CategoryId = 2,
+                ImgUrl = "http://example.com/updated.jpg"
+            };
+
+
+            // Act & Assert
+            var exception = Assert.Throws<Exception>(() => FoodAndDrinkDAO.UpdateFoodOrDrink(updateDto));
+            Assert.Contains("Object reference not set", exception.Message);
+        }
+
+        [Fact]
+        public void UpdateFoodOrDrink_ShouldThrowException_WhenItemDoesNotExist()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using var dbContext = new GreenGardenContext(options);
+            FoodAndDrinkDAO.InitializeContext(dbContext);
+
+            var updateDto = new UpdateFoodOrDrinkDTO
+            {
+                ItemId = 999, // Non-existing item ID
+                ItemName = "Non-Existent Item",
+                Price = 10.99m,
+                Description = "This item does not exist",
+                CategoryId = 1,
+                ImgUrl = "http://example.com/nonexistent.jpg"
+            };
+
+            // Act & Assert
+            var exception = Assert.Throws<Exception>(() => FoodAndDrinkDAO.UpdateFoodOrDrink(updateDto));
+            Assert.Equal("Food and Drink with ID 999 does not exist.", exception.Message);
+        }
+
+        [Fact]
+        public void UpdateFoodOrDrink_ShouldThrowException_WhenPriceIsNegative()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using var dbContext = new GreenGardenContext(options);
+            FoodAndDrinkDAO.InitializeContext(dbContext);
+
+            var existingItem = new FoodAndDrink
+            {
+                ItemId = 1,
+                ItemName = "Original Burger",
+                Price = 5.99m,
+                Description = "Classic beef burger",
+                CategoryId = 1,
+                ImgUrl = "http://example.com/original.jpg"
+            };
+            dbContext.FoodAndDrinks.Add(existingItem);
+            dbContext.SaveChanges();
+
+            var updateDto = new UpdateFoodOrDrinkDTO
+            {
+                ItemId = 1,
+                ItemName = "Updated Burger",
+                Price = -1.99m, // Invalid price
+                Description = "Updated description",
+                CategoryId = 2,
+                ImgUrl = "http://example.com/updated.jpg"
+            };
+
+            // Act & Assert
+            var exception = Assert.Throws<Exception>(() => FoodAndDrinkDAO.UpdateFoodOrDrink(updateDto));
+            Assert.Contains("Price must be greater than or equal to zero", exception.Message); // Adjust based on actual validation message
+        }
+
+        // Test for method ChangeFoodStatus
+        [Fact]
+        public async Task ChangeFoodStatus_ShouldToggleStatus_WhenItemExists()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using var dbContext = new GreenGardenContext(options);
+            FoodAndDrinkDAO.InitializeContext(dbContext);
+
+            var existingItem = new FoodAndDrink
+            {
+                ItemId = 1,
+                ItemName = "Sample Food Item",
+                Status = true, // Initial status
+                Price = 10.99m
+            };
+            dbContext.FoodAndDrinks.Add(existingItem);
+            await dbContext.SaveChangesAsync();
+
+            // Act
+            FoodAndDrinkDAO.ChangeFoodStatus(existingItem.ItemId);
+
+            // Assert
+            var updatedItem = dbContext.FoodAndDrinks.FirstOrDefault(f => f.ItemId == existingItem.ItemId);
+            Assert.NotNull(updatedItem);
+            Assert.False(updatedItem.Status); // Ensure the status is toggled to false
+
+            // Act (toggle back)
+            FoodAndDrinkDAO.ChangeFoodStatus(existingItem.ItemId);
+
+            // Assert (after second toggle)
+            updatedItem = dbContext.FoodAndDrinks.FirstOrDefault(f => f.ItemId == existingItem.ItemId);
+            Assert.NotNull(updatedItem);
+            Assert.True(updatedItem.Status); // Ensure the status is toggled back to true
+        }
+
+        [Fact]
+        public void ChangeFoodStatus_ShouldThrowException_WhenItemDoesNotExist()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using var dbContext = new GreenGardenContext(options);
+            FoodAndDrinkDAO.InitializeContext(dbContext);
+
+            var nonExistentItemId = 999; // Non-existent item ID
+
+            // Act & Assert
+            var exception = Assert.Throws<Exception>(() => FoodAndDrinkDAO.ChangeFoodStatus(nonExistentItemId));
+            Assert.Equal($"Food and Drink with ID {nonExistentItemId} does not exist.", exception.Message);
+        }
+
+        [Fact]
+        public void ChangeFoodStatus_ShouldThrowException_WhenContextIsNull()
+        {
+            // Arrange
+            FoodAndDrinkDAO.InitializeContext(null); // Nullify the context
+
+            var itemId = 1; // Random item ID for testing
+
+            // Act & Assert
+            var exception = Assert.Throws<Exception>(() => FoodAndDrinkDAO.ChangeFoodStatus(itemId));
+            Assert.Equal("Object reference not set to an instance of an object.", exception.Message);
+        }
 
 
     }
