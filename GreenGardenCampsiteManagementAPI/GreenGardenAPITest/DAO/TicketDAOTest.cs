@@ -1,4 +1,5 @@
-﻿using BusinessObject.Models;
+﻿using BusinessObject.DTOs;
+using BusinessObject.Models;
 using DataAccess.DAO;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
@@ -437,6 +438,7 @@ namespace GreenGardenAPITest.DAO
             result.First().TicketCategoryId.Should().Be(1);
             result.Should().BeInDescendingOrder(ticket => ticket.Price);
         }
+
         // TC 4
         [Fact]
         public async Task GetTicketsByCategoryIdAndSortByPriceAscending_ShouldReturnSortedTickets()
@@ -579,6 +581,275 @@ namespace GreenGardenAPITest.DAO
             // Act & Assert
             var exception = await Assert.ThrowsAsync<Exception>(() => Task.Run(() => TicketDAO.GetTicketsByCategoryIdAndSort(1, 1)));
             exception.Message.Should().Be("Object reference not set to an instance of an object.");
+        }
+
+        // Test for method AddTicket
+        [Fact]
+        public async Task AddTicket_ShouldAddTicketSuccessfully_WhenDataIsValid()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using var dbContext = new GreenGardenContext(options);
+            TicketDAO.InitializeContext(dbContext);
+
+            var validTicket = new AddTicket
+            {
+                TicketId = 1,
+                TicketName = "VIP Ticket",
+                Price = 50.00m,
+                TicketCategoryId = 2,
+                ImgUrl = "http://example.com/ticket.png"
+            };
+
+            // Act
+            TicketDAO.AddTicket(validTicket);
+
+            // Assert
+            var addedTicket = dbContext.Tickets.FirstOrDefault(t => t.TicketId == validTicket.TicketId);
+            Assert.NotNull(addedTicket);
+            Assert.Equal(validTicket.TicketName, addedTicket.TicketName);
+            Assert.Equal(validTicket.Price, addedTicket.Price);
+            Assert.Equal(validTicket.TicketCategoryId, addedTicket.TicketCategoryId);
+            Assert.Equal(validTicket.ImgUrl, addedTicket.ImgUrl);
+            Assert.True(addedTicket.Status);
+            Assert.NotNull(addedTicket.CreatedAt); // Ensure CreatedAt is populated
+        }
+
+        [Fact]
+        public void AddTicket_ShouldThrowException_WhenTicketNameIsNull()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using var dbContext = new GreenGardenContext(options);
+            TicketDAO.InitializeContext(dbContext);
+
+            var invalidTicket = new AddTicket
+            {
+                TicketId = 2,
+                TicketName = null!, // Invalid
+                Price = 25.00m,
+                TicketCategoryId = 1
+            };
+
+            // Act & Assert
+            var exception = Assert.Throws<Exception>(() => TicketDAO.AddTicket(invalidTicket));
+            Assert.Equal("The TicketName field is required.", exception.Message);
+        }
+
+        [Fact]
+        public void AddTicket_ShouldThrowException_WhenPriceIsZeroOrNegative()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using var dbContext = new GreenGardenContext(options);
+            TicketDAO.InitializeContext(dbContext);
+
+            var invalidTicket = new AddTicket
+            {
+                TicketId = 3,
+                TicketName = "Economy Ticket",
+                Price = -10.00m, // Invalid
+                TicketCategoryId = 1
+            };
+
+            // Act & Assert
+            var exception = Assert.Throws<Exception>(() => TicketDAO.AddTicket(invalidTicket));
+            Assert.Equal("Price must be a positive value.", exception.Message);
+        }
+
+        [Fact]
+        public void AddTicket_ShouldThrowException_WhenContextIsNull()
+        {
+            // Arrange
+            TicketDAO.InitializeContext(null); // Nullify the context
+
+            var validTicket = new AddTicket
+            {
+                TicketId = 4,
+                TicketName = "Standard Ticket",
+                Price = 30.00m,
+                TicketCategoryId = 1
+            };
+
+            // Act & Assert
+            var exception = Assert.Throws<Exception>(() => TicketDAO.AddTicket(validTicket));
+            Assert.Equal("Object reference not set to an instance of an object.", exception.Message);
+        }
+
+        // Test for method UpdateTicket
+        [Fact]
+        public async Task UpdateTicket_ShouldUpdateTicketSuccessfully_WhenTicketExists()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using var dbContext = new GreenGardenContext(options);
+            TicketDAO.InitializeContext(dbContext);
+
+            // Add a ticket first for update
+            var existingTicket = new Ticket
+            {
+                TicketId = 1,
+                TicketName = "VIP Ticket",
+                Price = 100.00m,
+                TicketCategoryId = 1,
+                ImgUrl = "http://example.com/vip-ticket.png",
+                Status = true,
+                CreatedAt = DateTime.Now
+            };
+            dbContext.Tickets.Add(existingTicket);
+            dbContext.SaveChanges();
+
+            var updatedTicketDto = new UpdateTicket
+            {
+                TicketId = 1,
+                TicketName = "VIP Ticket Updated",
+                Price = 120.00m,
+                ImgUrl = "http://example.com/vip-ticket-updated.png",
+                TicketCategoryId = 2
+            };
+
+            // Act
+            TicketDAO.UpdateTicket(updatedTicketDto);
+
+            // Assert
+            var updatedTicket = dbContext.Tickets.FirstOrDefault(t => t.TicketId == 1);
+            Assert.NotNull(updatedTicket);
+            Assert.Equal("VIP Ticket Updated", updatedTicket.TicketName);
+            Assert.Equal(120.00m, updatedTicket.Price);
+            Assert.Equal("http://example.com/vip-ticket-updated.png", updatedTicket.ImgUrl);
+            Assert.Equal(2, updatedTicket.TicketCategoryId);
+        }
+
+        [Fact]
+        public void UpdateTicket_ShouldThrowException_WhenTicketDoesNotExist()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using var dbContext = new GreenGardenContext(options);
+            TicketDAO.InitializeContext(dbContext);
+
+            var updateTicketDto = new UpdateTicket
+            {
+                TicketId = 999, // Non-existing ticket ID
+                TicketName = "Non-Existing Ticket",
+                Price = 50.00m,
+                TicketCategoryId = 1
+            };
+
+            // Act & Assert
+            var exception = Assert.Throws<Exception>(() => TicketDAO.UpdateTicket(updateTicketDto));
+            Assert.Equal("Ticket with ID 999 does not exist.", exception.Message);
+        }
+
+        [Fact]
+        public void UpdateTicket_ShouldThrowException_WhenPriceIsZeroOrNegative()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using var dbContext = new GreenGardenContext(options);
+            TicketDAO.InitializeContext(dbContext);
+
+            var existingTicket = new Ticket
+            {
+                TicketId = 1,
+                TicketName = "VIP Ticket",
+                Price = 100.00m,
+                TicketCategoryId = 1,
+                ImgUrl = "http://example.com/vip-ticket.png",
+                Status = true,
+                CreatedAt = DateTime.Now
+            };
+            dbContext.Tickets.Add(existingTicket);
+            dbContext.SaveChanges();
+
+            var updateTicketDto = new UpdateTicket
+            {
+                TicketId = 1,
+                TicketName = "VIP Ticket Updated",
+                Price = -10.00m, // Invalid price
+                ImgUrl = "http://example.com/vip-ticket-updated.png",
+                TicketCategoryId = 2
+            };
+
+            // Act & Assert
+            var exception = Assert.Throws<Exception>(() => TicketDAO.UpdateTicket(updateTicketDto));
+            Assert.Equal("Price must be a positive value.", exception.Message);
+        }
+
+        [Fact]
+        public void UpdateTicket_ShouldThrowException_WhenTicketNameIsNull()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using var dbContext = new GreenGardenContext(options);
+            TicketDAO.InitializeContext(dbContext);
+
+            var existingTicket = new Ticket
+            {
+                TicketId = 1,
+                TicketName = "VIP Ticket",
+                Price = 100.00m,
+                TicketCategoryId = 1,
+                ImgUrl = "http://example.com/vip-ticket.png",
+                Status = true,
+                CreatedAt = DateTime.Now
+            };
+            dbContext.Tickets.Add(existingTicket);
+            dbContext.SaveChanges();
+
+            var updateTicketDto = new UpdateTicket
+            {
+                TicketId = 1,
+                TicketName = null!, // Invalid null name
+                Price = 120.00m,
+                ImgUrl = "http://example.com/vip-ticket-updated.png",
+                TicketCategoryId = 2
+            };
+
+            // Act & Assert
+            var exception = Assert.Throws<Exception>(() => TicketDAO.UpdateTicket(updateTicketDto));
+            Assert.Equal("TicketName is required.", exception.Message);  // Assuming your validation enforces a required TicketName
+        }
+
+        [Fact]
+        public void UpdateTicket_ShouldThrowException_WhenContextIsNull()
+        {
+            // Arrange
+            TicketDAO.InitializeContext(null); // Nullify the context
+
+            var updatedTicketDto = new UpdateTicket
+            {
+                TicketId = 1,
+                TicketName = "VIP Ticket Updated",
+                Price = 120.00m,
+                ImgUrl = "http://example.com/vip-ticket-updated.png",
+                TicketCategoryId = 2
+            };
+
+            // Act & Assert
+            var exception = Assert.Throws<Exception>(() => TicketDAO.UpdateTicket(updatedTicketDto));
+            Assert.Equal("Object reference not set to an instance of an object.", exception.Message);
         }
 
     }
