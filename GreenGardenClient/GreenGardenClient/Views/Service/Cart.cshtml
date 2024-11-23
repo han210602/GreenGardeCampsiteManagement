@@ -405,9 +405,10 @@
                                 <button type="submit" class="btn btn-dark">Quay lại dịch vụ</button>
                             </form>
                             <p class="mt-3">Nếu bạn muốn chọn lại ngày sử dụng, vui lòng đặt lại.</p>
-                            <form action="~/Service/Reset" method="post" id="resetForm">
+                            <form action="/Service/Reset" method="post" onsubmit="return resetCart();">
                                 <button type="submit" class="btn btn-warning">Đặt lại</button>
                             </form>
+
                             <!-- Remove the existing form's submit button -->
                             <form id="paymentForm" asp-controller="Service" asp-action="Order" method="post">
                                 <button type="button" class="btn btn-dark" onclick="submitPayment()">Đặt ngay </button>
@@ -421,6 +422,18 @@
         </div>
     </div>
     <script>
+        function resetCart() {
+            // Thực hiện logic bổ sung trước khi gửi form
+            if (confirm("Bạn có chắc chắn muốn đặt lại giỏ hàng không?")) {
+                console.log("Xóa giỏ hàng và gửi yêu cầu đến controller...");
+                sessionStorage.removeItem('usageDateForAll');
+                return true;
+               
+            } else {
+                console.log("Người dùng đã hủy thao tác.");
+                return false; // Ngăn không cho form gửi đi
+            }
+        }
         function validateQuantity(element, type, maxQuantity) {
             // Lấy giá trị nhập vào
             let value = element.value;
