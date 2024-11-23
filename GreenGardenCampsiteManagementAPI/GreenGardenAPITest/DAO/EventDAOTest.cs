@@ -470,6 +470,397 @@ namespace GreenGardenAPITest.DAO
             var exception = await Assert.ThrowsAsync<Exception>(() => EventDAO.AddEvent(eventDTO, configuration));
             Assert.Contains("Error adding event and sending emails", exception.Message);
         }
+
+        // Test for method UpdateEvent
+        [Fact]
+        public async Task UpdateEvent_ShouldUpdateEvent_WhenEventExists()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using var dbContext = new GreenGardenContext(options);
+
+            // Seed data
+            var existingEvent = new Event
+            {
+                EventId = 1,
+                EventName = "Original Event",
+                Description = "Original Description",
+                EventDate = DateTime.Now,
+                StartTime = new TimeSpan(10, 0, 0),
+                EndTime = new TimeSpan(12, 0, 0),
+                Location = "Original Location",
+                PictureUrl = "http://example.com/original.jpg",
+                IsActive = true
+            };
+            dbContext.Events.Add(existingEvent);
+            await dbContext.SaveChangesAsync();
+
+            EventDAO.InitializeContext(dbContext);
+
+            var updateDto = new UpdateEventDTO
+            {
+                EventId = 1,
+                EventName = "Updated Event",
+                Description = "Updated Description",
+                EventDate = DateTime.Now.AddDays(1),
+                StartTime = "11:00:00",
+                EndTime = "13:00:00",
+                Location = "Updated Location",
+                PictureUrl = "http://example.com/updated.jpg",
+                IsActive = false
+            };
+
+            // Act
+            var result = EventDAO.UpdateEvent(updateDto);
+
+            // Assert
+            Assert.True(result);
+            var updatedEvent = dbContext.Events.FirstOrDefault(e => e.EventId == 1);
+            Assert.NotNull(updatedEvent);
+            Assert.Equal(updateDto.EventName, updatedEvent.EventName);
+            Assert.Equal(updateDto.Description, updatedEvent.Description);
+            Assert.Equal(updateDto.EventDate, updatedEvent.EventDate);
+            Assert.Equal(TimeSpan.Parse(updateDto.StartTime), updatedEvent.StartTime);
+            Assert.Equal(TimeSpan.Parse(updateDto.EndTime), updatedEvent.EndTime);
+            Assert.Equal(updateDto.Location, updatedEvent.Location);
+            Assert.Equal(updateDto.PictureUrl, updatedEvent.PictureUrl);
+            Assert.Equal(updateDto.IsActive, updatedEvent.IsActive);
+        }
+
+        [Fact]
+        public void UpdateEvent_ShouldThrowException_WhenEventDoesNotExist()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using var dbContext = new GreenGardenContext(options);
+            EventDAO.InitializeContext(dbContext);
+
+            var updateDto = new UpdateEventDTO
+            {
+                EventId = 999, // Non-existent EventId
+                EventName = "Non-existent Event",
+                Description = "Description",
+                EventDate = DateTime.Now,
+                StartTime = "10:00:00",
+                EndTime = "12:00:00",
+                Location = "Location",
+                PictureUrl = "http://example.com/event.jpg",
+                IsActive = true
+            };
+
+            // Act & Assert
+            var exception = Assert.Throws<Exception>(() => EventDAO.UpdateEvent(updateDto));
+            Assert.Contains("Event not found.", exception.Message);
+        }
+
+        [Fact]
+        public void UpdateEvent_ShouldHandleNullFields_Gracefully()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using var dbContext = new GreenGardenContext(options);
+
+            var existingEvent = new Event
+            {
+                EventId = 1,
+                EventName = "Original Event",
+                Description = "Original Description",
+                EventDate = DateTime.Now,
+                StartTime = new TimeSpan(10, 0, 0),
+                EndTime = new TimeSpan(12, 0, 0),
+                Location = "Original Location",
+                PictureUrl = "http://example.com/original.jpg",
+                IsActive = true
+            };
+            dbContext.Events.Add(existingEvent);
+            dbContext.SaveChanges();
+
+            EventDAO.InitializeContext(dbContext);
+
+            var updateDto = new UpdateEventDTO
+            {
+                EventId = 1,
+                EventName = "Updated Event",
+                Description = null, // Null description
+                EventDate = DateTime.Now.AddDays(1),
+                StartTime = "11:00:00",
+                EndTime = "13:00:00",
+                Location = null, // Null location
+                PictureUrl = null, // Null picture URL
+                IsActive = null // Null IsActive
+            };
+
+            // Act
+            var result = EventDAO.UpdateEvent(updateDto);
+
+            // Assert
+            Assert.True(result);
+            var updatedEvent = dbContext.Events.FirstOrDefault(e => e.EventId == 1);
+            Assert.NotNull(updatedEvent);
+            Assert.Equal(updateDto.EventName, updatedEvent.EventName);
+            Assert.Null(updatedEvent.Description);
+            Assert.Equal(updateDto.EventDate, updatedEvent.EventDate);
+            Assert.Equal(TimeSpan.Parse(updateDto.StartTime), updatedEvent.StartTime);
+            Assert.Equal(TimeSpan.Parse(updateDto.EndTime), updatedEvent.EndTime);
+            Assert.Null(updatedEvent.Location);
+            Assert.Null(updatedEvent.PictureUrl);
+            Assert.Null(updatedEvent.IsActive);
+        }
+
+        [Fact]
+        public void UpdateEvent_ShouldThrowException_WhenContextIsNull()
+        {
+            // Arrange
+            EventDAO.InitializeContext(null); // Null context
+
+            var updateDto = new UpdateEventDTO
+            {
+                EventId = 1,
+                EventName = "Updated Event",
+                Description = "Updated Description",
+                EventDate = DateTime.Now,
+                StartTime = "11:00:00",
+                EndTime = "13:00:00",
+                Location = "Updated Location",
+                PictureUrl = "http://example.com/updated.jpg",
+                IsActive = true
+            };
+
+            // Act & Assert
+            var exception = Assert.Throws<Exception>(() => EventDAO.UpdateEvent(updateDto));
+            Assert.Contains("Object reference not set", exception.Message);
+        }
+
+        // Test for method DeleteEvent
+        [Fact]
+        public async Task DeleteEvent_ShouldDeleteEvent_WhenEventExists()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using var dbContext = new GreenGardenContext(options);
+
+            // Seed data
+            var existingEvent = new Event
+            {
+                EventId = 1,
+                EventName = "Test Event",
+                Description = "Test Description",
+                EventDate = DateTime.Now,
+                StartTime = new TimeSpan(10, 0, 0),
+                EndTime = new TimeSpan(12, 0, 0),
+                Location = "Test Location",
+                PictureUrl = "http://example.com/test.jpg",
+                IsActive = true
+            };
+            dbContext.Events.Add(existingEvent);
+            await dbContext.SaveChangesAsync();
+
+            EventDAO.InitializeContext(dbContext);
+
+            // Act
+            var result = EventDAO.DeleteEvent(1);
+
+            // Assert
+            Assert.True(result);
+            var deletedEvent = dbContext.Events.FirstOrDefault(e => e.EventId == 1);
+            Assert.Null(deletedEvent);
+        }
+
+        [Fact]
+        public void DeleteEvent_ShouldThrowException_WhenEventDoesNotExist()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using var dbContext = new GreenGardenContext(options);
+            EventDAO.InitializeContext(dbContext);
+
+            // Act & Assert
+            var exception = Assert.Throws<Exception>(() => EventDAO.DeleteEvent(999)); // Non-existent EventId
+            Assert.Contains("Event not found.", exception.Message);
+        }
+
+        [Fact]
+        public void DeleteEvent_ShouldThrowException_WhenContextIsNull()
+        {
+            // Arrange
+            EventDAO.InitializeContext(null); // Null context
+
+            // Act & Assert
+            var exception = Assert.Throws<Exception>(() => EventDAO.DeleteEvent(1));
+            Assert.Contains("Object reference not set", exception.Message);
+        }
+
+        // Test for method GetTop3NewestEvents
+        [Fact]
+        public async Task GetTop3NewestEvents_ShouldReturnTop3EventsOrderedByDate()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using var dbContext = new GreenGardenContext(options);
+
+            // Seed data
+            dbContext.Events.AddRange(
+                new Event
+                {
+                    EventId = 1,
+                    EventName = "Event 1",
+                    Description = "First Event",
+                    EventDate = DateTime.Now.AddDays(-3), // Older event
+                    StartTime = new TimeSpan(10, 0, 0),
+                    EndTime = new TimeSpan(12, 0, 0),
+                    Location = "Location 1",
+                    PictureUrl = "http://example.com/event1.jpg",
+                    IsActive = true,
+                    CreatedAt = DateTime.Now.AddDays(-5),
+                    CreateByNavigation = new User { FirstName = "John", LastName = "Doe", Email = "john@gmail.com", Password = "123" }
+                },
+                new Event
+                {
+                    EventId = 2,
+                    EventName = "Event 2",
+                    Description = "Second Event",
+                    EventDate = DateTime.Now.AddDays(-1), // Newer event
+                    StartTime = new TimeSpan(14, 0, 0),
+                    EndTime = new TimeSpan(16, 0, 0),
+                    Location = "Location 2",
+                    PictureUrl = "http://example.com/event2.jpg",
+                    IsActive = true,
+                    CreatedAt = DateTime.Now.AddDays(-4),
+                    CreateByNavigation = new User { FirstName = "Jane", LastName = "Smith", Email = "jane@gmail.com", Password = "123" }
+                },
+                new Event
+                {
+                    EventId = 3,
+                    EventName = "Event 3",
+                    Description = "Third Event",
+                    EventDate = DateTime.Now.AddDays(-2), // Middle event
+                    StartTime = new TimeSpan(9, 0, 0),
+                    EndTime = new TimeSpan(11, 0, 0),
+                    Location = "Location 3",
+                    PictureUrl = "http://example.com/event3.jpg",
+                    IsActive = true,
+                    CreatedAt = DateTime.Now.AddDays(-3),
+                    CreateByNavigation = new User { FirstName = "Alice", LastName = "Johnson", Email = "alice@gmail.com", Password = "123" }
+                },
+                new Event
+                {
+                    EventId = 4,
+                    EventName = "Event 4",
+                    Description = "Fourth Event",
+                    EventDate = DateTime.Now.AddDays(-4), // Older event
+                    StartTime = new TimeSpan(8, 0, 0),
+                    EndTime = new TimeSpan(10, 0, 0),
+                    Location = "Location 4",
+                    PictureUrl = "http://example.com/event4.jpg",
+                    IsActive = true,
+                    CreatedAt = DateTime.Now.AddDays(-6),
+                    CreateByNavigation = new User { FirstName = "Bob", LastName = "Brown", Email = "bob@gmail.com", Password = "123" }
+                }
+            );
+            await dbContext.SaveChangesAsync();
+
+            EventDAO.InitializeContext(dbContext);
+
+            // Act
+            var result = EventDAO.GetTop3NewestEvents();
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(3, result.Count); // Only top 3 events should be returned
+            Assert.Equal("Event 2", result[0].EventName); // Newest event should be first
+            Assert.Equal("Event 3", result[1].EventName); // Second newest event
+            Assert.Equal("Event 1", result[2].EventName); // Third newest event
+        }
+
+        [Fact]
+        public async Task GetTop3NewestEvents_ShouldReturnEmptyList_WhenNoEventsExist()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using var dbContext = new GreenGardenContext(options);
+            EventDAO.InitializeContext(dbContext);
+
+            // Act
+            var result = EventDAO.GetTop3NewestEvents();
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Empty(result); // No events should result in an empty list
+        }
+
+        [Fact]
+        public async Task GetTop3NewestEvents_ShouldHandleNullContext()
+        {
+            // Arrange
+            EventDAO.InitializeContext(null); // Null context
+
+            // Act & Assert
+            var exception = Assert.Throws<Exception>(() => EventDAO.GetTop3NewestEvents());
+            Assert.Contains("Object reference not set", exception.Message);
+        }
+
+        [Fact]
+        public async Task GetTop3NewestEvents_ShouldReturnLessThan3_WhenFewerEventsExist()
+        {
+            // Arrange
+            var options = new DbContextOptionsBuilder<GreenGardenContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .Options;
+
+            using var dbContext = new GreenGardenContext(options);
+
+            // Seed data with fewer than 3 events
+            dbContext.Events.Add(
+                new Event
+                {
+                    EventId = 1,
+                    EventName = "Event 1",
+                    Description = "Only Event",
+                    EventDate = DateTime.Now.AddDays(-1),
+                    StartTime = new TimeSpan(10, 0, 0),
+                    EndTime = new TimeSpan(12, 0, 0),
+                    Location = "Location 1",
+                    PictureUrl = "http://example.com/event1.jpg",
+                    IsActive = true,
+                    CreatedAt = DateTime.Now.AddDays(-2),
+                    CreateByNavigation = new User { FirstName = "John", LastName = "Doe", Email = "john@gmail.com", Password = "123" }
+                }
+            );
+            await dbContext.SaveChangesAsync();
+
+            EventDAO.InitializeContext(dbContext);
+
+            // Act
+            var result = EventDAO.GetTop3NewestEvents();
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Single(result); // Only one event should be returned
+            Assert.Equal("Event 1", result[0].EventName);
+        }
+
+
     }
 
 }
