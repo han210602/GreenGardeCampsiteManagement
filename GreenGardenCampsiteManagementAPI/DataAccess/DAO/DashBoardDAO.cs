@@ -12,13 +12,19 @@ namespace DataAccess.DAO
 {
     public class DashBoardDAO
     {
-        private static GreenGardenContext context = new GreenGardenContext();
+        // private static GreenGardenContext context = new GreenGardenContext();
+        private static GreenGardenContext _context;
+        public static void InitializeContext(GreenGardenContext context)
+        {
+            _context = context;
+        }
+
         public static List<UserDTO> ListCustomer()
         {
             try
             {
                 var list = new List<UserDTO>();
-                var data = context.Orders.Include(o => o.Customer).Where(o => o.CustomerId != null && o.Customer.IsActive == true).ToList();
+                var data = _context.Orders.Include(o => o.Customer).Where(o => o.CustomerId != null && o.Customer.IsActive == true).ToList();
                 foreach (var item in data)
                 {
                     if (list.FirstOrDefault(s => s.UserId == item.CustomerId) == null)
@@ -71,7 +77,7 @@ namespace DataAccess.DAO
                 decimal MoneyTotalAmountOrderCheckout = 0;
                 if (datetime.Equals("0"))
                 {
-                    foreach (var item in context.Orders)
+                    foreach (var item in _context.Orders)
                     {
                         if (item.ActivityId == 3)
                         {
@@ -118,7 +124,7 @@ namespace DataAccess.DAO
                     DateTime targetDate = DateTime.ParseExact(datetime, "yyyy-MM", CultureInfo.InvariantCulture);
 
                     // Filter orders directly using Year and Month comparison
-                    var list = context.Orders.Where(s =>
+                    var list = _context.Orders.Where(s =>
                         (s.OrderDate.HasValue && s.OrderDate.Value.Year == targetDate.Year && s.OrderDate.Value.Month == targetDate.Month) ||
                         (s.OrderCheckoutDate.HasValue && s.OrderCheckoutDate.Value.Year == targetDate.Year && s.OrderCheckoutDate.Value.Month == targetDate.Month) ||
                         (s.OrderUsageDate.HasValue && s.OrderUsageDate.Value.Year == targetDate.Year && s.OrderUsageDate.Value.Month == targetDate.Month))
