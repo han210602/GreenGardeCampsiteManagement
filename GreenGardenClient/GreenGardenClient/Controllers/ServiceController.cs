@@ -613,7 +613,7 @@ namespace GreenGardenClient.Controllers
 
             // Lấy danh sách dụng cụ cắm trại
             var campingGears = await GetDataFromApiAsync<List<GearVM>>(
-                "https://localhost:7298/api/CampingGear/GetCampingGearsBySort?");
+                "https://localhost:7298/api/CampingGear/GetAllCustomerCampingGears");
 
             // Kiểm tra xem có sản phẩm nào là "Gear" và "GearCategory" không
             if (cartItems.Any(item => item.Type == "Gear" && item.TypeCategory == "GearCategory"))
