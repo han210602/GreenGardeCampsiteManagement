@@ -14,7 +14,9 @@ namespace Repositories.FoodAndDrink
         FoodAndDrinkDTO GetFoodAndDrinkDetail(int itemId);
         List<FoodAndDrinkCategoryDTO> GetAllFoodAndDrinkCategories();
 
-        List<FoodAndDrinkDTO> GetFoodAndDrinks(int? categoryId, int? sortBy, int? priceRange);
+        public (List<FoodAndDrinkDTO> FoodAndDrinks, int TotalPages) GetFoodAndDrinks(int? categoryId, int? sortBy, int? priceRange, int page, int pageSize);
+
+
 
         void AddFoodOrDrink(AddFoodOrDrinkDTO item);
         void UpdateFoodOrDrink(UpdateFoodOrDrinkDTO item);

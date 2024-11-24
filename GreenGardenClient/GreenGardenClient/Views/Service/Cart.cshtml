@@ -360,7 +360,7 @@
                                     }
 
                                     <div class="cart-item-details ml-3">
-                                        <h5>@item.Name</h5>                                      
+                                        <h5>@item.Name</h5>
                                         <p>@item.CategoryName</p>
                                         <p>Giá: <span id="price_@item.Id-@item.Type-@item.TypeCategory">@item.Price.ToString("N0")</span> đ</p>
 
@@ -428,7 +428,7 @@
                 console.log("Xóa giỏ hàng và gửi yêu cầu đến controller...");
                 sessionStorage.removeItem('usageDateForAll');
                 return true;
-               
+
             } else {
                 console.log("Người dùng đã hủy thao tác.");
                 return false; // Ngăn không cho form gửi đi
@@ -699,21 +699,21 @@
             // Thêm các sản phẩm mới vào giỏ hàng
             $.each(cartItems, function (index, item) {
                 $('#cartContainer').append(`
-                            <div class="cart-item" id="cart-item-${item.id}">
-                                        <img src="~/images//img_1.jpg" alt="${item.name}" class="img-thumbnail" style="width: 120px;">
-                                <div class="cart-item-details ml-3">
-                                    <h5>${item.name}</h5>
-                                    <p>${item.typeCategory}</p>
-                                    <p>Giá: <span id="price_${item.id}-${item.type}-${item.typeCategory}">${item.price.toLocaleString()}</span> đ</p>
-                                </div>
-                                <div class="ml-auto d-flex align-items-center">
-                                    <button class="btn btn-light" onclick="decrementQuantity(${item.id}, ${item.price}, '${item.type}', '${item.typeCategory}')">-</button>
-                                    <input type="text" id="quantity_${item.id}-${item.type}-${item.typeCategory}" value="${item.quantity}" class="form-control text-center mx-2" style="width: 50px;" readonly>
-                                    <button class="btn btn-light" onclick="incrementQuantity(${item.id}, ${item.price}, '${item.type}', '${item.typeCategory}')">+</button>
-                                    <button class="btn btn-danger ml-2" onclick="removeCartItem(${item.id}, '${item.type}', '${item.typeCategory}')">Xóa</button>
-                                </div>
-                            </div>
-                        `);
+                                    <div class="cart-item" id="cart-item-${item.id}">
+                                                <img src="~/images//img_1.jpg" alt="${item.name}" class="img-thumbnail" style="width: 120px;">
+                                        <div class="cart-item-details ml-3">
+                                            <h5>${item.name}</h5>
+                                            <p>${item.typeCategory}</p>
+                                            <p>Giá: <span id="price_${item.id}-${item.type}-${item.typeCategory}">${item.price.toLocaleString()}</span> đ</p>
+                                        </div>
+                                        <div class="ml-auto d-flex align-items-center">
+                                            <button class="btn btn-light" onclick="decrementQuantity(${item.id}, ${item.price}, '${item.type}', '${item.typeCategory}')">-</button>
+                                            <input type="text" id="quantity_${item.id}-${item.type}-${item.typeCategory}" value="${item.quantity}" class="form-control text-center mx-2" style="width: 50px;" readonly>
+                                            <button class="btn btn-light" onclick="incrementQuantity(${item.id}, ${item.price}, '${item.type}', '${item.typeCategory}')">+</button>
+                                            <button class="btn btn-danger ml-2" onclick="removeCartItem(${item.id}, '${item.type}', '${item.typeCategory}')">Xóa</button>
+                                        </div>
+                                    </div>
+                                `);
             });
 
             updateTotalPrice(); // Cập nhật tổng giá tiền nếu cần

@@ -14,7 +14,7 @@ namespace Repositories.Tickets
         List<TicketDTO> GetAllCustomerTickets();
         TicketDTO GetTicketDetail(int id);
         List<TicketCategoryDTO> GetAllTicketCategories();
-        List<TicketDTO> GetTicketsByCategoryIdAndSort(int? categoryId, int? sort);
+        public (List<TicketDTO> Tickets, int TotalPages) GetTicketsByCategoryIdAndSort(int? categoryId, int? sort, int page, int pageSize);
         void AddTicket(AddTicket ticketDto);
         void UpdateTicket(UpdateTicket ticketDto);
         void ChangeTicketStatus(int ticketId);

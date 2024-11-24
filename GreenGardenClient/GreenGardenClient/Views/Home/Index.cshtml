@@ -47,7 +47,94 @@
                     </div>
                 </div>
                 <div class="site-mobile-menu-body">
+                    <ul class="site-menu main-menu js-clone-nav ml-auto ">
+                        <li class="active"><a href="/Home" class="nav-link">Trang chủ</a></li>
+                        <li><a href="/Common/Event" class="nav-link">Sự kiện</a></li>
+                        <li class="has-dropdown">
+                            <a href="/Service" class="nav-link">Dịch vụ</a>
+                            <ul class="dropdown">
+                                <li><a href="/Service/ComboList" class="nav-link">Danh sách combo vé</a></li>
+                                <li><a href="/Service/OrderTicket" class="nav-link">Danh sách vé</a></li>
+                                <li><a href="/Service/OrderFoodAndDrink" class="nav-link">Danh sách đồ ăn</a></li>
+                                <li><a href="/Service/OrderGear" class="nav-link">Danh sách dụng cụ</a></li>
+                            </ul>
+                        </li>
 
+                        <li><a href="~/Common/Contact" class="nav-link">Liên hệ</a></li>
+                        <li>
+                            @if (HttpContextAccessor.HttpContext.Session.GetString("Email") == null)
+                            {
+                                <a href="/Common/Login" class="nav-link">Đăng nhập</a>
+                                <a href="/Common/Register" class="nav-link">Đăng Ký</a>
+                            }
+                            else
+                            {
+                            <li class="has-dropdown">
+                                <a href="~/Common/UpdateProfile" class="nav-link" style="display: flex; align-items: center;">
+                                        @if (@HttpContextAccessor.HttpContext.Session.GetString("Img") == null)
+                                        {
+                                        <div style="width: 30px; height: 30px; border-radius: 50%; overflow: hidden; margin-right: 8px;">
+                                            <img src="~/images/p22.jpg" alt="Trang cá nhân" style="width: 100%; height: 100%; object-fit: cover;">
+                                        </div>
+                                        }
+                                        else
+                                        {
+                                        <div style="width: 30px; height: 30px; border-radius: 50%; overflow: hidden; margin-right: 8px;">
+                                            <img src="~/images/Avatar/@HttpContextAccessor.HttpContext.Session.GetString("Img")" alt="Trang cá nhân" style="width: 100%; height: 100%; object-fit: cover;">
+                                        </div>
+                                        }
+
+                                        @HttpContextAccessor.HttpContext.Session.GetString("Fullname")
+                                </a>
+
+
+                                <ul class="dropdown">
+                                        @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 1)
+                                        {
+                                        <li><a href="~/DashBoard" class="nav-link">Quản lí</a></li>
+                                        <li><a href="~/Home/Logout" class="nav-link">Đăng xuất</a></li>
+                                        }
+                                        else if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 2)
+                                        {
+                                        <li><a href="~/OrderManagement/OrderOnline" class="nav-link">Quản lí</a></li>
+                                        <li><a href="~/Home/Logout" class="nav-link">Đăng xuất</a></li>
+                                        }
+                                        else
+                                        {
+
+                                        <li><a href="~/Service/OrderHistory" class="nav-link">Lịch sử đặt hàng</a></li>
+                                        <li><a href="~/Service/Cart" class="nav-link">Giỏ hàng</a></li>
+                                        <li><a href="~/Home/Logout" class="nav-link">Đăng xuất</a></li>
+
+                                        }
+                                </ul>
+
+                            </li>
+                            }
+
+                        </li>
+                        @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 3)
+                        {
+                            <li>
+                                <a href="~/Service/Cart" class="nav-link cart-icon">
+                                    <span class="cart-wrapper">
+                                        <i id="cart-count" class="fas fa-shopping-cart"></i>
+                                        @if (HttpContextAccessor.HttpContext.Session.GetInt32("CartItemCount") > 0)
+                                        {
+                                            <span class="cart-badge">
+                                                @HttpContextAccessor.HttpContext.Session.GetInt32("CartItemCount")
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="cart-badge">0</span>
+                                        }
+                                    </span>
+                                </a>
+                            </li>
+                        }
+
+                    </ul>
                 </div>
             </div>
             <div class="container">
@@ -60,7 +147,11 @@
                         </div>
                     </div>
                     <div class="col-9 text-right">
-                        <span class="d-inline-block d-lg-none"><a href="#" class="text-black site-menu-toggle js-menu-toggle py-5 text-white"><span class="icon-menu h3 text-black"></span></a></span>
+                        <span class="d-inline-block d-lg-none">
+                            <a href="#" class="text-black site-menu-toggle js-menu-toggle py-5 text-white">
+                                <span class="icon-menu h3 text-black"></span> <!-- Nút mở menu -->
+                            </a>
+                        </span>
                         <nav class="site-navigation text-right ml-auto d-none d-lg-block" role="navigation">
                             <ul class="site-menu main-menu js-clone-nav ml-auto ">
                                 <li class="active"><a href="/Home" class="nav-link">Trang chủ</a></li>
@@ -155,6 +246,78 @@
                 </div>
             </div>
             <style>
+                .site-mobile-menu {
+                    width: 80%;
+                    max-width: 400px;
+                    position: fixed;
+                    right: 0;
+                    z-index: 2000;
+                    padding-top: 20px;
+                    background: #ffffff;
+                    height: 100vh;
+                    transform: translateX(110%);
+                    transition: transform 0.3s ease-in-out;
+                    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+                }
+
+                .offcanvas-menu .site-mobile-menu {
+                    transform: translateX(0);
+                }
+
+                /* Close Button */
+                .site-mobile-menu-close {
+                    position: absolute;
+                    top: 15px;
+                    right: 15px;
+                    z-index: 1001;
+                    cursor: pointer;
+                }
+
+                    .site-mobile-menu-close span {
+                        font-size: 24px;
+                        color: #333;
+                        transition: color 0.3s ease;
+                    }
+
+                        .site-mobile-menu-close span:hover {
+                            color: #ff0000;
+                        }
+
+                /* Dropdown Menu */
+                .site-menu .dropdown {
+                    display: none;
+                    padding: 10px;
+                    background: #f9f9f9;
+                    border-radius: 4px;
+                }
+
+                .site-menu .has-dropdown.open .dropdown {
+                    display: block;
+                }
+
+                .site-menu a {
+                    text-decoration: none;
+                    color: #333;
+                    padding: 10px 20px;
+                    display: block;
+                    transition: background 0.3s ease;
+                }
+
+
+                /* General Styling */
+                .user-avatar img {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    margin-right: 10px;
+                }
+
+                .user-avatar span {
+                    font-size: 16px;
+                    font-weight: bold;
+                    color: #333;
+                }
+
                 .cart-wrapper {
                     position: relative;
                     display: inline-block;
@@ -246,7 +409,46 @@
             </script>
         </header>
 
+        <script>
+            $(document).ready(function () {
+                // Toggle mobile menu visibility
+                $('.js-menu-toggle').on('click', function (e) {
+                    e.preventDefault();
+                    $('body').toggleClass('offcanvas-menu');
+                });
 
+                // Close the menu when clicking the close button
+                $('.site-mobile-menu-close').on('click', function () {
+                    $('body').removeClass('offcanvas-menu');
+                });
+
+                // Close the menu when clicking outside of it
+                $(document).mouseup(function (e) {
+                    var container = $(".site-mobile-menu");
+                    if (!container.is(e.target) && container.has(e.target).length === 0) {
+                        $('body').removeClass('offcanvas-menu');
+                    }
+                });
+
+                // Set the active class based on the current URL
+                var currentUrl = window.location.pathname; // Get the current URL path
+                $('.site-menu a').each(function () {
+                    if ($(this).attr('href') === currentUrl || (currentUrl === '/' && $(this).attr('href') === '/Home')) {
+                        $('.site-menu a').removeClass('active'); // Remove active from all links
+                        $(this).addClass('active'); // Add active to the matching link
+                    }
+                });
+
+                // Ensure menu is hidden when resizing to desktop
+                $(window).resize(function () {
+                    if ($(window).width() > 991.98) { // Bootstrap lg breakpoint
+                        $('body').removeClass('offcanvas-menu'); // Reset menu state
+                    }
+                });
+            });
+
+
+        </script>
 
         <div class="tile">
             <div class="ftco-blocks-cover-1">

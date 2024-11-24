@@ -45,187 +45,137 @@ namespace GreenGardenClient.Controllers
                 }
             }
         }
-        public async Task<IActionResult> OrderGear()
-        {
-            var campingGears = await GetDataFromApiAsync<List<GearVM>>("https://localhost:7298/api/CampingGear/GetAllCustomerCampingGears");
 
-            // Lấy danh sách danh mục thiết bị cắm trại
-            var campingCategories = await GetDataFromApiAsync<List<GearCategoryVM>>("https://localhost:7298/api/CampingGear/GetAllCampingGearCategories");
-
-            // Đưa dữ liệu vào ViewBag
-            ViewBag.CampingGears = campingGears;
-            ViewBag.CampingCategories = campingCategories;  // Thêm danh sách danh mục vào ViewBag
-
-            return View("OrderGear");
-        }
         [HttpGet]
-        public async Task<IActionResult> OrderGear(int? categoryId, int? sortBy, int? priceRange, string popularity)
+        public async Task<IActionResult> OrderGear(int? categoryId, int? sortBy, int? priceRange, int page = 1, int pageSize = 6)
         {
-            // Lấy giỏ hàng từ phương thức GetCartItems()
+            // Retrieve cart items
             var cartItems = GetCartItems();
             ViewBag.CurrentCategoryId = categoryId;
 
-            // Xây dựng URL cho API
-            string apiUrl = "https://localhost:7298/api/CampingGear/GetCampingGearsBySort?";
+            // Build API URL with query parameters
+            var queryParams = new List<string>
+    {
+        categoryId.HasValue ? $"categoryId={categoryId.Value}" : null,
+        sortBy.HasValue ? $"sortBy={sortBy.Value}" : null,
+        priceRange.HasValue ? $"priceRange={priceRange.Value}" : null,
+        $"page={page}",
+        $"pageSize={pageSize}"
+    };
+            string apiUrl = "https://localhost:7298/api/CampingGear/GetCampingGearsBySort?" +
+                            string.Join("&", queryParams.Where(param => param != null));
 
-            // Thêm các tham số vào URL
-            if (categoryId.HasValue)
-                apiUrl += $"categoryId={categoryId.Value}&";
+            // Fetch data from the API
+            var apiResponse = await GetDataFromApiAsync<PaginatedResponse<GearVM>>(apiUrl);
 
-            if (sortBy.HasValue)
-                apiUrl += $"sortBy={sortBy.Value}&";
+            // Fetch categories
+            var campingCategories = await GetDataFromApiAsync<List<GearCategoryVM>>(
+                "https://localhost:7298/api/CampingGear/GetAllCampingGearCategories");
 
-            if (priceRange.HasValue)
-                apiUrl += $"priceRange={priceRange.Value}&";
-
-            if (!string.IsNullOrEmpty(popularity))
-                apiUrl += $"popularity={popularity}";
-
-            // Lấy dữ liệu từ API
-            var campingGears = await GetDataFromApiAsync<List<GearVM>>(apiUrl);
-            var campingCategories = await GetDataFromApiAsync<List<GearCategoryVM>>("https://localhost:7298/api/CampingGear/GetAllCampingGearCategories");
-
-            // Kiểm tra ngày sử dụng từ giỏ hàng nếu có
+            // Check cart usage date
             DateTime? cartUsageDate = cartItems.FirstOrDefault()?.UsageDate;
-
             if (cartUsageDate.HasValue)
             {
-                // Định dạng ngày sử dụng để gọi API
+                // Format usage date for the API
                 string formattedDate = cartUsageDate.Value.ToString("MM-dd-yyyy");
 
-                // Lấy danh sách số lượng đã sử dụng theo ngày
+                // Fetch usage details by date
                 var gearUsage = await GetDataFromApiAsync<List<OrderCampingGearByUsageDateDTO>>(
                     $"https://localhost:7298/api/OrderManagement/GetListOrderGearByUsageDate/{formattedDate}");
-                if (gearUsage != null) // Check if gearUsage is not null
+
+                if (gearUsage != null)
                 {
-                    // Cập nhật số lượng còn lại cho từng thiết bị
-                    foreach (var item in campingGears)
+                    // Update available quantities based on usage
+                    foreach (var item in apiResponse?.Data ?? new List<GearVM>())
                     {
-                        var ticket = gearUsage.ToList().Where(s => s.GearId == item.GearId);
-                        if (ticket != null)
+                        var tickets = gearUsage.Where(s => s.GearId == item.GearId).ToList();
+                        foreach (var ticket in tickets)
                         {
-                            foreach (var item1 in ticket)
-                            {
-                                item.QuantityAvailable = item.QuantityAvailable - item1.Quantity.Value;
-                                if (item.QuantityAvailable < 0)
-                                {
-                                    item.QuantityAvailable = 0;
-                                }
-                            }
+                            item.QuantityAvailable -= ticket.Quantity.Value;
+                            if (item.QuantityAvailable < 0) item.QuantityAvailable = 0;
                         }
                     }
+
+                    // Update cart items with available quantities
                     foreach (var item in cartItems)
                     {
-                        var ticket = campingGears.ToList().FirstOrDefault(s => s.GearId == item.Id && item.TypeCategory == "GearCategory");
-                        if (ticket != null)
+                        var ticket = apiResponse?.Data?.FirstOrDefault(s => s.GearId == item.Id && item.TypeCategory == "GearCategory");
+                        if (ticket != null && ticket.QuantityAvailable >= item.Quantity)
                         {
-
-                            if (ticket.QuantityAvailable >= item.Quantity)
-                            {
-                                ticket.Quantity = item.Quantity;
-                                ticket.QuantityAvailable -= item.Quantity;
-                            }
+                            ticket.Quantity = item.Quantity;
+                            ticket.QuantityAvailable -= item.Quantity;
                         }
                     }
                 }
             }
 
-            // Truyền dữ liệu về View
-            ViewBag.SortBy = sortBy.HasValue ? sortBy.Value.ToString() : "0";
-            ViewBag.PriceRange = priceRange.HasValue ? priceRange.Value.ToString() : null;
-            ViewBag.Popularity = popularity;
-            ViewBag.CampingGears = campingGears;
+            // Update ViewBag with pagination and data
+            ViewBag.CampingGears = apiResponse?.Data ?? new List<GearVM>();
+            ViewBag.TotalPages = apiResponse?.TotalPages ?? 1;
+            ViewBag.CurrentPage = apiResponse?.CurrentPage ?? 1;
+            ViewBag.PageSize = apiResponse?.PageSize ?? pageSize;
+
+            ViewBag.SortBy = sortBy?.ToString();
+            ViewBag.PriceRange = priceRange?.ToString();
             ViewBag.CampingCategories = campingCategories;
 
             return View("OrderGear");
         }
 
-        public async Task<IActionResult> OrderFoodAndDrink()
-        {
-            var foodAndDrink = await GetDataFromApiAsync<List<FoodAndDrinkVM>>("https://localhost:7298/api/FoodAndDrink/GetAllCustomerFoodAndDrink");
-            var comboFood = await GetDataFromApiAsync<List<ComboFoodVM>>("https://localhost:7298/api/ComboFood/GetAllOrders");
-            Console.WriteLine("-----------" + comboFood.Count);
-            // Lấy danh sách danh mục thiết bị cắm trại
-            var foodAndDrinkCategories = await GetDataFromApiAsync<List<FoodAndDrinkCategoryVM>>("https://localhost:7298/api/FoodAndDrink/GetAllFoodAndDrinkCategories");
-            foreach (var item in comboFood)
-            {
-                foodAndDrink.Add(new FoodAndDrinkVM()
-                {
-                    ItemId = item.ComboId,
-                    ItemName = item.ComboName,
-                    Price = item.Price,
-                    ImgUrl = item.ImgUrl,
-                    CategoryName = "combo",
 
-                });
-            }
 
-            ViewBag.FoodAndDrink = foodAndDrink;
-            ViewBag.FoodAndDrinkCategories = foodAndDrinkCategories;  // Thêm danh sách danh mục vào ViewBag
-
-            return View("OrderFoodAndDrink");
-        }
         [HttpGet]
-        public async Task<IActionResult> OrderFoodAndDrink(int? categoryId, int? sortBy, int? priceRange)
+        public async Task<IActionResult> OrderFoodAndDrink(int? categoryId, int? sortBy, int? priceRange, int page = 1, int pageSize = 6)
         {
-            var foodAndDrinkCategories = await GetDataFromApiAsync<List<FoodAndDrinkCategoryVM>>("https://localhost:7298/api/FoodAndDrink/GetAllFoodAndDrinkCategories");
-
-            ViewBag.CurrentCategoryId = categoryId; // Lưu lại categoryId hiện tại để hiển thị active
-
-            // Xây dựng URL cho API
-            if (categoryId == 9999)
+            try
             {
-                var foodAndDrink = new List<FoodAndDrinkVM>();
-                var comboFood = await GetDataFromApiAsync<List<ComboFoodVM>>("https://localhost:7298/api/ComboFood/GetAllOrders");
+                // Fetch categories from API
+                var foodAndDrinkCategories = await GetDataFromApiAsync<List<FoodAndDrinkCategoryVM>>(
+                    "https://localhost:7298/api/FoodAndDrink/GetAllFoodAndDrinkCategories");
 
-                foreach (var item in comboFood)
-                {
-                    foodAndDrink.Add(new FoodAndDrinkVM()
-                    {
-                        ItemId = item.ComboId,
-                        ItemName = item.ComboName,
-                        Price = item.Price,
-                        ImgUrl = item.ImgUrl,
-                        CategoryName = "combo"
-                    });
-                }
+                // Save current category to ViewBag
+                ViewBag.CurrentCategoryId = categoryId;
 
+                // Construct API URL with filters
+                var queryParams = new List<string>
+        {
+            categoryId.HasValue ? $"categoryId={categoryId.Value}" : null,
+            sortBy.HasValue ? $"sortBy={sortBy.Value}" : null,
+            priceRange.HasValue ? $"priceRange={priceRange.Value}" : null,
+            $"page={page}",
+            $"pageSize={pageSize}"
+        };
+                string apiUrl = "https://localhost:7298/api/FoodAndDrink/GetFoodAndDrinksBySort?" +
+                                string.Join("&", queryParams.Where(param => param != null));
+
+                // Fetch filtered data from API
+                var apiResponse = await GetDataFromApiAsync<PaginatedResponse<FoodAndDrinkVM>>(apiUrl);
+
+                // Update ViewBag for rendering
+                ViewBag.FoodAndDrink = apiResponse?.Data ?? new List<FoodAndDrinkVM>();
+                ViewBag.TotalPages = apiResponse?.TotalPages ?? 1;
+                ViewBag.CurrentPage = apiResponse?.CurrentPage ?? 1;
+                ViewBag.PageSize = apiResponse?.PageSize ?? pageSize;
+
+                ViewBag.SortBy = sortBy?.ToString();
+
+                ViewBag.PriceRange = priceRange?.ToString();
+                ViewBag.FoodAndDrinkCategories = foodAndDrinkCategories;
+
+                return View("OrderFoodAndDrink");
             }
-            else
+            catch (Exception ex)
             {
-                string apiUrl = "https://localhost:7298/api/FoodAndDrink/GetFoodAndDrinksBySort?";
-
-                // Thêm các tham số vào URL
-                if (categoryId.HasValue)
-                {
-                    apiUrl += $"categoryId={categoryId.Value}&";
-                }
-
-                if (sortBy.HasValue)
-                {
-                    apiUrl += $"sortBy={sortBy.Value}&";
-                }
-
-                if (priceRange.HasValue)
-                {
-                    apiUrl += $"priceRange={priceRange.Value}&";
-                }
-
-
-                // Gọi API lấy dữ liệu về đồ ăn và thức uống
-                var foodAndDrink = await GetDataFromApiAsync<List<FoodAndDrinkVM>>(apiUrl);
-                // Gọi API lấy dữ liệu về danh mục đồ ăn và thức uống
-
-                // Cập nhật ViewBag với các giá trị cần thiết
-
-                ViewBag.FoodAndDrink = foodAndDrink;
+                // Log the error and return a user-friendly error view or message
+                ViewBag.ErrorMessage = "An error occurred while processing your request.";
+                return View("Error");
             }
-            ViewBag.SortBy = sortBy.HasValue ? sortBy.Value.ToString() : "0"; // Sắp xếp
-            ViewBag.PriceRange = priceRange.HasValue ? priceRange.Value.ToString() : null; // Khoảng giá
-            ViewBag.FoodAndDrinkCategories = foodAndDrinkCategories;
-
-            return View("OrderFoodAndDrink");
         }
+
+
+
+
+
         [HttpGet("FoodDetail")]
         public async Task<IActionResult> FoodDetail(int itemId)
         {
@@ -566,38 +516,40 @@ namespace GreenGardenClient.Controllers
             return View("OrderTicket");
         }
         [HttpGet]
-        public async Task<IActionResult> OrderTicket(int? categoryId, int? sortBy)
+        public async Task<IActionResult> OrderTicket(int? categoryId, int? sortBy, int page = 1, int pageSize = 3)
         {
-            ViewBag.CurrentCategoryId = categoryId; // Lưu lại categoryId hiện tại để hiển thị active
+            ViewBag.CurrentCategoryId = categoryId; // Save the current category for UI state
 
-            // Xây dựng URL cho API
-            string apiUrl = "https://localhost:7298/api/Ticket/GetTicketsByCategoryAndSort?";
+            // Build API URL with query parameters
+            var queryParams = new List<string>
+    {
+        categoryId.HasValue ? $"categoryId={categoryId.Value}" : null,
+        sortBy.HasValue ? $"sort={sortBy.Value}" : null,
+        $"page={page}",
+        $"pageSize={pageSize}"
+    };
+            string apiUrl = "https://localhost:7298/api/Ticket/GetTicketsByCategoryAndSort?" +
+                            string.Join("&", queryParams.Where(param => param != null));
 
-            // Thêm các tham số vào URL
-            if (categoryId.HasValue)
-            {
-                apiUrl += $"categoryId={categoryId.Value}&";
-            }
+            // Fetch ticket data with pagination
+            var apiResponse = await GetDataFromApiAsync<PaginatedResponse<TicketVM>>(apiUrl);
 
-            if (sortBy.HasValue)
-            {
-                apiUrl += $"sort={sortBy.Value}&";
-            }
+            // Fetch ticket categories
+            var ticketCategories = await GetDataFromApiAsync<List<TicketCategoryVM>>("https://localhost:7298/api/Ticket/GetAllTicketCategories");
 
+            // Update ViewBag with necessary data for the view
+            ViewBag.Ticket = apiResponse?.Data ?? new List<TicketVM>(); // Paginated ticket list
+            ViewBag.TicketCategories = ticketCategories; // Ticket categories
+            ViewBag.SortBy = sortBy?.ToString() ?? "0"; // Current sort option
 
-
-            // Gọi API lấy dữ liệu về đồ ăn và thức uống
-            var ticket = await GetDataFromApiAsync<List<TicketVM>>(apiUrl);
-            // Gọi API lấy dữ liệu về danh mục đồ ăn và thức uống
-            var ticketCategory = await GetDataFromApiAsync<List<TicketCategoryVM>>("https://localhost:7298/api/Ticket/GetAllTicketCategories");
-
-            // Cập nhật ViewBag với các giá trị cần thiết
-            ViewBag.SortBy = sortBy.HasValue ? sortBy.Value.ToString() : "0"; // Sắp xếp          
-            ViewBag.Ticket = ticket;
-            ViewBag.TicketCategories = ticketCategory;
+            // Pagination details
+            ViewBag.TotalPages = apiResponse?.TotalPages ?? 1;
+            ViewBag.CurrentPage = apiResponse?.CurrentPage ?? 1;
+            ViewBag.PageSize = apiResponse?.PageSize ?? pageSize;
 
             return View("OrderTicket");
         }
+
         public async Task<IActionResult> ComboList()
         {
             var combo = await GetDataFromApiAsync<List<ComboVM>>("https://localhost:7298/api/Combo/GetAllCustomerCombos");
@@ -731,7 +683,7 @@ namespace GreenGardenClient.Controllers
             HttpContext.Session.SetString("Cart", session);
         }
         [HttpPost]
-        public async Task<IActionResult> AddToCartAsync(int Id, string Name,string image, string CategoryName, string Type, string TypeCategory, decimal price, int quantity, string usageDate, string redirectAction)
+        public async Task<IActionResult> AddToCartAsync(int Id, string Name, string image, string CategoryName, string Type, string TypeCategory, decimal price, int quantity, string usageDate, string redirectAction)
         {
             // Kiểm tra người dùng đã đăng nhập chưa
             var userId = HttpContext.Session.GetInt32("UserId");
@@ -772,7 +724,7 @@ namespace GreenGardenClient.Controllers
                     return Json(new { success = false, message = "Không thể thêm combo vào giỏ hàng vì đã có vé trong giỏ hàng." });
                 }
 
-              
+
             }
 
             // Nếu đang thêm một vé, không giới hạn loại vé khác nhau
@@ -849,7 +801,7 @@ namespace GreenGardenClient.Controllers
             }
             // Xóa toàn bộ sản phẩm trong giỏ hàng
             HttpContext.Session.Remove("Cart"); // Nếu giỏ hàng lưu trong Session
-              HttpContext.Session.SetInt32("CartItemCount", 0);
+            HttpContext.Session.SetInt32("CartItemCount", 0);
             return RedirectToAction("OrderTicket"); // "Booking" là tên controller, "Index" là action.
         }
 
@@ -921,7 +873,7 @@ namespace GreenGardenClient.Controllers
         }
 
 
-        
+
         public IActionResult Error()
         {
             return View();
@@ -1100,189 +1052,6 @@ namespace GreenGardenClient.Controllers
             }
         }
 
-
-
-        //public async Task<IActionResult> Order()
-        //{
-        //    // Retrieve cart items from session
-        //    var cartItems = GetCartItems();
-
-        //    // Ensure there's at least one item in the cart
-        //    if (!cartItems.Any())
-        //    {
-        //        TempData["Notification"] = "Giỏ hàng của bạn trống!";
-        //        return RedirectToAction("Cart");
-        //    }
-
-        //    try
-        //    {
-        //        // Create a new HttpClient instance from the factory
-        //        var client = _clientFactory.CreateClient();
-
-        //        // Retrieve JWT token from cookies
-        //        var jwtToken = Request.Cookies["JWTToken"];
-        //        if (!string.IsNullOrEmpty(jwtToken))
-        //        {
-        //            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
-        //        }
-        //        else
-        //        {
-        //            TempData["Notification"] = "Vui lòng đăng nhập để thực hiện đặt hàng!";
-        //            return RedirectToAction("Login"); // Redirect to login if token is not available
-        //        }
-
-        //        // Retrieve the user ID and other customer details from session
-        //        var customerId = 4;
-        //        var customerName = HttpContext.Session.GetString("FullName");
-        //        var phoneCustomer = HttpContext.Session.GetString("NumberPhone");
-
-
-        //        // Check if the user is authenticated
-        //        if (customerId == null || string.IsNullOrEmpty(customerName) || string.IsNullOrEmpty(phoneCustomer))
-        //        {
-        //            TempData["Notification"] = "Vui lòng đăng nhập trước khi đặt hàng!";
-        //            return RedirectToAction("Login"); // Redirect to login if the user is not authenticated
-        //        }
-
-        //        // Classify cart items into different categories
-        //        var tickets = cartItems.Where(c => c.Type == "Ticket" && c.TypeCategory == "TicketCategory").ToList();
-        //        var gears = cartItems.Where(c => c.Type == "Gear" && c.TypeCategory == "GearCategory").ToList();
-        //        var combo = cartItems.Where(c => c.Type == "Combo" && c.TypeCategory == "ComboCategory").ToList();
-        //        var foods = cartItems.Where(c => c.Type == "FoodAndDrink" && c.TypeCategory == "FoodAndDrinkCategory").ToList();
-        //        var combofoods = cartItems.Where(c => c.TypeCategory == "Combo").ToList();
-
-        //        // Assuming all cart items share the same usage date
-        //        var usageDate = cartItems.First().UsageDate;
-
-        //        // Calculate total amount
-        //        var totalAmount = cartItems.Sum(item => item.TotalPrice);
-        //        if (tickets.Any())
-        //        {
-        //            var orderRequest = new CheckOut
-        //            {
-        //                Order = new CustomerOrderAddDTO
-        //                {
-        //                    CustomerId = customerId, // Use the retrieved customer ID
-        //                    CustomerName = customerName, // Retrieve the customer's name from session
-        //                    OrderDate = DateTime.Now,
-        //                    OrderUsageDate = usageDate,
-        //                    Deposit = 0,
-        //                    TotalAmount = totalAmount,
-        //                    PhoneCustomer = phoneCustomer // Retrieve the customer's phone from session
-        //                },
-        //                OrderTicket = tickets.Select(t => new CustomerOrderTicketAddlDTO
-        //                {
-        //                    TicketId = t.Id,
-        //                    Quantity = t.Quantity
-        //                }).ToList(),
-        //                OrderCampingGear = gears.Select(g => new CustomerOrderCampingGearAddDTO
-        //                {
-        //                    GearId = g.Id,
-        //                    Quantity = g.Quantity
-        //                }).ToList(),
-        //                OrderFood = foods.Select(f => new CustomerOrderFoodAddDTO
-        //                {
-        //                    ItemId = f.Id,
-        //                    Quantity = f.Quantity,
-        //                    Description = f.Name
-        //                }).ToList(),
-        //                OrderFoodCombo = combofoods.Select(cf => new CustomerOrderFoodComboAddDTO
-        //                {
-        //                    ComboId = cf.Id,
-        //                    Quantity = cf.Quantity
-        //                }).ToList()
-        //            };
-
-        //            // Serialize the order request to JSON
-        //            var content = new StringContent(JsonConvert.SerializeObject(orderRequest), Encoding.UTF8, "application/json");
-
-        //            // Use the client from IHttpClientFactory to make the API call
-        //            var apiUrl = "https://localhost:7298/api/OrderManagement/CheckOut";
-        //            var response = await client.PostAsync(apiUrl, content);
-
-        //            // Handle the API response
-        //            if (response.IsSuccessStatusCode)
-        //            {
-        //                // Clear the cart after successful checkout
-        //                HttpContext.Session.Remove("Cart");  // This clears the cart items in the session
-
-        //                TempData["Notification"] = "Đặt hàng thành công!";
-        //                return RedirectToAction("Index");
-        //            }
-        //            else
-        //            {
-        //                var errorMessage = await response.Content.ReadAsStringAsync();
-        //                TempData["Notification"] = $"Lỗi khi đặt hàng: {errorMessage}";
-        //                return RedirectToAction("Cart");
-        //            }
-        //        }
-        //        else
-        //        {
-        //            var orderRequest = new CheckOutComboOrderRequest
-        //            {
-        //                Order = new CustomerOrderAddDTO
-        //                {
-        //                    CustomerId = customerId, // Use the retrieved customer ID
-        //                    CustomerName = customerName, // Retrieve the customer's name from session
-        //                    OrderDate = DateTime.Now,
-        //                    OrderUsageDate = usageDate,
-        //                    Deposit = 0,
-        //                    TotalAmount = totalAmount,
-        //                    PhoneCustomer = phoneCustomer // Retrieve the customer's phone from session
-        //                },
-        //                OrderCombo = tickets.Select(t => new CustomerOrderComboAddDTO
-        //                {
-        //                    ComboId = t.Id,
-        //                    Quantity = t.Quantity
-        //                }).ToList(),
-        //                OrderCampingGear = gears.Select(g => new CustomerOrderCampingGearAddDTO
-        //                {
-        //                    GearId = g.Id,
-        //                    Quantity = g.Quantity
-        //                }).ToList(),
-        //                OrderFood = foods.Select(f => new CustomerOrderFoodAddDTO
-        //                {
-        //                    ItemId = f.Id,
-        //                    Quantity = f.Quantity,
-        //                    Description = f.Name
-        //                }).ToList(),
-        //                OrderFoodCombo = combofoods.Select(cf => new CustomerOrderFoodComboAddDTO
-        //                {
-        //                    ComboId = cf.Id,
-        //                    Quantity = cf.Quantity
-        //                }).ToList()
-        //            };
-
-        //            // Serialize the order request to JSON
-        //            var content = new StringContent(JsonConvert.SerializeObject(orderRequest), Encoding.UTF8, "application/json");
-
-        //            // Use the client from IHttpClientFactory to make the API call
-        //            var apiUrl = "https://localhost:7298/api/OrderManagement/CheckOutComboOrder";
-        //            var response = await client.PostAsync(apiUrl, content);
-
-        //            // Handle the API response
-        //            if (response.IsSuccessStatusCode)
-        //            {
-        //                // Clear the cart after successful checkout
-        //                HttpContext.Session.Remove("Cart");  // This clears the cart items in the session
-
-        //                TempData["Notification"] = "Đặt hàng thành công!";
-        //                return RedirectToAction("Index");
-        //            }
-        //            else
-        //            {
-        //                var errorMessage = await response.Content.ReadAsStringAsync();
-        //                TempData["Notification"] = $"Lỗi khi đặt hàng: {errorMessage}";
-        //                return RedirectToAction("Cart");
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        TempData["Notification"] = $"Lỗi hệ thống: {ex.Message}";
-        //        return RedirectToAction("Cart");
-        //    }
-        //}
 
 
     }

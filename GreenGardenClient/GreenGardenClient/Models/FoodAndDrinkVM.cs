@@ -14,6 +14,13 @@ namespace GreenGardenClient.Models
         public int Quantity { get; set; }
         public bool? Status { get; set; }
     }
+    public class PaginatedResponse<T>
+    {
+        public List<T> Data { get; set; }
+        public int TotalPages { get; set; }
+        public int CurrentPage { get; set; }
+        public int PageSize { get; set; }
+    }
     public class FoodAndDrinkVMNew
     {
         public int ItemId { get; set; }

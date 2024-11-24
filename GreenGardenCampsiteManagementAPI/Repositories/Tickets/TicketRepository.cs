@@ -22,9 +22,9 @@ namespace Repositories.Tickets
         {
             return TicketDAO.GetTicketDetail(id);
         }
-        public List<TicketDTO> GetTicketsByCategoryIdAndSort(int? categoryId, int? sort)
+        public (List<TicketDTO> Tickets, int TotalPages) GetTicketsByCategoryIdAndSort(int? categoryId, int? sortBy, int page, int pageSize)
         {
-            return TicketDAO.GetTicketsByCategoryIdAndSort(categoryId, sort); // Gọi phương thức từ TicketDAO
+            return TicketDAO.GetTicketsByCategoryIdAndSort(categoryId, sortBy, page, pageSize);
         }
         public void AddTicket(AddTicket ticketDto)
         {

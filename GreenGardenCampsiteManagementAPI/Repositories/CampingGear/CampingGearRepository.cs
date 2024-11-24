@@ -38,9 +38,9 @@ namespace Repositories.CampingGear
         {
             return CampingGearDAO.GetAllCampingGearCategories();
         }
-        public List<CampingGearDTO> GetCampingGearsBySort(int? categoryId, int? sortBy, int? priceRange, int? popularity)
+        public (List<CampingGearDTO> campingGears, int TotalPages) GetCampingGearsBySort(int? categoryId, int? sortBy, int? priceRange, int page, int pageSize)
         {
-            return CampingGearDAO.GetCampingGears(categoryId, sortBy, priceRange, popularity);
+            return CampingGearDAO.GetCampingGears(categoryId, sortBy, priceRange, page, pageSize);
         }
         public void ChangeGearStatus(int gearId)
         {

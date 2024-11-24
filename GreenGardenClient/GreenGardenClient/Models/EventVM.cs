@@ -11,7 +11,7 @@ namespace GreenGardenClient.Models
 
         public string? Description { get; set; }
 
-        public DateTime EventDate { get; set; }
+        public DateTime? EventDate { get; set; }
 
         public TimeSpan? StartTime { get; set; }
 

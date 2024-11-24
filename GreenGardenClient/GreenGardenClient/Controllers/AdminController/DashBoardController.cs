@@ -73,7 +73,7 @@ namespace GreenGardenClient.Controllers.AdminController
                     if (allEvents != null)
                     {
                         events = allEvents
-                            .Where(s => s.EventDate.ToString("yyyy/MM") == DateTime.Now.ToString("yyyy/MM"))
+                            .Where(s => s.EventDate.Value.ToString("yyyy/MM") == DateTime.Now.ToString("yyyy/MM"))
                             .ToList();
                     }
 

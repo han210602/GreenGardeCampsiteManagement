@@ -175,14 +175,19 @@ namespace DataAccess.DAO
                 throw new Exception(ex.Message);
             }
         }
-        public static List<TicketDTO> GetTicketsByCategoryIdAndSort(int? categoryId, int? sortBy)
+        public static (List<TicketDTO> tickets, int totalPages) GetTicketsByCategoryIdAndSort(
+       int? categoryId,
+       int? sortBy,
+       int page = 1,
+       int pageSize = 3)
         {
             try
             {
                 var query = context.Tickets
-                .Include(ticket => ticket.TicketCategory).Where(s => s.Status == true) // Sửa tên biến từ gear thành ticket
-                .AsNoTracking() // Không theo dõi thực thể để cải thiện hiệu suất
-                .AsQueryable();
+                    .Include(ticket => ticket.TicketCategory)
+                    .Where(s => s.Status == true) // Bao gồm trạng thái vé
+                    .AsNoTracking() // Không theo dõi thực thể để cải thiện hiệu suất
+                    .AsQueryable();
 
                 // Lọc theo danh mục vé nếu có categoryId
                 if (categoryId.HasValue)
@@ -205,10 +210,18 @@ namespace DataAccess.DAO
                         break;
                 }
 
+                // Tính tổng số vé và số trang
+                var totalItems = query.Count(); // Tổng số vé
+                var totalPages = (int)Math.Ceiling((double)totalItems / pageSize); // Tổng số trang
+                var skip = (page - 1) * pageSize;
+
+                // Phân trang
+                query = query.Skip(skip).Take(pageSize);
+
                 // Chọn các thuộc tính cần thiết và chuyển đổi sang DTO
                 var tickets = query.Select(ticket => new TicketDTO
                 {
-                    TicketId = ticket.TicketId, // Sửa tên thuộc tính từ GearId thành TicketId
+                    TicketId = ticket.TicketId,
                     TicketName = ticket.TicketName,
                     Price = ticket.Price,
                     TicketCategoryId = ticket.TicketCategory.TicketCategoryId,
@@ -217,12 +230,13 @@ namespace DataAccess.DAO
                     Status = ticket.Status
                 }).ToList();
 
-                return tickets;
+                return (tickets, totalPages);
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new Exception("Đã xảy ra lỗi khi lấy dữ liệu vé: " + ex.Message);
             }
         }
+
     }
 }

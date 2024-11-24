@@ -618,27 +618,28 @@
                 color: #fff;
             }
 
+
                 .widget-small .icon {
                     margin-right: 15px;
                     font-size: 3rem;
                 }
 
                 .widget-small.primary {
-                    background-color: #007bff;
+                    background-color: #4bc0c0; /* Màu gốc của rgba(75, 192, 192, 0.6) */
                 }
 
                 .widget-small.info {
-                    background-color: #17a2b8;
+                    background-color: #36a2eb; /* Màu gốc của rgba(54, 162, 235, 0.6) */
                 }
 
                 .widget-small.warning {
-                    background-color: #dc3545;
-                    color: #212529;
+                    background-color: #ffce56; /* Màu gốc của rgba(255, 206, 86, 0.6) */
                 }
 
                 .widget-small.danger {
-                    background-color: #28a745;
+                    background-color: #ff6384; /* Màu gốc của rgba(255, 99, 132, 0.6) */
                 }
+
 
             /* Tổng doanh thu */
             .revenue-container {
@@ -884,63 +885,7 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="tile">
-                    <div>
-                        <h3 class="tile-title">Sự kiện trong tháng</h3>
-                    </div>
-                    <!-- Top Bar with Search -->
-                    <!-- Event Cards -->
-                    <div class="row">
-                        @foreach (var eventItem in ViewBag.listevent)
-                        {
-                            <div class="event-card col-md-4">
-                                <div class="d-flex">
-                                    <!-- Event Image on the Left -->
-                                    <div class="event-image mr-3">
-                                        <img src="/images/@eventItem.PictureUrl" alt="Event Image" class="event-thumbnail">
-                                    </div>
-
-                                    <!-- Event Details on the Right -->
-                                    <div class="event-details">
-                                        <strong>
-                                            <i class="fas fa-calendar-day mr-1" style="color: #007bff;"></i> @eventItem.EventName
-                                        </strong><br>
-                                        <span>
-                                            <i class="fas fa-clock" style="color: #28a745; margin-right: 5px;"></i>
-                                            @eventItem.StartTime - @eventItem.EndTime
-                                        </span><br>
-                                        <span>
-                                            <!-- Calendar icon with event date -->
-                                            <i class="fas fa-calendar-alt mr-1" style="color: #ffc107;"></i> Từ @eventItem.EventDate.ToString("dd/MM/yyyy")
-                                        </span><br>
-
-                                        <span>
-                                            <i class="fas fa-map-marker-alt mr-1" style="color: #17a2b8;"></i> @eventItem.Location
-                                        </span><br>
-
-                                        <span class="stats-link">
-                                            <i class="fas fa-info-circle mr-1" style="color: #6c757d;"></i>
-                                            <a href="@Url.Action("UpdateEvent", "EventManagement", new { id = @eventItem.EventId })" style="text-decoration: none; color: inherit;">
-                                                (Chi tiết)
-                                            </a>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                    </div>
-                    <div id="pagination" class="dataTables_paginate paging_simple_numbers">
-                        <ul class="pagination">
-                            <li class="paginate_button page-item previous disabled" id="prev-page"><a href="#" class="page-link">Lùi</a></li>
-                            <!-- Các nút số trang sẽ được tạo tự động -->
-                            <li class="paginate_button page-item next" id="next-page"><a href="#" class="page-link">Tiếp</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
 
 
     </main>

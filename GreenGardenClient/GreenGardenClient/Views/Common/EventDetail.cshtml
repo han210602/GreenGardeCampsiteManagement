@@ -149,7 +149,7 @@
                 </div>
             </div>
             <style>
-                  .cart-wrapper {
+                .cart-wrapper {
                     position: relative;
                     display: inline-block;
                 }
@@ -174,6 +174,7 @@
                     z-index: 10;
                     white-space: nowrap; /* Prevent text wrapping */
                 }
+
                 .site-navbar {
                     position: fixed; /* Cố định header */
                     top: 0; /* Đặt header ở đầu trang */
@@ -224,68 +225,31 @@
                     display: block; /* Hiện menu thả xuống khi hover vào mục Services */
                 }
 
-                .post-entry-1 {
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: space-between;
-                    height: 100%;
-                    position: relative; /* Để đặt nút "Chi tiết" ở góc phải */
-                    border: 1px solid #ddd; /* Đường viền mỏng */
-                    border-radius: 10px;
-                    overflow: hidden;
-                    background: #fff;
-                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
-                    padding: 15px;
-                }
-
-                    /* Hiệu ứng khi hover vào khung */
-                    .post-entry-1:hover {
-                        transform: translateY(-5px); /* Dịch khung lên một chút */
-                        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Tăng hiệu ứng đổ bóng */
-                    }
-
-                    /* Định dạng ảnh bên trong khung */
-                    .post-entry-1 img {
-                        width: 70%; /* Đảm bảo ảnh luôn đầy chiều rộng khung */
-                        height: 50%; /* Chiều cao cố định */
-                        object-fit: cover; /* Đảm bảo ảnh không bị méo */
-                        border-bottom: 1px solid #ddd; /* Đường viền dưới ảnh */
-                    }
-
-                /* Định dạng nội dung trong khung */
-                .post-entry-1-contents {
-                    padding: 15px; /* Khoảng cách bên trong nội dung */
-                    text-align: left; /* Căn lề trái */
-                }
-
-                    /* Tiêu đề sự kiện */
-                    .post-entry-1-contents h2 {
-                        font-size: 18px; /* Kích thước chữ tiêu đề */
-                        font-weight: bold; /* Chữ đậm */
-                        margin-bottom: 10px; /* Khoảng cách phía dưới */
-                        color: #333; /* Màu chữ đậm */
-                    }
-
-                    /* Định dạng thông tin ngày tháng và người tạo */
-                    .post-entry-1-contents .meta {
-                        font-size: 14px; /* Kích thước chữ nhỏ */
-                        color: #888; /* Màu chữ xám nhạt */
-                        margin-bottom: 15px; /* Khoảng cách phía dưới */
-                        display: block;
-                    }
-
-                    /* Định dạng đoạn mô tả */
-                    .post-entry-1-contents p {
-                        font-size: 14px; /* Kích thước chữ mô tả */
-                        color: #555; /* Màu chữ trung tính */
-                        line-height: 1.5; /* Độ cao dòng để dễ đọc */
-                        margin: 0;
-                    }
-
                 /* Đồng bộ khoảng cách giữa các khung */
                 .col-lg-4, .col-md-6 {
                     margin-bottom: 30px; /* Khoảng cách giữa các khung sự kiện */
                 }
+
+                .d-flex {
+                    display: flex;
+                    align-items: center; /* Căn giữa theo chiều dọc */
+                }
+
+                i {
+                    width: 30px; /* Đảm bảo tất cả các icon có cùng chiều ngang */
+                    font-size: 1.2rem;
+                    text-align: center;
+                }
+
+                p {
+                    margin-bottom: 0; /* Loại bỏ khoảng cách mặc định giữa các đoạn văn */
+                    font-size: 1rem;
+                }
+
+                strong {
+                    font-weight: bold; /* Làm nổi bật tiêu đề */
+                }
+
             </style>
             <script>
                 $(document).ready(function () {
@@ -301,60 +265,92 @@
             </script>
         </header>
 
-        <div class="tile">
-            <div class="ftco-blocks-cover-1">
-                <div class="site-section-cover overlay" style="background-image: url('@Url.Content("~/images/p22.jpg")')">
-                    <div class="container">
-                        <div class="row align-items-center justify-content-center text-center">
-                            <div class="col-md-5" data-aos="fade-up">
-                                <h1 class="mb-3 text-white">Về Sự Kiện</h1>
-                                <p>Tại đây chúng tôi sẽ lưu giữ những khoảnh khắc,kỷ niệm khó quên khi có mặt tại sông quê.</p>
 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="tile">
             <div class="site-section">
                 <div class="container">
+                    <!-- Event Title -->
                     <div class="row">
-                        <!-- Event Name -->
                         <div class="col-md-12 text-center mb-4">
-                            <h1 class="display-4 font-weight-bold">@events.EventName</h1>
+                            <h1 class="display-4 font-weight-bold" style="color: #efba6c !important;">CHI TIẾT SỰ KIỆN</h1>
                         </div>
                     </div>
+
                     <div class="row">
-                        <!-- Event Banner -->
-                        <div class="col-md-12">
-                            <div class="banner text-center">
-                                <img src="~/images/Event/@events.PictureUrl" alt="Event Banner" class="img-fluid mt-3" style="width:40%; max-height: 400px; border-radius: 10px; object-fit: cover;">
+                        <!-- Event Banner (Logo) -->
+                        <div class="col-md-6 text-center">
+                            <div class="banner">
+                                <img src="~/images/Event/@events.PictureUrl" alt="VTEC Logo" class="img-fluid mt-3" style="max-height: 300px; border-radius: 10px;">
                             </div>
                         </div>
 
                         <!-- Event Information -->
-                        
+                        <div class="col-md-6">
+                            <h3 class="font-weight-bold text-uppercase mb-3">@events.EventName</h3>
+                            <p class="text-muted" style="font-size: 1.1rem;">
+                                @events.Description
+                            </p>
+                        </div>
                     </div>
 
+
+                    <!-- Contact Information -->
                     <div class="row mt-4">
-                        <!-- CTA Section -->
-                        <div class="col-md-8">
-                            <h2 class="mb-3">Thông tin sự kiện</h2>
-                            <p><i class="fas fa-calendar-alt"></i> <strong>Ngày: </strong>@events.EventDate.ToString("dd-MM-yyyy")</p>
-                            <p><i class="fas fa-user"></i> <strong>Người tạo sự kiện: </strong>@events.CreatedByUserName</p>
-                            <p><i class="fas fa-map-marker-alt"></i> <strong>Địa điểm: </strong>@events.Location</p>
-                            <h3 class="mt-4">Mô tả sự kiện</h3>
-                            <p>@events.Description</p>
+                        <!-- Event Information -->
+                        <div class="col-md-12">
+                            <hr>
                         </div>
+                        <div class="col-md-8">
+                            <!-- Người tạo -->
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="fas fa-user" style="color: #efba6c; width: 30px; text-align: center;"></i>
+                                <p class="mb-0">
+                                    <strong>Người tạo:</strong> @events.CreatedByUserName
+                                </p>
+                            </div>
+                            <!-- Số điện thoại -->
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="fas fa-phone-alt" style="color: #efba6c; width: 30px; text-align: center;"></i>
+                                <p class="mb-0">
+                                    <strong>Số điện thoại:</strong> 098 732 76 69
+                                </p>
+                            </div>
+                            <!-- Ngày bắt đầu -->
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="fas fa-calendar-alt" style="color: #efba6c; width: 30px; text-align: center;"></i>
+                                <p class="mb-0">
+                                    <strong>Ngày bắt đầu:</strong> @events.EventDate.Value.ToString("dd-MM-yyyy")
+                                </p>
+                            </div>
+                            <!-- Giờ bắt đầu và kết thúc -->
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="fas fa-clock" style="color: #efba6c; width: 30px; text-align: center;"></i>
+                                <p class="mb-0">
+                                    <strong>Giờ bắt đầu:</strong> @events.StartTime; <strong>Giờ kết thúc:</strong> @events.EndTime
+                                </p>
+                            </div>
+                            <!-- Địa điểm -->
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-map-marker-alt" style="color: #efba6c; width: 30px; text-align: center;"></i>
+                                <p class="mb-0">
+                                    <strong>Địa điểm:</strong> @events.Location
+                                </p>
+                            </div>
+                        </div>
+
+
+                        <!-- Call to Action Section -->
                         <div class="col-md-4">
                             <div class="card">
                                 <div class="card-body text-center">
-                                    <h4 class="card-title">Tham gia sự kiện này</h4>
-                                    <p class="card-text">Đừng bỏ lỡ cơ hội tham gia sự kiện hấp dẫn này!</p>
-                                    <a href="/Common/Event" class="btn btn-primary btn-block">Xem các sự kiện khác</a>
+                                    <h4 class="card-title" style="color: #303f9f;">Trải nghiệm sự kiện này</h4>
+                                    <p class="card-text">Đặt vé để tham gia sự kiện ngay!</p>
+                                    <a href="/Service/OrderTicket" class="btn btn-primary btn-block" style="background-color: #efba6c !important; border: none;">Đặt vé</a>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>

@@ -22,6 +22,12 @@ namespace GreenGardenClient.Controllers
         {
             return View();
         }
+
+        public IActionResult Utilities()
+        {
+            return View();
+        }
+
         [HttpGet]
 
         public IActionResult Login()

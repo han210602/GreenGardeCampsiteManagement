@@ -37,10 +37,12 @@ namespace Repositories.FoodAndDrink
             return FoodAndDrinkDAO.GetAllFoodAndDrinkCategories();
 
         }
-        public List<FoodAndDrinkDTO> GetFoodAndDrinks(int? categoryId, int? sortBy, int? priceRange)
+        public (List<FoodAndDrinkDTO> FoodAndDrinks, int TotalPages) GetFoodAndDrinks(int? categoryId, int? sortBy, int? priceRange, int page, int pageSize)
         {
-            return FoodAndDrinkDAO.GetFoodAndDrinks(categoryId, sortBy, priceRange);
+            return FoodAndDrinkDAO.GetFoodAndDrinks(categoryId, sortBy, priceRange, page, pageSize);
         }
+
+
         public void ChangeFoodStatus(int itemId)
         {
             FoodAndDrinkDAO.ChangeFoodStatus(itemId); // Call DAO method

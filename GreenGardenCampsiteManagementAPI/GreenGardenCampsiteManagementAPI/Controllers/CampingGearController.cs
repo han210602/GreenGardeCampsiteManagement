@@ -106,12 +106,23 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
             }
         }
         [HttpGet("GetCampingGearsBySort")]
-        public IActionResult GetCampingGearsBySort([FromQuery] int? categoryId, [FromQuery] int? sortBy, [FromQuery] int? priceRange, [FromQuery] int? popularity)
+        public IActionResult GetCampingGearsBySort([FromQuery] int? categoryId, [FromQuery] int? sortBy, [FromQuery] int? priceRange, [FromQuery] int page = 1, [FromQuery] int pageSize = 6)
         {
             try
             {
-                var campingGears = _repo.GetCampingGearsBySort(categoryId, sortBy, priceRange, popularity);
-                return Ok(campingGears);
+                // Call the repository method that returns both the list and the total pages
+                var (campingGears, totalPages) = _repo.GetCampingGearsBySort(categoryId, sortBy, priceRange, page, pageSize);
+
+                // Create a response object to return both data and metadata
+                var response = new
+                {
+                    TotalPages = totalPages,
+                    CurrentPage = page,
+                    PageSize = pageSize,
+                    Data = campingGears
+                };
+
+                return Ok(response);
             }
             catch (Exception ex)
             {

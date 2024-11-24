@@ -34,7 +34,8 @@ namespace DataAccess.DAO
                    Status = gear.Status,
                }).ToList();
                 return campingGears;
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
@@ -168,7 +169,7 @@ namespace DataAccess.DAO
                 throw new Exception(ex.Message);
             }
         }
-    
+
 
         public static List<CampingCategoryDTO> GetAllCampingGearCategories()
         {
@@ -191,22 +192,29 @@ namespace DataAccess.DAO
             }
         }
 
-        public static List<CampingGearDTO> GetCampingGears(int? categoryId, int? sortBy, int? priceRange, int? popularity)
+        public static (List<CampingGearDTO> campingGears, int totalPages) GetCampingGears(
+      int? categoryId,
+      int? sortBy,
+      int? priceRange,
+      int page = 1,
+      int pageSize = 6)
         {
             try
             {
+                // Khởi tạo truy vấn cho bảng CampingGears
                 var query = context.CampingGears
-               .Include(gear => gear.GearCategory).Where(s => s.Status == true)
-               .AsNoTracking() // Không theo dõi thực thể để cải thiện hiệu suất
-               .AsQueryable();
+                    .Include(gear => gear.GearCategory)  // Bao gồm thông tin danh mục thiết bị
+                    .Where(s => s.Status == true) // Lọc các thiết bị có trạng thái active
+                    .AsNoTracking() // Không theo dõi thực thể để cải thiện hiệu suất
+                    .AsQueryable();
 
-                // Lọc theo danh mục nếu categoryId được cung cấp
+                // Lọc theo danh mục (nếu có)
                 if (categoryId.HasValue)
                 {
                     query = query.Where(gear => gear.GearCategoryId == categoryId.Value);
                 }
 
-                // Lọc theo khoảng giá
+                // Lọc theo khoảng giá (nếu có)
                 if (priceRange.HasValue)
                 {
                     switch (priceRange.Value)
@@ -223,26 +231,8 @@ namespace DataAccess.DAO
                     }
                 }
 
-                // Áp dụng sắp xếp nếu có tiêu chí sắp xếp hoặc độ phổ biến
-                bool isSorted = false;
 
-                // Sắp xếp theo độ phổ biến
-                if (popularity.HasValue && !sortBy.HasValue) // Ưu tiên `sortBy` nếu cả hai đều được yêu cầu
-                {
-                    switch (popularity.Value)
-                    {
-                        case 1: // Phổ biến nhất (số lượng có sẵn nhiều nhất)
-                            query = query.OrderByDescending(gear => gear.QuantityAvailable);
-                            isSorted = true;
-                            break;
-                        case 2: // Mới nhất (theo ngày tạo)
-                            query = query.OrderByDescending(gear => gear.CreatedAt);
-                            isSorted = true;
-                            break;
-                    }
-                }
-
-                // Sắp xếp theo tiêu chí sortBy
+                // Sắp xếp theo tiêu chí sortBy nếu có
                 if (sortBy.HasValue)
                 {
                     switch (sortBy.Value)
@@ -259,17 +249,23 @@ namespace DataAccess.DAO
                         case 4: // Sắp xếp theo tên từ Z-A
                             query = query.OrderByDescending(gear => gear.GearName);
                             break;
+                        case 5: // Phổ biến nhất (số lượng có sẵn nhiều nhất)
+                            query = query.OrderByDescending(gear => gear.QuantityAvailable);
+                            break;
+                        case 6: // Mới nhất (theo ngày tạo)
+                            query = query.OrderByDescending(gear => gear.CreatedAt);
+                            break;
                     }
-                    isSorted = true;
                 }
 
-                // Sắp xếp mặc định (nếu không có tiêu chí sắp xếp nào)
-                if (!isSorted)
-                {
-                    query = query; // Mặc định sắp xếp theo tên
-                }
+                // Tính toán tổng số thiết bị và tổng số trang
+                var totalItems = query.Count(); // Tổng số thiết bị
+                var totalPages = (int)Math.Ceiling((double)totalItems / pageSize); // Tính số trang
 
-                // Chọn các thuộc tính cần thiết và chuyển đổi sang DTO
+                // Phân trang: Lấy các thiết bị trong phạm vi của trang hiện tại
+                query = query.Skip((page - 1) * pageSize).Take(pageSize);
+
+                // Chuyển đổi thành DTO và lấy các thuộc tính cần thiết
                 var campingGears = query.Select(gear => new CampingGearDTO
                 {
                     GearId = gear.GearId,
@@ -282,13 +278,14 @@ namespace DataAccess.DAO
                     ImgUrl = gear.ImgUrl
                 }).ToList();
 
-                return campingGears;
+                return (campingGears, totalPages);
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new Exception("Đã xảy ra lỗi khi lấy dữ liệu thiết bị cắm trại: " + ex.Message);
             }
         }
+
 
     }
 

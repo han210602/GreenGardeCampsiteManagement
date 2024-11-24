@@ -32,7 +32,8 @@ namespace DataAccess.DAO
                 }).ToList();
 
                 return items;
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
@@ -141,14 +142,15 @@ namespace DataAccess.DAO
                 throw new Exception(ex.Message);
             }
         }
-        public static List<FoodAndDrinkDTO> GetFoodAndDrinks(int? categoryId, int? sortBy, int? priceRange)
+        public static (List<FoodAndDrinkDTO> foodAndDrinks, int totalPages) GetFoodAndDrinks(int? categoryId, int? sortBy, int? priceRange, int page = 1, int pageSize = 6)
         {
             try
             {
                 var query = context.FoodAndDrinks
-                .Include(food => food.Category).Where(s => s.Status == true) // Bao gồm thông tin danh mục
-                .AsNoTracking() // Không theo dõi thực thể để cải thiện hiệu suất
-                .AsQueryable();
+                    .Include(food => food.Category)
+                    .Where(s => s.Status == true) // Bao gồm thông tin danh mục
+                    .AsNoTracking() // Không theo dõi thực thể để cải thiện hiệu suất
+                    .AsQueryable();
 
                 // Lọc theo danh mục nếu categoryId được cung cấp
                 if (categoryId.HasValue)
@@ -161,49 +163,44 @@ namespace DataAccess.DAO
                 {
                     switch (priceRange.Value)
                     {
-                        case 1: // Dưới 100,000
+                        case 1: // Dưới 300,000
                             query = query.Where(food => food.Price < 300000);
                             break;
-                        case 2: // 100,000 - 300,000
+                        case 2: // 300,000 - 500,000
                             query = query.Where(food => food.Price >= 300000 && food.Price <= 500000);
                             break;
-                        case 3: // Trên 300,000
-                            query = query.Where(food => food.Price >= 500000);
+                        case 3: // Trên 500,000
+                            query = query.Where(food => food.Price > 500000);
                             break;
                     }
                 }
 
-                // Áp dụng sắp xếp nếu có tiêu chí sắp xếp hoặc độ phổ biến
-                bool isSorted = false;
-
-                // Sắp xếp theo độ phổ biến
-
-                // Sắp xếp theo tiêu chí sortBy
+                // Sắp xếp nếu có tiêu chí sắp xếp
                 if (sortBy.HasValue)
                 {
                     switch (sortBy.Value)
                     {
-                        case 1: // Sắp xếp theo giá từ thấp đến cao
+                        case 1: // Giá tăng dần
                             query = query.OrderBy(food => food.Price);
                             break;
-                        case 2: // Sắp xếp theo giá từ cao đến thấp
+                        case 2: // Giá giảm dần
                             query = query.OrderByDescending(food => food.Price);
                             break;
-                        case 3: // Sắp xếp theo ngày tạo mới nhất
+                        case 3: // Theo tên món ăn (tăng dần)
                             query = query.OrderBy(food => food.ItemName);
                             break;
-                        case 4: // Sắp xếp theo số lượng có sẵn
+                        case 4: // Theo tên món ăn (giảm dần)
                             query = query.OrderByDescending(food => food.ItemName);
                             break;
                     }
-                    isSorted = true;
                 }
 
-                // Sắp xếp mặc định (nếu không có tiêu chí sắp xếp nào)
-                if (!isSorted)
-                {
-                    query = query; // Mặc định sắp xếp theo tên món ăn
-                }
+                // Phân trang
+                var totalItems = query.Count(); // Tổng số sản phẩm
+                var totalPages = (int)Math.Ceiling((double)totalItems / pageSize); // Tổng số trang
+                var skip = (page - 1) * pageSize;
+
+                query = query.Skip(skip).Take(pageSize);
 
                 // Chuyển đổi sang DTO và lấy các thuộc tính cần thiết
                 var foodAndDrinks = query.Select(food => new FoodAndDrinkDTO
@@ -212,17 +209,19 @@ namespace DataAccess.DAO
                     ItemName = food.ItemName,
                     Price = food.Price,
                     Description = food.Description,
-                    CategoryName = food.Category.CategoryName, // Lấy tên danh mục
+                    CategoryName = food.Category.CategoryName,
                     ImgUrl = food.ImgUrl
                 }).ToList();
 
-                return foodAndDrinks;
+                // Trả về danh sách món ăn và tổng số trang
+                return (foodAndDrinks, totalPages);
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
         }
+
         public static List<FoodAndDrinkCategoryDTO> GetAllFoodAndDrinkCategories()
         {
             try

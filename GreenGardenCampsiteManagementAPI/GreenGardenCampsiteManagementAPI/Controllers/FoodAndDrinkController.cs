@@ -69,19 +69,31 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
             }
         }
         [HttpGet("GetFoodAndDrinksBySort")]
-        public IActionResult GetFoodAndDrinksBySort([FromQuery] int? categoryId, [FromQuery] int? sortBy, [FromQuery] int? priceRange)
+        public IActionResult GetFoodAndDrinksBySort([FromQuery] int? categoryId, [FromQuery] int? sortBy, [FromQuery] int? priceRange, [FromQuery] int page = 1, [FromQuery] int pageSize = 6)
         {
             try
             {
-                // Gọi đến Repository để lấy danh sách món ăn và đồ uống với các tiêu chí lọc
-                var foodAndDrinks = _repo.GetFoodAndDrinks(categoryId, sortBy, priceRange);
-                return Ok(foodAndDrinks);
+                // Call the repository method that returns both the list and the total pages
+                var (foodAndDrinks, totalPages) = _repo.GetFoodAndDrinks(categoryId, sortBy, priceRange, page, pageSize);
+
+                // Create a response object to return both data and metadata
+                var response = new
+                {
+                    TotalPages = totalPages,
+                    CurrentPage = page,
+                    PageSize = pageSize,
+                    Data = foodAndDrinks
+                };
+
+                return Ok(response);
             }
             catch (Exception ex)
             {
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+
+
 
         [HttpPost("AddFoodOrDrink")]
         public async Task<IActionResult> AddFoodOrDrink([FromBody] AddFoodOrDrinkDTO itemDto)

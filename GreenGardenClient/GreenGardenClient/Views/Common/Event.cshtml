@@ -362,49 +362,148 @@
                         </div>
                     </div>
 
-                    <div class="row">
-                        @if (events != null && events.Any())
-                        {
-                            foreach (var item in events)
+                    <div class="event-carousel-container">
+                        <!-- Nút điều hướng trái -->
+                        <button id="prev-button" class="carousel-button">←</button>
+
+                        <!-- Khu vực hiển thị sự kiện -->
+                        <div id="event-slider" class="event-slider">
+                            @if (events != null && events.Any())
                             {
-                                <div class="col-lg-4 col-md-6 mb-4">
-                                    <div class="post-entry-1">
-                                        <!-- Ảnh -->
-                                        <img src="~/images/Event/@item.PictureUrl" alt="Image" class="img-fluid">
+                                foreach (var item in events)
+                                {
+                                    <div class="event-item">
+                                        <div class="post-entry-1">
+                                            <!-- Ảnh -->
+                                            <img src="~/images/Event/@item.PictureUrl" alt="Image" class="img-fluid">
 
-                                        <!-- Nội dung sự kiện -->
-                                        <div class="post-entry-1-contents">
-                                            <!-- Tên sự kiện -->
-                                            <h2 class="event-title">@item.EventName</h2>
-
-                                            <!-- Ngày & Người tạo -->
-                                            <div class="meta">
-                                                <span class="event-date">@item.EventDate</span>
-                                                <span class="separator"> | </span>
-                                                <span class="event-creator">@item.CreatedByUserName</span>
-                                            </div>
-
-                                            <!-- Mô tả sự kiện -->
-                                            <p class="event-description">@item.Description</p>
-
-                                            <!-- Nút chi tiết -->
-                                            <div class="event-action">
-                                                <a href="@Url.Action("EventDetail", "Common", new { eventId = item.EventId })" class="btn btn-primary">Chi tiết</a>
+                                            <!-- Nội dung sự kiện -->
+                                            <div class="post-entry-1-contents">
+                                                <h2 class="event-title">@item.EventName</h2>
+                                                <div class="meta">
+                                                    <span class="event-date">@item.EventDate</span>
+                                                    <span class="separator"> | </span>
+                                                    <span class="event-creator">@item.CreatedByUserName</span>
+                                                </div>
+                                                <p class="event-description">@item.Description</p>
+                                                <div class="event-action">
+                                                    <a href="@Url.Action("EventDetail", "Common", new { eventId = item.EventId })" class="btn btn-primary">Chi tiết</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-
-                                </div>
-
-
-
+                                }
                             }
-                        }
+                        </div>
 
+                        <!-- Nút điều hướng phải -->
+                        <button id="next-button" class="carousel-button">→</button>
                     </div>
-                </div> <!-- END .site-section -->
 
+                </div> <!-- END .site-section -->
             </div>
+
+            <style>
+                .event-carousel-container {
+                    display: flex;
+                    align-items: center;
+                    position: relative;
+                    width: 100%;
+                    overflow: hidden;
+                }
+
+                .carousel-button {
+                    background-color: #333;
+                    color: white;
+                    border: none;
+                    padding: 10px 20px;
+                    cursor: pointer;
+                    font-size: 20px;
+                    position: absolute;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    z-index: 10;
+                }
+
+                #prev-button {
+                    left: -50px; /* Nút điều hướng trái ra ngoài */
+                }
+
+                #next-button {
+                    right: -50px; /* Nút điều hướng phải ra ngoài */
+                }
+
+                .event-slider {
+                    display: flex;
+                    transition: transform 0.5s ease-in-out;
+                    width: 100%;
+                }
+
+                .event-item {
+                    flex: 0 0 33.33%; /* Hiển thị 3 sự kiện một lúc */
+                    padding: 10px;
+                    box-sizing: border-box;
+                    text-align: center;
+                }
+            </style>
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    const slider = document.getElementById("event-slider");
+                    const prevButton = document.getElementById("prev-button");
+                    const nextButton = document.getElementById("next-button");
+                    const items = slider.querySelectorAll(".event-item");
+                    const itemWidth = items[0].offsetWidth; // Chiều rộng của một sự kiện
+                    const totalItems = items.length;
+                    const visibleItems = 3; // Số sự kiện hiển thị cùng lúc
+                    let currentIndex = 0; // Chỉ số phần tử hiện tại đang hiển thị
+
+                    // Cập nhật vị trí slider
+                    const updateSliderPosition = (animate = true) => {
+                        slider.style.transition = animate ? "transform 0.4s ease-in-out" : "none";
+                        slider.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
+                    };
+
+                    // Xử lý khi nhấn nút trái
+                    prevButton.addEventListener("click", function () {
+                        if (currentIndex === 0) {
+                            // Nếu ở đầu, nhảy đến cuối (không animation)
+                            currentIndex = totalItems - visibleItems;
+                            updateSliderPosition(false);
+                            // Sau đó di chuyển ngược
+                            setTimeout(() => {
+                                currentIndex--;
+                                updateSliderPosition(true);
+                            }, 50); // Delay nhỏ để đảm bảo reset xong
+                        } else {
+                            currentIndex--;
+                            updateSliderPosition(true);
+                        }
+                    });
+
+                    // Xử lý khi nhấn nút phải
+                    nextButton.addEventListener("click", function () {
+                        if (currentIndex === totalItems - visibleItems) {
+                            // Nếu ở cuối, nhảy về đầu (không animation)
+                            currentIndex = 0;
+                            updateSliderPosition(false);
+                            // Sau đó di chuyển tới phần tử kế tiếp
+                            setTimeout(() => {
+                                currentIndex++;
+                                updateSliderPosition(true);
+                            }, 50); // Delay nhỏ để đảm bảo reset xong
+                        } else {
+                            currentIndex++;
+                            updateSliderPosition(true);
+                        }
+                    });
+
+                    // Khởi tạo slider
+                    updateSliderPosition(false);
+                });
+
+
+
+            </script>
         </div>
 
 
@@ -541,6 +640,8 @@
         });
     </script>
     <script>
+     
+
         document.addEventListener("DOMContentLoaded", function () {
             // Tìm thẻ có class "site-section"
             var targetElement = document.querySelector(".site-section");
