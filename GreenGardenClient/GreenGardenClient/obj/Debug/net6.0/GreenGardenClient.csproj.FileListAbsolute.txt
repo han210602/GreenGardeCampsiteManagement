@@ -1498,3 +1498,5 @@ C:\Users\ADMIN\Desktop\NewFinal2\GreenGardenCampsiteManagement\GreenGardenClient
 C:\Users\ADMIN\Desktop\NewFinal2\GreenGardenCampsiteManagement\GreenGardenClient\GreenGardenClient\bin\Debug\net6.0\SixLabors.ImageSharp.dll
 C:\Users\admin\Desktop\New folder\GreenGardenCampsiteManagement\GreenGardenClient\GreenGardenClient\bin\Debug\net6.0\CloudinaryDotNet.dll
 C:\Users\admin\Desktop\New folder\GreenGardenCampsiteManagement\GreenGardenClient\GreenGardenClient\bin\Debug\net6.0\SixLabors.ImageSharp.dll
+D:\SEP490\GreenGardenCampsiteManagement\GreenGardenClient\GreenGardenClient\bin\Debug\net6.0\CloudinaryDotNet.dll
+D:\SEP490\GreenGardenCampsiteManagement\GreenGardenClient\GreenGardenClient\bin\Debug\net6.0\SixLabors.ImageSharp.dll

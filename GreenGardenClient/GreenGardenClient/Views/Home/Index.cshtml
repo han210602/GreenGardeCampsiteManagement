@@ -47,95 +47,138 @@
                     </div>
                 </div>
                 <div class="site-mobile-menu-body">
-                    <ul class="site-menu main-menu js-clone-nav ml-auto ">
-                        <li class="active"><a href="/Home" class="nav-link">Trang chủ</a></li>
-                        <li><a href="/Common/Event" class="nav-link">Sự kiện</a></li>
-                        <li class="has-dropdown">
-                            <a href="/Service" class="nav-link">Dịch vụ</a>
-                            <ul class="dropdown">
-                                <li><a href="/Service/ComboList" class="nav-link">Danh sách combo vé</a></li>
-                                <li><a href="/Service/OrderTicket" class="nav-link">Danh sách vé</a></li>
-                                <li><a href="/Service/OrderFoodAndDrink" class="nav-link">Danh sách đồ ăn</a></li>
-                                <li><a href="/Service/OrderGear" class="nav-link">Danh sách dụng cụ</a></li>
-                            </ul>
-                        </li>
+                    <ul class="site-menu main-menu js-clone-nav ml-auto">
+                        <!-- Home link with icon -->
+                        <a style="color: #efba6c " href="/Home">
+                            <i class="fas fa-home"></i> Trang chủ
+                        </a>
 
-                        <li><a href="~/Common/Contact" class="nav-link">Liên hệ</a></li>
-                        <li>
-                            @if (HttpContextAccessor.HttpContext.Session.GetString("Email") == null)
-                            {
-                                <a href="/Common/Login" class="nav-link">Đăng nhập</a>
-                                <a href="/Common/Register" class="nav-link">Đăng Ký</a>
-                            }
-                            else
-                            {
-                            <li class="has-dropdown">
-                                <a href="~/Common/UpdateProfile" class="nav-link" style="display: flex; align-items: center;">
-                                        @if (@HttpContextAccessor.HttpContext.Session.GetString("Img") == null)
-                                        {
-                                        <div style="width: 30px; height: 30px; border-radius: 50%; overflow: hidden; margin-right: 8px;">
-                                            <img src="~/images/p22.jpg" alt="Trang cá nhân" style="width: 100%; height: 100%; object-fit: cover;">
-                                        </div>
-                                        }
-                                        else
-                                        {
-                                        <div style="width: 30px; height: 30px; border-radius: 50%; overflow: hidden; margin-right: 8px;">
-                                            <img src="@HttpContextAccessor.HttpContext.Session.GetString("Img")" alt="Trang cá nhân" style="width: 100%; height: 100%; object-fit: cover;">
-                                        </div>
-                                        }
+                        <!-- Event link with icon -->
+                        <a href="/Common/Event" class="nav-link">
+                            <i class="fas fa-calendar-alt"></i> Sự kiện
+                        </a>
 
-                                        @HttpContextAccessor.HttpContext.Session.GetString("Fullname")
-                                </a>
+                        <!-- Service link with icon -->
+                        <a href="/Service" class="nav-link">
+                            <i class="fas fa-cogs"></i> Dịch vụ
+                        </a>
+                        <ul>
+                            <!-- Service sub-menu items with icons -->
+                            <a href="/Service/ComboList" class="nav-link">
+                                <i class="fas fa-ticket-alt"></i> Danh sách combo vé
+                            </a>
+                            <a href="/Service/OrderTicket" class="nav-link">
+                                <i class="fas fa-ticket"></i> Danh sách vé
+                            </a>
+                            <a href="/Service/OrderFoodAndDrink" class="nav-link">
+                                <i class="fas fa-utensils"></i> Danh sách đồ ăn
+                            </a>
+                            <a href="/Service/OrderGear" class="nav-link">
+                                <i class="fas fa-tools"></i> Danh sách dụng cụ
+                            </a>
+                        </ul>
 
+                        <!-- Contact link with icon -->
+                        <a href="~/Common/Contact" class="nav-link">
+                            <i class="fas fa-phone-alt"></i> Liên hệ
+                        </a>
 
-                                <ul class="dropdown">
-                                        @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 1)
-                                        {
-                                        <li><a href="~/DashBoard" class="nav-link">Quản lí</a></li>
-                                        <li><a href="~/Home/Logout" class="nav-link">Đăng xuất</a></li>
-                                        }
-                                        else if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 2)
-                                        {
-                                        <li><a href="~/OrderManagement/OrderOnline" class="nav-link">Quản lí</a></li>
-                                        <li><a href="~/Home/Logout" class="nav-link">Đăng xuất</a></li>
-                                        }
-                                        else
-                                        {
-
-                                        <li><a href="~/Service/OrderHistory" class="nav-link">Lịch sử đặt hàng</a></li>
-                                        <li><a href="~/Service/Cart" class="nav-link">Giỏ hàng</a></li>
-                                        <li><a href="~/Home/Logout" class="nav-link">Đăng xuất</a></li>
-
-                                        }
-                                </ul>
-
-                            </li>
-                            }
-
-                        </li>
-                        @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 3)
+                        <!-- User not authenticated, show Login and Register with icons -->
+                        @if (HttpContextAccessor.HttpContext.Session.GetString("Email") == null)
                         {
-                            <li>
-                                <a href="~/Service/Cart" class="nav-link cart-icon">
-                                    <span class="cart-wrapper">
-                                        <i id="cart-count" class="fas fa-shopping-cart"></i>
-                                        @if (HttpContextAccessor.HttpContext.Session.GetInt32("CartItemCount") > 0)
-                                        {
-                                            <span class="cart-badge">
-                                                @HttpContextAccessor.HttpContext.Session.GetInt32("CartItemCount")
-                                            </span>
-                                        }
-                                        else
-                                        {
-                                            <span class="cart-badge">0</span>
-                                        }
-                                    </span>
-                                </a>
-                            </li>
+                            <a href="/Common/Login" class="nav-link">
+                                <i class="fas fa-sign-in-alt"></i> Đăng nhập
+                            </a>
+                            <a href="/Common/Register" class="nav-link">
+                                <i class="fas fa-user-plus"></i> Đăng Ký
+                            </a>
+                        }
+                        else
+                        {
+                            <!-- User authenticated, show profile and user-specific links -->
+                            <a href="~/Common/UpdateProfile" class="nav-link" style="display: flex; align-items: center;">
+                                @if (@HttpContextAccessor.HttpContext.Session.GetString("Img") == null)
+                                {
+                                    <div style="width: 30px; height: 30px; border-radius: 50%; overflow: hidden; margin-right: 8px;">
+                                        <img src="~/images/p22.jpg" alt="Trang cá nhân" style="width: 100%; height: 100%; object-fit: cover;">
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div style="width: 30px; height: 30px; border-radius: 50%; overflow: hidden; margin-right: 8px;">
+                                        <img src="@HttpContextAccessor.HttpContext.Session.GetString("Img")" alt="Trang cá nhân" style="width: 100%; height: 100%; object-fit: cover;">
+                                    </div>
+                                }
+                                <i class="fas fa-user"></i> @HttpContextAccessor.HttpContext.Session.GetString("Fullname")
+                            </a>
+
+                            <ul>
+                                <!-- User role-based links with icons -->
+                                @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 1)
+                                {
+                                   
+                                        <a href="~/DashBoard" class="nav-link">
+                                            <i class="fas fa-tachometer-alt"></i> Quản lí
+                                        </a>
+                                   
+                                        <a href="~/Home/Logout" class="nav-link">
+                                            <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                                        </a>
+                                   
+                                }
+                                else if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 2)
+                                {
+                                   
+                                        <a href="~/OrderManagement/OrderOnline" class="nav-link">
+                                            <i class="fas fa-box"></i> Quản lí
+                                        </a>
+                                   
+                                        <a href="~/Home/Logout" class="nav-link">
+                                            <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                                        </a>
+                                   
+                                }
+                                else
+                                {
+                                   
+                                        <a href="~/Service/OrderHistory" class="nav-link">
+                                            <i class="fas fa-history"></i> Lịch sử đặt hàng
+                                        </a>
+                                    
+                                        <a href="~/Service/Cart" class="nav-link">
+                                            <i class="fas fa-shopping-cart"></i> Giỏ hàng
+                                        </a>
+                                    
+                                        <a href="~/Home/Logout" class="nav-link">
+                                            <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                                        </a>
+                                  
+                                }
+                            </ul>
                         }
 
+                        <!-- Shopping cart icon -->
+                        @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 3)
+                        {
+                            <a href="~/Service/Cart" class="nav-link cart-icon">
+                                <span class="cart-wrapper">
+                                    <i id="cart-count" class="fas fa-shopping-cart"></i>
+                                    @if (HttpContextAccessor.HttpContext.Session.GetInt32("CartItemCount") > 0)
+                                    {
+                                        <span class="cart-badge">
+                                            @HttpContextAccessor.HttpContext.Session.GetInt32("CartItemCount")
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="cart-badge">0</span>
+                                    }
+                                </span>
+                            </a>
+                        }
                     </ul>
                 </div>
+
             </div>
             <div class="container">
                 <div class="row align-items-center position-relative">
