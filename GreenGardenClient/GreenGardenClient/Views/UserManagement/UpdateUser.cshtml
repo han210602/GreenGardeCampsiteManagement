@@ -538,7 +538,7 @@
             }
             else
             {
-                <img src="~/images/Avatar/@HttpContextAccessor.HttpContext.Session.GetString("Img")" alt="Trang cá nhân" class="app-sidebar__user-avatar" src="~/images/img_1.jpg" width="50px">
+                <img src="@HttpContextAccessor.HttpContext.Session.GetString("Img")" alt="Trang cá nhân" class="app-sidebar__user-avatar" src="~/images/img_1.jpg" width="50px">
             }               <div>
                 <p class="app-sidebar__user-designation">Xin chào</p>
 
@@ -728,7 +728,7 @@
                                 else
                                 {
                                     <!-- Profile picture for logged-in user -->
-                                    <img src="~/images/Avatar/@Model.ProfilePictureUrl" alt="Trang cá nhân" style="width: 300px; height: 300px; object-fit: cover; border-radius: 50%;">
+                                    <img src="@Model.ProfilePictureUrl" alt="Trang cá nhân" style="width: 300px; height: 300px; object-fit: cover; border-radius: 50%;">
                                 }
                             }
                             else

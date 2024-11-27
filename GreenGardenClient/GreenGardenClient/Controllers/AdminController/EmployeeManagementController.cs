@@ -78,7 +78,11 @@ namespace GreenGardenClient.Controllers.AdminController
         public async Task<IActionResult> CreateEmployee(Employee model)
         {
             string apiUrl = "https://localhost:7298/api/User/AddEmployee";
-
+            if (!ModelState.IsValid)
+            {
+                // Trả lại View với các thông báo lỗi
+                return View(model);
+            }
             using (HttpClient client = new HttpClient())
             {
                 try
@@ -94,8 +98,7 @@ namespace GreenGardenClient.Controllers.AdminController
                         model.Address,
                         model.DateOfBirth,
                         model.Gender,
-                        model.IsActive,
-                        RoleId = 2
+
                     };
                     Console.WriteLine($"Sending data: {JsonConvert.SerializeObject(requestData)}");
 
@@ -108,10 +111,14 @@ namespace GreenGardenClient.Controllers.AdminController
                     // Check if the response was successful
                     if (response.IsSuccessStatusCode)
                     {
+                        TempData["SuccessMessage"] = "Tạo nhân viên thành công.";
+
                         return RedirectToAction("Index");
                     }
                     else
                     {
+                        TempData["ErrorMessage"] = "Đã xảy ra lỗi khi tạo người dùng";
+
                         var responseContent = await response.Content.ReadAsStringAsync();
                         Console.WriteLine($"API Error Response: {response.StatusCode} - {responseContent}");
                         return RedirectToAction("Error", "Home");
@@ -142,7 +149,7 @@ namespace GreenGardenClient.Controllers.AdminController
 
                 if (response.IsSuccessStatusCode)
                 {
-                    TempData["SuccessMessage"] = "User deleted successfully.";
+                    TempData["SuccessMessage"] = "Xoá nhân viên thành công!";
                     return RedirectToAction("Index");
                 }
                 else
@@ -197,7 +204,7 @@ namespace GreenGardenClient.Controllers.AdminController
 
                 if (response.IsSuccessStatusCode)
                 {
-                    TempData["SuccessMessage"] = "User blocked successfully.";
+                    TempData["SuccessMessage"] = "Chặn nhân viên thành công";
                     return RedirectToAction("Index");
                 }
                 else
@@ -233,7 +240,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 if (response.IsSuccessStatusCode)
                 {
                     Console.WriteLine("API call succeeded.");
-                    TempData["SuccessMessage"] = "User Unblocked successfully.";
+                    TempData["SuccessMessage"] = "Bỏ chặn nhân viên thành công.";
                     return RedirectToAction("Index");
                 }
                 else

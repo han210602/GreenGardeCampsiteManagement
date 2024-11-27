@@ -313,8 +313,8 @@
     .event-thumbnail-large {
         max-width: 100%;
         height: auto;
-        max-height: 300px; /* Limit the maximum height of the image */
-        object-fit: cover; /* Maintain aspect ratio while cropping */
+        max-height: 300px;
+        object-fit: cover;
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         transition: transform 0.3s ease;
@@ -375,11 +375,12 @@
         border: 1px solid #ddd;
         border-radius: 4px;
         cursor: pointer;
-        width: 100px; /* Set a fixed width to make it smaller horizontally */
-        max-width: 100%; /* Ensure it does not exceed container width on smaller screens */
+        width: 100px; /* Đặt chiều rộng cố định */
+        max-width: 100%; /* Đảm bảo không vượt quá chiều rộng container */
+        text-align: center;
+        display: block;
     }
-    /* Button container */
-    /* Button Styling */
+
     .button-container .btn {
         width: 100px; /* Đặt chiều rộng cố định cho tất cả các nút */
         padding: 10px 0; /* Thiết lập padding cho cùng chiều cao */
@@ -624,7 +625,7 @@
             }
             else
             {
-                <img src="~/images/Avatar/@HttpContextAccessor.HttpContext.Session.GetString("Img")" alt="Trang cá nhân" class="app-sidebar__user-avatar" src="~/images/img_1.jpg" width="50px">
+                <img src="@HttpContextAccessor.HttpContext.Session.GetString("Img")" alt="Trang cá nhân" class="app-sidebar__user-avatar" src="~/images/img_1.jpg" width="50px">
             }               <div>
                 <p class="app-sidebar__user-designation">Xin chào</p>
 
@@ -765,7 +766,7 @@
             </li>
 
             <li class="app-menu__item active">
-                <a class="app-menu__link" href="~/FoodAndDrink/Index">
+                <a class="app-menu__link" href="~/FoodAndDrinkManagement/Index">
                     <i class='app-menu__icon bx bx-restaurant'></i>
                     <span class="app-menu__label">Quản lý đồ ăn</span>
                 </a>
@@ -821,7 +822,7 @@
                                 <!-- Hiển thị ảnh hiện tại nếu có -->
                                 @if (!string.IsNullOrEmpty(@Model.ImgUrl))
                                 {
-                                    <img src="~/images/Food/@Model.ImgUrl" alt="Event Image" class="event-thumbnail-large" id="currentImage_@Model.ItemId" />
+                                    <img src="@Model.ImgUrl" alt="Event Image" class="event-thumbnail-large" id="currentImage_@Model.ItemId" />
                                 }
 
                                 <!-- Hidden input cho URL ảnh hiện tại -->

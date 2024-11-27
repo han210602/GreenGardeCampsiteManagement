@@ -622,7 +622,7 @@
             }
             else
             {
-                <img src="~/images/Avatar/@HttpContextAccessor.HttpContext.Session.GetString("Img")" alt="Trang cá nhân" class="app-sidebar__user-avatar" src="~/images/img_1.jpg" width="50px">
+                <img src="@HttpContextAccessor.HttpContext.Session.GetString("Img")" alt="Trang cá nhân" class="app-sidebar__user-avatar" src="~/images/img_1.jpg" width="50px">
             }               <div>
                 <p class="app-sidebar__user-designation">Xin chào</p>
 
@@ -814,7 +814,7 @@
                             <div class="event-image-container flex-grow-1">
                                 @if (!string.IsNullOrEmpty(Model?.ImgUrl))
                                 {
-                                    <img id="currentImage_@Model.TicketId" src="~/images/Ticket/@Model.ImgUrl" alt="Ticket Image" class="event-thumbnail-large" />
+                                    <img id="currentImage_@Model.TicketId" src="@Model.ImgUrl" alt="Ticket Image" class="event-thumbnail-large" />
                                 }
 
                                 <input type="hidden" name="CurrentPictureUrl" value="@Model?.ImgUrl" />

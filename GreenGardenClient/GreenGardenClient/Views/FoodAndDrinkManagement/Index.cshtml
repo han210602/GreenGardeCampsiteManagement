@@ -491,7 +491,7 @@
             }
             else
             {
-                <img src="~/images/Avatar/@HttpContextAccessor.HttpContext.Session.GetString("Img")" alt="Trang cá nhân" class="app-sidebar__user-avatar" src="~/images/img_1.jpg" width="50px">
+                <img src="@HttpContextAccessor.HttpContext.Session.GetString("Img")" alt="Trang cá nhân" class="app-sidebar__user-avatar" src="~/images/img_1.jpg" width="50px">
             }               <div>
                 <p class="app-sidebar__user-designation">Xin chào</p>
 
@@ -697,7 +697,7 @@
                                 <div class="d-flex">
                                     <!-- Event Image on the Left -->
                                     <div class="event-image mr-3">
-                                        <img src="/images/Food/@eventItem.ImgUrl" alt="Event Image" class="event-thumbnail">
+                                        <img src="@eventItem.ImgUrl" alt="Event Image" class="event-thumbnail">
                                     </div>
 
                                     <!-- Event Details on the Right -->

@@ -324,7 +324,73 @@
                 });
             </script>
         </header>
+        @{
+            if (@TempData["NotificationSuccess"] != null)
+            {
+                <div id="notification-success" class="notification alert alert-success" role="alert">
+                    <i class="fas fa-bell"></i> <!-- Bell Icon -->
+                @TempData["NotificationSuccess"]
+                </div>
+            }
+        }
+        @{
+            if (@TempData["NotificationError"] != null)
+            {
+                <div id="notification-success" class="notification alert alert-danger" role="alert">
+                    <i class="fas fa-bell"></i> <!-- Bell Icon -->
+                @TempData["NotificationError"]
+                </div>
+            }
+        }
+        <style>
+            .notification {
+                position: fixed;
+                top: 20px; /* Distance from the top */
+                right: -350px; /* Start outside the viewport */
+                z-index: 1050; /* Ensure it appears above other elements */
+                opacity: 1; /* Fully visible initially */
+                transition: transform 0.5s ease-out, opacity 1s ease-out; /* Smooth slide and fade effects */
+                max-width: 300px; /* Restrict maximum width */
+                padding: 15px; /* Padding inside the notification */
+                border-radius: 5px; /* Rounded corners */
+            }
 
+            /* Success notification styles */
+            .alert-success {
+                background-color: #d4edda; /* Light green background */
+                color: #155724; /* Dark green text */
+                border: 1px solid #c3e6cb; /* Green border */
+            }
+
+            /* Error notification styles */
+            .alert-danger {
+                background-color: #f8d7da; /* Light red background */
+                color: #721c24; /* Dark red text */
+                border: 1px solid #f5c6cb; /* Red border */
+            }
+        </style>
+
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                function showAndHideNotification(selector) {
+                    if ($(selector).length) {
+                        // Slide notification into view
+                        $(selector).css("transform", "translateX(-350px)"); // Slide in
+                        setTimeout(function () {
+                            // Slide notification back out after 5 seconds
+                            $(selector).css("transform", "translateX(0)"); // Slide out
+                            $(selector).css("opacity", "0"); // Optional fade-out effect
+                        }, 5000); // Display for 5 seconds before sliding out
+                    }
+                }
+
+                // Show success and error notifications
+                showAndHideNotification("#notification-success");
+                showAndHideNotification("#notification-error");
+            });
+        </script>
 
         <div class="container mt-5" data-aos="fade-up">
             <div class="tile">
@@ -344,24 +410,24 @@
                                 <div class="cart-item d-flex mb-3" id="cart-item-@item.Id">
                                     @if (@item.Type == "Gear")
                                     {
-                                        <img src="~/images/Gear/@item.Image" alt="@item.Name" class="img-thumbnail" style="width: 120px;">
+                                        <img src="@item.Image" alt="@item.Name" class="img-thumbnail" style="width: 120px;">
                                     }
                                     else if (@item.Type == "Combo")
                                     {
-                                        <img src="~/images/Combo/@item.Image" alt="@item.Name" class="img-thumbnail" style="width: 120px;">
+                                        <img src="@item.Image" alt="@item.Name" class="img-thumbnail" style="width: 120px;">
                                     }
                                     else if (@item.Type == "Ticket")
                                     {
-                                        <img src="~/images/Ticket/@item.Image" alt="@item.Name" class="img-thumbnail" style="width: 120px;">
+                                        <img src="@item.Image" alt="@item.Name" class="img-thumbnail" style="width: 120px;">
                                     }
                                     else if (@item.Type == "FoodAndDrink")
                                     {
-                                        <img src="~/images/Food/@item.Image" alt="@item.Name" class="img-thumbnail" style="width: 120px;">
+                                        <img src="@item.Image" alt="@item.Name" class="img-thumbnail" style="width: 120px;">
                                     }
 
                                     <div class="cart-item-details ml-3">
                                         <h5>@item.Name</h5>
-                                        <p>@item.CategoryName</p>
+                                        <p>@item.TypeCategory</p>
                                         <p>Giá: <span id="price_@item.Id-@item.Type-@item.TypeCategory">@item.Price.ToString("N0")</span> đ</p>
 
                                     </div>
@@ -568,19 +634,24 @@
 
 
         function removeCartItem(itemId) {
-            // Hiển thị thông báo xác nhận
+            // Confirm before removing the item
             if (confirm('Bạn có muốn xóa sản phẩm này khỏi giỏ hàng không?')) {
                 $.ajax({
                     url: '/Service/RemoveFromCart',
                     type: 'POST',
                     data: { ticketId: itemId },
-                    success: function () {
-                        $('#cart-item-' + itemId).remove();
-                        updateTotalPrice();
-                        updateCartCount();
-                        // Kiểm tra nếu giỏ hàng trống thì xóa ngày sử dụng trong sessionStorage
-                        if ($('.cart-item').length === 0) {
-                            sessionStorage.removeItem('usageDateForAll');
+                    success: function (response) {
+                        if (response.isCartCleared) {
+                            // If the entire cart is cleared, remove the cart section
+                            $('.cart-section').remove(); // Assuming the cart is wrapped in .cart-section
+                            sessionStorage.removeItem('usageDateForAll'); // Clear usage date
+                            alert('Giỏ hàng đã được xóa hết vì không còn vé hoặc combo. Vui lòng đặt lại vé');
+                            window.location.href = '/Service/OrderTicket';
+                        } else {
+                            // Remove the specific cart item from the DOM
+                            $('#cart-item-' + itemId).remove();
+                            updateTotalPrice(); // Update total price display
+                            updateCartCount(response.cartItemCount); // Update cart count display
                         }
                     },
                     error: function () {
@@ -593,27 +664,23 @@
 
 
 
+
         function submitPayment() {
             if (!confirm('Bạn có muốn đặt ngay?')) {
                 return; // Nếu người dùng chọn Cancel, thoát hàm
             }
 
             // Check if there are any items in the cart
-            let hasItems = false;
-            document.querySelectorAll('.cart-item').forEach(function (item) {
-                hasItems = true; // Nếu có ít nhất một item trong giỏ, gán true
-            });
-
-            // Nếu giỏ hàng trống, thông báo và dừng thực hiện
-            if (!hasItems) {
+            const cartItems = document.querySelectorAll('.cart-item');
+            if (cartItems.length === 0) {
                 alert('Giỏ hàng của bạn không có sản phẩm nào!');
-                return; // Exit the function
+                return; // Exit the function if cart is empty
             }
 
             // Check if there are any tickets or combos in the cart
             let hasTicketOrCombo = false;
-            document.querySelectorAll('.cart-item').forEach(function (item) {
-                let typeCategory = item.querySelector('.cart-item-details p:nth-child(2)').innerText; // Gets the TypeCategory
+            cartItems.forEach(function (item) {
+                const typeCategory = item.querySelector('.cart-item-details p:nth-child(2)').innerText.trim(); // Ensure clean text
                 if (typeCategory === "TicketCategory" || typeCategory === "ComboCategory") {
                     hasTicketOrCombo = true;
                 }
@@ -625,13 +692,16 @@
                 return; // Exit the function
             }
 
-            console.log($('#paymentForm').serialize()); // Log the serialized data
+            // Log the serialized data for debugging
+            console.log($('#paymentForm').serialize());
 
+            // Send AJAX POST request to submit the order
             $.ajax({
                 url: '/Service/Order',
                 type: 'POST',
                 data: $('#paymentForm').serialize(),
                 success: function (response) {
+                    // Clear cart items after successful order
                     $('.cart-item').remove();
                     $('#totalPrice').text('0');
                     $('#totalPriceFinal').text('0');
@@ -640,16 +710,18 @@
                     // Redirect to OrderHistory page
                     window.location.href = '/Service/OrderHistory';
 
+                    // Clear session storage if cart is empty
                     if ($('.cart-item').length === 0) {
                         sessionStorage.removeItem('usageDateForAll');
                     }
                 },
                 error: function (xhr, status, error) {
-                    console.error(xhr); // Log the full error response
-                    alert('Đặt ngay thất bại. Vui lòng đăng nhập để đặt ngay');
+                    console.error('Error:', xhr); // Log detailed error for debugging
+                    alert('Đặt ngay thất bại. Vui lòng đăng nhập để đặt ngay.');
                 }
             });
         }
+
 
 
     </script>
@@ -699,21 +771,21 @@
             // Thêm các sản phẩm mới vào giỏ hàng
             $.each(cartItems, function (index, item) {
                 $('#cartContainer').append(`
-                                    <div class="cart-item" id="cart-item-${item.id}">
-                                                <img src="~/images//img_1.jpg" alt="${item.name}" class="img-thumbnail" style="width: 120px;">
-                                        <div class="cart-item-details ml-3">
-                                            <h5>${item.name}</h5>
-                                            <p>${item.typeCategory}</p>
-                                            <p>Giá: <span id="price_${item.id}-${item.type}-${item.typeCategory}">${item.price.toLocaleString()}</span> đ</p>
-                                        </div>
-                                        <div class="ml-auto d-flex align-items-center">
-                                            <button class="btn btn-light" onclick="decrementQuantity(${item.id}, ${item.price}, '${item.type}', '${item.typeCategory}')">-</button>
-                                            <input type="text" id="quantity_${item.id}-${item.type}-${item.typeCategory}" value="${item.quantity}" class="form-control text-center mx-2" style="width: 50px;" readonly>
-                                            <button class="btn btn-light" onclick="incrementQuantity(${item.id}, ${item.price}, '${item.type}', '${item.typeCategory}')">+</button>
-                                            <button class="btn btn-danger ml-2" onclick="removeCartItem(${item.id}, '${item.type}', '${item.typeCategory}')">Xóa</button>
-                                        </div>
-                                    </div>
-                                `);
+                                            <div class="cart-item" id="cart-item-${item.id}">
+                                                        <img src="~/images//img_1.jpg" alt="${item.name}" class="img-thumbnail" style="width: 120px;">
+                                                <div class="cart-item-details ml-3">
+                                                    <h5>${item.name}</h5>
+                                                    <p>${item.typeCategory}</p>
+                                                    <p>Giá: <span id="price_${item.id}-${item.type}-${item.typeCategory}">${item.price.toLocaleString()}</span> đ</p>
+                                                </div>
+                                                <div class="ml-auto d-flex align-items-center">
+                                                    <button class="btn btn-light" onclick="decrementQuantity(${item.id}, ${item.price}, '${item.type}', '${item.typeCategory}')">-</button>
+                                                    <input type="text" id="quantity_${item.id}-${item.type}-${item.typeCategory}" value="${item.quantity}" class="form-control text-center mx-2" style="width: 50px;" readonly>
+                                                    <button class="btn btn-light" onclick="incrementQuantity(${item.id}, ${item.price}, '${item.type}', '${item.typeCategory}')">+</button>
+                                                    <button class="btn btn-danger ml-2" onclick="removeCartItem(${item.id}, '${item.type}', '${item.typeCategory}')">Xóa</button>
+                                                </div>
+                                            </div>
+                                        `);
             });
 
             updateTotalPrice(); // Cập nhật tổng giá tiền nếu cần

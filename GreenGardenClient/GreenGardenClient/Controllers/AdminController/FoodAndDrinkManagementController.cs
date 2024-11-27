@@ -1,4 +1,6 @@
-﻿using GreenGardenClient.Models;
+﻿using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
+using GreenGardenClient.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
@@ -127,7 +129,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 return RedirectToAction("Error");
             }
         }
- 
+
 
         [HttpPost]
         public async Task<IActionResult> UpdateFoodAndDrink(UpdateFoodAndDrinkVM model, IFormFile PictureUrl, string CurrentPictureUrl)
@@ -135,19 +137,51 @@ namespace GreenGardenClient.Controllers.AdminController
 
             if (PictureUrl != null)
             {
-                // Lưu file mới
-                string filePath = Path.Combine("wwwroot/images/Food", PictureUrl.FileName);
-                using (var stream = new FileStream(filePath, FileMode.Create))
+                // Lấy tên file từ tệp được tải lên
+                string fileName = PictureUrl.FileName;
+
+                // Sử dụng Stream để tải trực tiếp lên Cloudinary
+                using (var stream = PictureUrl.OpenReadStream())
                 {
-                    await PictureUrl.CopyToAsync(stream);
+                    // Cấu hình tài khoản Cloudinary
+                    var accountVM = new AccountVM
+                    {
+                        CloudName = "dxpsghdhb", // Thay bằng giá trị thực tế
+                        ApiKey = "312128264571836",
+                        ApiSecret = "nU5ETmubjnFSHIcwRPIDjjjuN8Y"
+                    };
+
+                    // Ánh xạ từ AccountVM sang Account
+                    var account = new CloudinaryDotNet.Account(
+                        accountVM.CloudName,
+                        accountVM.ApiKey,
+                        accountVM.ApiSecret
+                    );
+
+                    // Tạo đối tượng Cloudinary
+                    var cloudinary = new Cloudinary(account);
+
+                    // Thiết lập thông số upload
+                    var uploadParams = new ImageUploadParams()
+                    {
+                        File = new FileDescription(fileName, stream), // Đặt stream và tên file
+                        PublicId = "Food/" + Path.GetFileNameWithoutExtension(fileName), // Tùy chọn đặt tên file trên Cloudinary
+                        Folder = "Food", // Thư mục trong Cloudinary (tùy chọn)
+                    };
+
+                    // Thực hiện upload
+                    var uploadResult = await cloudinary.UploadAsync(uploadParams);
+
+                    // Cập nhật đường dẫn hình ảnh từ Cloudinary vào model
+                    model.ImgUrl = uploadResult.SecureUrl.AbsoluteUri;
                 }
-                model.ImgUrl = PictureUrl.FileName;
             }
             else
             {
-                // Sử dụng ảnh hiện tại
+                // Sử dụng ảnh hiện tại nếu không có ảnh mới
                 model.ImgUrl = CurrentPictureUrl;
             }
+
 
             // Gọi API để cập nhật thông tin món ăn
             string apiUrl = "https://localhost:7298/api/FoodAndDrink/UpdateFoodOrDrink";
@@ -244,18 +278,50 @@ namespace GreenGardenClient.Controllers.AdminController
             model.CreatedAt = DateTime.Now;
             model.Status = model.Status ?? true;
 
-            if (PictureUrl != null && PictureUrl.Length > 0)
+            if (PictureUrl != null)
             {
-                string filePath = Path.Combine("wwwroot/images/Gear", PictureUrl.FileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                // Lấy tên file từ tệp được tải lên
+                string fileName = PictureUrl.FileName;
+
+                // Sử dụng Stream để tải trực tiếp lên Cloudinary
+                using (var stream = PictureUrl.OpenReadStream())
                 {
-                    await PictureUrl.CopyToAsync(fileStream);
+                    // Cấu hình tài khoản Cloudinary
+                    var accountVM = new AccountVM
+                    {
+                        CloudName = "dxpsghdhb", // Thay bằng giá trị thực tế
+                        ApiKey = "312128264571836",
+                        ApiSecret = "nU5ETmubjnFSHIcwRPIDjjjuN8Y"
+                    };
+
+                    // Ánh xạ từ AccountVM sang Account
+                    var account = new CloudinaryDotNet.Account(
+                        accountVM.CloudName,
+                        accountVM.ApiKey,
+                        accountVM.ApiSecret
+                    );
+
+                    // Tạo đối tượng Cloudinary
+                    var cloudinary = new Cloudinary(account);
+
+                    // Thiết lập thông số upload
+                    var uploadParams = new ImageUploadParams()
+                    {
+                        File = new FileDescription(fileName, stream), // Đặt stream và tên file
+                        PublicId = "Food/" + Path.GetFileNameWithoutExtension(fileName), // Tùy chọn đặt tên file trên Cloudinary
+                        Folder = "Food", // Thư mục trong Cloudinary (tùy chọn)
+                    };
+
+                    // Thực hiện upload
+                    var uploadResult = await cloudinary.UploadAsync(uploadParams);
+
+                    // Cập nhật đường dẫn hình ảnh từ Cloudinary vào model
+                    model.ImgUrl = uploadResult.SecureUrl.AbsoluteUri;
                 }
-                model.ImgUrl = PictureUrl.FileName; // Save image name
             }
             else
             {
-                // Nếu không có ảnh, sử dụng ảnh mặc định hoặc bỏ qua xử lý ảnh
+                // Sử dụng ảnh hiện tại nếu không có ảnh mới
                 model.ImgUrl = "Colorful Modern Camping Club Logo.png"; // Hoặc bỏ qua giá trị ImgUrl nếu cần
                 ModelState.AddModelError("PictureUrl", "File ảnh không hợp lệ hoặc không được chọn.");
             }

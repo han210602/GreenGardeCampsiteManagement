@@ -414,7 +414,7 @@
             }
             else
             {
-                <img src="~/images/Avatar/@HttpContextAccessor.HttpContext.Session.GetString("Img")" alt="Trang cá nhân" class="app-sidebar__user-avatar" src="~/images/img_1.jpg" width="50px">
+                <img src="@HttpContextAccessor.HttpContext.Session.GetString("Img")" alt="Trang cá nhân" class="app-sidebar__user-avatar" src="~/images/img_1.jpg" width="50px">
             }
             <div>
                 <p class="app-sidebar__user-designation">Xin chào</p>
@@ -644,7 +644,7 @@
                                 <i class="zoom-icon fa fa-search-plus" onclick="openModal()" style="position: absolute; top: 10px; right: 10px; font-size: 24px; cursor: pointer;"></i>
 
                                 <!-- Hình ảnh -->
-                                <img src="~/images/Gear/@Model.ImgUrl" alt="Lẩu cá mú nấu ngọt" class="img-fluid img-thumbnail" id="productImage">
+                                <img src="@Model.ImgUrl" alt="Lẩu cá mú nấu ngọt" class="img-fluid img-thumbnail" id="productImage">
                             </div>
 
                             <!-- Modal để phóng to hình ảnh -->

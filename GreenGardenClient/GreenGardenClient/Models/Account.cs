@@ -56,13 +56,33 @@ public class ChangePassword
 }
 public class Employee
 {
+    [Required(ErrorMessage = "Họ không được để trống.")]
     public string FirstName { get; set; }
+    [Required(ErrorMessage = "Tên không được để trống.")]
+
     public string LastName { get; set; }
+
+    [Required(ErrorMessage = "Email là bắt buộc.")]
+    [EmailAddress(ErrorMessage = "Định dạng email không hợp lệ.")]
     public string Email { get; set; }
+    [Required(ErrorMessage = "Mật khẩu là bắt buộc.")]
+    [MinLength(6, ErrorMessage = "Mật khẩu phải có ít nhất 6 ký tự.")]
+
     public string Password { get; set; }
+    [Required(ErrorMessage = "Số điện thoại là bắt buộc.")]
+
+    [Phone(ErrorMessage = "Số điện thoại không hợp lệ.")]
+    [StringLength(10, MinimumLength = 10, ErrorMessage = "Số điện thoại phải có đúng 10 ký tự.")]
     public string PhoneNumber { get; set; }
+
+    [Required(ErrorMessage = "Địa chỉ là bắt buộc.")]
+
     public string Address { get; set; }
+    [Required(ErrorMessage = "Ngày sinh là bắt buộc.")]
+
     public DateTime? DateOfBirth { get; set; }
+    [Required(ErrorMessage = "Giới tính là bắt buộc.")]
+
     public string Gender { get; set; }
     public bool IsActive { get; set; }
     public DateTime CreatedAt { get; set; }

@@ -65,6 +65,33 @@
         .highlight-row {
             background-color: rgba(144, 238, 144, 0.3); /* Màu xanh lá nhạt ban đầu */
         }
+        .notification {
+    position: fixed;
+    top: 20px; /* Khoảng cách từ trên xuống */
+    right: -350px; /* Bắt đầu ngoài viewport */
+    z-index: 1050; /* Hiển thị trên các phần tử khác */
+    opacity: 1; /* Hiển thị đầy đủ ban đầu */
+    transition: transform 0.5s ease-out, opacity 1s ease-out; /* Hiệu ứng mượt */
+    max-width: 300px; /* Giới hạn chiều rộng */
+    padding: 15px; /* Padding trong thông báo */
+    border-radius: 5px; /* Bo tròn góc */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Hiệu ứng đổ bóng */
+}
+
+/* Thông báo thành công */
+.alert-success {
+    background-color: #d4edda; /* Nền xanh lá nhạt */
+    color: #155724; /* Chữ xanh lá đậm */
+    border: 1px solid #c3e6cb; /* Viền xanh lá */
+}
+
+/* Thông báo lỗi */
+.alert-danger {
+    background-color: #f8d7da; /* Nền đỏ nhạt */
+    color: #721c24; /* Chữ đỏ đậm */
+    border: 1px solid #f5c6cb; /* Viền đỏ */
+}
+
     </style>
 
 
@@ -511,7 +538,7 @@
             }
             else
             {
-                <img src="~/images/Avatar/@HttpContextAccessor.HttpContext.Session.GetString("Img")" alt="Trang cá nhân" class="app-sidebar__user-avatar" src="~/images/img_1.jpg" width="50px">
+                <img src="@HttpContextAccessor.HttpContext.Session.GetString("Img")" alt="Trang cá nhân" class="app-sidebar__user-avatar" src="~/images/img_1.jpg" width="50px">
             }               <div>
                 <p class="app-sidebar__user-designation">Xin chào</p>
 
@@ -769,23 +796,27 @@
     </script>
 
     <script>
-        $(document).ready(function () {
-            function showAndHideNotification(selector) {
-                if ($(selector).length) {
-                    // Slide notification into view
-                    $(selector).css("transform", "translateX(-350px)"); // Slide in
-                    setTimeout(function () {
-                        // Slide notification back out after 5 seconds
-                        $(selector).css("transform", "translateX(0)"); // Slide out
-                        $(selector).css("opacity", "0"); // Optional fade-out effect
-                    }, 5000); // Display for 5 seconds before sliding out
-                }
-            }
+            $(document).ready(function () {
+                // Chọn tất cả các thông báo
+                $(".notification").each(function () {
+                    const notification = $(this);
 
-            // Show success and error notifications
-            showAndHideNotification("#notification-success");
-            showAndHideNotification("#notification-error");
-        });
+                    // Thêm hiệu ứng trượt vào viewport
+                    setTimeout(function () {
+                        notification.css("transform", "translateX(-350px)"); // Trượt vào viewport
+                    }, 100); // Delay trước khi bắt đầu trượt
+
+                    // Tự động ẩn sau 5 giây
+                    setTimeout(function () {
+                        notification.css("opacity", "0"); // Làm mờ dần
+                        setTimeout(function () {
+                            notification.remove(); // Xóa hoàn toàn sau khi ẩn
+                        }, 1000); // Đợi 1 giây sau khi làm mờ
+                    }, 5000); // Hiển thị thông báo trong 5 giây
+                });
+            });
+    </script>
+
     </script>
 
     <script src="~/js/jquery-3.2.1.min.js"></script>

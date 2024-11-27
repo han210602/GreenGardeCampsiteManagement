@@ -25,6 +25,33 @@
         max-width: 300px; /* Giới hạn chiều rộng tối đa */
         padding: 15px; /* Khoảng cách bên trong cho thông báo */
     }
+
+    .notification {
+        position: fixed;
+        top: 20px; /* Khoảng cách từ trên xuống */
+        right: -350px; /* Bắt đầu ngoài viewport */
+        z-index: 1050; /* Hiển thị trên các phần tử khác */
+        opacity: 1; /* Hiển thị đầy đủ ban đầu */
+        transition: transform 0.5s ease-out, opacity 1s ease-out; /* Hiệu ứng mượt */
+        max-width: 300px; /* Giới hạn chiều rộng */
+        padding: 15px; /* Padding trong thông báo */
+        border-radius: 5px; /* Bo tròn góc */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Hiệu ứng đổ bóng */
+    }
+
+    /* Thông báo thành công */
+    .alert-success {
+        background-color: #d4edda; /* Nền xanh lá nhạt */
+        color: #155724; /* Chữ xanh lá đậm */
+        border: 1px solid #c3e6cb; /* Viền xanh lá */
+    }
+
+    /* Thông báo lỗi */
+    .alert-danger {
+        background-color: #f8d7da; /* Nền đỏ nhạt */
+        color: #721c24; /* Chữ đỏ đậm */
+        border: 1px solid #f5c6cb; /* Viền đỏ */
+    }
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -576,7 +603,23 @@
         </ul>
 
     </header>
+    @{
+        if (TempData["SuccessMessage"] != null)
+        {
+            <div id="notification-success" class="notification alert alert-success" role="alert">
+                <i class="fas fa-bell"></i> <!-- Bell Icon -->
+            @TempData["SuccessMessage"]
+            </div>
+        }
 
+        if (TempData["ErrorMessage"] != null)
+        {
+            <div id="notification-error" class="notification alert alert-danger" role="alert">
+                <i class="fas fa-bell"></i> <!-- Bell Icon -->
+            @TempData["ErrorMessage"]
+            </div>
+        }
+    }
     <!-- Sidebar menu-->
     <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
     <aside class="app-sidebar">
@@ -592,7 +635,7 @@
             }
             else
             {
-                <img src="~/images/Avatar/@HttpContextAccessor.HttpContext.Session.GetString("Img")" alt="Trang cá nhân" class="app-sidebar__user-avatar" src="~/images/img_1.jpg" width="50px">
+                <img src="@HttpContextAccessor.HttpContext.Session.GetString("Img")" alt="Trang cá nhân" class="app-sidebar__user-avatar" src="~/images/img_1.jpg" width="50px">
             }            
             <div>
                 <p class="app-sidebar__user-designation">Xin chào</p>
@@ -782,7 +825,7 @@
                                 else
                                 {
                                     <!-- Profile picture for logged-in user -->
-                                    <img src="~/images/Avatar/@Model.ProfilePictureUrl" alt="Trang cá nhân" style="width: 300px; height: 300px; object-fit: cover; border-radius: 50%;">
+                                    <img src="@Model.ProfilePictureUrl" alt="Trang cá nhân" style="width: 300px; height: 300px; object-fit: cover; border-radius: 50%;">
                                 }
                             }
                             else

@@ -840,7 +840,17 @@ namespace GreenGardenClient.Controllers
             {
                 cartItems.Remove(item);
             }
+            bool hasTicketOrCombo = cartItems.Any(c => c.Type == "Ticket" || c.Type == "Combo");
 
+            // If no "ticket" or "combo" items exist, clear the cart and notify the frontend
+            if (!hasTicketOrCombo)
+            {
+                cartItems.Clear(); // Clear all items
+                HttpContext.Session.Remove("Cart");
+                HttpContext.Session.SetInt32("CartItemCount", 0);// Clear the cart from the session 
+                SaveCartItems(cartItems);
+                return Json(new { isCartCleared = true }); // Indicate cart has been cleared
+            }
             SaveCartItems(cartItems);
             int cartItemCount = cartItems.Sum(c => c.Quantity);
             HttpContext.Session.SetInt32("CartItemCount", cartItemCount);
@@ -946,23 +956,27 @@ namespace GreenGardenClient.Controllers
                         OrderTicket = tickets.Select(t => new CustomerOrderTicketAddlDTO
                         {
                             TicketId = t.Id,
-                            Quantity = t.Quantity
+                            Quantity = t.Quantity,
+                            ImgUrl = t.Image,
                         }).ToList(),
                         OrderCampingGear = gears.Select(g => new CustomerOrderCampingGearAddDTO
                         {
                             GearId = g.Id,
-                            Quantity = g.Quantity
+                            Quantity = g.Quantity,
+                            ImgUrl = g.Image,
                         }).ToList(),
                         OrderFood = foods.Select(f => new CustomerOrderFoodAddDTO
                         {
                             ItemId = f.Id,
                             Quantity = f.Quantity,
-                            Description = f.Name
+                            Description = f.Name,
+                            ImgUrl = f.Image,
                         }).ToList(),
                         OrderFoodCombo = comboFoods.Select(cf => new CustomerOrderFoodComboAddDTO
                         {
                             ComboId = cf.Id,
-                            Quantity = cf.Quantity
+                            Quantity = cf.Quantity,
+                            ImgUrl = cf.Image,
                         }).ToList()
                     };
 
@@ -1004,23 +1018,27 @@ namespace GreenGardenClient.Controllers
                         OrderCombo = combos.Select(t => new CustomerOrderComboAddDTO
                         {
                             ComboId = t.Id,
-                            Quantity = t.Quantity
+                            Quantity = t.Quantity,
+                            ImgUrl = t.Image
                         }).ToList(),
                         OrderCampingGear = gears.Select(g => new CustomerOrderCampingGearAddDTO
                         {
                             GearId = g.Id,
-                            Quantity = g.Quantity
+                            Quantity = g.Quantity,
+                            ImgUrl = g.Image
                         }).ToList(),
                         OrderFood = foods.Select(f => new CustomerOrderFoodAddDTO
                         {
                             ItemId = f.Id,
                             Quantity = f.Quantity,
-                            Description = f.Name
+                            Description = f.Name,
+                            ImgUrl = f.Image
                         }).ToList(),
                         OrderFoodCombo = comboFoods.Select(cf => new CustomerOrderFoodComboAddDTO
                         {
                             ComboId = cf.Id,
-                            Quantity = cf.Quantity
+                            Quantity = cf.Quantity,
+                            ImgUrl = cf.Image
                         }).ToList()
                     };
 

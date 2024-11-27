@@ -1,4 +1,6 @@
-﻿using GreenGardenClient.Models;
+﻿using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
+using GreenGardenClient.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
@@ -97,7 +99,7 @@ namespace GreenGardenClient.Controllers.AdminController
             {
                 return RedirectToAction("Index", "Home");
             }
-            return View( new EventVM()); // Otherwise, return the view with userdata
+            return View(new EventVM()); // Otherwise, return the view with userdata
 
         }
         [HttpPost]
@@ -122,23 +124,52 @@ namespace GreenGardenClient.Controllers.AdminController
                 return RedirectToAction("Index", "Home");
             }
 
-       
-            if (PictureUrl != null && PictureUrl.Length > 0)
+
+            if (PictureUrl != null)
             {
-                MultipartFormDataContent formData = new MultipartFormDataContent();
-                StreamContent fileContent = new StreamContent(PictureUrl.OpenReadStream());
-                formData.Add(fileContent, "file", PictureUrl.FileName);
+                // Lấy tên file từ tệp được tải lên
+                string fileName = PictureUrl.FileName;
 
-                string filePath = Path.Combine("wwwroot/images/Event", PictureUrl.FileName);
-                using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
+                // Sử dụng Stream để tải trực tiếp lên Cloudinary
+                using (var stream = PictureUrl.OpenReadStream())
                 {
-                    await PictureUrl.CopyToAsync(fileStream);
-                }
+                    // Cấu hình tài khoản Cloudinary
+                    var accountVM = new AccountVM
+                    {
+                        CloudName = "dxpsghdhb", // Thay bằng giá trị thực tế
+                        ApiKey = "312128264571836",
+                        ApiSecret = "nU5ETmubjnFSHIcwRPIDjjjuN8Y"
+                    };
 
-                model.PictureUrl = PictureUrl.FileName;
+                    // Ánh xạ từ AccountVM sang Account
+                    var account = new CloudinaryDotNet.Account(
+                        accountVM.CloudName,
+                        accountVM.ApiKey,
+                        accountVM.ApiSecret
+                    );
+
+                    // Tạo đối tượng Cloudinary
+                    var cloudinary = new Cloudinary(account);
+
+                    // Thiết lập thông số upload
+                    var uploadParams = new ImageUploadParams()
+                    {
+                        File = new FileDescription(fileName, stream), // Đặt stream và tên file
+                        PublicId = "Event/" + Path.GetFileNameWithoutExtension(fileName), // Tùy chọn đặt tên file trên Cloudinary
+                        Folder = "Event", // Thư mục trong Cloudinary (tùy chọn)
+                    };
+
+                    // Thực hiện upload
+                    var uploadResult = await cloudinary.UploadAsync(uploadParams);
+
+                    // Cập nhật đường dẫn hình ảnh từ Cloudinary vào model
+                    model.PictureUrl = uploadResult.SecureUrl.AbsoluteUri;
+                }
             }
             else
             {
+                // Sử dụng ảnh hiện tại nếu không có ảnh mới
+                model.PictureUrl = "Colorful Modern Camping Club Logo.png"; // Hoặc bỏ qua giá trị ImgUrl nếu cần
                 ModelState.AddModelError("PictureUrl", "File ảnh không hợp lệ hoặc không được chọn.");
             }
             // URL API to add a new event
@@ -151,7 +182,7 @@ namespace GreenGardenClient.Controllers.AdminController
 
 
                     // Get UserId from Session
-                    
+
 
                     var requestData = new
                     {
@@ -226,17 +257,44 @@ namespace GreenGardenClient.Controllers.AdminController
             // Kiểm tra nếu có file ảnh mới
             if (PictureUrl != null)
             {
-                // Tạo đường dẫn lưu file mới
-                string filePath = Path.Combine("wwwroot/images/Event", PictureUrl.FileName);
+                // Lấy tên file từ tệp được tải lên
+                string fileName = PictureUrl.FileName;
 
-                // Lưu file vào thư mục wwwroot/images
-                using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
+                // Sử dụng Stream để tải trực tiếp lên Cloudinary
+                using (var stream = PictureUrl.OpenReadStream())
                 {
-                    await PictureUrl.CopyToAsync(fileStream);
-                }
+                    // Cấu hình tài khoản Cloudinary
+                    var accountVM = new AccountVM
+                    {
+                        CloudName = "dxpsghdhb", // Thay bằng giá trị thực tế
+                        ApiKey = "312128264571836",
+                        ApiSecret = "nU5ETmubjnFSHIcwRPIDjjjuN8Y"
+                    };
 
-                // Cập nhật đường dẫn hình ảnh vào model với ảnh mới
-                model.PictureUrl = PictureUrl.FileName;
+                    // Ánh xạ từ AccountVM sang Account
+                    var account = new CloudinaryDotNet.Account(
+                        accountVM.CloudName,
+                        accountVM.ApiKey,
+                        accountVM.ApiSecret
+                    );
+
+                    // Tạo đối tượng Cloudinary
+                    var cloudinary = new Cloudinary(account);
+
+                    // Thiết lập thông số upload
+                    var uploadParams = new ImageUploadParams()
+                    {
+                        File = new FileDescription(fileName, stream), // Đặt stream và tên file
+                        PublicId = "Event/" + Path.GetFileNameWithoutExtension(fileName), // Tùy chọn đặt tên file trên Cloudinary
+                        Folder = "Event", // Thư mục trong Cloudinary (tùy chọn)
+                    };
+
+                    // Thực hiện upload
+                    var uploadResult = await cloudinary.UploadAsync(uploadParams);
+
+                    // Cập nhật đường dẫn hình ảnh từ Cloudinary vào model
+                    model.PictureUrl = uploadResult.SecureUrl.AbsoluteUri;
+                }
             }
             else
             {

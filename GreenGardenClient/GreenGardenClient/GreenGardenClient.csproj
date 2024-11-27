@@ -187,6 +187,7 @@
     <None Include="wwwroot\scss\_site-base.scss" />
     <None Include="wwwroot\scss\_site-blocks.scss" />
     <None Include="wwwroot\scss\_site-navbar.scss" />
+    <PackageReference Include="CloudinaryDotNet" Version="1.26.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.35" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.35">

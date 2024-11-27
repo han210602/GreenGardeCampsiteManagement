@@ -90,7 +90,7 @@
                                                 else
                                                 {
                                                 <div style="width: 30px; height: 30px; border-radius: 50%; overflow: hidden; margin-right: 8px;">
-                                                    <img src="~/images/Avatar/@HttpContextAccessor.HttpContext.Session.GetString("Img")" alt="Trang cá nhân" style="width: 100%; height: 100%; object-fit: cover;">
+                                                    <img src="@HttpContextAccessor.HttpContext.Session.GetString("Img")" alt="Trang cá nhân" style="width: 100%; height: 100%; object-fit: cover;">
                                                 </div>
                                                 }
                                                 @HttpContextAccessor.HttpContext.Session.GetString("Fullname")

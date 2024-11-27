@@ -92,7 +92,7 @@
                                                 else
                                                 {
                                                 <div style="width: 30px; height: 30px; border-radius: 50%; overflow: hidden; margin-right: 8px;">
-                                                    <img src="~/images/Avatar/@HttpContextAccessor.HttpContext.Session.GetString("Img")" alt="Trang cá nhân" style="width: 100%; height: 100%; object-fit: cover;">
+                                                    <img src="@HttpContextAccessor.HttpContext.Session.GetString("Img")" alt="Trang cá nhân" style="width: 100%; height: 100%; object-fit: cover;">
                                                 </div>
                                                 }
                                                 @HttpContextAccessor.HttpContext.Session.GetString("Fullname")
@@ -336,7 +336,7 @@
                                 {
                                     <div class="divider"></div>
                                     <div class="item-card">
-                                        <img src="~/images/img_1.jpg" alt="White & Red Nike Athletic Shoe">
+                                        <img src="@item.ImgUrl" alt="White & Red Nike Athletic Shoe">
                                         <div class="item-details">
                                             <p></p>
                                             <p class="item-title">Vé @item.Name</p>
@@ -353,7 +353,7 @@
                                 {
                                     <div class="divider"></div>
                                     <div class="item-card">
-                                        <img src="~/images/img_1.jpg" alt="White & Red Nike Athletic Shoe">
+                                        <img src="@item.ImgUrl" alt="White & Red Nike Athletic Shoe">
                                         <div class="item-details">
                                             <p></p>
                                             <p class="item-title">@item.Name</p>
@@ -370,7 +370,7 @@
                                 {
                                     <div class="divider"></div>
                                     <div class="item-card">
-                                        <img src="~/images/img_1.jpg" alt="White & Red Nike Athletic Shoe">
+                                        <img src="@item.ImgUrl" alt="White & Red Nike Athletic Shoe">
                                         <div class="item-details">
                                             <p></p>
                                             <p class="item-title">@item.Name</p>
@@ -387,7 +387,7 @@
                                 {
                                     <div class="divider"></div>
                                     <div class="item-card">
-                                        <img src="~/images/img_1.jpg" alt="White & Red Nike Athletic Shoe">
+                                        <img src="@item.ImgUrl" alt="White & Red Nike Athletic Shoe">
                                         <div class="item-details">
                                             <p></p>
                                             <p class="item-title">@item.Name</p>

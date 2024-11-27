@@ -1,4 +1,6 @@
-﻿using GreenGardenClient.Models;
+﻿using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
+using GreenGardenClient.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -416,25 +418,54 @@ namespace GreenGardenClient.Controllers
         public async Task<IActionResult> ChangeProfile(UpdateProfile updateProfile, IFormFile ProfilePictureUrl, string CurrentPictureUrl)
         {
 
+
             if (ProfilePictureUrl != null)
             {
-                // Tạo đường dẫn lưu file mới
-                string filePath = Path.Combine("wwwroot/images/Avatar", ProfilePictureUrl.FileName);
+                // Lấy tên file từ tệp được tải lên
+                string fileName = ProfilePictureUrl.FileName;
 
-                // Lưu file vào thư mục wwwroot/images
-                using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
+                // Sử dụng Stream để tải trực tiếp lên Cloudinary
+                using (var stream = ProfilePictureUrl.OpenReadStream())
                 {
-                    await ProfilePictureUrl.CopyToAsync(fileStream);
-                }
+                    // Cấu hình tài khoản Cloudinary
+                    var accountVM = new AccountVM
+                    {
+                        CloudName = "dxpsghdhb", // Thay bằng giá trị thực tế
+                        ApiKey = "312128264571836",
+                        ApiSecret = "nU5ETmubjnFSHIcwRPIDjjjuN8Y"
+                    };
 
-                // Cập nhật đường dẫn hình ảnh vào model với ảnh mới
-                updateProfile.ProfilePictureUrl = ProfilePictureUrl.FileName;
+                    // Ánh xạ từ AccountVM sang Account
+                    var account = new CloudinaryDotNet.Account(
+                        accountVM.CloudName,
+                        accountVM.ApiKey,
+                        accountVM.ApiSecret
+                    );
+
+                    // Tạo đối tượng Cloudinary
+                    var cloudinary = new Cloudinary(account);
+
+                    // Thiết lập thông số upload
+                    var uploadParams = new ImageUploadParams()
+                    {
+                        File = new FileDescription(fileName, stream), // Đặt stream và tên file
+                        PublicId = "Avatar/" + Path.GetFileNameWithoutExtension(fileName), // Tùy chọn đặt tên file trên Cloudinary
+                        Folder = "Avatar", // Thư mục trong Cloudinary (tùy chọn)
+                    };
+
+                    // Thực hiện upload
+                    var uploadResult = await cloudinary.UploadAsync(uploadParams);
+
+                    // Cập nhật đường dẫn hình ảnh từ Cloudinary vào model
+                    updateProfile.ProfilePictureUrl = uploadResult.SecureUrl.AbsoluteUri;
+                }
             }
             else
             {
                 // Sử dụng ảnh hiện tại nếu không có ảnh mới
                 updateProfile.ProfilePictureUrl = CurrentPictureUrl;
             }
+
             // Retrieve the userId from the session
             var userId = HttpContext.Session.GetInt32("UserId");
 

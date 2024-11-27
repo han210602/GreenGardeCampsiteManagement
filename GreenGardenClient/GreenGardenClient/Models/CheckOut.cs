@@ -22,6 +22,7 @@
         public int OrderId { get; set; }
         public int? Quantity { get; set; }
         public string? Description { get; set; }
+        public string? ImgUrl { get; set; }
     }
     public class CustomerOrderAddDTO
     {
@@ -40,13 +41,14 @@
         public int TicketId { get; set; }
         public int OrderId { get; set; }
         public int? Quantity { get; set; }
+        public string? ImgUrl { get; set; }
     }
     public class CustomerOrderCampingGearAddDTO
     {
         public int GearId { get; set; }
         public int OrderId { get; set; }
 
-
+        public string? ImgUrl { get; set; }
 
         public int? Quantity { get; set; }
     }
@@ -55,7 +57,7 @@
         public int ItemId { get; set; }
         public int OrderId { get; set; }
 
-
+        public string? ImgUrl { get; set; }
         public int? Quantity { get; set; }
         public string? Description { get; set; }
     }
@@ -64,6 +66,7 @@
         public int ComboId { get; set; }
         public int OrderId { get; set; }
         public int? Quantity { get; set; }
+        public string? ImgUrl { get; set; }
 
     }
 }

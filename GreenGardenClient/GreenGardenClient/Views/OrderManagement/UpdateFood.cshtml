@@ -448,7 +448,7 @@
             }
             else
             {
-                <img src="~/images/Avatar/@HttpContextAccessor.HttpContext.Session.GetString("Img")" alt="Trang cá nhân" class="app-sidebar__user-avatar" src="~/images/img_1.jpg" width="50px">
+                <img src="@HttpContextAccessor.HttpContext.Session.GetString("Img")" alt="Trang cá nhân" class="app-sidebar__user-avatar" src="~/images/img_1.jpg" width="50px">
             }               <div>
                 <p class="app-sidebar__user-designation">Xin chào</p>
 
@@ -735,7 +735,7 @@
 
                                 <div class="product-card">
                                     <div class="product-image">
-                                        <img src="~/images/Gear/@item.ImgUrl" alt="Foodandrink">
+                                        <img src="@item.ImgUrl" alt="Foodandrink">
                                     </div>
                                     <div class="product-details">
                                         <div class="product-name">

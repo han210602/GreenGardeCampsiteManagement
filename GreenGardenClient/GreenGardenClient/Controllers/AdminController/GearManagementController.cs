@@ -1,21 +1,23 @@
-﻿using GreenGardenClient.Models;
+﻿using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
+using GreenGardenClient.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
 namespace GreenGardenClient.Controllers.AdminController
 {
 
-        public class GearManagementController : Controller
-        {
-            private readonly IHttpClientFactory _clientFactory;
-            [BindProperty]
-            public IFormFile PictureUrl { get; set; }
+    public class GearManagementController : Controller
+    {
+        private readonly IHttpClientFactory _clientFactory;
+        [BindProperty]
+        public IFormFile PictureUrl { get; set; }
 
-            // Constructor to inject IHttpClientFactory
-            public GearManagementController(IHttpClientFactory clientFactory)
-            {
-                _clientFactory = clientFactory ?? throw new ArgumentNullException(nameof(clientFactory));
-            }
+        // Constructor to inject IHttpClientFactory
+        public GearManagementController(IHttpClientFactory clientFactory)
+        {
+            _clientFactory = clientFactory ?? throw new ArgumentNullException(nameof(clientFactory));
+        }
         private async Task<T> GetDataFromApiAsync<T>(string apiUrl)
         {
             using (var client = _clientFactory.CreateClient())
@@ -132,19 +134,51 @@ namespace GreenGardenClient.Controllers.AdminController
 
             if (PictureUrl != null)
             {
-                // Lưu file mới
-                string filePath = Path.Combine("wwwroot/images/Gear", PictureUrl.FileName);
-                using (var stream = new FileStream(filePath, FileMode.Create))
+                // Lấy tên file từ tệp được tải lên
+                string fileName = PictureUrl.FileName;
+
+                // Sử dụng Stream để tải trực tiếp lên Cloudinary
+                using (var stream = PictureUrl.OpenReadStream())
                 {
-                    await PictureUrl.CopyToAsync(stream);
+                    // Cấu hình tài khoản Cloudinary
+                    var accountVM = new AccountVM
+                    {
+                        CloudName = "dxpsghdhb", // Thay bằng giá trị thực tế
+                        ApiKey = "312128264571836",
+                        ApiSecret = "nU5ETmubjnFSHIcwRPIDjjjuN8Y"
+                    };
+
+                    // Ánh xạ từ AccountVM sang Account
+                    var account = new CloudinaryDotNet.Account(
+                        accountVM.CloudName,
+                        accountVM.ApiKey,
+                        accountVM.ApiSecret
+                    );
+
+                    // Tạo đối tượng Cloudinary
+                    var cloudinary = new Cloudinary(account);
+
+                    // Thiết lập thông số upload
+                    var uploadParams = new ImageUploadParams()
+                    {
+                        File = new FileDescription(fileName, stream), // Đặt stream và tên file
+                        PublicId = "Gear/" + Path.GetFileNameWithoutExtension(fileName), // Tùy chọn đặt tên file trên Cloudinary
+                        Folder = "Gear", // Thư mục trong Cloudinary (tùy chọn)
+                    };
+
+                    // Thực hiện upload
+                    var uploadResult = await cloudinary.UploadAsync(uploadParams);
+
+                    // Cập nhật đường dẫn hình ảnh từ Cloudinary vào model
+                    model.ImgUrl = uploadResult.SecureUrl.AbsoluteUri;
                 }
-                model.ImgUrl = PictureUrl.FileName;
             }
             else
             {
-                // Sử dụng ảnh hiện tại
+                // Sử dụng ảnh hiện tại nếu không có ảnh mới
                 model.ImgUrl = CurrentPictureUrl;
             }
+
 
             // Gọi API để cập nhật thông tin món ăn
             string apiUrl = "https://localhost:7298/api/CampingGear/UpdateCampingGear";
@@ -226,8 +260,8 @@ namespace GreenGardenClient.Controllers.AdminController
 
             return View(new AddGearVM());
         }
-          
-        
+
+
 
         [HttpPost]
         public async Task<IActionResult> CreateGear(AddGearVM model, IFormFile PictureUrl)
@@ -240,23 +274,54 @@ namespace GreenGardenClient.Controllers.AdminController
             model.CreatedAt = DateTime.Now;
             model.Status = model.Status ?? true;  // Set to true if not provided
             ViewBag.GearCategoryId = model.GearCategoryId;
-           
-           if (PictureUrl != null && PictureUrl.Length > 0)
+
+            if (PictureUrl != null)
             {
-                string filePath = Path.Combine("wwwroot/images/Gear", PictureUrl.FileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                // Lấy tên file từ tệp được tải lên
+                string fileName = PictureUrl.FileName;
+
+                // Sử dụng Stream để tải trực tiếp lên Cloudinary
+                using (var stream = PictureUrl.OpenReadStream())
                 {
-                    await PictureUrl.CopyToAsync(fileStream);
+                    // Cấu hình tài khoản Cloudinary
+                    var accountVM = new AccountVM
+                    {
+                        CloudName = "dxpsghdhb", // Thay bằng giá trị thực tế
+                        ApiKey = "312128264571836",
+                        ApiSecret = "nU5ETmubjnFSHIcwRPIDjjjuN8Y"
+                    };
+
+                    // Ánh xạ từ AccountVM sang Account
+                    var account = new CloudinaryDotNet.Account(
+                        accountVM.CloudName,
+                        accountVM.ApiKey,
+                        accountVM.ApiSecret
+                    );
+
+                    // Tạo đối tượng Cloudinary
+                    var cloudinary = new Cloudinary(account);
+
+                    // Thiết lập thông số upload
+                    var uploadParams = new ImageUploadParams()
+                    {
+                        File = new FileDescription(fileName, stream), // Đặt stream và tên file
+                        PublicId = "Gear/" + Path.GetFileNameWithoutExtension(fileName), // Tùy chọn đặt tên file trên Cloudinary
+                        Folder = "Gear", // Thư mục trong Cloudinary (tùy chọn)
+                    };
+
+                    // Thực hiện upload
+                    var uploadResult = await cloudinary.UploadAsync(uploadParams);
+
+                    // Cập nhật đường dẫn hình ảnh từ Cloudinary vào model
+                    model.ImgUrl = uploadResult.SecureUrl.AbsoluteUri;
                 }
-                model.ImgUrl = PictureUrl.FileName; // Save image name
             }
             else
             {
-                // Nếu không có ảnh, sử dụng ảnh mặc định hoặc bỏ qua xử lý ảnh
+                // Sử dụng ảnh hiện tại nếu không có ảnh mới
                 model.ImgUrl = "Colorful Modern Camping Club Logo.png"; // Hoặc bỏ qua giá trị ImgUrl nếu cần
                 ModelState.AddModelError("PictureUrl", "File ảnh không hợp lệ hoặc không được chọn.");
             }
-
 
             // Prepare request data for API
             string apiUrl = "https://localhost:7298/api/CampingGear/AddCampingGear";
@@ -266,10 +331,10 @@ namespace GreenGardenClient.Controllers.AdminController
                 {
                     var requestData = new
                     {
-                        GearName = model.GearName ,
+                        GearName = model.GearName,
                         Description = model.Description,
                         ImgUrl = model.ImgUrl,
-                        RentalPrice = model.RentalPrice ,
+                        RentalPrice = model.RentalPrice,
                         GearCategoryId = model.GearCategoryId,
                         QuantityAvailable = model.QuantityAvailable,
                         Status = model.Status,
@@ -278,7 +343,7 @@ namespace GreenGardenClient.Controllers.AdminController
 
                     // Send POST request
                     var response = await client.PostAsJsonAsync(apiUrl, requestData);
-                    
+
                     ViewBag.Gear = model;
                     if (response.IsSuccessStatusCode)
                     {

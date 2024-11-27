@@ -91,7 +91,7 @@
                                                 else
                                                 {
                                                 <div style="width: 30px; height: 30px; border-radius: 50%; overflow: hidden; margin-right: 8px;">
-                                                    <img src="~/images/Avatar/@HttpContextAccessor.HttpContext.Session.GetString("Img")" alt="Trang cá nhân" style="width: 100%; height: 100%; object-fit: cover;">
+                                                    <img src="@HttpContextAccessor.HttpContext.Session.GetString("Img")" alt="Trang cá nhân" style="width: 100%; height: 100%; object-fit: cover;">
                                                 </div>
                                                 }
                                                 @HttpContextAccessor.HttpContext.Session.GetString("Fullname")
@@ -415,7 +415,7 @@
                             <!-- Image Section -->
                             <div class="col-md-4">
                                 <div class="product-image position-relative">                                    
-                                    <img src="~/images/Ticket/@tickets.ImgUrl" alt="Product Image" class="img-fluid img-thumbnail" id="productImage"
+                                    <img src="@tickets.ImgUrl" alt="Product Image" class="img-fluid img-thumbnail" id="productImage"
                                          style="width: 377px; height: 455px; object-fit: cover; margin-bottom:50px;">
                                 </div>
                             </div>
