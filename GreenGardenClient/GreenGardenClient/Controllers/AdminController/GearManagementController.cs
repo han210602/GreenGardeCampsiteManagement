@@ -3,6 +3,8 @@ using CloudinaryDotNet.Actions;
 using GreenGardenClient.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;  // For image resizing
 using System.Net.Http.Headers;
 namespace GreenGardenClient.Controllers.AdminController
 {
@@ -116,7 +118,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 TempData["ErrorMessage"] = $"Error connecting to API: {ex.Message}";
                 return RedirectToAction("Error");
             }
-            catch (JsonException ex)
+            catch (System.Text.Json.JsonException ex)
             {
                 TempData["ErrorMessage"] = $"Error parsing JSON response: {ex.Message}";
                 return RedirectToAction("Error");
@@ -132,50 +134,123 @@ namespace GreenGardenClient.Controllers.AdminController
         public async Task<IActionResult> UpdateGear(UpdateGearVM model, IFormFile PictureUrl, string CurrentPictureUrl)
         {
 
+
+
             if (PictureUrl != null)
             {
-                // Lấy tên file từ tệp được tải lên
-                string fileName = PictureUrl.FileName;
-
-                // Sử dụng Stream để tải trực tiếp lên Cloudinary
-                using (var stream = PictureUrl.OpenReadStream())
+                // Check for valid image file
+                var allowedMimeTypes = new[] { "image/jpeg", "image/png", "image/gif" };
+                if (!allowedMimeTypes.Contains(PictureUrl.ContentType))
                 {
-                    // Cấu hình tài khoản Cloudinary
-                    var accountVM = new AccountVM
+                    return BadRequest("Invalid file type.");
+                }
+
+                // Check file size (optional)
+                if (PictureUrl.Length > 10 * 1024 * 1024) // Increase the size limit to 10 MB
+                {
+                    // Optionally, resize the image if it's too large (resize to 1MB max, for example)
+                    using (var stream = PictureUrl.OpenReadStream())
                     {
-                        CloudName = "dxpsghdhb", // Thay bằng giá trị thực tế
-                        ApiKey = "312128264571836",
-                        ApiSecret = "nU5ETmubjnFSHIcwRPIDjjjuN8Y"
-                    };
+                        // Specify the ImageSharp.Image type to avoid ambiguity with MediaTypeNames.Image
+                        var image = SixLabors.ImageSharp.Image.Load(stream); // Use SixLabors.ImageSharp.Image.Load
 
-                    // Ánh xạ từ AccountVM sang Account
-                    var account = new CloudinaryDotNet.Account(
-                        accountVM.CloudName,
-                        accountVM.ApiKey,
-                        accountVM.ApiSecret
-                    );
+                        // Resize the image to fit within a 1MB size (you can adjust the max size as needed)
+                        int maxSizeInKB = 1024; // Target size of 1MB
+                        int maxWidth = 1000; // Max width
+                        int maxHeight = 1000; // Max height
 
-                    // Tạo đối tượng Cloudinary
-                    var cloudinary = new Cloudinary(account);
+                        if (image.Width > maxWidth || image.Height > maxHeight)
+                        {
+                            image.Mutate(x => x.Resize(new SixLabors.ImageSharp.Size(maxWidth, maxHeight))); // Use SixLabors.ImageSharp.Size
+                        }
 
-                    // Thiết lập thông số upload
-                    var uploadParams = new ImageUploadParams()
+                        // Save the resized image to a memory stream
+                        using (var resizedStream = new MemoryStream())
+                        {
+                            image.SaveAsJpeg(resizedStream); // Save as JPEG or any preferred format
+                            resizedStream.Seek(0, SeekOrigin.Begin);
+
+                            // Upload to Cloudinary
+                            string fileName = PictureUrl.FileName;
+
+                            var accountVM = new AccountVM
+                            {
+                                CloudName = "dxpsghdhb",
+                                ApiKey = "312128264571836",
+                                ApiSecret = "nU5ETmubjnFSHIcwRPIDjjjuN8Y"
+                            };
+
+                            var account = new CloudinaryDotNet.Account(
+                                accountVM.CloudName,
+                                accountVM.ApiKey,
+                                accountVM.ApiSecret
+                            );
+
+                            var cloudinary = new Cloudinary(account);
+
+                            var uploadParams = new ImageUploadParams()
+                            {
+                                File = new FileDescription(fileName, resizedStream),
+                                PublicId = "Gear/" + Path.GetFileNameWithoutExtension(fileName),
+                                Folder = "Gear"
+                            };
+
+                            var uploadResult = await cloudinary.UploadAsync(uploadParams);
+
+                            // Check for upload errors
+                            if (uploadResult.Error != null)
+                            {
+                                return BadRequest("Upload failed: " + uploadResult.Error.Message);
+                            }
+
+                            model.ImgUrl = uploadResult.SecureUrl.AbsoluteUri;
+                        }
+                    }
+                }
+                else
+                {
+                    // Proceed with the original upload if file size is within limit
+                    string fileName = PictureUrl.FileName;
+
+                    using (var stream = PictureUrl.OpenReadStream())
                     {
-                        File = new FileDescription(fileName, stream), // Đặt stream và tên file
-                        PublicId = "Gear/" + Path.GetFileNameWithoutExtension(fileName), // Tùy chọn đặt tên file trên Cloudinary
-                        Folder = "Gear", // Thư mục trong Cloudinary (tùy chọn)
-                    };
+                        var accountVM = new AccountVM
+                        {
+                            CloudName = "dxpsghdhb",
+                            ApiKey = "312128264571836",
+                            ApiSecret = "nU5ETmubjnFSHIcwRPIDjjjuN8Y"
+                        };
 
-                    // Thực hiện upload
-                    var uploadResult = await cloudinary.UploadAsync(uploadParams);
+                        var account = new CloudinaryDotNet.Account(
+                            accountVM.CloudName,
+                            accountVM.ApiKey,
+                            accountVM.ApiSecret
+                        );
 
-                    // Cập nhật đường dẫn hình ảnh từ Cloudinary vào model
-                    model.ImgUrl = uploadResult.SecureUrl.AbsoluteUri;
+                        var cloudinary = new Cloudinary(account);
+
+                        var uploadParams = new ImageUploadParams()
+                        {
+                            File = new FileDescription(fileName, stream),
+                            PublicId = "Gear/" + Path.GetFileNameWithoutExtension(fileName),
+                            Folder = "Gear"
+                        };
+
+                        var uploadResult = await cloudinary.UploadAsync(uploadParams);
+
+                        // Check for upload errors
+                        if (uploadResult.Error != null)
+                        {
+                            return BadRequest("Upload failed: " + uploadResult.Error.Message);
+                        }
+
+                        model.ImgUrl = uploadResult.SecureUrl.AbsoluteUri;
+                    }
                 }
             }
             else
             {
-                // Sử dụng ảnh hiện tại nếu không có ảnh mới
+                // Use the current profile picture URL if no new picture is uploaded
                 model.ImgUrl = CurrentPictureUrl;
             }
 
@@ -275,50 +350,121 @@ namespace GreenGardenClient.Controllers.AdminController
             model.Status = model.Status ?? true;  // Set to true if not provided
             ViewBag.GearCategoryId = model.GearCategoryId;
 
+
             if (PictureUrl != null)
             {
-                // Lấy tên file từ tệp được tải lên
-                string fileName = PictureUrl.FileName;
-
-                // Sử dụng Stream để tải trực tiếp lên Cloudinary
-                using (var stream = PictureUrl.OpenReadStream())
+                // Check for valid image file
+                var allowedMimeTypes = new[] { "image/jpeg", "image/png", "image/gif" };
+                if (!allowedMimeTypes.Contains(PictureUrl.ContentType))
                 {
-                    // Cấu hình tài khoản Cloudinary
-                    var accountVM = new AccountVM
+                    return BadRequest("Invalid file type.");
+                }
+
+                // Check file size (optional)
+                if (PictureUrl.Length > 10 * 1024 * 1024) // Increase the size limit to 10 MB
+                {
+                    // Optionally, resize the image if it's too large (resize to 1MB max, for example)
+                    using (var stream = PictureUrl.OpenReadStream())
                     {
-                        CloudName = "dxpsghdhb", // Thay bằng giá trị thực tế
-                        ApiKey = "312128264571836",
-                        ApiSecret = "nU5ETmubjnFSHIcwRPIDjjjuN8Y"
-                    };
+                        // Specify the ImageSharp.Image type to avoid ambiguity with MediaTypeNames.Image
+                        var image = SixLabors.ImageSharp.Image.Load(stream); // Use SixLabors.ImageSharp.Image.Load
 
-                    // Ánh xạ từ AccountVM sang Account
-                    var account = new CloudinaryDotNet.Account(
-                        accountVM.CloudName,
-                        accountVM.ApiKey,
-                        accountVM.ApiSecret
-                    );
+                        // Resize the image to fit within a 1MB size (you can adjust the max size as needed)
+                        int maxSizeInKB = 1024; // Target size of 1MB
+                        int maxWidth = 1000; // Max width
+                        int maxHeight = 1000; // Max height
 
-                    // Tạo đối tượng Cloudinary
-                    var cloudinary = new Cloudinary(account);
+                        if (image.Width > maxWidth || image.Height > maxHeight)
+                        {
+                            image.Mutate(x => x.Resize(new SixLabors.ImageSharp.Size(maxWidth, maxHeight))); // Use SixLabors.ImageSharp.Size
+                        }
 
-                    // Thiết lập thông số upload
-                    var uploadParams = new ImageUploadParams()
+                        // Save the resized image to a memory stream
+                        using (var resizedStream = new MemoryStream())
+                        {
+                            image.SaveAsJpeg(resizedStream); // Save as JPEG or any preferred format
+                            resizedStream.Seek(0, SeekOrigin.Begin);
+
+                            // Upload to Cloudinary
+                            string fileName = PictureUrl.FileName;
+
+                            var accountVM = new AccountVM
+                            {
+                                CloudName = "dxpsghdhb",
+                                ApiKey = "312128264571836",
+                                ApiSecret = "nU5ETmubjnFSHIcwRPIDjjjuN8Y"
+                            };
+
+                            var account = new CloudinaryDotNet.Account(
+                                accountVM.CloudName,
+                                accountVM.ApiKey,
+                                accountVM.ApiSecret
+                            );
+
+                            var cloudinary = new Cloudinary(account);
+
+                            var uploadParams = new ImageUploadParams()
+                            {
+                                File = new FileDescription(fileName, resizedStream),
+                                PublicId = "Gear/" + Path.GetFileNameWithoutExtension(fileName),
+                                Folder = "Gear"
+                            };
+
+                            var uploadResult = await cloudinary.UploadAsync(uploadParams);
+
+                            // Check for upload errors
+                            if (uploadResult.Error != null)
+                            {
+                                return BadRequest("Upload failed: " + uploadResult.Error.Message);
+                            }
+
+                            model.ImgUrl = uploadResult.SecureUrl.AbsoluteUri;
+                        }
+                    }
+                }
+                else
+                {
+                    // Proceed with the original upload if file size is within limit
+                    string fileName = PictureUrl.FileName;
+
+                    using (var stream = PictureUrl.OpenReadStream())
                     {
-                        File = new FileDescription(fileName, stream), // Đặt stream và tên file
-                        PublicId = "Gear/" + Path.GetFileNameWithoutExtension(fileName), // Tùy chọn đặt tên file trên Cloudinary
-                        Folder = "Gear", // Thư mục trong Cloudinary (tùy chọn)
-                    };
+                        var accountVM = new AccountVM
+                        {
+                            CloudName = "dxpsghdhb",
+                            ApiKey = "312128264571836",
+                            ApiSecret = "nU5ETmubjnFSHIcwRPIDjjjuN8Y"
+                        };
 
-                    // Thực hiện upload
-                    var uploadResult = await cloudinary.UploadAsync(uploadParams);
+                        var account = new CloudinaryDotNet.Account(
+                            accountVM.CloudName,
+                            accountVM.ApiKey,
+                            accountVM.ApiSecret
+                        );
 
-                    // Cập nhật đường dẫn hình ảnh từ Cloudinary vào model
-                    model.ImgUrl = uploadResult.SecureUrl.AbsoluteUri;
+                        var cloudinary = new Cloudinary(account);
+
+                        var uploadParams = new ImageUploadParams()
+                        {
+                            File = new FileDescription(fileName, stream),
+                            PublicId = "Gear/" + Path.GetFileNameWithoutExtension(fileName),
+                            Folder = "Gear"
+                        };
+
+                        var uploadResult = await cloudinary.UploadAsync(uploadParams);
+
+                        // Check for upload errors
+                        if (uploadResult.Error != null)
+                        {
+                            return BadRequest("Upload failed: " + uploadResult.Error.Message);
+                        }
+
+                        model.ImgUrl = uploadResult.SecureUrl.AbsoluteUri;
+                    }
                 }
             }
             else
             {
-                // Sử dụng ảnh hiện tại nếu không có ảnh mới
                 model.ImgUrl = "Colorful Modern Camping Club Logo.png"; // Hoặc bỏ qua giá trị ImgUrl nếu cần
                 ModelState.AddModelError("PictureUrl", "File ảnh không hợp lệ hoặc không được chọn.");
             }
