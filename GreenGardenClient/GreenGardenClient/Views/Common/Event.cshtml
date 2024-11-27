@@ -354,7 +354,7 @@
                 </div>
             </div>
             <div class="site-section">
-                <div class="container" style="margin-top:20px">
+                <div class="container">
                     <div class="row justify-content-center mb-5">
                         <div class="col-md-7 text-center">
                             <h2 class="font-weight-bold">Những sự kiện của chúng tôi</h2>
@@ -362,89 +362,115 @@
                         </div>
                     </div>
 
-                    <div class="event-carousel-container">
-                        <!-- Nút điều hướng trái -->
-                        <button id="prev-button" class="carousel-button">←</button>
+                    <!-- Outer wrapper for the slider and buttons -->
+                    <div class="event-carousel-wrapper">
+                        <!-- Navigation Button: Left -->
+                        <button id="prev-button" class="carousel-button prev">←</button>
 
-                        <!-- Khu vực hiển thị sự kiện -->
-                        <div id="event-slider" class="event-slider">
-                            @if (events != null && events.Any())
-                            {
-                                foreach (var item in events)
+                        <!-- Slider container -->
+                        <div class="event-carousel-container">
+                            <div id="event-slider" class="event-slider">
+                                @if (events != null && events.Any())
                                 {
-                                    <div class="event-item">
-                                        <div class="post-entry-1">
-                                            <!-- Ảnh -->
-                                            <img src="@item.PictureUrl" alt="Image" class="img-fluid">
+                                    foreach (var item in events)
+                                    {
+                                        <div class="event-item">
+                                            <div class="post-entry-1">
+                                                <!-- Event Image -->
+                                                <img src="@item.PictureUrl" alt="Image" class="img-fluid">
 
-                                            <!-- Nội dung sự kiện -->
-                                            <div class="post-entry-1-contents">
-                                                <h2 class="event-title">@item.EventName</h2>
-                                                <div class="meta">
-                                                    <span class="event-date">@item.EventDate</span>
-                                                    <span class="separator"> | </span>
-                                                    <span class="event-creator">@item.CreatedByUserName</span>
-                                                </div>
-                                                <p class="event-description">@item.Description</p>
-                                                <div class="event-action">
-                                                    <a href="@Url.Action("EventDetail", "Common", new { eventId = item.EventId })" class="btn btn-primary">Chi tiết</a>
+                                                <!-- Event Content -->
+                                                <div class="post-entry-1-contents">
+                                                    <h2 class="event-title">@item.EventName</h2>
+                                                    <div class="meta">
+                                                        <span class="event-date">@item.EventDate</span>
+                                                        <span class="separator"> | </span>
+                                                        <span class="event-creator">@item.CreatedByUserName</span>
+                                                    </div>
+                                                    <p class="event-description">@item.Description</p>
+                                                    <div class="event-action">
+                                                        <a href="@Url.Action("EventDetail", "Common", new { eventId = item.EventId })" class="btn btn-primary">Chi tiết</a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    }
                                 }
-                            }
+                            </div>
                         </div>
 
-                        <!-- Nút điều hướng phải -->
-                        <button id="next-button" class="carousel-button">→</button>
+                        <!-- Navigation Button: Right -->
+                        <button id="next-button" class="carousel-button next">→</button>
                     </div>
-
-                </div> <!-- END .site-section -->
+                </div>
             </div>
 
+
             <style>
-                .event-carousel-container {
-                    display: flex;
-                    align-items: center;
+                /* Wrapper for the entire slider and buttons */
+                .event-carousel-wrapper {
                     position: relative;
+                    display: flex;
+                    align-items: center; /* Center buttons vertically */
+                    justify-content: space-between; /* Buttons on the left and right */
                     width: 100%;
-                    overflow: hidden;
                 }
 
-                .carousel-button {
-                    background-color: #333;
-                    color: white;
-                    border: none;
-                    padding: 10px 20px;
-                    cursor: pointer;
-                    font-size: 20px;
-                    position: absolute;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    z-index: 10;
+                /* Container for the slider */
+                .event-carousel-container {
+                    flex: 1; /* Occupy remaining space between buttons */
+                    overflow: hidden; /* Ensure only visible events are displayed */
+                    position: relative;
                 }
 
-                #prev-button {
-                    left: -50px; /* Nút điều hướng trái ra ngoài */
-                }
-
-                #next-button {
-                    right: -50px; /* Nút điều hướng phải ra ngoài */
-                }
-
+                /* Slider */
                 .event-slider {
                     display: flex;
-                    transition: transform 0.5s ease-in-out;
+                    transition: transform 0.5s ease-in-out; /* Smooth slide transition */
                     width: 100%;
                 }
 
+                /* Each event item */
                 .event-item {
-                    flex: 0 0 33.33%; /* Hiển thị 3 sự kiện một lúc */
-                    padding: 10px;
+                    flex: 0 0 33.33%; /* Display 3 items at a time */
+                    max-width: 33.33%;
                     box-sizing: border-box;
+                    padding: 10px;
                     text-align: center;
                 }
+
+                /* Navigation buttons */
+                .carousel-button {
+                    background-color: #efba6c;
+                    color: white;
+                    border: none;
+                    padding: 15px;
+                    font-size: 20px;
+                    cursor: pointer;
+                    z-index: 10; /* Ensure buttons are above all elements */
+                    border-radius: 40%; /* Circular buttons */
+                    opacity: 0.9;
+                    transition: opacity 0.3s ease, transform 0.3s ease;
+                    position: absolute; /* Positioned outside the slider */
+                    top: 50%;
+                    transform: translateY(-50%); /* Vertically center the buttons */
+                }
+
+                    .carousel-button:hover {
+                        opacity: 1; /* Fully visible on hover */
+                        transform: scale(1.1) translateY(-50%); /* Slight zoom on hover */
+                    }
+
+                    /* Left button */
+                    .carousel-button.prev {
+                        left: -60px; /* Move outside the slider on the left */
+                    }
+
+                    /* Right button */
+                    .carousel-button.next {
+                        right: -60px; /* Move outside the slider on the right */
+                    }
+
             </style>
             <script>
                 document.addEventListener("DOMContentLoaded", function () {
@@ -452,53 +478,34 @@
                     const prevButton = document.getElementById("prev-button");
                     const nextButton = document.getElementById("next-button");
                     const items = slider.querySelectorAll(".event-item");
-                    const itemWidth = items[0].offsetWidth; // Chiều rộng của một sự kiện
+                    const itemWidth = items[0].offsetWidth;
                     const totalItems = items.length;
-                    const visibleItems = 3; // Số sự kiện hiển thị cùng lúc
-                    let currentIndex = 0; // Chỉ số phần tử hiện tại đang hiển thị
+                    const visibleItems = 3; // Number of visible items
+                    let currentIndex = 0;
 
-                    // Cập nhật vị trí slider
-                    const updateSliderPosition = (animate = true) => {
-                        slider.style.transition = animate ? "transform 0.4s ease-in-out" : "none";
+                    // Update the slider position
+                    const updateSliderPosition = () => {
                         slider.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
                     };
 
-                    // Xử lý khi nhấn nút trái
-                    prevButton.addEventListener("click", function () {
-                        if (currentIndex === 0) {
-                            // Nếu ở đầu, nhảy đến cuối (không animation)
-                            currentIndex = totalItems - visibleItems;
-                            updateSliderPosition(false);
-                            // Sau đó di chuyển ngược
-                            setTimeout(() => {
-                                currentIndex--;
-                                updateSliderPosition(true);
-                            }, 50); // Delay nhỏ để đảm bảo reset xong
-                        } else {
+                    // Handle "Previous" button click
+                    prevButton.addEventListener("click", () => {
+                        if (currentIndex > 0) {
                             currentIndex--;
-                            updateSliderPosition(true);
+                            updateSliderPosition();
                         }
                     });
 
-                    // Xử lý khi nhấn nút phải
-                    nextButton.addEventListener("click", function () {
-                        if (currentIndex === totalItems - visibleItems) {
-                            // Nếu ở cuối, nhảy về đầu (không animation)
-                            currentIndex = 0;
-                            updateSliderPosition(false);
-                            // Sau đó di chuyển tới phần tử kế tiếp
-                            setTimeout(() => {
-                                currentIndex++;
-                                updateSliderPosition(true);
-                            }, 50); // Delay nhỏ để đảm bảo reset xong
-                        } else {
+                    // Handle "Next" button click
+                    nextButton.addEventListener("click", () => {
+                        if (currentIndex < totalItems - visibleItems) {
                             currentIndex++;
-                            updateSliderPosition(true);
+                            updateSliderPosition();
                         }
                     });
 
-                    // Khởi tạo slider
-                    updateSliderPosition(false);
+                    // Initialize position
+                    updateSliderPosition();
                 });
 
 

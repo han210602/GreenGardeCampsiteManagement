@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\images\home\**" />
+    <Content Remove="wwwroot\images\home\**" />
+    <EmbeddedResource Remove="wwwroot\images\home\**" />
+    <None Remove="wwwroot\images\home\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\css\.DS_Store" />
     <None Include="wwwroot\css\aos.css" />
     <None Include="wwwroot\css\bootstrap-datepicker.css" />
@@ -53,7 +60,6 @@
     <None Include="wwwroot\fonts\icomoon\fonts\icomoon.woff" />
     <None Include="wwwroot\fonts\icomoon\Read Me.txt" />
     <None Include="wwwroot\fonts\icomoon\style.css" />
-    <None Include="wwwroot\images\.DS_Store" />
     <None Include="wwwroot\js\aos.js" />
     <None Include="wwwroot\js\bootstrap-datepicker.min.js" />
     <None Include="wwwroot\js\bootstrap.min.js" />
@@ -207,15 +213,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\images\home\" />
-    <Folder Include="wwwroot\images\food\" />
-    <Folder Include="wwwroot\images\gear\" />
-    <Folder Include="wwwroot\images\Food\" />
-    <Folder Include="wwwroot\images\Gear\" />
-    <Folder Include="wwwroot\images\Event\" />
-    <Folder Include="wwwroot\images\Event\" />
-    <Folder Include="wwwroot\images\Ticket\" />
-    <Folder Include="wwwroot\images\User\" />
+    <Folder Include="Views\Home\" />
   </ItemGroup>
 
 </Project>

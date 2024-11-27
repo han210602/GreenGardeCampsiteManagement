@@ -12,8 +12,8 @@ namespace DataAccess.DAO
 {
     public class DashBoardDAO
     {
-        private static GreenGardenContext context = new GreenGardenContext();
-        public static List<UserDTO> ListCustomer()
+        private GreenGardenContext context = new GreenGardenContext();
+        public  List<UserDTO> ListCustomer()
         {
             try
             {
@@ -52,7 +52,7 @@ namespace DataAccess.DAO
 
        
 
-        public static ProfitDTO Profit(string datetime)
+        public  ProfitDTO Profit(string datetime)
         {
             try
             {

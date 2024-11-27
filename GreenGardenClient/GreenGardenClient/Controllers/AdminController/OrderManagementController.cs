@@ -82,7 +82,7 @@ namespace GreenGardenClient.Controllers.AdminController
                             item.ActivityId = 1002;
                             TempData["NotificationError"] += $"Đơn {item.OrderId} đã bị hủy do tới ngày đặt trước nhưng chưa cọc.\n";
                             orderdata.Remove(item);
-                            return RedirectToAction("OrderCancel");
+                            return RedirectToAction("OrderOnline");
 
                             // Xóa item khỏi danh sách gốc
                         }
@@ -93,7 +93,7 @@ namespace GreenGardenClient.Controllers.AdminController
                             item.ActivityId = 1002;
                             TempData["NotificationError"] += $"Đơn {item.OrderId} đã bị hủy do quá ngày sử dụng.\n";
                             orderdata.Remove(item);
-                            return RedirectToAction("OrderCancel");
+                            return RedirectToAction("OrderOnline");
                             // Xóa item khỏi danh sách gốc
                         }
                     }

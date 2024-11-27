@@ -12,13 +12,16 @@ namespace Repositories.DashBoard
     {
         public List<UserDTO> ListCustomer()
         {
-            return DashBoardDAO.ListCustomer();
+            DashBoardDAO dashBoardDAO = new DashBoardDAO(); 
+            return dashBoardDAO.ListCustomer();
         }
 
 
         public ProfitDTO Profit(string datetime)
         {
-            return DashBoardDAO.Profit(datetime);
+            DashBoardDAO dashBoardDAO = new DashBoardDAO();
+
+            return dashBoardDAO.Profit(datetime);
         }
 
        
