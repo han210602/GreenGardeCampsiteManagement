@@ -871,10 +871,36 @@
                 </li>
             }
 
-            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+            @* Hiển thị trang đầu tiên *@
+            <li class="page-item @(1 == ViewBag.CurrentPage ? "active" : "")">
+                <a class="page-link" href="?categoryId=@ViewBag.CurrentCategoryId&sortBy=@ViewBag.SortBy&priceRange=@ViewBag.PriceRange&page=1">1</a>
+            </li>
+
+            @* Hiển thị trang giữa (nếu cần) *@
+            @if (ViewBag.CurrentPage > 2)
+            {
+                <li class="page-item disabled"><span class="page-link">...</span></li>
+            }
+
+            @* Hiển thị trang hiện tại và 1 trang kế cận *@
+            @for (int i = Math.Max(2, ViewBag.CurrentPage - 1); i <= Math.Min(ViewBag.TotalPages - 1, ViewBag.CurrentPage + 1); i++)
             {
                 <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
                     <a class="page-link" href="?categoryId=@ViewBag.CurrentCategoryId&sortBy=@ViewBag.SortBy&priceRange=@ViewBag.PriceRange&page=@i">@i</a>
+                </li>
+            }
+
+            @* Hiển thị dấu "..." nếu trang cuối không liền kề trang hiện tại *@
+            @if (ViewBag.CurrentPage < ViewBag.TotalPages - 1)
+            {
+                <li class="page-item disabled"><span class="page-link">...</span></li>
+            }
+
+            @* Hiển thị trang cuối cùng *@
+            @if (ViewBag.TotalPages > 1)
+            {
+                <li class="page-item @(ViewBag.TotalPages == ViewBag.CurrentPage ? "active" : "")">
+                    <a class="page-link" href="?categoryId=@ViewBag.CurrentCategoryId&sortBy=@ViewBag.SortBy&priceRange=@ViewBag.PriceRange&page=@ViewBag.TotalPages">@ViewBag.TotalPages</a>
                 </li>
             }
 
@@ -889,6 +915,7 @@
             }
         </ul>
     </div>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
