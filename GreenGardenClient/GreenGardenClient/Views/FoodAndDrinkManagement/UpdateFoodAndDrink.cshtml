@@ -804,7 +804,7 @@
     <main class="app-content">
         <div class="app-title">
             <ul class="app-breadcrumb breadcrumb side">
-                <li class="breadcrumb-item active">Quản lí đơn hàng/Tạo đơn mới/Đặt đồ ăn</li>
+                <li class="breadcrumb-item active">Quản lí đồ ăn/Chi tiết đồ ăn</li>
             </ul>
             <div id="clock"></div>
         </div>
@@ -1152,6 +1152,13 @@
             const file = fileInput.files[0]; // Lấy file được chọn
 
             if (file) {
+
+                const allowedExtensions = ['image/jpeg', 'image/png', 'image/jpg'];
+                if (!allowedExtensions.includes(file.type)) {
+                    alert("Vui lòng chọn một hình ảnh hợp lệ (.jpg, .png).");
+                    fileInput.value = ""; // Reset the input
+                    return;
+                }
                 // Tạo URL tạm thời cho file
                 const newImageUrl = URL.createObjectURL(file);
 

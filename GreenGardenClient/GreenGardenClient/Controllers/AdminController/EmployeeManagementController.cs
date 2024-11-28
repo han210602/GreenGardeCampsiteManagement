@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using System.Net.Http.Headers;
 
 namespace GreenGardenClient.Controllers.AdminController
@@ -78,16 +77,18 @@ namespace GreenGardenClient.Controllers.AdminController
         public async Task<IActionResult> CreateEmployee(Employee model)
         {
             string apiUrl = "https://localhost:7298/api/User/AddEmployee";
+
             if (!ModelState.IsValid)
             {
-                // Trả lại View với các thông báo lỗi
+                // Return to the view with validation errors if the model is not valid
                 return View(model);
             }
+
             using (HttpClient client = new HttpClient())
             {
                 try
                 {
-                    // Log request data
+                    // Prepare the data to send to the API
                     var requestData = new
                     {
                         model.FirstName,
@@ -98,36 +99,32 @@ namespace GreenGardenClient.Controllers.AdminController
                         model.Address,
                         model.DateOfBirth,
                         model.Gender,
-
                     };
-                    Console.WriteLine($"Sending data: {JsonConvert.SerializeObject(requestData)}");
-
-                    // Add Authorization if required
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "YourAccessToken");
 
                     // Send POST request to the API
                     var response = await client.PostAsJsonAsync(apiUrl, requestData);
 
-                    // Check if the response was successful
-                    if (response.IsSuccessStatusCode)
+                    // If the response is not successful
+                    if (!response.IsSuccessStatusCode)
                     {
-                        TempData["SuccessMessage"] = "Tạo nhân viên thành công.";
-
-                        return RedirectToAction("Index");
-                    }
-                    else
-                    {
-                        TempData["ErrorMessage"] = "Đã xảy ra lỗi khi tạo người dùng";
-
                         var responseContent = await response.Content.ReadAsStringAsync();
-                        Console.WriteLine($"API Error Response: {response.StatusCode} - {responseContent}");
-                        return RedirectToAction("Error", "Home");
+                        Console.WriteLine($"API Error Response: {responseContent}");
+
+                        // Add the error message to ModelState
+                        ModelState.AddModelError("Email", "Email đã tồn tại hoặc không đúng định dạng.");
+
+                        // Return to the view with the error
+                        return View(model);
                     }
+
+                    // Handle success case
+                    TempData["SuccessMessage"] = "Tạo nhân viên thành công.";
+                    return RedirectToAction("Index");
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine($"Exception occurred: {ex.Message}");
-                    return RedirectToAction("OrderManagement", "Error");
+                    return RedirectToAction("Error", "Home");
                 }
             }
         }

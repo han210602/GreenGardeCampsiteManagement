@@ -8,6 +8,4 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = BusinessObject
-build_property.ProjectDir = C:\Users\admin\Desktop\New folder\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\BusinessObject\
-build_property.EnableComHosting = 
-build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.ProjectDir = C:\Users\ADMIN\Desktop\New folder (9)\GreenGardenCampsiteManagement\GreenGardenCampsiteManagementAPI\BusinessObject\

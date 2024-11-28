@@ -600,9 +600,10 @@ namespace GreenGardenClient.Controllers
         public async Task<IActionResult> Cart()
         {
             var customerId = HttpContext.Session.GetInt32("UserId");
+            var RoleId = HttpContext.Session.GetInt32("RoleId");
 
             // Ensure customerId is found
-            if (!customerId.HasValue)
+            if (!customerId.HasValue || RoleId != 3)
             {
                 return RedirectToAction("Error");
             }

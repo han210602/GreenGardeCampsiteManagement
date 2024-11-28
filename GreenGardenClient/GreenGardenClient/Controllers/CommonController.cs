@@ -95,7 +95,6 @@ namespace GreenGardenClient.Controllers
                         {
                             HttpContext.Session.SetString("Img", loginResponse.ProfilePictureUrl);
                         }
-                        TempData["SuccessMessage"] = "Đăng nhập thành công!";
                         return RedirectToAction("Index", "Home");
                     }
                     else
@@ -227,11 +226,6 @@ namespace GreenGardenClient.Controllers
         {
             try
             {
-                var userId = HttpContext.Session.GetInt32("UserId");
-                if (!userId.HasValue)
-                {
-                    return RedirectToAction("Error");
-                }
 
                 if (string.IsNullOrEmpty(email))
                 {

@@ -12,5 +12,8 @@ namespace Repositories.Accounts
         Task<string> SendVerificationCode(string email);
         Task<string> UpdateProfile(UpdateProfile updateProfile);
         bool ChangePassword(ChangePassword changePasswordDto);
+
+
+
     }
 }

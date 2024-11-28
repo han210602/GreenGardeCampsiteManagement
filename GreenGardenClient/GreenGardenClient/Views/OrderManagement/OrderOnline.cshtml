@@ -820,8 +820,7 @@
                                                            name="money"
                                                            id="depositAmount-@item.OrderId"
                                                            class="form-control"
-                                                           min="0"
-                                                           required
+                                                           
                                                            placeholder="Nhập số tiền đặt cọc" />
                                                     <!-- Predefined rounded deposit amounts -->
                                                     <div class="mt-3 text-center">
@@ -870,8 +869,13 @@
                                                 const depositAmountInput = document.getElementById(`depositAmount-${orderId}`);
                                                 const depositAmount = parseFloat(depositAmountInput.value);
 
+                                                if (isNaN(depositAmount)) {
+                                                    alert("Số tiền không được để trống.");
+                                                    return false; // Prevent form submission
+                                                }
+
                                                 // Check if the deposit amount is valid and not greater than totalAmount
-                                                if (isNaN(depositAmount) || depositAmount <= 1000) {
+                                                if ( depositAmount <= 1000) {
                                                     alert("Số tiền đặt cọc phải lớn hơn 1.000 VNĐ. Vui lòng nhập số tiền hợp lệ.");
                                                     return false; // Prevent form submission
                                                 }

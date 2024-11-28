@@ -88,7 +88,7 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
                 bool result = _repo.AddEmployee(newEmployeeDto, null); // Pass IConfiguration if needed
                 if (!result)
                 {
-                    return BadRequest("Failed to add employee. The email may already be in use or invalid data was provided.");
+                    return BadRequest("Tạo tài khoản thất bại. Email mày đã được sử dụng hoặc không đúng định dạng.");
                 }
                 return Ok("Employee added successfully.");
             }

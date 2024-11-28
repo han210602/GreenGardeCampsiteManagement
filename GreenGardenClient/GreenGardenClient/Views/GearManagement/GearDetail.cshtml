@@ -1000,6 +1000,12 @@
                 const file = fileInput.files[0]; // Lấy file được chọn
 
                 if (file) {
+                    const allowedExtensions = ['image/jpeg', 'image/png', 'image/jpg'];
+                    if (!allowedExtensions.includes(file.type)) {
+                        alert("Vui lòng chọn một hình ảnh hợp lệ (.jpg, .png).");
+                        fileInput.value = ""; // Reset the input
+                        return;
+                    }
                     // Tạo URL tạm thời cho file
                     const newImageUrl = URL.createObjectURL(file);
 

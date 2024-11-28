@@ -558,7 +558,7 @@
     <main class="app-content">
         <div class="app-title">
             <ul class="app-breadcrumb breadcrumb side">
-                <li class="breadcrumb-item active">Quản lí đơn hàng/Tạo đơn mới </li>
+                <li class="breadcrumb-item active">Quản lí đồ ăn/Tạo đồ ăn </li>
             </ul>
             <div id="clock"></div>
         </div>
@@ -757,6 +757,14 @@
             const preview = document.getElementById("imagePreview");
 
             if (file) {
+
+                const allowedExtensions = ['image/jpeg', 'image/png', 'image/jpg'];
+                if (!allowedExtensions.includes(file.type)) {
+                    alert("Vui lòng chọn một hình ảnh hợp lệ (.jpg, .png).");
+                    fileInput.value = ""; // Reset the input
+                    return;
+                }
+
                 const reader = new FileReader();
 
                 reader.onload = function (e) {

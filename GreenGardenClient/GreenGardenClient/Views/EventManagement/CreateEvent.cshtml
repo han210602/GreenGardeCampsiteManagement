@@ -700,6 +700,13 @@
             const preview = document.getElementById("imagePreview");
 
             if (file) {
+                const allowedExtensions = ['image/jpeg', 'image/png', 'image/jpg'];
+                if (!allowedExtensions.includes(file.type)) {
+                    alert("Vui lòng chọn một hình ảnh hợp lệ (.jpg, .png).");
+                    fileInput.value = ""; // Reset the input
+                    return;
+                }
+
                 const reader = new FileReader();
 
                 reader.onload = function (e) {
