@@ -303,7 +303,7 @@ namespace GreenGardenClient.Controllers.AdminController
                     var jwtToken = Request.Cookies["JWTToken"];
                     _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
                     List<OrderVM> orderdata = GetDataFromApi<List<OrderVM>>("https://localhost:7298/api/OrderManagement/GetAllOrders");
-                    orderdata = orderdata.Where(s => s.ActivityId == 1002).ToList();
+                    orderdata = orderdata.Where(s => s.ActivityId == 1002).OrderByDescending(s=>s.OrderUsageDate).ToList();
 
                     ViewBag.dataorder = orderdata;
 
