@@ -53,7 +53,19 @@ namespace GreenGardenClient.Controllers.AdminController
         // Main action method
         public IActionResult Index()
         {
+            var userRole = HttpContext.Session.GetInt32("RoleId");
 
+            int? userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+            {
+                // Redirect to login page if UserId is not found in session
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (userRole != 1 && userRole != 2)
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
             var userdata = GetDataFromApi<List<Account>>("https://localhost:7298/api/User/GetAllEmployees");
 
@@ -76,6 +88,19 @@ namespace GreenGardenClient.Controllers.AdminController
         [HttpPost]
         public async Task<IActionResult> CreateEmployee(Employee model)
         {
+            var userRole = HttpContext.Session.GetInt32("RoleId");
+
+            int? userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+            {
+                // Redirect to login page if UserId is not found in session
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (userRole != 1 && userRole != 2)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             string apiUrl = "https://localhost:7298/api/User/AddEmployee";
 
             if (!ModelState.IsValid)
@@ -133,6 +158,7 @@ namespace GreenGardenClient.Controllers.AdminController
         [HttpPost("DeleteEmployee/{id}")]
         public async Task<IActionResult> DeleteEmployee(int id)
         {
+
             Console.WriteLine($"Received id: {id}");
             string apiUrl = $"https://localhost:7298/api/User/DeleteUser/{id}";
 
@@ -174,6 +200,19 @@ namespace GreenGardenClient.Controllers.AdminController
         [HttpGet]
         public IActionResult UpdateEmployee(int id)
         {
+            var userRole = HttpContext.Session.GetInt32("RoleId");
+
+            int? userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+            {
+                // Redirect to login page if UserId is not found in session
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (userRole != 1 && userRole != 2)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             // Fetch user data from the API asynchronously
             var user = GetDataFromApi<Account>($"https://localhost:7298/api/User/GetUserById/{id}");
 

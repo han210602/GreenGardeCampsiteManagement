@@ -23,6 +23,7 @@ namespace GreenGardenClient.Controllers.AdminController
 
         public IActionResult Index()
         {
+
             var events = GetDataFromApi<List<EventVM>>("https://localhost:7298/api/Event/GetAllEvents");
             var userRole = HttpContext.Session.GetInt32("RoleId");
 

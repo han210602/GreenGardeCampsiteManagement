@@ -437,6 +437,12 @@
                     display: block; /* Hiện menu thả xuống khi hover vào mục Services */
                 }
 
+                .event-description {
+                    display: -webkit-box; /* Hỗ trợ hiển thị mô tả ngắn gọn */
+                    -webkit-line-clamp: 3; /* Hiển thị tối đa 3 dòng */
+                    -webkit-box-orient: vertical; /* Chiều dọc */
+                    overflow: hidden; /* Ẩn chữ thừa */
+                }
             </style>
             <script>
                 $(document).ready(function () {
@@ -633,9 +639,9 @@
                     <div class="row justify-content-center text-center">
                         <div class="col-md-10">
                             <div class="heading-39101 mb-5">
-                                <span class="backdrop text-center">Bài Viết</span>
+                                <span class="backdrop text-center">Sự kiện</span>
                                 <span class="subtitle-39191">Mới nhất</span>
-                                <h3>Về bài viết</h3>
+                                <h3>Sự kiện</h3>
                             </div>
                         </div>
                     </div>
@@ -662,7 +668,7 @@
                                                 <span class="mx-2">by</span>
                                                 <a href="#">@eventItem.CreatedByUserName</a>
                                             </span>
-                                            <p>@eventItem.Description</p>
+                                            <p class="event-description">@eventItem.Description</p>
                                         </div>
                                     </div>
                                 </div>

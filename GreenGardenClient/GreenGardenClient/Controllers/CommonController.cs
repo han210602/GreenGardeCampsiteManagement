@@ -273,7 +273,7 @@ namespace GreenGardenClient.Controllers
             var userId = HttpContext.Session.GetInt32("UserId");
             if (!userId.HasValue)
             {
-                return RedirectToAction("Error");
+                return RedirectToAction("Index", "Home");
             }
             var oldPassword = HttpContext.Session.GetString("Password");
             if (oldPassword == null || oldPassword != model.OldPassword)
@@ -381,7 +381,7 @@ namespace GreenGardenClient.Controllers
             // Check if userId is available; if not, redirect to login
             if (userId == null)
             {
-                return RedirectToAction("Error");
+                return RedirectToAction("Index", "Home");
             }
 
             string apiUrl = $"https://localhost:7298/api/Account/GetAccountById?id={userId}";
@@ -539,7 +539,7 @@ namespace GreenGardenClient.Controllers
             // Check if userId is available; if not, redirect to login
             if (userId == null)
             {
-                return RedirectToAction("Error");
+                return RedirectToAction("Index", "Home");
             }
 
             // Ensure the submitted updateProfile model is valid

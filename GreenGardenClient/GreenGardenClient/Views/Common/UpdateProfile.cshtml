@@ -659,7 +659,10 @@
                                 {
                                     <img id="currentImage_@user.UserId" src="@user.ProfilePictureUrl" alt="Avt Image" class="event-thumbnail-large" />
                                 }
-
+                                @if (@HttpContextAccessor.HttpContext.Session.GetString("Img") == null)
+                                {
+                                    <img id="currentImage_@user.UserId" src="~/images/p22.jpg" alt="Avt Image" class="event-thumbnail-large" />
+                                }
                                 <input type="hidden" name="CurrentPictureUrl" value="@user?.ProfilePictureUrl" />
                                 <div class="mt-3">
                                     <label for="ProfilePictureUrl_@user.UserId" class="file-upload-label">Chọn Ảnh</label>

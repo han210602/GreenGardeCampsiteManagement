@@ -24,6 +24,19 @@ namespace GreenGardenClient.Controllers.AdminController
 
         public IActionResult Index()
         {
+            var userRole = HttpContext.Session.GetInt32("RoleId");
+
+            int? userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+            {
+                // Redirect to login page if UserId is not found in session
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (userRole != 1 && userRole != 2)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             var client = _clientFactory.CreateClient();
             var jwtToken = Request.Cookies["JWTToken"];
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
@@ -33,6 +46,7 @@ namespace GreenGardenClient.Controllers.AdminController
         [HttpPost("BlockUser/{id}")]
         public async Task<IActionResult> BlockUser(int id)
         {
+
             Console.WriteLine($"Received id: {id}");
             string apiUrl = $"https://localhost:7298/api/User/BlockUser/{id}";
 
@@ -111,6 +125,19 @@ namespace GreenGardenClient.Controllers.AdminController
         [HttpGet]
         public IActionResult UpdateUser(int id)
         {
+            var userRole = HttpContext.Session.GetInt32("RoleId");
+
+            int? userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+            {
+                // Redirect to login page if UserId is not found in session
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (userRole != 1 && userRole != 2)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             // Fetch user data from the API asynchronously
             var user = GetDataFromApi<Account>($"https://localhost:7298/api/User/GetUserById/{id}");
 

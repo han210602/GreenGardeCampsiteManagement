@@ -1,9 +1,7 @@
 ﻿using GreenGardenClient.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
-using System.Diagnostics.Eventing.Reader;
 using System.Net.Http.Headers;
 using System.Text;
 
@@ -104,7 +102,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 }
                 else
                 {
-                    return RedirectToAction("Error");
+                    return RedirectToAction("Index", "Home");
 
                 }
                 ViewBag.dataorder = orderdata;
@@ -183,7 +181,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 }
                 else
                 {
-                    return RedirectToAction("Error");
+                    return RedirectToAction("Index", "Home");
 
                 }
                 ViewBag.dataorder = orderdata;
@@ -237,7 +235,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 }
                 else
                 {
-                    return RedirectToAction("Error");
+                    return RedirectToAction("Index", "Home");
                 }
 
 
@@ -280,7 +278,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 }
                 else
                 {
-                    return RedirectToAction("Error");
+                    return RedirectToAction("Index", "Home");
                 }
             }
             catch (Exception e)
@@ -303,7 +301,7 @@ namespace GreenGardenClient.Controllers.AdminController
                     var jwtToken = Request.Cookies["JWTToken"];
                     _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
                     List<OrderVM> orderdata = GetDataFromApi<List<OrderVM>>("https://localhost:7298/api/OrderManagement/GetAllOrders");
-                    orderdata = orderdata.Where(s => s.ActivityId == 1002).OrderByDescending(s=>s.OrderUsageDate).ToList();
+                    orderdata = orderdata.Where(s => s.ActivityId == 1002).OrderByDescending(s => s.OrderUsageDate).ToList();
 
                     ViewBag.dataorder = orderdata;
 
@@ -319,7 +317,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 }
                 else
                 {
-                    return RedirectToAction("Error");
+                    return RedirectToAction("Index", "Home");
                 }
             }
             catch (Exception e)
@@ -511,7 +509,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 }
                 else
                 {
-                    return RedirectToAction("Error");
+                    return RedirectToAction("Index", "Home");
                 }
             }
             catch (Exception e)
@@ -588,9 +586,10 @@ namespace GreenGardenClient.Controllers.AdminController
                 }
                 else
                 {
-                    return RedirectToAction("Error");
+                    return RedirectToAction("Index", "Home");
                 }
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 return RedirectToAction("Error");
             }
@@ -735,7 +734,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 }
                 else
                 {
-                    return RedirectToAction("Error");
+                    return RedirectToAction("Index", "Home");
                 }
             }
             catch (Exception e)
@@ -819,7 +818,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 }
                 else
                 {
-                    return RedirectToAction("Error");
+                    return RedirectToAction("Index", "Home");
                 }
             }
             catch (Exception e)
@@ -850,7 +849,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 }
                 else
                 {
-                    return RedirectToAction("Error");
+                    return RedirectToAction("Index", "Home");
 
                 }
             }
@@ -887,7 +886,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 }
                 else
                 {
-                    return RedirectToAction("Error");
+                    return RedirectToAction("Index", "Home");
 
                 }
             }
@@ -924,7 +923,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 }
                 else
                 {
-                    return RedirectToAction("Error");
+                    return RedirectToAction("Index", "Home");
 
                 }
             }
@@ -958,7 +957,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 }
                 else
                 {
-                    return RedirectToAction("Error");
+                    return RedirectToAction("Index", "Home");
 
                 }
             }
@@ -1107,7 +1106,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 }
                 else
                 {
-                    return RedirectToAction("Error");
+                    return RedirectToAction("Index", "Home");
 
                 }
             }
@@ -1227,7 +1226,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 }
                 else
                 {
-                    return RedirectToAction("Error");
+                    return RedirectToAction("Index", "Home");
 
                 }
             }
@@ -1330,7 +1329,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 }
                 else
                 {
-                    return RedirectToAction("Error");
+                    return RedirectToAction("Index", "Home");
 
                 }
             }
@@ -1396,7 +1395,8 @@ namespace GreenGardenClient.Controllers.AdminController
                         TempData["NotificationError"] = "Phải đặt vé hoặc combo bao gồm vé mới có thể lên đơn.";
 
                         return RedirectToAction("CreateOrder");
-                    } else
+                    }
+                    else
                     {
                         var orders = HttpContext.Session.GetObjectFromJson<OrderVM>("OrderCart") ?? new OrderVM();
                         decimal total = 0;
@@ -1440,7 +1440,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 }
                 else
                 {
-                    return RedirectToAction("Error");
+                    return RedirectToAction("Index", "Home");
 
                 }
             }
@@ -1734,8 +1734,10 @@ namespace GreenGardenClient.Controllers.AdminController
                     }
                     ViewBag.date = daysDifference + 1;
                     return View("OrderDetail", orderdata);
-                } else {
-                    return RedirectToAction("Error");
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
 
                 }
             }
@@ -1800,7 +1802,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 }
                 else
                 {
-                    return RedirectToAction("Error");
+                    return RedirectToAction("Index", "Home");
 
                 }
             }
@@ -1847,7 +1849,7 @@ namespace GreenGardenClient.Controllers.AdminController
                             else
                             {
                                 ticket.Quantity = item.Quantity.Value;
-                                ticket.QuantityAvailable -=item.Quantity.Value;
+                                ticket.QuantityAvailable -= item.Quantity.Value;
                             }
                         }
                     }
@@ -1855,8 +1857,10 @@ namespace GreenGardenClient.Controllers.AdminController
                     ViewBag.id = order.OrderId;
                     ViewBag.gears = tickets;
                     return View("UpdateGearChangeDate");
-                } else {
-                    return RedirectToAction("Error");
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
 
                 }
             }
@@ -1989,7 +1993,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 }
                 else
                 {
-                    return RedirectToAction("Error");
+                    return RedirectToAction("Index", "Home");
 
                 }
             }
@@ -2015,7 +2019,7 @@ namespace GreenGardenClient.Controllers.AdminController
                     break;        // Thoát vòng lặp sớm
                 }
             }
-            if (check==false)
+            if (check == false)
             {
                 TempData["NotificationError"] = "Cập nhập lại vé thất bại!Không được hủy tất cả vé.";
 
@@ -2151,7 +2155,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 }
                 else
                 {
-                    return RedirectToAction("Error");
+                    return RedirectToAction("Index", "Home");
 
                 }
             }
@@ -2279,7 +2283,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 }
                 else
                 {
-                    return RedirectToAction("Error");
+                    return RedirectToAction("Index", "Home");
 
                 }
             }
@@ -2409,7 +2413,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 }
                 else
                 {
-                    return RedirectToAction("Error");
+                    return RedirectToAction("Index", "Home");
 
                 }
             }
@@ -2541,7 +2545,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 }
                 else
                 {
-                    return RedirectToAction("Error");
+                    return RedirectToAction("Index", "Home");
 
                 }
             }
@@ -2549,12 +2553,12 @@ namespace GreenGardenClient.Controllers.AdminController
             {
                 return RedirectToAction("Error");
             }
-        } 
-    
+        }
+
         [HttpPost]
         public async Task<IActionResult> UpdateCombo(List<int> id, List<decimal> price, List<int> quantity)
         {
-            
+
             var order = HttpContext.Session.GetObjectFromJson<UpdateOrderDTO>("order") ?? new UpdateOrderDTO();
             var ticketscart = HttpContext.Session.GetObjectFromJson<List<OrderComboDetailDTO>>("ComboUpdateCart") ?? new List<OrderComboDetailDTO>();
             bool check = false;
@@ -2658,7 +2662,7 @@ namespace GreenGardenClient.Controllers.AdminController
                     return RedirectToAction("Error"); // Replace "ErrorView" with your actual error view
                 }
             }
-           
+
         }
         public decimal RoundToNearestTen(decimal amount)
         {

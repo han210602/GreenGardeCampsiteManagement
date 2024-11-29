@@ -347,9 +347,10 @@ namespace GreenGardenClient.Controllers
         {
             // Retrieve the CustomerId from the session
             var customerId = HttpContext.Session.GetInt32("UserId");
+            var RoleId = HttpContext.Session.GetInt32("RoleId");
 
             // Ensure customerId is found
-            if (!customerId.HasValue)
+            if (!customerId.HasValue || RoleId != 3)
             {
                 return RedirectToAction("Error");
             }
@@ -404,10 +405,13 @@ namespace GreenGardenClient.Controllers
         }
         public async Task<IActionResult> OrderDetailHistory(int orderId)
         {
-            var customerId = HttpContext.Session.GetInt32("UserId");
 
             // Ensure customerId is found
-            if (!customerId.HasValue)
+            var customerId = HttpContext.Session.GetInt32("UserId");
+            var RoleId = HttpContext.Session.GetInt32("RoleId");
+
+            // Ensure customerId is found
+            if (!customerId.HasValue || RoleId != 3)
             {
                 return RedirectToAction("Error");
             }
@@ -464,9 +468,10 @@ namespace GreenGardenClient.Controllers
         public async Task<IActionResult> CancelOrder(int orderId)
         {
             var customerId = HttpContext.Session.GetInt32("UserId");
+            var RoleId = HttpContext.Session.GetInt32("RoleId");
 
             // Ensure customerId is found
-            if (!customerId.HasValue)
+            if (!customerId.HasValue || RoleId != 3)
             {
                 return RedirectToAction("Error");
             }
@@ -898,7 +903,7 @@ namespace GreenGardenClient.Controllers
             if (customerId == null)
             {
                 TempData["Notification"] = "Vui lòng đăng nhập để thực hiện đặt hàng!";
-                return RedirectToAction("Login"); // Redirect to login if not logged in
+                return RedirectToAction("Login", "Common"); // Redirect to login if not logged in
             }
 
             // Retrieve cart items from session
