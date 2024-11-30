@@ -88,24 +88,28 @@ namespace GreenGardenClient.Controllers.AdminController
         [HttpPost]
         public async Task<IActionResult> CreateEmployee(Employee model)
         {
+            // Lấy thông tin RoleId từ Session
             var userRole = HttpContext.Session.GetInt32("RoleId");
-
             int? userId = HttpContext.Session.GetInt32("UserId");
+
+            // Kiểm tra xem người dùng đã đăng nhập chưa
             if (userId == null)
             {
-                // Redirect to login page if UserId is not found in session
                 return RedirectToAction("Index", "Home");
             }
 
+            // Chỉ cho phép RoleId là 1 hoặc 2 truy cập
             if (userRole != 1 && userRole != 2)
             {
                 return RedirectToAction("Index", "Home");
             }
+
+            // URL API để thêm nhân viên
             string apiUrl = "https://localhost:7298/api/User/AddEmployee";
 
+            // Kiểm tra tính hợp lệ của model
             if (!ModelState.IsValid)
             {
-                // Return to the view with validation errors if the model is not valid
                 return View(model);
             }
 
@@ -113,7 +117,7 @@ namespace GreenGardenClient.Controllers.AdminController
             {
                 try
                 {
-                    // Prepare the data to send to the API
+                    // Chuẩn bị dữ liệu gửi lên API
                     var requestData = new
                     {
                         model.FirstName,
@@ -123,36 +127,42 @@ namespace GreenGardenClient.Controllers.AdminController
                         model.PhoneNumber,
                         model.Address,
                         model.DateOfBirth,
-                        model.Gender,
+                        model.Gender
                     };
 
-                    // Send POST request to the API
+                    // Gửi yêu cầu POST đến API
                     var response = await client.PostAsJsonAsync(apiUrl, requestData);
 
-                    // If the response is not successful
+                    // Xử lý trường hợp API trả về lỗi
                     if (!response.IsSuccessStatusCode)
                     {
                         var responseContent = await response.Content.ReadAsStringAsync();
                         Console.WriteLine($"API Error Response: {responseContent}");
 
-                        // Add the error message to ModelState
+                        // Xác định lỗi cụ thể dựa vào nội dung phản hồi
+
                         ModelState.AddModelError("Email", "Email đã tồn tại hoặc không đúng định dạng.");
 
-                        // Return to the view with the error
+
+                        ModelState.AddModelError("PhoneNumber", "Số điện thoại đã tồn tại.");
+
+
                         return View(model);
                     }
 
-                    // Handle success case
+                    // Xử lý thành công
                     TempData["SuccessMessage"] = "Tạo nhân viên thành công.";
                     return RedirectToAction("Index");
                 }
                 catch (Exception ex)
                 {
+                    // Log lỗi và chuyển hướng tới trang lỗi
                     Console.WriteLine($"Exception occurred: {ex.Message}");
                     return RedirectToAction("Error", "Home");
                 }
             }
         }
+
 
 
         [HttpPost("DeleteEmployee/{id}")]

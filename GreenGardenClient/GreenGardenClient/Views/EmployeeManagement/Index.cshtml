@@ -4,39 +4,7 @@
 @using GreenGardenClient.Models
 
 
-@{
-    if (ViewBag.Notification != null)
-    {
-        <div id="notification" class="alert alert-warning" role="alert">
-            @ViewBag.Notification
-        </div>
-    }
-}
-<style>
-    #notification {
-        position: fixed;
-        top: 20px; /* Khoảng cách từ đầu trang */
-        right: 20px; /* Khoảng cách từ bên phải */
-        z-index: 1050; /* Đảm bảo thông báo nằm trên các phần tử khác */
-        opacity: 1; /* Bắt đầu với độ mờ là 1 */
-        transition: opacity 1s ease-out, transform 1s ease-out; /* Hiệu ứng chuyển đổi cho độ mờ và biến đổi */
-        transform: translateY(-10px); /* Đưa thông báo lên một chút */
-        width: auto; /* Hoặc thay đổi thành một giá trị cụ thể, ví dụ: 300px */
-        max-width: 300px; /* Giới hạn chiều rộng tối đa */
-        padding: 15px; /* Khoảng cách bên trong cho thông báo */
-    }
-</style>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function () {
-        if ($("#notification").length) {
-            setTimeout(function () {
-                $("#notification").css("opacity", "0"); // Đặt độ mờ thành 0
-                $("#notification").css("transform", "translateY(10px)"); // Đưa thông báo xuống một chút khi ẩn
-            }, 3000); // Sau 3 giây
-        }
-    });
-</script>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -545,7 +513,33 @@
             @TempData["ErrorMessage"]
             </div>
         }
+
     }
+    <style>
+        #notification {
+            position: fixed;
+            top: 20px; /* Khoảng cách từ đầu trang */
+            right: 20px; /* Khoảng cách từ bên phải */
+            z-index: 1050; /* Đảm bảo thông báo nằm trên các phần tử khác */
+            opacity: 1; /* Bắt đầu với độ mờ là 1 */
+            transition: opacity 1s ease-out, transform 1s ease-out; /* Hiệu ứng chuyển đổi cho độ mờ và biến đổi */
+            transform: translateY(-10px); /* Đưa thông báo lên một chút */
+            width: auto; /* Hoặc thay đổi thành một giá trị cụ thể, ví dụ: 300px */
+            max-width: 300px; /* Giới hạn chiều rộng tối đa */
+            padding: 15px; /* Khoảng cách bên trong cho thông báo */
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            if ($("#notification").length) {
+                setTimeout(function () {
+                    $("#notification").css("opacity", "0"); // Đặt độ mờ thành 0
+                    $("#notification").css("transform", "translateY(10px)"); // Đưa thông báo xuống một chút khi ẩn
+                }, 3000); // Sau 3 giây
+            }
+        });
+    </script>
     <!-- Sidebar menu-->
     <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
     <aside class="app-sidebar">

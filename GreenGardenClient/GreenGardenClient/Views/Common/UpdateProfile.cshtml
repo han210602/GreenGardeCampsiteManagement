@@ -804,7 +804,7 @@
                 const firstNameInput = document.getElementById("FirstName");
                 const lastNameInput = document.getElementById("LastName");
                 const phoneNumberInput = document.getElementById("PhoneNumber");
-
+                const dateOfBirthInput = document.getElementById("DateOfBirth");
                 if (!namePattern.test(firstNameInput.value.trim())) {
                     document.getElementById("firstNameError").style.display = "block";
                     valid = false;
@@ -825,31 +825,18 @@
                 } else {
                     document.getElementById("phoneNumberError").style.display = "none";
                 }
+                const today = new Date(); // Ngày hiện tại
+                const selectedDate = new Date(dateOfBirthInput.value); // Ngày nhập vào
+
+                if (selectedDate > today) {
+                    document.getElementById("dateError").style.display = "block";
+                    valid = false;
+                } else {
+                    document.getElementById("dateError").style.display = "none";
+                }
 
                 return valid;
             }
-            document.getElementById("DateOfBirth").addEventListener("change", function () {
-                const dateInput = new Date(this.value); // Ngày sinh được nhập
-                const today = new Date(); // Ngày hiện tại
-
-                // Xóa thời gian để chỉ so sánh ngày
-                dateInput.setHours(0, 0, 0, 0);
-                today.setHours(0, 0, 0, 0);
-
-                const errorMessage = document.getElementById("dateError");
-
-                if (dateInput > today) {
-                    // Hiển thị thông báo lỗi
-                    errorMessage.style.display = "block";
-
-                    // Đặt lại giá trị về ngày hiện tại
-                    const todayFormatted = today.toISOString().split("T")[0];
-                    this.value = todayFormatted;
-                } else {
-                    // Ẩn thông báo lỗi
-                    errorMessage.style.display = "none";
-                }
-            });
         </script>
 
 

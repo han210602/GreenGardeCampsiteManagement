@@ -249,21 +249,20 @@
     }
 
     .product-image {
-        text-align: center; /* Căn giữa hình ảnh */
-        margin-bottom: 20px;
-        width:50%;
+        display: flex;
+        justify-content: center; /* Căn giữa theo chiều ngang */
+        align-items: center; /* Căn giữa theo chiều dọc */
+        text-align: center; /* Căn giữa ảnh nếu có văn bản bên dưới */
+        position: relative;
+        height: 500px; /* Hoặc chiều cao tùy chỉnh của phần tử chứa */
     }
 
         .product-image img {
-            max-width: 100%; /* Giới hạn chiều rộng của ảnh (80% của khung chứa) */
-            height: auto;
-            border-radius: 10px;
-            transition: transform 0.2s ease-in-out;
+            max-width: 90%; /* Giới hạn chiều rộng của ảnh */
+            height: 100%; /* Giảm chiều cao của ảnh */
+            object-fit: contain; /* Giữ tỷ lệ của ảnh, không làm méo */
         }
 
-            .product-image img:hover {
-                transform: scale(1.05); /* Hiệu ứng phóng to khi hover */
-            }
 
     .product-title {
         font-size: 28px;

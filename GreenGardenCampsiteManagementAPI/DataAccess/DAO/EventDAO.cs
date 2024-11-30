@@ -132,7 +132,6 @@ namespace DataAccess.DAO
                           $"Thời gian bắt đầu: {eventDTO.StartTime}\n" +
                           $"Thời gian kết thúc: {eventDTO.EndTime}\n" +
                           $"Địa điểm: {eventDTO.Location}\n" +
-                          $"Hình ảnh: {eventDTO.PictureUrl}\n\n" +
                           $"Chúng tôi rất mong có được sự tham gia của các bạn\n\n" +
                           $"Cảm ơn bạn!";
 

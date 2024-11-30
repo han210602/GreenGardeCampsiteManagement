@@ -43,7 +43,7 @@
 <html lang="en">
 
 <head>
-    <title>Danh sách nhân viên | Quản trị Admin</title>
+    <title>Tạo nhân viên | Quản trị Admin</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -495,7 +495,7 @@
                             <div class="row">
                                 <!-- Phần chứa form -->
                                 <div class="col-md-6">
-                                    <form asp-page="/EmployeeManagement/CreateEmployee" method="post">
+                                    <form asp-page="/EmployeeManagement/CreateEmployee" method="post" id="employeeForm">
                                         
                                         <div class="mb-3 row">
                                             <div class="col-md-6">
@@ -509,19 +509,17 @@
                                                 <span asp-validation-for="LastName" class="text-danger"></span>
                                             </div>
                                         </div>
-
                                         <div class="mb-3">
                                             <label for="PhoneNumber" class="form-label">Số điện thoại:</label>
-                                            <input asp-for="PhoneNumber" class="form-control" id="PhoneNumber">                                  
+                                            <input asp-for="PhoneNumber" class="form-control" id="PhoneNumber">
                                             <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-
                                         </div>
+
 
                                         <div class="mb-3">
                                             <label for="Email" class="form-label">Email:</label>
                                             <input asp-for="Email" class="form-control" id="Email">
                                             <span asp-validation-for="Email" class="text-danger"></span>
-
                                         </div>
                                         <div class="mb-3">
                                             <label for="Address" class="form-label">Địa chỉ:</label>
@@ -534,8 +532,22 @@
                                             <label for="DateOfBirth" class="form-label">Ngày sinh:</label>
                                             <input asp-for="DateOfBirth" type="date" class="form-control" id="DateOfBirth">
                                             <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                                            <small id="dateError" class="text-danger" style="display: none;">Ngày sinh không được vượt quá ngày hiện tại.</small>
                                         </div>
+                                        <script>
+                                            document.getElementById("employeeForm").addEventListener("submit", function (event) {
+                                                const today = new Date();
+                                                const selectedDate = new Date(document.getElementById("DateOfBirth").value);
 
+                                                // If the selected date is in the future, prevent form submission
+                                                if (selectedDate > today) {
+                                                    document.getElementById("dateError").style.display = "block";
+                                                    event.preventDefault(); // Prevent form submission
+                                                } else {
+                                                    document.getElementById("dateError").style.display = "none";
+                                                }
+                                            });
+                                        </script>
 
 
                                         <div class="mb-3">
@@ -570,6 +582,8 @@
                                             Đăng ký
                                          </button>
                                     </form>
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
                                 </div>
 
 

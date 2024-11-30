@@ -151,6 +151,13 @@ namespace DataAccess.DAO
                     return false; // Indicate failure
                 }
 
+                var existingPhoneNumber = context.Users.SingleOrDefault(u => u.PhoneNumber == newEmployeeDto.PhoneNumber);
+                if (existingPhoneNumber != null)
+                {
+                    Console.WriteLine("PhoneNumber already registered.");
+                    return false; // Indicate failure
+                }
+
                 // Map UserDTO to User entity
                 var newEmployee = new User
                 {
