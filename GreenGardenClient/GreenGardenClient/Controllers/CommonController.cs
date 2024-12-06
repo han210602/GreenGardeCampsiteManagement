@@ -60,7 +60,7 @@ namespace GreenGardenClient.Controllers
 
             var client = _clientFactory.CreateClient();
 
-            string apiUrl = "https://localhost:7298/api/Account/Login";
+            string apiUrl = "http://103.75.186.149:5000/api/Account/Login";
             var loginData = new { Email = email, Password = password };
             var jsonContent = new StringContent(JsonSerializer.Serialize(loginData), Encoding.UTF8, "application/json");
 
@@ -133,7 +133,7 @@ namespace GreenGardenClient.Controllers
             try
             {
                 var client = _clientFactory.CreateClient();
-                string apiUrl = "https://localhost:7298/api/Account/SendVerificationCode";
+                string apiUrl = "http://103.75.186.149:5000/api/Account/SendVerificationCode";
 
                 var jsonContent = new StringContent(JsonSerializer.Serialize(email), Encoding.UTF8, "application/json");
 
@@ -168,11 +168,15 @@ namespace GreenGardenClient.Controllers
 
                 return View(model);
             }
-
+            if (!Regex.IsMatch(model.Password, @"^(?=.*[A-Z])(?=.*[\W_]).{6,}$"))
+            {
+                ModelState.AddModelError("Password", "Mật khẩu phải có ít nhất 6 ký tự, bao gồm 1 chữ cái viết hoa và 1 ký tự đặc biệt.");
+                return View(model);
+            }
 
 
             // API endpoint with verification code included as a query parameter
-            string apiUrl = $"https://localhost:7298/api/Account/Register?enteredCode={VerificationCode}";
+            string apiUrl = $"http://103.75.186.149:5000/api/Account/Register?enteredCode={VerificationCode}";
 
             using (HttpClient client = new HttpClient())
             {
@@ -197,12 +201,14 @@ namespace GreenGardenClient.Controllers
 
                     if (response.IsSuccessStatusCode)
                     {
+                        TempData["Success"] = "Đăng ký thành công!";
                         return RedirectToAction("Login", "Common");
                     }
                     else
                     {
                         Console.WriteLine($"API Error Response: {response.StatusCode} - {responseContent}");
-                        ViewBag.error = $"Đăng kí thất bại.";
+                        TempData["Error"] = "Đăng ký thất bại!";
+
                         return View(model);
                     }
                 }
@@ -240,7 +246,7 @@ namespace GreenGardenClient.Controllers
                     return View(new { Email = email });
                 }
                 var client = _clientFactory.CreateClient();
-                var response = await client.PostAsync($"https://localhost:7298/api/Account/SendResetPasswordEmail/{email}", null);
+                var response = await client.PostAsync($"http://103.75.186.149:5000/api/Account/SendResetPasswordEmail/{email}", null);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -264,6 +270,11 @@ namespace GreenGardenClient.Controllers
 
         public IActionResult ChangePassword()
         {
+            var userId = HttpContext.Session.GetInt32("UserId");
+            if (!userId.HasValue)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View(new ChangePassword());
         }
 
@@ -279,6 +290,11 @@ namespace GreenGardenClient.Controllers
             if (oldPassword == null || oldPassword != model.OldPassword)
             {
                 ModelState.AddModelError("OldPassword", "Mật khẩu hiện tại không đúng.");
+                return View(model);
+            }
+            if (!Regex.IsMatch(model.NewPassword, @"^(?=.*[A-Z])(?=.*[\W_]).{6,}$"))
+            {
+                ModelState.AddModelError("NewPassword", "Mật khẩu mới phải có ít nhất 6 ký tự, bao gồm 1 chữ cái viết hoa và 1 ký tự đặc biệt.");
                 return View(model);
             }
             // Kiểm tra mật khẩu mới và xác nhận mật khẩu có khớp không
@@ -307,7 +323,7 @@ namespace GreenGardenClient.Controllers
                 ConfirmPassword = model.ConfirmPassword
             };
 
-            string apiUrl = "https://localhost:7298/api/Account/ChangePassword";
+            string apiUrl = "http://103.75.186.149:5000/api/Account/ChangePassword";
 
             try
             {
@@ -337,7 +353,7 @@ namespace GreenGardenClient.Controllers
 
         public async Task<IActionResult> Event()
         {
-            var events = await GetDataFromApiAsync<List<EventVM>>("https://localhost:7298/api/Event/GetAllEvents");
+            var events = await GetDataFromApiAsync<List<EventVM>>("http://103.75.186.149:5000/api/Event/GetAllEvents");
 
             ViewBag.Event = events;
 
@@ -384,7 +400,7 @@ namespace GreenGardenClient.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            string apiUrl = $"https://localhost:7298/api/Account/GetAccountById?id={userId}";
+            string apiUrl = $"http://103.75.186.149:5000/api/Account/GetAccountById?id={userId}";
 
             try
             {
@@ -413,7 +429,11 @@ namespace GreenGardenClient.Controllers
         [HttpPost]
         public async Task<IActionResult> ChangeProfile(UpdateProfile updateProfile, IFormFile ProfilePictureUrl, string CurrentPictureUrl)
         {
-
+            var userId = HttpContext.Session.GetInt32("UserId");
+            if (!userId.HasValue)
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
             if (ProfilePictureUrl != null)
             {
@@ -533,14 +553,7 @@ namespace GreenGardenClient.Controllers
                 updateProfile.ProfilePictureUrl = CurrentPictureUrl;
             }
 
-            // Retrieve the userId from the session
-            var userId = HttpContext.Session.GetInt32("UserId");
 
-            // Check if userId is available; if not, redirect to login
-            if (userId == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
 
             // Ensure the submitted updateProfile model is valid
             //if (!ModelState.IsValid)
@@ -550,7 +563,7 @@ namespace GreenGardenClient.Controllers
             //}
 
             // Prepare the API URL for updating the profile
-            string apiUrl = "https://localhost:7298/api/Account/UpdateProfile";
+            string apiUrl = "http://103.75.186.149:5000/api/Account/UpdateProfile";
 
             try
             {
@@ -595,7 +608,7 @@ namespace GreenGardenClient.Controllers
         {
 
 
-            string apiUrl = $"https://localhost:7298/api/Event/GetEventById?eventId={eventId}";
+            string apiUrl = $"http://103.75.186.149:5000/api/Event/GetEventById?eventId={eventId}";
 
             try
             {

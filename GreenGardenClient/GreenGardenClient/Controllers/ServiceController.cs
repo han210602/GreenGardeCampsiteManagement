@@ -62,7 +62,7 @@ namespace GreenGardenClient.Controllers
         $"page={page}",
         $"pageSize={pageSize}"
     };
-            string apiUrl = "https://localhost:7298/api/CampingGear/GetCampingGearsBySort?" +
+            string apiUrl = "http://103.75.186.149:5000/api/CampingGear/GetCampingGearsBySort?" +
                             string.Join("&", queryParams.Where(param => param != null));
 
             // Fetch data from the API
@@ -70,7 +70,7 @@ namespace GreenGardenClient.Controllers
 
             // Fetch categories
             var campingCategories = await GetDataFromApiAsync<List<GearCategoryVM>>(
-                "https://localhost:7298/api/CampingGear/GetAllCampingGearCategories");
+                "http://103.75.186.149:5000/api/CampingGear/GetAllCampingGearCategories");
 
             // Check cart usage date
             DateTime? cartUsageDate = cartItems.FirstOrDefault()?.UsageDate;
@@ -81,7 +81,7 @@ namespace GreenGardenClient.Controllers
 
                 // Fetch usage details by date
                 var gearUsage = await GetDataFromApiAsync<List<OrderCampingGearByUsageDateDTO>>(
-                    $"https://localhost:7298/api/OrderManagement/GetListOrderGearByUsageDate/{formattedDate}");
+                    $"http://103.75.186.149:5000/api/OrderManagement/GetListOrderGearByUsageDate/{formattedDate}");
 
                 if (gearUsage != null)
                 {
@@ -131,7 +131,7 @@ namespace GreenGardenClient.Controllers
             {
                 // Fetch categories from API
                 var foodAndDrinkCategories = await GetDataFromApiAsync<List<FoodAndDrinkCategoryVM>>(
-                    "https://localhost:7298/api/FoodAndDrink/GetAllFoodAndDrinkCategories");
+                    "http://103.75.186.149:5000/api/FoodAndDrink/GetAllFoodAndDrinkCategories");
 
                 // Save current category to ViewBag
                 ViewBag.CurrentCategoryId = categoryId;
@@ -145,7 +145,7 @@ namespace GreenGardenClient.Controllers
             $"page={page}",
             $"pageSize={pageSize}"
         };
-                string apiUrl = "https://localhost:7298/api/FoodAndDrink/GetFoodAndDrinksBySort?" +
+                string apiUrl = "http://103.75.186.149:5000/api/FoodAndDrink/GetFoodAndDrinksBySort?" +
                                 string.Join("&", queryParams.Where(param => param != null));
 
                 // Fetch filtered data from API
@@ -179,7 +179,7 @@ namespace GreenGardenClient.Controllers
         [HttpGet("FoodDetail")]
         public async Task<IActionResult> FoodDetail(int itemId)
         {
-            var apiUrl = $"https://localhost:7298/api/FoodAndDrink/GetFoodAndDrinkDetail?itemId={itemId}";
+            var apiUrl = $"http://103.75.186.149:5000/api/FoodAndDrink/GetFoodAndDrinkDetail?itemId={itemId}";
 
             try
             {
@@ -219,7 +219,7 @@ namespace GreenGardenClient.Controllers
         {
             // Retrieve cart items from session
             var cartItems = GetCartItems();
-            var apiUrl = $"https://localhost:7298/api/CampingGear/GetCampingGearDetail?id={gearId}";
+            var apiUrl = $"http://103.75.186.149:5000/api/CampingGear/GetCampingGearDetail?id={gearId}";
 
             try
             {
@@ -257,7 +257,7 @@ namespace GreenGardenClient.Controllers
 
                     // Fetch gear usage data from API
                     var usageResponse = await GetDataFromApiAsync<List<OrderCampingGearByUsageDateDTO>>(
-                        $"https://localhost:7298/api/OrderManagement/GetListOrderGearByUsageDate/{formattedDate}");
+                        $"http://103.75.186.149:5000/api/OrderManagement/GetListOrderGearByUsageDate/{formattedDate}");
 
                     if (usageResponse != null)
                     {
@@ -307,7 +307,7 @@ namespace GreenGardenClient.Controllers
         [HttpGet("TicketDetail")]
         public async Task<IActionResult> TicketDetail(int ticketId)
         {
-            var apiUrl = $"https://localhost:7298/api/Ticket/GetTicketDetail?id={ticketId}";
+            var apiUrl = $"http://103.75.186.149:5000/api/Ticket/GetTicketDetail?id={ticketId}";
 
             try
             {
@@ -348,9 +348,12 @@ namespace GreenGardenClient.Controllers
             // Retrieve the CustomerId from the session
             var customerId = HttpContext.Session.GetInt32("UserId");
             var RoleId = HttpContext.Session.GetInt32("RoleId");
-
+            if (!customerId.HasValue)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             // Ensure customerId is found
-            if (!customerId.HasValue || RoleId != 3)
+            if (RoleId != 3)
             {
                 return RedirectToAction("Error");
             }
@@ -362,7 +365,7 @@ namespace GreenGardenClient.Controllers
 
 
             // Build API URL dynamically based on filters
-            string apiUrl = $"https://localhost:7298/api/OrderManagement/GetCustomerOrders?customerId={customerId.Value}";
+            string apiUrl = $"http://103.75.186.149:5000/api/OrderManagement/GetCustomerOrders?customerId={customerId.Value}";
             if (activityId.HasValue)
             {
                 apiUrl += $"&activityId={activityId.Value}";
@@ -378,7 +381,7 @@ namespace GreenGardenClient.Controllers
 
                 // Fetch data from APIs
                 var order = await GetDataFromApiAsync<List<CustomerOrderVM>>(apiUrl);
-                var activity = await GetDataFromApiAsync<List<ActivityVM>>("https://localhost:7298/api/Activity/GetAllActivities");
+                var activity = await GetDataFromApiAsync<List<ActivityVM>>("http://103.75.186.149:5000/api/Activity/GetAllActivities");
 
                 // Pass data to View
                 ViewBag.CustomerOrder = order;
@@ -409,13 +412,16 @@ namespace GreenGardenClient.Controllers
             // Ensure customerId is found
             var customerId = HttpContext.Session.GetInt32("UserId");
             var RoleId = HttpContext.Session.GetInt32("RoleId");
-
+            if (!customerId.HasValue)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             // Ensure customerId is found
-            if (!customerId.HasValue || RoleId != 3)
+            if ( RoleId != 3)
             {
                 return RedirectToAction("Error");
             }
-            var apiUrl = $"https://localhost:7298/api/OrderManagement/GetCustomerOrderDetail/{orderId}";
+            var apiUrl = $"http://103.75.186.149:5000/api/OrderManagement/GetCustomerOrderDetail/{orderId}";
 
             try
             {
@@ -469,13 +475,16 @@ namespace GreenGardenClient.Controllers
         {
             var customerId = HttpContext.Session.GetInt32("UserId");
             var RoleId = HttpContext.Session.GetInt32("RoleId");
-
+            if (!customerId.HasValue)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             // Ensure customerId is found
-            if (!customerId.HasValue || RoleId != 3)
+            if (RoleId != 3)
             {
                 return RedirectToAction("Error");
             }
-            var apiUrl = $"https://localhost:7298/api/OrderManagement/ChangeCustomerActivity?orderId={orderId}";
+            var apiUrl = $"http://103.75.186.149:5000/api/OrderManagement/ChangeCustomerActivity?orderId={orderId}";
 
             try
             {
@@ -511,8 +520,8 @@ namespace GreenGardenClient.Controllers
 
         public async Task<IActionResult> OrderTicket()
         {
-            var ticket = await GetDataFromApiAsync<List<TicketVM>>("https://localhost:7298/api/Ticket/GetAllCustomerTickets");
-            var ticketCategory = await GetDataFromApiAsync<List<TicketCategoryVM>>("https://localhost:7298/api/Ticket/GetAllTicketCategories");
+            var ticket = await GetDataFromApiAsync<List<TicketVM>>("http://103.75.186.149:5000/api/Ticket/GetAllCustomerTickets");
+            var ticketCategory = await GetDataFromApiAsync<List<TicketCategoryVM>>("http://103.75.186.149:5000/api/Ticket/GetAllTicketCategories");
 
             ViewBag.Ticket = ticket;
             ViewBag.TicketCategories = ticketCategory;
@@ -533,14 +542,14 @@ namespace GreenGardenClient.Controllers
         $"page={page}",
         $"pageSize={pageSize}"
     };
-            string apiUrl = "https://localhost:7298/api/Ticket/GetTicketsByCategoryAndSort?" +
+            string apiUrl = "http://103.75.186.149:5000/api/Ticket/GetTicketsByCategoryAndSort?" +
                             string.Join("&", queryParams.Where(param => param != null));
 
             // Fetch ticket data with pagination
             var apiResponse = await GetDataFromApiAsync<PaginatedResponse<TicketVM>>(apiUrl);
 
             // Fetch ticket categories
-            var ticketCategories = await GetDataFromApiAsync<List<TicketCategoryVM>>("https://localhost:7298/api/Ticket/GetAllTicketCategories");
+            var ticketCategories = await GetDataFromApiAsync<List<TicketCategoryVM>>("http://103.75.186.149:5000/api/Ticket/GetAllTicketCategories");
 
             // Update ViewBag with necessary data for the view
             ViewBag.Ticket = apiResponse?.Data ?? new List<TicketVM>(); // Paginated ticket list
@@ -557,7 +566,7 @@ namespace GreenGardenClient.Controllers
 
         public async Task<IActionResult> ComboList()
         {
-            var combo = await GetDataFromApiAsync<List<ComboVM>>("https://localhost:7298/api/Combo/GetAllCustomerCombos");
+            var combo = await GetDataFromApiAsync<List<ComboVM>>("http://103.75.186.149:5000/api/Combo/GetAllCustomerCombos");
 
             ViewBag.Combo = combo;
 
@@ -567,7 +576,7 @@ namespace GreenGardenClient.Controllers
         [HttpGet("ComboDetail")]
         public async Task<IActionResult> ComboDetail(int comboId)
         {
-            var apiUrl = $"https://localhost:7298/api/Combo/GetComboDetail/{comboId}";
+            var apiUrl = $"http://103.75.186.149:5000/api/Combo/GetComboDetail/{comboId}";
 
             try
             {
@@ -606,9 +615,12 @@ namespace GreenGardenClient.Controllers
         {
             var customerId = HttpContext.Session.GetInt32("UserId");
             var RoleId = HttpContext.Session.GetInt32("RoleId");
-
+            if (!customerId.HasValue)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             // Ensure customerId is found
-            if (!customerId.HasValue || RoleId != 3)
+            if (RoleId != 3)
             {
                 return RedirectToAction("Error");
             }
@@ -619,7 +631,7 @@ namespace GreenGardenClient.Controllers
 
             // Lấy danh sách dụng cụ cắm trại
             var campingGears = await GetDataFromApiAsync<List<GearVM>>(
-                "https://localhost:7298/api/CampingGear/GetAllCustomerCampingGears");
+                "http://103.75.186.149:5000/api/CampingGear/GetAllCustomerCampingGears");
 
             // Kiểm tra xem có sản phẩm nào là "Gear" và "GearCategory" không
             if (cartItems.Any(item => item.Type == "Gear" && item.TypeCategory == "GearCategory"))
@@ -628,7 +640,7 @@ namespace GreenGardenClient.Controllers
                 {
                     string formattedDate = cartUsageDate.Value.ToString("MM-dd-yyyy");
                     var gearUsage = await GetDataFromApiAsync<List<OrderCampingGearByUsageDateDTO>>(
-                        $"https://localhost:7298/api/OrderManagement/GetListOrderGearByUsageDate/{formattedDate}");
+                        $"http://103.75.186.149:5000/api/OrderManagement/GetListOrderGearByUsageDate/{formattedDate}");
 
                     if (gearUsage != null)
                     {
@@ -786,7 +798,34 @@ namespace GreenGardenClient.Controllers
             // Trả về JSON cho AJAX với thông báo thành công
             return Json(new { success = true, message = "Thêm vào giỏ hàng thành công!", cartItemCount = cartItems.Count });
         }
+        [HttpPost]
+        public IActionResult AddDateToCart(string usageDate)
+        {
+            var cartItems = GetCartItems();
+            DateTime parsedDate;
 
+            // Try to parse only the date, ignoring time (ensure format is yyyy-MM-dd)
+            if (!DateTime.TryParseExact(usageDate, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out parsedDate))
+            {
+                // If parsing fails, use the current date as a default
+                parsedDate = DateTime.Now.Date; // Ensure we only get the date part
+            }
+
+            // Create a new cart item with only the date
+            var newItem = new CartItem
+            {
+                UsageDate = parsedDate
+            };
+
+            // Add the new item to the cart
+            cartItems.Add(newItem);
+
+            // Save the updated cart items
+            SaveCartItems(cartItems);
+
+            // Redirect to the "OrderTicket" page or another page as necessary
+            return RedirectToAction("OrderTicket");
+        }
         [HttpGet]
         public IActionResult GetCartItemCount()
         {
@@ -989,7 +1028,7 @@ namespace GreenGardenClient.Controllers
                     var content = new StringContent(JsonConvert.SerializeObject(orderRequest), Encoding.UTF8, "application/json");
 
                     // Use the client from IHttpClientFactory to make the API call
-                    var apiUrl = "https://localhost:7298/api/OrderManagement/CheckOut";
+                    var apiUrl = "http://103.75.186.149:5000/api/OrderManagement/CheckOut";
                     var response = await client.PostAsync(apiUrl, content);
 
                     // Handle the API response
@@ -1051,7 +1090,7 @@ namespace GreenGardenClient.Controllers
                     var content = new StringContent(JsonConvert.SerializeObject(orderRequest), Encoding.UTF8, "application/json");
 
                     // Use the client from IHttpClientFactory to make the API call
-                    var apiUrl = "https://localhost:7298/api/OrderManagement/CheckOutComboOrder";
+                    var apiUrl = "http://103.75.186.149:5000/api/OrderManagement/CheckOutComboOrder";
                     var response = await client.PostAsync(apiUrl, content);
 
                     if (response.IsSuccessStatusCode)

@@ -240,19 +240,19 @@
                                                 @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 1)
                                                 {
                                                 <li><a href="~/DashBoard" class="nav-link">Quản lí</a></li>
-                                                <li><a href="~/Home/Logout" class="nav-link">Đăng xuất</a></li>
+                                                <li><a href="~/Home/Logout" onclick="return Logout();" class="nav-link">Đăng xuất</a></li>
                                                 }
                                                 else if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 2)
                                                 {
                                                 <li><a href="~/OrderManagement/OrderOnline" class="nav-link">Quản lí</a></li>
-                                                <li><a href="~/Home/Logout" class="nav-link">Đăng xuất</a></li>
+                                                <li><a href="~/Home/Logout" onclick="return Logout();" class="nav-link">Đăng xuất</a></li>
                                                 }
                                                 else
                                                 {
 
                                                 <li><a href="~/Service/OrderHistory" class="nav-link">Lịch sử đặt hàng</a></li>
                                                 <li><a href="~/Service/Cart" class="nav-link">Giỏ hàng</a></li>
-                                                <li><a href="~/Home/Logout" class="nav-link">Đăng xuất</a></li>
+                                                <li><a href="~/Home/Logout" onclick="return Logout();" class="nav-link">Đăng xuất</a></li>
 
                                                 }
                                         </ul>
@@ -287,6 +287,12 @@
                     </div>
                 </div>
             </div>
+            <script>
+                function Logout() {
+                    sessionStorage.removeItem('usageDateForAll');
+                }
+
+            </script>
             <style>
                 .site-mobile-menu {
                     width: 80%;
@@ -793,6 +799,9 @@
                         </div>
                     </div>
                 </div>
+                    <p id="successMessage" style="color:orangered; margin-left: 10px;" class="mt-3" hidden>
+                        Nếu bạn muốn chọn lại ngày sử dụng, vui lòng vào giỏ hàng đặt lại.
+                    </p>
                 <div class="row" style="margin-top: 50px">
                     <!-- Cột bên trái: Danh sách category -->
                     <!-- Cột bên phải: Danh sách sản phẩm -->
@@ -807,7 +816,7 @@
                                             <img src="~/images/Combo/@item.ImgUrl" alt="Image" class="img-fluid">
                                         </div>
                                         <div class="product-content">
-                                            <h2><a href="@Url.Action("TripSingle", new { id = item.ComboId })">Vé @item.ComboName</a></h2>
+                                                <h2><a href="@Url.Action("ComboDetail", "Service", new { comboId = item.ComboId })">Vé @item.ComboName</a></h2>
                                             <p><i class="fa fa-info-circle"></i> Mô tả: Vé đơn giúp bạn trải nghiệm không gian cắm trại và tổ chức tiệc ngoài trời rộng rãi.</p>
 
                                             <div class="price-quantity">
@@ -885,10 +894,41 @@
     <script src="~/js/aos.js"></script>
     <script src="~/js/main.js"></script>
     <script>
+        function showSuccessMessage() {
+            // Hiển thị thông báo
+            const message = document.getElementById("successMessage");
+            message.hidden = false;  // Hiện thông báo
+
+            // Ẩn thông báo sau 3 giây
+            setTimeout(() => {
+                message.hidden = true;  // Ẩn thông báo
+            }, 6000);
+        }
         function setUsageDate(comboId) {
             const savedDate = sessionStorage.getItem('usageDateForAll');
             const savedTime = sessionStorage.getItem('usageTimeForAll');
-
+            const isFirstTimeSelectingDate = !sessionStorage.getItem('hasSelectedDateBefore');
+            var userId = '@HttpContextAccessor.HttpContext.Session.GetInt32("UserId")'; // hoặc nếu có thể null thì chuyển qua check null
+            if (!userId) {
+                Swal.fire({
+                    title: 'Bạn cần đăng nhập để tiếp tục!',
+                    icon: 'warning',
+                    confirmButtonText: 'Đăng nhập',
+                    showCancelButton: true,
+                    cancelButtonText: 'Hủy',
+                    customClass: {
+                        confirmButton: 'swal-confirm-button', // Nút đăng nhập
+                        cancelButton: 'swal-cancel-button'  // Nút hủy
+                    },
+                    // Sử dụng hàm xử lý khi bấm vào nút
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Khi bấm vào nút "Đăng nhập", chuyển hướng tới trang đăng nhập
+                        window.location.href = '/Common/Login';  // Địa chỉ trang đăng nhập của bạn
+                    }
+                });
+                return false; // Ngừng thực hiện hành động
+            }
             if (savedDate && savedTime) {
                 // Use the saved date and time if they exist
                 document.getElementById('hidden-date-' + comboId).value = `${savedDate} ${savedTime}`;
@@ -926,16 +966,26 @@
                     preConfirm: () => {
                         const date = document.getElementById('usage-date').value;
                         const time = document.getElementById('usage-time').value;
-                        const currentDate = new Date().toISOString().split('T')[0]; // Get current date in 'yyyy-mm-dd' format
+                        const now = new Date();
+                        const currentDate = now.toISOString().split('T')[0]; // Get current date in 'yyyy-mm-dd' format
+                        const currentTime = now.toTimeString().split(':').slice(0, 2).join(':'); // Get current time in 'HH:mm' format
+
+                        // Validate if both date and time are entered
                         if (!date || !time) {
                             Swal.showValidationMessage('Bạn cần nhập cả ngày và giờ sử dụng!');
                             return false;
                         }
-                        if (date < currentDate) {
-                            Swal.showValidationMessage('Ngày sử dụng phải lớn hơn hoặc bằng ngày hiện tại!');
+
+                        // Compare entered date and time with the current date and time
+                        const enteredDateTime = new Date(date + 'T' + time); // Convert to Date object
+                        const currentDateTime = new Date(currentDate + 'T' + currentTime); // Convert current date and time to Date object
+
+                        if (enteredDateTime < currentDateTime) {
+                            Swal.showValidationMessage('Ngày và thời gian sử dụng phải lớn hơn hoặc bằng ngày hiện tại!');
                             return false;
                         }
-                        return { date, time };
+
+                        return { date, time }; // Return selected date and time
                     }
                 }).then((result) => {
                     if (result.isConfirmed) {
@@ -946,6 +996,10 @@
                         // Set both date and time in the hidden input for the form
                         document.getElementById('hidden-date-' + comboId).value = `${date} ${time}`;
                         addToCart(comboId); // Call addToCart after date and time selection
+                        sessionStorage.setItem('hasSelectedDateBefore', 'true');
+
+                        // Hiển thị thông báo sau khi lưu ngày thành công
+                        showSuccessMessage();  // Gọi
                     }
                 });
             }
@@ -993,7 +1047,7 @@
                     } else {
                         // Nếu có lỗi (chưa đăng nhập hoặc sai vai trò)
                         Swal.fire({
-                            icon: "error",
+                            icon: "warning",
                             title: "Thất bại",
                             text: response.message,
                             showConfirmButton: false,

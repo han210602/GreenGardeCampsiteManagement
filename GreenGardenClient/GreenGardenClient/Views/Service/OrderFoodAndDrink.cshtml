@@ -240,19 +240,19 @@
                                                 @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 1)
                                                 {
                                                 <li><a href="~/DashBoard" class="nav-link">Quản lí</a></li>
-                                                <li><a href="~/Home/Logout" class="nav-link">Đăng xuất</a></li>
+                                                <li><a href="~/Home/Logout" onclick="return Logout();" class="nav-link">Đăng xuất</a></li>
                                                 }
                                                 else if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 2)
                                                 {
                                                 <li><a href="~/OrderManagement/OrderOnline" class="nav-link">Quản lí</a></li>
-                                                <li><a href="~/Home/Logout" class="nav-link">Đăng xuất</a></li>
+                                                <li><a href="~/Home/Logout" onclick="return Logout();" class="nav-link">Đăng xuất</a></li>
                                                 }
                                                 else
                                                 {
 
                                                 <li><a href="~/Service/OrderHistory" class="nav-link">Lịch sử đặt hàng</a></li>
                                                 <li><a href="~/Service/Cart" class="nav-link">Giỏ hàng</a></li>
-                                                <li><a href="~/Home/Logout" class="nav-link">Đăng xuất</a></li>
+                                                <li><a href="~/Home/Logout" onclick="return Logout();" class="nav-link">Đăng xuất</a></li>
 
                                                 }
                                         </ul>
@@ -287,6 +287,12 @@
                     </div>
                 </div>
             </div>
+            <script>
+                function Logout() {
+                    sessionStorage.removeItem('usageDateForAll');
+                }
+
+            </script>
             <style>
                 .site-mobile-menu {
                     width: 80%;
@@ -603,6 +609,32 @@
                         height: auto;
                     }
 
+                .swal-confirm-button {
+                    background-color: #efba6c !important; /* Yellow background */
+                    color: #000 !important; /* Black text */
+                    border: none; /* Remove border */
+                    font-weight: bold; /* Make text bold */
+                    padding: 10px 20px; /* Adjust padding */
+                    border-radius: 5px; /* Rounded corners */
+                }
+
+                    .swal-confirm-button:hover {
+                        background-color: #efba6c !important; /* Slightly darker yellow on hover */
+                    }
+
+
+                .swal-cancel-button {
+                    background-color: #6c757d !important; /* Default cancel button color (gray) */
+                    color: #fff !important;
+                    border: none;
+                    font-weight: bold;
+                    padding: 10px 20px;
+                    border-radius: 5px;
+                }
+
+                    .swal-cancel-button:hover {
+                        background-color: #5a6268 !important; /* Darker gray on hover */
+                    }
             </style>
             <script>
                 $(document).ready(function () {
@@ -926,7 +958,27 @@
         function setUsageDate(itemId) {
             const savedDate = sessionStorage.getItem('usageDateForAll');
             const savedTime = sessionStorage.getItem('usageTimeForAll');
-
+            var userId = '@HttpContextAccessor.HttpContext.Session.GetInt32("UserId")'; // hoặc nếu có thể null thì chuyển qua check null
+            if (!userId) {
+                Swal.fire({
+                    title: 'Bạn cần đăng nhập để tiếp tục!',
+                    icon: 'warning',
+                    confirmButtonText: 'Đăng nhập',
+                    showCancelButton: true,
+                    cancelButtonText: 'Hủy',
+                    customClass: {
+                        confirmButton: 'swal-confirm-button', // Nút đăng nhập
+                        cancelButton: 'swal-cancel-button'  // Nút hủy
+                    },
+                    // Sử dụng hàm xử lý khi bấm vào nút
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Khi bấm vào nút "Đăng nhập", chuyển hướng tới trang đăng nhập
+                        window.location.href = '/Common/Login';  // Địa chỉ trang đăng nhập của bạn
+                    }
+                });
+                return false; // Ngừng thực hiện hành động
+            }
             if (savedDate && savedTime) {
                 // Use the saved date and time if they exist
                 document.getElementById('hidden-date-' + itemId).value = `${savedDate} ${savedTime}`;
@@ -979,7 +1031,7 @@
                     } else {
                         // Nếu có lỗi (chưa đăng nhập hoặc sai vai trò)
                         Swal.fire({
-                            icon: "error",
+                            icon: "warning",
                             title: "Thất bại",
                             text: response.message,
                             showConfirmButton: false,

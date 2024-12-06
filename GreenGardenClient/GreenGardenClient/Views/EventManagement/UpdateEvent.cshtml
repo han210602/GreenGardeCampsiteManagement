@@ -753,7 +753,7 @@
 
                             <div class="event-card">
                                 <!-- Left Column: Image and File Upload -->
-                                <div class="event-image-container">
+                                <div class="event-image-container" style="position: relative; display: inline-block; text-align: center;">
                                     <!-- Hiển thị ảnh hiện tại nếu có -->
                                     @if (!string.IsNullOrEmpty(eventItem.PictureUrl))
                                     {
@@ -764,10 +764,18 @@
                                     <input type="hidden" name="CurrentPictureUrl" value="@eventItem.PictureUrl" />
 
                                     <!-- File input để upload ảnh mới -->
-                                    <div class="mt-2">
-                                        <input type="file" name="PictureUrl" id="PictureUrl_@eventItem.EventId" accept=".jpg, .png" class="file-input" onchange="previewImage(event, '@eventItem.EventId')" />
+                                    <div class="mt-2" style="margin-top: 10px;">
+                                        <!-- Ẩn input file mặc định -->
+                                        <input type="file" name="PictureUrl" id="PictureUrl_@eventItem.EventId" accept=".jpg, .png" class="file-input" onchange="previewImage(event, '@eventItem.EventId')" style="display: none;" />
+
+                                        <!-- Tạo nút "Chọn ảnh" và căn giữa -->
+                                        <label for="PictureUrl_@eventItem.EventId" class="btn btn-primary" style="cursor: pointer; padding: 8px 15px; font-size: 14px; text-align: center; background-color: #efba6c; color: #fff; border-radius: 50px; border: none; display: inline-block; margin-top: 10px;">
+                                            Chọn ảnh
+                                        </label>
                                     </div>
                                 </div>
+
+
 
                                 <!-- Right Column: Event Details Form -->
                                 <div class="event-details">

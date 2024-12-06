@@ -641,12 +641,16 @@
                                     <img id="imagePreview" src="#" alt="Image Preview" style="display: none; max-width: 100%; height: auto;" />
                                 </div>
                                 <div class="file-input-wrapper w-100">
-                                    <label for="PictureUrl" class="form-label fw-bold">URL hình ảnh:</label>
+                                    
                                     <div class="input-group">
-                                        <span class="input-group-text bg-light">
-                                            <i class="fas fa-image text-primary"></i>
-                                        </span>
-                                        <input type="file" name="PictureUrl" id="PictureUrl" accept=".jpg, .png" class="form-control" onchange="previewImage(event)">
+                                        <input type="file" name="PictureUrl" id="PictureUrl" accept=".jpg, .png" class="form-control" onchange="previewImage(event)" style="display: none;">
+
+                                        <!-- Tạo nút "Chọn ảnh" -->
+                                        <div class="file-input-wrapper w-100" style="display: flex; justify-content: center;">
+                                            <label for="PictureUrl" class="btn btn-primary mt-2" style="cursor: pointer;">
+                                                Chọn ảnh
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

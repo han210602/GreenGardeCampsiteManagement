@@ -111,47 +111,24 @@
                                 <i class="fas fa-user"></i> @HttpContextAccessor.HttpContext.Session.GetString("Fullname")
                             </a>
 
-                            <ul>
-                                <!-- User role-based links with icons -->
+                            <ul class="dropdown">
                                 @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 1)
                                 {
-                                   
-                                        <a href="~/DashBoard" class="nav-link">
-                                            <i class="fas fa-tachometer-alt"></i> Quản lí
-                                        </a>
-                                   
-                                        <a href="~/Home/Logout" class="nav-link">
-                                            <i class="fas fa-sign-out-alt"></i> Đăng xuất
-                                        </a>
-                                  
+                                    <li><a href="~/DashBoard" class="nav-link">Quản lí</a></li>
+                                    <li><a href="~/Home/Logout" onclick="return Logout();" class="nav-link">Đăng xuất</a></li>
                                 }
                                 else if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 2)
                                 {
-                                   
-                                        <a href="~/OrderManagement/OrderOnline" class="nav-link">
-                                            <i class="fas fa-box"></i> Quản lí
-                                        </a>
-                                    
-                                        <a href="~/Home/Logout" class="nav-link">
-                                            <i class="fas fa-sign-out-alt"></i> Đăng xuất
-                                        </a>
-                                    
+                                    <li><a href="~/OrderManagement/OrderOnline" class="nav-link">Quản lí</a></li>
+                                    <li><a href="~/Home/Logout" onclick="return Logout();" class="nav-link">Đăng xuất</a></li>
                                 }
                                 else
                                 {
-                                    
-                                        <a href="~/Service/OrderHistory" class="nav-link">
-                                            <i class="fas fa-history"></i> Lịch sử đặt hàng
-                                        </a>
-                                    
-                                        <a href="~/Service/Cart" class="nav-link">
-                                            <i class="fas fa-shopping-cart"></i> Giỏ hàng
-                                        </a>
-                                    
-                                        <a href="~/Home/Logout" class="nav-link">
-                                            <i class="fas fa-sign-out-alt"></i> Đăng xuất
-                                        </a>
-                                    
+
+                                    <li><a href="~/Service/OrderHistory" class="nav-link">Lịch sử đặt hàng</a></li>
+                                    <li><a href="~/Service/Cart" class="nav-link">Giỏ hàng</a></li>
+                                    <li><a href="~/Home/Logout" onclick="return Logout();" class="nav-link">Đăng xuất</a></li>
+
                                 }
                             </ul>
                         }

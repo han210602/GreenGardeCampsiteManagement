@@ -685,7 +685,7 @@
                            id="sampleTable">
                         <thead>
                             <tr>
-
+                                <th width="2%"></th>
                                 <th width="8%">Mã đơn</th>           <!-- Order ID -->
                                 <th width="15%">Khách hàng</th>      <!-- Customer Name -->
                                 <th width="10%">Số điện thoại</th>   <!-- Phone Number -->
@@ -716,10 +716,13 @@
 
                                 <tr onclick="window.location.href='@Url.Action("OrderDetail", "OrderManagement", new { id = item.OrderId })'"
                                     class="@(item.StatusOrder == true ? "highlight-row" : "")">
+                                    <td>
+                                        <i class="fas fa-clipboard-list" style="color: green;"></i>
+                                    </td> <!-- Trạng thái đặt trước -->
 
 
                                     <td>
-                                        <a asp-controller="OrderManagement" asp-action="OrderDetail" asp-route-id="@item.OrderId">#@item.OrderId</a>
+                                        #@item.OrderId
                                     </td>
                                     <td>@item.CustomerName</td>
                                     <td>@item.PhoneCustomer</td>

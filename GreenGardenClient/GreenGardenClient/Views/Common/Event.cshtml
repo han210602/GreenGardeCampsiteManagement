@@ -244,19 +244,19 @@
                                                 @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 1)
                                                 {
                                                 <li><a href="~/DashBoard" class="nav-link">Quản lí</a></li>
-                                                <li><a href="~/Home/Logout" class="nav-link">Đăng xuất</a></li>
+                                                <li><a href="~/Home/Logout" onclick="return Logout();" class="nav-link">Đăng xuất</a></li>
                                                 }
                                                 else if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 2)
                                                 {
                                                 <li><a href="~/OrderManagement/OrderOnline" class="nav-link">Quản lí</a></li>
-                                                <li><a href="~/Home/Logout" class="nav-link">Đăng xuất</a></li>
+                                                <li><a href="~/Home/Logout" onclick="return Logout();" class="nav-link">Đăng xuất</a></li>
                                                 }
                                                 else
                                                 {
 
                                                 <li><a href="~/Service/OrderHistory" class="nav-link">Lịch sử đặt hàng</a></li>
                                                 <li><a href="~/Service/Cart" class="nav-link">Giỏ hàng</a></li>
-                                                <li><a href="~/Home/Logout" class="nav-link">Đăng xuất</a></li>
+                                                <li><a href="~/Home/Logout" onclick="return Logout();" class="nav-link">Đăng xuất</a></li>
 
                                                 }
                                         </ul>
@@ -291,6 +291,12 @@
                     </div>
                 </div>
             </div>
+            <script>
+                function Logout() {
+                    sessionStorage.removeItem('usageDateForAll');
+                }
+
+            </script>
             <style>
                 .site-mobile-menu {
                     width: 80%;
@@ -601,8 +607,8 @@
                     </div>
                 </div>
             </div>
-            <div class="site-section">
-                <div class="container">
+            <div class="site-section" >
+                <div class="container" style="margin-top:20px">
                     <div class="row justify-content-center mb-5">
                         <div class="col-md-7 text-center">
                             <h2 class="font-weight-bold">Những sự kiện của chúng tôi</h2>
@@ -620,8 +626,9 @@
                             <div id="event-slider" class="event-slider">
                                 @if (events != null && events.Any())
                                 {
-                                    foreach (var item in events)
+                                    @foreach (var item in events)
                                     {
+                                        var isExpired = item.EventDate <= DateTime.Now; // Determine if the event is expired
                                         <div class="event-item">
                                             <div class="post-entry-1">
                                                 <!-- Event Image -->
@@ -631,7 +638,11 @@
                                                 <div class="post-entry-1-contents">
                                                     <h2 class="event-title">@item.EventName</h2>
                                                     <div class="meta">
-                                                        <span class="event-date">@item.EventDate</span>
+                                                        <span id="event-date-@item.EventId"
+                                                              class="event-date @(isExpired ? "expired" : "")"
+                                                              data-event-date="@item.EventDate.Value.ToString("yyyy-MM-dd")">
+                                                            @item.EventDate.Value.ToString("dd-MM-yyyy")
+                                                        </span>
                                                         <span class="separator"> | </span>
                                                         <span class="event-creator">@item.CreatedByUserName</span>
                                                     </div>
@@ -643,6 +654,7 @@
                                             </div>
                                         </div>
                                     }
+
                                 }
                             </div>
                         </div>
@@ -652,7 +664,25 @@
                     </div>
                 </div>
             </div>
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const eventDates = document.querySelectorAll('.event-date');
+                    const currentDate = new Date(); // Get the current date
 
+                    eventDates.forEach((eventDateElement) => {
+                        const eventDateStr = eventDateElement.getAttribute('data-event-date'); // Get the date from data attribute
+                        const eventDate = new Date(eventDateStr); // Convert to Date object
+
+                        // Compare the event date with the current date
+                        if (eventDate <= currentDate) {
+                            eventDateElement.style.textDecoration = 'line-through'; // Apply the strike-through
+                            eventDateElement.style.color = 'red'; // Change the text color to red
+                            eventDateElement.innerHTML = `<strong>Hết hạn: ${eventDateElement.textContent}</strong>`; // Update text
+                        }
+                    });
+                });
+
+            </script>
 
             <style>
                 /* Wrapper for the entire slider and buttons */
@@ -696,7 +726,7 @@
                     font-size: 20px;
                     cursor: pointer;
                     z-index: 10; /* Ensure buttons are above all elements */
-                    border-radius: 40%; /* Circular buttons */
+                    border-radius: 10%; /* Circular buttons */
                     opacity: 0.9;
                     transition: opacity 0.3s ease, transform 0.3s ease;
                     position: absolute; /* Positioned outside the slider */

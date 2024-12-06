@@ -632,7 +632,14 @@
 
         </ul>
     </aside>
-
+    <style>
+        /* CSS cho dấu sao đỏ ở các label */
+        label.required::before {
+            content: "*";
+            color: red; /* Màu đỏ */
+            margin-right: 5px; /* Khoảng cách giữa dấu sao và nội dung */
+        }
+    </style>
 
     <main class="app-content">
         <div class="app-title">
@@ -651,20 +658,21 @@
                                 <div class="col-md-6">
                                     <form asp-controller="OrderManagement" asp-action="CreateOrder" method="post" id="autoSubmitForm">
                                         <div class="mb-3">
-                                            <label for="customer-name" class="form-label">Tên khách hàng:</label>
+                                            <label for="customer-name" class="form-label required">Tên khách hàng:</label>
                                             <input type="text" value="@Model.CustomerName" class="form-control" id="customer-name" name="name" placeholder="Nhập tên khách hàng" required>
                                         </div>
 
                                         <div class="mb-3">
-                                            <label for="usage-date" class="form-label">Ngày sử dụng:</label>
+                                            <label for="usage-date" class="form-label required">Ngày sử dụng:</label>
                                             <input type="datetime-local" value="@ViewBag.date" class="form-control" id="usage-date" name="usagedate" required>
                                         </div>
 
                                         <div class="mb-3">
-                                            <label for="phone-number" class="form-label">Số điện thoại:</label>
+                                            <label for="phone-number" class="form-label required">Số điện thoại:</label>
                                             <input type="tel" value="@Model.PhoneCustomer" class="form-control" id="phone-number" name="phone" placeholder="Nhập số điện thoại" pattern="[0-9]{10}" required>
                                         </div>
                                     </form>
+
 
                                     <script>
                                         document.addEventListener('DOMContentLoaded', function () {

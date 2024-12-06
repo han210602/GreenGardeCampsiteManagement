@@ -277,7 +277,6 @@
 
                 .bg-welcome {
                     background-color: #fff7e6; /* Màu vàng nhạt */
-                    height: calc(100vh - 0px); /* Chiều cao đầy đủ, không chừa khoảng trống */
                     margin: 0;
                     padding: 0;
                     display: flex;
@@ -413,14 +412,14 @@
                     <!-- Phía bên phải: Form đăng nhập -->
                     <!-- Phía bên phải: Form đăng nhập -->
                     <div class="col-md-6 d-flex align-items-center justify-content-center">
-                        <form id="registerForm" asp-action="Register" method="post" class="p-5 bg-light shadow-lg login-form" style="border-radius: 10px; width: 100%; max-width: 800px;">
+                        <form id="registerForm" asp-action="Register" method="post" class="p-5 bg-light shadow-lg login-form" style="border-radius: 10px; width: 100%; max-width: 800px;margin-top:35px;margin-bottom:20px">
                             <h2 class="text-center mb-4">Đăng Ký</h2>
 
                             <div class="row">
                                 <!-- Họ -->
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="firstname">Họ:</label>
+                                        <label for="firstname" class="form-label required">Họ:</label>
                                         <input type="text" class="form-control" id="firstname" name="FirstName" placeholder="Họ" required value="@Model.FirstName">
                                         <span asp-validation-for="FirstName" class="text-danger"></span>
                                     </div>
@@ -429,7 +428,7 @@
                                 <!-- Tên -->
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="lastname">Tên:</label>
+                                        <label for="lastname" class="form-label required">  Tên:</label>
                                         <input type="text" class="form-control" id="lastname" name="LastName" placeholder="Tên" required value="@Model.LastName">
                                         <span asp-validation-for="LastName" class="text-danger"></span>
                                     </div>
@@ -440,7 +439,7 @@
                                 <!-- Email -->
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="email">Email:</label>
+                                        <label for="email" class="form-label required">Email:</label>
                                         <input type="email" class="form-control" id="email" name="Email" placeholder="Email" required value="@Model.Email">
                                         <span asp-validation-for="Email" class="text-danger"></span>
                                     </div>
@@ -449,7 +448,7 @@
                                 <!-- Số điện thoại -->
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="PhoneNumber">Số điện thoại:</label>
+                                        <label for="PhoneNumber" class="form-label required">Số điện thoại:</label>
                                         <input type="tel" class="form-control" id="PhoneNumber" name="PhoneNumber" placeholder="Số điện thoại" required value="@Model.PhoneNumber">
                                         <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                                     </div>
@@ -460,7 +459,7 @@
                                 <!-- Mật khẩu -->
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="password">Mật khẩu:</label>
+                                        <label for="password" class="form-label required">Mật khẩu:</label>
                                         <input type="password" class="form-control" id="password" name="Password" placeholder="Mật khẩu" required value="@Model.Password">
                                         <span asp-validation-for="Password" class="text-danger"></span>
                                     </div>
@@ -469,7 +468,7 @@
                                 <!-- Nhắc lại mật khẩu -->
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="confirmPassword">Xác nhận mật khẩu:</label>
+                                        <label for="confirmPassword" class="form-label required">Xác nhận mật khẩu:</label>
                                         <input type="password" class="form-control" id="confirmPassword" name="ConfirmPassword" placeholder="Xác nhận mật khẩu" required value="@Model.ConfirmPassword">
                                         <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                                         <div id="passwordError" class="text-danger" style="display: none;">Mật khẩu không khớp, vui lòng nhập lại.</div>
@@ -482,7 +481,7 @@
                                 <!-- Mã xác thực -->
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="verificationCode">Nhập mã xác thực:</label>
+                                        <label for="verificationCode" class="form-label required">Nhập mã xác thực:</label>
                                         <div class="input-group">
                                             <input type="text" class="form-control" id="verificationCode" name="VerificationCode" placeholder="Mã xác thực" required style="max-width: 180px;" value="@ViewBag.code">
                                             <button type="button" class="btn btn-secondary btn-sm ml-2" id="getCodeButton">Lấy mã</button>
@@ -511,7 +510,14 @@
             </div>
         </div>
 
-
+        <style>
+            /* CSS cho dấu sao đỏ ở các label */
+            label.required::before {
+                content: "*";
+                color: red; /* Màu đỏ */
+                margin-right: 5px; /* Khoảng cách giữa dấu sao và nội dung */
+            }
+        </style>
         <script>
             function validatePassword() {
 

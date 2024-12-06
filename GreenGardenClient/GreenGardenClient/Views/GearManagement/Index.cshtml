@@ -692,7 +692,9 @@
                                 <div class="d-flex">
                                     <!-- Event Image on the Left -->
                                     <div class="event-image mr-3">
+                                        <a href="@Url.Action("GearDetail", "GearManagement", new { gearId = @eventItem.GearId })">
                                         <img src="@eventItem.ImgUrl" alt="Event Image" class="event-thumbnail">
+                                        </a>
                                     </div>
 
                                     <!-- Event Details on the Right -->

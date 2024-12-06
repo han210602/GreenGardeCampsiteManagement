@@ -240,19 +240,19 @@
                                                 @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 1)
                                                 {
                                                 <li><a href="~/DashBoard" class="nav-link">Quản lí</a></li>
-                                                <li><a href="~/Home/Logout" class="nav-link">Đăng xuất</a></li>
+                                                <li><a href="~/Home/Logout" onclick="return Logout();" class="nav-link">Đăng xuất</a></li>
                                                 }
                                                 else if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 2)
                                                 {
                                                 <li><a href="~/OrderManagement/OrderOnline" class="nav-link">Quản lí</a></li>
-                                                <li><a href="~/Home/Logout" class="nav-link">Đăng xuất</a></li>
+                                                <li><a href="~/Home/Logout" onclick="return Logout();" class="nav-link">Đăng xuất</a></li>
                                                 }
                                                 else
                                                 {
 
-                                                <li class="active"><a href="~/Service/OrderHistory" class="nav-link">Lịch sử đặt hàng</a></li>
+                                                <li><a href="~/Service/OrderHistory" class="nav-link">Lịch sử đặt hàng</a></li>
                                                 <li><a href="~/Service/Cart" class="nav-link">Giỏ hàng</a></li>
-                                                <li><a href="~/Home/Logout" class="nav-link">Đăng xuất</a></li>
+                                                <li><a href="~/Home/Logout" onclick="return Logout();" class="nav-link">Đăng xuất</a></li>
 
                                                 }
                                         </ul>
@@ -287,6 +287,12 @@
                     </div>
                 </div>
             </div>
+            <script>
+                function Logout() {
+                    sessionStorage.removeItem('usageDateForAll');
+                }
+
+            </script>
             <style>
                 .site-mobile-menu {
                     width: 80%;
@@ -573,7 +579,7 @@
                             <div class="order-card">
                                 <div class="d-flex justify-content-between">
                                     <span class="order-title">Đơn đặt: @orderDetail.OrderId</span>
-                                    <span>Ngày đặt: @orderDetail.OrderDate</span>
+                                    <span>Ngày sử dụng: @orderDetail.OrderUsageDate.Value.ToString("dd-MM-yyyy")</span>
                                     <p class="text-primary">@orderDetail.ActivityName</p>
                                 </div>
 

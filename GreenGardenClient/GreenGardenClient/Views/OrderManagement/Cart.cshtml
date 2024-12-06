@@ -666,7 +666,7 @@
                                     <p><strong style="margin-right:10px">Tên khách hàng:</strong>@ViewBag.order.CustomerName</p>
                                 </div>
                                 <div class="col-md-4">
-                                    <p><strong style="margin-right:10px">Ngày sử dụng:</strong>@ViewBag.order.OrderUsageDate</p>
+                                    <p><strong style="margin-right:10px">Ngày sử dụng:</strong>@ViewBag.order.OrderUsageDate?.ToString("hh:mm:ss tt dd/MM/yyyy")</p>
                                 </div>
                                 <div class="col-md-4">
                                     <p><strong style="margin-right:10px">Số điện thoại:</strong>@ViewBag.order.PhoneCustomer</p>

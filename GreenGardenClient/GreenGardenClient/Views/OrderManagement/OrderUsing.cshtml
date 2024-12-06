@@ -691,8 +691,8 @@
                             @foreach (OrderVM item in ViewBag.dataorder)
                             {
 
-                                <tr onclick="window.location.href='@Url.Action("OrderDetail", "OrderManagement", new { id = item.OrderId })'"
-                                    class="highlight-row">
+                                <tr data-order-id="@item.OrderId"
+                                    class="@(item.OrderUsageDate.Value.ToString("dd/MM/yyyy").Equals(DateTime.Now.ToString("dd/MM/yyyy")) ? "highlight-row" : "")">
                                     <td>
                                         <i class="fas fa-circle" style="color: green;"></i>
                                     </td>
@@ -741,7 +741,61 @@
         });
 
     </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Lấy danh sách các orderIds từ localStorage
+            const orderIds = JSON.parse(localStorage.getItem('orderIds')) || [];
 
+            // Duyệt qua tất cả các dòng và kiểm tra nếu orderId có trong danh sách
+            const orderRows = document.querySelectorAll('tr[data-order-id]');
+            orderRows.forEach(row => {
+                const orderId = parseInt(row.getAttribute('data-order-id'));  // Chuyển orderId từ chuỗi thành số
+
+                // Kiểm tra nếu orderId có trong danh sách orderIds
+                if (orderIds.includes(orderId)) {
+                    row.style.fontWeight = 'bold';  // In đậm dòng nếu orderId có trong localStorage
+                }
+            });
+
+            // Hàm xử lý khi người dùng click vào dòng đơn hàng
+            function handleClick(event, orderId) {
+                event.preventDefault();
+
+                // Lấy danh sách orderIds từ localStorage
+                let storedOrderIds = JSON.parse(localStorage.getItem('orderIds')) || [];
+
+                // Chuyển đổi orderId thành số nguyên trước khi thao tác
+                const orderIdInt = parseInt(orderId);
+
+                // Kiểm tra nếu orderId có trong danh sách
+                const index = storedOrderIds.indexOf(orderIdInt);
+                if (index !== -1) {
+                    // Nếu tồn tại, xóa orderId khỏi danh sách
+                    storedOrderIds.splice(index, 1);
+                }
+
+                // Cập nhật lại localStorage với danh sách mới
+                localStorage.setItem('orderIds', JSON.stringify(storedOrderIds));
+
+                // Cập nhật lại trạng thái in đậm của dòng
+
+                // Chuyển hướng tới trang chi tiết
+                window.location.href = '@Url.Action("OrderDetail", "OrderManagement", new { id = "__id__" })'.replace('__id__', orderId);
+            }
+
+
+
+            // Lắng nghe sự kiện khi người dùng click vào dòng đơn hàng để xem chi tiết
+            orderRows.forEach(row => {
+                row.addEventListener('click', function (event) {
+                    const orderId = row.getAttribute('data-order-id');
+                    handleClick(event, orderId);
+                });
+            });
+        });
+
+
+    </script>
 
 
     <script src="~/js/jquery-3.2.1.min.js"></script>

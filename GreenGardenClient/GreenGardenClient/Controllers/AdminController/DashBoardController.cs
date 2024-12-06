@@ -54,7 +54,7 @@ namespace GreenGardenClient.Controllers.AdminController
         {
             try
             {
-                if (HttpContext.Session.GetInt32("RoleId").Value == 1)
+                if (HttpContext.Session.GetInt32("RoleId") != null && (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2))
                 {
                     if (datetime == null)
                     {
@@ -62,12 +62,12 @@ namespace GreenGardenClient.Controllers.AdminController
                     }
 
 
-                    ProfitVM profitVM = GetDataFromApi<ProfitVM>($"https://localhost:7298/api/DashBoard/GetProfit/{datetime}");
-                    List<Account> userdata = GetDataFromApi<List<Account>>("https://localhost:7298/api/DashBoard/GetListCustomer\r\n");
+                    ProfitVM profitVM = GetDataFromApi<ProfitVM>($"http://103.75.186.149:5000/api/DashBoard/GetProfit/{datetime}");
+                    List<Account> userdata = GetDataFromApi<List<Account>>("http://103.75.186.149:5000/api/DashBoard/GetListCustomer\r\n");
                     List<EventVM> events = new List<EventVM>();
 
                     // Fetch events from the API
-                    var allEvents = GetDataFromApi<List<EventVM>>("https://localhost:7298/api/Event/GetAllEvents");
+                    var allEvents = GetDataFromApi<List<EventVM>>("http://103.75.186.149:5000/api/Event/GetAllEvents");
 
                     // Ensure allEvents is not null before filtering
                     if (allEvents != null)
@@ -92,13 +92,13 @@ namespace GreenGardenClient.Controllers.AdminController
                 }
                 else
                 {
-                    return View("~/Views/Home/Index.cshtml");
+                    return RedirectToAction("Index", "Home");
 
                 }
             }
             catch (Exception e)
             {
-                return View("~/Views/OrderManagement/Error.cshtml");
+                return RedirectToAction("Error", "OrderManagement");
             }
         }
     }

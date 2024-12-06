@@ -566,7 +566,7 @@
                                         <div class="text-danger" id="error-message" style="display: none;"></div>
                                         <div class="mb-3">
                                             <label for="Location" class="form-label">Địa điểm:</label>
-                                            <input type="text" class="form-control form-control-sm" id="Location" value="@(Model.Location!=null?Model.Location:"Gần đình chùa Quán Tính,Giang Biên,Long Biên,Hà Nội")" name="Location" placeholder="Nhập địa điểm">
+                                            <input type="text" class="form-control form-control-sm" id="Location" value="@(Model.Location!=null?Model.Location:"Gần đình chùa Quán Tính, Giang Biên, Long Biên, Hà Nội")" name="Location" placeholder="Nhập địa điểm">
                                         </div>
                                         <span asp-validation-for="Location" class="text-danger"></span>
                                     </div>
@@ -577,10 +577,17 @@
                                             <img id="imagePreview" src="#" alt="Image Preview" style="display: none; width: 100%; max-width: 200px; height: auto;" />
                                         </div>
                                         <div class="file-input-wrapper">
-                                            <label for="PictureUrl" class="form-label">URL hình ảnh:</label>
-                                            <input type="file" name="PictureUrl" id="PictureUrl" accept=".jpg, .png" class="file-input form-control form-control-sm" onchange="previewImage(event)" />
+
+                                            <!-- Ẩn input file mặc định -->
+                                            <input type="file" name="PictureUrl" id="PictureUrl" accept=".jpg, .png" class="file-input form-control form-control-sm" onchange="previewImage(event)" style="display: none;" />
+
+                                            <!-- Tạo nút chọn ảnh -->
+                                            <label for="PictureUrl" class="btn btn-primary mt-2" style="cursor: pointer; padding: 8px 15px; font-size: 14px; text-align: center;">
+                                                Chọn ảnh
+                                            </label>
                                         </div>
                                     </div>
+
                                 </div>
 
                                 <!-- Nút submit nằm ở cuối form -->

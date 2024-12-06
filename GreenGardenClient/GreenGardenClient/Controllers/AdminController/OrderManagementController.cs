@@ -55,18 +55,21 @@ namespace GreenGardenClient.Controllers.AdminController
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
                 List<OrderVM> orderdata = new List<OrderVM>();
                 List<ActivityVM> activities = new List<ActivityVM>();
-                if (HttpContext.Session.GetInt32("RoleId").Value == 2)
+                if (HttpContext.Session.GetInt32("RoleId") != null && (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2))
                 {
-                    orderdata = GetDataFromApi<List<OrderVM>>("https://localhost:7298/api/OrderManagement/GetAllOrderOnline").Where(s => s.StatusOrder == true).ToList();
-                    activities = GetDataFromApi<List<ActivityVM>>("https://localhost:7298/api/Activity/GetAllActivities").Where(s => s.ActivityId == 1 || s.ActivityId == 2 || s.ActivityId == 1002).ToList();
-
-                }
-                else if (HttpContext.Session.GetInt32("RoleId").Value == 1)
-                {
-                    orderdata = GetDataFromApi<List<OrderVM>>("https://localhost:7298/api/OrderManagement/GetAllOrderOnline")
-                    .Where(s => s.ActivityId == 1)
+                    if (HttpContext.Session.GetInt32("RoleId").Value == 1)
+                    {
+                        orderdata = GetDataFromApi<List<OrderVM>>("http://103.75.186.149:5000/api/OrderManagement/GetAllOrderOnline")
+                                            .Where(s => s.ActivityId == 1).OrderByDescending(s => s.OrderDate)
+                                            .ToList();
+                    }
+                    else if (HttpContext.Session.GetInt32("RoleId").Value == 2)
+                    {
+                        orderdata = GetDataFromApi<List<OrderVM>>("http://103.75.186.149:5000/api/OrderManagement/GetAllOrderOnline")
+                    .Where(s => s.ActivityId == 1 && s.StatusOrder == true).OrderByDescending(s => s.OrderDate)
                     .ToList();
-                    activities = GetDataFromApi<List<ActivityVM>>("https://localhost:7298/api/Activity/GetAllActivities")
+                    }
+                    activities = GetDataFromApi<List<ActivityVM>>("http://103.75.186.149:5000/api/Activity/GetAllActivities")
                         .Where(s => s.ActivityId == 1 || s.ActivityId == 2 || s.ActivityId == 1002)
                         .ToList();
 
@@ -75,7 +78,7 @@ namespace GreenGardenClient.Controllers.AdminController
                     {
                         if (item != null && item.OrderUsageDate.HasValue && item.OrderUsageDate.Value.Date < DateTime.Now.Date && item.StatusOrder == false)
                         {
-                            string apiUrl = $"https://localhost:7298/api/OrderManagement/UpdateActivityOrder/{item.OrderId}/{1002}";
+                            string apiUrl = $"http://103.75.186.149:5000/api/OrderManagement/UpdateActivityOrder/{item.OrderId}/{1002}";
                             HttpResponseMessage response = _httpClient.PutAsync(apiUrl, null).Result;
                             item.ActivityId = 1002;
                             TempData["NotificationError"] += $"Đơn {item.OrderId} đã bị hủy do tới ngày đặt trước nhưng chưa cọc.\n";
@@ -86,7 +89,7 @@ namespace GreenGardenClient.Controllers.AdminController
                         }
                         else if (item != null && item.OrderUsageDate.HasValue && item.OrderUsageDate.Value.Date < DateTime.Now.Date && item.StatusOrder == true)
                         {
-                            string apiUrl = $"https://localhost:7298/api/OrderManagement/UpdateActivityOrder/{item.OrderId}/{1002}";
+                            string apiUrl = $"http://103.75.186.149:5000/api/OrderManagement/UpdateActivityOrder/{item.OrderId}/{1002}";
                             HttpResponseMessage response = _httpClient.PutAsync(apiUrl, null).Result;
                             item.ActivityId = 1002;
                             TempData["NotificationError"] += $"Đơn {item.OrderId} đã bị hủy do quá ngày sử dụng.\n";
@@ -95,9 +98,6 @@ namespace GreenGardenClient.Controllers.AdminController
                             // Xóa item khỏi danh sách gốc
                         }
                     }
-
-
-
 
                 }
                 else
@@ -134,18 +134,22 @@ namespace GreenGardenClient.Controllers.AdminController
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
                 List<OrderVM> orderdata = new List<OrderVM>();
                 List<ActivityVM> activities = new List<ActivityVM>();
-                if (HttpContext.Session.GetInt32("RoleId").Value == 2)
+                if (HttpContext.Session.GetInt32("RoleId") != null && (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2))
                 {
-                    orderdata = GetDataFromApi<List<OrderVM>>("https://localhost:7298/api/OrderManagement/GetAllOrderOnline").Where(s => s.StatusOrder == true && s.OrderUsageDate.Value.ToString("yyyy/MM/dd").Equals(DateTime.Now.ToString("yyyy/MM/dd"))).ToList();
-                    activities = GetDataFromApi<List<ActivityVM>>("https://localhost:7298/api/Activity/GetAllActivities").Where(s => s.ActivityId == 1 || s.ActivityId == 2 || s.ActivityId == 1002).ToList();
-
-                }
-                else if (HttpContext.Session.GetInt32("RoleId").Value == 1)
-                {
-                    orderdata = GetDataFromApi<List<OrderVM>>("https://localhost:7298/api/OrderManagement/GetAllOrderOnline")
-                    .Where(s => s.ActivityId == 1 && s.OrderUsageDate.Value.ToString("yyyy/MM/dd").Equals(DateTime.Now.ToString("yyyy/MM/dd")))
+                    if (HttpContext.Session.GetInt32("RoleId").Value == 1)
+                    {
+                        orderdata = GetDataFromApi<List<OrderVM>>("http://103.75.186.149:5000/api/OrderManagement/GetAllOrderOnline")
+                    .Where(s => s.ActivityId == 1 && s.OrderUsageDate.Value.ToString("yyyy/MM/dd").Equals(DateTime.Now.ToString("yyyy/MM/dd"))).OrderByDescending(s => s.OrderDate)
                     .ToList();
-                    activities = GetDataFromApi<List<ActivityVM>>("https://localhost:7298/api/Activity/GetAllActivities")
+                    }
+                    else if (HttpContext.Session.GetInt32("RoleId").Value == 2)
+                    {
+                        orderdata = GetDataFromApi<List<OrderVM>>("http://103.75.186.149:5000/api/OrderManagement/GetAllOrderOnline")
+                    .Where(s => s.ActivityId == 1 && s.StatusOrder == true && s.OrderUsageDate.Value.ToString("yyyy/MM/dd").Equals(DateTime.Now.ToString("yyyy/MM/dd"))).OrderByDescending(s => s.OrderDate)
+                    .ToList();
+                    }
+
+                    activities = GetDataFromApi<List<ActivityVM>>("http://103.75.186.149:5000/api/Activity/GetAllActivities")
                         .Where(s => s.ActivityId == 1 || s.ActivityId == 2 || s.ActivityId == 1002)
                         .ToList();
 
@@ -154,7 +158,7 @@ namespace GreenGardenClient.Controllers.AdminController
                     {
                         if (item != null && item.OrderUsageDate.HasValue && item.OrderUsageDate.Value.Date < DateTime.Now.Date && item.StatusOrder == false)
                         {
-                            string apiUrl = $"https://localhost:7298/api/OrderManagement/UpdateActivityOrder/{item.OrderId}/{1002}";
+                            string apiUrl = $"http://103.75.186.149:5000/api/OrderManagement/UpdateActivityOrder/{item.OrderId}/{1002}";
                             HttpResponseMessage response = _httpClient.PutAsync(apiUrl, null).Result;
                             item.ActivityId = 1002;
                             TempData["NotificationError"] += $"Đơn {item.OrderId} đã bị hủy do tới ngày đặt trước nhưng chưa cọc.\n";
@@ -165,7 +169,7 @@ namespace GreenGardenClient.Controllers.AdminController
                         }
                         else if (item != null && item.OrderUsageDate.HasValue && item.OrderUsageDate.Value.Date < DateTime.Now.Date && item.StatusOrder == true)
                         {
-                            string apiUrl = $"https://localhost:7298/api/OrderManagement/UpdateActivityOrder/{item.OrderId}/{1002}";
+                            string apiUrl = $"http://103.75.186.149:5000/api/OrderManagement/UpdateActivityOrder/{item.OrderId}/{1002}";
                             HttpResponseMessage response = _httpClient.PutAsync(apiUrl, null).Result;
                             item.ActivityId = 1002;
                             TempData["NotificationError"] += $"Đơn {item.OrderId} đã bị hủy do quá ngày sử dụng.\n";
@@ -174,7 +178,6 @@ namespace GreenGardenClient.Controllers.AdminController
                             // Xóa item khỏi danh sách gốc
                         }
                     }
-
 
 
 
@@ -210,13 +213,13 @@ namespace GreenGardenClient.Controllers.AdminController
         {
             try
             {
-                if (HttpContext.Session.GetInt32("RoleId").Value == 2 || HttpContext.Session.GetInt32("RoleId").Value == 1)
+                if (HttpContext.Session.GetInt32("RoleId") != null && (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2))
                 {
                     var jwtToken = Request.Cookies["JWTToken"];
                     _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
-                    List<OrderVM> orderdata = GetDataFromApi<List<OrderVM>>("https://localhost:7298/api/OrderManagement/GetAllOrders");
-                    orderdata = orderdata.Where(s => s.ActivityId == 2).ToList();
-                    List<ActivityVM> activities = GetDataFromApi<List<ActivityVM>>("https://localhost:7298/api/Activity/GetAllActivities");
+                    List<OrderVM> orderdata = GetDataFromApi<List<OrderVM>>("http://103.75.186.149:5000/api/OrderManagement/GetAllOrders");
+                    orderdata = orderdata.Where(s => s.ActivityId == 2).OrderByDescending(s => s.OrderUsageDate).ToList();
+                    List<ActivityVM> activities = GetDataFromApi<List<ActivityVM>>("http://103.75.186.149:5000/api/Activity/GetAllActivities");
                     activities = activities.Where(s => s.ActivityId == 2 || s.ActivityId == 3).ToList();
 
                     ViewBag.dataorder = orderdata;
@@ -254,11 +257,11 @@ namespace GreenGardenClient.Controllers.AdminController
             {
 
 
-                if (HttpContext.Session.GetInt32("RoleId").Value == 2 || HttpContext.Session.GetInt32("RoleId").Value == 1)
+                if (HttpContext.Session.GetInt32("RoleId") != null && (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2))
                 {
                     var jwtToken = Request.Cookies["JWTToken"];
                     _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
-                    List<OrderVM> orderdata = GetDataFromApi<List<OrderVM>>("https://localhost:7298/api/OrderManagement/GetAllOrders");
+                    List<OrderVM> orderdata = GetDataFromApi<List<OrderVM>>("http://103.75.186.149:5000/api/OrderManagement/GetAllOrders");
                     orderdata = orderdata
                         .Where(s => s.ActivityId == 3 && s.OrderCheckoutDate != null).OrderByDescending(s => s.OrderCheckoutDate)
                         .ToList();
@@ -296,11 +299,11 @@ namespace GreenGardenClient.Controllers.AdminController
             {
 
 
-                if (HttpContext.Session.GetInt32("RoleId").Value == 2 || HttpContext.Session.GetInt32("RoleId").Value == 1)
+                if (HttpContext.Session.GetInt32("RoleId") != null && (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2))
                 {
                     var jwtToken = Request.Cookies["JWTToken"];
                     _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
-                    List<OrderVM> orderdata = GetDataFromApi<List<OrderVM>>("https://localhost:7298/api/OrderManagement/GetAllOrders");
+                    List<OrderVM> orderdata = GetDataFromApi<List<OrderVM>>("http://103.75.186.149:5000/api/OrderManagement/GetAllOrders");
                     orderdata = orderdata.Where(s => s.ActivityId == 1002).OrderByDescending(s => s.OrderUsageDate).ToList();
 
                     ViewBag.dataorder = orderdata;
@@ -332,91 +335,139 @@ namespace GreenGardenClient.Controllers.AdminController
         [HttpPost]
         public async Task<IActionResult> UpdateActivityOrder(int idorder, int idactivity)
         {
-            try
+
+            var order = HttpContext.Session.GetObjectFromJson<UpdateOrderDTO>("order");
+            var ticketscart = HttpContext.Session.GetObjectFromJson<List<OrderCampingGearDetailDTO>>("GearUpdateCart") ?? new List<OrderCampingGearDetailDTO>();
+
+            var jwtToken = Request.Cookies["JWTToken"];
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
+
+            if (idactivity == 2)
             {
-
-                var order = HttpContext.Session.GetObjectFromJson<UpdateOrderDTO>("order");
-                var jwtToken = Request.Cookies["JWTToken"];
-
-                if (idactivity == 2)
+                if (order.OrderUsageDate.Value.ToString("dd/MM/yyyy").Equals(DateTime.Now.ToString("dd/MM/yyyy")) || ticketscart.IsNullOrEmpty())
                 {
-                    if (order.OrderUsageDate.Value.ToString("dd/MM/yyyy").Equals(DateTime.Now.ToString("dd/MM/yyyy")))
-                    {
-                        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
-
-                        string apiUrl = $"https://localhost:7298/api/OrderManagement/UpdateActivityOrder/{idorder}/{idactivity}";
-
-                        HttpResponseMessage response = _httpClient.PutAsync(apiUrl, null).Result;
-                        TempData["NotificationSuccess"] = $"Đơn #{idorder} đã chuyển sang trạng đang sử dụng.";
-
-                        return RedirectToAction("OrderUsing");
-                    }
-                    else
-                    {
-                        TempData["NotificationError"] = $"Đơn #{idorder} chưa tới ngày sử dụng.";
-
-                        return RedirectToAction("OrderOnline");
-                    }
-
-
-                }
-                else if (idactivity == 3)
-                {
-
 
                     UpdateOrderDTO orderupdate = new UpdateOrderDTO()
                     {
                         OrderId = order.OrderId,
-                        OrderUsageDate = order.OrderUsageDate,
+                        OrderUsageDate = DateTime.Now,
                         TotalAmount = order.TotalAmount,
-                        OrderCheckoutDate = order.OrderCheckoutDate,
                     };
-                    var apiUrl1 = "https://localhost:7298/api/OrderManagement/UpdateOrder";
+                    var apiUrl1 = "http://103.75.186.149:5000/api/OrderManagement/UpdateOrder";
                     // Serialize request objects to JSON
                     var content1 = new StringContent(JsonConvert.SerializeObject(orderupdate), Encoding.UTF8, "application/json");
 
 
-                    _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
 
                     var response1 = await _httpClient.PostAsync(apiUrl1, content1);
 
                     if (response1.IsSuccessStatusCode)
                     {
-                        TempData["NotificationSuccess"] = $"Đơn #{idorder} đã thanh toán thành công.";
+                        TempData["NotificationSuccess"] = $"Đơn #{idorder} đã chuyển sang trạng thái đang sử dụng.";
                         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
 
-                        string apiUrl = $"https://localhost:7298/api/OrderManagement/UpdateActivityOrder/{idorder}/{idactivity}";
+
+                        string apiUrl = $"http://103.75.186.149:5000/api/OrderManagement/UpdateActivityOrder/{idorder}/{idactivity}";
 
                         HttpResponseMessage response = _httpClient.PutAsync(apiUrl, null).Result;
-                        return RedirectToAction("OrderCheckOut");
+                        return RedirectToAction("OrderUsing");
                     }
                     else
                     {
-                        TempData["NotificationError"] = $"Đơn #{idorder} đã thanh toán thất bại.";
+                        TempData["NotificationError"] = $"Đơn #{idorder} chuyển trang thái không thành công.";
                         return RedirectToAction("OrderDetail", new { id = order.OrderId });
                     }
-
-
-
                 }
                 else
                 {
+
+                    OrderDetailVM orderdata = GetDataFromApi<OrderDetailVM>($"http://103.75.186.149:5000/api/OrderManagement/GetOrderDetail/{idorder}");
+                    string formattedDate = DateTime.Now.ToString("yyyy-MM-dd");
+
+                    List<GearVM> tickets = GetDataFromApi<List<GearVM>>("http://103.75.186.149:5000/api/CampingGear/GetAllCampingGears");
+                    List<OrderCampingGearByUsageDateDTO> ordergear = GetDataFromApi<List<OrderCampingGearByUsageDateDTO>>($"http://103.75.186.149:5000/api/OrderManagement/GetListOrderGearByUsageDate/{formattedDate}");
+                    foreach (var item in tickets)
+                    {
+                        var ticket = ordergear.ToList().Where(s => s.GearId == item.GearId);
+                        if (ticket != null)
+                        {
+                            foreach (var item1 in ticket)
+                            {
+                                item.QuantityAvailable = item.QuantityAvailable - item1.Quantity.Value;
+                            }
+                        }
+                    }
+                    foreach (var item in orderdata.OrderCampingGearDetails)
+                    {
+                        var ticket = tickets.FirstOrDefault(s => item.GearId == s.GearId);
+                        item.QuantityAvaiable = ticket.QuantityAvailable;
+                    }
+                    UpdateOrderDTO updateorder = new UpdateOrderDTO()
+                    {
+                        OrderId = orderdata.OrderId,
+                        OrderUsageDate = DateTime.Now,
+                        TotalAmount = orderdata.TotalAmount,
+                    };
+                    HttpContext.Session.SetObjectAsJson("order2", updateorder);
+                    HttpContext.Session.SetObjectAsJson("GearUpdateDateCart", orderdata.OrderCampingGearDetails);
+                    return RedirectToAction("OrderDetail", new { id = order.OrderId });
+                }
+
+
+            }
+            else if (idactivity == 3)
+            {
+
+
+                UpdateOrderDTO orderupdate = new UpdateOrderDTO()
+                {
+                    OrderId = order.OrderId,
+                    OrderUsageDate = order.OrderUsageDate,
+                    TotalAmount = order.TotalAmount,
+                    OrderCheckoutDate = order.OrderCheckoutDate,
+                };
+                var apiUrl1 = "http://103.75.186.149:5000/api/OrderManagement/UpdateOrder";
+                // Serialize request objects to JSON
+                var content1 = new StringContent(JsonConvert.SerializeObject(orderupdate), Encoding.UTF8, "application/json");
+
+
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
+
+                var response1 = await _httpClient.PostAsync(apiUrl1, content1);
+
+                if (response1.IsSuccessStatusCode)
+                {
+                    TempData["NotificationSuccess"] = $"Đơn #{idorder} đã thanh toán thành công.";
                     _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
 
-                    string apiUrl = $"https://localhost:7298/api/OrderManagement/UpdateActivityOrder/{idorder}/{idactivity}";
+
+                    string apiUrl = $"http://103.75.186.149:5000/api/OrderManagement/UpdateActivityOrder/{idorder}/{idactivity}";
 
                     HttpResponseMessage response = _httpClient.PutAsync(apiUrl, null).Result;
-                    TempData["NotificationError"] = $"Đơn #{idorder} đã hủy thành công.";
-
-                    return RedirectToAction("OrderCancel");
-
+                    return RedirectToAction("OrderCheckOut");
                 }
-            }
-            catch (Exception e)
-            {
-                return RedirectToAction("Error");
+                else
+                {
+                    TempData["NotificationError"] = $"Đơn #{idorder} đã thanh toán thất bại.";
+                    return RedirectToAction("OrderDetail", new { id = order.OrderId });
+                }
+
+
 
             }
+            else
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
+
+                string apiUrl = $"http://103.75.186.149:5000/api/OrderManagement/UpdateActivityOrder/{idorder}/{idactivity}";
+
+                HttpResponseMessage response = _httpClient.PutAsync(apiUrl, null).Result;
+                TempData["NotificationError"] = $"Đơn #{idorder} đã hủy thành công.";
+
+                return RedirectToAction("OrderCancel");
+
+            }
+
 
 
         }
@@ -428,7 +479,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 var jwtToken = Request.Cookies["JWTToken"];
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
 
-                string apiUrl = $"https://localhost:7298/api/OrderManagement/EnterDeposit/{idorder}/{money}";
+                string apiUrl = $"http://103.75.186.149:5000/api/OrderManagement/EnterDeposit/{idorder}/{money}";
                 TempData["NotificationSuccess"] = "Đặt cọc thành công!";
 
                 // Send the PUT request
@@ -460,7 +511,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 var jwtToken = Request.Cookies["JWTToken"];
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
                 // Construct the API URL with the parameters
-                string apiUrl = $"https://localhost:7298/api/OrderManagement/CancelDeposit/{idorder}";
+                string apiUrl = $"http://103.75.186.149:5000/api/OrderManagement/CancelDeposit/{idorder}";
                 TempData["NotificationSuccess"] = "Hủy đặt cọc thành công!";
 
                 // Send the PUT request
@@ -488,7 +539,7 @@ namespace GreenGardenClient.Controllers.AdminController
         {
             try
             {
-                if (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)
+                if (HttpContext.Session.GetInt32("RoleId") != null && (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2))
                 {
                     var orders = HttpContext.Session.GetObjectFromJson<OrderVM>("OrderCart") ?? new OrderVM();
                     if (orders.OrderUsageDate != null)
@@ -539,7 +590,7 @@ namespace GreenGardenClient.Controllers.AdminController
         {
             try
             {
-                if (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)
+                if (HttpContext.Session.GetInt32("RoleId") != null && (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2))
                 {
                     var orders = HttpContext.Session.GetObjectFromJson<OrderVM>("OrderCart") ?? new OrderVM();
                     var combo = HttpContext.Session.GetObjectFromJson<List<TicketVM>>("ComboCart") ?? new List<TicketVM>();
@@ -561,7 +612,7 @@ namespace GreenGardenClient.Controllers.AdminController
                         else
                         {
                             var ticketscart = HttpContext.Session.GetObjectFromJson<List<TicketVM>>("TicketCart") ?? new List<TicketVM>();
-                            List<TicketVM> tickets = GetDataFromApi<List<TicketVM>>("https://localhost:7298/api/Ticket/GetAllTickets");
+                            List<TicketVM> tickets = GetDataFromApi<List<TicketVM>>("http://103.75.186.149:5000/api/Ticket/GetAllTickets");
 
                             foreach (var item in ticketscart)
                             {
@@ -680,7 +731,7 @@ namespace GreenGardenClient.Controllers.AdminController
         {
             try
             {
-                if (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)
+                if (HttpContext.Session.GetInt32("RoleId") != null && (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2))
                 {
                     var ticketscart = HttpContext.Session.GetObjectFromJson<List<GearVM>>("GearCart") ?? new List<GearVM>();
                     var orders = HttpContext.Session.GetObjectFromJson<OrderVM>("OrderCart") ?? new OrderVM();
@@ -694,10 +745,10 @@ namespace GreenGardenClient.Controllers.AdminController
                     {
                         string formattedDate = orders.OrderUsageDate.Value.ToString("yyyy-MM-dd");
 
-                        List<GearVM> tickets = GetDataFromApi<List<GearVM>>("https://localhost:7298/api/CampingGear/GetAllCampingGears");
+                        List<GearVM> tickets = GetDataFromApi<List<GearVM>>("http://103.75.186.149:5000/api/CampingGear/GetAllCampingGears");
                         var jwtToken = Request.Cookies["JWTToken"];
                         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
-                        List<OrderCampingGearByUsageDateDTO> ordergear = GetDataFromApi<List<OrderCampingGearByUsageDateDTO>>($"https://localhost:7298/api/OrderManagement/GetListOrderGearByUsageDate/{formattedDate}");
+                        List<OrderCampingGearByUsageDateDTO> ordergear = GetDataFromApi<List<OrderCampingGearByUsageDateDTO>>($"http://103.75.186.149:5000/api/OrderManagement/GetListOrderGearByUsageDate/{formattedDate}");
                         foreach (var item in tickets)
                         {
                             var ticket = ordergear.ToList().Where(s => s.GearId == item.GearId);
@@ -789,11 +840,11 @@ namespace GreenGardenClient.Controllers.AdminController
         {
             try
             {
-                if (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)
+                if (HttpContext.Session.GetInt32("RoleId") != null && (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2))
                 {
                     var ticketscart = HttpContext.Session.GetObjectFromJson<List<FoodAndDrinkVM>>("FoodCart") ?? new List<FoodAndDrinkVM>();
 
-                    List<FoodAndDrinkVM> foodAndDrinks = GetDataFromApi<List<FoodAndDrinkVM>>("https://localhost:7298/api/FoodAndDrink/GetAllFoodAndDrink");
+                    List<FoodAndDrinkVM> foodAndDrinks = GetDataFromApi<List<FoodAndDrinkVM>>("http://103.75.186.149:5000/api/FoodAndDrink/GetAllFoodAndDrink");
 
                     foreach (var item in ticketscart)
                     {
@@ -831,11 +882,11 @@ namespace GreenGardenClient.Controllers.AdminController
         {
             try
             {
-                if (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)
+                if (HttpContext.Session.GetInt32("RoleId") != null && (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2))
                 {
                     var cart = HttpContext.Session.GetObjectFromJson<List<FoodAndDrinkVM>>("FoodCart") ?? new List<FoodAndDrinkVM>();
 
-                    FoodAndDrinkVM foodAndDrinks = GetDataFromApi<List<FoodAndDrinkVM>>("https://localhost:7298/api/FoodAndDrink/GetAllFoodAndDrink").ToList().FirstOrDefault(f => f.ItemId == id);
+                    FoodAndDrinkVM foodAndDrinks = GetDataFromApi<List<FoodAndDrinkVM>>("http://103.75.186.149:5000/api/FoodAndDrink/GetAllFoodAndDrink").ToList().FirstOrDefault(f => f.ItemId == id);
                     if (cart.FirstOrDefault(s => s.ItemId == id) == null)
                     {
                         foodAndDrinks.Quantity = 0;
@@ -866,12 +917,12 @@ namespace GreenGardenClient.Controllers.AdminController
         {
             try
             {
-                if (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)
+                if (HttpContext.Session.GetInt32("RoleId") != null && (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2))
                 {
                     var cart = HttpContext.Session.GetObjectFromJson<List<TicketVM>>("TicketCart") ?? new List<TicketVM>();
 
 
-                    TicketVM foodAndDrinks = GetDataFromApi<List<TicketVM>>("https://localhost:7298/api/Ticket/GetAllTickets").ToList().FirstOrDefault(f => f.TicketId == id);
+                    TicketVM foodAndDrinks = GetDataFromApi<List<TicketVM>>("http://103.75.186.149:5000/api/Ticket/GetAllTickets").ToList().FirstOrDefault(f => f.TicketId == id);
                     if (cart.FirstOrDefault(s => s.TicketId == id) == null)
                     {
                         foodAndDrinks.Quantity = 0;
@@ -902,11 +953,11 @@ namespace GreenGardenClient.Controllers.AdminController
         {
             try
             {
-                if (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)
+                if (HttpContext.Session.GetInt32("RoleId") != null && (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2))
                 {
                     var cart = HttpContext.Session.GetObjectFromJson<List<ComboVM>>("ComboCart") ?? new List<ComboVM>();
 
-                    ComboDetailVM foodAndDrinks = GetDataFromApi<ComboDetailVM>($"https://localhost:7298/api/Combo/GetComboDetail/{id}");
+                    ComboDetailVM foodAndDrinks = GetDataFromApi<ComboDetailVM>($"http://103.75.186.149:5000/api/Combo/GetComboDetail/{id}");
 
                     if (cart.FirstOrDefault(s => s.ComboId == id) == null)
                     {
@@ -937,12 +988,12 @@ namespace GreenGardenClient.Controllers.AdminController
         {
             try
             {
-                if (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)
+                if (HttpContext.Session.GetInt32("RoleId") != null && (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2))
                 {
                     var cart = HttpContext.Session.GetObjectFromJson<List<ComboFoodVM>>("ComboFoodCart") ?? new List<ComboFoodVM>();
 
 
-                    ComboFoodDetailVM foodAndDrinks = GetDataFromApi<ComboFoodDetailVM>($"https://localhost:7298/api/ComboFood/GetComboFoodDetail/{id}");
+                    ComboFoodDetailVM foodAndDrinks = GetDataFromApi<ComboFoodDetailVM>($"http://103.75.186.149:5000/api/ComboFood/GetComboFoodDetail/{id}");
                     if (cart.FirstOrDefault(s => s.ComboId == id) == null)
                     {
                         foodAndDrinks.Quantity = 0;
@@ -1096,9 +1147,9 @@ namespace GreenGardenClient.Controllers.AdminController
         {
             try
             {
-                if (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)
+                if (HttpContext.Session.GetInt32("RoleId") != null && (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2))
                 {
-                    GearVM tickets = GetDataFromApi<List<GearVM>>("https://localhost:7298/api/CampingGear/GetAllCampingGears").ToList().FirstOrDefault(s => s.GearId == id);
+                    GearVM tickets = GetDataFromApi<List<GearVM>>("http://103.75.186.149:5000/api/CampingGear/GetAllCampingGears").ToList().FirstOrDefault(s => s.GearId == id);
 
                     tickets.Quantity = quantity;
                     tickets.QuantityAvailable = quantityavai;
@@ -1199,11 +1250,11 @@ namespace GreenGardenClient.Controllers.AdminController
         {
             try
             {
-                if (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)
+                if (HttpContext.Session.GetInt32("RoleId") != null && (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2))
                 {
                     var ticketscart = HttpContext.Session.GetObjectFromJson<List<ComboFoodVM>>("ComboFoodCart") ?? new List<ComboFoodVM>();
 
-                    List<ComboFoodVM> tickets = GetDataFromApi<List<ComboFoodVM>>("https://localhost:7298/api/ComboFood/GetAllOrders\r\n");
+                    List<ComboFoodVM> tickets = GetDataFromApi<List<ComboFoodVM>>("http://103.75.186.149:5000/api/ComboFood/GetAllOrders\r\n");
 
                     foreach (var item in ticketscart)
                     {
@@ -1280,7 +1331,7 @@ namespace GreenGardenClient.Controllers.AdminController
         {
             try
             {
-                if (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)
+                if (HttpContext.Session.GetInt32("RoleId") != null && (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2))
                 {
                     var orders = HttpContext.Session.GetObjectFromJson<OrderVM>("OrderCart") ?? new OrderVM();
                     var combo = HttpContext.Session.GetObjectFromJson<List<TicketVM>>("TicketCart") ?? new List<TicketVM>();
@@ -1303,7 +1354,7 @@ namespace GreenGardenClient.Controllers.AdminController
                         {
                             var ticketscart = HttpContext.Session.GetObjectFromJson<List<ComboVM>>("ComboCart") ?? new List<ComboVM>();
 
-                            List<ComboVM> tickets = GetDataFromApi<List<ComboVM>>("https://localhost:7298/api/Combo/GetAllCombos\r\n");
+                            List<ComboVM> tickets = GetDataFromApi<List<ComboVM>>("http://103.75.186.149:5000/api/Combo/GetAllCombos\r\n");
 
                             foreach (var item in ticketscart)
                             {
@@ -1383,7 +1434,7 @@ namespace GreenGardenClient.Controllers.AdminController
         {
             try
             {
-                if (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)
+                if (HttpContext.Session.GetInt32("RoleId") != null && (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2))
                 {
                     var tickets = HttpContext.Session.GetObjectFromJson<List<TicketVM>>("TicketCart") ?? new List<TicketVM>();
                     var gears = HttpContext.Session.GetObjectFromJson<List<GearVM>>("GearCart") ?? new List<GearVM>();
@@ -1505,7 +1556,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 {
                     var jwtToken = Request.Cookies["JWTToken"];
                     _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
-                    var apiUrl = "https://localhost:7298/api/OrderManagement/CreateUniqueOrder\r\n";
+                    var apiUrl = "http://103.75.186.149:5000/api/OrderManagement/CreateUniqueOrder\r\n";
 
                     // Serialize request object to JSON
                     var content = new StringContent(JsonConvert.SerializeObject(orderRequest), Encoding.UTF8, "application/json");
@@ -1597,7 +1648,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 {
                     var jwtToken = Request.Cookies["JWTToken"];
                     _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
-                    var apiUrl = "https://localhost:7298/api/OrderManagement/CreateComboOrder";
+                    var apiUrl = "http://103.75.186.149:5000/api/OrderManagement/CreateComboOrder";
 
                     // Serialize request object to JSON
                     var content = new StringContent(JsonConvert.SerializeObject(orderRequest), Encoding.UTF8, "application/json");
@@ -1677,16 +1728,29 @@ namespace GreenGardenClient.Controllers.AdminController
 
         }
         [HttpGet]
+        public async Task<IActionResult> CancelForm(int itemid)
+        {
+
+            HttpContext.Session.Remove("GearUpdateDateCart");
+            return RedirectToAction("OrderDetail", new { id = itemid });
+
+        }
+        [HttpGet]
         public async Task<IActionResult> OrderDetail(int id)
         {
             try
             {
 
-                if (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)
+                if (HttpContext.Session.GetInt32("RoleId") != null && (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2))
                 {
+                    var ticketscart = HttpContext.Session.GetObjectFromJson<List<OrderCampingGearDetailDTO>>("GearUpdateDateCart") ?? new List<OrderCampingGearDetailDTO>();
+                    if (!ticketscart.IsNullOrEmpty())
+                    {
+                        ViewBag.gear = ticketscart;
+                    }
                     var jwtToken = Request.Cookies["JWTToken"];
                     _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
-                    OrderDetailVM orderdata = GetDataFromApi<OrderDetailVM>($"https://localhost:7298/api/OrderManagement/GetOrderDetail/{id}");
+                    OrderDetailVM orderdata = GetDataFromApi<OrderDetailVM>($"http://103.75.186.149:5000/api/OrderManagement/GetOrderDetail/{id}");
 
 
                     int daysDifference = (DateTime.Now.Date - orderdata.OrderUsageDate.Value.Date).Days;
@@ -1733,6 +1797,7 @@ namespace GreenGardenClient.Controllers.AdminController
                         ViewBag.NotificationSuccess = TempData["NotificationError"];
                     }
                     ViewBag.date = daysDifference + 1;
+
                     return View("OrderDetail", orderdata);
                 }
                 else
@@ -1755,15 +1820,15 @@ namespace GreenGardenClient.Controllers.AdminController
         {
             try
             {
-                if (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)
+                if (HttpContext.Session.GetInt32("RoleId") != null && (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2))
                 {
                     var jwtToken = Request.Cookies["JWTToken"];
                     _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
-                    OrderDetailVM orderdata = GetDataFromApi<OrderDetailVM>($"https://localhost:7298/api/OrderManagement/GetOrderDetail/{idorder}");
+                    OrderDetailVM orderdata = GetDataFromApi<OrderDetailVM>($"http://103.75.186.149:5000/api/OrderManagement/GetOrderDetail/{idorder}");
                     string formattedDate = changedate.Value.ToString("yyyy-MM-dd");
 
-                    List<GearVM> tickets = GetDataFromApi<List<GearVM>>("https://localhost:7298/api/CampingGear/GetAllCampingGears");
-                    List<OrderCampingGearByUsageDateDTO> ordergear = GetDataFromApi<List<OrderCampingGearByUsageDateDTO>>($"https://localhost:7298/api/OrderManagement/GetListOrderGearByUsageDate/{formattedDate}");
+                    List<GearVM> tickets = GetDataFromApi<List<GearVM>>("http://103.75.186.149:5000/api/CampingGear/GetAllCampingGears");
+                    List<OrderCampingGearByUsageDateDTO> ordergear = GetDataFromApi<List<OrderCampingGearByUsageDateDTO>>($"http://103.75.186.149:5000/api/OrderManagement/GetListOrderGearByUsageDate/{formattedDate}");
                     foreach (var item in tickets)
                     {
                         var ticket = ordergear.ToList().Where(s => s.GearId == item.GearId);
@@ -1815,15 +1880,15 @@ namespace GreenGardenClient.Controllers.AdminController
         {
             try
             {
-                if (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)
+                if (HttpContext.Session.GetInt32("RoleId") != null && (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2))
                 {
                     var ticketscart = HttpContext.Session.GetObjectFromJson<List<OrderCampingGearDetailDTO>>("GearUpdateDateCart") ?? new List<OrderCampingGearDetailDTO>();
                     var order = HttpContext.Session.GetObjectFromJson<UpdateOrderDTO>("order") ?? new UpdateOrderDTO();
                     string formattedDate = order.OrderUsageDate.Value.ToString("yyyy-MM-dd");
                     var jwtToken = Request.Cookies["JWTToken"];
                     _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
-                    List<GearVM> tickets = GetDataFromApi<List<GearVM>>("https://localhost:7298/api/CampingGear/GetAllCampingGears");
-                    List<OrderCampingGearByUsageDateDTO> ordergear = GetDataFromApi<List<OrderCampingGearByUsageDateDTO>>($"https://localhost:7298/api/OrderManagement/GetListOrderGearByUsageDate/{formattedDate}");
+                    List<GearVM> tickets = GetDataFromApi<List<GearVM>>("http://103.75.186.149:5000/api/CampingGear/GetAllCampingGears");
+                    List<OrderCampingGearByUsageDateDTO> ordergear = GetDataFromApi<List<OrderCampingGearByUsageDateDTO>>($"http://103.75.186.149:5000/api/OrderManagement/GetListOrderGearByUsageDate/{formattedDate}");
                     foreach (var item in tickets)
                     {
                         var ticket = ordergear.ToList().Where(s => s.GearId == item.GearId);
@@ -1912,8 +1977,9 @@ namespace GreenGardenClient.Controllers.AdminController
                 OrderUsageDate = order.OrderUsageDate,
                 TotalAmount = order.TotalAmount - totalticket + total,
             };
-            var apiUrl = "https://localhost:7298/api/OrderManagement/UpdateCampingGear";
-            var apiUrl1 = "https://localhost:7298/api/OrderManagement/UpdateOrder";
+            Console.WriteLine("Dddddddddddddd2" + orderupdate.OrderUsageDate);
+            var apiUrl = "http://103.75.186.149:5000/api/OrderManagement/UpdateCampingGear";
+            var apiUrl1 = "http://103.75.186.149:5000/api/OrderManagement/UpdateOrder";
             Console.WriteLine(tickets.Count);
             // Serialize request objects to JSON
             var content = new StringContent(JsonConvert.SerializeObject(tickets), Encoding.UTF8, "application/json");
@@ -1934,7 +2000,107 @@ namespace GreenGardenClient.Controllers.AdminController
                     {
                         // Both updates were successful
                         TempData["NotificationSuccess"] = "Đơn đã cập nhập lại và chuyển ngày thành công.";
+                        HttpContext.Session.Remove("Order");
+                        HttpContext.Session.Remove("GearUpdateDateCart");
+
                         return RedirectToAction("OrderDetail", new { id = order.OrderId });
+                    }
+                    else
+                    {
+                        // Handle error for the second API call
+                        var errorMessage1 = await response1.Content.ReadAsStringAsync();
+                        ViewBag.ErrorMessage = $"Error updating order: {errorMessage1}";
+                        return RedirectToAction("Error"); // Replace "ErrorView" with your actual error view
+                    }
+                }
+                else
+                {
+                    // Handle error for the first API call
+                    var errorMessage = await response.Content.ReadAsStringAsync();
+                    ViewBag.ErrorMessage = $"Error updating tickets: {errorMessage}";
+                    return RedirectToAction("Error"); // Replace "ErrorView" with your actual error view
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions that occur during the process
+                return RedirectToAction("Error"); // Replace "ErrorView" with your actual error view
+            }
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> UpdateGearChangeDate2(List<int> id, List<decimal> price, List<int> quantity)
+        {
+            var order = HttpContext.Session.GetObjectFromJson<UpdateOrderDTO>("order2") ?? new UpdateOrderDTO();
+            var ticketscart = HttpContext.Session.GetObjectFromJson<List<OrderCampingGearDetailDTO>>("GearUpdateDateCart") ?? new List<OrderCampingGearDetailDTO>();
+
+            decimal total = 0;
+            List<OrderCampingGearAddDTO> tickets = new List<OrderCampingGearAddDTO>();
+            for (int i = 0; i < id.Count; i++)
+            {
+
+
+                if (quantity[i] > 0)
+                {
+
+                    tickets.Add(new OrderCampingGearAddDTO { GearId = id[i], OrderId = order.OrderId, Quantity = quantity[i] });
+                    total += (decimal)quantity[i] * price[i];
+                }
+
+
+
+            }
+            decimal totalticket = 0;
+            foreach (var item in ticketscart)
+            {
+                totalticket += (decimal)item.Quantity.Value * item.Price;
+            }
+
+            if (tickets.Count == 0)
+            {
+                tickets.Add(new OrderCampingGearAddDTO
+                {
+                    GearId = 0,
+                    OrderId = order.OrderId,
+                    Quantity = 0
+                });
+            }
+            UpdateOrderDTO orderupdate = new UpdateOrderDTO()
+            {
+                OrderId = order.OrderId,
+                OrderUsageDate = order.OrderUsageDate,
+                TotalAmount = order.TotalAmount - totalticket + total,
+            };
+            Console.WriteLine("Dddddddddddddd2" + orderupdate.OrderUsageDate);
+            var apiUrl = "http://103.75.186.149:5000/api/OrderManagement/UpdateCampingGear";
+            var apiUrl1 = "http://103.75.186.149:5000/api/OrderManagement/UpdateOrder";
+            Console.WriteLine(tickets.Count);
+            // Serialize request objects to JSON
+            var content = new StringContent(JsonConvert.SerializeObject(tickets), Encoding.UTF8, "application/json");
+            var content1 = new StringContent(JsonConvert.SerializeObject(orderupdate), Encoding.UTF8, "application/json");
+
+            try
+            {
+                var jwtToken = Request.Cookies["JWTToken"];
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
+                // Call to UpdateTicket API
+                var response = await _httpClient.PutAsync(apiUrl, content);
+                if (response.IsSuccessStatusCode)
+                {
+                    // Proceed to the next API call if the first one is successful
+                    var response1 = await _httpClient.PostAsync(apiUrl1, content1);
+
+                    if (response1.IsSuccessStatusCode)
+                    {
+                        string apiUrl3 = $"http://103.75.186.149:5000/api/OrderManagement/UpdateActivityOrder/{order.OrderId}/{2}";
+
+                        var response2 = _httpClient.PutAsync(apiUrl3, null).Result;
+                        // Both updates were successful
+                        TempData["NotificationSuccess"] = $"Đơn {order.OrderId} đã chuyển sang trạng thái đang sử dụng.";
+                        HttpContext.Session.Remove("Order2");
+                        HttpContext.Session.Remove("GearUpdateDateCart");
+
+                        return RedirectToAction("OrderUsing");
                     }
                     else
                     {
@@ -1964,12 +2130,12 @@ namespace GreenGardenClient.Controllers.AdminController
         {
             try
             {
-                if (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)
+                if (HttpContext.Session.GetInt32("RoleId") != null && (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2))
                 {
                     var order = HttpContext.Session.GetObjectFromJson<UpdateOrderDTO>("order") ?? new UpdateOrderDTO();
 
                     var ticketscart = HttpContext.Session.GetObjectFromJson<List<OrderTicketDetailDTO>>("TicketUpdateCart") ?? new List<OrderTicketDetailDTO>();
-                    List<TicketVM> tickets = GetDataFromApi<List<TicketVM>>("https://localhost:7298/api/Ticket/GetAllTickets");
+                    List<TicketVM> tickets = GetDataFromApi<List<TicketVM>>("http://103.75.186.149:5000/api/Ticket/GetAllTickets");
 
                     foreach (var item in ticketscart)
                     {
@@ -2064,8 +2230,8 @@ namespace GreenGardenClient.Controllers.AdminController
                     OrderUsageDate = order.OrderUsageDate,
                     TotalAmount = order.TotalAmount - totalticket + total,
                 };
-                var apiUrl = "https://localhost:7298/api/OrderManagement/UpdateTicket";
-                var apiUrl1 = "https://localhost:7298/api/OrderManagement/UpdateOrder";
+                var apiUrl = "http://103.75.186.149:5000/api/OrderManagement/UpdateTicket";
+                var apiUrl1 = "http://103.75.186.149:5000/api/OrderManagement/UpdateOrder";
                 Console.WriteLine(tickets.Count);
                 // Serialize request objects to JSON
                 var content = new StringContent(JsonConvert.SerializeObject(tickets), Encoding.UTF8, "application/json");
@@ -2119,15 +2285,15 @@ namespace GreenGardenClient.Controllers.AdminController
         {
             try
             {
-                if (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)
+                if (HttpContext.Session.GetInt32("RoleId") != null && (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2))
                 {
                     var ticketscart = HttpContext.Session.GetObjectFromJson<List<OrderCampingGearDetailDTO>>("GearUpdateCart") ?? new List<OrderCampingGearDetailDTO>();
                     var order = HttpContext.Session.GetObjectFromJson<UpdateOrderDTO>("order") ?? new UpdateOrderDTO();
                     string formattedDate = order.OrderUsageDate.Value.ToString("yyyy-MM-dd");
                     var jwtToken = Request.Cookies["JWTToken"];
                     _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
-                    List<GearVM> tickets = GetDataFromApi<List<GearVM>>("https://localhost:7298/api/CampingGear/GetAllCampingGears");
-                    List<OrderCampingGearByUsageDateDTO> ordergear = GetDataFromApi<List<OrderCampingGearByUsageDateDTO>>($"https://localhost:7298/api/OrderManagement/GetListOrderGearByUsageDate/{formattedDate}");
+                    List<GearVM> tickets = GetDataFromApi<List<GearVM>>("http://103.75.186.149:5000/api/CampingGear/GetAllCampingGears");
+                    List<OrderCampingGearByUsageDateDTO> ordergear = GetDataFromApi<List<OrderCampingGearByUsageDateDTO>>($"http://103.75.186.149:5000/api/OrderManagement/GetListOrderGearByUsageDate/{formattedDate}");
                     foreach (var item in tickets)
                     {
                         var ticket = ordergear.ToList().Where(s => s.GearId == item.GearId);
@@ -2207,8 +2373,8 @@ namespace GreenGardenClient.Controllers.AdminController
                 OrderUsageDate = order.OrderUsageDate,
                 TotalAmount = order.TotalAmount - totalticket + total,
             };
-            var apiUrl = "https://localhost:7298/api/OrderManagement/UpdateCampingGear";
-            var apiUrl1 = "https://localhost:7298/api/OrderManagement/UpdateOrder";
+            var apiUrl = "http://103.75.186.149:5000/api/OrderManagement/UpdateCampingGear";
+            var apiUrl1 = "http://103.75.186.149:5000/api/OrderManagement/UpdateOrder";
             Console.WriteLine(tickets.Count);
             // Serialize request objects to JSON
             var content = new StringContent(JsonConvert.SerializeObject(tickets), Encoding.UTF8, "application/json");
@@ -2259,12 +2425,12 @@ namespace GreenGardenClient.Controllers.AdminController
         {
             try
             {
-                if (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)
+                if (HttpContext.Session.GetInt32("RoleId") != null && (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2))
                 {
                     var ticketscart = HttpContext.Session.GetObjectFromJson<List<OrderFoodDetailDTO>>("FoodUpdateCart") ?? new List<OrderFoodDetailDTO>();
                     var order = HttpContext.Session.GetObjectFromJson<UpdateOrderDTO>("order") ?? new UpdateOrderDTO();
 
-                    List<FoodAndDrinkVM> foodAndDrinks = GetDataFromApi<List<FoodAndDrinkVM>>("https://localhost:7298/api/FoodAndDrink/GetAllFoodAndDrink");
+                    List<FoodAndDrinkVM> foodAndDrinks = GetDataFromApi<List<FoodAndDrinkVM>>("http://103.75.186.149:5000/api/FoodAndDrink/GetAllFoodAndDrink");
 
                     foreach (var item in ticketscart)
                     {
@@ -2335,8 +2501,8 @@ namespace GreenGardenClient.Controllers.AdminController
                 OrderUsageDate = order.OrderUsageDate,
                 TotalAmount = (order.TotalAmount - totalticket) + total,
             };
-            var apiUrl = "https://localhost:7298/api/OrderManagement/UpdateFoodAndDrink";
-            var apiUrl1 = "https://localhost:7298/api/OrderManagement/UpdateOrder";
+            var apiUrl = "http://103.75.186.149:5000/api/OrderManagement/UpdateFoodAndDrink";
+            var apiUrl1 = "http://103.75.186.149:5000/api/OrderManagement/UpdateOrder";
             Console.WriteLine(tickets.Count);
             // Serialize request objects to JSON
             var content = new StringContent(JsonConvert.SerializeObject(tickets), Encoding.UTF8, "application/json");
@@ -2389,12 +2555,12 @@ namespace GreenGardenClient.Controllers.AdminController
         {
             try
             {
-                if (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)
+                if (HttpContext.Session.GetInt32("RoleId") != null && (HttpContext.Session.GetInt32("RoleId") != null && (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)))
                 {
                     var ticketscart = HttpContext.Session.GetObjectFromJson<List<OrderFoodComboDetailDTO>>("ComboFoodUpdateCart") ?? new List<OrderFoodComboDetailDTO>();
                     var order = HttpContext.Session.GetObjectFromJson<UpdateOrderDTO>("order") ?? new UpdateOrderDTO();
 
-                    List<ComboFoodVM> tickets = GetDataFromApi<List<ComboFoodVM>>("https://localhost:7298/api/ComboFood/GetAllOrders");
+                    List<ComboFoodVM> tickets = GetDataFromApi<List<ComboFoodVM>>("http://103.75.186.149:5000/api/ComboFood/GetAllOrders");
 
                     foreach (var item in ticketscart)
                     {
@@ -2465,8 +2631,8 @@ namespace GreenGardenClient.Controllers.AdminController
                 OrderUsageDate = order.OrderUsageDate,
                 TotalAmount = (order.TotalAmount - totalticket) + total,
             };
-            var apiUrl = "https://localhost:7298/api/OrderManagement/UpdateFoodCombo";
-            var apiUrl1 = "https://localhost:7298/api/OrderManagement/UpdateOrder";
+            var apiUrl = "http://103.75.186.149:5000/api/OrderManagement/UpdateFoodCombo";
+            var apiUrl1 = "http://103.75.186.149:5000/api/OrderManagement/UpdateOrder";
 
             var content = new StringContent(JsonConvert.SerializeObject(tickets), Encoding.UTF8, "application/json");
             var content1 = new StringContent(JsonConvert.SerializeObject(orderupdate), Encoding.UTF8, "application/json");
@@ -2515,12 +2681,12 @@ namespace GreenGardenClient.Controllers.AdminController
         {
             try
             {
-                if (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2)
+                if (HttpContext.Session.GetInt32("RoleId") != null && (HttpContext.Session.GetInt32("RoleId").Value == 1 || HttpContext.Session.GetInt32("RoleId").Value == 2))
                 {
                     var ticketscart = HttpContext.Session.GetObjectFromJson<List<ComboVM>>("ComboUpdateCart") ?? new List<ComboVM>();
                     var order = HttpContext.Session.GetObjectFromJson<UpdateOrderDTO>("order") ?? new UpdateOrderDTO();
 
-                    List<ComboVM> tickets = GetDataFromApi<List<ComboVM>>("https://localhost:7298/api/Combo/GetAllCombos");
+                    List<ComboVM> tickets = GetDataFromApi<List<ComboVM>>("http://103.75.186.149:5000/api/Combo/GetAllCombos");
 
                     foreach (var item in ticketscart)
                     {
@@ -2616,8 +2782,8 @@ namespace GreenGardenClient.Controllers.AdminController
                     OrderUsageDate = order.OrderUsageDate,
                     TotalAmount = order.TotalAmount - totalticket + total,
                 };
-                var apiUrl = "https://localhost:7298/api/OrderManagement/UpdateCombo";
-                var apiUrl1 = "https://localhost:7298/api/OrderManagement/UpdateOrder";
+                var apiUrl = "http://103.75.186.149:5000/api/OrderManagement/UpdateCombo";
+                var apiUrl1 = "http://103.75.186.149:5000/api/OrderManagement/UpdateOrder";
                 Console.WriteLine(tickets.Count);
                 // Serialize request objects to JSON
                 var content = new StringContent(JsonConvert.SerializeObject(tickets), Encoding.UTF8, "application/json");
@@ -2668,5 +2834,6 @@ namespace GreenGardenClient.Controllers.AdminController
         {
             return Math.Round(amount / 10) * 10;
         }
+
     }
 }

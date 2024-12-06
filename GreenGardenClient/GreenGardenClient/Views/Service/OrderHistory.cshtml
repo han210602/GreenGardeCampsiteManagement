@@ -239,19 +239,19 @@
                                                 @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 1)
                                                 {
                                                 <li><a href="~/DashBoard" class="nav-link">Quản lí</a></li>
-                                                <li><a href="~/Home/Logout" class="nav-link">Đăng xuất</a></li>
+                                                <li><a href="~/Home/Logout" onclick="return Logout();" class="nav-link">Đăng xuất</a></li>
                                                 }
                                                 else if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 2)
                                                 {
                                                 <li><a href="~/OrderManagement/OrderOnline" class="nav-link">Quản lí</a></li>
-                                                <li><a href="~/Home/Logout" class="nav-link">Đăng xuất</a></li>
+                                                <li><a href="~/Home/Logout" onclick="return Logout();" class="nav-link">Đăng xuất</a></li>
                                                 }
                                                 else
                                                 {
 
-                                                <li class="active"><a href="~/Service/OrderHistory" class="nav-link">Lịch sử đặt hàng</a></li>
+                                                <li><a href="~/Service/OrderHistory" class="nav-link">Lịch sử đặt hàng</a></li>
                                                 <li><a href="~/Service/Cart" class="nav-link">Giỏ hàng</a></li>
-                                                <li><a href="~/Home/Logout" class="nav-link">Đăng xuất</a></li>
+                                                <li><a href="~/Home/Logout" onclick="return Logout();" class="nav-link">Đăng xuất</a></li>
 
                                                 }
                                         </ul>
@@ -286,6 +286,12 @@
                     </div>
                 </div>
             </div>
+            <script>
+                function Logout() {
+                    sessionStorage.removeItem('usageDateForAll');
+                }
+
+            </script>
             <style>
                 .site-mobile-menu {
                     width: 80%;
@@ -500,6 +506,13 @@
                     margin: 20px 0;
                 }
 
+                .contact-notice {
+                    color: orangered; /* Màu chữ trắng */
+                    font-size: 18px; /* Tăng kích thước chữ */
+                    font-weight: bold; /* In đậm chữ */
+                    text-align: center; /* Căn giữa nội dung */
+                }
+
             </style>
             <script>
                 $(document).ready(function () {
@@ -608,20 +621,25 @@
                                 {
                                     foreach (var order in customerOrders)
                                     {
+                                            if (order.StatusOrder == false && order.ActivityId == 1)
+                                            {
+                                                <p class="contact-notice">Vui lòng liên hệ số: 0987327669 để xác thực đơn hàng</p>
+                                            }
+                                           
                                         <div class="divider"></div>
                                         <div class="d-flex justify-content-between">
                                             <span class="order-title">Đơn đặt: @order.OrderId</span>
-                                            <span>Ngày đặt: @order.OrderDate</span>
+                                            <span>Ngày đặt: @order.OrderDate.Value.ToString("dd-MM-yyyy")</span>
                                             <p class="text-primary">@order.ActivityName</p>
                                         </div>
 
                                         <div class="item-card">
-                                            <img src="~/images/img_1.jpg" alt="">
+                                            <img src="~/images/newlogo.jpg" alt="">
                                             
                                             @if (order.StatusOrder == true && order.ActivityId == 1)
                                             {
                                                     <div class="item-details">
-                                                        <p class="item-title">Ngày sử dụng: @order.OrderUsageDate</p>
+                                                        <p class="item-title">Ngày sử dụng: @order.OrderUsageDate.Value.ToString("dd-MM-yyyy")</p>
                                                         @if (order.StatusOrder == true)
                                                         {
                                                             <p>Trạng thái: Đã cọc</p>
@@ -639,9 +657,9 @@
                                                 </div>
                                             }
                                             else if (order.StatusOrder == false && order.ActivityId == 1)
-                                            {
+                                            {                                             
                                                     <div class="item-details">
-                                                        <p class="item-title">Ngày sử dụng: @order.OrderUsageDate</p>
+                                                        <p class="item-title">Ngày sử dụng: @order.OrderUsageDate.Value.ToString("dd-MM-yyyy")</p>
                                                         @if (order.StatusOrder == true)
                                                         {
                                                             <p>Trạng thái: Đã cọc</p>
@@ -663,7 +681,7 @@
                                             else if (order.ActivityId == 2)
                                             {
                                                     <div class="item-details">
-                                                        <p class="item-title">Ngày sử dụng: @order.OrderUsageDate</p>
+                                                        <p class="item-title">Ngày sử dụng: @order.OrderUsageDate.Value.ToString("dd-MM-yyyy")</p>
 
                                                         <p class="item-price">Tổng tiền: @order.TotalAmount.ToString("N0") đ</p>
                                                     </div>
@@ -675,7 +693,7 @@
                                             else if (order.ActivityId == 3)
                                             {
                                                     <div class="item-details">
-                                                        <p class="item-title">Ngày sử dụng: @order.OrderUsageDate</p>
+                                                        <p class="item-title">Ngày sử dụng: @order.OrderUsageDate.Value.ToString("dd-MM-yyyy")</p>
 
                                                         <p class="item-price">Tổng tiền: @order.TotalAmount.ToString("N0") đ</p>
                                                     </div>
@@ -686,7 +704,7 @@
                                             else if (order.ActivityId == 1002)
                                             {
                                                     <div class="item-details">
-                                                        <p class="item-title">Ngày sử dụng: @order.OrderUsageDate</p>
+                                                        <p class="item-title">Ngày sử dụng: @order.OrderUsageDate.Value.ToString("dd-MM-yyyy")</p>
 
                                                         <p class="item-price">Tổng tiền: @order.TotalAmount.ToString("N0") đ</p>
                                                     </div>

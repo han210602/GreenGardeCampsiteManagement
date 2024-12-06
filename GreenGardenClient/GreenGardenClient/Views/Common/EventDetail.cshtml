@@ -1,4 +1,4 @@
-﻿﻿@using GreenGardenClient.Models;
+﻿﻿﻿@using GreenGardenClient.Models;
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
 @{
@@ -33,7 +33,7 @@
 
     <div class="site-wrap" id="home-section">
 
-      
+
 
 
 
@@ -114,43 +114,43 @@
                                 <!-- User role-based links with icons -->
                                 @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 1)
                                 {
-                                   
-                                        <a href="~/DashBoard" class="nav-link">
-                                            <i class="fas fa-tachometer-alt"></i> Quản lí
-                                        </a>
-                                  
-                                        <a href="~/Home/Logout" class="nav-link">
-                                            <i class="fas fa-sign-out-alt"></i> Đăng xuất
-                                        </a>
-                                  
+
+                                    <a href="~/DashBoard" class="nav-link">
+                                        <i class="fas fa-tachometer-alt"></i> Quản lí
+                                    </a>
+
+                                    <a href="~/Home/Logout" class="nav-link">
+                                        <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                                    </a>
+
                                 }
                                 else if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 2)
                                 {
-                                  
-                                        <a href="~/OrderManagement/OrderOnline" class="nav-link">
-                                            <i class="fas fa-box"></i> Quản lí
-                                        </a>
-                                    
-                                        <a href="~/Home/Logout" class="nav-link">
-                                            <i class="fas fa-sign-out-alt"></i> Đăng xuất
-                                        </a>
-                                   
+
+                                    <a href="~/OrderManagement/OrderOnline" class="nav-link">
+                                        <i class="fas fa-box"></i> Quản lí
+                                    </a>
+
+                                    <a href="~/Home/Logout" class="nav-link">
+                                        <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                                    </a>
+
                                 }
                                 else
                                 {
-                                   
-                                        <a href="~/Service/OrderHistory" class="nav-link">
-                                            <i class="fas fa-history"></i> Lịch sử đặt hàng
-                                        </a>
-                                   
-                                        <a href="~/Service/Cart" class="nav-link">
-                                            <i class="fas fa-shopping-cart"></i> Giỏ hàng
-                                        </a>
-                                    
-                                        <a href="~/Home/Logout" class="nav-link">
-                                            <i class="fas fa-sign-out-alt"></i> Đăng xuất
-                                        </a>
-                                    
+
+                                    <a href="~/Service/OrderHistory" class="nav-link">
+                                        <i class="fas fa-history"></i> Lịch sử đặt hàng
+                                    </a>
+
+                                    <a href="~/Service/Cart" class="nav-link">
+                                        <i class="fas fa-shopping-cart"></i> Giỏ hàng
+                                    </a>
+
+                                    <a href="~/Home/Logout" class="nav-link">
+                                        <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                                    </a>
+
                                 }
                             </ul>
                         }
@@ -239,19 +239,19 @@
                                                 @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 1)
                                                 {
                                                 <li><a href="~/DashBoard" class="nav-link">Quản lí</a></li>
-                                                <li><a href="~/Home/Logout" class="nav-link">Đăng xuất</a></li>
+                                                <li><a href="~/Home/Logout" onclick="return Logout();" class="nav-link">Đăng xuất</a></li>
                                                 }
                                                 else if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 2)
                                                 {
                                                 <li><a href="~/OrderManagement/OrderOnline" class="nav-link">Quản lí</a></li>
-                                                <li><a href="~/Home/Logout" class="nav-link">Đăng xuất</a></li>
+                                                <li><a href="~/Home/Logout" onclick="return Logout();" class="nav-link">Đăng xuất</a></li>
                                                 }
                                                 else
                                                 {
 
                                                 <li><a href="~/Service/OrderHistory" class="nav-link">Lịch sử đặt hàng</a></li>
                                                 <li><a href="~/Service/Cart" class="nav-link">Giỏ hàng</a></li>
-                                                <li><a href="~/Home/Logout" class="nav-link">Đăng xuất</a></li>
+                                                <li><a href="~/Home/Logout" onclick="return Logout();" class="nav-link">Đăng xuất</a></li>
 
                                                 }
                                         </ul>
@@ -286,6 +286,12 @@
                     </div>
                 </div>
             </div>
+            <script>
+                function Logout() {
+                    sessionStorage.removeItem('usageDateForAll');
+                }
+
+            </script>
             <style>
                 .site-mobile-menu {
                     width: 80%;
@@ -358,6 +364,7 @@
                     font-weight: bold;
                     color: #333;
                 }
+
                 .cart-wrapper {
                     position: relative;
                     display: inline-block;
@@ -459,6 +466,32 @@
                     font-weight: bold; /* Làm nổi bật tiêu đề */
                 }
 
+                .swal-confirm-button {
+                    background-color: #efba6c !important; /* Yellow background */
+                    color: #000 !important; /* Black text */
+                    border: none; /* Remove border */
+                    font-weight: bold; /* Make text bold */
+                    padding: 10px 20px; /* Adjust padding */
+                    border-radius: 5px; /* Rounded corners */
+                }
+
+                    .swal-confirm-button:hover {
+                        background-color: #efba6c !important; /* Slightly darker yellow on hover */
+                    }
+
+
+                .swal-cancel-button {
+                    background-color: #6c757d !important; /* Default cancel button color (gray) */
+                    color: #fff !important;
+                    border: none;
+                    font-weight: bold;
+                    padding: 10px 20px;
+                    border-radius: 5px;
+                }
+
+                    .swal-cancel-button:hover {
+                        background-color: #5a6268 !important; /* Darker gray on hover */
+                    }
             </style>
             <script>
                 $(document).ready(function () {
@@ -520,7 +553,7 @@
                     <!-- Event Title -->
                     <div class="row">
                         <div class="col-md-12 text-center mb-4">
-                            <h1 class="display-4 font-weight-bold" style="color: #efba6c !important;">CHI TIẾT SỰ KIỆN</h1>
+                            <h1 class="display-4 font-weight-bold" style="color: #efba6c !important;">@events.EventName</h1>
                         </div>
                     </div>
 
@@ -533,14 +566,17 @@
                         </div>
 
                         <!-- Event Information -->
-                        <div class="col-md-6">
-                            <h3 class="font-weight-bold text-uppercase mb-3">@events.EventName</h3>
-                            <p class="text-muted" style="font-size: 1.1rem;">
+                        <div class="col-md-6" style="display: flex; flex-direction: column; align-items: flex-start;">
+                            <h3 class="font-weight-bold text-uppercase mb-3" style="font-size: 0.8rem; color: #777; opacity: 0.7; margin-bottom: 0;">
+                                Ngày Đăng: @events.CreatedAt - Đăng bởi: @events.CreatedByUserName
+                            </h3>
+                            <p class="text-muted" style="font-size: 1.1rem; text-align: justify; line-height: 1.6; padding: 10px 15px;margin-left: -15px;">
                                 @events.Description
                             </p>
                         </div>
-                    </div>
 
+
+                    </div>
 
                     <!-- Contact Information -->
                     <div class="row mt-4">
@@ -566,15 +602,16 @@
                             <!-- Ngày bắt đầu -->
                             <div class="d-flex align-items-center mb-2">
                                 <i class="fas fa-calendar-alt" style="color: #efba6c; width: 30px; text-align: center;"></i>
-                                <p class="mb-0">
+                                <p id="event-date" class="mb-0">
                                     <strong>Ngày bắt đầu:</strong> @events.EventDate.Value.ToString("dd-MM-yyyy")
                                 </p>
                             </div>
                             <!-- Giờ bắt đầu và kết thúc -->
                             <div class="d-flex align-items-center mb-2">
                                 <i class="fas fa-clock" style="color: #efba6c; width: 30px; text-align: center;"></i>
-                                <p class="mb-0">
-                                    <strong>Giờ bắt đầu:</strong> @events.StartTime; <strong>Giờ kết thúc:</strong> @events.EndTime
+                                <p id="start-time" class="mb-0">
+                                    <strong>Giờ bắt đầu:</strong> @events.StartTime?.ToString(@"hh\:mm")
+                                    <strong>Giờ kết thúc:</strong> @events.EndTime?.ToString(@"hh\:mm")
                                 </p>
                             </div>
                             <!-- Địa điểm -->
@@ -586,39 +623,255 @@
                             </div>
                         </div>
 
-
                         <!-- Call to Action Section -->
                         <div class="col-md-4">
                             <div class="card">
                                 <div class="card-body text-center">
                                     <h4 class="card-title" style="color: #303f9f;">Trải nghiệm sự kiện này</h4>
                                     <p class="card-text">Đặt vé để tham gia sự kiện ngay!</p>
-                                    <a href="/Service/OrderTicket" class="btn btn-primary btn-block" style="background-color: #efba6c !important; border: none;">Đặt vé</a>
+                                    <form id="ticketForm-@events.EventId" method="post" action="/Service/AddDateToCart">
+                                        <input type="hidden" id="hidden-date-@events.EventId" name="usageDate" />
+                                        <div style="display: flex; gap: 10px;">
+                                            <a href="/Common/Event" class="btn btn-secondary mt-4" style="border: none; width: 200px; height: 50px; display: flex; align-items: center; justify-content: center; text-align: center;">Quay lại</a>
+
+                                            <button type="button" class="btn btn-primary" style="background-color: #efba6c !important; border: none; width: 200px; height: 50px; display: flex; align-items: center; justify-content: center;margin-top: 24px;" onclick="setUsageDate(@events.EventId)">Đặt vé</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const eventDateStr = '@events.EventDate.Value.ToString("yyyy-MM-dd")'; // Get the event date in "yyyy-MM-dd" format
+                        const eventDate = new Date(eventDateStr); // Convert to Date object
+
+                        const currentDate = new Date(); // Get the current date
+
+                        // Compare the event date with the current date
+                        if (eventDate <= currentDate) {
+                            // Apply the strike-through style and change the text color to red if the event date is in the past
+                            const eventDateElement = document.getElementById('event-date');
+                            eventDateElement.style.textDecoration = 'line-through'; // Apply the strike-through
+                            eventDateElement.style.color = 'red'; // Change the text color to red
+                            eventDateElement.innerHTML = '<strong>Sự kiện này đã hết hạn: @events.EventDate.Value.ToString("dd-MM-yyyy")</strong>';
+
+                            const startTimeElement = document.getElementById('start-time');
+                            startTimeElement.style.textDecoration = 'line-through'; // Gạch đỏ
+                            startTimeElement.style.color = 'red'; // Đổi màu đỏ
+                            startTimeElement.innerHTML = `
+                                                                        <strong>Đã quá thời gian sự kiện: </strong>@events.StartTime?.ToString(@"hh\:mm") -  @events.EndTime?.ToString(@"hh\:mm")
+                            `;
+                        }
+                    });
+                </script>
+
             </div>
-        </div>
 
-        <script src="~/js/jquery-3.3.1.min.js"></script>
-        <script src="~/js/jquery-migrate-3.0.0.js"></script>
-        <script src="~/js/popper.min.js"></script>
-        <script src="~/js/bootstrap.min.js"></script>
-        <script src="~/js/owl.carousel.min.js"></script>
-        <script src="~/js/jquery.sticky.js"></script>
-        <script src="~/js/jquery.waypoints.min.js"></script>
-        <script src="~/js/jquery.animateNumber.min.js"></script>
-        <script src="~/js/jquery.fancybox.min.js"></script>
-        <script src="~/js/jquery.stellar.min.js"></script>
-        <script src="~/js/jquery.easing.1.3.js"></script>
-        <script src="~/js/bootstrap-datepicker.min.js"></script>
-        <script src="~/js/isotope.pkgd.min.js"></script>
-        <script src="~/js/aos.js"></script>
-        <script src="~/js/main.js"></script>
 
+
+
+            <script>
+                function setUsageDate(ticketId) {
+                    const savedDate = sessionStorage.getItem('usageDateForAll');
+                    const savedTime = sessionStorage.getItem('usageTimeForAll');
+
+                    var userId = '@HttpContextAccessor.HttpContext.Session.GetInt32("UserId")'; // Kiểm tra xem người dùng đã đăng nhập hay chưa
+                    if (!userId) {
+                        Swal.fire({
+                            title: 'Bạn cần đăng nhập để tiếp tục!',
+                            icon: 'warning',
+                            confirmButtonText: 'Đăng nhập',
+                            showCancelButton: true,
+                            cancelButtonText: 'Hủy',
+                            customClass: {
+                                confirmButton: 'swal-confirm-button', // Nút đăng nhập
+                                cancelButton: 'swal-cancel-button'   // Nút hủy
+                            },
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = '/Common/Login'; // Chuyển hướng đến trang đăng nhập
+                            }
+                        });
+                        return false; // Ngừng thực hiện nếu người dùng chưa đăng nhập
+                    }
+
+                    var roleId = '@HttpContextAccessor.HttpContext.Session.GetInt32("RoleId")'; // Kiểm tra xem người dùng đã đăng nhập hay chưa
+                    if (roleId != 3) {
+                        Swal.fire({
+                            title: 'Lưu ý!',
+                            text: ` Vui lòng đăng nhập với quyền khách hàng!`,
+                            icon: 'warning',
+                            showConfirmButton: false,
+                            timer: 1500,
+                        });
+                        return false; // Ngừng thực hiện nếu người dùng chưa đăng nhập
+                    }
+                    const eventDate = '@events.EventDate.Value.ToString("yyyy-MM-dd")'; // Ngày sự kiện từ server
+
+                    // So sánh EventDate với ngày hiện tại
+                    const currentDate = new Date().toISOString().split('T')[0]; // Ngày hiện tại theo định dạng 'yyyy-MM-dd'
+
+                    if (eventDate < currentDate) {
+                        // Nếu sự kiện đã hết hạn, hiển thị thông báo
+                        Swal.fire({
+                            title: 'Sự kiện này đã hết hạn',
+                            text: 'Nếu bạn muốn tiếp tục đặt vé vui lòng bấm đồng ý!',
+                            icon: 'warning',
+                            confirmButtonText: 'Đồng ý',
+                            showCancelButton: true,
+                            cancelButtonText: 'Hủy',
+                            customClass: {
+                                confirmButton: 'swal-confirm-button', // Nút đăng nhập
+                                cancelButton: 'swal-cancel-button'   // Nút hủy
+                            },
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = '/Service/OrderTicket'; // Chuyển hướng đến trang đăng nhập
+                            }
+                        });
+                        return false; // Ngừng thực hiện nếu sự kiện đã hết hạn
+                    }
+
+                    // Kiểm tra nếu người dùng đã tham gia sự kiện khác
+                    if (savedDate && savedTime) {
+                        const eventName = '@events.EventName'; // Lấy tên sự kiện từ server
+                        Swal.fire({
+                            title: 'Lưu ý!',
+                            text: ` Vui lòng hoàn thành cho sự kiện trước đó để tiếp tục!`,
+                            icon: 'warning',
+                            showConfirmButton: false,
+                            timer: 1500,
+
+                        });
+                        return false; // Ngừng thực hiện nếu người dùng đã tham gia sự kiện khác
+                    }
+
+                    if (savedDate && savedTime) {
+                        // Nếu đã có ngày và giờ, sử dụng giá trị đã lưu
+                        document.getElementById('hidden-date-' + ticketId).value = `${savedDate} ${savedTime}`;
+                        // Chuyển hướng đến trang Đặt Vé
+                        window.location.href = '/Service/OrderTicket';
+                        return true;
+                    } else {
+                        // Hiển thị popup để chọn ngày và giờ nếu chưa có dữ liệu đã lưu
+                        Swal.fire({
+                            title: 'Chọn ngày và giờ sử dụng',
+                            html: (() => {
+                                const now = new Date();
+                                const currentDate = now.toISOString().split('T')[0]; // Định dạng ngày 'yyyy-MM-dd'
+
+                                // Lấy thông tin EventDate và thời gian (StartTime, EndTime) từ server
+                                const eventDate = '@events.EventDate.Value.ToString("yyyy-MM-dd")'; // Ví dụ: 2024-12-31
+                                const startTime = '@events.StartTime'; // Ví dụ: 09:00
+                                const endTime = '@events.EndTime'; // Ví dụ: 18:00
+                                const [hour, minute] = startTime.split(':'); // Tách giờ và phút
+                                const startDateTime = new Date();
+                                startDateTime.setHours(hour, minute); // Gán giờ và phút từ startTime
+                                startDateTime.setMinutes(startDateTime.getMinutes() + 1); // Cộng 1 phút
+
+                                // Chuyển đổi lại thời gian mới (sau khi cộng 1 phút)
+                                const newStartTime = startDateTime.toTimeString().slice(0, 5);
+                                return `
+                                                        <input type="date" id="usage-date" class="swal2-input" value="${eventDate}" min="${eventDate}">
+                                                                        <input type="time" id="usage-time" class="swal2-input" value="${newStartTime}" min="${startTime}" max="${endTime}">
+                                                    `;
+                            })(),
+                            showCancelButton: true,
+                            confirmButtonText: 'Xác nhận',
+                            cancelButtonText: 'Hủy',
+                            customClass: {
+                                confirmButton: 'swal-confirm-button',
+                                cancelButton: 'swal-cancel-button'
+                            },
+                            preConfirm: () => {
+                                const date = document.getElementById('usage-date').value;
+                                const time = document.getElementById('usage-time').value;
+                                const now = new Date();
+                                const currentDate = now.toISOString().split('T')[0];
+                                const currentTime = now.toTimeString().split(':').slice(0, 2).join(':'); // Thời gian hiện tại
+                                const startTime = '@events.StartTime'; // Ví dụ: 09:00
+                                const endTime = '@events.EndTime'; // Ví dụ: 18:00
+                                // Kiểm tra tính hợp lệ của ngày và giờ
+                                if (!date || !time) {
+                                    Swal.showValidationMessage('Bạn cần nhập cả ngày và giờ sử dụng!');
+                                    return false;
+                                }
+
+                                const enteredDateTime = new Date(date + 'T' + time); // Kết hợp ngày và giờ
+                                const currentDateTime = new Date(currentDate + 'T' + currentTime); // Ngày và giờ hiện tại
+
+                                if (enteredDateTime < currentDateTime) {
+                                    Swal.showValidationMessage('Ngày và thời gian sử dụng phải lớn hơn hoặc bằng ngày hiện tại!');
+                                    return false;
+                                }
+                                const startDateTime = new Date(date + 'T' + startTime); // Kết hợp ngày đã chọn với StartTime
+                                const endDateTime = new Date(date + 'T' + endTime); // Kết hợp ngày đã chọn với EndTime
+
+                                if (enteredDateTime <= startDateTime || enteredDateTime >= endDateTime) {
+                                    Swal.showValidationMessage(`Thời gian sử dụng phải trong khoảng từ ${startTime} đến ${endTime}!`);
+                                    return false;
+                                }
+                                return { date, time }; // Trả về ngày và giờ đã chọn
+                            }
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                const { date, time } = result.value;
+                                sessionStorage.setItem('usageDateForAll', date);
+                                sessionStorage.setItem('usageTimeForAll', time);
+
+                                // Lưu ngày và giờ vào input ẩn
+                                document.getElementById('hidden-date-' + ticketId).value = `${date} ${time}`;
+
+                                // Chuyển hướng đến trang Đặt Vé
+                                window.location.href = '/Service/OrderTicket';
+                                return true;
+                            }
+                        });
+                    }
+                    return false; // Ngừng thực hiện nếu không có trường hợp nào được xử lý
+                }
+            </script>
+
+
+
+
+            <script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
+            <script>
+                AOS.init({
+                    duration: 1200,
+                });
+            </script>
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <script src="~/js/jquery-3.3.1.min.js"></script>
+            <script src="~/js/jquery-migrate-3.0.0.js"></script>
+            <script src="~/js/popper.min.js"></script>
+            <script src="~/js/bootstrap.min.js"></script>
+            <script src="~/js/owl.carousel.min.js"></script>
+            <script src="~/js/jquery.sticky.js"></script>
+            <script src="~/js/jquery.waypoints.min.js"></script>
+            <script src="~/js/jquery.animateNumber.min.js"></script>
+            <script src="~/js/jquery.fancybox.min.js"></script>
+            <script src="~/js/jquery.stellar.min.js"></script>
+            <script src="~/js/jquery.easing.1.3.js"></script>
+            <script src="~/js/bootstrap-datepicker.min.js"></script>
+            <script src="~/js/isotope.pkgd.min.js"></script>
+            <script src="~/js/aos.js"></script>
+            <script src="~/js/main.js"></script>
+            <style>
+                /* CSS để hiển thị placeholder cho input date */
+                input[type="date"]::before {
+                    content: attr(placeholder);
+                    color: #aaa;
+                }
+
+                input[type="date"]:focus::before,
+                input[type="date"]:valid::before {
+                    content: '';
+                }
+            </style>
 </body>
 <footer class="site-footer bg-light">
     <div class="container">
@@ -767,4 +1020,3 @@
     });
 </script>
 </html>
-

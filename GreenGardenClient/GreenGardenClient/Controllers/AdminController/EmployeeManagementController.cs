@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Net.Http.Headers;
+using System.Text.RegularExpressions;
 
 namespace GreenGardenClient.Controllers.AdminController
 {
@@ -67,7 +68,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 return RedirectToAction("Index", "Home");
             }
 
-            var userdata = GetDataFromApi<List<Account>>("https://localhost:7298/api/User/GetAllEmployees");
+            var userdata = GetDataFromApi<List<Account>>("http://103.75.186.149:5000/api/User/GetAllEmployees");
 
             // Check if userdata is null, meaning there was an error or forbidden access
             if (userdata == null)
@@ -103,9 +104,13 @@ namespace GreenGardenClient.Controllers.AdminController
             {
                 return RedirectToAction("Index", "Home");
             }
-
+            if (!Regex.IsMatch(model.Password, @"^(?=.*[A-Z])(?=.*[\W_]).{6,}$"))
+            {
+                ModelState.AddModelError("Password", "Mật khẩu phải có ít nhất 6 ký tự, bao gồm 1 chữ cái viết hoa và 1 ký tự đặc biệt.");
+                return View(model);
+            }
             // URL API để thêm nhân viên
-            string apiUrl = "https://localhost:7298/api/User/AddEmployee";
+            string apiUrl = "http://103.75.186.149:5000/api/User/AddEmployee";
 
             // Kiểm tra tính hợp lệ của model
             if (!ModelState.IsValid)
@@ -170,7 +175,7 @@ namespace GreenGardenClient.Controllers.AdminController
         {
 
             Console.WriteLine($"Received id: {id}");
-            string apiUrl = $"https://localhost:7298/api/User/DeleteUser/{id}";
+            string apiUrl = $"http://103.75.186.149:5000/api/User/DeleteUser/{id}";
 
             try
             {
@@ -224,7 +229,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 return RedirectToAction("Index", "Home");
             }
             // Fetch user data from the API asynchronously
-            var user = GetDataFromApi<Account>($"https://localhost:7298/api/User/GetUserById/{id}");
+            var user = GetDataFromApi<Account>($"http://103.75.186.149:5000/api/User/GetUserById/{id}");
 
             // Check if user data is null and redirect to an error page if not found
             if (user == null)
@@ -239,7 +244,7 @@ namespace GreenGardenClient.Controllers.AdminController
         public async Task<IActionResult> BlockEmployee(int id)
         {
             Console.WriteLine($"Received id: {id}");
-            string apiUrl = $"https://localhost:7298/api/User/BlockUser/{id}";
+            string apiUrl = $"http://103.75.186.149:5000/api/User/BlockUser/{id}";
 
             try
             {
@@ -271,7 +276,7 @@ namespace GreenGardenClient.Controllers.AdminController
         {
             Console.WriteLine($"Received id: {id}"); // Log nhận ID từ request
 
-            string apiUrl = $"https://localhost:7298/api/User/UnBlockUser/{id}";
+            string apiUrl = $"http://103.75.186.149:5000/api/User/UnBlockUser/{id}";
 
             try
             {

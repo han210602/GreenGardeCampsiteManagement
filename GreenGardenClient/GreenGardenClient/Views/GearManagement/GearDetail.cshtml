@@ -842,8 +842,13 @@
 
                                 <input type="hidden" name="CurrentPictureUrl" value="@Model?.ImgUrl" />
                                 <div class="mt-3">
-                                    <!-- Add onchange event to preview image -->
-                                    <input type="file" name="PictureUrl" accept=".jpg, .png" class="file-input" onchange="previewImage(event, @Model.GearId)" />
+                                    <!-- Giấu nút input file mặc định -->
+                                    <input type="file" name="PictureUrl" accept=".jpg, .png" class="file-input" id="PictureUrl_@Model.GearId" onchange="previewImage(event, @Model.GearId)" style="display: none;" />
+
+                                    <!-- Tạo nút "Chọn ảnh" -->
+                                    <label for="PictureUrl_@Model.GearId" class="btn btn-primary" style="cursor: pointer;">
+                                        Chọn ảnh
+                                    </label>
                                 </div>
                             </div>
 

@@ -674,27 +674,24 @@
             <div class="col-md-12">
                 <div class="tile">
                     <table class="table table-hover table-bordered" id="sampleTable">
-                        <thead class="thead-light">
-                            <tr>
-                                <th width="2%"></th>      <!-- Status -->
-
-                                <th width="8%">Mã đơn</th>           <!-- Order ID -->
-                                <th width="13%">Khách hàng</th>      <!-- Customer Name -->
-                                <th width="12%">Số điện thoại</th>   <!-- Phone Number -->
-                                <th width="12%">Ngày sử dụng</th>     <!-- Usage Date -->
-                                <th width="12%">Ngày thanh toán</th>         <!-- Order Date -->
-
-                                <th class="text-right" width="12%">Tiền cọc</th>        <!-- Deposit -->
-                                <th class="text-right" width="12%">Tổng tiền</th>
-                                <th class="text-right" width="12%">Thanh Toán</th>             <!-- Income -->
-                                <!-- Total Amount -->
-                            </tr>
-                        </thead>
+    <thead class="thead-light">
+        <tr>
+            <th width="2%"></th>      <!-- Status -->
+            <th width="8%">Mã đơn</th>           <!-- Order ID -->
+            <th width="13%">Khách hàng</th>      <!-- Customer Name -->
+            <th width="12%">Số điện thoại</th>   <!-- Phone Number -->
+            <th width="12%">Ngày sử dụng</th>     <!-- Usage Date -->
+            <th width="12%">Ngày thanh toán</th>         <!-- Order Date -->
+            <th class="text-right" width="12%">Tiền cọc</th>        <!-- Deposit -->
+            <th class="text-right" width="12%">Tổng tiền</th>
+            <th class="text-right" width="12%">Thanh Toán</th>             <!-- Income -->
+        </tr>
+    </thead>
 
                         <tbody>
                             @foreach (OrderVM item in ViewBag.dataorder)
                             {
-                                <tr onclick="window.location.href='@Url.Action("OrderDetail", "OrderManagement", new { id = item.OrderId })'"
+                                <tr data-order-id="@item.OrderId"
                                     class="@(item.OrderCheckoutDate.Value.ToString("dd/MM/yyyy").Equals(DateTime.Now.ToString("dd/MM/yyyy")) ? "highlight-row" : "")">
                                     <td><i class="fas fa-check-circle" style="color: green;"></i></td>
                                     <td>#@item.OrderId</td>
@@ -702,7 +699,6 @@
                                     <td>@item.PhoneCustomer</td>
                                     <td>@item.OrderUsageDate?.ToString("hh:mm:ss tt dd/MM/yyyy")</td>
                                     <td>@item.OrderCheckoutDate?.ToString("hh:mm:ss tt dd/MM/yyyy")</td>
-
                                     <td class="text-right">@String.Format("{0:0,0} ₫", item.Deposit)</td>
                                     <td class="text-right">@String.Format("{0:0,0} ₫", item.TotalAmount)</td>
 
@@ -720,11 +716,18 @@
                                             <span class="text-amount">@String.Format("{0:0,0}", Math.Abs(item.AmountPayable))</span>
                                         </td>
                                     }
-
                                 </tr>
                             }
                         </tbody>
-                    </table>
+
+
+
+
+
+
+</table>
+
+
 
                     
                 </div>
@@ -760,6 +763,67 @@
     <script type="text/javascript" src="~/js/plugins/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/js/plugins/dataTables.bootstrap.min.js"></script>
     <script type="text/javascript">$('#sampleTable').DataTable();</script>
+    <style>
+        /* CSS để làm cho dòng table in đậm */
+        .highlight-row {
+            background-color: #f0f0f0; /* Tùy chỉnh màu nền cho dòng nổi bật */
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Lấy danh sách các orderIds từ localStorage
+            const orderIds = JSON.parse(localStorage.getItem('orderIds')) || [];
+
+            // Duyệt qua tất cả các dòng và kiểm tra nếu orderId có trong danh sách
+            const orderRows = document.querySelectorAll('tr[data-order-id]');
+            orderRows.forEach(row => {
+                const orderId = parseInt(row.getAttribute('data-order-id'));  // Chuyển orderId từ chuỗi thành số
+
+                // Kiểm tra nếu orderId có trong danh sách orderIds
+                if (orderIds.includes(orderId)) {
+                    row.style.fontWeight = 'bold';  // In đậm dòng nếu orderId có trong localStorage
+                }
+            });
+
+            // Hàm xử lý khi người dùng click vào dòng đơn hàng
+            function handleClick(event, orderId) {
+                event.preventDefault();
+
+                // Lấy danh sách orderIds từ localStorage
+                let storedOrderIds = JSON.parse(localStorage.getItem('orderIds')) || [];
+
+                // Chuyển đổi orderId thành số nguyên trước khi thao tác
+                const orderIdInt = parseInt(orderId);
+
+                // Kiểm tra nếu orderId có trong danh sách
+                const index = storedOrderIds.indexOf(orderIdInt);
+                if (index !== -1) {
+                    // Nếu tồn tại, xóa orderId khỏi danh sách
+                    storedOrderIds.splice(index, 1);
+                } 
+
+                // Cập nhật lại localStorage với danh sách mới
+                localStorage.setItem('orderIds', JSON.stringify(storedOrderIds));
+
+                // Cập nhật lại trạng thái in đậm của dòng
+
+                // Chuyển hướng tới trang chi tiết
+                window.location.href = '@Url.Action("OrderDetail", "OrderManagement", new { id = "__id__" })'.replace('__id__', orderId);
+            }
+
+           
+
+            // Lắng nghe sự kiện khi người dùng click vào dòng đơn hàng để xem chi tiết
+            orderRows.forEach(row => {
+                row.addEventListener('click', function (event) {
+                    const orderId = row.getAttribute('data-order-id');
+                    handleClick(event, orderId);
+                });
+            });
+        });
+
+
+    </script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const rows = document.querySelectorAll(".highlight-row");
@@ -774,6 +838,9 @@
                 }, 1000); // Nhấp nháy mỗi 1 giây
             });
         });
+        
+
+
 
       
         oTable = $('#sampleTable').dataTable();

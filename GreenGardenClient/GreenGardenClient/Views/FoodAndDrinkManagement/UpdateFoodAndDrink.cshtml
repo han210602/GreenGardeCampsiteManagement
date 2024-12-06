@@ -818,7 +818,7 @@
                         <input type="hidden" name="ItemId" value="@Model.ItemId" />
                     <div class="event-card d-flex align-items-start">
                         <!-- Left Column: Large Image -->
-                            <div class="event-image-container flex-grow-1">
+                            <div class="event-image-container flex-grow-1" style="display: flex; flex-direction: column; justify-content: flex-end; align-items: center; height: 100%;">
                                 <!-- Hiển thị ảnh hiện tại nếu có -->
                                 @if (!string.IsNullOrEmpty(@Model.ImgUrl))
                                 {
@@ -829,11 +829,17 @@
                                 <input type="hidden" name="CurrentPictureUrl" value="@Model.ImgUrl" />
 
                                 <!-- Input file cho ảnh mới -->
-                                <div class="mt-3">
-                                    <input type="file" name="PictureUrl" id="ImgUrl_@Model.ItemId" accept=".jpg, .png" class="file-input"
-                                           onchange="previewImage(event, '@Model.ItemId')" />
+                                <div class="mt-3" style="width: 100%; display: flex; justify-content: center;">
+                                    <!-- Giấu nút input file mặc định -->
+                                    <input type="file" name="PictureUrl" id="ImgUrl_@Model.ItemId" accept=".jpg, .png" class="file-input" onchange="previewImage(event, '@Model.ItemId')" style="display: none;" />
+
+                                    <!-- Tạo nút "Chọn ảnh" -->
+                                    <label for="ImgUrl_@Model.ItemId" class="btn btn-primary" style="cursor: pointer; padding: 8px 15px; font-size: 14px; text-align: center; margin-top: 10px;">
+                                        Chọn ảnh
+                                    </label>
                                 </div>
                             </div>
+
 
 
                         <!-- Right Column: Event Details -->

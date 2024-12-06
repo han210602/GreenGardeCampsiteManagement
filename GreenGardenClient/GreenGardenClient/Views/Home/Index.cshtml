@@ -241,19 +241,19 @@
                                                 @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 1)
                                                 {
                                                 <li><a href="~/DashBoard" class="nav-link">Quản lí</a></li>
-                                                <li><a href="~/Home/Logout" class="nav-link">Đăng xuất</a></li>
+                                                <li><a href="~/Home/Logout" onclick="return Logout();" class="nav-link">Đăng xuất</a></li>
                                                 }
                                                 else if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 2)
                                                 {
                                                 <li><a href="~/OrderManagement/OrderOnline" class="nav-link">Quản lí</a></li>
-                                                <li><a href="~/Home/Logout" class="nav-link">Đăng xuất</a></li>
+                                                <li><a href="~/Home/Logout" onclick="return Logout();" class="nav-link">Đăng xuất</a></li>
                                                 }
                                                 else
                                                 {
 
                                                 <li><a href="~/Service/OrderHistory" class="nav-link">Lịch sử đặt hàng</a></li>
                                                 <li><a href="~/Service/Cart" class="nav-link">Giỏ hàng</a></li>
-                                                <li><a href="~/Home/Logout" class="nav-link">Đăng xuất</a></li>
+                                                <li><a href="~/Home/Logout" onclick="return Logout();" class="nav-link">Đăng xuất</a></li>
 
                                                 }
                                         </ul>
@@ -288,6 +288,12 @@
                     </div>
                 </div>
             </div>
+            <script>
+                function Logout() {
+                    sessionStorage.removeItem('usageDateForAll');
+                }
+
+            </script>
             <style>
                 .site-mobile-menu {
                     width: 80%;
@@ -505,12 +511,78 @@
                     <div class="container">
                         <div class="row align-items-center">
                             <div class="col-md-5" data-aos="fade-right">
-                                <h1 class="mb-3 text-white">Lợi ích khi đến với Sông quê</h1>
-                                <p>
-                                    Khi đến với Sông Quê Green Garden, bạn sẽ được tận hưởng nhiều tiện ích tuyệt vời
-                                    như khuôn viên cắm trại rộng rãi, không gian lý tưởng cho tiệc ngoài trời và
-                                    Thỏa sức check-in tại vườn và tận hưởng không khí trong lành.
+                                <h1 class="mb-3 text-white" style="font-family: var(--cl-font-family-display, 'Queens Medium', serif); white-space: nowrap; color: #efba6c !important; font-size: var(--cl-font-size-display-01-small, 4rem); font-weight: var(--cl-font-weight-display-01-small, 500); line-height: var(--cl-line-height-display-01-small, 1.27777778); letter-spacing: var(--cl-letter-spacing-display-01-small, normal);">
+                                    <span>Chào mừng bạn đến với</span> <br>
+                                    <span style="font-family: var(--cl-font-family-display, 'Queens Medium', serif); color: #efba6c !important; font-size: var(--cl-font-size-display-01-small, 4rem); font-weight: var(--cl-font-weight-display-01-small, 500); line-height: var(--cl-line-height-display-01-small, 1.27777778); letter-spacing: var(--cl-letter-spacing-display-01-small, normal);">
+                                        Sông Quê
+                                    </span>
+                                </h1>
+
+
+
+
+                                <p style="font-size: var(--cl-text-font-size, 1rem); font-weight: var(--cl-text-font-weight, 300); line-height: var(--cl-text-line-height, 1.75); letter-spacing: var(--cl-text-letter-spacing, normal);">
+                                    Tại đây chúng tôi sẽ cung cấp cho bạn không gian xanh mát giúp bạn thưởng thức ẩm thực đa dạng, trải nghiệm những hoạt động nhóm thú vị và khám phá phong cảnh tuyệt đẹp.
                                 </p>
+
+                                <a href="/Service"
+                                   class="btn btn-primary"
+                                   style="display: inline-block; margin-top: 20px; color: #f6f8fa; padding: 15px 60px; font-size: 18px; text-decoration: none; text-align: center; border-radius: 50px; background-color: #efba6c; transition: all 0.3s ease;">
+                                    Khám phá ngay
+                                </a>
+
+                                <style>
+                                    a.btn {
+                                        display: inline-block;
+                                        padding: 10px 20px;
+                                        background-color: #f4a261; /* Màu nền */
+                                        color: #fff; /* Màu chữ */
+                                        text-decoration: none;
+                                        font-size: 16px;
+                                        border-radius: 5px;
+                                        transition: transform 0.2s, background-color 0.2s, color 0.2s; /* Hiệu ứng mượt */
+                                    }
+
+                                        /* Trạng thái khi di chuột vào */
+                                        a.btn:hover {
+                                            background-color: #d99359; /* Màu nền khi hover */
+                                            transform: scale(1.1); /* Giữ trạng thái nổi */
+                                        }
+                                </style>
+
+                                <script>
+                                    // Lấy tất cả các nút có class 'btn'
+                                    document.querySelectorAll('a.btn').forEach(btn => {
+                                        let interval; // Biến để lưu hiệu ứng tự động
+                                        let scaleUp = true; // Cờ để kiểm soát trạng thái phóng to/thu nhỏ
+
+                                        // Bắt đầu hiệu ứng tự động "nổi rồi không nổi"
+                                        const startAutoEffect = () => {
+                                            interval = setInterval(() => {
+                                                btn.style.transform = scaleUp ? 'scale(1.1)' : 'scale(1)';
+                                                scaleUp = !scaleUp;
+                                            }, 450); // Chu kỳ hiệu ứng mỗi 150ms
+                                        };
+
+                                        // Dừng hiệu ứng tự động
+                                        const stopAutoEffect = () => {
+                                            clearInterval(interval);
+                                            btn.style.transform = 'scale(1.1)'; // Giữ trạng thái "nổi"
+                                        };
+
+                                        // Bắt đầu hiệu ứng tự động khi tải trang
+                                        startAutoEffect();
+
+                                        // Khi di chuột vào, dừng hiệu ứng tự động và giữ trạng thái "nổi"
+                                        btn.addEventListener('mouseover', stopAutoEffect);
+
+                                        // Khi chuột rời khỏi nút, tiếp tục hiệu ứng tự động
+                                        btn.addEventListener('mouseout', startAutoEffect);
+                                    });
+                                </script>
+
+
+                               
 
                             </div>
                         </div>
