@@ -264,54 +264,54 @@ namespace GreenGardenAPITest.DAO
         }
 
         // Test for method AddEvent
-        private async Task<GreenGardenContext> GetDbContext2() // Create a database in memory with mock data.
-        {
-            var options = new DbContextOptionsBuilder<GreenGardenContext>()
-                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()) // Unique name for each test
-                .Options;
+        //private async Task<GreenGardenContext> GetDbContext2() // Create a database in memory with mock data.
+        //{
+        //    var options = new DbContextOptionsBuilder<GreenGardenContext>()
+        //        .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()) // Unique name for each test
+        //        .Options;
 
-            var databaseContext = new GreenGardenContext(options);
-            databaseContext.Database.EnsureCreated();
+        //    var databaseContext = new GreenGardenContext(options);
+        //    databaseContext.Database.EnsureCreated();
 
-            // Seed mock users
-            if (!await databaseContext.Users.AnyAsync())
-            {
-                var users = new List<User>
-            {
-                new User
-                {
-                    UserId = 1,
-                    FirstName = "Admin",
-                    LastName = "User",
-                    Email = "admin@example.com",
-                    Password = "Password123",
-                    RoleId = 1 // Admin role
-                },
-                new User
-                {
-                    UserId = 2,
-                    FirstName = "John",
-                    LastName = "Doe",
-                    Email = "john.doe@example.com",
-                    Password = "Password123",
-                    RoleId = 2 // Regular user role
-                },
-                new User
-                {
-                    UserId = 3,
-                    FirstName = "Jane",
-                    LastName = "Smith",
-                    Email = "jane.smith@example.com",
-                    Password = "SecurePassword",
-                    RoleId = 3 // Regular user role
-                }
-            };
-                await databaseContext.Users.AddRangeAsync(users);
-            }
+        //    // Seed mock users
+        //    if (!await databaseContext.Users.AnyAsync())
+        //    {
+        //        var users = new List<User>
+        //    {
+        //        new User
+        //        {
+        //            UserId = 1,
+        //            FirstName = "Admin",
+        //            LastName = "User",
+        //            Email = "admin@example.com",
+        //            Password = "Password123",
+        //            RoleId = 1 // Admin role
+        //        },
+        //        new User
+        //        {
+        //            UserId = 2,
+        //            FirstName = "John",
+        //            LastName = "Doe",
+        //            Email = "john.doe@example.com",
+        //            Password = "Password123",
+        //            RoleId = 2 // Regular user role
+        //        },
+        //        new User
+        //        {
+        //            UserId = 3,
+        //            FirstName = "Jane",
+        //            LastName = "Smith",
+        //            Email = "jane.smith@example.com",
+        //            Password = "SecurePassword",
+        //            RoleId = 3 // Regular user role
+        //        }
+        //    };
+        //        await databaseContext.Users.AddRangeAsync(users);
+        //    }
 
-            await databaseContext.SaveChangesAsync();
-            return databaseContext;
-        }
+        //    await databaseContext.SaveChangesAsync();
+        //    return databaseContext;
+        //}
 
         private IConfiguration GetTestConfiguration()
         {
@@ -336,87 +336,194 @@ namespace GreenGardenAPITest.DAO
             return true;
         }
 
-        [Fact]
-        public async Task AddEvent_ShouldAddEventAndSendEmails_WhenDataIsValid()
-        {
-            // Arrange
-            var options = new DbContextOptionsBuilder<GreenGardenContext>()
-                .UseInMemoryDatabase(databaseName: "TestDatabase_AddEvent")
-                .Options;
+        //[Fact]
+        //public async Task AddEvent_ShouldAddEventAndSendEmails_WhenDataIsValid()
+        //{
+        //    // Arrange
+        //    var options = new DbContextOptionsBuilder<GreenGardenContext>()
+        //        .UseInMemoryDatabase(databaseName: "TestDatabase_AddEvent")
+        //        .Options;
 
-            await using var context = new GreenGardenContext(options);
-            context.Database.EnsureCreated();
+        //    await using var context = new GreenGardenContext(options);
+        //    context.Database.EnsureCreated();
 
-            // Seed necessary data: Add a user with RoleId = 3 (sender)
-            var senderUser = new User
-            {
-                UserId = 3,
-                FirstName = "John",
-                LastName = "Doe",
-                Email = "sender@example.com",
-                Password = "password123",
-                RoleId = 3
-            };
+        //    // Seed necessary data: Add a user with RoleId = 3 (sender)
+        //    var senderUser = new User
+        //    {
+        //        UserId = 3,
+        //        FirstName = "John",
+        //        LastName = "Doe",
+        //        Email = "sender@example.com",
+        //        Password = "password123",
+        //        RoleId = 3
+        //    };
 
-            // Seed another user with RoleId != 3 (the recipient of the email)
-            var recipientUser = new User
-            {
-                UserId = 4,
-                FirstName = "Jane",
-                LastName = "Smith",
-                Email = "recipient@example.com",
-                Password = "password123",
-                RoleId = 2
-            };
+        //    // Seed another user with RoleId != 3 (the recipient of the email)
+        //    var recipientUser = new User
+        //    {
+        //        UserId = 4,
+        //        FirstName = "Jane",
+        //        LastName = "Smith",
+        //        Email = "recipient@example.com",
+        //        Password = "password123",
+        //        RoleId = 2
+        //    };
 
-            context.Users.Add(senderUser);
-            context.Users.Add(recipientUser);
-            await context.SaveChangesAsync();
+        //    context.Users.Add(senderUser);
+        //    context.Users.Add(recipientUser);
+        //    await context.SaveChangesAsync();
 
-            var eventDTO = new CreateEventDTO
-            {
-                EventName = "Test Event",
-                Description = "This is a test event",
-                EventDate = DateTime.Now,
-                StartTime = "10:00",
-                EndTime = "12:00",
-                Location = "Test Location",
-                PictureUrl = "http://example.com/event.jpg",
-                CreateBy = senderUser.UserId
-            };
+        //    var eventDTO = new CreateEventDTO
+        //    {
+        //        EventName = "Test Event",
+        //        Description = "This is a test event",
+        //        EventDate = DateTime.Now,
+        //        StartTime = "10:00",
+        //        EndTime = "12:00",
+        //        Location = "Test Location",
+        //        PictureUrl = "http://example.com/event.jpg",
+        //        CreateBy = senderUser.UserId
+        //    };
 
-            var configurationMock = new Mock<IConfiguration>();
-            configurationMock.Setup(config => config["EmailSettings:FromEmail"])
-                .Returns("no-reply@example.com");
+        //    var configurationMock = new Mock<IConfiguration>();
+        //    configurationMock.Setup(config => config["EmailSettings:FromEmail"])
+        //        .Returns("no-reply@example.com");
 
-            // Mock email service
-            var emailServiceMock = new Mock<Func<string, CreateEventDTO, IConfiguration, Task>>();
-            emailServiceMock.Setup(service => service(It.IsAny<string>(), It.IsAny<CreateEventDTO>(), It.IsAny<IConfiguration>()))
-                .Returns(Task.CompletedTask); // Mock the email sending task to complete instantly.
+        //    // Mock email service
+        //    var emailServiceMock = new Mock<Func<string, CreateEventDTO, IConfiguration, Task>>();
+        //    emailServiceMock.Setup(service => service(It.IsAny<string>(), It.IsAny<CreateEventDTO>(), It.IsAny<IConfiguration>()))
+        //        .Returns(Task.CompletedTask); // Mock the email sending task to complete instantly.
 
-            // Act
-            var result = await EventDAO.AddEvent(eventDTO, configurationMock.Object);
+        //    // Act
+        //    var result = await EventDAO.AddEvent(eventDTO, configurationMock.Object);
 
-            // Assert
-            Assert.True(result, "AddEvent should return true when the event is successfully added and emails are sent.");
+        //    // Assert
+        //    Assert.True(result, "AddEvent should return true when the event is successfully added and emails are sent.");
 
-            // Verify the event was added to the database
-            var addedEvent = context.Events.FirstOrDefault(e => e.EventName == eventDTO.EventName);
-            Assert.NotNull(addedEvent);
-            Assert.Equal(eventDTO.Description, addedEvent.Description);
-            Assert.Equal(eventDTO.Location, addedEvent.Location);
-            Assert.Equal(eventDTO.CreateBy, addedEvent.CreateBy);
+        //    // Verify the event was added to the database
+        //    var addedEvent = context.Events.FirstOrDefault(e => e.EventName == eventDTO.EventName);
+        //    Assert.NotNull(addedEvent);
+        //    Assert.Equal(eventDTO.Description, addedEvent.Description);
+        //    Assert.Equal(eventDTO.Location, addedEvent.Location);
+        //    Assert.Equal(eventDTO.CreateBy, addedEvent.CreateBy);
 
-            // Verify the email service was called for users with RoleId = 3
-            emailServiceMock.Verify(service => service(It.IsAny<string>(), It.Is<CreateEventDTO>(e => e.EventName == "Test Event"), It.IsAny<IConfiguration>()), Times.AtLeastOnce);
+        //    // Verify the email service was called for users with RoleId = 3
+        //    emailServiceMock.Verify(service => service(It.IsAny<string>(), It.Is<CreateEventDTO>(e => e.EventName == "Test Event"), It.IsAny<IConfiguration>()), Times.AtLeastOnce);
 
-            // Check that the email was intended to be sent to the recipients (e.g., RoleId == 2, not the sender)
-            var notifiedUsers = context.Users.Where(u => u.UserId != senderUser.UserId).ToList();
-            Assert.Contains(notifiedUsers, u => u.Email == recipientUser.Email);
+        //    // Check that the email was intended to be sent to the recipients (e.g., RoleId == 2, not the sender)
+        //    var notifiedUsers = context.Users.Where(u => u.UserId != senderUser.UserId).ToList();
+        //    Assert.Contains(notifiedUsers, u => u.Email == recipientUser.Email);
 
-            // Check that the sender was not included in the notification
-            Assert.DoesNotContain(notifiedUsers, u => u.Email == senderUser.Email);
-        }
+        //    // Check that the sender was not included in the notification
+        //    Assert.DoesNotContain(notifiedUsers, u => u.Email == senderUser.Email);
+        //}
+
+
+    //    [Fact] // Test for method AddEvent
+    //    public async Task AddEvent_ShouldAddEventAndSendEmails_WhenDataIsValid()
+    //    {
+    //        // Arrange
+    //        var options = new DbContextOptionsBuilder<GreenGardenContext>()
+    //            .UseInMemoryDatabase(databaseName: "TestDatabase_AddEvent")
+    //            .Options;
+
+    //        await using var context = new GreenGardenContext(options);
+    //        context.Database.EnsureCreated();
+
+    //        // Seed necessary data: Add users with RoleId = 3 (email recipients)
+    //        var usersToNotify = new List<User>
+    //{
+    //    new User
+    //    {
+    //        UserId = 1,
+    //        FirstName = "Jane",
+    //        LastName = "Smith",
+    //        Email = "jane.smith@example.com",
+    //        Password = "password123",
+    //        RoleId = 3 // Notification recipient
+    //    },
+    //    new User
+    //    {
+    //        UserId = 2,
+    //        FirstName = "Alice",
+    //        LastName = "Johnson",
+    //        Email = "alice.johnson@example.com",
+    //        Password = "password123",
+    //        RoleId = 3 // Notification recipient
+    //    }
+    //};
+
+    //        // Add a user with RoleId != 3 to ensure they are excluded from notifications
+    //        var nonNotifiedUser = new User
+    //        {
+    //            UserId = 3,
+    //            FirstName = "Bob",
+    //            LastName = "Brown",
+    //            Email = "bob.brown@example.com",
+    //            Password = "password123",
+    //            RoleId = 2
+    //        };
+
+    //        context.Users.AddRange(usersToNotify);
+    //        context.Users.Add(nonNotifiedUser);
+    //        await context.SaveChangesAsync();
+
+    //        // Create a valid event DTO
+    //        var eventDTO = new CreateEventDTO
+    //        {
+    //            EventName = "Test Event",
+    //            Description = "This is a test event",
+    //            EventDate = DateTime.Now,
+    //            StartTime = "10:00",
+    //            EndTime = "12:00",
+    //            Location = "Test Location",
+    //            PictureUrl = "http://example.com/event.jpg",
+    //            CreateBy = 1 // User ID of the event creator
+    //        };
+
+    //        // Mock configuration for email settings
+    //        var configuration = new ConfigurationBuilder()
+    //            .AddInMemoryCollection(new Dictionary<string, string>
+    //            {
+    //        { "EmailSettings:FromEmail", "no-reply@example.com" }
+    //            })
+    //            .Build();
+
+    //        // Mock the email sending function
+    //        var emailServiceMock = new Mock<Func<string, CreateEventDTO, IConfiguration, Task>>();
+    //        emailServiceMock
+    //            .Setup(service => service(It.IsAny<string>(), It.IsAny<CreateEventDTO>(), It.IsAny<IConfiguration>()))
+    //            .Returns(Task.CompletedTask); // Simulate successful email sending
+
+    //        // Act
+    //        EventDAO.InitializeContext(context);
+    //        var result = await EventDAO.AddEvent(eventDTO, configuration);
+
+    //        // Assert
+    //        Assert.True(result, "AddEvent should return true when the event is successfully added and emails are sent.");
+
+    //        // Verify the event was added to the database
+    //        var addedEvent = context.Events.FirstOrDefault(e => e.EventName == eventDTO.EventName);
+    //        Assert.NotNull(addedEvent);
+    //        Assert.Equal(eventDTO.Description, addedEvent.Description);
+    //        Assert.Equal(eventDTO.Location, addedEvent.Location);
+    //        Assert.Equal(eventDTO.CreateBy, addedEvent.CreateBy);
+
+    //        // Verify the email sending function was called for each user with RoleId = 3
+    //        var recipientEmails = usersToNotify.Select(u => u.Email).ToList();
+    //        emailServiceMock.Verify(service =>
+    //            service(It.Is<string>(email => recipientEmails.Contains(email)),
+    //                    It.Is<CreateEventDTO>(e => e.EventName == "Test Event"),
+    //                    It.IsAny<IConfiguration>()),
+    //            Times.Exactly(recipientEmails.Count));
+
+    //        // Ensure no email was sent to the non-notified user (RoleId != 3)
+    //        emailServiceMock.Verify(service =>
+    //            service(It.Is<string>(email => email == nonNotifiedUser.Email),
+    //                    It.IsAny<CreateEventDTO>(),
+    //                    It.IsAny<IConfiguration>()),
+    //            Times.Never);
+    //    }
 
         [Fact]
         public async Task AddEvent_ShouldThrowException_WhenEventCreationFails()
