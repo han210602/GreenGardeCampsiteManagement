@@ -119,5 +119,15 @@ namespace Repositories.Orders
             return OrderDAO.UpdateTicket(tickets);
 
         }
+
+        public bool CreateUniqueOrderUsing(CreateUniqueOrderRequest order)
+        {
+            return OrderDAO.CreateUniqueOrderUsing(order);
+        }
+
+        public bool CreateComboOrderUsing(CreateComboOrderRequest order)
+        {
+            return OrderDAO.CreateComboOrderUsing(order);
+        }
     }
 }

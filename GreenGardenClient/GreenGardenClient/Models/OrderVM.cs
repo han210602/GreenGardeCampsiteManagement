@@ -17,6 +17,7 @@
         public string? ActivityName { get; set; }
         public string? PhoneCustomer { get; set; }
         public DateTime? OrderCheckoutDate { get; set; }
+        public bool mustDeposit { get; set; }
 
     }
     public class CustomerOrderVM

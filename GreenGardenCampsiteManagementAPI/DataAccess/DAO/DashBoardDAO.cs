@@ -96,7 +96,7 @@ namespace DataAccess.DAO
                             if (item.Deposit > 0)
                             {
                                 TotalDepositOrderUsing++;
-                                MoneyTotalDepositOrderUsing++;
+                                MoneyTotalDepositOrderUsing+= item.Deposit;
                             }
                         }
                         else if (item.ActivityId == 1)
@@ -149,7 +149,7 @@ namespace DataAccess.DAO
                             if (item.Deposit > 0)
                             {
                                 TotalDepositOrderUsing++;
-                                MoneyTotalDepositOrderUsing++;
+                                MoneyTotalDepositOrderUsing+= item.Deposit;
                             }
                         }
                         else if (item.ActivityId == 1)

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "JUIRtYMRqEXALPbsUcdA8jNhv86HyokhAe9tah6CNJVZQ43ijCZPMBwdtYXhpXOnCMkQuxtu2zTmwjq76pdpHQ==",
+  "dgSpecHash": "LpRWiDsGXaqvsjpqvzAsd6ITP10d3yduN6wvQB7U/1p3qtbM3ASIrrq1ZGAlyOSOO/A/Yc6ouRTBF473XwBS+w==",
   "success": true,
-  "projectFilePath": "C:\\Users\\PCT\\Downloads\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient.csproj",
+  "projectFilePath": "D:\\SEP490\\GreenGardenCampsiteManagement\\GreenGardenClient\\GreenGardenClient\\GreenGardenClient.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\PCT\\.nuget\\packages\\cloudinarydotnet\\1.26.2\\cloudinarydotnet.1.26.2.nupkg.sha512",
     "C:\\Users\\PCT\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",

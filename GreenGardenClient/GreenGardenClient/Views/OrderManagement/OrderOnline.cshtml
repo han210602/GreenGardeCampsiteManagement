@@ -720,9 +720,15 @@
                                         <i class="fas fa-clipboard-list" style="color: green;"></i>
                                     </td> <!-- Trạng thái đặt trước -->
 
-
                                     <td>
-                                        #@item.OrderId
+                                        @if (item.mustDeposit == true)
+                                        {
+                                            <span style="color:red;">#@item.OrderId</span>
+                                        }
+                                        else
+                                        {
+                                            <span>#@item.OrderId</span>
+                                        }
                                     </td>
                                     <td>@item.CustomerName</td>
                                     <td>@item.PhoneCustomer</td>

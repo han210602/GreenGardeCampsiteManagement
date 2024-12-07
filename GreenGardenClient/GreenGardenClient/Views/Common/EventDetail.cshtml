@@ -632,8 +632,15 @@
                                     <form id="ticketForm-@events.EventId" method="post" action="/Service/AddDateToCart">
                                         <input type="hidden" id="hidden-date-@events.EventId" name="usageDate" />
                                         <div style="display: flex; gap: 10px;">
-                                            <a href="/Common/Event" class="btn btn-secondary mt-4" style="border: none; width: 200px; height: 50px; display: flex; align-items: center; justify-content: center; text-align: center;">Quay lại</a>
+                                            <a href="javascript:void(0);" class="btn btn-secondary mt-4"
+                                               style="border: none; width: 200px; height: 50px; display: flex; align-items: center; justify-content: center; text-align: center;"
+                                               onclick="goBack()">Quay lại</a>
 
+                                            <script>
+                                                function goBack() {
+                                                    window.history.back();
+                                                }
+                                            </script>
                                             <button type="button" class="btn btn-primary" style="background-color: #efba6c !important; border: none; width: 200px; height: 50px; display: flex; align-items: center; justify-content: center;margin-top: 24px;" onclick="setUsageDate(@events.EventId)">Đặt vé</button>
                                         </div>
                                     </form>
@@ -881,26 +888,25 @@
                 <h2 class="footer-heading mb-3 text-uppercase">Facebook</h2>
                 <div class="row g-2">
                     <div class="col-4" style="margin:10px">
-                        <a href="#"><img src="~/images/Picture1.jpg" alt="Image" class="img-fluid rounded"></a>
+                        <a><img src="https://res.cloudinary.com/dxpsghdhb/image/upload/v1733553625/Avatar/Avatar/picture16.jpg" alt="Image" class="img-fluid rounded"></a>
                     </div>
                     <div class="col-4" style="margin:10px">
-                        <a href="#"><img src="~/images/Picture8.jpg" alt="Image" class="img-fluid rounded"></a>
+                        <a><img src="https://res.cloudinary.com/dxpsghdhb/image/upload/v1733553595/Avatar/Avatar/picture8.jpg" alt="Image" class="img-fluid rounded"></a>
                     </div>
                     <div class="col-4" style="margin:10px">
-                        <a href="#"><img src="~/images/Picture7.jpg" alt="Image" class="img-fluid rounded"></a>
+                        <a><img src="https://res.cloudinary.com/dxpsghdhb/image/upload/v1733553649/Avatar/Avatar/picture7.jpg" alt="Image" class="img-fluid rounded"></a>
                     </div>
                     <div class="col-4" style="margin:10px">
-                        <a href="#"><img src="~/images/Picture1.jpg" alt="Image" class="img-fluid rounded"></a>
+                        <a><img src="https://res.cloudinary.com/dxpsghdhb/image/upload/v1733553681/Avatar/Avatar/Picture1.jpg" alt="Image" class="img-fluid rounded"></a>
                     </div>
                     <div class="col-4" style="margin:10px">
-                        <a href="#"><img src="~/images/Picture8.jpg" alt="Image" class="img-fluid rounded"></a>
+                        <a><img src="https://res.cloudinary.com/dxpsghdhb/image/upload/v1733553756/Avatar/Avatar/picture4.jpg" alt="Image" class="img-fluid rounded"></a>
                     </div>
                     <div class="col-4" style="margin:10px">
-                        <a href="#"><img src="~/images/Picture7.jpg" alt="Image" class="img-fluid rounded"></a>
+                        <a><img src="https://res.cloudinary.com/dxpsghdhb/image/upload/v1732511144/Avatar/Avatar/picture11.jpg" alt="Image" class="img-fluid rounded"></a>
                     </div>
                 </div>
             </div>
-
 
             <!-- Quick Links Section -->
             <div class="col-lg-4">

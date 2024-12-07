@@ -336,6 +336,43 @@
                     padding: 0;
                     overflow-x: hidden;
                 }
+
+                .password-container {
+                    position: relative;
+                    width: 100%;
+                }
+
+                #password {
+                    width: 100%;
+                    padding-right: 40px; /* Chừa khoảng trống cho icon */
+                }
+
+                
+                #togglePassword {
+                    position: absolute;
+                    top: 50%;
+                    right: 10px; /* Đặt icon ở bên phải */
+                    transform: translateY(-50%);
+                    cursor: pointer;
+                    color: #888;
+                }
+
+                    #togglePassword:hover {
+                        color: #000; /* Đổi màu khi hover */
+                    }
+
+                #toggleConfirmPassword {
+                    position: absolute;
+                    top: 50%;
+                    right: 10px; /* Đặt icon ở bên phải */
+                    transform: translateY(-50%);
+                    cursor: pointer;
+                    color: #888;
+                }
+
+                    #toggleConfirmPassword:hover {
+                        color: #000; /* Đổi màu khi hover */
+                    }
             </style>
             <script>
                 $(document).ready(function () {
@@ -460,7 +497,11 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="password" class="form-label required">Mật khẩu:</label>
-                                        <input type="password" class="form-control" id="password" name="Password" placeholder="Mật khẩu" required value="@Model.Password">
+                                        <div class="password-container">
+                                            <input type="password" class="form-control" id="password" name="Password" placeholder="Mật khẩu" required value="@Model.Password">
+                                            <i id="togglePassword" class="fas fa-eye-slash"></i>
+                                        </div>
+                                       
                                         <span asp-validation-for="Password" class="text-danger"></span>
                                     </div>
                                 </div>
@@ -469,7 +510,11 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="confirmPassword" class="form-label required">Xác nhận mật khẩu:</label>
-                                        <input type="password" class="form-control" id="confirmPassword" name="ConfirmPassword" placeholder="Xác nhận mật khẩu" required value="@Model.ConfirmPassword">
+                                        <div class="password-container">
+                                            <input type="password" class="form-control" id="confirmPassword" name="ConfirmPassword" placeholder="Xác nhận mật khẩu" required value="@Model.ConfirmPassword">
+                                            <i id="toggleConfirmPassword" class="fas fa-eye-slash"></i>
+                                        </div>
+                                       
                                         <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                                         <div id="passwordError" class="text-danger" style="display: none;">Mật khẩu không khớp, vui lòng nhập lại.</div>
 
@@ -509,7 +554,33 @@
                 </div>
             </div>
         </div>
+        <script>
+            document.getElementById("togglePassword").addEventListener("click", function () {
+                const passwordInput = document.getElementById("password");
+                const isPassword = passwordInput.type === "password";
 
+                // Đổi loại của input giữa 'password' và 'text'
+                passwordInput.type = isPassword ? "text" : "password";
+
+                // Đổi icon (mắt mở -> mắt gạch)
+                this.classList.toggle("fa-eye-slash");
+                this.classList.toggle("fa-eye");
+            });
+
+            document.getElementById("toggleConfirmPassword").addEventListener("click", function () {
+                const confirmPasswordInput = document.getElementById("confirmPassword");
+                const isPassword = confirmPasswordInput.type === "password";
+
+                // Đổi loại của input giữa 'password' và 'text'
+                confirmPasswordInput.type = isPassword ? "text" : "password";
+
+                // Đổi icon (mắt mở -> mắt gạch)
+                this.classList.toggle("fa-eye-slash");
+                this.classList.toggle("fa-eye");
+            });
+
+
+        </script>
         <style>
             /* CSS cho dấu sao đỏ ở các label */
             label.required::before {
@@ -543,22 +614,22 @@
                         <h2 class="footer-heading mb-3 text-uppercase">Facebook</h2>
                         <div class="row g-2">
                             <div class="col-4" style="margin:10px">
-                                <a href="#"><img src="~/images/Picture1.jpg" alt="Image" class="img-fluid rounded"></a>
+                                <a><img src="https://res.cloudinary.com/dxpsghdhb/image/upload/v1733553625/Avatar/Avatar/picture16.jpg" alt="Image" class="img-fluid rounded"></a>
                             </div>
                             <div class="col-4" style="margin:10px">
-                                <a href="#"><img src="~/images/Picture8.jpg" alt="Image" class="img-fluid rounded"></a>
+                                <a><img src="https://res.cloudinary.com/dxpsghdhb/image/upload/v1733553595/Avatar/Avatar/picture8.jpg" alt="Image" class="img-fluid rounded"></a>
                             </div>
                             <div class="col-4" style="margin:10px">
-                                <a href="#"><img src="~/images/Picture7.jpg" alt="Image" class="img-fluid rounded"></a>
+                                <a><img src="https://res.cloudinary.com/dxpsghdhb/image/upload/v1733553649/Avatar/Avatar/picture7.jpg" alt="Image" class="img-fluid rounded"></a>
                             </div>
                             <div class="col-4" style="margin:10px">
-                                <a href="#"><img src="~/images/Picture1.jpg" alt="Image" class="img-fluid rounded"></a>
+                                <a><img src="https://res.cloudinary.com/dxpsghdhb/image/upload/v1733553681/Avatar/Avatar/Picture1.jpg" alt="Image" class="img-fluid rounded"></a>
                             </div>
                             <div class="col-4" style="margin:10px">
-                                <a href="#"><img src="~/images/Picture8.jpg" alt="Image" class="img-fluid rounded"></a>
+                                <a><img src="https://res.cloudinary.com/dxpsghdhb/image/upload/v1733553756/Avatar/Avatar/picture4.jpg" alt="Image" class="img-fluid rounded"></a>
                             </div>
                             <div class="col-4" style="margin:10px">
-                                <a href="#"><img src="~/images/Picture7.jpg" alt="Image" class="img-fluid rounded"></a>
+                                <a><img src="https://res.cloudinary.com/dxpsghdhb/image/upload/v1732511144/Avatar/Avatar/picture11.jpg" alt="Image" class="img-fluid rounded"></a>
                             </div>
                         </div>
                     </div>

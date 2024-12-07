@@ -738,22 +738,17 @@
                         </a>
                     </div>
 
-                    <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
-                           id="sampleTable">
+                    <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0" id="sampleTable">
                         <thead>
                             <tr>
                                 <th width="10%">Số thứ tự</th>
                                 <th width="15%">Họ và tên</th>
                                 <th width="10%">Email</th>
-
                                 <th width="12%">Số Điện thoại</th>
-
                                 <th width="14%">Trạng thái</th>
                                 <th width="10%">Năm sinh</th>
                                 <th width="10%">Giới tính</th>
                                 <th width="10%">Tính năng</th>
-
-
                             </tr>
                         </thead>
                         <tbody>
@@ -762,40 +757,79 @@
                             }
                             @foreach (var account in Model)
                             {
-                                <tr>
+                                // Check if IsActive is false, and add a class to change the row's style
+                                var rowClass = account.IsActive ? "" : "inactive-row";
+                                <tr class="@rowClass">
                                     <td>@a</td>
                                     <td>@account.FirstName @account.LastName</td>
                                     <td>@account.Email</td>
-
                                     <td>@account.PhoneNumber</td>
-
-                                    <td>@(account.IsActive ? "Hoạt động" : "Không hoạt động")</td>
+                                    <td style="font-weight: bold;">
+                                        @if (account.IsActive == true)
+                                        {
+                                            <i class="fas fa-check-circle" style="color: green;"></i>
+                                            <span>Hoạt động</span>
+                                                            }
+                                        else
+                                        {
+                                            <i class="fas fa-times-circle" style="color: red;"></i>
+                                            <span>Không hoạt động</span>
+                                                            }
+                                    </td>
 
                                     <td>
                                         @(account.DateOfBirth != null ? account.DateOfBirth.Value.ToString("dd/MM/yyyy") : "")
-
                                     </td>
-
                                     <td>@(account.Gender?.Trim().ToLower() == "male" ? "Nam" : account.Gender?.Trim().ToLower() == "female" ? "Nữ" : "Khác")</td>
-
-
-
-                           
                                     <td style="display: flex; justify-content: center; align-items: center;">
                                         <a href="@Url.Action("UpdateEmployee", "EmployeeManagement", new { id = @account.UserId })">
                                             <i class="fa fa-info-circle"></i>
                                         </a>
                                     </td>
-                                  
-
-                    
                                 </tr>
-                                         a++;
+                                a++;
                             }
-
                         </tbody>
-
                     </table>
+
+                    <!-- Add custom CSS for the red line -->
+                    <style>
+                        .inactive-row {
+                            color: red; /* Change text color to red */
+                            border: none; /* Red border to highlight inactive rows */
+                        }
+
+                        .text-danger {
+                            color: red;
+                            font-weight: bold;
+                        }
+
+                        .text-dark {
+                            color: black;
+                            font-weight: normal;
+                        }
+                    </style>
+
+                    <!-- Summary Section for Active and Blocked Accounts -->
+                    <div class="status-summary mt-4">
+                        <div class="row">
+                            <div class="col-md-6 text-center">
+                                <div class="summary-box active-summary">
+                                    <i class="fas fa-check-circle"></i>
+                                    <h5 class="text-dark">Tài khoản hoạt động</h5>
+                                    <p class="status-count">@Model.Count(account => account.IsActive)</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 text-center">
+                                <div class="summary-box inactive-summary">
+                                    <i class="fas fa-times-circle"></i>
+                                    <h5 class="text-danger">Tài khoản đã block</h5>
+                                    <p class="status-count">@Model.Count(account => !account.IsActive)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Modal xác nhận xóa -->
                     <div id="confirmationModal" class="modal" tabindex="-1" role="dialog" style="display: none;">
                         <div class="modal-dialog" role="document">
@@ -813,12 +847,48 @@
 
                 </div>
             </div>
-
         </div>
-
-
-
     </main>
+
+    <!-- Add custom CSS for summary boxes -->
+    <style>
+        .status-summary {
+            margin-top: 20px;
+        }
+
+        .summary-box {
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+            .summary-box h5 {
+                margin-bottom: 10px;
+                font-weight: bold;
+            }
+
+            .summary-box .status-count {
+                font-size: 24px;
+                font-weight: bold;
+            }
+
+        .active-summary {
+            background-color: #d4edda;
+        }
+
+        .inactive-summary {
+            background-color: #f8d7da;
+        }
+
+        .active-summary i {
+            color: #28a745;
+        }
+
+        .inactive-summary i {
+            color: #dc3545;
+        }
+    </style>
+
 
     <script>
         $(document).ready(function () {

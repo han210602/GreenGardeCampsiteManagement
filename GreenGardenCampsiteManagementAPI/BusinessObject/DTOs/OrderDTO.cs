@@ -25,6 +25,8 @@ namespace BusinessObject.DTOs
         public string? PhoneCustomer { get; set; }
         public DateTime? OrderCheckoutDate { get; set; }
 
+        public bool mustDeposit { get; set; }
+
 
     }
     public class CustomerOrderDTO

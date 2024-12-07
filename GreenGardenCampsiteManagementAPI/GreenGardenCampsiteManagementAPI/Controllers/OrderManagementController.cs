@@ -155,6 +155,36 @@ namespace GreenGardenCampsiteManagementAPI.Controllers
         }
         [Authorize("AdminAndEmployeePolicy")]
 
+        [HttpPost("CreateUniqueOrderUsing")]
+        public IActionResult CreateUniqueOrderUsing([FromBody] CreateUniqueOrderRequest order)
+        {
+            try
+            {
+                return Ok(_repo.CreateUniqueOrderUsing(order));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+
+        [Authorize("AdminAndEmployeePolicy")]
+
+        [HttpPost("CreateComboOrderUsing")]
+        public IActionResult CreateComboOrderUsing([FromBody] CreateComboOrderRequest order)
+        {
+            try
+            {
+                return Ok(_repo.CreateComboOrderUsing(order));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+        [Authorize("AdminAndEmployeePolicy")]
+
         [HttpPost("UpdateTicket")]
         public IActionResult UpdateTicket([FromBody] List<OrderTicketAddlDTO> ticket)
         {

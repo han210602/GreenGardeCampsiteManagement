@@ -15,7 +15,7 @@ namespace DataAccess.DAO
         {
             try
             {
-                var events = context.Events.Include(user => user.CreateByNavigation)
+                var events = context.Events.Include(user => user.CreateByNavigation).OrderByDescending(eventEntity => eventEntity.EventDate)
                     .Select(eventEntity => new EventDTO
                     {
                         EventId = eventEntity.EventId,

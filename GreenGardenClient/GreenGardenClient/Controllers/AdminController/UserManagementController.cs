@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using GreenGardenClient.Models;
+using Microsoft.AspNetCore.Mvc;
 using System.Net.Http.Headers;
 
 namespace GreenGardenClient.Controllers.AdminController
 {
-
     public class UserManagementController : Controller
     {
         private readonly IHttpClientFactory _clientFactory;
@@ -13,23 +13,34 @@ namespace GreenGardenClient.Controllers.AdminController
             _clientFactory = clientFactory;
         }
 
-        private T GetDataFromApi<T>(string url)
+        private async Task<T> GetDataFromApiAsync<T>(string url)
         {
-            var client = _clientFactory.CreateClient(); // Create an HttpClient instance
-            using var response = client.GetAsync(url).Result; // Call GetAsync on the client
-            response.EnsureSuccessStatusCode();
-            return response.Content.ReadFromJsonAsync<T>().Result;
+            using (var client = _clientFactory.CreateClient())
+            {
+                var jwtToken = Request.Cookies["JWTToken"];
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
+                var response = await client.GetAsync(url);
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = await response.Content.ReadFromJsonAsync<T>();
+                    return data!;
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = $"Không thể lấy dữ liệu từ API: {response.StatusCode}";
+                    return default!;
+                }
+            }
         }
 
-
-        public IActionResult Index()
+        // Make Index method asynchronous and await GetDataFromApiAsync calls
+        public async Task<IActionResult> Index()
         {
             var userRole = HttpContext.Session.GetInt32("RoleId");
-
             int? userId = HttpContext.Session.GetInt32("UserId");
+
             if (userId == null)
             {
-                // Redirect to login page if UserId is not found in session
                 return RedirectToAction("Index", "Home");
             }
 
@@ -37,24 +48,34 @@ namespace GreenGardenClient.Controllers.AdminController
             {
                 return RedirectToAction("Index", "Home");
             }
-            var client = _clientFactory.CreateClient();
-            var jwtToken = Request.Cookies["JWTToken"];
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
-            List<Account> userdata = GetDataFromApi<List<Account>>("http://103.75.186.149:5000/api/User/GetAllCustomers");
+
+            // Awaiting the API calls
+            List<OrderVM> orderdata = await GetDataFromApiAsync<List<OrderVM>>("https://be-green.chunchun.io.vn/api/OrderManagement/GetAllOrders");
+            List<Account> userdata = await GetDataFromApiAsync<List<Account>>("https://be-green.chunchun.io.vn/api/User/GetAllCustomers");
+
+            if (userdata == null)
+            {
+                TempData["ErrorMessage"] = "Không thể lấy dữ liệu người dùng";
+            }
+
+            // Pass the order data and the user data to the view
+            ViewBag.OrderData = orderdata;
+            ViewBag.UserData = userdata;
+
             return View(userdata);
         }
+
+
+
         [HttpPost("BlockUser/{id}")]
         public async Task<IActionResult> BlockUser(int id)
         {
-
             Console.WriteLine($"Received id: {id}");
-            string apiUrl = $"http://103.75.186.149:5000/api/User/BlockUser/{id}";
+            string apiUrl = $"https://be-green.chunchun.io.vn/api/User/BlockUser/{id}";
 
             try
             {
                 var client = _clientFactory.CreateClient();
-
-
                 var response = await client.PostAsync(apiUrl, null);
 
                 if (response.IsSuccessStatusCode)
@@ -64,7 +85,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 }
                 else
                 {
-                    TempData["ErrorMessage"] = "Đã xảy ra lỗi khi mở khoá người dùng";
+                    TempData["ErrorMessage"] = "Đã xảy ra lỗi khi chặn người dùng";
                     return RedirectToAction("Index");
                 }
             }
@@ -74,48 +95,38 @@ namespace GreenGardenClient.Controllers.AdminController
                 return RedirectToAction("Index");
             }
         }
+
         [HttpPost("UnBlockUser/{id}")]
         public async Task<IActionResult> UnBlockUser(int id)
         {
-            Console.WriteLine($"Received id: {id}"); // Log nhận ID từ request
-
-            string apiUrl = $"http://103.75.186.149:5000/api/User/UnBlockUser/{id}";
+            Console.WriteLine($"Received id: {id}");
+            string apiUrl = $"https://be-green.chunchun.io.vn/api/User/UnBlockUser/{id}";
 
             try
             {
-                // Tạo HttpClient từ _clientFactory
                 var client = _clientFactory.CreateClient();
-                Console.WriteLine($"Sending POST request to API: {apiUrl}");
-
-                // Gửi POST request đến API
                 var response = await client.PostAsync(apiUrl, null);
 
-                // Kiểm tra trạng thái phản hồi
                 if (response.IsSuccessStatusCode)
                 {
                     TempData["SuccessMessage"] = "Mở khoá người dùng thành công";
-                    Console.WriteLine(TempData["SuccessMessage"]); // Log giá trị để kiểm tra
                     return RedirectToAction("Index");
                 }
                 else
                 {
-                    // Đọc thông báo lỗi từ API
                     var errorMessage = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine($"API call failed with error: {errorMessage}");
                     TempData["ErrorMessage"] = $"Failed to Unblock user: {errorMessage}";
                     return RedirectToAction("Index");
                 }
             }
             catch (HttpRequestException httpEx)
             {
-                // Lỗi liên quan đến HTTP
                 Console.WriteLine($"HTTP Request error: {httpEx.Message}");
                 TempData["ErrorMessage"] = "Network error occurred. Please try again.";
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                // Lỗi chung
                 Console.WriteLine($"Internal server error: {ex.Message}");
                 TempData["ErrorMessage"] = $"Internal server error: {ex.Message}";
                 return RedirectToAction("Index");
@@ -123,11 +134,11 @@ namespace GreenGardenClient.Controllers.AdminController
         }
 
         [HttpGet]
-        public IActionResult UpdateUser(int id)
+        public async Task<IActionResult> UpdateUser(int id)
         {
             var userRole = HttpContext.Session.GetInt32("RoleId");
-
             int? userId = HttpContext.Session.GetInt32("UserId");
+
             if (userId == null)
             {
                 // Redirect to login page if UserId is not found in session
@@ -138,8 +149,9 @@ namespace GreenGardenClient.Controllers.AdminController
             {
                 return RedirectToAction("Index", "Home");
             }
-            // Fetch user data from the API asynchronously
-            var user = GetDataFromApi<Account>($"http://103.75.186.149:5000/api/User/GetUserById/{id}");
+
+            // Fetch user data from the API asynchronously and await the result
+            var user = await GetDataFromApiAsync<Account>($"https://be-green.chunchun.io.vn/api/User/GetUserById/{id}");
 
             // Check if user data is null and redirect to an error page if not found
             if (user == null)
@@ -147,9 +159,8 @@ namespace GreenGardenClient.Controllers.AdminController
                 return RedirectToAction("Error", "Home"); // Redirect if the user is not found
             }
 
-            // Pass the user to the view
+            // Pass the user data to the view
             return View(user);
         }
-
     }
 }

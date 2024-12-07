@@ -36,7 +36,7 @@
 
     <div class="site-wrap" id="home-section">
 
-        
+
 
 
 
@@ -50,7 +50,7 @@
                 <div class="site-mobile-menu-body">
                     <ul class="site-menu main-menu js-clone-nav ml-auto">
                         <!-- Home link with icon -->
-                        <a  href="/Home">
+                        <a href="/Home">
                             <i class="fas fa-home"></i> Trang chủ
                         </a>
 
@@ -117,43 +117,43 @@
                                 <!-- User role-based links with icons -->
                                 @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 1)
                                 {
-                                   
-                                        <a href="~/DashBoard" class="nav-link">
-                                            <i class="fas fa-tachometer-alt"></i> Quản lí
-                                        </a>
-                                  
-                                        <a href="~/Home/Logout" class="nav-link">
-                                            <i class="fas fa-sign-out-alt"></i> Đăng xuất
-                                        </a>
-                                   
+
+                                    <a href="~/DashBoard" class="nav-link">
+                                        <i class="fas fa-tachometer-alt"></i> Quản lí
+                                    </a>
+
+                                    <a href="~/Home/Logout" class="nav-link">
+                                        <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                                    </a>
+
                                 }
                                 else if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 2)
                                 {
-                                    
-                                        <a href="~/OrderManagement/OrderOnline" class="nav-link">
-                                            <i class="fas fa-box"></i> Quản lí
-                                        </a>
-                                    
-                                        <a href="~/Home/Logout" class="nav-link">
-                                            <i class="fas fa-sign-out-alt"></i> Đăng xuất
-                                        </a>
-                                    
+
+                                    <a href="~/OrderManagement/OrderOnline" class="nav-link">
+                                        <i class="fas fa-box"></i> Quản lí
+                                    </a>
+
+                                    <a href="~/Home/Logout" class="nav-link">
+                                        <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                                    </a>
+
                                 }
                                 else
                                 {
-                                   
-                                        <a href="~/Service/OrderHistory" class="nav-link">
-                                            <i class="fas fa-history"></i> Lịch sử đặt hàng
-                                        </a>
-                                   
-                                        <a style="color: #efba6c " href="~/Service/Cart" class="nav-link">
-                                            <i class="fas fa-shopping-cart"></i> Giỏ hàng
-                                        </a>
-                                    
-                                        <a href="~/Home/Logout" class="nav-link">
-                                            <i class="fas fa-sign-out-alt"></i> Đăng xuất
-                                        </a>
-                                    
+
+                                    <a href="~/Service/OrderHistory" class="nav-link">
+                                        <i class="fas fa-history"></i> Lịch sử đặt hàng
+                                    </a>
+
+                                    <a style="color: #efba6c " href="~/Service/Cart" class="nav-link">
+                                        <i class="fas fa-shopping-cart"></i> Giỏ hàng
+                                    </a>
+
+                                    <a href="~/Home/Logout" class="nav-link">
+                                        <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                                    </a>
+
                                 }
                             </ul>
                         }
@@ -161,7 +161,7 @@
                         <!-- Shopping cart icon -->
                         @if (HttpContextAccessor.HttpContext.Session.GetInt32("RoleId") == 3)
                         {
-                            <a  href="~/Service/Cart" class="nav-link cart-icon">
+                            <a href="~/Service/Cart" class="nav-link cart-icon">
                                 <span class="cart-wrapper">
                                     <i id="cart-count" class="fas fa-shopping-cart"></i>
                                     @if (HttpContextAccessor.HttpContext.Session.GetInt32("CartItemCount") > 0)
@@ -367,6 +367,7 @@
                     font-weight: bold;
                     color: #333;
                 }
+
                 .cart-wrapper {
                     position: relative;
                     display: inline-block;
@@ -478,8 +479,7 @@
                 }
 
                     .summary button {
-                        background-color: #efba6c !important;
-                        color: black !important;
+              
                         width: 100%;
                         padding: 10px;
                         margin: 10px 0;
@@ -487,10 +487,40 @@
                         transition: background-color 0.3s ease, color 0.3s ease;
                     }
 
-                        .summary button:hover {
-                            background-color: #d99b53 !important;
-                            color: white !important;
-                        }
+                /* Nút "Quay lại dịch vụ" */
+                .btn-service {
+                    background-color: #6c757d !important; /* Màu xanh */
+                    color: #fff !important;
+                }
+
+                    .btn-service:hover {
+                        background-color: #6c757d !important;
+                        color: #fff !important;
+                    }
+
+                /* Nút "Đặt lại" */
+                .btn-reset {
+                    background-color: red !important;
+                                        color: #fff !important;
+
+                }
+
+                    .btn-reset:hover {
+                        background-color: #red !important;
+                        color: white !important;
+                    }
+
+                /* Nút "Đặt ngay" */
+                .btn-order {
+                    background-color: #efba6c !important; /* Màu xanh dương */
+                                               color: #fff !important;
+
+                }
+
+                    .btn-order:hover {
+                        background-color: #efba6c !important;
+                        color: #fff !important;
+                    }
 
 
                 .form-label {
@@ -723,18 +753,18 @@
                             <p>Đã cọc: 0đ</p>
                             <p>Tổng: <span id="totalPriceFinal">@Model.Sum(item => item.TotalPrice).ToString("N0")</span> đ</p>
                             <form action="~/Service" method="get">
-                                <button type="submit" class="btn btn-dark">Quay lại dịch vụ</button>
+                                <button type="submit" class="btn2 btn-dark btn-service">Quay lại dịch vụ</button>
                             </form>
                             <p class="mt-3">Nếu bạn muốn chọn lại ngày sử dụng, vui lòng đặt lại.</p>
                             <form action="/Service/Reset" method="post" onsubmit="return resetCart();">
-                                <button type="submit" class="btn btn-warning">Đặt lại</button>
+                                <button type="submit" class="btn1 btn-warning btn-reset">Đặt lại</button>
                             </form>
 
                             <!-- Remove the existing form's submit button -->
+                      
                             <form id="paymentForm" asp-controller="Service" asp-action="Order" method="post">
-                                <button type="button" class="btn btn-dark" onclick="submitPayment()">Đặt ngay </button>
+                                <button type="button" class="btn btn-dark btn-order" onclick="submitPayment()">Đặt ngay </button>
                             </form>
-
 
                         </div>
                     </div>
@@ -1026,21 +1056,21 @@
             // Thêm các sản phẩm mới vào giỏ hàng
             $.each(cartItems, function (index, item) {
                 $('#cartContainer').append(`
-                                            <div class="cart-item" id="cart-item-${item.id}">
-                                                        <img src="~/images//img_1.jpg" alt="${item.name}" class="img-thumbnail" style="width: 120px;">
-                                                <div class="cart-item-details ml-3">
-                                                    <h5>${item.name}</h5>
-                                                    <p>${item.typeCategory}</p>
-                                                    <p>Giá: <span id="price_${item.id}-${item.type}-${item.typeCategory}">${item.price.toLocaleString()}</span> đ</p>
-                                                </div>
-                                                <div class="ml-auto d-flex align-items-center">
-                                                    <button class="btn btn-light" onclick="decrementQuantity(${item.id}, ${item.price}, '${item.type}', '${item.typeCategory}')">-</button>
-                                                    <input type="text" id="quantity_${item.id}-${item.type}-${item.typeCategory}" value="${item.quantity}" class="form-control text-center mx-2" style="width: 50px;" readonly>
-                                                    <button class="btn btn-light" onclick="incrementQuantity(${item.id}, ${item.price}, '${item.type}', '${item.typeCategory}')">+</button>
-                                                    <button class="btn btn-danger ml-2" onclick="removeCartItem(${item.id}, '${item.type}', '${item.typeCategory}')">Xóa</button>
-                                                </div>
-                                            </div>
-                                        `);
+                                                    <div class="cart-item" id="cart-item-${item.id}">
+                                                                <img src="~/images//img_1.jpg" alt="${item.name}" class="img-thumbnail" style="width: 120px;">
+                                                        <div class="cart-item-details ml-3">
+                                                            <h5>${item.name}</h5>
+                                                            <p>${item.typeCategory}</p>
+                                                            <p>Giá: <span id="price_${item.id}-${item.type}-${item.typeCategory}">${item.price.toLocaleString()}</span> đ</p>
+                                                        </div>
+                                                        <div class="ml-auto d-flex align-items-center">
+                                                            <button class="btn btn-light" onclick="decrementQuantity(${item.id}, ${item.price}, '${item.type}', '${item.typeCategory}')">-</button>
+                                                            <input type="text" id="quantity_${item.id}-${item.type}-${item.typeCategory}" value="${item.quantity}" class="form-control text-center mx-2" style="width: 50px;" readonly>
+                                                            <button class="btn btn-light" onclick="incrementQuantity(${item.id}, ${item.price}, '${item.type}', '${item.typeCategory}')">+</button>
+                                                            <button class="btn btn-danger ml-2" onclick="removeCartItem(${item.id}, '${item.type}', '${item.typeCategory}')">Xóa</button>
+                                                        </div>
+                                                    </div>
+                                                `);
             });
 
             updateTotalPrice(); // Cập nhật tổng giá tiền nếu cần

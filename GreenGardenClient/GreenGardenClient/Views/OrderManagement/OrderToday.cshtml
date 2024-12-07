@@ -714,7 +714,14 @@
 
 
                                     <td>
-                                        <a asp-controller="OrderManagement" asp-action="OrderDetail" asp-route-id="@item.OrderId">#@item.OrderId</a>
+                                        @if (item.mustDeposit == true)
+                                        {
+                                            <span style="color:red;">#@item.OrderId</span>
+                                        }
+                                        else
+                                        {
+                                            <span>#@item.OrderId</span>
+                                        }
                                     </td>
                                     <td>@item.CustomerName</td>
                                     <td>@item.PhoneCustomer</td>

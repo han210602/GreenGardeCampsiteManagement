@@ -22,8 +22,8 @@ namespace DataAccess.DAO
                             OrderId = o.OrderId,
                             CustomerId = o.CustomerId,
                             EmployeeId = o.EmployeeId,
-                            EmployeeName = o.Employee.FirstName + "" + o.Employee.LastName,
-                            CustomerName = o.CustomerId != null ? o.Customer.FirstName + "" + o.Customer.LastName : o.CustomerName,
+                            EmployeeName = o.Employee.FirstName + " " + o.Employee.LastName,
+                            CustomerName = o.CustomerId != null ? o.Customer.FirstName + " " + o.Customer.LastName : o.CustomerName,
                             PhoneCustomer = o.PhoneCustomer == null ? o.Customer.PhoneNumber : o.PhoneCustomer,
                             OrderDate = o.OrderDate,
                             OrderUsageDate = o.OrderUsageDate,
@@ -33,7 +33,7 @@ namespace DataAccess.DAO
                             StatusOrder = o.StatusOrder,
                             ActivityId = o.ActivityId,
                             ActivityName = o.Activity.ActivityName,
-                            OrderCheckoutDate = o.OrderCheckoutDate
+                            OrderCheckoutDate = o.OrderCheckoutDate,
                         })
                         .ToList();
                 }
@@ -105,7 +105,7 @@ namespace DataAccess.DAO
                             CustomerId = o.CustomerId,
                             EmployeeId = o.EmployeeId,
                             EmployeeName = o.Employee.FirstName + "" + o.Employee.LastName,
-                            CustomerName = o.CustomerId != null ? o.Customer.FirstName + "" + o.Customer.LastName : o.CustomerName,
+                            CustomerName = o.CustomerId != null ? o.Customer.FirstName + " " + o.Customer.LastName : o.CustomerName,
                             PhoneCustomer = o.PhoneCustomer != null ? o.Customer.PhoneNumber : o.PhoneCustomer,
                             OrderDate = o.OrderDate,
                             OrderUsageDate = o.OrderUsageDate,
@@ -236,38 +236,131 @@ namespace DataAccess.DAO
 
                         Order newOrder;
 
-                        if (order.Deposit > 0)
-                        {
+                        
                             newOrder = new Order
                             {
                                 EmployeeId = order.EmployeeId,
                                 CustomerName = order.CustomerName,
                                 OrderUsageDate = order.OrderUsageDate,
-                                Deposit = order.Deposit,
-                                TotalAmount = order.TotalAmount,
-                                AmountPayable = order.TotalAmount - order.Deposit,
-                                StatusOrder = true,
-                                ActivityId = 1,
-                                PhoneCustomer = order.PhoneCustomer
-
-                            };
-                        }
-                        else
-                        {
-                            newOrder = new Order
-                            {
-                                EmployeeId = order.EmployeeId,
-                                CustomerName = order.CustomerName,
-                                OrderUsageDate = order.OrderUsageDate,
-                                OrderDate = DateTime.Now,
                                 Deposit = order.Deposit,
                                 TotalAmount = order.TotalAmount,
                                 AmountPayable = order.TotalAmount - order.Deposit,
                                 StatusOrder = false,
-                                ActivityId = 2,
+                                ActivityId = 1,
                                 PhoneCustomer = order.PhoneCustomer
+
                             };
+                        if (order.Deposit > 0)
+                        {
+                            newOrder.StatusOrder = true;
                         }
+
+
+                        // Add the order and save to the database
+                        context.Orders.Add(newOrder);
+                        context.SaveChanges();
+
+                        int id = newOrder.OrderId;
+
+
+                        List<OrderTicketDetail> tickets = order_ticket.Select(t => new OrderTicketDetail
+                        {
+                            TicketId = t.TicketId,
+                            OrderId = id,
+                            Quantity = t.Quantity,
+                        }).ToList();
+                        context.OrderTicketDetails.AddRange(tickets);
+
+                        if (order_camping_gear != null)
+                        {
+                            List<OrderCampingGearDetail> gears = order_camping_gear.Select(g => new OrderCampingGearDetail
+                            {
+                                GearId = g.GearId,
+                                Quantity = g.Quantity,
+                                OrderId = id,
+                            }).ToList();
+                            context.OrderCampingGearDetails.AddRange(gears);
+                            context.SaveChanges();
+
+                        }
+                        if (order_food != null)
+                        {
+                            List<OrderFoodDetail> foods = order_food.Select(f => new OrderFoodDetail
+                            {
+                                OrderId = id,
+                                ItemId = f.ItemId,
+                                Quantity = f.Quantity,
+                                Description = f.Description,
+                            }).ToList();
+                            context.OrderFoodDetails.AddRange(foods);
+                            context.SaveChanges();
+
+                        }
+                        if (order_foot_combo != null)
+                        {
+                            List<OrderFoodComboDetail> foodCombos = order_foot_combo.Select(c => new OrderFoodComboDetail
+                            {
+                                OrderId = id,
+                                ComboId = c.ComboId,
+                                Quantity = c.Quantity,
+                            }).ToList();
+                            context.OrderFoodComboDetails.AddRange(foodCombos);
+                            context.SaveChanges();
+
+                        }
+                        return true;
+                    }
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+
+            }
+
+
+
+        }
+        public static bool CreateUniqueOrderUsing(CreateUniqueOrderRequest order_request)
+        {
+            var order = order_request.Order;
+            var order_ticket = order_request.OrderTicket;
+            var order_camping_gear = order_request.OrderCampingGear;
+            var order_food = order_request.OrderFood;
+            var order_foot_combo = order_request.OrderFoodCombo;
+
+
+            try
+            {
+                using (var context = new GreenGardenContext())
+                {
+
+                    if (order_ticket == null)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+
+                        Order newOrder;
+
+
+                        newOrder = new Order
+                        {
+                            EmployeeId = order.EmployeeId,
+                            CustomerName = order.CustomerName,
+                            OrderUsageDate = order.OrderUsageDate,
+                            Deposit = order.Deposit,
+                            TotalAmount = order.TotalAmount,
+                            AmountPayable = order.TotalAmount - order.Deposit,
+                            StatusOrder = false,
+                            ActivityId = 2,
+                            PhoneCustomer = order.PhoneCustomer
+
+                        };
+
 
                         // Add the order and save to the database
                         context.Orders.Add(newOrder);
@@ -413,7 +506,7 @@ namespace DataAccess.DAO
                         {
                             OrderId = o.OrderId,
                             EmployeeName = o.Employee.FirstName + "" + o.Employee.LastName,
-                            CustomerName = o.CustomerId != null ? o.Customer.FirstName + "" + o.Customer.LastName : o.CustomerName,
+                            CustomerName = o.CustomerId != null ? o.Customer.FirstName + " " + o.Customer.LastName : o.CustomerName,
                             OrderDate = o.OrderDate,
                             OrderUsageDate = o.OrderUsageDate,
                             Deposit = o.Deposit,
@@ -600,7 +693,7 @@ namespace DataAccess.DAO
                             CustomerId = o.CustomerId,
                             EmployeeId = o.EmployeeId,
                             EmployeeName = o.Employee.FirstName + "" + o.Employee.LastName,
-                            CustomerName = o.CustomerId != null ? o.Customer.FirstName + "" + o.Customer.LastName : o.CustomerName,
+                            CustomerName = o.CustomerId != null ? o.Customer.FirstName + " " + o.Customer.LastName : o.CustomerName,
                             PhoneCustomer = o.PhoneCustomer == null ? o.Customer.PhoneNumber : o.PhoneCustomer,
                             OrderDate = o.OrderDate,
                             OrderUsageDate = o.OrderUsageDate,
@@ -609,7 +702,13 @@ namespace DataAccess.DAO
                             AmountPayable = o.AmountPayable,
                             StatusOrder = o.StatusOrder,
                             ActivityId = o.ActivityId,
-                            ActivityName = o.Activity.ActivityName
+                            ActivityName = o.Activity.ActivityName,
+                            mustDeposit = (
+    (o.OrderCampingGearDetails != null && o.OrderCampingGearDetails.Any()) ||
+    (o.OrderFoodComboDetails != null && o.OrderFoodComboDetails.Any()) ||
+    (o.OrderFoodDetails != null && o.OrderFoodDetails.Any()) ||
+    (o.OrderComboDetails != null && o.OrderComboDetails.Any())
+) ? true : false
                         })
                         .ToList();
                 }
@@ -705,38 +804,25 @@ namespace DataAccess.DAO
 
                         Order newOrder;
 
-                        if (order.Deposit > 0)
-                        {
+                        
                             newOrder = new Order
                             {
                                 EmployeeId = order.EmployeeId,
                                 CustomerName = order.CustomerName,
                                 OrderUsageDate = order.OrderUsageDate,
-                                Deposit = order.Deposit,
-                                TotalAmount = order.TotalAmount,
-                                AmountPayable = order.TotalAmount - order.Deposit,
-                                StatusOrder = true,
-                                ActivityId = 1,
-                                PhoneCustomer = order.PhoneCustomer
-
-                            };
-                        }
-                        else
-                        {
-                            newOrder = new Order
-                            {
-                                EmployeeId = order.EmployeeId,
-                                CustomerName = order.CustomerName,
-                                OrderUsageDate = order.OrderUsageDate,
-                                OrderDate = DateTime.Now,
                                 Deposit = order.Deposit,
                                 TotalAmount = order.TotalAmount,
                                 AmountPayable = order.TotalAmount - order.Deposit,
                                 StatusOrder = false,
-                                ActivityId = 2,
+                                ActivityId = 1,
                                 PhoneCustomer = order.PhoneCustomer
+
                             };
+                        if (order.Deposit > 0)
+                        {
+                            newOrder.StatusOrder = true;
                         }
+                       
 
                         // Add the order and save to the database
                         context.Orders.Add(newOrder);
@@ -804,7 +890,114 @@ namespace DataAccess.DAO
 
 
         }
+        public static bool CreateComboOrderUsing(CreateComboOrderRequest order_request)
+        {
 
+
+            var order = order_request.Order;
+            var order_combo = order_request.OrderCombo;
+            var order_camping_gear = order_request.OrderCampingGear;
+            var order_food = order_request.OrderFood;
+            var order_foot_combo = order_request.OrderFoodCombo;
+
+
+            try
+            {
+                using (var context = new GreenGardenContext())
+                {
+
+                    if (order_combo == null)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+
+                        Order newOrder;
+
+
+                        newOrder = new Order
+                        {
+                            EmployeeId = order.EmployeeId,
+                            CustomerName = order.CustomerName,
+                            OrderUsageDate = order.OrderUsageDate,
+                            Deposit = order.Deposit,
+                            TotalAmount = order.TotalAmount,
+                            AmountPayable = order.TotalAmount - order.Deposit,
+                            StatusOrder = false,
+                            ActivityId = 2,
+                            PhoneCustomer = order.PhoneCustomer
+
+                        };
+
+
+
+                        // Add the order and save to the database
+                        context.Orders.Add(newOrder);
+                        context.SaveChanges();
+
+                        int id = newOrder.OrderId;
+
+
+                        List<OrderComboDetail> tickets = order_combo.Select(t => new OrderComboDetail
+                        {
+                            ComboId = t.ComboId,
+                            OrderId = id,
+                            Quantity = t.Quantity,
+                        }).ToList();
+                        context.OrderComboDetails.AddRange(tickets);
+
+                        if (order_camping_gear != null)
+                        {
+                            List<OrderCampingGearDetail> gears = order_camping_gear.Select(g => new OrderCampingGearDetail
+                            {
+                                GearId = g.GearId,
+                                Quantity = g.Quantity,
+                                OrderId = id,
+                            }).ToList();
+                            context.OrderCampingGearDetails.AddRange(gears);
+                            context.SaveChanges();
+
+                        }
+                        if (order_food != null)
+                        {
+                            List<OrderFoodDetail> foods = order_food.Select(f => new OrderFoodDetail
+                            {
+                                OrderId = id,
+                                ItemId = f.ItemId,
+                                Quantity = f.Quantity,
+                                Description = f.Description,
+                            }).ToList();
+                            context.OrderFoodDetails.AddRange(foods);
+                            context.SaveChanges();
+
+                        }
+                        if (order_foot_combo != null)
+                        {
+                            List<OrderFoodComboDetail> foodCombos = order_foot_combo.Select(c => new OrderFoodComboDetail
+                            {
+                                OrderId = id,
+                                ComboId = c.ComboId,
+                                Quantity = c.Quantity,
+                            }).ToList();
+                            context.OrderFoodComboDetails.AddRange(foodCombos);
+                            context.SaveChanges();
+
+                        }
+                        return true;
+                    }
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+
+            }
+
+
+        }
         public static bool UpdateTicket(List<OrderTicketAddlDTO> tickets)
         {
             try

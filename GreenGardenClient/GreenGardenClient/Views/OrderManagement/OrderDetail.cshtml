@@ -735,7 +735,13 @@
                             }
                         </div>
                         <div class="container mt-5">
-                            <h2 class="text-start mb-4">Đồ đã đặt</h2>
+                            <h2 class="text-start mb-4 d-inline">
+                                Đồ đã đặt
+                                @if ((Model.OrderCampingGearDetails.Any() || Model.OrderFoodDetails.Any() || Model.OrderFoodComboDetails.Any() || Model.OrderComboDetails.Any()) && Model.ActivityId == 1)
+                                {
+                                    <span style="color:red; font-style:normal; font-size: 0.7em;">( Đơn phải cọc )</span>
+                                }
+                            </h2>
                             <table class="invoice-table">
                                 <thead>
                                     <tr>
