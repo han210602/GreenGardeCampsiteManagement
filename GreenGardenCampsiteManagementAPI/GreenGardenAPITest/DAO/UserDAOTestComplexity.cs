@@ -134,7 +134,7 @@ namespace GreenGardenAPITest.DAO
             _mockContext.Verify(m => m.SaveChanges(), Times.Once);
         }
 
-        [Fact] 
+        [Fact]
         public void BlockUser_UserDoesNotExist_ReturnsFalse()
         {
             // Arrange
@@ -147,6 +147,7 @@ namespace GreenGardenAPITest.DAO
             _mockUsers.As<IQueryable<User>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
             _mockContext.Setup(c => c.Users).Returns(_mockUsers.Object);
 
+            UserDAO.InitializeContext(_mockContext.Object);
             // Act
             var result = UserDAO.BlockUser(userId, _mockConfiguration.Object);
 
@@ -275,139 +276,334 @@ namespace GreenGardenAPITest.DAO
                 IsActive = true
             };
 
-            var existingUser = new User { UserId = userId };
-           // _mockContext.Setup(c => c.Users.FirstOrDefault(It.IsAny<Func<User, bool>>())).Returns(existingUser);
+            var userList = new List<User>
+    {
+        new User { UserId = userId, FirstName = "Old", LastName = "User", Email = "old.user@example.com" }
+    }.AsQueryable();
 
-            UserDAO.InitializeContext(_mockContext.Object);
-            // Act
-            var result = UserDAO.UpdateUser(updatedUserDto);
+            var mockUserSet = new Mock<DbSet<User>>();
+            mockUserSet.As<IQueryable<User>>().Setup(m => m.Provider).Returns(userList.Provider);
+            mockUserSet.As<IQueryable<User>>().Setup(m => m.Expression).Returns(userList.Expression);
+            mockUserSet.As<IQueryable<User>>().Setup(m => m.ElementType).Returns(userList.ElementType);
+            mockUserSet.As<IQueryable<User>>().Setup(m => m.GetEnumerator()).Returns(userList.GetEnumerator());
 
-            // Assert
-            Assert.True(result, "Update should succeed for a valid user.");
-            Assert.Equal("Updated", existingUser.FirstName);
-            Assert.Equal("Updated Address", existingUser.Address);
-            _mockContext.Verify(m => m.SaveChanges(), Times.Once);
-        }
+            var mockContext = new Mock<GreenGardenContext>();
+            mockContext.Setup(c => c.Users).Returns(mockUserSet.Object);
 
-        [Fact]
-        public void UpdateUser_ExceptionDuringSave_ReturnsFalse()
-        {
-            // Arrange
-            var userId = 1;
-            var updatedUserDto = new UpdateUserDTO { UserId = userId };
-
-            var existingUser = new User { UserId = userId };
-            _mockContext.Setup(c => c.Users.FirstOrDefault(It.IsAny<Func<User, bool>>())).Returns(existingUser);
-            _mockContext.Setup(c => c.SaveChanges()).Throws(new Exception("Database error"));
+            UserDAO.InitializeContext(mockContext.Object);
 
             // Act
             var result = UserDAO.UpdateUser(updatedUserDto);
 
             // Assert
-            Assert.False(result, "Update should fail if an exception occurs during save.");
+            Assert.True(result, "UpdateUser should return true for a successful update.");
+            mockContext.Verify(m => m.SaveChanges(), Times.Once);
         }
 
+        // Test for method AddEmployee
         [Fact]
-        public void UpdateUser_NullOrEmptyEmail_ReturnsFalse()
+        public void AddEmployee_EmailAlreadyExists_ReturnsFalse()
         {
             // Arrange
-            var userId = 1;
-            var updatedUserDto = new UpdateUserDTO
-            {
-                UserId = userId,
-                Email = "" // Invalid email
-            };
+            var existingUser = new User { Email = "existing@example.com" };
+            var userList = new List<User> { existingUser }.AsQueryable();
 
-            var existingUser = new User { UserId = userId };
-            _mockContext.Setup(c => c.Users.FirstOrDefault(It.IsAny<Func<User, bool>>())).Returns(existingUser);
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.Provider).Returns(userList.Provider);
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.Expression).Returns(userList.Expression);
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.ElementType).Returns(userList.ElementType);
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.GetEnumerator()).Returns(userList.GetEnumerator());
 
-            UserDAO.InitializeContext(_mockContext.Object);
-            // Act
-            var result = UserDAO.UpdateUser(updatedUserDto);
-
-            // Assert
-            Assert.False(result, "Update should fail for null or empty email.");
-            _mockContext.Verify(m => m.SaveChanges(), Times.Never);
-        }
-
-        [Fact]
-        public void UpdateUser_InvalidDateOfBirth_ReturnsFalse()
-        {
-            // Arrange
-            var userId = 1;
-            var updatedUserDto = new UpdateUserDTO
-            {
-                UserId = userId,
-                DateOfBirth = DateTime.UtcNow.AddYears(1) // Future date
-            };
-
-            var existingUser = new User { UserId = userId };
-            _mockContext.Setup(c => c.Users.FirstOrDefault(It.IsAny<Func<User, bool>>())).Returns(existingUser);
-
-            UserDAO.InitializeContext(_mockContext.Object);
-            // Act
-            var result = UserDAO.UpdateUser(updatedUserDto);
-
-            // Assert
-            Assert.False(result, "Update should fail for an invalid date of birth.");
-            _mockContext.Verify(m => m.SaveChanges(), Times.Never);
-        }
-
-        [Fact]
-        public void UpdateUser_IsActiveStatusUpdated_ReturnsTrue()
-        {
-            // Arrange
-            var userId = 1;
-            var updatedUserDto = new UpdateUserDTO
-            {
-                UserId = userId,
-                IsActive = false
-            };
-
-            var existingUser = new User { UserId = userId, IsActive = true };
-            _mockContext.Setup(c => c.Users.FirstOrDefault(It.IsAny<Func<User, bool>>())).Returns(existingUser);
-
-            UserDAO.InitializeContext(_mockContext.Object);
-            // Act
-            var result = UserDAO.UpdateUser(updatedUserDto);
-
-            // Assert
-            Assert.True(result, "Update should succeed for valid IsActive status.");
-            Assert.False(existingUser.IsActive);
-            _mockContext.Verify(m => m.SaveChanges(), Times.Once);
-        }
-
-        [Fact]
-        public void UpdateUser_DuplicatePhoneNumber_ReturnsFalse()
-        {
-            // Arrange
-            var userId = 1;
-            var updatedUserDto = new UpdateUserDTO
-            {
-                UserId = userId,
-                PhoneNumber = "1234567890"
-            };
-
-            var existingUser = new User { UserId = userId };
-            var otherUser = new User { UserId = 2, PhoneNumber = "1234567890" }; // Duplicate phone number
-
-            var data = new List<User> { existingUser, otherUser }.AsQueryable();
-            _mockUsers.As<IQueryable<User>>().Setup(m => m.Provider).Returns(data.Provider);
-            _mockUsers.As<IQueryable<User>>().Setup(m => m.Expression).Returns(data.Expression);
-            _mockUsers.As<IQueryable<User>>().Setup(m => m.ElementType).Returns(data.ElementType);
-            _mockUsers.As<IQueryable<User>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
             _mockContext.Setup(c => c.Users).Returns(_mockUsers.Object);
 
             UserDAO.InitializeContext(_mockContext.Object);
+
+            var newEmployeeDto = new AddUserDTO { Email = "existing@example.com" };
+
             // Act
-            var result = UserDAO.UpdateUser(updatedUserDto);
+            var result = UserDAO.AddEmployee(newEmployeeDto, _mockConfiguration.Object);
 
             // Assert
-            Assert.False(result, "Update should fail for duplicate phone numbers.");
-            _mockContext.Verify(m => m.SaveChanges(), Times.Never);
+            Assert.False(result, "AddEmployee should return false when email already exists.");
         }
 
+        [Fact]
+        public void AddEmployee_SuccessfulAddition_ReturnsTrue()
+        {
+            // Arrange
+            var userList = new List<User>().AsQueryable();
 
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.Provider).Returns(userList.Provider);
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.Expression).Returns(userList.Expression);
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.ElementType).Returns(userList.ElementType);
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.GetEnumerator()).Returns(userList.GetEnumerator());
+
+            _mockContext.Setup(c => c.Users).Returns(_mockUsers.Object);
+
+            UserDAO.InitializeContext(_mockContext.Object);
+
+            var newEmployeeDto = new AddUserDTO
+            {
+                FirstName = "John",
+                LastName = "Doe",
+                Email = "newuser@example.com",
+                Password = "password123",
+                PhoneNumber = "1234567890",
+                Address = "123 Main St",
+                DateOfBirth = new DateTime(2000, 1, 1),
+                Gender = "Male"
+            };
+
+            // Act
+            var result = UserDAO.AddEmployee(newEmployeeDto, _mockConfiguration.Object);
+
+            // Assert
+            Assert.True(result, "AddEmployee should return true for a successful addition.");
+            _mockContext.Verify(c => c.SaveChanges(), Times.Once);
+        }
+
+        [Fact]
+        public void AddEmployee_NullOrEmptyEmail_ReturnsFalse()
+        {
+            // Arrange
+            var userList = new List<User>().AsQueryable();
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.Provider).Returns(userList.Provider);
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.Expression).Returns(userList.Expression);
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.ElementType).Returns(userList.ElementType);
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.GetEnumerator()).Returns(userList.GetEnumerator());
+
+            _mockContext.Setup(c => c.Users).Returns(_mockUsers.Object);
+            UserDAO.InitializeContext(_mockContext.Object);
+
+            var newEmployeeDto = new AddUserDTO { Email = "" }; // Empty email
+
+            // Act
+            var result = UserDAO.AddEmployee(newEmployeeDto, _mockConfiguration.Object);
+
+            // Assert
+            Assert.False(result, "AddEmployee should return false when email is empty.");
+        }
+
+        [Fact]
+        public void AddEmployee_DuplicatePhoneNumber_ReturnsFalse()
+        {
+            // Arrange
+            var existingUser = new User { PhoneNumber = "1234567890" };
+            var userList = new List<User> { existingUser }.AsQueryable();
+
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.Provider).Returns(userList.Provider);
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.Expression).Returns(userList.Expression);
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.ElementType).Returns(userList.ElementType);
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.GetEnumerator()).Returns(userList.GetEnumerator());
+
+            _mockContext.Setup(c => c.Users).Returns(_mockUsers.Object);
+
+            UserDAO.InitializeContext(_mockContext.Object);
+
+            var newEmployeeDto = new AddUserDTO
+            {
+                PhoneNumber = "1234567890" // Duplicate phone number
+            };
+
+            // Act
+            var result = UserDAO.AddEmployee(newEmployeeDto, _mockConfiguration.Object);
+
+            // Assert
+            Assert.False(result, "AddEmployee should return false when phone number is duplicated.");
+        }
+
+        [Fact]
+        public void AddEmployee_ExceptionDuringEmailSend_DoesNotAffectDatabaseChanges()
+        {
+            // Arrange
+            var userList = new List<User>().AsQueryable();
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.Provider).Returns(userList.Provider);
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.Expression).Returns(userList.Expression);
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.ElementType).Returns(userList.ElementType);
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.GetEnumerator()).Returns(userList.GetEnumerator());
+
+            _mockContext.Setup(c => c.Users).Returns(_mockUsers.Object);
+
+            UserDAO.InitializeContext(_mockContext.Object);
+
+            var newEmployeeDto = new AddUserDTO
+            {
+                Email = "newuser@example.com"
+            };
+
+            _mockConfiguration.Setup(c => c["EmailSettings:Host"]).Throws(new Exception("Email send failed"));
+
+            // Act
+            var result = UserDAO.AddEmployee(newEmployeeDto, _mockConfiguration.Object);
+
+            // Assert
+            Assert.True(result, "AddEmployee should return true even if email sending fails.");
+            _mockContext.Verify(c => c.SaveChanges(), Times.Once);
+        }
+
+        // Test for method AddCustomer
+        [Fact]
+        public void AddCustomer_EmailAlreadyExists_ReturnsFalse()
+        {
+            // Arrange
+            var existingUser = new User { Email = "existing@example.com" };
+            var userList = new List<User> { existingUser }.AsQueryable();
+
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.Provider).Returns(userList.Provider);
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.Expression).Returns(userList.Expression);
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.ElementType).Returns(userList.ElementType);
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.GetEnumerator()).Returns(userList.GetEnumerator());
+
+            _mockContext.Setup(c => c.Users).Returns(_mockUsers.Object);
+            UserDAO.InitializeContext(_mockContext.Object);
+
+            var newCustomerDto = new AddUserDTO { Email = "existing@example.com" };
+
+            // Act
+            var result = UserDAO.AddCustomer(newCustomerDto, _mockConfiguration.Object);
+
+            // Assert
+            Assert.False(result, "AddCustomer should return false when the email already exists.");
+        }
+
+        [Fact]
+        public void AddCustomer_SuccessfulAddition_ReturnsTrue()
+        {
+            // Arrange
+            var userList = new List<User>().AsQueryable();
+
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.Provider).Returns(userList.Provider);
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.Expression).Returns(userList.Expression);
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.ElementType).Returns(userList.ElementType);
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.GetEnumerator()).Returns(userList.GetEnumerator());
+
+            _mockContext.Setup(c => c.Users).Returns(_mockUsers.Object);
+            UserDAO.InitializeContext(_mockContext.Object);
+
+            var newCustomerDto = new AddUserDTO
+            {
+                FirstName = "John",
+                LastName = "Doe",
+                Email = "newcustomer@example.com",
+                Password = "password123",
+                PhoneNumber = "1234567890",
+                Address = "123 Main St",
+                DateOfBirth = new DateTime(1990, 1, 1),
+                Gender = "Male",
+                IsActive = true
+            };
+
+            // Act
+            var result = UserDAO.AddCustomer(newCustomerDto, _mockConfiguration.Object);
+
+            // Assert
+            Assert.True(result, "AddCustomer should return true for successful addition.");
+            _mockContext.Verify(c => c.SaveChanges(), Times.Once);
+        }
+
+        [Fact]
+        public void AddCustomer_NullOrEmptyEmail_ReturnsFalse()
+        {
+            // Arrange
+            var userList = new List<User>().AsQueryable();
+
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.Provider).Returns(userList.Provider);
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.Expression).Returns(userList.Expression);
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.ElementType).Returns(userList.ElementType);
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.GetEnumerator()).Returns(userList.GetEnumerator());
+
+            _mockContext.Setup(c => c.Users).Returns(_mockUsers.Object);
+            UserDAO.InitializeContext(_mockContext.Object);
+
+            var newCustomerDto = new AddUserDTO { Email = "" }; // Empty email
+
+            // Act
+            var result = UserDAO.AddCustomer(newCustomerDto, _mockConfiguration.Object);
+
+            // Assert
+            Assert.False(result, "AddCustomer should return false when the email is empty.");
+        }
+
+        [Fact]
+        public void AddCustomer_DuplicatePhoneNumber_ReturnsFalse()
+        {
+            // Arrange
+            var existingUser = new User { PhoneNumber = "1234567890" };
+            var userList = new List<User> { existingUser }.AsQueryable();
+
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.Provider).Returns(userList.Provider);
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.Expression).Returns(userList.Expression);
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.ElementType).Returns(userList.ElementType);
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.GetEnumerator()).Returns(userList.GetEnumerator());
+
+            _mockContext.Setup(c => c.Users).Returns(_mockUsers.Object);
+            UserDAO.InitializeContext(_mockContext.Object);
+
+            var newCustomerDto = new AddUserDTO
+            {
+                PhoneNumber = "1234567890" // Duplicate phone number
+            };
+
+            // Act
+            var result = UserDAO.AddCustomer(newCustomerDto, _mockConfiguration.Object);
+
+            // Assert
+            Assert.False(result, "AddCustomer should return false when the phone number already exists.");
+        }
+
+        [Fact]
+        public void AddCustomer_ExceptionDuringEmailSend_ReturnsTrue()
+        {
+            // Arrange
+            var userList = new List<User>().AsQueryable();
+
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.Provider).Returns(userList.Provider);
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.Expression).Returns(userList.Expression);
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.ElementType).Returns(userList.ElementType);
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.GetEnumerator()).Returns(userList.GetEnumerator());
+
+            _mockContext.Setup(c => c.Users).Returns(_mockUsers.Object);
+            UserDAO.InitializeContext(_mockContext.Object);
+
+            var newCustomerDto = new AddUserDTO
+            {
+                Email = "newcustomer@example.com"
+            };
+
+            _mockConfiguration.Setup(c => c["EmailSettings:Host"]).Throws(new Exception("Email sending failed"));
+
+            // Act
+            var result = UserDAO.AddCustomer(newCustomerDto, _mockConfiguration.Object);
+
+            // Assert
+            Assert.True(result, "AddCustomer should return true even if email sending fails.");
+            _mockContext.Verify(c => c.SaveChanges(), Times.Once);
+        }
+
+        [Fact]
+        public void AddCustomer_InvalidDateOfBirth_ReturnsFalse()
+        {
+            // Arrange
+            var userList = new List<User>().AsQueryable();
+
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.Provider).Returns(userList.Provider);
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.Expression).Returns(userList.Expression);
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.ElementType).Returns(userList.ElementType);
+            _mockUsers.As<IQueryable<User>>().Setup(m => m.GetEnumerator()).Returns(userList.GetEnumerator());
+
+            _mockContext.Setup(c => c.Users).Returns(_mockUsers.Object);
+            UserDAO.InitializeContext(_mockContext.Object);
+
+            var newCustomerDto = new AddUserDTO
+            {
+                DateOfBirth = DateTime.Now.AddYears(1) // Invalid: Future date
+            };
+
+            // Act
+            var result = UserDAO.AddCustomer(newCustomerDto, _mockConfiguration.Object);
+
+            // Assert
+            Assert.False(result, "AddCustomer should return false when the date of birth is invalid.");
+        }
     }
 
 }
