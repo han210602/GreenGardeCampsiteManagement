@@ -104,8 +104,10 @@ namespace GreenGardenClient.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("PasswordError", "Email hoặc mật khẩu của bị sai. Vui lòng nhập lại");
+                    var responseData = await response.Content.ReadAsStringAsync();
+                    ModelState.AddModelError("PasswordError", $"{responseData}");
                 }
+
 
             }
             catch (Exception ex)
