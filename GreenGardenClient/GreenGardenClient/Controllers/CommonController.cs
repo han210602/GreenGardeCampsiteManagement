@@ -81,7 +81,7 @@ namespace GreenGardenClient.Controllers
                         {
                             HttpOnly = true,
                             Secure = true,
-                            Expires = DateTimeOffset.Now.AddHours(1)
+                            Expires = DateTimeOffset.Now.AddHours(24)
                         });
                         HttpContext.Session.SetInt32("RoleId", loginResponse.RoleId);
                         HttpContext.Session.SetInt32("UserId", loginResponse.UserId);
@@ -104,8 +104,21 @@ namespace GreenGardenClient.Controllers
                 }
                 else
                 {
-                    var responseData = await response.Content.ReadAsStringAsync();
-                    ModelState.AddModelError("PasswordError", $"{responseData}");
+                     var responseData = await response.Content.ReadAsStringAsync();
+                   
+            // Kiểm tra xem phản hồi có chứa thông báo về tài khoản bị khóa hay sai mật khẩu
+            if (responseData.Contains("Tài khoản của bạn đã bị khóa"))
+            {
+                ModelState.AddModelError("PasswordError", "Tài khoản của bạn đã bị khóa.");
+            }
+            else if (responseData.Contains("Mật khẩu không đúng"))
+            {
+                ModelState.AddModelError("PasswordError", "Email hoặc mật khẩu của bạn bị sai.");
+            }
+                    else if (responseData.Contains("Địa chỉ email không tồn tại"))
+                    {
+                        ModelState.AddModelError("PasswordError", "Email hoặc mật khẩu của bạn bị sai.");
+                    }
                 }
 
 

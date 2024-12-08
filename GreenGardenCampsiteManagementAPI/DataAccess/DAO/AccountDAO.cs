@@ -16,8 +16,7 @@ namespace DataAccess.DAO
     public class AccountDAO
     {
         // Assuming you have a list of User objects
-        private static Dictionary<string, int> loginAttempts = new Dictionary<string, int>();
-
+     
         public static string Login(AccountDTO a, IConfiguration configuration)
         {
             using (var context = new GreenGardenContext())
@@ -38,10 +37,7 @@ namespace DataAccess.DAO
                 if (user.Password == a.Password)
                 {
                     // Reset login attempts on success
-                    if (loginAttempts.ContainsKey(a.Email))
-                    {
-                        loginAttempts[a.Email] = 0;
-                    }
+  
 
                     // Define JWT claims, including RoleId
                     var claims = new[]
@@ -81,16 +77,6 @@ namespace DataAccess.DAO
                 }
                 else
                 {
-                    // Track login attempts
-                    if (!loginAttempts.ContainsKey(a.Email))
-                    {
-                        loginAttempts[a.Email] = 1;
-                    }
-                    else
-                    {
-                        loginAttempts[a.Email]++;
-                    }
-
                     // Throw an error message if the login attempt fails
                     throw new Exception("Mật khẩu không đúng");
                 }

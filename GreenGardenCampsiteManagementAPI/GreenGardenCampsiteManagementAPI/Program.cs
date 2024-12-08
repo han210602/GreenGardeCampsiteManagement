@@ -124,6 +124,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Green Garden Campsite Management API v1"));
 }
+builder.WebHost.ConfigureAppConfiguration((context, config) =>
+{
+    config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: false); // Set reloadOnChange to false
+});
 
 app.UseHttpsRedirection();
 app.UseRouting();

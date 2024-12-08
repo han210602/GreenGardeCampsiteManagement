@@ -804,7 +804,7 @@
                                         foreach (var item in Model.OrderCampingGearDetails)
                                         {
                                             <tr>
-                                                <td class="text-start">@item.Name còn @item.QuantityAvaiable</td>
+                                                <td class="text-start">@item.Name  @item.QuantityAvaiable</td>
                                                 <td>@String.Format("{0:0,0}", @item.Price)<span class="currency-symbol"> ₫</span></td>
                                                 <td>@item.Quantity</td>
                                                 @if (Model.ActivityId == 2 || Model.ActivityId == 3)
