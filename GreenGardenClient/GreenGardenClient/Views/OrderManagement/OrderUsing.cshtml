@@ -691,7 +691,7 @@
                             @foreach (OrderVM item in ViewBag.dataorder)
                             {
 
-                                <tr data-order-id="@item.OrderId"
+                                <tr onclick="window.location.href='@Url.Action("OrderDetail", "OrderManagement", new { id = item.OrderId })'" data-order-id="@item.OrderId"
                                     class="@(item.OrderUsageDate.Value.ToString("dd/MM/yyyy").Equals(DateTime.Now.ToString("dd/MM/yyyy")) ? "highlight-row" : "")">
                                     <td>
                                         <i class="fas fa-circle" style="color: green;"></i>

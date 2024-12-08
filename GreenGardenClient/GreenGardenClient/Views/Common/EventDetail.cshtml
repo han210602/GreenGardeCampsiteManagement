@@ -88,7 +88,7 @@
                                 <i class="fas fa-sign-in-alt"></i> Đăng nhập
                             </a>
                             <a href="/Common/Register" class="nav-link">
-                                <i class="fas fa-user-plus"></i> Đăng Ký
+                                <i class="fas fa-user-plus"></i> Đăng ký
                             </a>
                         }
                         else
@@ -212,7 +212,7 @@
                                     @if (HttpContextAccessor.HttpContext.Session.GetString("Email") == null)
                                     {
                                         <a href="/Common/Login" class="nav-link">Đăng nhập</a>
-                                        <a href="/Common/Register" class="nav-link">Đăng Ký</a>
+                                        <a href="/Common/Register" class="nav-link">Đăng ký</a>
                                     }
                                     else
                                     {
@@ -782,7 +782,7 @@
                                 // Chuyển đổi lại thời gian mới (sau khi cộng 1 phút)
                                 const newStartTime = startDateTime.toTimeString().slice(0, 5);
                                 return `
-                                                        <input type="date" id="usage-date" class="swal2-input" value="${eventDate}" min="${eventDate}">
+                                                                        <input type="date" id="usage-date" class="swal2-input" value="${eventDate}" min="${eventDate} " readonly>
                                                                         <input type="time" id="usage-time" class="swal2-input" value="${newStartTime}" min="${startTime}" max="${endTime}">
                                                     `;
                             })(),

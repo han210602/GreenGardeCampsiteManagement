@@ -149,7 +149,6 @@ namespace GreenGardenClient.Controllers.AdminController
                         ModelState.AddModelError("Email", "Email đã tồn tại hoặc không đúng định dạng.");
 
 
-                        ModelState.AddModelError("PhoneNumber", "Số điện thoại đã tồn tại.");
 
 
                         return View(model);

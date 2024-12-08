@@ -1,10 +1,5 @@
 ﻿using BusinessObject.DTOs;
 using BusinessObject.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccess.DAO
 {
@@ -17,14 +12,15 @@ namespace DataAccess.DAO
             {
                 using (var context = new GreenGardenContext())
                 {
-                    listActivities = context.Activities.Select(a => new ActivityDTO()
-                    { 
-                        ActivityId =a.ActivityId,
-                        ActivityName =a.ActivityName,
-                    })
-                    .ToList();
+                    listActivities = context.Activities
+                        .Where(a => a.ActivityId != 1003) // Lọc bỏ ActivityId là 1003
+                        .Select(a => new ActivityDTO()
+                        {
+                            ActivityId = a.ActivityId,
+                            ActivityName = a.ActivityName,
+                        })
+                        .ToList();
                 }
-
             }
             catch (Exception ex)
             {
@@ -33,4 +29,5 @@ namespace DataAccess.DAO
             return listActivities;
         }
     }
+
 }
