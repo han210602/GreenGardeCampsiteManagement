@@ -511,7 +511,7 @@ namespace GreenGardenClient.Controllers.AdminController
                 // Kiểm tra kết quả trả về từ server
                 if (response.IsSuccessStatusCode)
                 {
-
+                    TempData["NotificationSuccess"] = "Sự kiện đã được xóa thành công.";
                     return RedirectToAction("Index");
                 }
                 else
